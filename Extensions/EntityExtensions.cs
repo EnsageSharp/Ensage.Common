@@ -632,7 +632,7 @@
                     }
                     break;
             }
-            return (float)(unit.AttackRange + bonus);
+            return (float) (unit.AttackRange + bonus + unit.HullRadius/2);
         }
 
         public static Ability GetChanneledAbility(this Unit unit)
@@ -775,6 +775,11 @@
         public static Vector3 Vector3FromPolarAngle(this Entity unit, float delta = 0f, float radial = 1f)
         {
             return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
+        }
+
+        public static Hero BestAATarget(this Hero source)
+        {
+            return TargetSelector.BestAutoAttackTarget(source);
         }
 
         #endregion
