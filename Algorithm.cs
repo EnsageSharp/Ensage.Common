@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ensage.Common.Extensions;
-using SharpDX;
-
-namespace Ensage.Common
+﻿namespace Ensage.Common
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Ensage.Common.Extensions;
+
+    using SharpDX;
+
     /// <summary>
-    /// Static class for holding general algorithm implementations
+    ///     Static class for holding general algorithm implementations
     /// </summary>
     public static class Algorithm
     {
+        #region Public Methods and Operators
+
         /// <summary>
-        /// Finds a circle enclosing the maximum possible number of given vectors, with their weights.
+        ///     Finds a circle enclosing the maximum possible number of given vectors, with their weights.
         /// </summary>
         /// <param name="vector">List of the Tuples containing vectors and weight of the vector.</param>
         /// <param name="radius">Radius of the enclosing circle</param>
@@ -41,25 +43,37 @@ namespace Ensage.Common
                 {
                     var point2 = tuple2.Item1;
                     if (point1 == point2)
+                    {
                         continue;
+                    }
 
                     var distance = Vector2.Distance(point1, point2);
 
                     if (Math.Abs(distance - radius) < 0.0001f)
                     {
                         var center = point1 + (point2 - point1) / 2;
-                        MaximalEnclosingCircle_Compare(vector, radius, center, ref returnValue, ref contain);
+                        MaximalEnclosingCircleCompare(vector, radius, center, ref returnValue, ref contain);
                     }
                     else if (distance < radius)
                     {
-                        var center = Vector2.Lerp(point1,point2,0.5f);
+                        var center = Vector2.Lerp(point1, point2, 0.5f);
                         var unit = point2 - point1;
                         unit.Normalize();
-                        var unitCW = unit.Rotate((float)Math.PI / 2);
-                        var unitCCW = unit.Rotate((float)Math.PI / -2);
+                        var unitClockWise = unit.Rotate((float)Math.PI / 2);
+                        var unitCounterClockWise = unit.Rotate((float)Math.PI / -2);
                         var delta = (float)Math.Sqrt(Math.Pow(radius, 2f) - Math.Pow(distance, 2f));
-                        MaximalEnclosingCircle_Compare(vector, radius, center + (delta * unitCW), ref returnValue, ref contain);
-                        MaximalEnclosingCircle_Compare(vector, radius, center + (delta * unitCCW), ref returnValue, ref contain);
+                        MaximalEnclosingCircleCompare(
+                            vector,
+                            radius,
+                            center + (delta * unitClockWise),
+                            ref returnValue,
+                            ref contain);
+                        MaximalEnclosingCircleCompare(
+                            vector,
+                            radius,
+                            center + (delta * unitCounterClockWise),
+                            ref returnValue,
+                            ref contain);
                     }
                 }
             }
@@ -72,17 +86,8 @@ namespace Ensage.Common
             return returnValue;
         }
 
-        private static void MaximalEnclosingCircle_Compare(List<Tuple<Vector2, uint>> vector, float radius, Vector2 candidate, ref Vector2 oldCenter, ref uint oldContain)
-        {
-            var containList = vector.FindAll(x => Vector2.Distance(x.Item1, candidate) < radius);
-            var sum = containList.Aggregate<Tuple<Vector2, uint>, uint>(0, (current, tuple) => current + tuple.Item2);
-            if (oldContain >= sum) return;
-            oldCenter = candidate;
-            oldContain = sum;
-        }
-
         /// <summary>
-        /// Finds a circle enclosing the maximum possible number of given vectors.
+        ///     Finds a circle enclosing the maximum possible number of given vectors.
         /// </summary>
         /// <param name="vector">List of the vectors.</param>
         /// <param name="radius">Radius of the enclosing circle</param>
@@ -93,5 +98,28 @@ namespace Ensage.Common
             var tupleList = vector.Select(vec => new Tuple<Vector2, uint>(vec, 1)).ToList();
             return MaximalEnclosingCircle(tupleList, radius);
         }
+
+        #endregion
+
+        #region Methods
+
+        private static void MaximalEnclosingCircleCompare(
+            List<Tuple<Vector2, uint>> vector,
+            float radius,
+            Vector2 candidate,
+            ref Vector2 oldCenter,
+            ref uint oldContain)
+        {
+            var containList = vector.FindAll(x => Vector2.Distance(x.Item1, candidate) < radius);
+            var sum = containList.Aggregate<Tuple<Vector2, uint>, uint>(0, (current, tuple) => current + tuple.Item2);
+            if (oldContain >= sum)
+            {
+                return;
+            }
+            oldCenter = candidate;
+            oldContain = sum;
+        }
+
+        #endregion
     }
 }

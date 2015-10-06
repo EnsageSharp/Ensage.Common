@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ensage.Common
+﻿namespace Ensage.Common
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Utils
     {
+        #region Static Fields
 
         public static readonly Dictionary<string, double> Sleeps = new Dictionary<string, double>();
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public static double DegreeToRadian(double angle)
         {
@@ -28,5 +33,7 @@ namespace Ensage.Common
             double asd;
             return !Sleeps.TryGetValue(name, out asd) || Environment.TickCount > asd;
         }
+
+        #endregion
     }
 }

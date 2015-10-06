@@ -1,31 +1,55 @@
 ﻿namespace Ensage.Common
 {
-
     public class SpellData
     {
-        public string SpellName;
-        public bool IsDisable;
-        public bool IsSlow;
-        public bool IsNuke;
-        public bool IsSkillShot;
-        public bool IsHeal;
-        public bool IsShield;
+        #region Fields
+
         public double AdditionalDelay;
-        public float Radius;
-        public string StringRadius;
-        public string Speed;
-        public string Width;
+
         public bool AllyBlock;
+
         public bool EnemyBlock;
-        public bool MagicImmunityPierce;
+
         public bool FakeCastRange;
-        public string RealCastRange;
+
+        public bool IsDisable;
+
+        public bool IsHeal;
+
+        public bool IsNuke;
+
+        public bool IsShield;
+
+        public bool IsSkillShot;
+
+        public bool IsSlow;
+
+        public bool MagicImmunityPierce;
+
         public bool OnlyForKillSteal;
 
+        public float Radius;
 
-        public SpellData() { }
+        public string RealCastRange;
 
-        public SpellData(string spellName,
+        public string Speed;
+
+        public string SpellName;
+
+        public string StringRadius;
+
+        public string Width;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public SpellData()
+        {
+        }
+
+        public SpellData(
+            string spellName,
             bool isDisable,
             bool isSlow,
             bool isNuke,
@@ -44,24 +68,26 @@
             string realCastRange,
             bool onlyForKillSteal)
         {
-            SpellName = spellName;
-            IsDisable = isDisable;
-            IsSlow = isSlow;
-            IsNuke = isNuke;
-            IsSkillShot = isSkillShot;
-            IsHeal = isHeal;
-            IsShield = isShield;
-            AdditionalDelay = additionalDelay;
-            Radius = radius;
-            StringRadius = stringRadius;
-            Speed = speed;
-            Width = width;
-            AllyBlock = allyBlock;
-            EnemyBlock = enemyBlock;
-            MagicImmunityPierce = magicImmunityPierce;
-            FakeCastRange = fakeCastRange;
-            RealCastRange = realCastRange;
-            OnlyForKillSteal = onlyForKillSteal;
+            this.SpellName = spellName;
+            this.IsDisable = isDisable;
+            this.IsSlow = isSlow;
+            this.IsNuke = isNuke;
+            this.IsSkillShot = isSkillShot;
+            this.IsHeal = isHeal;
+            this.IsShield = isShield;
+            this.AdditionalDelay = additionalDelay;
+            this.Radius = radius;
+            this.StringRadius = stringRadius;
+            this.Speed = speed;
+            this.Width = width;
+            this.AllyBlock = allyBlock;
+            this.EnemyBlock = enemyBlock;
+            this.MagicImmunityPierce = magicImmunityPierce;
+            this.FakeCastRange = fakeCastRange;
+            this.RealCastRange = realCastRange;
+            this.OnlyForKillSteal = onlyForKillSteal;
         }
+
+        #endregion
     }
 }

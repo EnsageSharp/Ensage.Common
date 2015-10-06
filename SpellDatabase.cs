@@ -1,11 +1,16 @@
-﻿using System.Collections.Generic;
-
-namespace Ensage.Common
+﻿namespace Ensage.Common
 {
+    using System.Collections.Generic;
+
     public static class SpellDatabase
     {
-        
+        #region Static Fields
+
         public static List<SpellData> Spells = new List<SpellData>();
+
+        #endregion
+
+        #region Constructors and Destructors
 
         static SpellDatabase()
         {
@@ -13,26 +18,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "dark_seer_ion_shell",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "dark_seer_ion_shell", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -40,26 +31,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "magnataur_shockwave",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = true,
-                    IsSkillShot = true,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "shock_speed",
-                    Width = "shock_width",
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "magnataur_shockwave", IsDisable = false, IsSlow = false, IsNuke = true,
+                        IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "shock_speed", Width = "shock_width", AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -67,26 +45,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ursa_earthshock",
-                    IsDisable = false,
-                    IsSlow = true,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "shock_radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ursa_earthshock", IsDisable = false, IsSlow = true, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "shock_radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -94,26 +58,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "chaos_knight_reality_rift",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "chaos_knight_reality_rift", IsDisable = false, IsSlow = false, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -121,26 +71,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "skywrath_mage_mystic_flare",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.2,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = "radius",
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "skywrath_mage_mystic_flare", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.2, Radius = 0,
+                        StringRadius = null, Speed = null, Width = "radius", AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -148,26 +84,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "death_prophet_carrion_swarm",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "death_prophet_carrion_swarm", IsDisable = false, IsSlow = false, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -175,26 +97,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "zuus_lightning_bolt",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "spread_aoe",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "zuus_lightning_bolt", IsDisable = true, IsSlow = false, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "spread_aoe", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -202,26 +110,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "axe_berserkers_call",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "axe_berserkers_call", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -229,26 +123,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "beastmaster_wild_axes",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "beastmaster_wild_axes", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -256,26 +136,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "puck_waning_rift",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "puck_waning_rift", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -283,26 +149,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lone_druid_rabid",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lone_druid_rabid", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -310,26 +162,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "rattletrap_battery_assault",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.7,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "rattletrap_battery_assault", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.7, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -337,26 +175,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "sven_storm_bolt",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "bolt_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "sven_storm_bolt", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "bolt_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -364,26 +188,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "chen_test_of_faith",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "chen_test_of_faith", IsDisable = false, IsSlow = false, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -391,26 +201,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phantom_assassin_stifling_dagger",
-                    IsDisable = false,
-                    IsSlow = true,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "dagger_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phantom_assassin_stifling_dagger", IsDisable = false, IsSlow = true, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "dagger_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -418,26 +214,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bounty_hunter_track",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bounty_hunter_track", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -445,26 +227,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "axe_battle_hunger",
-                    IsDisable = false,
-                    IsSlow = true,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "axe_battle_hunger", IsDisable = false, IsSlow = true, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -472,26 +240,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "storm_spirit_electric_vortex",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "storm_spirit_electric_vortex", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -499,26 +253,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ember_spirit_sleight_of_fist",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ember_spirit_sleight_of_fist", IsDisable = false, IsSlow = false, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -526,26 +266,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "batrider_flamebreak",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = true,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.3,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "batrider_flamebreak", IsDisable = true, IsSlow = false, IsNuke = true,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.3, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -553,26 +279,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "mirana_arrow",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "arrow_speed",
-                    Width = "arrow_width",
-                    AllyBlock = true,
-                    EnemyBlock = true,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "mirana_arrow", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = null,
+                        Speed = "arrow_speed", Width = "arrow_width", AllyBlock = true, EnemyBlock = true,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -580,26 +292,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "abaddon_aphotic_shield",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = true,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "abaddon_aphotic_shield", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = true, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -607,26 +305,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "windrunner_shackleshot",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "arrow_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "windrunner_shackleshot", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "arrow_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -634,26 +318,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ancient_apparition_cold_feet",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 2.01,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ancient_apparition_cold_feet", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 2.01, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -661,26 +331,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "rattletrap_hookshot",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = "latch_radius",
-                    AllyBlock = true,
-                    EnemyBlock = true,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "rattletrap_hookshot", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = "latch_radius", AllyBlock = true, EnemyBlock = true,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -688,26 +344,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_shaman_mass_serpent_ward",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_shaman_mass_serpent_ward", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -715,26 +357,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ogre_magi_unrefined_fireblast",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ogre_magi_unrefined_fireblast", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -742,26 +370,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "oracle_fortunes_end",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "bolt_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "oracle_fortunes_end", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "bolt_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -769,26 +383,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shredder_timber_chain",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "chain_radius",
-                    Speed = "speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shredder_timber_chain", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "chain_radius", Speed = "speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -796,26 +397,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "doom_bringer_lvl_death",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "doom_bringer_lvl_death", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -823,26 +410,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "crystal_maiden_freezing_field",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = -0.1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "crystal_maiden_freezing_field", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = -0.1, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -850,26 +423,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lich_frost_armor",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lich_frost_armor", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -877,26 +436,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "enigma_malefice",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "enigma_malefice", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -904,26 +449,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "elder_titan_earth_splitter",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "elder_titan_earth_splitter", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -931,26 +462,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shredder_return_chakram_2",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shredder_return_chakram_2", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -958,26 +475,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "zuus_thundergods_wrath",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = -0.1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "zuus_thundergods_wrath", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = -0.1, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -985,26 +488,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shredder_chakram_2",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.5,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = "speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shredder_chakram_2", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
+                        StringRadius = "radius", Speed = "speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1012,26 +501,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phantom_assassin_phantom_strike",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phantom_assassin_phantom_strike", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1039,26 +514,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "pugna_decrepify",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "pugna_decrepify", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1066,26 +527,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "omniknight_purification",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "omniknight_purification", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1093,26 +540,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "keeper_of_the_light_blinding_light",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "keeper_of_the_light_blinding_light", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1120,26 +553,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "queenofpain_shadow_strike",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "projectile_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "queenofpain_shadow_strike", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "projectile_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1147,26 +567,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shredder_chakram",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.5,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = "speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shredder_chakram", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
+                        StringRadius = "radius", Speed = "speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1174,26 +580,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "undying_soul_rip",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "undying_soul_rip", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1201,26 +593,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_sun_strike",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 1.7,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_sun_strike", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.7, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1228,26 +606,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "winter_wyvern_splinter_blast",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "winter_wyvern_splinter_blast", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1255,26 +619,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "dark_seer_surge",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "dark_seer_surge", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1282,26 +632,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "mirana_starfall",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 400,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "mirana_starfall", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 400,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1309,26 +645,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "luna_lucent_beam",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "luna_lucent_beam", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1336,26 +658,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "nyx_assassin_mana_burn",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "nyx_assassin_mana_burn", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1363,26 +671,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "dark_seer_vacuum",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "dark_seer_vacuum", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1390,26 +684,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "rattletrap_power_cogs",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.1,
-                    Radius = 125,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "rattletrap_power_cogs", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.1, Radius = 125,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1417,26 +697,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "dark_seer_wall_of_replica",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "dark_seer_wall_of_replica", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1444,26 +710,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ogre_magi_fireblast",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ogre_magi_fireblast", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1471,26 +723,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "riki_blink_strike",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "riki_blink_strike", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1498,26 +736,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_cold_snap",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_cold_snap", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1525,26 +749,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "wisp_spirits",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 1300,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "wisp_spirits", IsDisable = false, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 1300, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1552,26 +762,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "warlock_fatal_bonds",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "warlock_fatal_bonds", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1579,26 +775,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "oracle_purifying_flames",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = true
-                });
+                    {
+                        SpellName = "oracle_purifying_flames", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
+                    });
 
             #endregion
 
@@ -1606,26 +788,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "burrow_width",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "burrow_width",
-                    Speed = "burrow_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "burrow_width", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = "burrow_width",
+                        Speed = "burrow_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1633,26 +801,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "pudge_meat_hook",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "hook_speed",
-                    Width = "hook_width",
-                    AllyBlock = true,
-                    EnemyBlock = true,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "pudge_meat_hook", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "hook_speed", Width = "hook_width", AllyBlock = true,
+                        EnemyBlock = true, MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1660,26 +815,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "keeper_of_the_light_mana_leak",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "keeper_of_the_light_mana_leak", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1687,26 +828,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "keeper_of_the_light_spirit_form_illuminate",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "keeper_of_the_light_spirit_form_illuminate", IsDisable = false, IsSlow = false,
+                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1714,26 +841,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "templar_assassin_meld",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "templar_assassin_meld", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1741,26 +854,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "disruptor_glimpse",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "disruptor_glimpse", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1768,26 +867,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "disruptor_thunder_strike",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "disruptor_thunder_strike", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1795,26 +880,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "disruptor_kinetic_field",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 1.2,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "disruptor_kinetic_field", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.2, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1822,26 +893,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ember_spirit_searing_chains",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ember_spirit_searing_chains", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1849,26 +906,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "silencer_curse_of_the_silent",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "silencer_curse_of_the_silent", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1876,26 +919,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "venomancer_plague_ward",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "venomancer_plague_ward", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1903,26 +932,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phoenix_icarus_dive_stop",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phoenix_icarus_dive_stop", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1930,26 +945,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phoenix_icarus_dive",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phoenix_icarus_dive", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1957,26 +958,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "puck_ethereal_jaunt",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "puck_ethereal_jaunt", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -1984,26 +971,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "enchantress_enchant",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "enchantress_enchant", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2011,26 +984,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "treant_leech_seed",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "treant_leech_seed", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2038,26 +997,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phoenix_launch_fire_spirit",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "spirit_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phoenix_launch_fire_spirit", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "spirit_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2065,26 +1010,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "nyx_assassin_impale",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "nyx_assassin_impale", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2092,26 +1023,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tidehunter_gush",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "projectile_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tidehunter_gush", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "projectile_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2119,26 +1037,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_demon_demonic_purge",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_demon_demonic_purge", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2146,26 +1050,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "puck_illusory_orb",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "orb_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "puck_illusory_orb", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "orb_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2173,26 +1063,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "legion_commander_duel",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "legion_commander_duel", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2200,26 +1076,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "jakiro_dual_breath",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "jakiro_dual_breath", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2227,26 +1089,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lina_light_strike_array",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.5,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lina_light_strike_array", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2254,26 +1102,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "clinkz_strafe",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 630,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "clinkz_strafe", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 630,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2281,26 +1115,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_demon_disruption",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_demon_disruption", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2308,26 +1128,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "slardar_slithereen_crush",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "crush_radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "slardar_slithereen_crush", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "crush_radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2335,26 +1141,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "terrorblade_conjure_image",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "terrorblade_conjure_image", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2362,26 +1154,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "terrorblade_metamorphosis",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 700,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "terrorblade_metamorphosis", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 700,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2389,26 +1167,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "slark_dark_pact",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "slark_dark_pact", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2416,26 +1180,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "terrorblade_reflection",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "terrorblade_reflection", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2443,26 +1193,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_demon_soul_catcher",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_demon_soul_catcher", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2470,26 +1206,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "terrorblade_sunder",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "terrorblade_sunder", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2497,26 +1219,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bloodseeker_rupture",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bloodseeker_rupture", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2524,26 +1232,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "undying_tombstone",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "undying_tombstone", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2551,26 +1245,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "undying_decay",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "undying_decay", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2578,26 +1258,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "gyrocopter_flak_cannon",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "gyrocopter_flak_cannon", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2605,26 +1271,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "spectre_spectral_dagger",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "spectre_spectral_dagger", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2632,26 +1284,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "naga_siren_rip_tide",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "naga_siren_rip_tide", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2659,26 +1297,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "visage_soul_assumption",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "visage_soul_assumption", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2686,26 +1310,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earthshaker_echo_slam",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 625,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earthshaker_echo_slam", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 625,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2713,26 +1323,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_ice_wall",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 1,
-                    Radius = 590,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_ice_wall", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1, Radius = 590,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2740,26 +1336,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tinker_laser",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tinker_laser", IsDisable = false, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2767,26 +1349,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "rattletrap_rocket_flare",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "rattletrap_rocket_flare", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2794,26 +1362,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_forge_spirit",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 700,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_forge_spirit", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 700,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2821,26 +1375,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "weaver_the_swarm",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "weaver_the_swarm", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2848,26 +1388,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ember_spirit_fire_remnant",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ember_spirit_fire_remnant", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2875,26 +1401,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earthshaker_fissure",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = -0.1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earthshaker_fissure", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = -0.1, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2902,26 +1414,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "magnataur_skewer",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "skewer_radius",
-                    Speed = "skewer_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "magnataur_skewer", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "skewer_radius", Speed = "skewer_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2929,26 +1428,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "beastmaster_primal_roar",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "beastmaster_primal_roar", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2956,26 +1441,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tusk_walrus_kick",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tusk_walrus_kick", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -2983,26 +1454,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "brewmaster_thunder_clap",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "brewmaster_thunder_clap", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3010,26 +1467,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bane_nightmare",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bane_nightmare", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3037,26 +1480,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "keeper_of_the_light_illuminate",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "keeper_of_the_light_illuminate", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3064,26 +1493,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "nevermore_shadowraze3",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "shadowraze_range",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "nevermore_shadowraze3", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "shadowraze_range", Speed = null, Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3091,26 +1507,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "windrunner_powershot",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "arrow_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "windrunner_powershot", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "arrow_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3118,26 +1520,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tusk_ice_shards",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "shard_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tusk_ice_shards", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "shard_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3145,26 +1533,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "brewmaster_drunken_haze",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "brewmaster_drunken_haze", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3172,26 +1546,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "leshrac_lightning_storm",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "leshrac_lightning_storm", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3199,26 +1559,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "necrolyte_death_pulse",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "area_of_effect",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "necrolyte_death_pulse", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "area_of_effect", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3226,26 +1572,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_alacrity",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_alacrity", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3253,26 +1585,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_shaman_voodoo",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_shaman_voodoo", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3280,26 +1598,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "pugna_nether_blast",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "pugna_nether_blast", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3307,26 +1611,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "morphling_adaptive_strike",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "morphling_adaptive_strike", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3334,26 +1624,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lone_druid_true_form",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 700,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lone_druid_true_form", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 700,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3361,26 +1637,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "nevermore_shadowraze2",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "shadowraze_range",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "nevermore_shadowraze2", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "shadowraze_range", Speed = null, Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3388,26 +1651,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "storm_spirit_ball_lightning",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "ball_lightning_move_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "storm_spirit_ball_lightning", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "ball_lightning_move_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3415,26 +1665,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tusk_snowball",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "snowball_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tusk_snowball", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = null,
+                        Speed = "snowball_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3442,26 +1678,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phoenix_sun_ray_toggle_move",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phoenix_sun_ray_toggle_move", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3469,26 +1691,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "doom_bringer_scorched_earth",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "doom_bringer_scorched_earth", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3496,26 +1704,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phoenix_sun_ray",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = true
-                });
+                    {
+                        SpellName = "phoenix_sun_ray", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
+                    });
 
             #endregion
 
@@ -3523,26 +1717,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phoenix_fire_spirits",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "spirit_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phoenix_fire_spirits", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "spirit_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3550,26 +1730,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "silencer_last_word",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 4,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "silencer_last_word", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 4, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3577,26 +1743,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "phantom_lancer_spirit_lance",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "lance_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "phantom_lancer_spirit_lance", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "lance_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3604,26 +1756,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ursa_enrage",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 350,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ursa_enrage", IsDisable = false, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 350, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = true,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3631,26 +1769,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "chen_penitence",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "chen_penitence", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3658,26 +1782,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_deafening_blast",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "travel_distance",
-                    Speed = "travel_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_deafening_blast", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "travel_distance", Speed = "travel_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3685,26 +1796,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "warlock_shadow_word",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "warlock_shadow_word", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3712,26 +1809,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "centaur_double_edge",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "centaur_double_edge", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3739,26 +1822,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earth_spirit_stone_caller",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 400,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earth_spirit_stone_caller", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 400,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3766,26 +1835,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bane_fiends_grip",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bane_fiends_grip", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3793,26 +1848,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ogre_magi_bloodlust",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ogre_magi_bloodlust", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3820,26 +1861,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earthshaker_enchant_totem",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 350,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earthshaker_enchant_totem", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 350,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3847,26 +1874,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earth_spirit_rolling_boulder",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.6,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earth_spirit_rolling_boulder", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.6, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3874,26 +1887,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "visage_grave_chill",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "visage_grave_chill", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3901,26 +1900,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tusk_frozen_sigil",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tusk_frozen_sigil", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3928,26 +1913,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "night_stalker_void",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "night_stalker_void", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3955,26 +1926,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "riki_smoke_screen",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = -0.1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "riki_smoke_screen", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = -0.1, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -3982,26 +1939,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "vengefulspirit_magic_missile",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "magic_missile_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "vengefulspirit_magic_missile", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "magic_missile_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4009,26 +1953,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "leshrac_diabolic_edict",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "leshrac_diabolic_edict", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4036,26 +1966,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earth_spirit_boulder_smash",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earth_spirit_boulder_smash", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4063,26 +1979,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "slardar_sprint",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "slardar_sprint", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4090,26 +1992,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "razor_plasma_field",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "razor_plasma_field", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4117,26 +2005,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ember_spirit_flame_guard",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ember_spirit_flame_guard", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4144,26 +2018,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "morphling_waveform",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "projectile_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "morphling_waveform", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "projectile_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4171,26 +2032,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "axe_culling_blade",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = true
-                });
+                    {
+                        SpellName = "axe_culling_blade", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
+                    });
 
             #endregion
 
@@ -4198,26 +2045,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "weaver_shukuchi",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "weaver_shukuchi", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4225,26 +2058,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "death_prophet_silence",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = -0.1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "death_prophet_silence", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = -0.1, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4252,26 +2071,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earth_spirit_geomagnetic_grip",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earth_spirit_geomagnetic_grip", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4279,26 +2084,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "enigma_midnight_pulse",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "enigma_midnight_pulse", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4306,26 +2097,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "sniper_assassinate",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = true
-                });
+                    {
+                        SpellName = "sniper_assassinate", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
+                    });
 
             #endregion
 
@@ -4333,26 +2110,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "elder_titan_echo_stomp",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "elder_titan_echo_stomp", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4360,26 +2123,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "nevermore_shadowraze1",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "shadowraze_range",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "nevermore_shadowraze1", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "shadowraze_range", Speed = null, Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4387,26 +2137,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "nevermore_requiem",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "nevermore_requiem", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4414,26 +2150,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tiny_toss",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tiny_toss", IsDisable = false, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4441,26 +2163,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "slark_pounce",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "pounce_radius",
-                    Speed = "pounce_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "slark_pounce", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = "pounce_radius",
+                        Speed = "pounce_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4468,26 +2176,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ogre_magi_ignite",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "projectile_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ogre_magi_ignite", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "projectile_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4495,26 +2190,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "furion_sprout",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = -0.1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "furion_sprout", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = -0.1, Radius = 0, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4522,26 +2203,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "kunkka_ghostship",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "ghostship_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "kunkka_ghostship", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "ghostship_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4549,26 +2217,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "troll_warlord_whirling_axes_ranged",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "axe_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "troll_warlord_whirling_axes_ranged", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "axe_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4576,26 +2230,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ember_spirit_activate_fire_remnant",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ember_spirit_activate_fire_remnant", IsDisable = false, IsSlow = false,
+                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4603,26 +2243,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "storm_spirit_static_remnant",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "storm_spirit_static_remnant", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4630,26 +2256,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "skeleton_king_hellfire_blast",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "blast_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "skeleton_king_hellfire_blast", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "blast_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4657,26 +2269,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "centaur_hoof_stomp",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "centaur_hoof_stomp", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4684,26 +2282,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tusk_walrus_punch",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tusk_walrus_punch", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4711,26 +2295,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "leshrac_split_earth",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.35,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "leshrac_split_earth", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.35, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4738,26 +2308,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "spirit_breaker_charge_of_darkness",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "movement_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "spirit_breaker_charge_of_darkness", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "movement_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4765,26 +2321,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "vengefulspirit_wave_of_terror",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "vengefulspirit_wave_of_terror", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4792,26 +2334,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "queenofpain_scream_of_pain",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "area_of_effect",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "queenofpain_scream_of_pain", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "area_of_effect", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4819,26 +2347,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "earth_spirit_petrify",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "earth_spirit_petrify", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4846,26 +2360,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "gyrocopter_rocket_barrage",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "gyrocopter_rocket_barrage", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4873,26 +2373,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_emp",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 2.9,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_emp", IsDisable = false, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 2.9, Radius = 0, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4900,26 +2386,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bane_enfeeble",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bane_enfeeble", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4927,26 +2399,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bristleback_viscous_nasal_goo",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bristleback_viscous_nasal_goo", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4954,26 +2412,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_demon_shadow_poison",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_demon_shadow_poison", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -4981,26 +2425,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shredder_return_chakram",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shredder_return_chakram", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5008,26 +2438,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_shaman_ether_shock",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_shaman_ether_shock", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5035,26 +2451,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ancient_apparition_ice_vortex",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ancient_apparition_ice_vortex", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5062,26 +2464,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bloodseeker_blood_bath",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 2.6,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bloodseeker_blood_bath", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 2.6, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5089,26 +2477,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "gyrocopter_homing_missile",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 3,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "gyrocopter_homing_missile", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 3, Radius = 0,
+                        StringRadius = null, Speed = "speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5116,26 +2490,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "jakiro_ice_path",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.5,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "jakiro_ice_path", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5143,26 +2503,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "drow_ranger_wave_of_silence",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "wave_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "drow_ranger_wave_of_silence", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "wave_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5170,26 +2516,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_tornado",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "travel_distance",
-                    Speed = "travel_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_tornado", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "travel_distance", Speed = "travel_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5197,26 +2530,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "dragon_knight_breathe_fire",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "dragon_knight_breathe_fire", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5224,26 +2543,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "naga_siren_ensnare",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "net_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "naga_siren_ensnare", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "net_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5251,26 +2556,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "kunkka_x_marks_the_spot",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.1,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "kunkka_x_marks_the_spot", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.1, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5278,26 +2569,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "spirit_breaker_nether_strike",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "spirit_breaker_nether_strike", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5305,26 +2582,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "razor_static_link",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "razor_static_link", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5332,26 +2595,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "necrolyte_reapers_scythe",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "necrolyte_reapers_scythe", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5359,26 +2608,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "broodmother_spawn_spiderlings",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "broodmother_spawn_spiderlings", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5386,26 +2621,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bristleback_quill_spray",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bristleback_quill_spray", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5413,26 +2634,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "legion_commander_overwhelming_odds",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "legion_commander_overwhelming_odds", IsDisable = false, IsSlow = false,
+                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5440,26 +2647,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ancient_apparition_ice_blast_release",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ancient_apparition_ice_blast_release", IsDisable = false, IsSlow = false,
+                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5467,26 +2660,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tinker_heat_seeking_missile",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tinker_heat_seeking_missile", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5494,26 +2673,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shredder_whirling_death",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "whirling_radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shredder_whirling_death", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "whirling_radius", Speed = null, Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5521,26 +2687,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "elder_titan_ancestral_spirit",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "elder_titan_ancestral_spirit", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5548,26 +2700,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "chaos_knight_chaos_bolt",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "chaos_knight_chaos_bolt", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5575,26 +2713,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "legion_commander_press_the_attack",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "legion_commander_press_the_attack", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5602,26 +2726,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "kunkka_torrent",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 1.7,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "kunkka_torrent", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.7, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5629,26 +2739,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bounty_hunter_shuriken_toss",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = true
-                });
+                    {
+                        SpellName = "bounty_hunter_shuriken_toss", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
+                    });
 
             #endregion
 
@@ -5656,26 +2752,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "omniknight_repel",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "omniknight_repel", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5683,26 +2765,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "batrider_sticky_napalm",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.2,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "batrider_sticky_napalm", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.2, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5710,26 +2778,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "pudge_dismember",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "pudge_dismember", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5737,26 +2791,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "batrider_flaming_lasso",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "batrider_flaming_lasso", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5764,26 +2804,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "slardar_amplify_damage",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "slardar_amplify_damage", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5791,26 +2817,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lion_voodoo",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lion_voodoo", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5818,26 +2830,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lich_frost_nova",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lich_frost_nova", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5845,26 +2843,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "beastmaster_call_of_the_wild_boar",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "beastmaster_call_of_the_wild_boar", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5872,26 +2856,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tiny_avalanche",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0.5,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tiny_avalanche", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5899,26 +2869,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "doom_bringer_doom",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "doom_bringer_doom", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5926,26 +2882,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tinker_rearm",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tinker_rearm", IsDisable = false, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0, StringRadius = null,
+                        Speed = null, Width = null, AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5953,26 +2895,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "abaddon_death_coil",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "abaddon_death_coil", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -5980,26 +2908,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "templar_assassin_refraction",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "templar_assassin_refraction", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6007,26 +2921,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "troll_warlord_whirling_axes_melee",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 400,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "troll_warlord_whirling_axes_melee", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 400,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6034,26 +2934,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "leshrac_pulse_nova",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "leshrac_pulse_nova", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6061,26 +2947,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lion_finger_of_death",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lion_finger_of_death", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6088,26 +2960,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "life_stealer_open_wounds",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "life_stealer_open_wounds", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6115,26 +2973,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bane_brain_sap",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bane_brain_sap", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6142,26 +2986,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "zuus_arc_lightning",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "zuus_arc_lightning", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6169,26 +2999,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "tidehunter_anchor_smash",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "tidehunter_anchor_smash", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6196,26 +3012,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "night_stalker_crippling_fear",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "night_stalker_crippling_fear", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6223,26 +3025,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "skywrath_mage_arcane_bolt",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "skywrath_mage_arcane_bolt", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6250,26 +3038,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "invoker_chaos_meteor",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 1.3,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "invoker_chaos_meteor", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.3, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6277,26 +3051,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "medusa_mystic_snake",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "medusa_mystic_snake", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6304,26 +3064,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "sniper_shrapnel",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 1.4,
-                    Radius = 0,
-                    StringRadius = "radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "sniper_shrapnel", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.4, Radius = 0,
+                        StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6331,26 +3077,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lina_laguna_blade",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lina_laguna_blade", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6358,26 +3090,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "ursa_overpower",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "ursa_overpower", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6385,26 +3103,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "queenofpain_sonic_wave",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "queenofpain_sonic_wave", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6412,26 +3116,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lion_impale",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 450,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = "width",
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lion_impale", IsDisable = true, IsSlow = false, IsNuke = false, IsSkillShot = false,
+                        IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 450, StringRadius = null,
+                        Speed = null, Width = "width", AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false,
+                        FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6439,26 +3129,13 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "lina_dragon_slave",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "dragon_slave_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "lina_dragon_slave", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "dragon_slave_speed", Width = null, AllyBlock = false,
+                        EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
+                        OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6466,26 +3143,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "venomancer_venomous_gale",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "venomancer_venomous_gale", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6493,26 +3156,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "skywrath_mage_ancient_seal",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "skywrath_mage_ancient_seal", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6520,26 +3169,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "antimage_mana_void",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = true
-                });
+                    {
+                        SpellName = "antimage_mana_void", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
+                    });
 
             #endregion
 
@@ -6547,26 +3182,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "shadow_shaman_shackles",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "shadow_shaman_shackles", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6574,26 +3195,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "huskar_life_break",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = "charge_speed",
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "huskar_life_break", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = "charge_speed", Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6601,26 +3208,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "dragon_knight_dragon_tail",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "dragon_knight_dragon_tail", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6628,26 +3221,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "crystal_maiden_frostbite",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "crystal_maiden_frostbite", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6655,26 +3234,12 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "skywrath_mage_concussive_shot",
-                    IsDisable = true,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = "launch_radius",
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = false,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "skywrath_mage_concussive_shot", IsDisable = true, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = "launch_radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
 
@@ -6682,31 +3247,16 @@ namespace Ensage.Common
 
             Spells.Add(
                 new SpellData
-                {
-                    SpellName = "bloodseeker_bloodrage",
-                    IsDisable = false,
-                    IsSlow = false,
-                    IsNuke = false,
-                    IsSkillShot = false,
-                    IsHeal = false,
-                    IsShield = false,
-                    AdditionalDelay = 0,
-                    Radius = 0,
-                    StringRadius = null,
-                    Speed = null,
-                    Width = null,
-                    AllyBlock = false,
-                    EnemyBlock = false,
-                    MagicImmunityPierce = true,
-                    FakeCastRange = false,
-                    RealCastRange = null,
-                    OnlyForKillSteal = false
-                });
+                    {
+                        SpellName = "bloodseeker_bloodrage", IsDisable = false, IsSlow = false, IsNuke = false,
+                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
+                        MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                    });
 
             #endregion
-
-
         }
-    }
 
+        #endregion
+    }
 }

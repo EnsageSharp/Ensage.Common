@@ -1,51 +1,71 @@
-﻿#region
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using SharpDX;
-
-#endregion
-
-namespace Ensage.Common
+﻿namespace Ensage.Common
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class AttackAnimation
     {
-        public string UnitName;
-        public ClassID UnitClassID;
-        public double MoveTime;
-        public double EndTime;
+        #region Fields
+
         public bool CanMove;
 
-        public AttackAnimation() { }
+        public double EndTime;
 
-        public AttackAnimation(string unitName,
-            ClassID unitClassID,
-            double moveTime,
-            double endTime,
-            bool canMove)
+        public double MoveTime;
+
+        public ClassID UnitClassID;
+
+        public string UnitName;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public AttackAnimation()
         {
-            UnitName = unitName;
-            UnitClassID = unitClassID;
-            MoveTime = moveTime;
-            EndTime = endTime;
-            CanMove = canMove;
         }
+
+        public AttackAnimation(string unitName, ClassID unitClassID, double moveTime, double endTime, bool canMove)
+        {
+            this.UnitName = unitName;
+            this.UnitClassID = unitClassID;
+            this.MoveTime = moveTime;
+            this.EndTime = endTime;
+            this.CanMove = canMove;
+        }
+
+        #endregion
     }
 
     public class AttackAnimationData
     {
-        public string UnitName;
-        public ClassID UnitClassID;
-        public double AttackRate;
-        public double AttackPoint;
+        #region Fields
+
         public double AttackBackswing;
+
+        public double AttackPoint;
+
+        public double AttackRate;
+
         public int ProjectileSpeed;
+
         public double TurnRate;
 
-        public AttackAnimationData() { }
+        public ClassID UnitClassID;
 
-        public AttackAnimationData(string unitName,
+        public string UnitName;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        public AttackAnimationData()
+        {
+        }
+
+        public AttackAnimationData(
+            string unitName,
             ClassID unitClassID,
             double attackRate,
             double attackPoint,
@@ -53,22 +73,33 @@ namespace Ensage.Common
             int projectileSpeed,
             double turnRate)
         {
-            UnitName = unitName;
-            UnitClassID = unitClassID;
-            AttackRate = attackRate;
-            AttackPoint = attackPoint;
-            AttackBackswing = attackBackswing;
-            ProjectileSpeed = projectileSpeed;
-            TurnRate = turnRate;
+            this.UnitName = unitName;
+            this.UnitClassID = unitClassID;
+            this.AttackRate = attackRate;
+            this.AttackPoint = attackPoint;
+            this.AttackBackswing = attackBackswing;
+            this.ProjectileSpeed = projectileSpeed;
+            this.TurnRate = turnRate;
         }
+
+        #endregion
     }
-    
+
     public class UnitData
     {
+        #region Static Fields
+
+        public static List<AttackAnimation> AttackAnimation = new List<AttackAnimation>();
 
         public static double Count = 0;
+
         public static double MaxCount = 0;
+
         public static double StartTime = 0;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         static UnitData()
         {
@@ -77,7 +108,9 @@ namespace Ensage.Common
             //ObjectMgr.OnProjectileAdd += ObjectMgr_OnProjectileAdd;
         }
 
-        public static List<AttackAnimation> AttackAnimation = new List<AttackAnimation>();
+        #endregion
+
+        #region Public Methods and Operators
 
         //static void ObjectMgr_OnProjectileAdd(ObjectMgrProjectileAddEventArgs args)
         //{
@@ -110,7 +143,9 @@ namespace Ensage.Common
         public static bool IsInBackswingtime(Unit unit)
         {
             if (MaxCount < 1)
+            {
                 return false;
+            }
 
             var attackPoint = UnitDatabase.GetAttackPoint(unit);
             //if (attackPoint * 1000 < Game.Ping/2)
@@ -126,7 +161,6 @@ namespace Ensage.Common
         //{
         //    if (!Game.IsInGame || Game.IsPaused || args.Property != "m_NetworkActivity" || MaxCount < 1)
         //        return;
-
 
         //    var unit = sender as Unit;
         //    var data =
@@ -160,9 +194,14 @@ namespace Ensage.Common
         public static void TrackTick(EventArgs args)
         {
             if (!Game.IsInGame || Game.IsPaused)
+            {
                 return;
+            }
             var me = ObjectMgr.LocalHero;
-            if (me == null) return;
+            if (me == null)
+            {
+                return;
+            }
             //Console.WriteLine(me.ClassID);
             var gameTime = Game.GameTime;
             var tick = Environment.TickCount;
@@ -177,10 +216,14 @@ namespace Ensage.Common
                 Count = 0;
             }
             else
+            {
                 Count += 1;
+            }
 
             if (MaxCount < 1)
+            {
                 return;
+            }
             //Console.WriteLine(MaxCount);
             var units = ObjectMgr.GetEntities<Unit>();
             foreach (var unit in units)
@@ -200,17 +243,23 @@ namespace Ensage.Common
                     continue;
                 }
                 if (data == null)
+                {
                     continue;
+                }
                 if (data.MoveTime > 0 && gameTime > data.MoveTime)
                 {
                     data.CanMove = true;
                 }
-                if (!(data.EndTime <= gameTime && data.EndTime > 0)) continue;
+                if (!(data.EndTime <= gameTime && data.EndTime > 0))
+                {
+                    continue;
+                }
                 data.CanMove = false;
                 data.MoveTime = 0;
                 data.EndTime = 0;
             }
         }
 
+        #endregion
     }
 }
