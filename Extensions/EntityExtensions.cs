@@ -1,4 +1,6 @@
-﻿namespace Ensage.Common.Extensions
+﻿using System.Runtime.InteropServices;
+
+namespace Ensage.Common.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -780,6 +782,11 @@
         public static Hero BestAATarget(this Hero source)
         {
             return TargetSelector.BestAutoAttackTarget(source);
+        }
+
+        public static JungleCamp ClosestCamp(this Unit unit)
+        {
+            return JungleCamps.FindClosestCamp(unit.Position);
         }
 
         #endregion

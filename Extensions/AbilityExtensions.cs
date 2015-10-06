@@ -13,7 +13,7 @@ namespace Ensage.Common.Extensions
         /// </summary>
         /// <param name="ability"></param>
         /// <param name="target"></param>
-        /// <returns>returns true in case of succesfull cast</returns>
+        /// <returns>returns true in case of successfull cast</returns>
         public static bool CastStun(this Ability ability, Unit target)
         {
             var data = SpellDatabase.Find(ability.Name);
@@ -68,7 +68,7 @@ namespace Ensage.Common.Extensions
                     radius = ability.AbilityData.FirstOrDefault(x => x.Name == data.Width).Value;
                 }
             }
-            var xyz = Prediction.SkillShotXYZ(owner, target, delay, speed,radius);
+            var xyz = Prediction.SkillShotXYZ(owner, target, delay, speed, radius);
             if (!(owner.Distance2D(xyz) <= (ability.CastRange + radius/2))) return false;
             ability.UseAbility(xyz);
             return true;
