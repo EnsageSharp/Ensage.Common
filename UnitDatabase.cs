@@ -21,7 +21,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_terrorblade",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.6,
@@ -37,7 +37,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_lycan",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.55,
                     AttackBackswing = 0.55,
@@ -53,7 +53,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lycan_wolf1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.25,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.64,
@@ -69,7 +69,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_necronomicon_warrior_1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.75,
                     AttackPoint = 0.56,
                     AttackBackswing = 0.44,
@@ -85,7 +85,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower2_bot",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -101,7 +101,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_earth_1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.35,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -117,7 +117,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_ancient_apparition",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.45,
                     AttackBackswing = 0.3,
@@ -133,7 +133,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_brewmaster",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.35,
                     AttackBackswing = 0.65,
@@ -149,7 +149,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_luna",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.46,
                     AttackBackswing = 0.46,
@@ -165,7 +165,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_venomancer_plague_ward_3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -181,7 +181,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_centaur",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -197,7 +197,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_puck",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.8,
@@ -213,7 +213,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_tusk",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.64,
@@ -229,7 +229,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_broodmother",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.5,
@@ -245,7 +245,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_drow_ranger",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.7,
                     AttackBackswing = 0.3,
@@ -261,7 +261,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_phoenix",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.35,
                     AttackBackswing = 0.633,
@@ -277,7 +277,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_windrunner",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.3,
@@ -293,7 +293,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_dragon_knight",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -309,7 +309,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower1_mid",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -325,7 +325,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_sven",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.3,
@@ -341,7 +341,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_visage_familiar2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.4,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.2,
@@ -357,7 +357,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_warlock",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -373,7 +373,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_slardar",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.36,
                     AttackBackswing = 0.64,
@@ -389,7 +389,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower1_top",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -405,7 +405,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_invoker",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.7,
@@ -421,7 +421,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_wisp",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.15,
                     AttackBackswing = 0.4,
@@ -437,7 +437,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower2_mid",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 0.7,
@@ -453,7 +453,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_earth_3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.35,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -469,7 +469,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_creep_badguys_ranged",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -485,7 +485,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_life_stealer",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.39,
                     AttackBackswing = 0.44,
@@ -501,7 +501,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_necronomicon_archer_1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0.7,
                     AttackBackswing = 0.3,
@@ -517,7 +517,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_crystal_maiden",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.55,
                     AttackBackswing = 0,
@@ -533,7 +533,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_tiny",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.49,
                     AttackBackswing = 1,
@@ -549,7 +549,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_siege",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 2.7,
                     AttackPoint = 0.7,
                     AttackBackswing = 0.3,
@@ -565,7 +565,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_chen",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -581,7 +581,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_huskar",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.6,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.5,
@@ -597,7 +597,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_troll_warlord",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -613,7 +613,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_zuus",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.633,
                     AttackBackswing = 0.366,
@@ -629,7 +629,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_clinkz",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.7,
                     AttackBackswing = 0.3,
@@ -645,7 +645,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_mirana",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -661,7 +661,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_sand_king",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.53,
                     AttackBackswing = 0.47,
@@ -677,7 +677,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_morphling",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.6,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -693,7 +693,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_witch_doctor",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.5,
@@ -709,7 +709,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lycan_wolf2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.2,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.64,
@@ -725,7 +725,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_skeleton_king",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.56,
                     AttackBackswing = 0.44,
@@ -741,7 +741,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_lion",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.43,
                     AttackBackswing = 0.74,
@@ -757,7 +757,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_bounty_hunter",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.59,
                     AttackBackswing = 0.59,
@@ -773,7 +773,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_elder_titan",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.35,
                     AttackBackswing = 0.97,
@@ -789,7 +789,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_beastmaster",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -805,7 +805,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_omniknight",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.433,
                     AttackBackswing = 0.567,
@@ -821,7 +821,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_fire_1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.35,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -837,7 +837,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_vengefulspirit",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.64,
@@ -853,7 +853,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_pugna",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -869,7 +869,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_bloodseeker",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.43,
                     AttackBackswing = 0.74,
@@ -885,7 +885,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower4",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -901,7 +901,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_shadow_demon",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.35,
                     AttackBackswing = 0.5,
@@ -917,7 +917,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_necronomicon_archer_2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0.7,
                     AttackBackswing = 0.3,
@@ -933,7 +933,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_axe",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -949,7 +949,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_creep_goodguys_ranged",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -965,7 +965,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_tidehunter",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.6,
                     AttackBackswing = 0.56,
@@ -981,7 +981,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lone_druid_bear2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.65,
                     AttackPoint = 0.43,
                     AttackBackswing = 0.67,
@@ -997,7 +997,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_spectre",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -1013,7 +1013,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_weaver",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.64,
                     AttackBackswing = 0.36,
@@ -1029,7 +1029,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower2_top",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1045,7 +1045,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_templar_assassin",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.5,
@@ -1061,7 +1061,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_shadow_shaman",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.5,
@@ -1077,7 +1077,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower2_top",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1093,7 +1093,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_doom_bringer",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.7,
@@ -1109,7 +1109,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_earthshaker",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.467,
                     AttackBackswing = 0.863,
@@ -1125,7 +1125,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_dazzle",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -1141,7 +1141,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_naga_siren",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -1157,7 +1157,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_chaos_knight",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -1173,7 +1173,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_winter_wyvern",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.25,
                     AttackBackswing = 0.8,
@@ -1189,7 +1189,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_spirit_breaker",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.6,
                     AttackBackswing = 0.3,
@@ -1205,7 +1205,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower2_bot",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1221,7 +1221,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_pudge",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 1.17,
@@ -1237,7 +1237,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_treant",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.9,
                     AttackPoint = 0.6,
                     AttackBackswing = 0.4,
@@ -1253,7 +1253,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_storm_3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.77,
@@ -1269,7 +1269,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower1_bot",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1285,7 +1285,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_enigma",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.77,
@@ -1301,7 +1301,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_visage_familiar3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.4,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.2,
@@ -1317,7 +1317,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_kunkka",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.3,
@@ -1333,7 +1333,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_creep_badguys_melee",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0.467,
                     AttackBackswing = 0.633,
@@ -1349,7 +1349,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_queenofpain",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.56,
                     AttackBackswing = 0.41,
@@ -1365,7 +1365,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_gyrocopter",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.2,
                     AttackBackswing = 0.97,
@@ -1381,7 +1381,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_nevermore",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.54,
@@ -1397,7 +1397,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_rubick",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.77,
@@ -1413,7 +1413,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_visage_familiar1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.4,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.2,
@@ -1429,7 +1429,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_bristleback",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.8,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.3,
@@ -1445,7 +1445,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_beastmaster_boar",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.25,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.47,
@@ -1461,7 +1461,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_storm_spirit",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.3,
@@ -1477,7 +1477,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_venomancer_plague_ward_2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -1493,7 +1493,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_necronomicon_warrior_2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.75,
                     AttackPoint = 0.56,
                     AttackBackswing = 0.44,
@@ -1509,7 +1509,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lycan_wolf3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.15,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.64,
@@ -1525,7 +1525,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_legion_commander",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.46,
                     AttackBackswing = 0.64,
@@ -1541,7 +1541,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_meepo",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.38,
                     AttackBackswing = 0.6,
@@ -1557,7 +1557,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_leshrac",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.77,
@@ -1573,7 +1573,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_undying",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -1589,7 +1589,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_siege",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 2.7,
                     AttackPoint = 0.7,
                     AttackBackswing = 0.3,
@@ -1605,7 +1605,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_storm_2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.77,
@@ -1621,7 +1621,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_storm_1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.77,
@@ -1637,7 +1637,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_fire_3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.35,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -1653,7 +1653,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_fire_2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.35,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -1669,7 +1669,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_skywrath_mage",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.78,
@@ -1685,7 +1685,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_brewmaster_earth_2",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.35,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -1701,7 +1701,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lone_druid_bear3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.55,
                     AttackPoint = 0.43,
                     AttackBackswing = 0.67,
@@ -1717,7 +1717,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_invoker_forged_spirit",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.2,
                     AttackBackswing = 0.4,
@@ -1733,7 +1733,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower4",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1749,7 +1749,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_furion",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.77,
@@ -1765,7 +1765,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower3_top",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1781,7 +1781,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_jakiro",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.5,
@@ -1797,7 +1797,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower3_mid",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1813,7 +1813,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower2_mid",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1829,7 +1829,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower1_top",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1845,7 +1845,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_death_prophet",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.56,
                     AttackBackswing = 0.51,
@@ -1861,7 +1861,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_lone_druid",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.53,
@@ -1877,7 +1877,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_sniper",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.17,
                     AttackBackswing = 0.7,
@@ -1893,7 +1893,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_batrider",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.54,
@@ -1909,7 +1909,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower3_top",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1925,7 +1925,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower3_mid",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -1941,7 +1941,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_oracle",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.4,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -1957,7 +1957,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_dark_seer",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.59,
                     AttackBackswing = 0.58,
@@ -1973,7 +1973,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_ursa",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -1989,7 +1989,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_rattletrap",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.64,
@@ -2005,7 +2005,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_medusa",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.6,
@@ -2021,7 +2021,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_razor",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -2037,7 +2037,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_tinker",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.35,
                     AttackBackswing = 0.65,
@@ -2053,7 +2053,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_earth_spirit",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.35,
                     AttackBackswing = 0.65,
@@ -2069,7 +2069,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower3_bot",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -2085,7 +2085,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_venomancer_plague_ward_4",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -2101,7 +2101,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_magnataur",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.84,
@@ -2117,7 +2117,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_necronomicon_warrior_3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.75,
                     AttackPoint = 0.56,
                     AttackBackswing = 0.44,
@@ -2133,7 +2133,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_keeper_of_the_light",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.85,
@@ -2149,7 +2149,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_ember_spirit",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.3,
@@ -2165,7 +2165,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_slark",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.3,
@@ -2181,7 +2181,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_creep_goodguys_melee",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0.467,
                     AttackBackswing = 0.633,
@@ -2197,7 +2197,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_riki",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -2213,7 +2213,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lone_druid_bear4",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.45,
                     AttackPoint = 0.43,
                     AttackBackswing = 0.67,
@@ -2229,7 +2229,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_antimage",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.45,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.6,
@@ -2245,7 +2245,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lycan_wolf4",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.1,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.64,
@@ -2261,7 +2261,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_lone_druid_bear1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.75,
                     AttackPoint = 0.43,
                     AttackBackswing = 0.67,
@@ -2277,7 +2277,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_necrolyte",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.53,
                     AttackBackswing = 0.77,
@@ -2293,7 +2293,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_techies",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -2309,7 +2309,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_phantom_assassin",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -2325,7 +2325,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_beastmaster_greater_boar",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.25,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.47,
@@ -2341,7 +2341,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_lina",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.75,
                     AttackBackswing = 0.78,
@@ -2357,7 +2357,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_obsidian_destroyer",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.46,
                     AttackBackswing = 0.54,
@@ -2373,7 +2373,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_venomancer",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -2389,7 +2389,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_visage",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.46,
                     AttackBackswing = 0.54,
@@ -2405,7 +2405,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_bane",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -2421,7 +2421,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_venomancer_plague_ward_1",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.5,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -2437,7 +2437,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_nyx_assassin",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.46,
                     AttackBackswing = 0.54,
@@ -2453,7 +2453,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_disruptor",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.4,
                     AttackBackswing = 0.5,
@@ -2469,7 +2469,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_ogre_magi",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.3,
@@ -2485,7 +2485,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_necronomicon_archer_3",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0.7,
                     AttackBackswing = 0.3,
@@ -2501,7 +2501,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower1_mid",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -2517,7 +2517,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_enchantress",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.3,
                     AttackBackswing = 0.7,
@@ -2533,7 +2533,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_silencer",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -2549,7 +2549,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_phantom_lancer",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.5,
@@ -2565,7 +2565,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_alchemist",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.35,
                     AttackBackswing = 0.65,
@@ -2581,7 +2581,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_night_stalker",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.55,
                     AttackBackswing = 0.56,
@@ -2597,7 +2597,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_badguys_tower3_bot",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 0.95,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -2613,7 +2613,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_viper",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.33,
                     AttackBackswing = 1,
@@ -2629,7 +2629,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_abaddon",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.56,
                     AttackBackswing = 0.41,
@@ -2645,7 +2645,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_faceless_void",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.5,
                     AttackBackswing = 0.56,
@@ -2661,7 +2661,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_goodguys_tower1_bot",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1,
                     AttackPoint = 0,
                     AttackBackswing = 1,
@@ -2677,7 +2677,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_lich",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.46,
                     AttackBackswing = 0.54,
@@ -2693,7 +2693,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_shredder",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.7,
                     AttackPoint = 0.36,
                     AttackBackswing = 0.64,
@@ -2709,7 +2709,7 @@ namespace Ensage.Common
                 new AttackAnimationData
                 {
                     UnitName = "npc_dota_hero_juggernaut",
-                    UnitClassId = 0,
+                    UnitClassID = 0,
                     AttackRate = 1.6,
                     AttackPoint = 0.33,
                     AttackBackswing = 0.84,
@@ -2726,9 +2726,9 @@ namespace Ensage.Common
             return Units.FirstOrDefault(unitData => unitData.UnitName.ToLower() == unitName);
         }
 
-        public static AttackAnimationData GetByClassId(ClassId classId)
+        public static AttackAnimationData GetByClassId(ClassID classId)
         {
-            return Units.FirstOrDefault(unitData => unitData.UnitClassId.Equals(classId));
+            return Units.FirstOrDefault(unitData => unitData.UnitClassID.Equals(classId));
         }
 
         public static float GetAttackSpeed(Unit unit)
@@ -2743,7 +2743,7 @@ namespace Ensage.Common
         {
             if (unit == null)
                 return 0;
-            var classId = unit.ClassId;
+            var classId = unit.ClassID;
             var name = unit.Name;
             var data = GetByClassId(classId) ?? GetByName(name);
             if (data == null) return 0;
@@ -2769,7 +2769,7 @@ namespace Ensage.Common
         public static double GetAttackRate(Unit unit)
         {
             var attackSpeed = GetAttackSpeed(unit);
-            var attackBaseTime = unit.AttackBaseTime;
+            var attackBaseTime = unit.BaseAttackTime;
             Ability spell = null;
             if (
                 !unit.Modifiers.Any(
@@ -2777,18 +2777,18 @@ namespace Ensage.Common
                         (x.Name == "modifier_alchemist_chemical_rage" || x.Name == "modifier_terrorblade_metamorphosis" ||
                          x.Name == "modifier_lone_druid_true_form" || x.Name == "modifier_troll_warlord_berserkers_rage")))
                 return (attackBaseTime / (1 + (attackSpeed - 100) / 100)) - 0.03;
-            switch (unit.ClassId)
+            switch (unit.ClassID)
             {
-                case ClassId.CDOTA_Unit_Hero_Alchemist:
+                case ClassID.CDOTA_Unit_Hero_Alchemist:
                     spell = unit.Spellbook.Spells.First(x => x.Name == "alchemist_chemical_rage");
                     break;
-                case ClassId.CDOTA_Unit_Hero_Terrorblade:
+                case ClassID.CDOTA_Unit_Hero_Terrorblade:
                     spell = unit.Spellbook.Spells.First(x => x.Name == "terrorblade_metamorphosis");
                     break;
-                case ClassId.CDOTA_Unit_Hero_LoneDruid:
+                case ClassID.CDOTA_Unit_Hero_LoneDruid:
                     spell = unit.Spellbook.Spells.First(x => x.Name == "lone_druid_true_form");
                     break;
-                case ClassId.CDOTA_Unit_Hero_TrollWarlord:
+                case ClassID.CDOTA_Unit_Hero_TrollWarlord:
                     spell = unit.Spellbook.Spells.First(x => x.Name == "troll_warlord_berserkers_rage");
                     break;
             }

@@ -13,7 +13,7 @@ namespace Ensage.Common.Extensions
         public double SourceTeam;
         public string Amp;
         public string SourceSpellName;
-        public ClassId HeroID;
+        public ClassID HeroID;
         public DamageType Type;
 
         public ExternalDmgAmps() { }
@@ -22,7 +22,7 @@ namespace Ensage.Common.Extensions
             double sourceTeam,
             string amp,
             string sourceSpellName,
-            ClassId heroID,
+            ClassID heroID,
             DamageType type)
         {
             ModifierName = modifierName;
@@ -40,7 +40,7 @@ namespace Ensage.Common.Extensions
         public double SourceTeam;
         public string Reduce;
         public string SourceSpellName;
-        public ClassId HeroID;
+        public ClassID HeroID;
         public float Type;
         public bool MagicOnly;
 
@@ -50,7 +50,7 @@ namespace Ensage.Common.Extensions
             double sourceTeam,
             string reduce,
             string sourceSpellName,
-            ClassId heroID,
+            ClassID heroID,
             float type,
             bool magicOnly)
         {
@@ -78,7 +78,7 @@ namespace Ensage.Common.Extensions
                     SourceTeam = -1,
                     Amp = "bonus_damage_taken",
                     SourceSpellName = "shadow_demon_soul_catcher",
-                    HeroID = ClassId.CDOTA_Unit_Hero_Shadow_Demon,
+                    HeroID = ClassID.CDOTA_Unit_Hero_Shadow_Demon,
                     Type = DamageType.Pure
                 });
 
@@ -89,7 +89,7 @@ namespace Ensage.Common.Extensions
                     SourceTeam = -2,
                     Amp = "damage_increase_pct",
                     SourceSpellName = "bloodseeker_bloodrage",
-                    HeroID = ClassId.CDOTA_Unit_Hero_Bloodseeker,
+                    HeroID = ClassID.CDOTA_Unit_Hero_Bloodseeker,
                     Type = DamageType.Pure
                 });
 
@@ -185,7 +185,7 @@ namespace Ensage.Common.Extensions
                     Type = 0,
                     SourceTeam = 1,
                     SourceSpellName = "treant_living_armor",
-                    HeroID = ClassId.CDOTA_Unit_Hero_Treant,
+                    HeroID = ClassID.CDOTA_Unit_Hero_Treant,
                     Reduce = "damage_block"
                 });
 
@@ -196,7 +196,7 @@ namespace Ensage.Common.Extensions
                     Type = 0,
                     SourceTeam = 1,
                     SourceSpellName = "abaddon_aphotic_shield",
-                    HeroID = ClassId.CDOTA_Unit_Hero_Abaddon,
+                    HeroID = ClassID.CDOTA_Unit_Hero_Abaddon,
                     Reduce = "damage_absorb"
                 });
 
@@ -247,10 +247,10 @@ namespace Ensage.Common.Extensions
         public static float GetAttackRange(this Unit unit)
         {
             var bonus = 0.0;
-            var classId = unit.ClassId;
-            switch (classId)
+            var ClassID = unit.ClassID;
+            switch (ClassID)
             {
-                case ClassId.CDOTA_Unit_Hero_TemplarAssassin:
+                case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
                     var psi = unit.Spellbook.SpellW;
                     if (psi != null && psi.Level > 0)
                     {
@@ -259,7 +259,7 @@ namespace Ensage.Common.Extensions
                             bonus = firstOrDefault.GetValue(psi.Level - 1);
                     }
                     break;
-                case ClassId.CDOTA_Unit_Hero_Sniper:
+                case ClassID.CDOTA_Unit_Hero_Sniper:
                     var aim = unit.Spellbook.SpellE;
                     if (aim != null && aim.Level > 0)
                     {
@@ -268,7 +268,7 @@ namespace Ensage.Common.Extensions
                             bonus = firstOrDefault.GetValue(aim.Level - 1);
                     }
                     break;
-                case ClassId.CDOTA_Unit_Hero_Enchantress:
+                case ClassID.CDOTA_Unit_Hero_Enchantress:
                     var impetus = unit.Spellbook.SpellR;
                     if (impetus.Level > 0 && unit.Inventory.Items.Any(x => (x.Name == "item_ultimate_scepter")))
                         bonus = 190;
@@ -312,7 +312,7 @@ namespace Ensage.Common.Extensions
 
         public static double GetTurnTime(this Entity unit, Vector3 position)
         {
-            var data = UnitDatabase.GetByClassId(unit.ClassId) ??
+            var data = UnitDatabase.GetByClassId(unit.ClassID) ??
                                        UnitDatabase.GetByName(unit.Name);
             if (data == null)
                 return
@@ -416,7 +416,7 @@ namespace Ensage.Common.Extensions
 
         public static bool IsIllusion(this Meepo unit)
         {
-            return unit.IsIllusion && unit.IsMeepoIllusion;
+            return unit.IsIllusion;
         }
 
         public static bool CanCast(this Unit unit)
@@ -462,8 +462,8 @@ namespace Ensage.Common.Extensions
 
             foreach (var v in ExternalDmgAmps.Where(v => target.Modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = EntityList.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName) ??
-                              EntityList.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
+                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName) ??
+                              ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
                 var burst = 0f;
                 if (ability == null) continue;
                 var firstOrDefault = ability.AbilityData.FirstOrDefault(x => x.Name == v.Amp);
@@ -487,8 +487,8 @@ namespace Ensage.Common.Extensions
 
             foreach (var v in ExternalDmgReductions.Where(v => target.Modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = EntityList.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName) ??
-                              EntityList.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
+                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName) ??
+                              ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
                 var burst = 0f;
                 if (ability == null) continue;
                 var firstOrDefault = ability.AbilityData.FirstOrDefault(x => x.Name == v.Reduce);
@@ -544,12 +544,12 @@ namespace Ensage.Common.Extensions
             if (target.Modifiers.Any(x => x.Name == "modifier_centaur_stampede"))
             {
                 var heroes =
-                    EntityList.GetEntities<Hero>()
+                    ObjectMgr.GetEntities<Hero>()
                         .Where(
                             x =>
                                 !x.IsIllusion() &&
-                                (x.ClassId == ClassId.CDOTA_Unit_Hero_Centaur ||
-                                 x.ClassId == ClassId.CDOTA_Unit_Hero_Rubick) && x.AghanimState());
+                                (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur ||
+                                 x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick) && x.AghanimState());
                 reduceProc = heroes.Aggregate(reduceProc, (current, hero) => (current + 0.7));
             }
 
@@ -574,11 +574,12 @@ namespace Ensage.Common.Extensions
 
             if (target.Modifiers.Any(x => x.Name == "modifier_undying_flesh_golem_plague_aura"))
             {
-                var spell = EntityList.GetEntities<Ability>().FirstOrDefault(x => x.Name == "undying_flesh_golem");
+                var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "undying_flesh_golem");
                 if (spell != null)
                 {
                     var baseAmp = .05*spell.Level;
-                    if (spell.Owner.AghanimState())
+                    var owner = spell.Owner as Unit;
+                    if (owner.AghanimState())
                         baseAmp = baseAmp + .1;
                     var distance = target.Distance2D(spell.Owner);
                     if (distance <= 200)
@@ -597,7 +598,7 @@ namespace Ensage.Common.Extensions
 
             if (source.Modifiers.Any(x => x.Name == "modifier_bloodseeker_bloodrage"))
             {
-                var spell = EntityList.GetEntities<Ability>().FirstOrDefault(x => x.Name == "bloodseeker_bloodrage");
+                var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "bloodseeker_bloodrage");
                 if (spell != null)
                 {
                     var firstOrDefault = spell.AbilityData.FirstOrDefault(x => x.Name == "damage_increase_pct");
@@ -618,11 +619,11 @@ namespace Ensage.Common.Extensions
 
             if (target.Modifiers.Any(x => x.Name == "modifier_ice_blast"))
             {
-                var spell = EntityList.GetEntities<Ability>().FirstOrDefault(x => x.Name == "ancient_apparition_ice_blast" && x.Owner.Team != target.Team);
+                var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "ancient_apparition_ice_blast" && x.Owner.Team != target.Team);
                 if (spell != null)
                 {
                     var treshold = spell.AbilityData.FirstOrDefault(x => x.Name == "kill_pct").GetValue(spell.Level - 1)/100;
-                    AA = Math.Floor(treshold/target.HealthMaximum);
+                    AA = Math.Floor(treshold/target.MaximumHealth);
                 }
             }
 

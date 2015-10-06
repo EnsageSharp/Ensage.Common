@@ -14,7 +14,7 @@ namespace Ensage.Common
     {
 
         public string UnitName;
-        public ClassId UnitClassId;
+        public ClassID UnitClassID;
         public Vector3 Speed;
         public float RotSpeed;
         public Vector3 LastPosition;
@@ -24,7 +24,7 @@ namespace Ensage.Common
         public Prediction() { }
 
         public Prediction(string unitName,
-            ClassId unitClassId,
+            ClassID unitClassID,
             Vector3 speed,
             float rotSpeed,
             Vector3 lastPosition,
@@ -32,7 +32,7 @@ namespace Ensage.Common
             float lasttick)
         {
             UnitName = unitName;
-            UnitClassId = unitClassId;
+            UnitClassID = unitClassID;
             Speed = speed;
             RotSpeed = rotSpeed;
             LastPosition = lastPosition;
@@ -51,19 +51,19 @@ namespace Ensage.Common
         {
             if (!Game.IsInGame || Game.IsPaused)
                 return;
-            var me = EntityList.Hero;
+            var me = ObjectMgr.LocalHero;
             if (me == null) return;
 
-            var heroes = EntityList.GetEntities<Hero>();
+            var heroes = ObjectMgr.GetEntities<Hero>();
             var tick = Environment.TickCount;
             foreach (var unit in heroes)
             {
                 var data =
                     TrackTable.FirstOrDefault(
-                        unitData => unitData.UnitName == unit.Name || unitData.UnitClassId == unit.ClassId);
+                        unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
-                    data = new Prediction(unit.Name, unit.ClassId, new Vector3(0, 0, 0), 0, new Vector3(0, 0, 0), 0, 0);
+                    data = new Prediction(unit.Name, unit.ClassID, new Vector3(0, 0, 0), 0, new Vector3(0, 0, 0), 0, 0);
                     TrackTable.Add(data);
                 }
                 if (data != null && (!unit.IsAlive || !unit.IsVisible))
@@ -103,20 +103,20 @@ namespace Ensage.Common
                                 data.Speed = newpredict;
                             }
                         }
-                        else if (unit.LastActivity != 422)
+                        else if (unit.NetworkActivity != NetworkActivity.Move)
                             data.Speed = speed;
                         else
                         {
                             var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) *
-                                             (unit.MovementSpeedTotal / 1000);
+                                             (unit.MovementSpeed / 1000);
                             data.Speed = newpredict;
                         }
                     }
                     var predict = PredictedXYZ(unit, 1000);
                     var realspeed = predict.Distance2D(unit.Position);
-                    if ((realspeed + 100 > unit.MovementSpeedTotal) && unit.LastActivity == 422)
+                    if ((realspeed + 100 > unit.MovementSpeed) && unit.NetworkActivity != NetworkActivity.Move)
                     {
-                        var newpredict = unit.Vector3FromPolarAngle() * (unit.MovementSpeedTotal / 1000);
+                        var newpredict = unit.Vector3FromPolarAngle() * (unit.MovementSpeed / 1000);
                         data.Speed = newpredict;
                     }
                     data.LastPosition = unit.Position;
@@ -136,7 +136,7 @@ namespace Ensage.Common
         {
             var data =
                 TrackTable.FirstOrDefault(
-                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassId == unit.ClassId);
+                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
             if (IsIdle(unit) || data == null)
                 return unit.Position;
             var fpsTolerancy = ((1 / UnitData.MaxCount) * 3 * (1 + (1 - 1 / UnitData.MaxCount))) * 1000;
@@ -149,7 +149,7 @@ namespace Ensage.Common
         {
             var data =
                 TrackTable.FirstOrDefault(
-                    unitData => unitData.UnitName == target.Name || unitData.UnitClassId == target.ClassId);
+                    unitData => unitData.UnitName == target.Name || unitData.UnitClassID == target.ClassID);
             if (IsIdle(target) || data == null)
                 return target.Position;
             var predict = PredictedXYZ(target, delay);
@@ -185,12 +185,12 @@ namespace Ensage.Common
         {
             var data =
                 TrackTable.FirstOrDefault(
-                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassId == unit.ClassId);
+                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
             return (data != null && data.Speed == new Vector3(0, 0, 0)) ||
                    unit.Modifiers.Any(x => x.Name == "modifier_eul_cyclone" || x.Name == "modifier_invoker_tornado") ||
-                   (unit.LastActivity == 419 && !AbilityMove(unit) &&
+                   (unit.NetworkActivity == NetworkActivity.Idle1 && !AbilityMove(unit) &&
                     unit.Modifiers.Any(x => x.Name == "modifier_invoker_deafening_blast_knockback")) ||
-                   unit.LastActivity == 424;
+                   unit.NetworkActivity == NetworkActivity.Attack1;
         }
     }
 }
