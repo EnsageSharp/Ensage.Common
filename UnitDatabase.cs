@@ -2733,7 +2733,7 @@ namespace Ensage.Common
 
         public static float GetAttackSpeed(Unit unit)
         {
-            var attackSpeed = Math.Min(unit.AttackSpeed, 600);
+            var attackSpeed = Math.Min(unit.Speed, 600);
             if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
                 attackSpeed = 600;
             return attackSpeed;
