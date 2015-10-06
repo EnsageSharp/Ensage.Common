@@ -1,4 +1,6 @@
-﻿namespace Ensage.Common
+﻿using System.Linq;
+
+namespace Ensage.Common
 {
     using System.Collections.Generic;
 
@@ -3258,5 +3260,15 @@
         }
 
         #endregion
+
+        #region Public Methods and Operators
+
+        public static SpellData Find(string spellName)
+        {
+            return Spells.FirstOrDefault(data => data.SpellName == spellName);
+        }
+
+        #endregion
+
     }
 }
