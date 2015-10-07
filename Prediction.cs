@@ -109,8 +109,7 @@ namespace Ensage.Common
             {
                 return unit.Position;
             }
-            var fpsTolerancy = ((1 / UnitData.MaxCount) * 3 * (1 + (1 - 1 / UnitData.MaxCount))) * 1000;
-            var v = unit.Position + data.Speed * (float)(delay + fpsTolerancy);
+            var v = unit.Position + data.Speed * delay;
             return new Vector3(v.X, v.Y, 0);
         }
 
@@ -125,14 +124,28 @@ namespace Ensage.Common
             }
             var predict = PredictedXYZ(target, delay);
             var sourcePos = source.Position;
-            var reachTime = (predict.Distance2D(sourcePos) / speed) * 1000;
+            var reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             predict = PredictedXYZ(target, delay + reachTime);
-            reachTime = (predict.Distance2D(sourcePos) / speed) * 1000;
-            predict = PredictedXYZ(target, delay + reachTime);
-            sourcePos = (source.Position - predict) * (predict.Distance2D(source.Position) - radius / 2)
-                        / predict.Distance2D(source.Position) + predict;
-            reachTime = (predict.Distance2D(sourcePos) / speed) * 1000;
+            if (!(source.Distance2D(target) > radius)) return PredictedXYZ(target, delay + reachTime);
+            sourcePos = (sourcePos - predict)*(sourcePos.Distance2D(predict) - radius - 100)/
+                        sourcePos.Distance2D(predict) + predict;
+            reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             return PredictedXYZ(target, delay + reachTime);
+        }
+
+        public static float CalculateReachTime(Unit target, float speed, Vector3 dePos)
+        {
+            var data =
+                TrackTable.FirstOrDefault(
+                    unitData => unitData.UnitName == target.Name || unitData.UnitClassID == target.ClassID);
+            if (data == null)
+            {
+                return 0;
+            }
+            var a = Math.Pow(data.Speed.X,2) + Math.Pow(data.Speed.Y,2) - Math.Pow(speed/1000,2);
+            var b = 2*(dePos.X*data.Speed.X + dePos.Y*data.Speed.Y);
+            var c = Math.Pow(dePos.X, 2) + Math.Pow(dePos.Y, 2);
+            return (float) ((-b - Math.Sqrt(Math.Pow(b, 2) - 4*a*c))/(2*a));
         }
 
         public static void SpeedTrack(EventArgs args)
