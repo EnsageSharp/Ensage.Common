@@ -4,87 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class AttackAnimation
-    {
-        #region Fields
-
-        public bool CanMove;
-
-        public double EndTime;
-
-        public double MoveTime;
-
-        public ClassID UnitClassID;
-
-        public string UnitName;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public AttackAnimation()
-        {
-        }
-
-        public AttackAnimation(string unitName, ClassID unitClassID, double moveTime, double endTime, bool canMove)
-        {
-            this.UnitName = unitName;
-            this.UnitClassID = unitClassID;
-            this.MoveTime = moveTime;
-            this.EndTime = endTime;
-            this.CanMove = canMove;
-        }
-
-        #endregion
-    }
-
-    public class AttackAnimationData
-    {
-        #region Fields
-
-        public double AttackBackswing;
-
-        public double AttackPoint;
-
-        public double AttackRate;
-
-        public int ProjectileSpeed;
-
-        public double TurnRate;
-
-        public ClassID UnitClassID;
-
-        public string UnitName;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public AttackAnimationData()
-        {
-        }
-
-        public AttackAnimationData(
-            string unitName,
-            ClassID unitClassID,
-            double attackRate,
-            double attackPoint,
-            double attackBackswing,
-            int projectileSpeed,
-            double turnRate)
-        {
-            this.UnitName = unitName;
-            this.UnitClassID = unitClassID;
-            this.AttackRate = attackRate;
-            this.AttackPoint = attackPoint;
-            this.AttackBackswing = attackBackswing;
-            this.ProjectileSpeed = projectileSpeed;
-            this.TurnRate = turnRate;
-        }
-
-        #endregion
-    }
-
     public class UnitData
     {
         #region Static Fields
@@ -152,7 +71,7 @@
             //    return false;
             var data =
                 AttackAnimation.FirstOrDefault(
-                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
+                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassId == unit.ClassID);
             //Console.WriteLine(data);
             return data != null && data.CanMove;
         }
@@ -230,7 +149,7 @@
             {
                 var data =
                     AttackAnimation.FirstOrDefault(
-                        unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
+                        unitData => unitData.UnitName == unit.Name || unitData.UnitClassId == unit.ClassID);
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
                     //Console.WriteLine(unit.ClassID);
