@@ -102,14 +102,7 @@ namespace Ensage.Common.Extensions
                 return canBeCasted;
             }
             var data = SpellDatabase.Find(ability.Name);
-            if (data == null)
-            {
-                return canBeCasted;
-            }
-            if (!data.MagicImmunityPierce)
-            {
-                return false;
-            }
+            return data == null ? canBeCasted : data.MagicImmunityPierce;
         }
     }
 }
