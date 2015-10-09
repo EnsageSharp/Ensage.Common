@@ -7,7 +7,8 @@ namespace Ensage.Common.Extensions
     using System.Linq;
 
     using SharpDX;
-
+    using Ensage.Heroes;
+    
     internal class ExternalDmgAmps
     {
         #region Fields
