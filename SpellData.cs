@@ -1,43 +1,100 @@
 ﻿namespace Ensage.Common
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SpellData
     {
         #region Fields
 
+        /// <summary>
+        /// Spell have additional delay after being casted
+        /// </summary>
         public double AdditionalDelay;
 
+        /// <summary>
+        /// Spell is blocked by ally units in a way
+        /// </summary>
         public bool AllyBlock;
 
+        /// <summary>
+        /// Spell is blocked by enemy units in a way
+        /// </summary>
         public bool EnemyBlock;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool FakeCastRange;
 
+        /// <summary>
+        /// Spell disables the target
+        /// </summary>
         public bool IsDisable;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsHeal;
 
+        /// <summary>
+        /// Spell has low castpoint and high damage input
+        /// </summary>
         public bool IsNuke;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsShield;
 
+        /// <summary>
+        /// Spell needs prediction
+        /// </summary>
         public bool IsSkillShot;
 
+        /// <summary>
+        /// Spell applies movement slow to the target
+        /// </summary>
         public bool IsSlow;
 
+        /// <summary>
+        /// Spell goes through magic immunity
+        /// </summary>
         public bool MagicImmunityPierce;
 
+        /// <summary>
+        /// Spell is used only to killsteal
+        /// </summary>
         public bool OnlyForKillSteal;
 
+        /// <summary>
+        /// Radius of non targeted/aoe spell
+        /// </summary>
         public float Radius;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string RealCastRange;
 
+        /// <summary>
+        /// Speed of a projectile
+        /// </summary>
         public string Speed;
 
+        /// <summary>
+        /// Name of a spell
+        /// </summary>
         public string SpellName;
 
+        /// <summary>
+        /// Radius data name
+        /// </summary>
         public string StringRadius;
 
+        /// <summary>
+        /// Width of a projectile
+        /// </summary>
         public string Width;
 
         #endregion

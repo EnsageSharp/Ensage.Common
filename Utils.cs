@@ -6,21 +6,37 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Utility methods
+    /// </summary>
     public class Utils
     {
         #region Static Fields
 
+        /// <summary>
+        /// Stores sleep values
+        /// </summary>
         public static readonly Dictionary<string, double> Sleeps = new Dictionary<string, double>();
 
         #endregion
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// Switches given degrees to radians
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
         public static double DegreeToRadian(double angle)
         {
             return Math.PI * angle / 180.0;
         }
 
+        /// <summary>
+        /// Sleeps the sleeping engine with the given id for given miliseconds. If engine is already sleeping for more than the given time it will be ignored.
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <param name="name"></param>
         public static void Sleep(double duration, string name)
         {
             double dur;
@@ -31,12 +47,25 @@ namespace Ensage.Common
             }
         }
 
-        public static bool SleepCheck(string name)
+        /// <summary>
+        /// Checks sleeping status of the sleep engine with given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns true in case id was not found or is not sleeping</returns>
+        public static bool SleepCheck(string id)
         {
             double asd;
-            return !Sleeps.TryGetValue(name, out asd) || Environment.TickCount > asd;
+            return !Sleeps.TryGetValue(id, out asd) || Environment.TickCount > asd;
         }
 
+        /// <summary>
+        /// Checks if given unit wont be stunned after given delay in seconds.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="delay">Delay of possible stun in seconds</param>
+        /// <param name="except">Entering a modifier name will ignore that modifier</param>
+        /// <param name="onlychain">Entering true will make the function return true only in case enemy is already stunned</param>
+        /// <returns></returns>
         public static bool ChainStun(Unit unit, double delay, string except, bool onlychain)
         {
             var chain = false;

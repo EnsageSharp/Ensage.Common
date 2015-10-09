@@ -233,23 +233,43 @@ namespace Ensage.Common.Extensions
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// Checks if given hero has AghanimScepter
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static bool AghanimState(this Unit hero)
         {
             return hero.FindItem("item_ultimate_scepter") != null
                    || hero.Modifiers.Any(x => x.Name == "modifier_item_ultimate_scepter_consumed");
         }
 
+        /// <summary>
+        /// Checks if given unit is able to attack
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool CanAttack(this Unit unit)
         {
             return unit.AttackCapabilities != AttackCapabilities.None && !IsDisarmed(unit) && !IsStunned(unit)
                    && unit.IsAlive;
         }       
 
+        /// <summary>
+        /// Checks if given unit is able to cast spells
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool CanCast(this Unit unit)
         {
             return !IsSilenced(unit) && !IsStunned(unit) && unit.IsAlive;
         }
 
+        /// <summary>
+        /// Checks if given unit can become invisible
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool CanGoInvis(this Unit unit)
         {
             var invis =
@@ -261,12 +281,27 @@ namespace Ensage.Common.Extensions
             return (invis != null && invis.CanBeCasted()) || (riki != null && riki.Level > 0);
         }
 
+        /// <summary>
+        /// Checks if given unit is able to move
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool CanMove(this Unit unit)
         {
             return !IsRooted(unit) && !IsStunned(unit)
                    && unit.Modifiers.Any(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
         }
 
+        /// <summary>
+        /// Returns actual damage the unit takes
+        /// </summary>
+        /// <param name="target">damaged unit</param>
+        /// <param name="dmg">amount of damage</param>
+        /// <param name="dmgType">Type of damage (Magical/Physical/Pure/Health removal)</param>
+        /// <param name="source">source of the damage</param>
+        /// <param name="throughBKB">true if the damage pierces magic immunity</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static float DamageTaken(this Unit target, float dmg, DamageType dmgType, Unit source, bool throughBKB)
         {
             if (target.IsInvul())
@@ -542,31 +577,66 @@ namespace Ensage.Common.Extensions
             return Math.Max(tempDmg, 0);
         }
 
+        /// <summary>
+        /// Distance between a unit and a vector
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="vector"></param>
+        /// <returns></returns>
         public static float Distance2D(this Entity unit, Vector3 vector)
         {
             return unit.Position.Distance2D(vector);
         }
 
+        /// <summary>
+        /// Distance between two units
+        /// </summary>
+        /// <param name="unit1"></param>
+        /// <param name="unit2"></param>
+        /// <returns></returns>
         public static float Distance2D(this Entity unit1, Entity unit2)
         {
             return unit1.Position.Distance2D(unit2.Position);
         }
 
+        /// <summary>
+        /// Angle between a unit and a vector in degrees
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="second"></param>
+        /// <returns></returns>
         public static float FindAngleBetween(this Entity unit, Vector3 second)
         {
             return unit.Position.ToVector2().FindAngleBetween(second.ToVector2());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ent"></param>
+        /// <returns></returns>
         public static float FindAngleR(this Entity ent)
         {
             return (float)(ent.RotationRad < 0 ? Math.Abs(ent.RotationRad) : 2 * Math.PI - ent.RotationRad);
         }
 
+        /// <summary>
+        /// Searches for a item in the units inventory with given name
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static Item FindItem(this Unit unit, string name)
         {
             return unit.Inventory.Items.FirstOrDefault(x => x.Name == name);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public static float FindRelativeAngle(this Unit unit, Vector3 pos)
         {
             return
@@ -575,11 +645,22 @@ namespace Ensage.Common.Extensions
                   % (2 * Math.PI)) - Math.PI);
         }
 
+        /// <summary>
+        /// Returns spell of the unit with given name if it exists
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static Ability FindSpell(this Unit unit, string name)
         {
             return unit.Spellbook.Spells.FirstOrDefault(x => x.Name == name);
         }
 
+        /// <summary>
+        /// Returns actual attack range of a unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static float GetAttackRange(this Unit unit)
         {
             var bonus = 0.0;
@@ -633,6 +714,11 @@ namespace Ensage.Common.Extensions
             return (float) (unit.AttackRange + bonus + unit.HullRadius/2);
         }
 
+        /// <summary>
+        /// Finds spell/item which is currently being channeled by given unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static Ability GetChanneledAbility(this Unit unit)
         {
             var channelingItem = unit.Inventory.Items.ToList().FirstOrDefault(v => v.IsChanneling);
@@ -640,11 +726,21 @@ namespace Ensage.Common.Extensions
             return channelingItem ?? channelingAbility;
         }
 
+        /// <summary>
+        /// Finds a dagon in the units inventory
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static Item GetDagon(this Unit unit)
         {
             return unit.GetLeveledItem("item_dagon");
         }
 
+        /// <summary>
+        /// Returns Enemy Team of the unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static Team GetEnemyTeam(this Unit unit)
         {
             var team = unit.Team;
@@ -658,6 +754,12 @@ namespace Ensage.Common.Extensions
             return team;
         }
 
+        /// <summary>
+        /// Finds item with given name which has more than 1 level
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static Item GetLeveledItem(this Unit unit, string name)
         {
             return
@@ -666,6 +768,12 @@ namespace Ensage.Common.Extensions
                     .FirstOrDefault(x => x.Name.Substring(0, name.Length) == name);
         }
 
+        /// <summary>
+        /// Calculates how much time it will take for given unit to turn to given vector
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public static double GetTurnTime(this Entity unit, Vector3 position)
         {
             var data = UnitDatabase.GetByClassId(unit.ClassID) ?? UnitDatabase.GetByName(unit.Name);
@@ -682,16 +790,32 @@ namespace Ensage.Common.Extensions
                 0) / (turnRate * (1 / 0.03)));
         }
 
+        /// <summary>
+        /// Calculates how much time it will take for given unit to turn to another unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="unit2"></param>
+        /// <returns></returns>
         public static double GetTurnTime(this Entity unit, Entity unit2)
         {
             return unit.GetTurnTime(unit2.Position);
         }
 
+        /// <summary>
+        /// Checks if unit is immune to auto attack
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsAttackImmune(this Unit unit)
         {
             return IsUnitState(unit, UnitState.AttackImmune);
         }
 
+        /// <summary>
+        /// Checks if unit is currently channeling
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsChanneling(this Unit unit)
         {
             var channelingItem = unit.Inventory.Items.ToList().Any(v => v.IsChanneling);
@@ -699,87 +823,178 @@ namespace Ensage.Common.Extensions
             return channelingAbility || channelingItem;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsDisarmed(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Disarmed);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsHexed(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Hexed);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsIllusion(this Hero unit)
         {
             return unit.IsIllusion;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsIllusion(this Meepo unit)
         {
             return unit.IsIllusion;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsInBackswingtime(this Unit unit)
         {
             return UnitData.IsInBackswingtime(unit);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsInvisible(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Invisible);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsInvul(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Invulnerable);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsMagicImmune(this Unit unit)
         {
             return IsUnitState(unit, UnitState.MagicImmune);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsRooted(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Rooted);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsSilenced(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Silenced);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsStunned(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Stunned);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public static bool IsUnitState(this Unit unit, UnitState state)
         {
             return unit.UnitState.HasFlag(state);
         }
 
+        /// <summary>
+        /// Returns predicted location of a unit after given miliseconds
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static Vector3 Predict(this Unit unit, float delay)
         {
             return Prediction.PredictedXYZ(unit, delay);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="delta"></param>
+        /// <param name="radial"></param>
+        /// <returns></returns>
         public static Vector2 Vector2FromPolarAngle(this Entity unit, float delta = 0f, float radial = 1f)
         {
             var alpha = unit.RotationRad;
             return VectorExtensions.FromPolarCoordinates(radial, alpha + delta);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="delta"></param>
+        /// <param name="radial"></param>
+        /// <returns></returns>
         public static Vector3 Vector3FromPolarAngle(this Entity unit, float delta = 0f, float radial = 1f)
         {
             return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static Hero BestAATarget(this Hero source)
         {
             return TargetSelector.BestAutoAttackTarget(source);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static JungleCamp ClosestCamp(this Unit unit)
         {
             return JungleCamps.FindClosestCamp(unit.Position);

@@ -9,18 +9,36 @@ namespace Ensage.Common
 
         #region Fields
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Vector3 CampPosition;
 
+        /// <summary>
+        /// Vector of stacking path
+        /// </summary>
         public Vector3 StackPosition;
 
+        /// <summary>
+        /// Position which reveals creeps in camp but doesnt block it from spawning.
+        /// </summary>
         public Vector3 WaitPosition;
 
+        /// <summary>
+        /// Radiant / Dire jungle
+        /// </summary>
         public Team Team;
 
         public uint ID;
 
+        /// <summary>
+        /// Default time when creeps should be pulled out of the camp
+        /// </summary>
         public double StackTime;
 
+        /// <summary>
+        /// Camp of Ancients !
+        /// </summary>
         public bool Ancients;
 
         #endregion

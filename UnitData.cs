@@ -54,11 +54,20 @@
         //    //Console.WriteLine("proj");
         //}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public static double FPS()
         {
             return MaxCount;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsInBackswingtime(Unit unit)
         {
             if (MaxCount < 1)
@@ -110,6 +119,10 @@
         //    }
         //}
 
+        /// <summary>
+        /// Tracks attack animation of units
+        /// </summary>
+        /// <param name="args"></param>
         public static void TrackTick(EventArgs args)
         {
             if (!Game.IsInGame || Game.IsPaused)

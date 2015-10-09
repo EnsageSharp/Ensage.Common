@@ -4,10 +4,16 @@ namespace Ensage.Common
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class SpellDatabase
     {
         #region Static Fields
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static List<SpellData> Spells = new List<SpellData>();
 
         #endregion
