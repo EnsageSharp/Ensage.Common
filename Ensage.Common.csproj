@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm.cs" />
+    <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Extensions\GameExtensions.cs" />
     <Compile Include="JungleCamps.cs" />

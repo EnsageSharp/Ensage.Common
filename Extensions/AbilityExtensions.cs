@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Ensage;
 
 namespace Ensage.Common.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class AbilityExtensions
     {
         /// <summary>
@@ -20,7 +20,7 @@ namespace Ensage.Common.Extensions
             var owner = ability.Owner;
             var delay = Game.Ping;
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
-                delay += (float) owner.GetTurnTime(target);
+                delay += (float)owner.GetTurnTime(target);
             if (data != null)
             {
                 if (data.AdditionalDelay > 0)
@@ -28,8 +28,8 @@ namespace Ensage.Common.Extensions
                 if (data.Speed != null)
                 {
                     var speed = ability.AbilityData.FirstOrDefault(x => x.Name == data.Speed).Value;
-                    delay += owner.Distance2D(target)/speed;
-                } 
+                    delay += owner.Distance2D(target) / speed;
+                }
             }
             var canUse = Utils.ChainStun(target, delay, null, false);
             if (!canUse) return false;
@@ -69,9 +69,47 @@ namespace Ensage.Common.Extensions
                 }
             }
             var xyz = Prediction.SkillShotXYZ(owner, target, delay, speed, radius);
-            if (!(owner.Distance2D(xyz) <= (ability.CastRange + radius/2))) return false;
+            if (!(owner.Distance2D(xyz) <= (ability.CastRange + radius / 2))) return false;
             ability.UseAbility(xyz);
             return true;
+        }
+
+        /// <summary>
+        /// Checks if given ability can be used
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns>returns true in case ability can be used</returns>
+        public static bool CanBeCasted(this Ability ability)
+        {
+            return ability != null && ability.AbilityState == AbilityState.Ready;
+        }
+
+        /// <summary>
+        /// Checks if given ability can be used
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="target"></param>
+        /// <returns>returns true in case ability can be used</returns>
+        public static bool CanBeCasted(this Ability ability, Unit target)
+        {
+            if (!target.IsValid || target.IsInvul())
+            {
+                return false;
+            }
+            var canBeCasted = ability.CanBeCasted();
+            if (!target.IsMagicImmune())
+            {
+                return canBeCasted;
+            }
+            var data = SpellDatabase.Find(ability.Name);
+            if (data == null)
+            {
+                return canBeCasted;
+            }
+            if (!data.MagicImmunityPierce)
+            {
+                return false;
+            }
         }
     }
 }
