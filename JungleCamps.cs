@@ -59,13 +59,13 @@ namespace Ensage.Common
             double stackTime,
             bool ancients)
         {
-            this.CampPosition = campPosition;
-            this.StackPosition = stackPosition;
-            this.WaitPosition = waitPosition;
-            this.Team = team;
-            this.ID = id;
-            this.StackTime = stackTime;
-            this.Ancients = ancients;
+            CampPosition = campPosition;
+            StackPosition = stackPosition;
+            WaitPosition = waitPosition;
+            Team = team;
+            ID = id;
+            StackTime = stackTime;
+            Ancients = ancients;
         }
 
 

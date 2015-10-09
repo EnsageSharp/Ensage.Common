@@ -1,14 +1,11 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using SharpDX;
+using Ensage;
 
 namespace Ensage.Common.Extensions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using SharpDX;
-    using Ensage;
-    
     internal class ExternalDmgAmps
     {
         #region Fields
@@ -41,12 +38,12 @@ namespace Ensage.Common.Extensions
             ClassID heroID,
             DamageType type)
         {
-            this.ModifierName = modifierName;
-            this.SourceTeam = sourceTeam;
-            this.Amp = amp;
-            this.SourceSpellName = sourceSpellName;
-            this.HeroID = heroID;
-            this.Type = type;
+            ModifierName = modifierName;
+            SourceTeam = sourceTeam;
+            Amp = amp;
+            SourceSpellName = sourceSpellName;
+            HeroID = heroID;
+            Type = type;
         }
 
         #endregion
@@ -87,13 +84,13 @@ namespace Ensage.Common.Extensions
             float type,
             bool magicOnly)
         {
-            this.ModifierName = modifierName;
-            this.SourceTeam = sourceTeam;
-            this.Reduce = reduce;
-            this.SourceSpellName = sourceSpellName;
-            this.HeroID = heroID;
-            this.Type = type;
-            this.MagicOnly = magicOnly;
+            ModifierName = modifierName;
+            SourceTeam = sourceTeam;
+            Reduce = reduce;
+            SourceSpellName = sourceSpellName;
+            HeroID = heroID;
+            Type = type;
+            MagicOnly = magicOnly;
         }
 
         #endregion
@@ -139,14 +136,14 @@ namespace Ensage.Common.Extensions
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_oracle_fates_edict", SourceSpellName = "oracle_fates_edict",
-                        Amp = "damage_amp",
+                        Amp = "damage_amp"
                     });
 
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_item_mask_of_madness_berserk", SourceSpellName = "item_mask_of_madness",
-                        Amp = "berserk_extra_damage",
+                        Amp = "berserk_extra_damage"
                     });
 
             ExternalDmgAmps.Add(

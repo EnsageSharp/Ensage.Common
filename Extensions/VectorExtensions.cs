@@ -1,10 +1,9 @@
-﻿namespace Ensage.Common.Extensions
+﻿using System;
+using SharpDX;
+
+namespace Ensage.Common.Extensions
 {
-	using System;
-
-	using SharpDX;
-
-	/// <summary>
+    /// <summary>
 	///     Extension class for Vector2, Vector3 and Vector4 classes of SharpDX.
 	/// </summary>
 	public static class VectorExtensions
@@ -198,17 +197,14 @@
 		/// <returns>Polar angle of the vector</returns>
 		public static float PolarAngle(this Vector2 vector, bool radian = false)
 		{
-			if (radian)
+		    if (radian)
 			{
 				return (float)Math.Atan2(vector.Y, vector.X);
 			}
-			else
-			{
-				return (float)(Math.Atan2(vector.Y, vector.X) * (180d / Math.PI));
-			}
+		    return (float)(Math.Atan2(vector.Y, vector.X) * (180d / Math.PI));
 		}
 
-		/// <summary>
+	    /// <summary>
 		///     Rotates the given vector by given angle relative to given origin
 		/// </summary>
 		/// <param name="vector">Vector to be rotated</param>

@@ -1,20 +1,20 @@
-﻿namespace Ensage.Common
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
+namespace Ensage.Common
+{
     public class UnitData
     {
         #region Static Fields
 
         public static List<AttackAnimation> AttackAnimation = new List<AttackAnimation>();
 
-        public static double Count = 0;
+        public static double Count;
 
-        public static double MaxCount = 0;
+        public static double MaxCount;
 
-        public static double StartTime = 0;
+        public static double StartTime;
 
         #endregion
 

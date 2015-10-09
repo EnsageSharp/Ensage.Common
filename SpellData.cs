@@ -33,6 +33,11 @@
         public bool IsDisable;
 
         /// <summary>
+        /// Spell silences the target
+        /// </summary>
+        public bool IsSilence;
+
+        /// <summary>
         /// 
         /// </summary>
         public bool IsHeal;
@@ -43,7 +48,7 @@
         public bool IsNuke;
 
         /// <summary>
-        /// 
+        /// Spell is applied on an ally in order to prevent them from taking damage or reduce taken damage(Increasing armor, magic resistance etc).
         /// </summary>
         public bool IsShield;
 
@@ -109,6 +114,7 @@
             string spellName,
             bool isDisable,
             bool isSlow,
+            bool isSilence,
             bool isNuke,
             bool isSkillShot,
             bool isHeal,
@@ -125,24 +131,25 @@
             string realCastRange,
             bool onlyForKillSteal)
         {
-            this.SpellName = spellName;
-            this.IsDisable = isDisable;
-            this.IsSlow = isSlow;
-            this.IsNuke = isNuke;
-            this.IsSkillShot = isSkillShot;
-            this.IsHeal = isHeal;
-            this.IsShield = isShield;
-            this.AdditionalDelay = additionalDelay;
-            this.Radius = radius;
-            this.StringRadius = stringRadius;
-            this.Speed = speed;
-            this.Width = width;
-            this.AllyBlock = allyBlock;
-            this.EnemyBlock = enemyBlock;
-            this.MagicImmunityPierce = magicImmunityPierce;
-            this.FakeCastRange = fakeCastRange;
-            this.RealCastRange = realCastRange;
-            this.OnlyForKillSteal = onlyForKillSteal;
+            SpellName = spellName;
+            IsDisable = isDisable;
+            IsSlow = isSlow;
+            IsSilence = isSilence;
+            IsNuke = isNuke;
+            IsSkillShot = isSkillShot;
+            IsHeal = isHeal;
+            IsShield = isShield;
+            AdditionalDelay = additionalDelay;
+            Radius = radius;
+            StringRadius = stringRadius;
+            Speed = speed;
+            Width = width;
+            AllyBlock = allyBlock;
+            EnemyBlock = enemyBlock;
+            MagicImmunityPierce = magicImmunityPierce;
+            FakeCastRange = fakeCastRange;
+            RealCastRange = realCastRange;
+            OnlyForKillSteal = onlyForKillSteal;
         }
 
         #endregion

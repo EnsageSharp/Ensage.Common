@@ -57,13 +57,13 @@ namespace Ensage.Common
             int projectileSpeed,
             double turnRate)
         {
-            this.UnitName = unitName;
-            this.UnitClassId = unitClassId;
-            this.AttackRate = attackRate;
-            this.AttackPoint = attackPoint;
-            this.AttackBackswing = attackBackswing;
-            this.ProjectileSpeed = projectileSpeed;
-            this.TurnRate = turnRate;
+            UnitName = unitName;
+            UnitClassId = unitClassId;
+            AttackRate = attackRate;
+            AttackPoint = attackPoint;
+            AttackBackswing = attackBackswing;
+            ProjectileSpeed = projectileSpeed;
+            TurnRate = turnRate;
         }
 
         /// <summary>

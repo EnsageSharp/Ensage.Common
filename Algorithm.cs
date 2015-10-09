@@ -1,13 +1,11 @@
-﻿namespace Ensage.Common
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Ensage.Common.Extensions;
+using SharpDX;
+
+namespace Ensage.Common
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Ensage.Common.Extensions;
-
-    using SharpDX;
-
     /// <summary>
     ///     Static class for holding general algorithm implementations
     /// </summary>

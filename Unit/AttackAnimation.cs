@@ -44,11 +44,11 @@ namespace Ensage.Common
         /// </param>
         public AttackAnimation(string unitName, ClassID unitClassId, double moveTime, double endTime, bool canMove)
         {
-            this.UnitName = unitName;
-            this.UnitClassId = unitClassId;
-            this.MoveTime = moveTime;
-            this.EndTime = endTime;
-            this.CanMove = canMove;
+            UnitName = unitName;
+            UnitClassId = unitClassId;
+            MoveTime = moveTime;
+            EndTime = endTime;
+            CanMove = canMove;
         }
 
         #endregion

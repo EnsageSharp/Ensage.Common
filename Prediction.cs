@@ -1,13 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Ensage.Common.Extensions;
+using SharpDX;
+
 namespace Ensage.Common
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Ensage.Common.Extensions;
-
-    using SharpDX;
-
     public class Prediction
     {
         #region Static Fields
@@ -54,13 +52,13 @@ namespace Ensage.Common
             float lastRotR,
             float lasttick)
         {
-            this.UnitName = unitName;
-            this.UnitClassID = unitClassID;
-            this.Speed = speed;
-            this.RotSpeed = rotSpeed;
-            this.LastPosition = lastPosition;
-            this.LastRotR = lastRotR;
-            this.Lasttick = lasttick;
+            UnitName = unitName;
+            UnitClassID = unitClassID;
+            Speed = speed;
+            RotSpeed = rotSpeed;
+            LastPosition = lastPosition;
+            LastRotR = lastRotR;
+            Lasttick = lasttick;
         }
 
         #endregion
@@ -72,22 +70,35 @@ namespace Ensage.Common
             return
                 unit.Modifiers.Any(
                     x =>
-                    x.Name == "modifier_spirit_breaker_charge_of_darkness"
-                    || x.Name == "modifier_earth_spirit_boulder_smash"
-                    || x.Name == "modifier_earth_spirit_rolling_boulder_caster"
-                    || x.Name == "modifier_earth_spirit_geomagnetic_grip"
-                    || x.Name == "modifier_spirit_breaker_charge_of_darkness"
-                    || x.Name == "modifier_huskar_life_break_charge" || x.Name == "modifier_magnataur_skewer_movement"
-                    || x.Name == "modifier_storm_spirit_ball_lightning" || x.Name == "modifier_faceless_void_time_walk"
-                    || x.Name == "modifier_mirana_leap" || x.Name == "modifier_slark_pounce");
+                        x.Name == "modifier_spirit_breaker_charge_of_darkness"
+                        || x.Name == "modifier_earth_spirit_boulder_smash"
+                        || x.Name == "modifier_earth_spirit_rolling_boulder_caster"
+                        || x.Name == "modifier_earth_spirit_geomagnetic_grip"
+                        || x.Name == "modifier_spirit_breaker_charge_of_darkness"
+                        || x.Name == "modifier_huskar_life_break_charge" ||
+                        x.Name == "modifier_magnataur_skewer_movement"
+                        || x.Name == "modifier_storm_spirit_ball_lightning" ||
+                        x.Name == "modifier_faceless_void_time_walk"
+                        || x.Name == "modifier_mirana_leap" || x.Name == "modifier_slark_pounce");
         }
 
+        /// <summary>
+        /// Returns vector in facing direction of given unit with given distance
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="distance"></param>
+        /// <returns></returns>
         public static Vector3 InFront(Unit unit, float distance)
         {
             var v = unit.Position + unit.Vector3FromPolarAngle() * distance;
             return new Vector3(v.X, v.Y, 0);
         }
 
+        /// <summary>
+        /// Checks if enemy is not moving
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsIdle(Unit unit)
         {
             var data =
@@ -100,6 +111,12 @@ namespace Ensage.Common
                    || unit.NetworkActivity == NetworkActivity.Attack1;
         }
 
+        /// <summary>
+        /// Returns predicted location of given unit after given delay in ms
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public static Vector3 PredictedXYZ(Unit unit, float delay)
         {
             var data =
@@ -113,6 +130,15 @@ namespace Ensage.Common
             return new Vector3(v.X, v.Y, 0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="delay"></param>
+        /// <param name="speed"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
         public static Vector3 SkillShotXYZ(Unit source, Unit target, float delay, float speed, float radius)
         {
             var data =
@@ -148,6 +174,10 @@ namespace Ensage.Common
             return (float) ((-b - Math.Sqrt(Math.Pow(b, 2) - 4*a*c))/(2*a));
         }
 
+        /// <summary>
+        /// Tracks heroes movements
+        /// </summary>
+        /// <param name="args"></param>
         public static void SpeedTrack(EventArgs args)
         {
             if (!Game.IsInGame || Game.IsPaused)
@@ -199,13 +229,13 @@ namespace Ensage.Common
                     {
                         if (unit.Modifiers.Any(x => x.Name == "modifier_storm_spirit_ball_lightning"))
                         {
-                            var ballLightning = EntityExtensions.FindSpell(unit, "storm_spirit_ball_lightning");
+                            var ballLightning = unit.FindSpell("storm_spirit_ball_lightning");
                             var firstOrDefault =
                                 ballLightning.AbilityData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
                             if (firstOrDefault != null)
                             {
                                 var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
-                                Console.WriteLine(ballSpeed);
+                                //Console.WriteLine(ballSpeed);
                                 var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (ballSpeed / 1000);
                                 data.Speed = newpredict;
                             }

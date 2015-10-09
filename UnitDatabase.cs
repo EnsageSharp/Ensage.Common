@@ -15,18 +15,16 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Ensage.Common.Properties;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace Ensage.Common
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
-    using Ensage.Common.Properties;
-
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-
     /// <summary>
     ///     The unit database.
     /// </summary>
