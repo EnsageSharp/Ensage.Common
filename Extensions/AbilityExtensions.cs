@@ -22,20 +22,6 @@
         ///     Checks if given ability can be used
         /// </summary>
         /// <param name="ability"></param>
-        /// <param name="checkMana"></param>
-        /// <returns>returns true in case ability can be used</returns>
-        public static bool CanBeCasted(this Ability ability, bool checkMana = false)
-        {
-            return checkMana
-                       ? ability != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0
-                         && ability.ManaCost < ObjectMgr.LocalHero.Mana
-                       : ability != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0;
-        }
-
-        /// <summary>
-        ///     Checks if given ability can be used
-        /// </summary>
-        /// <param name="ability"></param>
         /// <param name="target"></param>
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability, Unit target)
@@ -45,7 +31,7 @@
                 return false;
             }
 
-            var canBeCasted = ability.CanBeCasted(true);
+            var canBeCasted = ability.CanBeCasted();
             if (!target.IsMagicImmune())
             {
                 return canBeCasted;

@@ -950,7 +950,7 @@
 
         public static bool IsValidTarget(this Unit unit,float range = float.MaxValue, bool checkTeam = true, Vector3 from = new Vector3())
         {
-            if (unit == null || !unit.IsValid || !unit.IsAlive || !unit.IsVisible || !unit.IsSpawned || unit.IsInvul())
+            if (unit == null || !unit.IsValid || !unit.IsAlive || !unit.IsVisible || !unit.IsSpawned || !unit.IsNeutral || unit.IsInvul())
             {
                 return false;
             }
