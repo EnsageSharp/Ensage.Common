@@ -127,6 +127,19 @@ namespace Ensage.Common
         }
 
         /// <summary>
+        /// Checks if enemy is currently changing their direction
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsTurning(Unit unit)
+        {
+            var data =
+                TrackTable.FirstOrDefault(
+                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
+            return data != null && Math.Abs(data.RotSpeed) > 0;
+        }
+
+        /// <summary>
         ///     Returns predicted location of given unit after given delay in ms
         /// </summary>
         /// <param name="unit"></param>
