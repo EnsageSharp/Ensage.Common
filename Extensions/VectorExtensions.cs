@@ -89,6 +89,22 @@
         }
 
         /// <summary>
+        ///     Returns true if the vector is valid.
+        /// </summary>
+        public static bool IsValid(this Vector2 v)
+        {
+            return v != Vector2.Zero;
+        }
+
+        /// <summary>
+        ///     Returns true if the vector is valid.
+        /// </summary>
+        public static bool IsValid(this Vector3 v)
+        {
+            return v != Vector3.Zero;
+        }
+
+        /// <summary>
         ///     Calculates the angle between two vectors. The angle represents at which direction the second vector resides in
         ///     compared to first vector.
         ///     Returns degree values on default, radian if requested.

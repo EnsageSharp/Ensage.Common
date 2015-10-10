@@ -648,6 +648,17 @@
         }
 
         /// <summary>
+        ///     Returns if the target has the given Item
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="classId"></param>
+        /// <returns></returns>
+        public static bool HasItem(this Unit unit, ClassID classId)
+        {
+            return (unit.Inventory.Items.Any(item => item.ClassID == classId));
+        }
+
+        /// <summary>
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="pos"></param>
@@ -935,6 +946,24 @@
         public static bool IsStunned(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Stunned);
+        }
+
+        public static bool IsValidTarget(this Unit unit,float range = float.MaxValue, bool checkTeam = true, Vector3 from = new Vector3())
+        {
+            if (unit == null || !unit.IsValid || !unit.IsAlive || !unit.IsVisible || !unit.IsSpawned || unit.IsInvul())
+            {
+                return false;
+            }
+
+            if (checkTeam && unit.Team == ObjectMgr.LocalHero.Team)
+            {
+                return false;
+            }
+
+            var @base = unit as Hero;
+            var unitPosition = @base != null ? @base.NetworkPosition : unit.Position;
+
+            return !(range < float.MaxValue) || !(Vector2.DistanceSquared( (@from.ToVector2().IsValid() ? @from : ObjectMgr.LocalHero.NetworkPosition).ToVector2(), unitPosition.ToVector2()) > range * range);
         }
 
         /// <summary>

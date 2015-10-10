@@ -15,7 +15,21 @@
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
-            return ability != null && ability.AbilityState == AbilityState.Ready;
+            return ability != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+        }
+
+        /// <summary>
+        ///     Checks if given ability can be used
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="checkMana"></param>
+        /// <returns>returns true in case ability can be used</returns>
+        public static bool CanBeCasted(this Ability ability, bool checkMana = false)
+        {
+            return checkMana
+                       ? ability != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0
+                         && ability.ManaCost < ObjectMgr.LocalHero.Mana
+                       : ability != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0;
         }
 
         /// <summary>
@@ -26,15 +40,17 @@
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability, Unit target)
         {
-            if (!target.IsValid || target.IsInvul())
+            if (!target.IsValidTarget())
             {
                 return false;
             }
-            var canBeCasted = ability.CanBeCasted();
+
+            var canBeCasted = ability.CanBeCasted(true);
             if (!target.IsMagicImmune())
             {
                 return canBeCasted;
             }
+
             var data = SpellDatabase.Find(ability.Name);
             return data == null ? canBeCasted : data.MagicImmunityPierce;
         }
