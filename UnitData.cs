@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Ensage.Common
+﻿namespace Ensage.Common
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class UnitData
     {
         #region Static Fields
@@ -55,7 +55,6 @@ namespace Ensage.Common
         //}
 
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         public static double FPS()
@@ -64,7 +63,6 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -120,7 +118,7 @@ namespace Ensage.Common
         //}
 
         /// <summary>
-        /// Tracks attack animation of units
+        ///     Tracks attack animation of units
         /// </summary>
         /// <param name="args"></param>
         public static void TrackTick(EventArgs args)

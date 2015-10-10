@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SharpDX;
-using Ensage;
-
-namespace Ensage.Common.Extensions
+﻿namespace Ensage.Common.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using SharpDX;
+
     internal class ExternalDmgAmps
     {
         #region Fields
@@ -38,12 +38,12 @@ namespace Ensage.Common.Extensions
             ClassID heroID,
             DamageType type)
         {
-            ModifierName = modifierName;
-            SourceTeam = sourceTeam;
-            Amp = amp;
-            SourceSpellName = sourceSpellName;
-            HeroID = heroID;
-            Type = type;
+            this.ModifierName = modifierName;
+            this.SourceTeam = sourceTeam;
+            this.Amp = amp;
+            this.SourceSpellName = sourceSpellName;
+            this.HeroID = heroID;
+            this.Type = type;
         }
 
         #endregion
@@ -84,13 +84,13 @@ namespace Ensage.Common.Extensions
             float type,
             bool magicOnly)
         {
-            ModifierName = modifierName;
-            SourceTeam = sourceTeam;
-            Reduce = reduce;
-            SourceSpellName = sourceSpellName;
-            HeroID = heroID;
-            Type = type;
-            MagicOnly = magicOnly;
+            this.ModifierName = modifierName;
+            this.SourceTeam = sourceTeam;
+            this.Reduce = reduce;
+            this.SourceSpellName = sourceSpellName;
+            this.HeroID = heroID;
+            this.Type = type;
+            this.MagicOnly = magicOnly;
         }
 
         #endregion
@@ -231,7 +231,7 @@ namespace Ensage.Common.Extensions
         #region Public Methods and Operators
 
         /// <summary>
-        /// Checks if given hero has AghanimScepter
+        ///     Checks if given hero has AghanimScepter
         /// </summary>
         /// <param name="hero"></param>
         /// <returns></returns>
@@ -242,7 +242,16 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Checks if given unit is able to attack
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static Hero BestAATarget(this Hero source)
+        {
+            return TargetSelector.BestAutoAttackTarget(source);
+        }
+
+        /// <summary>
+        ///     Checks if given unit is able to attack
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -250,10 +259,10 @@ namespace Ensage.Common.Extensions
         {
             return unit.AttackCapabilities != AttackCapabilities.None && !IsDisarmed(unit) && !IsStunned(unit)
                    && unit.IsAlive;
-        }       
+        }
 
         /// <summary>
-        /// Checks if given unit is able to cast spells
+        ///     Checks if given unit is able to cast spells
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -263,7 +272,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Checks if given unit can become invisible
+        ///     Checks if given unit can become invisible
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -279,7 +288,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Checks if given unit is able to move
+        ///     Checks if given unit is able to move
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -290,7 +299,16 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Returns actual damage the unit takes
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static JungleCamp ClosestCamp(this Unit unit)
+        {
+            return JungleCamps.FindClosestCamp(unit.Position);
+        }
+
+        /// <summary>
+        ///     Returns actual damage the unit takes
         /// </summary>
         /// <param name="target">damaged unit</param>
         /// <param name="dmg">amount of damage</param>
@@ -575,7 +593,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Distance between a unit and a vector
+        ///     Distance between a unit and a vector
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="vector"></param>
@@ -586,7 +604,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Distance between two units
+        ///     Distance between two units
         /// </summary>
         /// <param name="unit1"></param>
         /// <param name="unit2"></param>
@@ -597,7 +615,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Angle between a unit and a vector in degrees
+        ///     Angle between a unit and a vector in degrees
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="second"></param>
@@ -608,7 +626,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="ent"></param>
         /// <returns></returns>
@@ -618,7 +635,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Searches for a item in the units inventory with given name
+        ///     Searches for a item in the units inventory with given name
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="name"></param>
@@ -629,7 +646,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="pos"></param>
@@ -643,7 +659,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Returns spell of the unit with given name if it exists
+        ///     Returns spell of the unit with given name if it exists
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="name"></param>
@@ -654,7 +670,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Returns actual attack range of a unit
+        ///     Returns actual attack range of a unit
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -708,23 +724,11 @@ namespace Ensage.Common.Extensions
                     }
                     break;
             }
-            return (float) (unit.AttackRange + bonus + unit.HullRadius/2);
+            return (float)(unit.AttackRange + bonus + unit.HullRadius / 2);
         }
 
         /// <summary>
-        /// Finds spell/item which is currently being channeled by given unit
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static Ability GetChanneledAbility(this Unit unit)
-        {
-            var channelingItem = unit.Inventory.Items.ToList().FirstOrDefault(v => v.IsChanneling);
-            var channelingAbility = unit.Spellbook.Spells.ToList().FirstOrDefault(v => v.IsChanneling);
-            return channelingItem ?? channelingAbility;
-        }
-
-        /// <summary>
-        /// Finds a dagon in the units inventory
+        ///     Finds a dagon in the units inventory
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -734,7 +738,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Returns Enemy Team of the unit
+        ///     Returns Enemy Team of the unit
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -752,7 +756,19 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Finds item with given name which has more than 1 level
+        ///     Finds spell/item which is currently being channeled by given unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static Ability GetChanneledAbility(this Unit unit)
+        {
+            var channelingItem = unit.Inventory.Items.ToList().FirstOrDefault(v => v.IsChanneling);
+            var channelingAbility = unit.Spellbook.Spells.ToList().FirstOrDefault(v => v.IsChanneling);
+            return channelingItem ?? channelingAbility;
+        }
+
+        /// <summary>
+        ///     Finds item with given name which has more than 1 level
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="name"></param>
@@ -766,7 +782,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Calculates how much time it will take for given unit to turn to given vector
+        ///     Calculates how much time it will take for given unit to turn to given vector
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="position"></param>
@@ -788,7 +804,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Calculates how much time it will take for given unit to turn to another unit
+        ///     Calculates how much time it will take for given unit to turn to another unit
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="unit2"></param>
@@ -799,7 +815,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Checks if unit is immune to auto attack
+        ///     Checks if unit is immune to auto attack
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -809,7 +825,25 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Checks if unit is currently channeling
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsDisarmed(this Unit unit)
+        {
+            return IsUnitState(unit, UnitState.Disarmed);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsHexed(this Unit unit)
+        {
+            return IsUnitState(unit, UnitState.Hexed);
+        }
+
+        /// <summary>
+        ///     Checks if unit is currently channeling
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -821,27 +855,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool IsDisarmed(this Unit unit)
-        {
-            return IsUnitState(unit, UnitState.Disarmed);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool IsHexed(this Unit unit)
-        {
-            return IsUnitState(unit, UnitState.Hexed);
-        }
-
-        /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -851,7 +864,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -861,7 +873,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -871,7 +882,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -881,7 +891,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -891,7 +900,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -901,7 +909,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -911,7 +918,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -921,7 +927,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -931,7 +936,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="state"></param>
@@ -942,7 +946,7 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// Returns predicted location of a unit after given miliseconds
+        ///     Returns predicted location of a unit after given miliseconds
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="delay"></param>
@@ -953,7 +957,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="delta"></param>
@@ -966,7 +969,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="delta"></param>
@@ -975,26 +977,6 @@ namespace Ensage.Common.Extensions
         public static Vector3 Vector3FromPolarAngle(this Entity unit, float delta = 0f, float radial = 1f)
         {
             return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static Hero BestAATarget(this Hero source)
-        {
-            return TargetSelector.BestAutoAttackTarget(source);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static JungleCamp ClosestCamp(this Unit unit)
-        {
-            return JungleCamps.FindClosestCamp(unit.Position);
         }
 
         #endregion

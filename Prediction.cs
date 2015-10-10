@@ -1,11 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Ensage.Common.Extensions;
-using SharpDX;
-
 namespace Ensage.Common
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Ensage.Common.Extensions;
+
+    using SharpDX;
+
     public class Prediction
     {
         #region Static Fields
@@ -52,13 +54,13 @@ namespace Ensage.Common
             float lastRotR,
             float lasttick)
         {
-            UnitName = unitName;
-            UnitClassID = unitClassID;
-            Speed = speed;
-            RotSpeed = rotSpeed;
-            LastPosition = lastPosition;
-            LastRotR = lastRotR;
-            Lasttick = lasttick;
+            this.UnitName = unitName;
+            this.UnitClassID = unitClassID;
+            this.Speed = speed;
+            this.RotSpeed = rotSpeed;
+            this.LastPosition = lastPosition;
+            this.LastRotR = lastRotR;
+            this.Lasttick = lasttick;
         }
 
         #endregion
@@ -70,20 +72,33 @@ namespace Ensage.Common
             return
                 unit.Modifiers.Any(
                     x =>
-                        x.Name == "modifier_spirit_breaker_charge_of_darkness"
-                        || x.Name == "modifier_earth_spirit_boulder_smash"
-                        || x.Name == "modifier_earth_spirit_rolling_boulder_caster"
-                        || x.Name == "modifier_earth_spirit_geomagnetic_grip"
-                        || x.Name == "modifier_spirit_breaker_charge_of_darkness"
-                        || x.Name == "modifier_huskar_life_break_charge" ||
-                        x.Name == "modifier_magnataur_skewer_movement"
-                        || x.Name == "modifier_storm_spirit_ball_lightning" ||
-                        x.Name == "modifier_faceless_void_time_walk"
-                        || x.Name == "modifier_mirana_leap" || x.Name == "modifier_slark_pounce");
+                    x.Name == "modifier_spirit_breaker_charge_of_darkness"
+                    || x.Name == "modifier_earth_spirit_boulder_smash"
+                    || x.Name == "modifier_earth_spirit_rolling_boulder_caster"
+                    || x.Name == "modifier_earth_spirit_geomagnetic_grip"
+                    || x.Name == "modifier_spirit_breaker_charge_of_darkness"
+                    || x.Name == "modifier_huskar_life_break_charge" || x.Name == "modifier_magnataur_skewer_movement"
+                    || x.Name == "modifier_storm_spirit_ball_lightning" || x.Name == "modifier_faceless_void_time_walk"
+                    || x.Name == "modifier_mirana_leap" || x.Name == "modifier_slark_pounce");
+        }
+
+        public static float CalculateReachTime(Unit target, float speed, Vector3 dePos)
+        {
+            var data =
+                TrackTable.FirstOrDefault(
+                    unitData => unitData.UnitName == target.Name || unitData.UnitClassID == target.ClassID);
+            if (data == null)
+            {
+                return 0;
+            }
+            var a = Math.Pow(data.Speed.X, 2) + Math.Pow(data.Speed.Y, 2) - Math.Pow(speed / 1000, 2);
+            var b = 2 * (dePos.X * data.Speed.X + dePos.Y * data.Speed.Y);
+            var c = Math.Pow(dePos.X, 2) + Math.Pow(dePos.Y, 2);
+            return (float)((-b - Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a));
         }
 
         /// <summary>
-        /// Returns vector in facing direction of given unit with given distance
+        ///     Returns vector in facing direction of given unit with given distance
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="distance"></param>
@@ -95,7 +110,7 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        /// Checks if enemy is not moving
+        ///     Checks if enemy is not moving
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -112,7 +127,7 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        /// Returns predicted location of given unit after given delay in ms
+        ///     Returns predicted location of given unit after given delay in ms
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="delay"></param>
@@ -131,7 +146,6 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
@@ -152,30 +166,18 @@ namespace Ensage.Common
             var sourcePos = source.Position;
             var reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             predict = PredictedXYZ(target, delay + reachTime);
-            if (!(source.Distance2D(target) > radius)) return PredictedXYZ(target, delay + reachTime);
-            sourcePos = (sourcePos - predict)*(sourcePos.Distance2D(predict) - radius - 100)/
-                        sourcePos.Distance2D(predict) + predict;
+            if (!(source.Distance2D(target) > radius))
+            {
+                return PredictedXYZ(target, delay + reachTime);
+            }
+            sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius - 100)
+                        / sourcePos.Distance2D(predict) + predict;
             reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             return PredictedXYZ(target, delay + reachTime);
         }
 
-        public static float CalculateReachTime(Unit target, float speed, Vector3 dePos)
-        {
-            var data =
-                TrackTable.FirstOrDefault(
-                    unitData => unitData.UnitName == target.Name || unitData.UnitClassID == target.ClassID);
-            if (data == null)
-            {
-                return 0;
-            }
-            var a = Math.Pow(data.Speed.X,2) + Math.Pow(data.Speed.Y,2) - Math.Pow(speed/1000,2);
-            var b = 2*(dePos.X*data.Speed.X + dePos.Y*data.Speed.Y);
-            var c = Math.Pow(dePos.X, 2) + Math.Pow(dePos.Y, 2);
-            return (float) ((-b - Math.Sqrt(Math.Pow(b, 2) - 4*a*c))/(2*a));
-        }
-
         /// <summary>
-        /// Tracks heroes movements
+        ///     Tracks heroes movements
         /// </summary>
         /// <param name="args"></param>
         public static void SpeedTrack(EventArgs args)

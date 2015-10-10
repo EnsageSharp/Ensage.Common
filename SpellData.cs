@@ -1,104 +1,101 @@
 ﻿namespace Ensage.Common
 {
     /// <summary>
-    /// 
     /// </summary>
     public class SpellData
     {
         #region Fields
 
         /// <summary>
-        /// Spell have additional delay after being casted
+        ///     Spell have additional delay after being casted
         /// </summary>
         public double AdditionalDelay;
 
         /// <summary>
-        /// Spell is blocked by ally units in a way
+        ///     Spell is blocked by ally units in a way
         /// </summary>
         public bool AllyBlock;
 
         /// <summary>
-        /// Spell is blocked by enemy units in a way
+        ///     Spell is blocked by enemy units in a way
         /// </summary>
         public bool EnemyBlock;
 
         /// <summary>
-        /// 
         /// </summary>
         public bool FakeCastRange;
 
         /// <summary>
-        /// Spell disables the target
+        ///     Spell disables the target
         /// </summary>
         public bool IsDisable;
 
         /// <summary>
-        /// Spell silences the target
-        /// </summary>
-        public bool IsSilence;
-
-        /// <summary>
-        /// 
         /// </summary>
         public bool IsHeal;
 
         /// <summary>
-        /// Spell has low castpoint and high damage input
+        ///     Spell has low castpoint and high damage input
         /// </summary>
         public bool IsNuke;
 
         /// <summary>
-        /// Spell is applied on an ally in order to prevent them from taking damage or reduce taken damage(Increasing armor, magic resistance etc).
+        ///     Spell is applied on an ally in order to prevent them from taking damage or reduce taken damage(Increasing armor,
+        ///     magic resistance etc).
         /// </summary>
         public bool IsShield;
 
         /// <summary>
-        /// Spell needs prediction
+        ///     Spell silences the target
+        /// </summary>
+        public bool IsSilence;
+
+        /// <summary>
+        ///     Spell needs prediction
         /// </summary>
         public bool IsSkillShot;
 
         /// <summary>
-        /// Spell applies movement slow to the target
+        ///     Spell applies movement slow to the target
         /// </summary>
         public bool IsSlow;
 
         /// <summary>
-        /// Spell goes through magic immunity
+        ///     Spell goes through magic immunity
         /// </summary>
         public bool MagicImmunityPierce;
 
         /// <summary>
-        /// Spell is used only to killsteal
+        ///     Spell is used only to killsteal
         /// </summary>
         public bool OnlyForKillSteal;
 
         /// <summary>
-        /// Radius of non targeted/aoe spell
+        ///     Radius of non targeted/aoe spell
         /// </summary>
         public float Radius;
 
         /// <summary>
-        /// 
         /// </summary>
         public string RealCastRange;
 
         /// <summary>
-        /// Speed of a projectile
+        ///     Speed of a projectile
         /// </summary>
         public string Speed;
 
         /// <summary>
-        /// Name of a spell
+        ///     Name of a spell
         /// </summary>
         public string SpellName;
 
         /// <summary>
-        /// Radius data name
+        ///     Radius data name
         /// </summary>
         public string StringRadius;
 
         /// <summary>
-        /// Width of a projectile
+        ///     Width of a projectile
         /// </summary>
         public string Width;
 
@@ -131,25 +128,25 @@
             string realCastRange,
             bool onlyForKillSteal)
         {
-            SpellName = spellName;
-            IsDisable = isDisable;
-            IsSlow = isSlow;
-            IsSilence = isSilence;
-            IsNuke = isNuke;
-            IsSkillShot = isSkillShot;
-            IsHeal = isHeal;
-            IsShield = isShield;
-            AdditionalDelay = additionalDelay;
-            Radius = radius;
-            StringRadius = stringRadius;
-            Speed = speed;
-            Width = width;
-            AllyBlock = allyBlock;
-            EnemyBlock = enemyBlock;
-            MagicImmunityPierce = magicImmunityPierce;
-            FakeCastRange = fakeCastRange;
-            RealCastRange = realCastRange;
-            OnlyForKillSteal = onlyForKillSteal;
+            this.SpellName = spellName;
+            this.IsDisable = isDisable;
+            this.IsSlow = isSlow;
+            this.IsSilence = isSilence;
+            this.IsNuke = isNuke;
+            this.IsSkillShot = isSkillShot;
+            this.IsHeal = isHeal;
+            this.IsShield = isShield;
+            this.AdditionalDelay = additionalDelay;
+            this.Radius = radius;
+            this.StringRadius = stringRadius;
+            this.Speed = speed;
+            this.Width = width;
+            this.AllyBlock = allyBlock;
+            this.EnemyBlock = enemyBlock;
+            this.MagicImmunityPierce = magicImmunityPierce;
+            this.FakeCastRange = fakeCastRange;
+            this.RealCastRange = realCastRange;
+            this.OnlyForKillSteal = onlyForKillSteal;
         }
 
         #endregion
