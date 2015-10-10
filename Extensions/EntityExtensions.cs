@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ensage.Heroes;
+
     using SharpDX;
 
     internal class ExternalDmgAmps
