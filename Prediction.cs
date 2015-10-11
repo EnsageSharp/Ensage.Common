@@ -200,13 +200,14 @@ namespace Ensage.Common
             {
                 return;
             }
+
             var me = ObjectMgr.LocalHero;
             if (me == null)
             {
                 return;
             }
 
-            var heroes = ObjectMgr.GetEntities<Hero>();
+            var heroes = ObjectMgr.GetEntities<Hero>().Where(x => !x.IsIllusion);
             var tick = Environment.TickCount;
             foreach (var unit in heroes)
             {
@@ -220,7 +221,9 @@ namespace Ensage.Common
                 }
                 if (data != null && (!unit.IsAlive || !unit.IsVisible))
                 {
-                    TrackTable.Remove(data);
+                    data.LastPosition = new Vector3(0, 0, 0);
+                    data.LastRotR = 0;
+                    data.Lasttick = 0;
                     continue;
                 }
                 if (data == null || (data.LastPosition != new Vector3(0, 0, 0) && !((tick - data.Lasttick) > 0)))
