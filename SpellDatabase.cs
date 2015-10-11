@@ -1602,7 +1602,7 @@
                 new SpellData
                     {
                         SpellName = "necrolyte_death_pulse", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = true, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = "area_of_effect", Speed = null, Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -2382,7 +2382,7 @@
                 new SpellData
                     {
                         SpellName = "vengefulspirit_wave_of_terror", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2395,7 +2395,7 @@
                 new SpellData
                     {
                         SpellName = "queenofpain_scream_of_pain", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = "area_of_effect", Speed = null, Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -2436,7 +2436,7 @@
                 new SpellData
                     {
                         SpellName = "invoker_emp", IsDisable = false, IsSlow = false, IsSilence = false, IsNuke = false,
-                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 2.9, Radius = 0,
+                        IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 2.9, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2448,7 +2448,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "bane_enfeeble", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
+                        SpellName = "bane_enfeeble", IsDisable = false, IsSlow = false, IsSilence = false, IsNuke = false,
                         IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -2461,7 +2461,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "bristleback_viscous_nasal_goo", IsDisable = false, IsSlow = false, IsSilence = false,
+                        SpellName = "bristleback_viscous_nasal_goo", IsDisable = false, IsSlow = true, IsSilence = false,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = "radius", Speed = null, Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null,
@@ -2476,7 +2476,7 @@
                 new SpellData
                     {
                         SpellName = "shadow_demon_shadow_poison", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2502,7 +2502,7 @@
                 new SpellData
                     {
                         SpellName = "shadow_shaman_ether_shock", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2514,8 +2514,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "ancient_apparition_ice_vortex", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        SpellName = "ancient_apparition_ice_vortex", IsDisable = false, IsSlow = true, IsSilence = false,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2528,7 +2528,7 @@
                 new SpellData
                     {
                         SpellName = "bloodseeker_blood_bath", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 2.6,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 2.6,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2555,7 +2555,7 @@
                 new SpellData
                     {
                         SpellName = "jakiro_ice_path", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
-                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
+                        IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2567,8 +2567,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "drow_ranger_wave_of_silence", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        SpellName = "drow_ranger_wave_of_silence", IsDisable = false, IsSlow = false, IsSilence = true,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = "wave_speed", Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -2582,7 +2582,7 @@
                 new SpellData
                     {
                         SpellName = "invoker_tornado", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
-                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
+                        IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
                         StringRadius = "travel_distance", Speed = "travel_speed", Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -2596,7 +2596,7 @@
                 new SpellData
                     {
                         SpellName = "dragon_knight_breathe_fire", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2622,7 +2622,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "kunkka_x_marks_the_spot", IsDisable = false, IsSlow = false, IsSilence = false,
+                        SpellName = "kunkka_x_marks_the_spot", IsDisable = true, IsSlow = false, IsSilence = false,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.1,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -2636,7 +2636,7 @@
                 new SpellData
                     {
                         SpellName = "spirit_breaker_nether_strike", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2661,10 +2661,10 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "necrolyte_reapers_scythe", IsDisable = false, IsSlow = false, IsSilence = false,
+                        SpellName = "necrolyte_reapers_scythe", IsDisable = true, IsSlow = false, IsSilence = false,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
-                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
+                        MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
                     });
 
             #endregion
@@ -2675,7 +2675,7 @@
                 new SpellData
                     {
                         SpellName = "broodmother_spawn_spiderlings", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2688,7 +2688,7 @@
                 new SpellData
                     {
                         SpellName = "bristleback_quill_spray", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2701,7 +2701,7 @@
                 new SpellData
                     {
                         SpellName = "legion_commander_overwhelming_odds", IsDisable = false, IsSlow = false,
-                        IsSilence = false, IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false,
+                        IsSilence = false, IsNuke = true, IsSkillShot = true, IsHeal = false, IsShield = false,
                         AdditionalDelay = 0, Radius = 0, StringRadius = null, Speed = null, Width = null,
                         AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false,
                         RealCastRange = null, OnlyForKillSteal = false
@@ -2729,7 +2729,7 @@
                 new SpellData
                     {
                         SpellName = "tinker_heat_seeking_missile", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = "radius", Speed = null, Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -2743,7 +2743,7 @@
                 new SpellData
                     {
                         SpellName = "shredder_whirling_death", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = "whirling_radius", Speed = null, Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -2757,7 +2757,7 @@
                 new SpellData
                     {
                         SpellName = "elder_titan_ancestral_spirit", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2770,7 +2770,7 @@
                 new SpellData
                     {
                         SpellName = "chaos_knight_chaos_bolt", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2782,8 +2782,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "legion_commander_press_the_attack", IsDisable = true, IsSlow = false,
-                        IsSilence = false, IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false,
+                        SpellName = "legion_commander_press_the_attack", IsDisable = false, IsSlow = false,
+                        IsSilence = false, IsNuke = false, IsSkillShot = false, IsHeal = true, IsShield = true,
                         AdditionalDelay = 0, Radius = 0, StringRadius = null, Speed = null, Width = null,
                         AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false,
                         RealCastRange = null, OnlyForKillSteal = false
@@ -2797,7 +2797,7 @@
                 new SpellData
                     {
                         SpellName = "kunkka_torrent", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
-                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.7, Radius = 0,
+                        IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 1.7, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2810,7 +2810,7 @@
                 new SpellData
                     {
                         SpellName = "bounty_hunter_shuriken_toss", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
                     });
@@ -2823,7 +2823,7 @@
                 new SpellData
                     {
                         SpellName = "omniknight_repel", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = true, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2835,7 +2835,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "batrider_sticky_napalm", IsDisable = false, IsSlow = false, IsSilence = false,
+                        SpellName = "batrider_sticky_napalm", IsDisable = false, IsSlow = true, IsSilence = false,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.2,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -2900,7 +2900,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "lich_frost_nova", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
+                        SpellName = "lich_frost_nova", IsDisable = false, IsSlow = true, IsSilence = false, IsNuke = true,
                         IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -2913,7 +2913,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "beastmaster_call_of_the_wild_boar", IsDisable = true, IsSlow = false,
+                        SpellName = "beastmaster_call_of_the_wild_boar", IsDisable = false, IsSlow = true,
                         IsSilence = false, IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false,
                         AdditionalDelay = 0, Radius = 0, StringRadius = null, Speed = null, Width = null,
                         AllyBlock = false, EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false,
@@ -2927,8 +2927,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "tiny_avalanche", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
-                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
+                        SpellName = "tiny_avalanche", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = true,
+                        IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0.5, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2940,7 +2940,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "doom_bringer_doom", IsDisable = true, IsSlow = false, IsSilence = false,
+                        SpellName = "doom_bringer_doom", IsDisable = true, IsSlow = false, IsSilence = true,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -2967,7 +2967,7 @@
                 new SpellData
                     {
                         SpellName = "abaddon_death_coil", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = true, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -2980,7 +2980,7 @@
                 new SpellData
                     {
                         SpellName = "templar_assassin_refraction", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = true, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3021,7 +3021,7 @@
                 new SpellData
                     {
                         SpellName = "lion_finger_of_death", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3033,7 +3033,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "life_stealer_open_wounds", IsDisable = true, IsSlow = false, IsSilence = false,
+                        SpellName = "life_stealer_open_wounds", IsDisable = false, IsSlow = true, IsSilence = false,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -3046,7 +3046,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "bane_brain_sap", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
+                        SpellName = "bane_brain_sap", IsDisable = false, IsSlow = false, IsSilence = false, IsNuke = true,
                         IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -3073,7 +3073,7 @@
                 new SpellData
                     {
                         SpellName = "tidehunter_anchor_smash", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = "radius", Speed = null, Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -3086,7 +3086,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "night_stalker_crippling_fear", IsDisable = true, IsSlow = false, IsSilence = false,
+                        SpellName = "night_stalker_crippling_fear", IsDisable = false, IsSlow = false, IsSilence = true,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -3100,7 +3100,7 @@
                 new SpellData
                     {
                         SpellName = "skywrath_mage_arcane_bolt", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3113,7 +3113,7 @@
                 new SpellData
                     {
                         SpellName = "invoker_chaos_meteor", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.3,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 1.3,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3126,7 +3126,7 @@
                 new SpellData
                     {
                         SpellName = "medusa_mystic_snake", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3138,8 +3138,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "sniper_shrapnel", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
-                        IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 1.4, Radius = 0,
+                        SpellName = "sniper_shrapnel", IsDisable = false, IsSlow = false, IsSilence = false, IsNuke = false,
+                        IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 1.4, Radius = 0,
                         StringRadius = "radius", Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3152,7 +3152,7 @@
                 new SpellData
                     {
                         SpellName = "lina_laguna_blade", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3164,7 +3164,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "ursa_overpower", IsDisable = false, IsSlow = false, IsSilence = false, IsNuke = false,
+                        SpellName = "ursa_overpower", IsDisable = false, IsSlow = false, IsSilence = false, IsNuke = true,
                         IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 0,
                         StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = true, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -3177,8 +3177,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "queenofpain_sonic_wave", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        SpellName = "queenofpain_sonic_wave", IsDisable = false, IsSlow = false, IsSilence = false,
+                        IsNuke = true, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = "speed", Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -3191,7 +3191,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "lion_impale", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = false,
+                        SpellName = "lion_impale", IsDisable = true, IsSlow = false, IsSilence = false, IsNuke = true,
                         IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0, Radius = 450,
                         StringRadius = null, Speed = null, Width = "width", AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -3205,7 +3205,7 @@
                 new SpellData
                     {
                         SpellName = "lina_dragon_slave", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        IsNuke = true, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = "dragon_slave_speed", Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
                         OnlyForKillSteal = false
@@ -3218,8 +3218,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "venomancer_venomous_gale", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        SpellName = "venomancer_venomous_gale", IsDisable = false, IsSlow = true, IsSilence = false,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3231,7 +3231,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "skywrath_mage_ancient_seal", IsDisable = false, IsSlow = false, IsSilence = false,
+                        SpellName = "skywrath_mage_ancient_seal", IsDisable = false, IsSlow = false, IsSilence = true,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
@@ -3244,8 +3244,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "antimage_mana_void", IsDisable = false, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        SpellName = "antimage_mana_void", IsDisable = true, IsSlow = false, IsSilence = false,
+                        IsNuke = true, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = true
                     });
@@ -3270,7 +3270,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "huskar_life_break", IsDisable = false, IsSlow = false, IsSilence = false,
+                        SpellName = "huskar_life_break", IsDisable = false, IsSlow = true, IsSilence = false,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = "charge_speed", Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,
@@ -3297,8 +3297,8 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "crystal_maiden_frostbite", IsDisable = true, IsSlow = false, IsSilence = false,
-                        IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
+                        SpellName = "crystal_maiden_frostbite", IsDisable = false, IsSlow = true, IsSilence = false,
+                        IsNuke = false, IsSkillShot = true, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = null, Speed = null, Width = null, AllyBlock = false, EnemyBlock = false,
                         MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null, OnlyForKillSteal = false
                     });
@@ -3310,7 +3310,7 @@
             Spells.Add(
                 new SpellData
                     {
-                        SpellName = "skywrath_mage_concussive_shot", IsDisable = true, IsSlow = false, IsSilence = false,
+                        SpellName = "skywrath_mage_concussive_shot", IsDisable = false, IsSlow = true, IsSilence = false,
                         IsNuke = false, IsSkillShot = false, IsHeal = false, IsShield = false, AdditionalDelay = 0,
                         Radius = 0, StringRadius = "launch_radius", Speed = null, Width = null, AllyBlock = false,
                         EnemyBlock = false, MagicImmunityPierce = false, FakeCastRange = false, RealCastRange = null,

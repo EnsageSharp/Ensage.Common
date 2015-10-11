@@ -88,6 +88,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\UnitDatabase.json" />
+    <None Include="Resources\SpellDatabase.json" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
