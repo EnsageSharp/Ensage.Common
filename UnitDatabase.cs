@@ -37,7 +37,7 @@ namespace Ensage.Common
         /// <summary>
         ///     The units.
         /// </summary>
-        public static List<AttackAnimationData> Units = new List<AttackAnimationData>();
+        public static List<AttackAnimationData> Units;
 
         #endregion
 
@@ -48,8 +48,9 @@ namespace Ensage.Common
         /// </summary>
         static UnitDatabase()
         {
-            JsonConvert.DeserializeObject<AttackAnimationData>(
-                JObject.Parse(Encoding.Default.GetString(Resources.UnitDatabase)).ToString());
+            Units =
+                JsonConvert.DeserializeObject<AttackAnimationData[]>(
+                    JObject.Parse(Encoding.Default.GetString(Resources.UnitDatabase)).ToString()).ToList();
         }
 
         #endregion
