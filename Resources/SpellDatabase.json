@@ -583,6 +583,7 @@
     {
         "SpellName": "necrolyte_death_pulse",
         "IsNuke": true,
+        "IsHeal": true,
         "StringRadius": "area_of_effect"
     },
     {
@@ -856,10 +857,12 @@
         "Speed": "movement_speed"
     },
     {
-        "SpellName": "vengefulspirit_wave_of_terror"
+        "SpellName": "vengefulspirit_wave_of_terror",
+        "IsSkillShot": true
     },
     {
         "SpellName": "queenofpain_scream_of_pain",
+        "IsNuke": true,
         "StringRadius": "area_of_effect"
     },
     {
@@ -872,32 +875,37 @@
     },
     {
         "SpellName": "invoker_emp",
+        "IsSkillShot": true,
         "AdditionalDelay": 2.9
     },
     {
-        "SpellName": "bane_enfeeble",
-        "IsDisable": true
+        "SpellName": "bane_enfeeble"
     },
     {
         "SpellName": "bristleback_viscous_nasal_goo",
+        "IsSlow": true,
         "StringRadius": "radius",
         "MagicImmunityPierce": true
     },
     {
-        "SpellName": "shadow_demon_shadow_poison"
+        "SpellName": "shadow_demon_shadow_poison",
+        "IsSkillShot": true
     },
     {
         "SpellName": "shredder_return_chakram"
     },
     {
-        "SpellName": "shadow_shaman_ether_shock"
+        "SpellName": "shadow_shaman_ether_shock",
+        "IsNuke": true
     },
     {
         "SpellName": "ancient_apparition_ice_vortex",
-        "IsDisable": true
+        "IsSlow": true,
+        "IsSkillShot": true
     },
     {
         "SpellName": "bloodseeker_blood_bath",
+        "IsSkillShot": true,
         "AdditionalDelay": 2.6
     },
     {
@@ -909,21 +917,25 @@
     {
         "SpellName": "jakiro_ice_path",
         "IsDisable": true,
+        "IsSkillShot": true,
         "AdditionalDelay": 0.5
     },
     {
         "SpellName": "drow_ranger_wave_of_silence",
-        "IsDisable": true,
+        "IsSilence": true,
+        "IsSkillShot": true,
         "Speed": "wave_speed"
     },
     {
         "SpellName": "invoker_tornado",
         "IsDisable": true,
+        "IsSkillShot": true,
         "StringRadius": "travel_distance",
         "Speed": "travel_speed"
     },
     {
-        "SpellName": "dragon_knight_breathe_fire"
+        "SpellName": "dragon_knight_breathe_fire",
+        "IsNuke": true
     },
     {
         "SpellName": "naga_siren_ensnare",
@@ -933,65 +945,83 @@
     },
     {
         "SpellName": "kunkka_x_marks_the_spot",
+        "IsDisable": true,
         "AdditionalDelay": 0.1
     },
     {
         "SpellName": "spirit_breaker_nether_strike",
-        "IsDisable": true
+        "IsDisable": true,
+        "IsNuke": true
     },
     {
         "SpellName": "razor_static_link"
     },
     {
-        "SpellName": "necrolyte_reapers_scythe"
+        "SpellName": "necrolyte_reapers_scythe",
+        "IsDisable": true,
+        "OnlyForKillSteal": true
     },
     {
-        "SpellName": "broodmother_spawn_spiderlings"
+        "SpellName": "broodmother_spawn_spiderlings",
+        "IsNuke": true
     },
     {
-        "SpellName": "bristleback_quill_spray"
+        "SpellName": "bristleback_quill_spray",
+        "IsNuke": true
     },
     {
-        "SpellName": "legion_commander_overwhelming_odds"
+        "SpellName": "legion_commander_overwhelming_odds",
+        "IsNuke": true,
+        "IsSkillShot": true
     },
     {
         "SpellName": "ancient_apparition_ice_blast_release"
     },
     {
         "SpellName": "tinker_heat_seeking_missile",
+        "IsNuke": true,
         "StringRadius": "radius"
     },
     {
         "SpellName": "shredder_whirling_death",
+        "IsNuke": true,
         "StringRadius": "whirling_radius"
     },
     {
         "SpellName": "elder_titan_ancestral_spirit",
-        "IsDisable": true
+        "IsDisable": true,
+        "IsNuke": true,
+        "IsSkillShot": true
     },
     {
         "SpellName": "chaos_knight_chaos_bolt",
-        "IsDisable": true
+        "IsDisable": true,
+        "IsNuke": true
     },
     {
         "SpellName": "legion_commander_press_the_attack",
-        "IsDisable": true
+        "IsHeal": true,
+        "IsShield": true
     },
     {
         "SpellName": "kunkka_torrent",
         "IsDisable": true,
+        "IsSkillShot": true,
         "AdditionalDelay": 1.7
     },
     {
         "SpellName": "bounty_hunter_shuriken_toss",
         "IsDisable": true,
+        "IsNuke": true,
         "OnlyForKillSteal": true
     },
     {
-        "SpellName": "omniknight_repel"
+        "SpellName": "omniknight_repel",
+        "IsShield": true
     },
     {
         "SpellName": "batrider_sticky_napalm",
+        "IsSlow": true,
         "AdditionalDelay": 0.2
     },
     {
@@ -1013,29 +1043,36 @@
     },
     {
         "SpellName": "lich_frost_nova",
-        "IsDisable": true
+        "IsSlow": true,
+        "IsNuke": true
     },
     {
         "SpellName": "beastmaster_call_of_the_wild_boar",
-        "IsDisable": true
+        "IsSlow": true
     },
     {
         "SpellName": "tiny_avalanche",
         "IsDisable": true,
+        "IsNuke": true,
+        "IsSkillShot": true,
         "AdditionalDelay": 0.5
     },
     {
         "SpellName": "doom_bringer_doom",
-        "IsDisable": true
+        "IsDisable": true,
+        "IsSilence": true
     },
     {
         "SpellName": "tinker_rearm"
     },
     {
-        "SpellName": "abaddon_death_coil"
+        "SpellName": "abaddon_death_coil",
+        "IsNuke": true,
+        "IsHeal": true
     },
     {
-        "SpellName": "templar_assassin_refraction"
+        "SpellName": "templar_assassin_refraction",
+        "IsShield": true
     },
     {
         "SpellName": "troll_warlord_whirling_axes_melee",
@@ -1046,74 +1083,89 @@
         "StringRadius": "radius"
     },
     {
-        "SpellName": "lion_finger_of_death"
+        "SpellName": "lion_finger_of_death",
+        "IsNuke": true
     },
     {
         "SpellName": "life_stealer_open_wounds",
-        "IsDisable": true
+        "IsSlow": true
     },
     {
         "SpellName": "bane_brain_sap",
-        "IsDisable": true
+        "IsNuke": true
     },
     {
         "SpellName": "zuus_arc_lightning"
     },
     {
         "SpellName": "tidehunter_anchor_smash",
+        "IsNuke": true,
         "StringRadius": "radius"
     },
     {
         "SpellName": "night_stalker_crippling_fear",
-        "IsDisable": true
+        "IsSilence": true
     },
     {
-        "SpellName": "skywrath_mage_arcane_bolt"
+        "SpellName": "skywrath_mage_arcane_bolt",
+        "IsNuke": true
     },
     {
         "SpellName": "invoker_chaos_meteor",
+        "IsSkillShot": true,
         "AdditionalDelay": 1.3
     },
     {
-        "SpellName": "medusa_mystic_snake"
+        "SpellName": "medusa_mystic_snake",
+        "IsNuke": true
     },
     {
         "SpellName": "sniper_shrapnel",
-        "IsDisable": true,
+        "IsSkillShot": true,
         "AdditionalDelay": 1.4,
         "StringRadius": "radius"
     },
     {
-        "SpellName": "lina_laguna_blade"
+        "SpellName": "lina_laguna_blade",
+        "IsNuke": true
     },
     {
         "SpellName": "ursa_overpower",
+        "IsNuke": true,
         "MagicImmunityPierce": true
     },
     {
         "SpellName": "queenofpain_sonic_wave",
-        "IsDisable": true,
+        "IsNuke": true,
+        "IsSkillShot": true,
         "Speed": "speed"
     },
     {
         "SpellName": "lion_impale",
         "IsDisable": true,
+        "IsNuke": true,
         "Radius": 0,
         "Width": "width"
     },
     {
         "SpellName": "lina_dragon_slave",
+        "IsNuke": true,
+        "IsSkillShot": true,
         "Speed": "dragon_slave_speed"
     },
     {
         "SpellName": "venomancer_venomous_gale",
-        "IsDisable": true
+        "IsSlow": true,
+        "IsSkillShot": true
     },
     {
-        "SpellName": "skywrath_mage_ancient_seal"
+        "SpellName": "skywrath_mage_ancient_seal",
+        "IsSilence": true
     },
     {
         "SpellName": "antimage_mana_void",
+        "IsDisable": true,
+        "IsNuke": true,
         "OnlyForKillSteal": true
     },
     {
@@ -1122,6 +1174,7 @@
     },
     {
         "SpellName": "huskar_life_break",
+        "IsSlow": true,
         "Speed": "charge_speed"
     },
     {
@@ -1130,11 +1183,12 @@
     },
     {
         "SpellName": "crystal_maiden_frostbite",
-        "IsDisable": true
+        "IsSlow": true,
+        "IsSkillShot": true
     },
     {
         "SpellName": "skywrath_mage_concussive_shot",
-        "IsDisable": true,
+        "IsSlow": true,
         "StringRadius": "launch_radius"
     },
     {
