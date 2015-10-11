@@ -253,6 +253,17 @@
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static Hero ClosestToMouseTarget(this Hero source, float range = 1000)
+        {
+            return TargetSelector.ClosestToMouse(source, range);
+        }
+
+        /// <summary>
         ///     Checks if given unit is able to attack
         /// </summary>
         /// <param name="unit"></param>

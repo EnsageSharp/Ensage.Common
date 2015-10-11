@@ -42,6 +42,32 @@
             return bestTarget;
         }
 
+        /// <summary>
+        ///     Finds target closest to mouse in specified range
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static Hero ClosestToMouse(Hero source, float range = 1000)
+        {
+            var mousePosition = Game.MousePosition;
+            var enemyHeroes =
+                ObjectMgr.GetEntities<Hero>()
+                    .Where(
+                        x =>
+                        x.Team == source.GetEnemyTeam() && !x.IsIllusion && x.IsAlive && x.IsVisible
+                        && x.Distance2D(mousePosition) <= range);
+            Hero closestHero = null;
+            foreach (var enemyHero in enemyHeroes)
+            {
+                if (closestHero == null || closestHero.Distance2D(mousePosition) > enemyHero.Distance2D(mousePosition))
+                {
+                    closestHero = enemyHero;
+                }
+            }
+            return closestHero;
+        }
+
         #endregion
     }
 }
