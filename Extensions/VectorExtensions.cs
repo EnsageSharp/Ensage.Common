@@ -89,22 +89,6 @@
         }
 
         /// <summary>
-        ///     Returns true if the vector is valid.
-        /// </summary>
-        public static bool IsValid(this Vector2 v)
-        {
-            return v != Vector2.Zero;
-        }
-
-        /// <summary>
-        ///     Returns true if the vector is valid.
-        /// </summary>
-        public static bool IsValid(this Vector3 v)
-        {
-            return v != Vector3.Zero;
-        }
-
-        /// <summary>
         ///     Calculates the angle between two vectors. The angle represents at which direction the second vector resides in
         ///     compared to first vector.
         ///     Returns degree values on default, radian if requested.
@@ -207,6 +191,22 @@
         }
 
         /// <summary>
+        ///     Returns true if the vector is valid.
+        /// </summary>
+        public static bool IsValid(this Vector2 v)
+        {
+            return v != Vector2.Zero;
+        }
+
+        /// <summary>
+        ///     Returns true if the vector is valid.
+        /// </summary>
+        public static bool IsValid(this Vector3 v)
+        {
+            return v != Vector3.Zero;
+        }
+
+        /// <summary>
         ///     Calculates the polar angle of the given vector. Returns degree values on default, radian if requested.
         /// </summary>
         /// <param name="vector">Vector whose polar angle will be returned</param>
@@ -248,6 +248,11 @@
         public static Vector2 Rotate(this Vector2 vector, float delta)
         {
             return Rotate(vector, delta, Vector2.Zero);
+        }
+
+        public static Vector3 SwitchYZ(this Vector3 v)
+        {
+            return new Vector3(v.X, v.Z, v.Y);
         }
 
         /*

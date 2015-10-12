@@ -79,5 +79,41 @@ namespace Ensage.Common.Properties {
                 return ((byte[])(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CPActiveSlider
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("CPActiveSlider", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CPForm
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("CPForm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CPInactiveSlider
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("CPInactiveSlider", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

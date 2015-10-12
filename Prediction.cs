@@ -127,7 +127,7 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        /// Checks if a unit is currently changing their direction
+        ///     Checks if a unit is currently changing their direction
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="tolerancy">tolerancy of rotation speed</param>
@@ -135,8 +135,8 @@ namespace Ensage.Common
         public static bool IsTurning(Unit unit, double tolerancy = 0)
         {
             var data =
-                TrackTable.ToArray().FirstOrDefault(
-                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
+                TrackTable.ToArray()
+                    .FirstOrDefault(unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
             return data != null && Math.Abs(data.RotSpeed) > tolerancy;
         }
 

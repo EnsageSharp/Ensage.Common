@@ -2,9 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Security.Cryptography;
+    using System.Text;
 
     using Ensage.Common.Extensions;
+
+    using SharpDX;
 
     /// <summary>
     ///     Utility methods
@@ -20,6 +26,37 @@
 
         #endregion
 
+        #region Enums
+
+        public enum WindowsMessages
+        {
+            WM_LBUTTONDBLCLCK = 0x203,
+
+            WM_RBUTTONDBLCLCK = 0x206,
+
+            WM_MBUTTONDBLCLCK = 0x209,
+
+            WM_MBUTTONDOWN = 0x207,
+
+            WM_MBUTTONUP = 0x208,
+
+            WM_MOUSEMOVE = 0x200,
+
+            WM_LBUTTONDOWN = 0x201,
+
+            WM_LBUTTONUP = 0x202,
+
+            WM_RBUTTONDOWN = 0x204,
+
+            WM_RBUTTONUP = 0x205,
+
+            WM_KEYDOWN = 0x0100,
+
+            WM_KEYUP = 0x101
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -30,6 +67,23 @@
         public static double DegreeToRadian(double angle)
         {
             return Math.PI * angle / 180.0;
+        }
+
+        public static byte FixVirtualKey(byte key)
+        {
+            switch (key)
+            {
+                case 160:
+                    return 0x10;
+                case 161:
+                    return 0x10;
+                case 162:
+                    return 0x11;
+                case 163:
+                    return 0x11;
+            }
+
+            return key;
         }
 
         /// <summary>
@@ -60,11 +114,9 @@
                     "modifier_invoker_deafening_blast_knockback"
                 };
             var modifiers = unit.Modifiers.OrderByDescending(x => x.RemainingTime);
-            foreach (
-                var m in
-                    modifiers.Where(
-                        m => (m.IsStunDebuff || modifiersList.Contains(m.Name)) && (except == null || m.Name == except))
-                )
+            foreach (var m in
+                modifiers.Where(
+                    m => (m.IsStunDebuff || modifiersList.Contains(m.Name)) && (except == null || m.Name == except)))
             {
                 stunned = true;
                 var remainingTime = m.RemainingTime;
@@ -75,6 +127,68 @@
                 chain = remainingTime <= delay;
             }
             return ((((!(stunned || unit.IsStunned()) || chain) && !onlychain) || (onlychain && chain)));
+        }
+
+        /// <summary>
+        ///     Returns true if the point is under the rectangle
+        /// </summary>
+        public static bool IsUnderRectangle(Vector2 point, float x, float y, float width, float height)
+        {
+            return (point.X > x && point.X < x + width && point.Y > y && point.Y < y + height);
+        }
+
+        public static string KeyToText(uint vKey)
+        {
+            /*A-Z */
+            if (vKey >= 65 && vKey <= 90)
+            {
+                return ((char)vKey).ToString();
+            }
+
+            /*F1-F12*/
+            if (vKey >= 112 && vKey <= 123)
+            {
+                return ("F" + (vKey - 111));
+            }
+
+            switch (vKey)
+            {
+                case 9:
+                    return "Tab";
+                case 16:
+                    return "Shift";
+                case 17:
+                    return "Ctrl";
+                case 20:
+                    return "CAPS";
+                case 27:
+                    return "ESC";
+                case 32:
+                    return "Space";
+                case 45:
+                    return "Insert";
+                case 220:
+                    return "º";
+                default:
+                    return vKey.ToString();
+            }
+        }
+
+        /// <summary>
+        ///     Returns the md5 hash from a string.
+        /// </summary>
+        public static string Md5Hash(string s)
+        {
+            var sb = new StringBuilder();
+            HashAlgorithm algorithm = MD5.Create();
+            var h = algorithm.ComputeHash(Encoding.UTF8.GetBytes(s));
+
+            foreach (var b in h)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -102,6 +216,33 @@
         {
             double asd;
             return !Sleeps.TryGetValue(id, out asd) || Environment.TickCount > asd;
+        }
+
+        #endregion
+
+        #region Methods
+
+        // Convert a byte array to an Object
+        internal static T Deserialize<T>(byte[] arrBytes)
+        {
+            var memStream = new MemoryStream();
+            var binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            return (T)binForm.Deserialize(memStream);
+        }
+
+        // Convert an object to a byte array
+        internal static byte[] Serialize(Object obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+            var bf = new BinaryFormatter();
+            var ms = new MemoryStream();
+            bf.Serialize(ms, obj);
+            return ms.ToArray();
         }
 
         #endregion

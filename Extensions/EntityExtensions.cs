@@ -253,17 +253,6 @@
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="range"></param>
-        /// <returns></returns>
-        public static Hero ClosestToMouseTarget(this Hero source, float range = 1000)
-        {
-            return TargetSelector.ClosestToMouse(source, range);
-        }
-
-        /// <summary>
         ///     Checks if given unit is able to attack
         /// </summary>
         /// <param name="unit"></param>
@@ -318,6 +307,16 @@
         public static JungleCamp ClosestCamp(this Unit unit)
         {
             return JungleCamps.FindClosestCamp(unit.Position);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="range"></param>
+        /// <returns></returns>
+        public static Hero ClosestToMouseTarget(this Hero source, float range = 1000)
+        {
+            return TargetSelector.ClosestToMouse(source, range);
         }
 
         /// <summary>
@@ -571,7 +570,7 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.MagicDamageResist/100) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - target.MagicDamageResist / 100) - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -594,7 +593,7 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.DamageResist/100) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - target.DamageResist / 100) - reduceStatic + AA);
                     break;
                 case DamageType.HealthRemoval:
                     break;
@@ -656,17 +655,6 @@
         public static Item FindItem(this Unit unit, string name)
         {
             return unit.Inventory.Items.FirstOrDefault(x => x.Name == name);
-        }
-
-        /// <summary>
-        ///     Returns if the target has the given Item
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="classId"></param>
-        /// <returns></returns>
-        public static bool HasItem(this Unit unit, ClassID classId)
-        {
-            return (unit.Inventory.Items.Any(item => item.ClassID == classId));
         }
 
         /// <summary>
@@ -839,6 +827,17 @@
         }
 
         /// <summary>
+        ///     Returns if the target has the given Item
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="classId"></param>
+        /// <returns></returns>
+        public static bool HasItem(this Unit unit, ClassID classId)
+        {
+            return (unit.Inventory.Items.Any(item => item.ClassID == classId));
+        }
+
+        /// <summary>
         ///     Checks if unit is immune to auto attack
         /// </summary>
         /// <param name="unit"></param>
@@ -846,6 +845,17 @@
         public static bool IsAttackImmune(this Unit unit)
         {
             return IsUnitState(unit, UnitState.AttackImmune);
+        }
+
+        /// <summary>
+        ///     Checks if given unit's current activity is Attack
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsAttacking(this Unit unit)
+        {
+            return (unit.NetworkActivity == NetworkActivity.Attack1 || unit.NetworkActivity == NetworkActivity.Attack2
+                    || unit.NetworkActivity == NetworkActivity.Attack3);
         }
 
         /// <summary>
@@ -959,9 +969,24 @@
             return IsUnitState(unit, UnitState.Stunned);
         }
 
-        public static bool IsValidTarget(this Unit unit,float range = float.MaxValue, bool checkTeam = true, Vector3 from = new Vector3())
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public static bool IsUnitState(this Unit unit, UnitState state)
         {
-            if (unit == null || !unit.IsValid || !unit.IsAlive || !unit.IsVisible || !unit.IsSpawned || unit.IsNeutral || unit.IsInvul())
+            return unit.UnitState.HasFlag(state);
+        }
+
+        public static bool IsValidTarget(
+            this Unit unit,
+            float range = float.MaxValue,
+            bool checkTeam = true,
+            Vector3 from = new Vector3())
+        {
+            if (unit == null || !unit.IsValid || !unit.IsAlive || !unit.IsVisible || !unit.IsSpawned || unit.IsNeutral
+                || unit.IsInvul())
             {
                 return false;
             }
@@ -974,17 +999,10 @@
             var @base = unit as Hero;
             var unitPosition = @base != null ? @base.NetworkPosition : unit.Position;
 
-            return !(range < float.MaxValue) || !(Vector2.DistanceSquared( (@from.ToVector2().IsValid() ? @from : ObjectMgr.LocalHero.NetworkPosition).ToVector2(), unitPosition.ToVector2()) > range * range);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="state"></param>
-        /// <returns></returns>
-        public static bool IsUnitState(this Unit unit, UnitState state)
-        {
-            return unit.UnitState.HasFlag(state);
+            return !(range < float.MaxValue)
+                   || !(Vector2.DistanceSquared(
+                       (@from.ToVector2().IsValid() ? @from : ObjectMgr.LocalHero.NetworkPosition).ToVector2(),
+                       unitPosition.ToVector2()) > range * range);
         }
 
         /// <summary>
@@ -1019,16 +1037,6 @@
         public static Vector3 Vector3FromPolarAngle(this Entity unit, float delta = 0f, float radial = 1f)
         {
             return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
-        }
-
-        /// <summary>
-        /// Checks if given unit's current activity is Attack
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool IsAttacking(this Unit unit)
-        {
-            return (unit.NetworkActivity == NetworkActivity.Attack1 || unit.NetworkActivity == NetworkActivity.Attack2 || unit.NetworkActivity == NetworkActivity.Attack3);
         }
 
         #endregion
