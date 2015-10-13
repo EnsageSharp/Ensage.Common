@@ -23,7 +23,7 @@
         static UnitData()
         {
             //Entity.OnIntegerPropertyChange += Entity_OnIntegerPropertyChange;
-            Drawing.OnDraw += TrackTick;
+            //Drawing.OnDraw += TrackTick;
             //ObjectMgr.OnProjectileAdd += ObjectMgr_OnProjectileAdd;
         }
 
@@ -66,57 +66,6 @@
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool IsInBackswingtime(Unit unit)
-        {
-            if (MaxCount < 1)
-            {
-                return false;
-            }
-
-            var attackPoint = UnitDatabase.GetAttackPoint(unit);
-            //if (attackPoint * 1000 < Game.Ping/2)
-            //    return false;
-            var data =
-                AttackAnimation.FirstOrDefault(
-                    unitData => unitData.UnitName == unit.Name || unitData.UnitClassId == unit.ClassID);
-            //Console.WriteLine(data);
-            return data != null && data.CanMove;
-        }
-
-        //public static void Entity_OnIntegerPropertyChange(Entity sender, EntityIntegerPropertyChangeEventArgs args)
-        //{
-        //    if (!Game.IsInGame || Game.IsPaused || args.Property != "m_NetworkActivity" || MaxCount < 1)
-        //        return;
-
-        //    var unit = sender as Unit;
-        //    var data =
-        //        AttackAnimation.FirstOrDefault(
-        //            unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
-        //    if (data == null) 
-        //        return;
-        //    var gameTime = Game.GameTime;
-        //    var attackPoint = UnitDatabase.GetAttackPoint(unit);
-        //    var attackRate = UnitDatabase.GetAttackRate(unit);
-        //    //Console.WriteLine(attackPoint + " " + attackRate);
-        //   // Console.WriteLine("{0}  {1}",data.EndTime,gameTime);
-        //    if (args.NewValue == 424 && Math.Abs(data.MoveTime) == 0)
-        //    {
-        //        data.MoveTime = gameTime + attackPoint;
-        //        data.EndTime = gameTime + attackRate;
-        //        // Console.WriteLine(gameTime + " " + data.MoveTime + " " + data.EndTime);
-        //    }
-        //    else if (data.MoveTime > 0 && gameTime > data.MoveTime && !data.CanMove)
-        //    {
-        //        data.CanMove = true;
-        //    }
-        //    else if (data.EndTime > 0 && data.EndTime <= gameTime)
-        //    {
-        //        data.CanMove = false;
-        //        data.MoveTime = 0;
-        //        data.EndTime = 0;
-        //    }
-        //}
-
         /// <summary>
         ///     Tracks attack animation of units
         /// </summary>

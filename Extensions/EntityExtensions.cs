@@ -801,15 +801,7 @@
         /// <returns></returns>
         public static double GetTurnTime(this Entity unit, Vector3 position)
         {
-            var data = UnitDatabase.GetByClassId(unit.ClassID) ?? UnitDatabase.GetByName(unit.Name);
-            if (data == null)
-            {
-                return
-                    (Math.Max(
-                        Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleBetween(position))) - 0.69,
-                        0) / (0.5 * (1 / 0.03)));
-            }
-            var turnRate = data.TurnRate;
+            var turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
             return (Math.Max(
                 Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleBetween(position))) - 0.69,
                 0) / (turnRate * (1 / 0.03)));
@@ -910,11 +902,6 @@
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool IsInBackswingtime(this Unit unit)
-        {
-            return UnitData.IsInBackswingtime(unit);
-        }
-
         /// <summary>
         /// </summary>
         /// <param name="unit"></param>

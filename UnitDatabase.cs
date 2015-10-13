@@ -46,12 +46,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Initializes static members of the <see cref="UnitDatabase" /> class.
         /// </summary>
-        static UnitDatabase()
-        {
-            Units =
-                JsonConvert.DeserializeObject<AttackAnimationData[]>(
-                    JObject.Parse(Encoding.Default.GetString(Resources.UnitDatabase)).ToString()).ToList();
-        }
+        //static UnitDatabase()
+        //{
+        //    Units =
+        //        JsonConvert.DeserializeObject<AttackAnimationData[]>(
+        //            JObject.Parse(Encoding.Default.GetString(Resources.UnitDatabase)).ToString()).ToList();
+        //}
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
-        public static double GetAttackBackswing(Unit unit)
+        public static double GetAttackBackswing(Hero unit)
         {
             var attackRate = GetAttackRate(unit);
             var attackPoint = GetAttackPoint(unit);
@@ -82,26 +82,17 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
-        public static double GetAttackPoint(Unit unit)
+        public static double GetAttackPoint(Hero unit)
         {
             if (unit == null)
             {
                 return 0;
             }
-
-            var classId = unit.ClassID;
             var name = unit.Name;
-            var data = GetByClassId(classId) ?? GetByName(name);
-            if (data == null)
-            {
-                return 0;
-            }
-
+            var attackAnimationPoint =
+                Game.FindKeyValues(name + "/AttackAnimationPoint", KeyValueSource.Hero).FloatValue;
             var attackSpeed = GetAttackSpeed(unit);
-
-            return (data.AttackPoint / (1 + ((attackSpeed - 100) / 100)))
-                   - (((Game.Ping / 1000) / (1 + (1 - (1 / UnitData.MaxCount)))) * 2)
-                   + ((1 / UnitData.MaxCount) * 3 * (1 + (1 - (1 / UnitData.MaxCount))));
+            return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
         }
 
         /// <summary>
@@ -113,10 +104,10 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
-        public static double GetAttackRate(Unit unit)
+        public static double GetAttackRate(Hero unit)
         {
             var attackSpeed = GetAttackSpeed(unit);
-            var attackBaseTime = unit.BaseAttackTime;
+            var attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
             Ability spell = null;
             if (
                 !unit.Modifiers.Any(
@@ -124,7 +115,7 @@ namespace Ensage.Common
                     (x.Name == "modifier_alchemist_chemical_rage" || x.Name == "modifier_terrorblade_metamorphosis"
                      || x.Name == "modifier_lone_druid_true_form" || x.Name == "modifier_troll_warlord_berserkers_rage")))
             {
-                return (attackBaseTime / (1 + ((attackSpeed - 100) / 100))) - 0.03;
+                return attackBaseTime / (1 + (attackSpeed - 100) / 100);
             }
 
             switch (unit.ClassID)
@@ -143,20 +134,18 @@ namespace Ensage.Common
                     break;
             }
 
-            if (spell != null)
+            if (spell == null)
             {
-                var baseAttackTime = spell.AbilityData.FirstOrDefault(x => x.Name == "base_attack_time");
-                if (baseAttackTime != null)
-                {
-                    attackBaseTime = baseAttackTime.Value;
-                }
-
-                return (attackBaseTime / (1 + ((attackSpeed - 100) / 100)))
-                       - (((Game.Ping / 1000) / (1 + (1 - (1 / UnitData.MaxCount)))) * 2)
-                       + ((1 / UnitData.MaxCount) * 3 * (1 + (1 - (1 / UnitData.MaxCount))));
+                return attackBaseTime / (1 + (attackSpeed - 100) / 100);
+                ;
+            }
+            var baseAttackTime = spell.AbilityData.FirstOrDefault(x => x.Name == "base_attack_time");
+            if (baseAttackTime != null)
+            {
+                attackBaseTime = baseAttackTime.GetValue(spell.Level - 1);
             }
 
-            return 0d;
+            return attackBaseTime / (1 + (attackSpeed - 100) / 100);
         }
 
         /// <summary>
@@ -170,7 +159,7 @@ namespace Ensage.Common
         /// </returns>
         public static float GetAttackSpeed(Unit unit)
         {
-            var attackSpeed = Math.Min(unit.Speed, 600);
+            var attackSpeed = Math.Min(unit.AttackSpeedValue, 600);
 
             if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
             {
