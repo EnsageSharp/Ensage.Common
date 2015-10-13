@@ -161,14 +161,14 @@ namespace Ensage.Common
         /// </returns>
         public static float GetAttackSpeed(Unit unit)
         {
-            var attackSpeed = Math.Min(unit.AttackSpeedValue, 600);
+            var attackSpeed = Math.Min((unit.AttacksPerSecond * unit.BaseAttackTime) / 0.01, 600);
 
             if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
             {
                 attackSpeed = 600;
             }
 
-            return attackSpeed;
+            return (float)attackSpeed;
         }
 
         /// <summary>
