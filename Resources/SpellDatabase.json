@@ -162,9 +162,12 @@
         },
         {
             "SpellName": "crystal_maiden_freezing_field",
-            "IsSlow": true,
-            "IsNuke": true,
             "AdditionalDelay": -0.1
+        },
+        {
+            "SpellName": "crystal_maiden_crystal_nova",
+            "IsSlow": true,
+            "IsNuke": true
         },
         {
             "SpellName": "lich_frost_armor",
@@ -1184,7 +1187,7 @@
         },
         {
             "SpellName": "crystal_maiden_frostbite",
-            "IsSlow": true,
+            "IsDisable": true,
             "IsSkillShot": true
         },
         {

@@ -69,6 +69,11 @@
             return Math.PI * angle / 180.0;
         }
 
+        public static double RadianToDegree(double angle)
+        {
+            return angle * 180 / Math.PI;
+        }
+
         public static byte FixVirtualKey(byte key)
         {
             switch (key)
@@ -96,6 +101,10 @@
         /// <returns></returns>
         public static bool ChainStun(Unit unit, double delay, string except, bool onlychain)
         {
+            if (!SleepCheck("CHAINSTUN_SLEEP"))
+            {
+                return false;
+            }
             var chain = false;
             var stunned = false;
             string[] modifiersList =
@@ -116,7 +125,7 @@
             var modifiers = unit.Modifiers.OrderByDescending(x => x.RemainingTime);
             foreach (var m in
                 modifiers.Where(
-                    m => (m.IsStunDebuff || modifiersList.Contains(m.Name)) && (except == null || m.Name == except)))
+                    m => (m.IsStunDebuff || modifiersList.Contains(m.Name)) && (except == null || m.Name != except)))
             {
                 stunned = true;
                 var remainingTime = m.RemainingTime;
