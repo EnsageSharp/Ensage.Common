@@ -46,12 +46,14 @@ namespace Ensage.Common
         /// <summary>
         ///     Initializes static members of the <see cref="UnitDatabase" /> class.
         /// </summary>
-        //static UnitDatabase()
-        //{
-        //    Units =
-        //        JsonConvert.DeserializeObject<AttackAnimationData[]>(
-        //            JObject.Parse(Encoding.Default.GetString(Resources.UnitDatabase)).ToString()).ToList();
-        //}
+        static UnitDatabase()
+        {
+            JToken @object;
+            if (JObject.Parse(Encoding.Default.GetString(Resources.UnitDatabase)).TryGetValue("Units", out @object))
+            {
+                Units = JsonConvert.DeserializeObject<AttackAnimationData[]>(@object.ToString()).ToList();
+            }
+        }
 
         #endregion
 

@@ -27,9 +27,11 @@
 
         static SpellDatabase()
         {
-            Spells =
-                JsonConvert.DeserializeObject<SpellData[]>(
-                    JObject.Parse(Encoding.Default.GetString(Resources.SpellDatabase)).ToString()).ToList();
+            JToken @object;
+            if (JObject.Parse(Encoding.Default.GetString(Resources.SpellDatabase)).TryGetValue("Spells", out @object))
+            {
+                Spells = JsonConvert.DeserializeObject<SpellData[]>(@object.ToString()).ToList();
+            }
         }
 
         #endregion

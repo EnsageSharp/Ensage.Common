@@ -1,1198 +1,1200 @@
-[
-    {
-        "SpellName": "dark_seer_ion_shell",
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "magnataur_shockwave",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "shock_speed",
-        "Width": "shock_width"
-    },
-    {
-        "SpellName": "ursa_earthshock",
-        "IsSlow": true,
-        "IsNuke": true,
-        "StringRadius": "shock_radius"
-    },
-    {
-        "SpellName": "chaos_knight_reality_rift",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "skywrath_mage_mystic_flare",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.2,
-        "Width": "radius"
-    },
-    {
-        "SpellName": "death_prophet_carrion_swarm",
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "zuus_lightning_bolt",
-        "IsDisable": true,
-        "IsNuke": true,
-        "StringRadius": "spread_aoe"
-    },
-    {
-        "SpellName": "axe_berserkers_call",
-        "IsDisable": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "beastmaster_wild_axes"
-    },
-    {
-        "SpellName": "puck_waning_rift",
-        "IsSilence": true,
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "lone_druid_rabid"
-    },
-    {
-        "SpellName": "rattletrap_battery_assault",
-        "IsDisable": true,
-        "AdditionalDelay": 0.7,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "sven_storm_bolt",
-        "IsDisable": true,
-        "IsNuke": true,
-        "Speed": "bolt_speed"
-    },
-    {
-        "SpellName": "chen_test_of_faith",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "phantom_assassin_stifling_dagger",
-        "IsSlow": true,
-        "IsNuke": true,
-        "Speed": "dagger_speed"
-    },
-    {
-        "SpellName": "bounty_hunter_track"
-    },
-    {
-        "SpellName": "axe_battle_hunger",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "storm_spirit_electric_vortex",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "ember_spirit_sleight_of_fist",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "batrider_flamebreak",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.3
-    },
-    {
-        "SpellName": "mirana_arrow",
-        "IsDisable": true,
-        "IsSkillShot": true,
-        "Speed": "arrow_speed",
-        "Width": "arrow_width",
-        "AllyBlock": true,
-        "EnemyBlock": true
-    },
-    {
-        "SpellName": "abaddon_aphotic_shield",
-        "IsShield": true
-    },
-    {
-        "SpellName": "windrunner_shackleshot",
-        "IsDisable": true,
-        "Speed": "arrow_speed"
-    },
-    {
-        "SpellName": "ancient_apparition_cold_feet",
-        "IsDisable": true,
-        "AdditionalDelay": 2.01
-    },
-    {
-        "SpellName": "rattletrap_hookshot",
-        "IsDisable": true,
-        "IsSkillShot": true,
-        "Width": "latch_radius",
-        "AllyBlock": true,
-        "EnemyBlock": true,
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "shadow_shaman_mass_serpent_ward",
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "ogre_magi_unrefined_fireblast",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "oracle_fortunes_end",
-        "IsDisable": true,
-        "Speed": "bolt_speed"
-    },
-    {
-        "SpellName": "shredder_timber_chain",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "StringRadius": "chain_radius",
-        "Speed": "speed"
-    },
-    {
-        "SpellName": "doom_bringer_lvl_death",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "crystal_maiden_freezing_field",
-        "IsSlow": true,
-        "IsNuke": true,
-        "AdditionalDelay": -0.1
-    },
-    {
-        "SpellName": "lich_frost_armor",
-        "IsShield": true
-    },
-    {
-        "SpellName": "enigma_malefice",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "elder_titan_earth_splitter",
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "shredder_return_chakram_2"
-    },
-    {
-        "SpellName": "zuus_thundergods_wrath",
-        "IsNuke": true,
-        "AdditionalDelay": -0.1
-    },
-    {
-        "SpellName": "shredder_chakram_2",
-        "IsSlow": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.5,
-        "StringRadius": "radius",
-        "Speed": "speed"
-    },
-    {
-        "SpellName": "phantom_assassin_phantom_strike",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "pugna_decrepify",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "omniknight_purification",
-        "IsNuke": true,
-        "IsHeal": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "keeper_of_the_light_blinding_light",
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "queenofpain_shadow_strike",
-        "IsSlow": true,
-        "Speed": "projectile_speed"
-    },
-    {
-        "SpellName": "shredder_chakram",
-        "IsSlow": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.5,
-        "StringRadius": "radius",
-        "Speed": "speed"
-    },
-    {
-        "SpellName": "undying_soul_rip",
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "invoker_sun_strike",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 1.7
-    },
-    {
-        "SpellName": "winter_wyvern_splinter_blast",
-        "IsSlow": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "dark_seer_surge",
-        "IsShield": true
-    },
-    {
-        "SpellName": "mirana_starfall",
-        "IsNuke": true,
-        "Radius": 0
-    },
-    {
-        "SpellName": "luna_lucent_beam",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "nyx_assassin_mana_burn",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "dark_seer_vacuum",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "rattletrap_power_cogs",
-        "IsDisable": true,
-        "AdditionalDelay": 0.1,
-        "Radius": 0.1
-    },
-    {
-        "SpellName": "dark_seer_wall_of_replica",
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "ogre_magi_fireblast",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "riki_blink_strike",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "invoker_cold_snap",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "wisp_spirits",
-        "Radius": 0
-    },
-    {
-        "SpellName": "warlock_fatal_bonds"
-    },
-    {
-        "SpellName": "oracle_purifying_flames",
-        "OnlyForKillSteal": true
-    },
-    {
-        "SpellName": "sandking_burrowstrike",
-        "IsDisable": true,
-        "IsNuke": true,
-        "Speed": "burrow_speed",
-        "Width": "burrow_width"
-    },
-    {
-        "SpellName": "pudge_meat_hook",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "hook_speed",
-        "Width": "hook_width",
-        "AllyBlock": true,
-        "EnemyBlock": true,
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "keeper_of_the_light_mana_leak",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "keeper_of_the_light_spirit_form_illuminate"
-    },
-    {
-        "SpellName": "templar_assassin_meld",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "disruptor_glimpse",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "disruptor_thunder_strike"
-    },
-    {
-        "SpellName": "disruptor_kinetic_field",
-        "IsSkillShot": true,
-        "AdditionalDelay": 1.2
-    },
-    {
-        "SpellName": "ember_spirit_searing_chains",
-        "IsDisable": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "silencer_curse_of_the_silent"
-    },
-    {
-        "SpellName": "venomancer_plague_ward"
-    },
-    {
-        "SpellName": "phoenix_icarus_dive_stop"
-    },
-    {
-        "SpellName": "phoenix_icarus_dive",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "puck_ethereal_jaunt"
-    },
-    {
-        "SpellName": "enchantress_enchant",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "treant_leech_seed",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "phoenix_launch_fire_spirit",
-        "IsSlow": true,
-        "IsSkillShot": true,
-        "Speed": "spirit_speed"
-    },
-    {
-        "SpellName": "nyx_assassin_impale",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "tidehunter_gush",
-        "IsSlow": true,
-        "IsNuke": true,
-        "Speed": "projectile_speed"
-    },
-    {
-        "SpellName": "shadow_demon_demonic_purge",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "puck_illusory_orb",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "orb_speed"
-    },
-    {
-        "SpellName": "legion_commander_duel",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "jakiro_dual_breath",
-        "IsSlow": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "lina_light_strike_array",
-        "IsDisable": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.5
-    },
-    {
-        "SpellName": "clinkz_strafe",
-        "Radius": 0
-    },
-    {
-        "SpellName": "shadow_demon_disruption",
-        "IsDisable": true,
-        "IsShield": true
-    },
-    {
-        "SpellName": "slardar_slithereen_crush",
-        "IsDisable": true,
-        "StringRadius": "crush_radius"
-    },
-    {
-        "SpellName": "terrorblade_conjure_image"
-    },
-    {
-        "SpellName": "terrorblade_metamorphosis",
-        "Radius": 0
-    },
-    {
-        "SpellName": "slark_dark_pact",
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "terrorblade_reflection",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "shadow_demon_soul_catcher"
-    },
-    {
-        "SpellName": "terrorblade_sunder",
-        "IsShield": true
-    },
-    {
-        "SpellName": "bloodseeker_rupture",
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "undying_tombstone",
-        "IsSkillShot": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "undying_decay",
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "gyrocopter_flak_cannon",
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "spectre_spectral_dagger",
-        "IsSlow": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "StringRadius": "dagger_radius"
-    },
-    {
-        "SpellName": "naga_siren_rip_tide",
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "visage_soul_assumption",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "earthshaker_echo_slam",
-        "IsDisable": true,
-        "Radius": 0
-    },
-    {
-        "SpellName": "invoker_ice_wall",
-        "IsSlow": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 1,
-        "Radius": 1
-    },
-    {
-        "SpellName": "tinker_laser",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "rattletrap_rocket_flare",
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "invoker_forge_spirit",
-        "Radius": 0
-    },
-    {
-        "SpellName": "weaver_the_swarm",
-        "IsSkillShot": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "ember_spirit_fire_remnant"
-    },
-    {
-        "SpellName": "earthshaker_fissure",
-        "IsDisable": true,
-        "IsNuke": true,
-        "AdditionalDelay": -0.1
-    },
-    {
-        "SpellName": "magnataur_skewer",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "skewer_speed",
-        "Width": "skewer_radius"
-    },
-    {
-        "SpellName": "beastmaster_primal_roar",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "tusk_walrus_kick",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "brewmaster_thunder_clap",
-        "IsSlow": true,
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "bane_nightmare",
-        "IsDisable": true,
-        "AdditionalDelay": 1
-    },
-    {
-        "SpellName": "keeper_of_the_light_illuminate"
-    },
-    {
-        "SpellName": "nevermore_shadowraze3",
-        "IsNuke": true,
-        "StringRadius": "shadowraze_range"
-    },
-    {
-        "SpellName": "windrunner_powershot",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "arrow_speed"
-    },
-    {
-        "SpellName": "tusk_ice_shards",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "shard_speed"
-    },
-    {
-        "SpellName": "brewmaster_drunken_haze",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "leshrac_lightning_storm",
-        "IsSlow": true,
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "necrolyte_death_pulse",
-        "IsNuke": true,
-        "IsHeal": true,
-        "StringRadius": "area_of_effect"
-    },
-    {
-        "SpellName": "invoker_alacrity"
-    },
-    {
-        "SpellName": "shadow_shaman_voodoo",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "pugna_nether_blast",
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "morphling_adaptive_strike",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "lone_druid_true_form",
-        "IsShield": true,
-        "Radius": 0
-    },
-    {
-        "SpellName": "nevermore_shadowraze2",
-        "IsNuke": true,
-        "StringRadius": "shadowraze_range"
-    },
-    {
-        "SpellName": "storm_spirit_ball_lightning",
-        "IsSkillShot": true,
-        "Speed": "ball_lightning_move_speed"
-    },
-    {
-        "SpellName": "tusk_snowball",
-        "IsDisable": true,
-        "Speed": "snowball_speed"
-    },
-    {
-        "SpellName": "phoenix_sun_ray_toggle_move"
-    },
-    {
-        "SpellName": "doom_bringer_scorched_earth",
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "phoenix_sun_ray",
-        "OnlyForKillSteal": true
-    },
-    {
-        "SpellName": "phoenix_fire_spirits",
-        "IsSlow": true,
-        "IsSkillShot": true,
-        "Speed": "spirit_speed"
-    },
-    {
-        "SpellName": "silencer_last_word",
-        "AdditionalDelay": 4
-    },
-    {
-        "SpellName": "phantom_lancer_spirit_lance",
-        "IsSlow": true,
-        "IsNuke": true,
-        "Speed": "lance_speed"
-    },
-    {
-        "SpellName": "ursa_enrage",
-        "Radius": 0,
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "chen_penitence",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "invoker_deafening_blast",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "StringRadius": "travel_distance",
-        "Speed": "travel_speed"
-    },
-    {
-        "SpellName": "warlock_shadow_word"
-    },
-    {
-        "SpellName": "centaur_double_edge",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "earth_spirit_stone_caller",
-        "Radius": 0
-    },
-    {
-        "SpellName": "bane_fiends_grip",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "ogre_magi_bloodlust",
-        "IsShield": true
-    },
-    {
-        "SpellName": "earthshaker_enchant_totem",
-        "IsDisable": true,
-        "Radius": 0
-    },
-    {
-        "SpellName": "earth_spirit_rolling_boulder",
-        "IsSlow": true,
-        "AdditionalDelay": 0.6
-    },
-    {
-        "SpellName": "visage_grave_chill",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "tusk_frozen_sigil",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "night_stalker_void",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "riki_smoke_screen",
-        "IsSlow": true,
-        "IsSilence": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": -0.1
-    },
-    {
-        "SpellName": "vengefulspirit_magic_missile",
-        "IsDisable": true,
-        "IsNuke": true,
-        "Speed": "magic_missile_speed"
-    },
-    {
-        "SpellName": "leshrac_diabolic_edict"
-    },
-    {
-        "SpellName": "earth_spirit_boulder_smash",
-        "IsDisable": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "slardar_sprint"
-    },
-    {
-        "SpellName": "razor_plasma_field",
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "ember_spirit_flame_guard",
-        "IsShield": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "morphling_waveform",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "projectile_speed"
-    },
-    {
-        "SpellName": "axe_culling_blade",
-        "MagicImmunityPierce": true,
-        "OnlyForKillSteal": true
-    },
-    {
-        "SpellName": "weaver_shukuchi",
-        "IsShield": true
-    },
-    {
-        "SpellName": "death_prophet_silence",
-        "IsSilence": true,
-        "AdditionalDelay": -0.1
-    },
-    {
-        "SpellName": "earth_spirit_geomagnetic_grip",
-        "IsSilence": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "enigma_midnight_pulse",
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "sniper_assassinate",
-        "OnlyForKillSteal": true
-    },
-    {
-        "SpellName": "elder_titan_echo_stomp",
-        "IsDisable": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "nevermore_shadowraze1",
-        "IsNuke": true,
-        "StringRadius": "shadowraze_range"
-    },
-    {
-        "SpellName": "nevermore_requiem"
-    },
-    {
-        "SpellName": "tiny_toss",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "slark_pounce",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "StringRadius": "pounce_radius",
-        "Speed": "pounce_speed"
-    },
-    {
-        "SpellName": "ogre_magi_ignite",
-        "IsSlow": true,
-        "Speed": "projectile_speed"
-    },
-    {
-        "SpellName": "furion_sprout",
-        "IsSkillShot": true,
-        "AdditionalDelay": -0.1
-    },
-    {
-        "SpellName": "kunkka_ghostship",
-        "IsDisable": true,
-        "Speed": "ghostship_speed"
-    },
-    {
-        "SpellName": "troll_warlord_whirling_axes_ranged",
-        "IsSlow": true,
-        "Speed": "axe_speed"
-    },
-    {
-        "SpellName": "ember_spirit_activate_fire_remnant"
-    },
-    {
-        "SpellName": "storm_spirit_static_remnant",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "skeleton_king_hellfire_blast",
-        "IsDisable": true,
-        "Speed": "blast_speed"
-    },
-    {
-        "SpellName": "centaur_hoof_stomp",
-        "IsDisable": true,
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "tusk_walrus_punch",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "leshrac_split_earth",
-        "IsDisable": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.35
-    },
-    {
-        "SpellName": "spirit_breaker_charge_of_darkness",
-        "IsDisable": true,
-        "Speed": "movement_speed"
-    },
-    {
-        "SpellName": "vengefulspirit_wave_of_terror",
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "queenofpain_scream_of_pain",
-        "IsNuke": true,
-        "StringRadius": "area_of_effect"
-    },
-    {
-        "SpellName": "earth_spirit_petrify",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "gyrocopter_rocket_barrage",
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "invoker_emp",
-        "IsSkillShot": true,
-        "AdditionalDelay": 2.9
-    },
-    {
-        "SpellName": "bane_enfeeble"
-    },
-    {
-        "SpellName": "bristleback_viscous_nasal_goo",
-        "IsSlow": true,
-        "StringRadius": "radius",
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "shadow_demon_shadow_poison",
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "shredder_return_chakram"
-    },
-    {
-        "SpellName": "shadow_shaman_ether_shock",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "ancient_apparition_ice_vortex",
-        "IsSlow": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "bloodseeker_blood_bath",
-        "IsSkillShot": true,
-        "AdditionalDelay": 2.6
-    },
-    {
-        "SpellName": "gyrocopter_homing_missile",
-        "IsDisable": true,
-        "AdditionalDelay": 3,
-        "Speed": "speed"
-    },
-    {
-        "SpellName": "jakiro_ice_path",
-        "IsDisable": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.5
-    },
-    {
-        "SpellName": "drow_ranger_wave_of_silence",
-        "IsSilence": true,
-        "IsSkillShot": true,
-        "Speed": "wave_speed"
-    },
-    {
-        "SpellName": "invoker_tornado",
-        "IsDisable": true,
-        "IsSkillShot": true,
-        "StringRadius": "travel_distance",
-        "Speed": "travel_speed"
-    },
-    {
-        "SpellName": "dragon_knight_breathe_fire",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "naga_siren_ensnare",
-        "IsDisable": true,
-        "Speed": "net_speed",
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "kunkka_x_marks_the_spot",
-        "IsDisable": true,
-        "AdditionalDelay": 0.1
-    },
-    {
-        "SpellName": "spirit_breaker_nether_strike",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "razor_static_link"
-    },
-    {
-        "SpellName": "necrolyte_reapers_scythe",
-        "IsDisable": true,
-        "OnlyForKillSteal": true
-    },
-    {
-        "SpellName": "broodmother_spawn_spiderlings",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "bristleback_quill_spray",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "legion_commander_overwhelming_odds",
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "ancient_apparition_ice_blast_release"
-    },
-    {
-        "SpellName": "tinker_heat_seeking_missile",
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "shredder_whirling_death",
-        "IsNuke": true,
-        "StringRadius": "whirling_radius"
-    },
-    {
-        "SpellName": "elder_titan_ancestral_spirit",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "chaos_knight_chaos_bolt",
-        "IsDisable": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "legion_commander_press_the_attack",
-        "IsHeal": true,
-        "IsShield": true
-    },
-    {
-        "SpellName": "kunkka_torrent",
-        "IsDisable": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 1.7
-    },
-    {
-        "SpellName": "bounty_hunter_shuriken_toss",
-        "IsDisable": true,
-        "IsNuke": true,
-        "OnlyForKillSteal": true
-    },
-    {
-        "SpellName": "omniknight_repel",
-        "IsShield": true
-    },
-    {
-        "SpellName": "batrider_sticky_napalm",
-        "IsSlow": true,
-        "AdditionalDelay": 0.2
-    },
-    {
-        "SpellName": "pudge_dismember",
-        "IsDisable": true,
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "batrider_flaming_lasso",
-        "IsDisable": true,
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "slardar_amplify_damage"
-    },
-    {
-        "SpellName": "lion_voodoo",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "lich_frost_nova",
-        "IsSlow": true,
-        "IsNuke": true
-    },
-    {
-        "SpellName": "beastmaster_call_of_the_wild_boar",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "tiny_avalanche",
-        "IsDisable": true,
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "AdditionalDelay": 0.5
-    },
-    {
-        "SpellName": "doom_bringer_doom",
-        "IsDisable": true,
-        "IsSilence": true
-    },
-    {
-        "SpellName": "tinker_rearm"
-    },
-    {
-        "SpellName": "abaddon_death_coil",
-        "IsNuke": true,
-        "IsHeal": true
-    },
-    {
-        "SpellName": "templar_assassin_refraction",
-        "IsShield": true
-    },
-    {
-        "SpellName": "troll_warlord_whirling_axes_melee",
-        "Radius": 0
-    },
-    {
-        "SpellName": "leshrac_pulse_nova",
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "lion_finger_of_death",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "life_stealer_open_wounds",
-        "IsSlow": true
-    },
-    {
-        "SpellName": "bane_brain_sap",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "zuus_arc_lightning"
-    },
-    {
-        "SpellName": "tidehunter_anchor_smash",
-        "IsNuke": true,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "night_stalker_crippling_fear",
-        "IsSilence": true
-    },
-    {
-        "SpellName": "skywrath_mage_arcane_bolt",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "invoker_chaos_meteor",
-        "IsSkillShot": true,
-        "AdditionalDelay": 1.3
-    },
-    {
-        "SpellName": "medusa_mystic_snake",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "sniper_shrapnel",
-        "IsSkillShot": true,
-        "AdditionalDelay": 1.4,
-        "StringRadius": "radius"
-    },
-    {
-        "SpellName": "lina_laguna_blade",
-        "IsNuke": true
-    },
-    {
-        "SpellName": "ursa_overpower",
-        "IsNuke": true,
-        "MagicImmunityPierce": true
-    },
-    {
-        "SpellName": "queenofpain_sonic_wave",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "speed"
-    },
-    {
-        "SpellName": "lion_impale",
-        "IsDisable": true,
-        "IsNuke": true,
-        "Radius": 0,
-        "Width": "width"
-    },
-    {
-        "SpellName": "lina_dragon_slave",
-        "IsNuke": true,
-        "IsSkillShot": true,
-        "Speed": "dragon_slave_speed"
-    },
-    {
-        "SpellName": "venomancer_venomous_gale",
-        "IsSlow": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "skywrath_mage_ancient_seal",
-        "IsSilence": true
-    },
-    {
-        "SpellName": "antimage_mana_void",
-        "IsDisable": true,
-        "IsNuke": true,
-        "OnlyForKillSteal": true
-    },
-    {
-        "SpellName": "shadow_shaman_shackles",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "huskar_life_break",
-        "IsSlow": true,
-        "Speed": "charge_speed"
-    },
-    {
-        "SpellName": "dragon_knight_dragon_tail",
-        "IsDisable": true
-    },
-    {
-        "SpellName": "crystal_maiden_frostbite",
-        "IsSlow": true,
-        "IsSkillShot": true
-    },
-    {
-        "SpellName": "skywrath_mage_concussive_shot",
-        "IsSlow": true,
-        "StringRadius": "launch_radius"
-    },
-    {
-        "SpellName": "bloodseeker_bloodrage",
-        "MagicImmunityPierce": true
-    }
-]
+{
+    "Spells":[
+        {
+            "SpellName": "dark_seer_ion_shell",
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "magnataur_shockwave",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "shock_speed",
+            "Width": "shock_width"
+        },
+        {
+            "SpellName": "ursa_earthshock",
+            "IsSlow": true,
+            "IsNuke": true,
+            "StringRadius": "shock_radius"
+        },
+        {
+            "SpellName": "chaos_knight_reality_rift",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "skywrath_mage_mystic_flare",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.2,
+            "Width": "radius"
+        },
+        {
+            "SpellName": "death_prophet_carrion_swarm",
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "zuus_lightning_bolt",
+            "IsDisable": true,
+            "IsNuke": true,
+            "StringRadius": "spread_aoe"
+        },
+        {
+            "SpellName": "axe_berserkers_call",
+            "IsDisable": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "beastmaster_wild_axes"
+        },
+        {
+            "SpellName": "puck_waning_rift",
+            "IsSilence": true,
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "lone_druid_rabid"
+        },
+        {
+            "SpellName": "rattletrap_battery_assault",
+            "IsDisable": true,
+            "AdditionalDelay": 0.7,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "sven_storm_bolt",
+            "IsDisable": true,
+            "IsNuke": true,
+            "Speed": "bolt_speed"
+        },
+        {
+            "SpellName": "chen_test_of_faith",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "phantom_assassin_stifling_dagger",
+            "IsSlow": true,
+            "IsNuke": true,
+            "Speed": "dagger_speed"
+        },
+        {
+            "SpellName": "bounty_hunter_track"
+        },
+        {
+            "SpellName": "axe_battle_hunger",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "storm_spirit_electric_vortex",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "ember_spirit_sleight_of_fist",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "batrider_flamebreak",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.3
+        },
+        {
+            "SpellName": "mirana_arrow",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "Speed": "arrow_speed",
+            "Width": "arrow_width",
+            "AllyBlock": true,
+            "EnemyBlock": true
+        },
+        {
+            "SpellName": "abaddon_aphotic_shield",
+            "IsShield": true
+        },
+        {
+            "SpellName": "windrunner_shackleshot",
+            "IsDisable": true,
+            "Speed": "arrow_speed"
+        },
+        {
+            "SpellName": "ancient_apparition_cold_feet",
+            "IsDisable": true,
+            "AdditionalDelay": 2.01
+        },
+        {
+            "SpellName": "rattletrap_hookshot",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "Width": "latch_radius",
+            "AllyBlock": true,
+            "EnemyBlock": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "shadow_shaman_mass_serpent_ward",
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "ogre_magi_unrefined_fireblast",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "oracle_fortunes_end",
+            "IsDisable": true,
+            "Speed": "bolt_speed"
+        },
+        {
+            "SpellName": "shredder_timber_chain",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "StringRadius": "chain_radius",
+            "Speed": "speed"
+        },
+        {
+            "SpellName": "doom_bringer_lvl_death",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "crystal_maiden_freezing_field",
+            "IsSlow": true,
+            "IsNuke": true,
+            "AdditionalDelay": -0.1
+        },
+        {
+            "SpellName": "lich_frost_armor",
+            "IsShield": true
+        },
+        {
+            "SpellName": "enigma_malefice",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "elder_titan_earth_splitter",
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "shredder_return_chakram_2"
+        },
+        {
+            "SpellName": "zuus_thundergods_wrath",
+            "IsNuke": true,
+            "AdditionalDelay": -0.1
+        },
+        {
+            "SpellName": "shredder_chakram_2",
+            "IsSlow": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.5,
+            "StringRadius": "radius",
+            "Speed": "speed"
+        },
+        {
+            "SpellName": "phantom_assassin_phantom_strike",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "pugna_decrepify",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "omniknight_purification",
+            "IsNuke": true,
+            "IsHeal": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "keeper_of_the_light_blinding_light",
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "queenofpain_shadow_strike",
+            "IsSlow": true,
+            "Speed": "projectile_speed"
+        },
+        {
+            "SpellName": "shredder_chakram",
+            "IsSlow": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.5,
+            "StringRadius": "radius",
+            "Speed": "speed"
+        },
+        {
+            "SpellName": "undying_soul_rip",
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "invoker_sun_strike",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 1.7
+        },
+        {
+            "SpellName": "winter_wyvern_splinter_blast",
+            "IsSlow": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "dark_seer_surge",
+            "IsShield": true
+        },
+        {
+            "SpellName": "mirana_starfall",
+            "IsNuke": true,
+            "Radius": 0
+        },
+        {
+            "SpellName": "luna_lucent_beam",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "nyx_assassin_mana_burn",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "dark_seer_vacuum",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "rattletrap_power_cogs",
+            "IsDisable": true,
+            "AdditionalDelay": 0.1,
+            "Radius": 0.1
+        },
+        {
+            "SpellName": "dark_seer_wall_of_replica",
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "ogre_magi_fireblast",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "riki_blink_strike",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "invoker_cold_snap",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "wisp_spirits",
+            "Radius": 0
+        },
+        {
+            "SpellName": "warlock_fatal_bonds"
+        },
+        {
+            "SpellName": "oracle_purifying_flames",
+            "OnlyForKillSteal": true
+        },
+        {
+            "SpellName": "sandking_burrowstrike",
+            "IsDisable": true,
+            "IsNuke": true,
+            "Speed": "burrow_speed",
+            "Width": "burrow_width"
+        },
+        {
+            "SpellName": "pudge_meat_hook",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "hook_speed",
+            "Width": "hook_width",
+            "AllyBlock": true,
+            "EnemyBlock": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "keeper_of_the_light_mana_leak",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "keeper_of_the_light_spirit_form_illuminate"
+        },
+        {
+            "SpellName": "templar_assassin_meld",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "disruptor_glimpse",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "disruptor_thunder_strike"
+        },
+        {
+            "SpellName": "disruptor_kinetic_field",
+            "IsSkillShot": true,
+            "AdditionalDelay": 1.2
+        },
+        {
+            "SpellName": "ember_spirit_searing_chains",
+            "IsDisable": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "silencer_curse_of_the_silent"
+        },
+        {
+            "SpellName": "venomancer_plague_ward"
+        },
+        {
+            "SpellName": "phoenix_icarus_dive_stop"
+        },
+        {
+            "SpellName": "phoenix_icarus_dive",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "puck_ethereal_jaunt"
+        },
+        {
+            "SpellName": "enchantress_enchant",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "treant_leech_seed",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "phoenix_launch_fire_spirit",
+            "IsSlow": true,
+            "IsSkillShot": true,
+            "Speed": "spirit_speed"
+        },
+        {
+            "SpellName": "nyx_assassin_impale",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "tidehunter_gush",
+            "IsSlow": true,
+            "IsNuke": true,
+            "Speed": "projectile_speed"
+        },
+        {
+            "SpellName": "shadow_demon_demonic_purge",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "puck_illusory_orb",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "orb_speed"
+        },
+        {
+            "SpellName": "legion_commander_duel",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "jakiro_dual_breath",
+            "IsSlow": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "lina_light_strike_array",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.5
+        },
+        {
+            "SpellName": "clinkz_strafe",
+            "Radius": 0
+        },
+        {
+            "SpellName": "shadow_demon_disruption",
+            "IsDisable": true,
+            "IsShield": true
+        },
+        {
+            "SpellName": "slardar_slithereen_crush",
+            "IsDisable": true,
+            "StringRadius": "crush_radius"
+        },
+        {
+            "SpellName": "terrorblade_conjure_image"
+        },
+        {
+            "SpellName": "terrorblade_metamorphosis",
+            "Radius": 0
+        },
+        {
+            "SpellName": "slark_dark_pact",
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "terrorblade_reflection",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "shadow_demon_soul_catcher"
+        },
+        {
+            "SpellName": "terrorblade_sunder",
+            "IsShield": true
+        },
+        {
+            "SpellName": "bloodseeker_rupture",
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "undying_tombstone",
+            "IsSkillShot": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "undying_decay",
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "gyrocopter_flak_cannon",
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "spectre_spectral_dagger",
+            "IsSlow": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "StringRadius": "dagger_radius"
+        },
+        {
+            "SpellName": "naga_siren_rip_tide",
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "visage_soul_assumption",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "earthshaker_echo_slam",
+            "IsDisable": true,
+            "Radius": 0
+        },
+        {
+            "SpellName": "invoker_ice_wall",
+            "IsSlow": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 1,
+            "Radius": 1
+        },
+        {
+            "SpellName": "tinker_laser",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "rattletrap_rocket_flare",
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "invoker_forge_spirit",
+            "Radius": 0
+        },
+        {
+            "SpellName": "weaver_the_swarm",
+            "IsSkillShot": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "ember_spirit_fire_remnant"
+        },
+        {
+            "SpellName": "earthshaker_fissure",
+            "IsDisable": true,
+            "IsNuke": true,
+            "AdditionalDelay": -0.1
+        },
+        {
+            "SpellName": "magnataur_skewer",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "skewer_speed",
+            "Width": "skewer_radius"
+        },
+        {
+            "SpellName": "beastmaster_primal_roar",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "tusk_walrus_kick",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "brewmaster_thunder_clap",
+            "IsSlow": true,
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "bane_nightmare",
+            "IsDisable": true,
+            "AdditionalDelay": 1
+        },
+        {
+            "SpellName": "keeper_of_the_light_illuminate"
+        },
+        {
+            "SpellName": "nevermore_shadowraze3",
+            "IsNuke": true,
+            "StringRadius": "shadowraze_range"
+        },
+        {
+            "SpellName": "windrunner_powershot",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "arrow_speed"
+        },
+        {
+            "SpellName": "tusk_ice_shards",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "shard_speed"
+        },
+        {
+            "SpellName": "brewmaster_drunken_haze",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "leshrac_lightning_storm",
+            "IsSlow": true,
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "necrolyte_death_pulse",
+            "IsNuke": true,
+            "IsHeal": true,
+            "StringRadius": "area_of_effect"
+        },
+        {
+            "SpellName": "invoker_alacrity"
+        },
+        {
+            "SpellName": "shadow_shaman_voodoo",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "pugna_nether_blast",
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "morphling_adaptive_strike",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "lone_druid_true_form",
+            "IsShield": true,
+            "Radius": 0
+        },
+        {
+            "SpellName": "nevermore_shadowraze2",
+            "IsNuke": true,
+            "StringRadius": "shadowraze_range"
+        },
+        {
+            "SpellName": "storm_spirit_ball_lightning",
+            "IsSkillShot": true,
+            "Speed": "ball_lightning_move_speed"
+        },
+        {
+            "SpellName": "tusk_snowball",
+            "IsDisable": true,
+            "Speed": "snowball_speed"
+        },
+        {
+            "SpellName": "phoenix_sun_ray_toggle_move"
+        },
+        {
+            "SpellName": "doom_bringer_scorched_earth",
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "phoenix_sun_ray",
+            "OnlyForKillSteal": true
+        },
+        {
+            "SpellName": "phoenix_fire_spirits",
+            "IsSlow": true,
+            "IsSkillShot": true,
+            "Speed": "spirit_speed"
+        },
+        {
+            "SpellName": "silencer_last_word",
+            "AdditionalDelay": 4
+        },
+        {
+            "SpellName": "phantom_lancer_spirit_lance",
+            "IsSlow": true,
+            "IsNuke": true,
+            "Speed": "lance_speed"
+        },
+        {
+            "SpellName": "ursa_enrage",
+            "Radius": 0,
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "chen_penitence",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "invoker_deafening_blast",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "StringRadius": "travel_distance",
+            "Speed": "travel_speed"
+        },
+        {
+            "SpellName": "warlock_shadow_word"
+        },
+        {
+            "SpellName": "centaur_double_edge",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "earth_spirit_stone_caller",
+            "Radius": 0
+        },
+        {
+            "SpellName": "bane_fiends_grip",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "ogre_magi_bloodlust",
+            "IsShield": true
+        },
+        {
+            "SpellName": "earthshaker_enchant_totem",
+            "IsDisable": true,
+            "Radius": 0
+        },
+        {
+            "SpellName": "earth_spirit_rolling_boulder",
+            "IsSlow": true,
+            "AdditionalDelay": 0.6
+        },
+        {
+            "SpellName": "visage_grave_chill",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "tusk_frozen_sigil",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "night_stalker_void",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "riki_smoke_screen",
+            "IsSlow": true,
+            "IsSilence": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": -0.1
+        },
+        {
+            "SpellName": "vengefulspirit_magic_missile",
+            "IsDisable": true,
+            "IsNuke": true,
+            "Speed": "magic_missile_speed"
+        },
+        {
+            "SpellName": "leshrac_diabolic_edict"
+        },
+        {
+            "SpellName": "earth_spirit_boulder_smash",
+            "IsDisable": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "slardar_sprint"
+        },
+        {
+            "SpellName": "razor_plasma_field",
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "ember_spirit_flame_guard",
+            "IsShield": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "morphling_waveform",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "projectile_speed"
+        },
+        {
+            "SpellName": "axe_culling_blade",
+            "MagicImmunityPierce": true,
+            "OnlyForKillSteal": true
+        },
+        {
+            "SpellName": "weaver_shukuchi",
+            "IsShield": true
+        },
+        {
+            "SpellName": "death_prophet_silence",
+            "IsSilence": true,
+            "AdditionalDelay": -0.1
+        },
+        {
+            "SpellName": "earth_spirit_geomagnetic_grip",
+            "IsSilence": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "enigma_midnight_pulse",
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "sniper_assassinate",
+            "OnlyForKillSteal": true
+        },
+        {
+            "SpellName": "elder_titan_echo_stomp",
+            "IsDisable": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "nevermore_shadowraze1",
+            "IsNuke": true,
+            "StringRadius": "shadowraze_range"
+        },
+        {
+            "SpellName": "nevermore_requiem"
+        },
+        {
+            "SpellName": "tiny_toss",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "slark_pounce",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "StringRadius": "pounce_radius",
+            "Speed": "pounce_speed"
+        },
+        {
+            "SpellName": "ogre_magi_ignite",
+            "IsSlow": true,
+            "Speed": "projectile_speed"
+        },
+        {
+            "SpellName": "furion_sprout",
+            "IsSkillShot": true,
+            "AdditionalDelay": -0.1
+        },
+        {
+            "SpellName": "kunkka_ghostship",
+            "IsDisable": true,
+            "Speed": "ghostship_speed"
+        },
+        {
+            "SpellName": "troll_warlord_whirling_axes_ranged",
+            "IsSlow": true,
+            "Speed": "axe_speed"
+        },
+        {
+            "SpellName": "ember_spirit_activate_fire_remnant"
+        },
+        {
+            "SpellName": "storm_spirit_static_remnant",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "skeleton_king_hellfire_blast",
+            "IsDisable": true,
+            "Speed": "blast_speed"
+        },
+        {
+            "SpellName": "centaur_hoof_stomp",
+            "IsDisable": true,
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "tusk_walrus_punch",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "leshrac_split_earth",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.35
+        },
+        {
+            "SpellName": "spirit_breaker_charge_of_darkness",
+            "IsDisable": true,
+            "Speed": "movement_speed"
+        },
+        {
+            "SpellName": "vengefulspirit_wave_of_terror",
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "queenofpain_scream_of_pain",
+            "IsNuke": true,
+            "StringRadius": "area_of_effect"
+        },
+        {
+            "SpellName": "earth_spirit_petrify",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "gyrocopter_rocket_barrage",
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "invoker_emp",
+            "IsSkillShot": true,
+            "AdditionalDelay": 2.9
+        },
+        {
+            "SpellName": "bane_enfeeble"
+        },
+        {
+            "SpellName": "bristleback_viscous_nasal_goo",
+            "IsSlow": true,
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "shadow_demon_shadow_poison",
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "shredder_return_chakram"
+        },
+        {
+            "SpellName": "shadow_shaman_ether_shock",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "ancient_apparition_ice_vortex",
+            "IsSlow": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "bloodseeker_blood_bath",
+            "IsSkillShot": true,
+            "AdditionalDelay": 2.6
+        },
+        {
+            "SpellName": "gyrocopter_homing_missile",
+            "IsDisable": true,
+            "AdditionalDelay": 3,
+            "Speed": "speed"
+        },
+        {
+            "SpellName": "jakiro_ice_path",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.5
+        },
+        {
+            "SpellName": "drow_ranger_wave_of_silence",
+            "IsSilence": true,
+            "IsSkillShot": true,
+            "Speed": "wave_speed"
+        },
+        {
+            "SpellName": "invoker_tornado",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "StringRadius": "travel_distance",
+            "Speed": "travel_speed"
+        },
+        {
+            "SpellName": "dragon_knight_breathe_fire",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "naga_siren_ensnare",
+            "IsDisable": true,
+            "Speed": "net_speed",
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "kunkka_x_marks_the_spot",
+            "IsDisable": true,
+            "AdditionalDelay": 0.1
+        },
+        {
+            "SpellName": "spirit_breaker_nether_strike",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "razor_static_link"
+        },
+        {
+            "SpellName": "necrolyte_reapers_scythe",
+            "IsDisable": true,
+            "OnlyForKillSteal": true
+        },
+        {
+            "SpellName": "broodmother_spawn_spiderlings",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "bristleback_quill_spray",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "legion_commander_overwhelming_odds",
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "ancient_apparition_ice_blast_release"
+        },
+        {
+            "SpellName": "tinker_heat_seeking_missile",
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "shredder_whirling_death",
+            "IsNuke": true,
+            "StringRadius": "whirling_radius"
+        },
+        {
+            "SpellName": "elder_titan_ancestral_spirit",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "chaos_knight_chaos_bolt",
+            "IsDisable": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "legion_commander_press_the_attack",
+            "IsHeal": true,
+            "IsShield": true
+        },
+        {
+            "SpellName": "kunkka_torrent",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 1.7
+        },
+        {
+            "SpellName": "bounty_hunter_shuriken_toss",
+            "IsDisable": true,
+            "IsNuke": true,
+            "OnlyForKillSteal": true
+        },
+        {
+            "SpellName": "omniknight_repel",
+            "IsShield": true
+        },
+        {
+            "SpellName": "batrider_sticky_napalm",
+            "IsSlow": true,
+            "AdditionalDelay": 0.2
+        },
+        {
+            "SpellName": "pudge_dismember",
+            "IsDisable": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "batrider_flaming_lasso",
+            "IsDisable": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "slardar_amplify_damage"
+        },
+        {
+            "SpellName": "lion_voodoo",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "lich_frost_nova",
+            "IsSlow": true,
+            "IsNuke": true
+        },
+        {
+            "SpellName": "beastmaster_call_of_the_wild_boar",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "tiny_avalanche",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "AdditionalDelay": 0.5
+        },
+        {
+            "SpellName": "doom_bringer_doom",
+            "IsDisable": true,
+            "IsSilence": true
+        },
+        {
+            "SpellName": "tinker_rearm"
+        },
+        {
+            "SpellName": "abaddon_death_coil",
+            "IsNuke": true,
+            "IsHeal": true
+        },
+        {
+            "SpellName": "templar_assassin_refraction",
+            "IsShield": true
+        },
+        {
+            "SpellName": "troll_warlord_whirling_axes_melee",
+            "Radius": 0
+        },
+        {
+            "SpellName": "leshrac_pulse_nova",
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "lion_finger_of_death",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "life_stealer_open_wounds",
+            "IsSlow": true
+        },
+        {
+            "SpellName": "bane_brain_sap",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "zuus_arc_lightning"
+        },
+        {
+            "SpellName": "tidehunter_anchor_smash",
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "night_stalker_crippling_fear",
+            "IsSilence": true
+        },
+        {
+            "SpellName": "skywrath_mage_arcane_bolt",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "invoker_chaos_meteor",
+            "IsSkillShot": true,
+            "AdditionalDelay": 1.3
+        },
+        {
+            "SpellName": "medusa_mystic_snake",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "sniper_shrapnel",
+            "IsSkillShot": true,
+            "AdditionalDelay": 1.4,
+            "StringRadius": "radius"
+        },
+        {
+            "SpellName": "lina_laguna_blade",
+            "IsNuke": true
+        },
+        {
+            "SpellName": "ursa_overpower",
+            "IsNuke": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "SpellName": "queenofpain_sonic_wave",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "speed"
+        },
+        {
+            "SpellName": "lion_impale",
+            "IsDisable": true,
+            "IsNuke": true,
+            "Radius": 0,
+            "Width": "width"
+        },
+        {
+            "SpellName": "lina_dragon_slave",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "dragon_slave_speed"
+        },
+        {
+            "SpellName": "venomancer_venomous_gale",
+            "IsSlow": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "skywrath_mage_ancient_seal",
+            "IsSilence": true
+        },
+        {
+            "SpellName": "antimage_mana_void",
+            "IsDisable": true,
+            "IsNuke": true,
+            "OnlyForKillSteal": true
+        },
+        {
+            "SpellName": "shadow_shaman_shackles",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "huskar_life_break",
+            "IsSlow": true,
+            "Speed": "charge_speed"
+        },
+        {
+            "SpellName": "dragon_knight_dragon_tail",
+            "IsDisable": true
+        },
+        {
+            "SpellName": "crystal_maiden_frostbite",
+            "IsSlow": true,
+            "IsSkillShot": true
+        },
+        {
+            "SpellName": "skywrath_mage_concussive_shot",
+            "IsSlow": true,
+            "StringRadius": "launch_radius"
+        },
+        {
+            "SpellName": "bloodseeker_bloodrage",
+            "MagicImmunityPierce": true
+        }
+    ]
+}
