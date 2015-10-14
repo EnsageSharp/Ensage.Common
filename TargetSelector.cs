@@ -24,7 +24,7 @@
                     .Where(
                         x =>
                         x.Team == source.GetEnemyTeam() && !x.IsIllusion && x.IsAlive && x.IsVisible
-                        && x.Distance2D(source) <= (attackRange + x.HullRadius / 2));
+                        && x.Distance2D(source) <= (attackRange + x.HullRadius / 2 + source.HullRadius / 2));
             var aaDmg = source.MinimumDamage + source.BonusDamage;
             Hero bestTarget = null;
             var lastHitsToKill = 0f;
@@ -32,7 +32,7 @@
             {
                 var takenDmg = enemyHero.DamageTaken(aaDmg, DamageType.Physical, source, false);
                 var hitsToKill = enemyHero.Health / takenDmg;
-                if (bestTarget != null && !(lastHitsToKill < hitsToKill))
+                if (bestTarget != null && !(lastHitsToKill > hitsToKill))
                 {
                     continue;
                 }

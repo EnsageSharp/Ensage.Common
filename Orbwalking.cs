@@ -47,8 +47,9 @@
             {
                 return false;
             }
-            var turnTime = me.GetTurnTime(target) * 1000;
-            return ((LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping * 2 - turnTime * 2000)) > tick;
+            var turnTime = me.GetTurnTime(target);
+            //Console.WriteLine(turnTime*1000);
+            return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 150 + bonusWindupMs) > tick;
         }
 
         /// <summary>
@@ -57,7 +58,7 @@
         /// <returns></returns>
         public static bool CanCancelAnimation()
         {
-            return tick >= (LastAttackStart + UnitDatabase.GetAttackPoint(me) * 1000);
+            return tick >= (LastAttackStart + UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping);
         }
 
         /// <summary>
@@ -68,22 +69,37 @@
         /// <param name="bonusRange"></param>
         public static void Orbwalk(Unit target, float bonusWindupMs = 0, float bonusRange = 0)
         {
-            var canAttack = !AttackOnCooldown(target, bonusWindupMs)
-                            && !target.IsValidTarget(
-                                me.GetAttackRange() + me.HullRadius + target.HullRadius + bonusRange)
-                            && !target.IsAttackImmune() && me.CanAttack() && me.NetworkActivity != (NetworkActivity)1503;
-            if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
+            if (me == null)
             {
-                me.Attack(target);
-                Utils.Sleep(100, "Orbwalk.Attack");
                 return;
             }
-            var canCancel = target.Distance2D(me) > (me.GetAttackRange() + me.HullRadius + target.HullRadius + bonusRange)
-                            || (CanCancelAnimation() && me.NetworkActivity == (NetworkActivity)1503);
+            var targetHull = 0f;
+            if (target != null)
+            {
+                targetHull = target.HullRadius;
+            }
+            var isValid = target.IsValidTarget(me.GetAttackRange() + me.HullRadius + targetHull + bonusRange);
+            if (isValid)
+            {
+                var canAttack = !AttackOnCooldown(target, bonusWindupMs)
+                                && !target.IsAttackImmune() && me.CanAttack();
+                if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
+                {
+                    me.Attack(target);
+                    //Console.WriteLine("attack");
+                    Utils.Sleep(100, "Orbwalk.Attack");
+                    return;
+                }
+                //var canCancel = target.Distance2D(me)
+                //                > (me.GetAttackRange() + me.HullRadius + target.HullRadius + bonusRange)
+                //                || (CanCancelAnimation() && me.NetworkActivity == (NetworkActivity)1503);
+            }
+            var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs)) || !isValid;
             if (!canCancel || !Utils.SleepCheck("Orbwalk.Move"))
             {
                 return;
             }
+            //Console.WriteLine("move");
             me.Move(Game.MousePosition);
             Utils.Sleep(100, "Orbwalk.Move");
         }
@@ -116,14 +132,15 @@
             }
             if (!Game.IsInGame || me == null || Game.IsPaused)
             {
-                if (!Game.IsInGame || me == null)
+                if (Game.IsInGame && me != null)
                 {
-                    loaded = false;
-                    LastAttackStart = 0;
-                    lastActivity = 0;
-                    Game.OnUpdate -= Game_OnUpdate;
-                    me = null;
+                    return;
                 }
+                loaded = false;
+                LastAttackStart = 0;
+                lastActivity = 0;
+                Game.OnUpdate -= Game_OnUpdate;
+                me = null;
                 return;
             }
             //Console.WriteLine("a");
@@ -133,10 +150,19 @@
                 return;
             }
             lastActivity = (float)me.NetworkActivity;
-            if (lastActivity == 1503)
+            if (lastActivity != 1503)
             {
-                LastAttackStart = tick;
+                return;
             }
+            //Console.WriteLine("aaaa");
+            //if (orbwalkTarget != null)
+            //{
+            //    LastAttackStart = (float)(tick + me.GetTurnTime(orbwalkTarget) * 1000);
+            //}
+            //else
+            //{
+                LastAttackStart = tick;
+           // }
         }
 
         #endregion

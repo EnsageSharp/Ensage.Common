@@ -829,7 +829,6 @@
         public static double GetTurnTime(this Entity unit, Vector3 position)
         {
             var turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
-            //Console.WriteLine(FindAngleR(unit) + @" " + Utils.DegreeToRadian(unit.FindAngleBetween(position,true)));
             return
                 (Math.Max(
                     Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69,
