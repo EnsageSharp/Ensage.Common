@@ -635,7 +635,33 @@
         /// <returns></returns>
         public static float FindAngleBetween(this Entity unit, Vector3 second, bool radian = false)
         {
-            return unit.Position.ToVector2().FindAngleBetween(second.ToVector2(),radian);
+            return unit.Position.ToVector2().FindAngleBetween(second.ToVector2(), radian);
+        }
+
+        public static float FindAngleForTurnTime(this Entity unit, Vector3 position)
+        {
+            var first = unit.Position;
+            var second = position;
+            var xAngle =
+                Utils.RadianToDegree(
+                    Math.Atan(Math.Abs(position.X - unit.Position.X) / Math.Abs(position.Y - unit.Position.Y)));
+            if (first.X <= second.X && first.Y >= second.Y)
+            {
+                return (float)(90 - xAngle);
+            }
+            if (first.X >= second.X && first.Y >= second.Y)
+            {
+                return (float)(xAngle + 90);
+            }
+            if (first.X >= second.X && first.Y <= second.Y)
+            {
+                return (float)(270 - xAngle);
+            }
+            if (first.X <= second.X && first.Y <= second.Y)
+            {
+                return (float)(xAngle + 270);
+            }
+            return 0;
         }
 
         /// <summary>
@@ -804,33 +830,10 @@
         {
             var turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
             //Console.WriteLine(FindAngleR(unit) + @" " + Utils.DegreeToRadian(unit.FindAngleBetween(position,true)));
-            return (Math.Max(
-                Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69,
-                0) / (turnRate * (1 / 0.03)));
-        }
-
-        public static float FindAngleForTurnTime(this Entity unit, Vector3 position)
-        {
-            var first = unit.Position;
-            var second = position;
-            var xAngle = Utils.RadianToDegree(Math.Atan(Math.Abs(position.X - unit.Position.X) / Math.Abs(position.Y - unit.Position.Y)));
-            if (first.X <= second.X && first.Y >= second.Y)
-            {
-                return (float)(90 - xAngle);
-            }
-            if (first.X >= second.X && first.Y >= second.Y)
-            {
-                return (float)(xAngle + 90);
-            }
-            if (first.X >= second.X && first.Y <= second.Y)
-            {
-                return (float)(270 - xAngle);
-            }
-            if (first.X <= second.X && first.Y <= second.Y) 
-            {
-                return (float)(xAngle + 270);
-            }
-            return 0;
+            return
+                (Math.Max(
+                    Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69,
+                    0) / (turnRate * (1 / 0.03)));
         }
 
         /// <summary>

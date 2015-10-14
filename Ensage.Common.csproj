@@ -72,8 +72,8 @@
     <Compile Include="Algorithm.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
-    <Compile Include="Extensions\GameExtensions.cs" />
     <Compile Include="JungleCamps.cs" />
+    <Compile Include="Orbwalking.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -82,7 +82,6 @@
     <Compile Include="SpellData.cs" />
     <Compile Include="SpellDatabase.cs" />
     <Compile Include="TargetSelector.cs" />
-    <Compile Include="UnitData.cs" />
     <Compile Include="UnitDatabase.cs" />
     <Compile Include="Prediction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,5 @@
 ﻿namespace Ensage.Common.Extensions
 {
-    using System;
     using System.Linq;
 
     /// <summary>
@@ -52,7 +51,7 @@
         {
             var data = SpellDatabase.Find(ability.Name);
             var owner = ability.Owner as Unit;
-            var delay = Game.Ping/1000 + (float)owner.GetTurnTime(target);
+            var delay = Game.Ping / 1000 + (float)owner.GetTurnTime(target);
             var speed = 0f;
             var radius = 0f;
             if (data != null)
@@ -77,12 +76,6 @@
             }
             ability.UseAbility(xyz);
             return true;
-        }
-
-        public static double GetCastPoint(this Ability ability)
-        {
-            var castPoint = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).FloatValue;
-            return castPoint;
         }
 
         /// <summary>
@@ -113,7 +106,8 @@
                 }
                 if (data.Speed != null)
                 {
-                    var speed = ability.AbilityData.FirstOrDefault(x => x.Name == data.Speed).GetValue(ability.Level - 1);
+                    var speed = ability.AbilityData.FirstOrDefault(x => x.Name == data.Speed)
+                        .GetValue(ability.Level - 1);
                     delay += owner.Distance2D(target) / speed;
                 }
                 if (data.Radius != 0)
@@ -122,7 +116,8 @@
                 }
                 else if (data.StringRadius != null)
                 {
-                    radius = ability.AbilityData.FirstOrDefault(x => x.Name == data.StringRadius).GetValue(ability.Level - 1);
+                    radius =
+                        ability.AbilityData.FirstOrDefault(x => x.Name == data.StringRadius).GetValue(ability.Level - 1);
                 }
                 else if (data.Width != null)
                 {
@@ -155,6 +150,12 @@
             }
             Utils.Sleep(delay * 1000, "CHAINSTUN_SLEEP");
             return true;
+        }
+
+        public static double GetCastPoint(this Ability ability)
+        {
+            var castPoint = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).FloatValue;
+            return castPoint;
         }
 
         #endregion
