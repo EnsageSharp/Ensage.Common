@@ -150,7 +150,7 @@
                 return;
             }
             lastActivity = (float)me.NetworkActivity;
-            if (lastActivity != 1503)
+            if (lastActivity != 1503 && lastActivity != 1505)
             {
                 return;
             }
