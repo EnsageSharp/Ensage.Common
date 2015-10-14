@@ -42,14 +42,15 @@
             {
                 return false;
             }
-            var validTarget = target != null && target.IsValid;
+            var validTarget = target != null;
             if (!validTarget)
             {
                 return false;
             }
             var turnTime = me.GetTurnTime(target);
             //Console.WriteLine(turnTime*1000);
-            return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 150 + bonusWindupMs) > tick;
+            return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 150
+                    + bonusWindupMs) > tick;
         }
 
         /// <summary>
@@ -59,6 +60,22 @@
         public static bool CanCancelAnimation()
         {
             return tick >= (LastAttackStart + UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping);
+        }
+
+        /// <summary>
+        ///     Loads orbwalking if its not loaded yet
+        /// </summary>
+        public static void Load()
+        {
+            if (loaded)
+            {
+                return;
+            }
+            Game.OnUpdate += Game_OnUpdate;
+            LastAttackStart = 0;
+            lastActivity = 0;
+            me = null;
+            loaded = true;
         }
 
         /// <summary>
@@ -78,11 +95,11 @@
             {
                 targetHull = target.HullRadius;
             }
-            var isValid = target.IsValidTarget(me.GetAttackRange() + me.HullRadius + targetHull + bonusRange);
+            var isValid = target != null && target.Distance2D(me) <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange);
+            //Console.WriteLine(isValid);
             if (isValid)
             {
-                var canAttack = !AttackOnCooldown(target, bonusWindupMs)
-                                && !target.IsAttackImmune() && me.CanAttack();
+                var canAttack = !AttackOnCooldown(target, bonusWindupMs) && !target.IsAttackImmune() && !target.IsInvul() && me.CanAttack();
                 if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
                 {
                     me.Attack(target);
@@ -94,7 +111,8 @@
                 //                > (me.GetAttackRange() + me.HullRadius + target.HullRadius + bonusRange)
                 //                || (CanCancelAnimation() && me.NetworkActivity == (NetworkActivity)1503);
             }
-            var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs)) || !isValid;
+            var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs))
+                            || (!isValid && me.NetworkActivity != (NetworkActivity)1503 && me.NetworkActivity != (NetworkActivity)1505);
             if (!canCancel || !Utils.SleepCheck("Orbwalk.Move"))
             {
                 return;
@@ -102,22 +120,6 @@
             //Console.WriteLine("move");
             me.Move(Game.MousePosition);
             Utils.Sleep(100, "Orbwalk.Move");
-        }
-
-        /// <summary>
-        ///     Loads orbwalking if its not loaded yet
-        /// </summary>
-        public static void Load()
-        {
-            if (loaded)
-            {
-                return;
-            }
-            Game.OnUpdate += Game_OnUpdate;
-            LastAttackStart = 0;
-            lastActivity = 0;
-            me = null;
-            loaded = true;
         }
 
         #endregion
@@ -154,15 +156,15 @@
             {
                 return;
             }
-            //Console.WriteLine("aaaa");
+            Console.WriteLine("aaaa");
             //if (orbwalkTarget != null)
             //{
             //    LastAttackStart = (float)(tick + me.GetTurnTime(orbwalkTarget) * 1000);
             //}
             //else
             //{
-                LastAttackStart = tick;
-           // }
+            LastAttackStart = tick;
+            // }
         }
 
         #endregion
