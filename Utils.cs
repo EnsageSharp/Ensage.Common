@@ -112,7 +112,7 @@
                     "modifier_lone_druid_spirit_bear_entangle_effect", "modifier_meepo_earthbind",
                     "modifier_naga_siren_ensnare", "modifier_storm_spirit_electric_vortex_pull",
                     "modifier_treant_overgrowth", "modifier_cyclone", "modifier_sheepstick_debuff",
-                    "modifier_shadow_shaman_voodoo", "modifier_lion_voodoo",
+                    "modifier_shadow_shaman_voodoo", "modifier_lion_voodoo", "modifier_sheepstick",
                     "modifier_brewmaster_storm_cyclone", "modifier_puck_phase_shift",
                     "modifier_dark_troll_warlord_ensnare",
                     "modifier_invoker_deafening_blast_knockback"

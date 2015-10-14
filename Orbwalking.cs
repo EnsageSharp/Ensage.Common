@@ -156,7 +156,7 @@
             {
                 return;
             }
-            Console.WriteLine("aaaa");
+            //Console.WriteLine("aaaa");
             //if (orbwalkTarget != null)
             //{
             //    LastAttackStart = (float)(tick + me.GetTurnTime(orbwalkTarget) * 1000);
