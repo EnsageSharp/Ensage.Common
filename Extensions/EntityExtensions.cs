@@ -590,10 +590,11 @@
                     {
                         //some calculations missing
                     }
+                   // Console.WriteLine(target.DamageResist);
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.DamageResist / 100) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - target.DamageResist) - reduceStatic + AA);
                     break;
                 case DamageType.HealthRemoval:
                     break;
