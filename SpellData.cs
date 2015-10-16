@@ -4,6 +4,8 @@
     /// </summary>
     public class SpellData
     {
+        public bool AaDamage { get; set; }
+
         #region Fields
 
         /// <summary>
@@ -70,6 +72,10 @@
         /// </summary>
         public bool OnlyForKillSteal;
 
+        private readonly string damage;
+
+        private readonly float damageMultiplier;
+
         /// <summary>
         ///     Radius of non targeted/aoe spell
         /// </summary>
@@ -99,6 +105,23 @@
         /// </summary>
         public string Width;
 
+        /// <summary>
+        /// Damage data name
+        /// </summary>
+        public string DamageString;
+
+        public string DamageScepterString;
+
+        public float DamageMultiplier;
+
+        private readonly string bonusDamagestring;
+
+        public string BonusDamageString;
+
+        public bool AADamage;
+
+        private readonly string damageScepterString;
+
         #endregion
 
         #region Constructors and Destructors
@@ -126,8 +149,15 @@
             bool magicImmunityPierce,
             bool fakeCastRange,
             string realCastRange,
-            bool onlyForKillSteal)
+            bool onlyForKillSteal,
+            string damageString,
+            float damageMultiplier,
+            string bonusDamagestring,
+            bool aaDamage,
+            string damageScepterString)
         {
+            this.AADamage = aaDamage;
+            this.DamageScepterString = damageScepterString;
             this.SpellName = spellName;
             this.IsDisable = isDisable;
             this.IsSlow = isSlow;
@@ -147,6 +177,9 @@
             this.FakeCastRange = fakeCastRange;
             this.RealCastRange = realCastRange;
             this.OnlyForKillSteal = onlyForKillSteal;
+            this.DamageString = damageString;
+            this.DamageMultiplier = damageMultiplier;
+            this.BonusDamageString = bonusDamagestring;
         }
 
         #endregion

@@ -9,12 +9,12 @@
             "IsNuke": true,
             "IsSkillShot": true,
             "Speed": "shock_speed",
-            "Width": "shock_width"
+            "Width": "shock_width",
+            "DamageString":  "shock_damage"
         },
         {
             "SpellName": "ursa_earthshock",
             "IsSlow": true,
-            "IsNuke": true,
             "StringRadius": "shock_radius"
         },
         {
@@ -23,7 +23,6 @@
         },
         {
             "SpellName": "skywrath_mage_mystic_flare",
-            "IsNuke": true,
             "IsSkillShot": true,
             "AdditionalDelay": 0.2,
             "Width": "radius"
@@ -45,7 +44,9 @@
             "StringRadius": "radius"
         },
         {
-            "SpellName": "beastmaster_wild_axes"
+            "SpellName": "beastmaster_wild_axes",
+            "IsNuke": true,
+            "DamageMultiplier": 2
         },
         {
             "SpellName": "puck_waning_rift",
@@ -93,14 +94,17 @@
             "SpellName": "ember_spirit_sleight_of_fist",
             "IsNuke": true,
             "IsSkillShot": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "BonusDamageString": "bonus_hero_damage",
+            "AADamage": true
         },
         {
             "SpellName": "batrider_flamebreak",
             "IsDisable": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.3
+            "AdditionalDelay": 0.3,
+            "DamageString": "damage"
         },
         {
             "SpellName": "mirana_arrow",
@@ -153,12 +157,14 @@
             "IsNuke": true,
             "IsSkillShot": true,
             "StringRadius": "chain_radius",
-            "Speed": "speed"
+            "Speed": "speed",
+            "DamageString": "damage"
         },
         {
             "SpellName": "doom_bringer_lvl_death",
             "IsDisable": true,
-            "IsNuke": true
+            "IsNuke": true,
+            "DamageString": "damage"
         },
         {
             "SpellName": "crystal_maiden_freezing_field",
@@ -196,7 +202,9 @@
             "IsSkillShot": true,
             "AdditionalDelay": 0.5,
             "StringRadius": "radius",
-            "Speed": "speed"
+            "Speed": "speed",
+            "DamageString": "pass_damage",
+            "DamageMultiplier": 2
         },
         {
             "SpellName": "phantom_assassin_phantom_strike",
@@ -210,7 +218,8 @@
             "SpellName": "omniknight_purification",
             "IsNuke": true,
             "IsHeal": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "DamageString":  "heal"
         },
         {
             "SpellName": "keeper_of_the_light_blinding_light",
@@ -228,7 +237,9 @@
             "IsSkillShot": true,
             "AdditionalDelay": 0.5,
             "StringRadius": "radius",
-            "Speed": "speed"
+            "Speed": "speed",
+            "DamageString": "pass_damage",
+            "DamageMultiplier": 2
         },
         {
             "SpellName": "undying_soul_rip",

@@ -6,6 +6,8 @@
 
     using Ensage.Heroes;
 
+    using global::SharpDX;
+
     using SharpDX;
 
     internal class ExternalDmgAmps
@@ -717,8 +719,8 @@
         public static float GetAttackRange(this Unit unit)
         {
             var bonus = 0.0;
-            var ClassID = unit.ClassID;
-            switch (ClassID)
+            var classId = unit.ClassID;
+            switch (classId)
             {
                 case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
                     var psi = unit.Spellbook.SpellW;

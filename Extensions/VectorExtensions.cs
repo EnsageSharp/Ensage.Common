@@ -2,7 +2,7 @@
 {
     using System;
 
-    using SharpDX;
+    using global::SharpDX;
 
     /// <summary>
     ///     Extension class for Vector2, Vector3 and Vector4 classes of SharpDX.
