@@ -4,7 +4,6 @@
     /// </summary>
     public class SpellData
     {
-        public bool AaDamage { get; set; }
 
         #region Fields
 
@@ -72,10 +71,6 @@
         /// </summary>
         public bool OnlyForKillSteal;
 
-        private readonly string damage;
-
-        private readonly float damageMultiplier;
-
         /// <summary>
         ///     Radius of non targeted/aoe spell
         /// </summary>
@@ -114,13 +109,9 @@
 
         public float DamageMultiplier;
 
-        private readonly string bonusDamagestring;
-
         public string BonusDamageString;
 
         public bool AADamage;
-
-        private readonly string damageScepterString;
 
         #endregion
 
