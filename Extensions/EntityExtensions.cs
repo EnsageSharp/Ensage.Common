@@ -871,17 +871,6 @@
         }
 
         /// <summary>
-        ///     Checks if given unit's current activity is Attack
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool IsAttacking(this Unit unit)
-        {
-            return (unit.NetworkActivity == NetworkActivity.Attack1 || unit.NetworkActivity == NetworkActivity.Attack2
-                    || unit.NetworkActivity == NetworkActivity.Attack3);
-        }
-
-        /// <summary>
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>

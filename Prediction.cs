@@ -121,9 +121,9 @@ namespace Ensage.Common
                     unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
             return (data != null && data.Speed == new Vector3(0, 0, 0))
                    || unit.Modifiers.Any(x => x.Name == "modifier_eul_cyclone" || x.Name == "modifier_invoker_tornado")
-                   || (unit.NetworkActivity == NetworkActivity.Idle1 && !AbilityMove(unit)
+                   || (unit.NetworkActivity == (NetworkActivity)1500 && !AbilityMove(unit)
                        && unit.Modifiers.Any(x => x.Name == "modifier_invoker_deafening_blast_knockback"))
-                   || unit.NetworkActivity == NetworkActivity.Attack1;
+                   || unit.NetworkActivity == (NetworkActivity)1503;
         }
 
         /// <summary>

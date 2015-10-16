@@ -139,7 +139,6 @@ namespace Ensage.Common
             if (spell == null)
             {
                 return attackBaseTime / (1 + (attackSpeed - 100) / 100);
-                ;
             }
             var baseAttackTime = spell.AbilityData.FirstOrDefault(x => x.Name == "base_attack_time");
             if (baseAttackTime != null)
