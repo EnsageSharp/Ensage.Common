@@ -31,6 +31,91 @@
         #region Public Methods and Operators
 
         /// <summary>
+        /// Attacks target, uses spell UniqueAttackModifiers if enabled
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="useModifiers"></param>
+        public static void Attack(Unit target, bool useModifiers)
+        {
+            if (target is Hero && me.CanCast())
+            {
+                if (me.ClassID == ClassID.CDOTA_Unit_Hero_Clinkz)
+                {
+                    var searinga = me.Spellbook.Spell2;
+                    if (searinga.Level > 0 && me.Mana > searinga.ManaCost)
+                    {
+                        searinga.UseAbility(target);
+                        return;
+                    }
+                }
+                else if (me.ClassID == ClassID.CDOTA_Unit_Hero_DrowRanger && !target.IsMagicImmune())
+                {
+                    var frost = me.Spellbook.Spell1;
+                    if (frost.Level > 0 && me.Mana > frost.ManaCost)
+                    {
+                        frost.UseAbility(target);
+                        return;
+                    }
+                }
+                else if (me.ClassID == ClassID.CDOTA_Unit_Hero_Viper && !target.IsMagicImmune())
+                {
+                    var poison = me.Spellbook.Spell1;
+                    if (poison.Level > 0 && me.Mana > poison.ManaCost)
+                    {
+                        poison.UseAbility(target);
+                        return;
+                    }
+                }
+                else if (me.ClassID == ClassID.CDOTA_Unit_Hero_Huskar && !target.IsMagicImmune())
+                {
+                    var burning = me.Spellbook.Spell2;
+                    if (burning.Level > 0 && me.Health > me.MaximumHealth * 0.35)
+                    {
+                        burning.UseAbility(target);
+                        return;
+                    }
+                }
+                else if (me.ClassID == ClassID.CDOTA_Unit_Hero_Silencer && !target.IsMagicImmune())
+                {
+                    var glaives = me.Spellbook.Spell2;
+                    if (glaives.Level > 0 && me.Mana > glaives.ManaCost)
+                    {
+                        glaives.UseAbility(target);
+                        return;
+                    }
+                }
+                else if (me.ClassID == ClassID.CDOTA_Unit_Hero_Jakiro && !target.IsMagicImmune())
+                {
+                    var liquid = me.Spellbook.Spell3;
+                    if (liquid.Level > 0 && liquid.CanBeCasted())
+                    {
+                        liquid.UseAbility(target);
+                        return;
+                    }
+                }
+                else if (me.ClassID == ClassID.CDOTA_Unit_Hero_Obsidian_Destroyer && !target.IsMagicImmune())
+                {
+                    var arcane = me.Spellbook.Spell1;
+                    if (arcane.Level > 0 && me.Mana > arcane.ManaCost)
+                    {
+                        arcane.UseAbility(target);
+                        return;
+                    }
+                }
+                else if (me.ClassID == ClassID.CDOTA_Unit_Hero_Enchantress && !target.IsMagicImmune())
+                {
+                    var impetus = me.Spellbook.Spell4;
+                    if (impetus.Level > 0 && me.Mana > impetus.ManaCost)
+                    {
+                        impetus.UseAbility(target);
+                        return;
+                    }
+                }
+            }
+            me.Attack(target);
+        }
+
+        /// <summary>
         ///     Checks if attack is currently on cooldown
         /// </summary>
         /// <param name="target"></param>
@@ -84,7 +169,7 @@
         /// <param name="target"></param>
         /// <param name="bonusWindupMs"></param>
         /// <param name="bonusRange"></param>
-        public static void Orbwalk(Unit target, float bonusWindupMs = 0, float bonusRange = 0)
+        public static void Orbwalk(Unit target, float bonusWindupMs = 0, float bonusRange = 0, bool attackmodifiers = false)
         {
             if (me == null)
             {
@@ -95,14 +180,17 @@
             {
                 targetHull = target.HullRadius;
             }
-            var isValid = target != null && target.Distance2D(me) <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange);
+            var isValid = target != null
+                          && target.Distance2D(me)
+                          <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange);
             //Console.WriteLine(isValid);
             if (isValid)
             {
-                var canAttack = !AttackOnCooldown(target, bonusWindupMs) && !target.IsAttackImmune() && !target.IsInvul() && me.CanAttack();
+                var canAttack = !AttackOnCooldown(target, bonusWindupMs) && !target.IsAttackImmune()
+                                && !target.IsInvul() && me.CanAttack();
                 if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
                 {
-                    me.Attack(target);
+                    Attack(target,attackmodifiers);
                     //Console.WriteLine("attack");
                     Utils.Sleep(100, "Orbwalk.Attack");
                     return;
@@ -112,7 +200,8 @@
                 //                || (CanCancelAnimation() && me.NetworkActivity == (NetworkActivity)1503);
             }
             var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs))
-                            || (!isValid && me.NetworkActivity != (NetworkActivity)1503 && me.NetworkActivity != (NetworkActivity)1505);
+                            || (!isValid && me.NetworkActivity != (NetworkActivity)1503
+                                && me.NetworkActivity != (NetworkActivity)1505);
             if (!canCancel || !Utils.SleepCheck("Orbwalk.Move"))
             {
                 return;

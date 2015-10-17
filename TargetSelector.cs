@@ -68,6 +68,25 @@
             return closestHero;
         }
 
+        /// <summary>
+        /// Checks for lowest hp creep in attack range
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static Unit GetLowestHPCreep(Hero source)
+        {
+            var attackRange = source.GetAttackRange();
+            var lowestHp =
+                ObjectMgr.GetEntities<Creep>()
+                    .Where(
+                        x =>
+                        x.IsAlive && x.IsVisible && x.Team != source.Team && x.Distance2D(source) < (attackRange + 100))
+                    .OrderBy(creep => creep.Health)
+                    .DefaultIfEmpty(null)
+                    .FirstOrDefault();
+            return lowestHp;
+        }
+
         #endregion
     }
 }
