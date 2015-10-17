@@ -76,6 +76,7 @@
     <Compile Include="Extensions\SharpDX\Vector2Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector3Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
+    <Compile Include="HUDInfo.cs" />
     <Compile Include="JungleCamps.cs" />
     <Compile Include="Orbwalking.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

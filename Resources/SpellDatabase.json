@@ -250,7 +250,8 @@
             "SpellName": "invoker_sun_strike",
             "IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 1.7
+            "AdditionalDelay": 1.7,
+            "DamageString":  "damage_per_unit"
         },
         {
             "SpellName": "winter_wyvern_splinter_blast",
