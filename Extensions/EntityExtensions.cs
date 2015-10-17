@@ -723,7 +723,7 @@
             switch (classId)
             {
                 case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
-                    var psi = unit.Spellbook.SpellW;
+                    var psi = unit.Spellbook.SpellE;
                     if (psi != null && psi.Level > 0)
                     {
                         var firstOrDefault = psi.AbilityData.FirstOrDefault(x => x.Name == "bonus_attack_range");
