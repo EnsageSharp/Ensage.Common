@@ -18,7 +18,7 @@
 
         //public static Dictionary<float[], float> attackData = new Dictionary<float[], float>();
 
-        private static float lastActivity;
+        private static NetworkActivity lastActivity;
 
         private static bool loaded;
 
@@ -37,7 +37,7 @@
         /// <param name="useModifiers"></param>
         public static void Attack(Unit target, bool useModifiers)
         {
-            if (target is Hero && me.CanCast())
+            if (target is Hero && me.CanCast() && useModifiers)
             {
                 if (me.ClassID == ClassID.CDOTA_Unit_Hero_Clinkz)
                 {
@@ -169,6 +169,7 @@
         /// <param name="target"></param>
         /// <param name="bonusWindupMs"></param>
         /// <param name="bonusRange"></param>
+        /// <param name="attackmodifiers"></param>
         public static void Orbwalk(Unit target, float bonusWindupMs = 0, float bonusRange = 0, bool attackmodifiers = false)
         {
             if (me == null)
@@ -236,12 +237,12 @@
             }
             //Console.WriteLine("a");
             tick = Environment.TickCount;
-            if (me.NetworkActivity == (NetworkActivity)lastActivity)
+            if (me.NetworkActivity == lastActivity)
             {
                 return;
             }
-            lastActivity = (float)me.NetworkActivity;
-            if (lastActivity != 1503 && lastActivity != 1505)
+            lastActivity = me.NetworkActivity;
+            if (lastActivity != NetworkActivity.Attack && lastActivity != NetworkActivity.Crit)
             {
                 return;
             }
