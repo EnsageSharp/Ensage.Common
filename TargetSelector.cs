@@ -1,5 +1,6 @@
 ﻿namespace Ensage.Common
 {
+    using System;
     using System.Linq;
 
     using Ensage.Common.Extensions;
@@ -75,16 +76,32 @@
         /// <returns></returns>
         public static Unit GetLowestHPCreep(Hero source)
         {
-            var attackRange = source.GetAttackRange();
-            var lowestHp =
-                ObjectMgr.GetEntities<Creep>()
-                    .Where(
-                        x =>
-                        x.IsAlive && x.IsVisible && x.Team != source.Team && x.Distance2D(source) < (attackRange + 100))
-                    .OrderBy(creep => creep.Health)
-                    .DefaultIfEmpty(null)
-                    .FirstOrDefault();
-            return lowestHp;
+            try
+            {
+                var attackRange = source.GetAttackRange();
+                var lowestHp =
+                    ObjectMgr.GetEntities<Unit>()
+                        .Where(
+                            x =>
+                            (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
+                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
+                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
+                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
+                             || x.ClassID == ClassID.CDOTA_BaseNPC_Additive
+                             || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
+                             || x.ClassID == ClassID.CDOTA_BaseNPC_Building
+                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
+                            && x.Team != source.Team && x.Distance2D(source) < (attackRange + 100))
+                        .OrderBy(creep => creep.Health)
+                        .DefaultIfEmpty(null)
+                        .FirstOrDefault();
+                return lowestHp;
+            }
+            catch (Exception)
+            {
+                //no   
+            }
+            return null;
         }
 
         #endregion

@@ -205,37 +205,36 @@
                 distance = pos.Distance2D(target) - me.Distance2D(target);
             }
             var isValid = target != null
-                          && target.Distance2D(me)
+                          && target.IsValid && target.Distance2D(me)
                           <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + distance);
-            //Console.WriteLine(isValid);
             if (isValid
                 || (target != null
                     && (me.NetworkActivity == NetworkActivity.Attack || me.NetworkActivity == NetworkActivity.Crit
                         || me.NetworkActivity == (NetworkActivity)1504) && me.GetTurnTime(target.Position) < 0.1))
             {
-                var canAttack = !AttackOnCooldown(target, bonusWindupMs) && !target.IsAttackImmune()
+                var canAttack = (!AttackOnCooldown(target, bonusWindupMs) || !CanCancelAnimation()) && !target.IsAttackImmune()
                                 && !target.IsInvul() && me.CanAttack();
                 if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
                 {
                     Attack(target, attackmodifiers);
-                    //Console.WriteLine("attack");
                     Utils.Sleep(100, "Orbwalk.Attack");
                     return;
                 }
-                //var canCancel = target.Distance2D(me)
-                //                > (me.GetAttackRange() + me.HullRadius + target.HullRadius + bonusRange)
-                //                || (CanCancelAnimation() && me.NetworkActivity == (NetworkActivity)1503);
             }
-            var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs))
-                            || (!isValid && me.NetworkActivity != NetworkActivity.Attack
-                                && me.NetworkActivity != NetworkActivity.Crit);
+            var canCancel = (CanCancelAnimation() && (AttackOnCooldown(target, bonusWindupMs)))
+                            || (!isValid && CanCancelAnimation());
             if (!canCancel || !Utils.SleepCheck("Orbwalk.Move"))
             {
                 return;
-            }
-            //Console.WriteLine("move");            
+            }        
             me.Move(Game.MousePosition);
             Utils.Sleep(100, "Orbwalk.Move");
+        }
+
+        public static bool IsAttacking(Hero hero)
+        {
+            return hero.NetworkActivity == NetworkActivity.Attack || hero.NetworkActivity == NetworkActivity.Crit
+                   || hero.NetworkActivity == (NetworkActivity)1504;
         }
 
         #endregion

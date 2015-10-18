@@ -200,7 +200,6 @@ namespace Ensage.Common
             {
                 return;
             }
-
             var me = ObjectMgr.LocalHero;
             if (me == null)
             {
