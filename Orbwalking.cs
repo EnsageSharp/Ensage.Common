@@ -143,7 +143,7 @@
             }
             var turnTime = me.GetTurnTime(target);
             //Console.WriteLine(turnTime*1000);
-            return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 150
+            return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 75
                     + bonusWindupMs) > tick;
         }
 
@@ -220,12 +220,12 @@
                     return;
                 }
             }
-            var canCancel = (CanCancelAnimation() && (AttackOnCooldown(target, bonusWindupMs)))
-                            || (!isValid && CanCancelAnimation());
+            var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs))
+                            || (!isValid && !me.IsAttacking());
             if (!canCancel || !Utils.SleepCheck("Orbwalk.Move"))
             {
                 return;
-            }        
+            }
             me.Move(Game.MousePosition);
             Utils.Sleep(100, "Orbwalk.Move");
         }
