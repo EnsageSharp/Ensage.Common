@@ -10,6 +10,8 @@
 
     using SharpDX;
 
+    using Ability = Ensage.Ability;
+
     internal class ExternalDmgAmps
     {
         #region Fields
@@ -572,7 +574,7 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.MagicDamageResist / 100) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - target.MagicDamageResist) - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -883,6 +885,18 @@
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
+        public static bool IsAttacking(this Unit unit)
+        {
+            return (unit.NetworkActivity == NetworkActivity.Attack || unit.NetworkActivity == NetworkActivity.Crit
+                    || unit.NetworkActivity == NetworkActivity.Attack2
+                    || unit.NetworkActivity == NetworkActivity.AttackEvent
+                    || unit.NetworkActivity == NetworkActivity.AttackEventBash);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsHexed(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Hexed);
@@ -924,7 +938,6 @@
         /// <returns></returns>
         /// <summary>
         /// </summary>
-        /// <param name="unit"></param>
         /// <returns></returns>
         public static bool IsInvisible(this Unit unit)
         {

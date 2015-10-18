@@ -209,8 +209,7 @@
                           <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + distance);
             if (isValid
                 || (target != null
-                    && (me.NetworkActivity == NetworkActivity.Attack || me.NetworkActivity == NetworkActivity.Crit
-                        || me.NetworkActivity == (NetworkActivity)1504) && me.GetTurnTime(target.Position) < 0.1))
+                    && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))
             {
                 var canAttack = (!AttackOnCooldown(target, bonusWindupMs) || !CanCancelAnimation()) && !target.IsAttackImmune()
                                 && !target.IsInvul() && me.CanAttack();
@@ -229,12 +228,6 @@
             }        
             me.Move(Game.MousePosition);
             Utils.Sleep(100, "Orbwalk.Move");
-        }
-
-        public static bool IsAttacking(Hero hero)
-        {
-            return hero.NetworkActivity == NetworkActivity.Attack || hero.NetworkActivity == NetworkActivity.Crit
-                   || hero.NetworkActivity == (NetworkActivity)1504;
         }
 
         #endregion
@@ -266,8 +259,7 @@
             }
             lastActivity = me.NetworkActivity;
             //Console.WriteLine(lastActivity);
-            if (lastActivity != NetworkActivity.Attack && lastActivity != NetworkActivity.Crit
-                && lastActivity != (NetworkActivity)1504)
+            if (!me.IsAttacking())
             {
                 return;
             }
