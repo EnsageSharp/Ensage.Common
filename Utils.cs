@@ -28,31 +28,70 @@
 
         #region Enums
 
+        /// <summary>
+        ///     Messages called by OnWndProc
+        /// </summary>
         public enum WindowsMessages
         {
+            /// <summary>
+            ///     Left mouse button double-click
+            /// </summary>
             WM_LBUTTONDBLCLCK = 0x203,
 
+            /// <summary>
+            ///     Right mouse button double click
+            /// </summary>
             WM_RBUTTONDBLCLCK = 0x206,
 
+            /// <summary>
+            ///     Middle mouse button double click
+            /// </summary>
             WM_MBUTTONDBLCLCK = 0x209,
 
+            /// <summary>
+            ///     Middle mouse button down
+            /// </summary>
             WM_MBUTTONDOWN = 0x207,
 
+            /// <summary>
+            ///     Middle mouse button up
+            /// </summary>
             WM_MBUTTONUP = 0x208,
 
+            /// <summary>
+            ///     Mouse being moved
+            /// </summary>
             WM_MOUSEMOVE = 0x200,
 
+            /// <summary>
+            ///     Left mouse button down
+            /// </summary>
             WM_LBUTTONDOWN = 0x201,
 
+            /// <summary>
+            ///     Left mouse button up
+            /// </summary>
             WM_LBUTTONUP = 0x202,
 
+            /// <summary>
+            ///     Right mouse button down
+            /// </summary>
             WM_RBUTTONDOWN = 0x204,
 
+            /// <summary>
+            ///     Right mouse button up
+            /// </summary>
             WM_RBUTTONUP = 0x205,
 
+            /// <summary>
+            ///     Key down
+            /// </summary>
             WM_KEYDOWN = 0x0100,
 
-            WM_KEYUP = 0x101
+            /// <summary>
+            ///     Key up
+            /// </summary>
+            WM_KEYUP = 0x0101
         }
 
         #endregion
@@ -67,23 +106,6 @@
         public static double DegreeToRadian(double angle)
         {
             return Math.PI * angle / 180.0;
-        }
-
-        public static byte FixVirtualKey(byte key)
-        {
-            switch (key)
-            {
-                case 160:
-                    return 0x10;
-                case 161:
-                    return 0x10;
-                case 162:
-                    return 0x11;
-                case 163:
-                    return 0x11;
-            }
-
-            return key;
         }
 
         /// <summary>
@@ -141,6 +163,11 @@
             return (point.X > x && point.X < x + width && point.Y > y && point.Y < y + height);
         }
 
+        /// <summary>
+        ///     Converts given key code to text
+        /// </summary>
+        /// <param name="vKey"></param>
+        /// <returns></returns>
         public static string KeyToText(uint vKey)
         {
             /*A-Z */
@@ -195,6 +222,11 @@
             return sb.ToString();
         }
 
+        /// <summary>
+        ///     Converts given radian to degrees
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
         public static double RadianToDegree(double angle)
         {
             return angle * 180 / Math.PI;

@@ -161,7 +161,11 @@ namespace Ensage.Common
         public static float GetAttackSpeed(Hero unit)
         {
             //Console.WriteLine(unit.AttacksPerSecond * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01);
-            var attackSpeed = Math.Min(unit.AttacksPerSecond * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01, 600);
+            var attackSpeed =
+                Math.Min(
+                    unit.AttacksPerSecond
+                    * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01,
+                    600);
 
             if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
             {

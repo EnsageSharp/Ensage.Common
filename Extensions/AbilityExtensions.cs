@@ -1,6 +1,9 @@
 ﻿namespace Ensage.Common.Extensions
 {
+    using System;
     using System.Linq;
+
+    using Ensage.Common.AbilityInfo;
 
     /// <summary>
     /// </summary>
@@ -37,7 +40,7 @@
                 return canBeCasted;
             }
 
-            var data = SpellDatabase.Find(ability.Name);
+            var data = AbilityDatabase.Find(ability.Name);
             return data == null ? canBeCasted : data.MagicImmunityPierce;
         }
 
@@ -49,7 +52,7 @@
         /// <returns>returns true in case of successfull cast</returns>
         public static bool CastSkillShot(this Ability ability, Unit target)
         {
-            var data = SpellDatabase.Find(ability.Name);
+            var data = AbilityDatabase.Find(ability.Name);
             var owner = ability.Owner as Unit;
             var delay = Game.Ping / 1000 + (float)owner.GetTurnTime(target);
             var speed = 0f;
@@ -62,11 +65,11 @@
                 }
                 if (data.Speed != null)
                 {
-                    speed = ability.AbilityData.FirstOrDefault(x => x.Name == data.Speed).Value;
+                    speed = ability.AbilityData.FirstOrDefault(x => x.Name == data.Speed).GetValue(ability.Level - 1);
                 }
                 if (data.Width != null)
                 {
-                    radius = ability.AbilityData.FirstOrDefault(x => x.Name == data.Width).Value;
+                    radius = ability.AbilityData.FirstOrDefault(x => x.Name == data.Width).GetValue(ability.Level - 1);
                 }
             }
             var xyz = Prediction.SkillShotXYZ(owner, target, delay, speed, radius);
@@ -90,7 +93,7 @@
             {
                 return false;
             }
-            var data = SpellDatabase.Find(ability.Name);
+            var data = AbilityDatabase.Find(ability.Name);
             var owner = ability.Owner;
             var delay = Game.Ping / 1000 + ability.GetCastPoint();
             var radius = 0f;
@@ -135,10 +138,7 @@
             }
             else if (ability.AbilityBehavior.HasFlag(AbilityBehavior.AreaOfEffect))
             {
-                var pos = target.Position
-                          + VectorExtensions.FromPolarCoordinates(1f, target.NetworkRotationRad).ToVector3()
-                          * (float)(target.MovementSpeed * (delay));
-                ability.UseAbility(pos);
+                ability.CastSkillShot(target);
             }
             else if (ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
@@ -152,10 +152,68 @@
             return true;
         }
 
+        /// <summary>
+        ///     Returns ability data with given name, checks if data are level dependent or not
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="dataName"></param>
+        /// <param name="level">Custom level</param>
+        /// <returns></returns>
+        public static float GetAbilityData(this Ability ability, string dataName, uint level = 0)
+        {
+            var lvl = ability.Level;
+            if (level > 0)
+            {
+                lvl = level;
+            }
+            var data = ability.AbilityData.FirstOrDefault(x => x.Name == dataName);
+            if (data == null)
+            {
+                return 0;
+            }
+            return data.Count > 1 ? data.GetValue(lvl - 1) : data.Value;
+        }
+
+        public static float GetCastRange(this Ability ability)
+        {
+            if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
+            {
+                return ability.CastRange;
+            }
+            var radius = 0f;
+            var data = AbilityDatabase.Find(ability.Name);
+            if (data.Width != null)
+            {
+                radius = ability.GetAbilityData(data.Width);
+            }
+            if (data.StringRadius != null)
+            {
+                radius = ability.GetAbilityData(data.StringRadius);
+            }
+            if (data.Radius > 0)
+            {
+                radius = data.Radius;
+            }
+            return radius;
+        }
+
+        /// <summary>
+        ///     Returns castpoint of given ability
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
         public static double GetCastPoint(this Ability ability)
         {
-            var castPoint = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).FloatValue;
-            return castPoint;
+            if (ability is Item)
+            {
+                return 0;
+            }
+            var castPoint = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).StringValue;
+            if (castPoint.Length > 7)
+            {
+                castPoint = castPoint.Split(' ')[ability.Level - 1];
+            }
+            return Convert.ToSingle(castPoint);
         }
 
         #endregion

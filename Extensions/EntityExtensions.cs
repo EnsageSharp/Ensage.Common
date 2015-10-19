@@ -8,10 +8,6 @@
 
     using global::SharpDX;
 
-    using SharpDX;
-
-    using Ability = Ensage.Ability;
-
     internal class ExternalDmgAmps
     {
         #region Fields
@@ -333,7 +329,12 @@
         /// <param name="throughBKB">true if the damage pierces magic immunity</param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static float DamageTaken(this Unit target, float dmg, DamageType dmgType, Unit source, bool throughBKB)
+        public static float DamageTaken(
+            this Unit target,
+            float dmg,
+            DamageType dmgType,
+            Unit source,
+            bool throughBKB = false)
         {
             if (target.IsInvul())
             {
@@ -594,7 +595,7 @@
                     {
                         //some calculations missing
                     }
-                   // Console.WriteLine(target.DamageResist);
+                    // Console.WriteLine(target.DamageResist);
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
@@ -876,21 +877,21 @@
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
-        public static bool IsDisarmed(this Unit unit)
-        {
-            return IsUnitState(unit, UnitState.Disarmed);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
         public static bool IsAttacking(this Unit unit)
         {
             return (unit.NetworkActivity == NetworkActivity.Attack || unit.NetworkActivity == NetworkActivity.Crit
                     || unit.NetworkActivity == NetworkActivity.Attack2
                     || unit.NetworkActivity == NetworkActivity.AttackEvent
                     || unit.NetworkActivity == NetworkActivity.AttackEventBash);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsDisarmed(this Unit unit)
+        {
+            return IsUnitState(unit, UnitState.Disarmed);
         }
 
         /// <summary>
@@ -1023,6 +1024,32 @@
                    || !(Vector2.DistanceSquared(
                        (@from.ToVector2().IsValid() ? @from : ObjectMgr.LocalHero.NetworkPosition).ToVector2(),
                        unitPosition.ToVector2()) > range * range);
+        }
+
+        /// <summary>
+        ///     Returns how much mana burn damage given unit receives
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="burnAmount"></param>
+        /// <param name="multiplier"></param>
+        /// <param name="dmgType"></param>
+        /// <param name="source"></param>
+        /// <param name="throughBKB"></param>
+        /// <returns></returns>
+        public static float ManaBurnDamageTaken(
+            this Unit unit,
+            float burnAmount,
+            double multiplier,
+            DamageType dmgType,
+            Unit source,
+            bool throughBKB = false)
+        {
+            var tempBurn = burnAmount;
+            if (unit.Mana < tempBurn)
+            {
+                tempBurn = unit.Mana;
+            }
+            return unit.DamageTaken((float)(tempBurn * multiplier), dmgType, source, throughBKB);
         }
 
         /// <summary>

@@ -69,6 +69,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbilityInfo\AbilityDamage.cs" />
     <Compile Include="Algorithm.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
@@ -84,13 +85,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SpellData.cs" />
-    <Compile Include="SpellDatabase.cs" />
+    <Compile Include="AbilityInfo\AbilityInfo.cs" />
+    <Compile Include="AbilityInfo\AbilityDatabase.cs" />
     <Compile Include="TargetSelector.cs" />
     <Compile Include="UnitDatabase.cs" />
     <Compile Include="Prediction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\AttackAnimation.cs" />
     <Compile Include="Unit\AttackAnimationData.cs" />
     <Compile Include="Unit\UnitInfo.cs" />
     <Compile Include="Utils.cs" />
@@ -99,7 +99,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\UnitDatabase.json" />
-    <None Include="Resources\SpellDatabase.json" />
+    <None Include="Resources\AbilityDatabase.json" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
@@ -112,11 +112,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CPForm.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

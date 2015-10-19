@@ -1,11 +1,20 @@
-﻿namespace Ensage.Common
+﻿namespace Ensage.Common.AbilityInfo
 {
     /// <summary>
     /// </summary>
-    public class SpellData
+    public class AbilityInfo
     {
-
         #region Fields
+
+        /// <summary>
+        ///     True if ability damage is dependent on auto attack damage
+        /// </summary>
+        public bool AADamage;
+
+        /// <summary>
+        ///     Name of a ability
+        /// </summary>
+        public string AbilityName;
 
         /// <summary>
         ///     Spell have additional delay after being casted
@@ -16,6 +25,26 @@
         ///     Spell is blocked by ally units in a way
         /// </summary>
         public bool AllyBlock;
+
+        /// <summary>
+        ///     Bonus damage data
+        /// </summary>
+        public string BonusDamageString;
+
+        /// <summary>
+        ///     Damage Multiplier
+        /// </summary>
+        public float DamageMultiplier;
+
+        /// <summary>
+        ///     Damage data name when holding scepter
+        /// </summary>
+        public string DamageScepterString;
+
+        /// <summary>
+        ///     Damage data name
+        /// </summary>
+        public string DamageString;
 
         /// <summary>
         ///     Spell is blocked by enemy units in a way
@@ -67,6 +96,11 @@
         public bool MagicImmunityPierce;
 
         /// <summary>
+        ///     True if ability deals damage depending on target's mana
+        /// </summary>
+        public bool ManaBurn;
+
+        /// <summary>
         ///     Spell is used only to killsteal
         /// </summary>
         public bool OnlyForKillSteal;
@@ -86,9 +120,9 @@
         public string Speed;
 
         /// <summary>
-        ///     Name of a spell
+        ///     Name of spell which affects the damage depending on its level
         /// </summary>
-        public string SpellName;
+        public string SpellLevel;
 
         /// <summary>
         ///     Radius data name
@@ -100,29 +134,16 @@
         /// </summary>
         public string Width;
 
-        /// <summary>
-        /// Damage data name
-        /// </summary>
-        public string DamageString;
-
-        public string DamageScepterString;
-
-        public float DamageMultiplier;
-
-        public string BonusDamageString;
-
-        public bool AADamage;
-
         #endregion
 
         #region Constructors and Destructors
 
-        public SpellData()
+        public AbilityInfo()
         {
         }
 
-        public SpellData(
-            string spellName,
+        public AbilityInfo(
+            string abilityName,
             bool isDisable,
             bool isSlow,
             bool isSilence,
@@ -145,11 +166,15 @@
             float damageMultiplier,
             string bonusDamagestring,
             bool aaDamage,
-            string damageScepterString)
+            string damageScepterString,
+            string spellLevel,
+            bool manaBurn)
         {
+            this.ManaBurn = manaBurn;
+            this.SpellLevel = spellLevel;
             this.AADamage = aaDamage;
             this.DamageScepterString = damageScepterString;
-            this.SpellName = spellName;
+            this.AbilityName = abilityName;
             this.IsDisable = isDisable;
             this.IsSlow = isSlow;
             this.IsSilence = isSilence;

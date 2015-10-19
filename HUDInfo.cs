@@ -95,6 +95,12 @@
             return new Vector2((float)(GetXX(hero) - 20 + X * id), 0);
         }
 
+        public static double[] GetTopPanelSize(Hero hero)
+        {
+            double[] size = { GetTopPanelSizeX(hero), GetTopPanelSizeY(hero) };
+            return size;
+        }
+
         public static double GetTopPanelSizeX(Hero hero)
         {
             return X;
@@ -103,12 +109,6 @@
         public static double GetTopPanelSizeY(Hero hero)
         {
             return 35 * Rate;
-        }
-
-        public static double[] GetTopPanelSize(Hero hero)
-        {
-            double[] size = { GetTopPanelSizeX(hero), GetTopPanelSizeY(hero) };
-            return size;
         }
 
         #endregion

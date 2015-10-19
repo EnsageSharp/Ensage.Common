@@ -204,15 +204,13 @@
                     (float)((Game.Ping / 1000 + me.GetTurnTime(target.Position)) * me.MovementSpeed));
                 distance = pos.Distance2D(target) - me.Distance2D(target);
             }
-            var isValid = target != null
-                          && target.IsValid && target.Distance2D(me)
+            var isValid = target != null && target.IsValid
+                          && target.Distance2D(me)
                           <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + distance);
-            if (isValid
-                || (target != null
-                    && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))
+            if (isValid || (target != null && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))
             {
-                var canAttack = (!AttackOnCooldown(target, bonusWindupMs) || !CanCancelAnimation()) && !target.IsAttackImmune()
-                                && !target.IsInvul() && me.CanAttack();
+                var canAttack = (!AttackOnCooldown(target, bonusWindupMs) || !CanCancelAnimation())
+                                && !target.IsAttackImmune() && !target.IsInvul() && me.CanAttack();
                 if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
                 {
                     Attack(target, attackmodifiers);

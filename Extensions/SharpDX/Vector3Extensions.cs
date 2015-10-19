@@ -328,7 +328,7 @@
         /// <returns>Is Vector3 position a wall position</returns>
         public static bool IsWall(this Vector3 vector3)
         {
-            return false;//NavMesh.GetCollisionFlags(vector3).HasFlag(CollisionFlags.Wall);
+            return false; //NavMesh.GetCollisionFlags(vector3).HasFlag(CollisionFlags.Wall);
         }
 
         /// <summary>
