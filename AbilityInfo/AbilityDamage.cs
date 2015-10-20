@@ -5,8 +5,6 @@
 
     using Ensage.Common.Extensions;
 
-    using EnsageSharp.Sandbox;
-
     /// <summary>
     ///     Class used to calculate damage from most abilities
     /// </summary>
@@ -51,11 +49,7 @@
                     {
                         tempDmg += target.MaximumHealth * (bonusDamage / 100);
                     }
-                    outgoingDamage = target.DamageTaken(
-                        tempDmg,
-                        DamageType.Magical,
-                        source,
-                        data.MagicImmunityPierce);
+                    outgoingDamage = target.DamageTaken(tempDmg, DamageType.Magical, source, data.MagicImmunityPierce);
                     break;
                 case "phantom_assassin_phantom_strike":
                     var crit = source.Spellbook.SpellR;
@@ -102,7 +96,8 @@
                     var blinkdamage = target.DamageTaken(damage, DamageType.Magical, source, data.MagicImmunityPierce);
                     outgoingDamage = blinkdamage
                                      + target.DamageTaken(
-                                         agiMultiplier * source.TotalAgility + (source.MinimumDamage + source.BonusDamage),
+                                         agiMultiplier * source.TotalAgility
+                                         + (source.MinimumDamage + source.BonusDamage),
                                          DamageType.Physical,
                                          source,
                                          data.MagicImmunityPierce);

@@ -108,6 +108,23 @@
             return Math.PI * angle / 180.0;
         }
 
+        public static byte FixVirtualKey(byte key)
+        {
+            switch (key)
+            {
+                case 160:
+                    return 0x10;
+                case 161:
+                    return 0x10;
+                case 162:
+                    return 0x11;
+                case 163:
+                    return 0x11;
+            }
+
+            return key;
+        }
+
         /// <summary>
         ///     Checks if given unit wont be stunned after given delay in seconds.
         /// </summary>
@@ -287,5 +304,88 @@
         }
 
         #endregion
+    }
+
+    public static class DelayAction
+    {
+        #region Static Fields
+
+        public static List<Action> ActionList = new List<Action>();
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        static DelayAction()
+        {
+            Game.OnUpdate += GameOnOnGameUpdate;
+        }
+
+        #endregion
+
+        #region Delegates
+
+        public delegate void Callback();
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        public static void Add(int time, Callback func)
+        {
+            var action = new Action(time, func);
+            ActionList.Add(action);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void GameOnOnGameUpdate(EventArgs args)
+        {
+            for (var i = ActionList.Count - 1; i >= 0; i--)
+            {
+                if (ActionList[i].Time <= Environment.TickCount)
+                {
+                    try
+                    {
+                        if (ActionList[i].CallbackObject != null)
+                        {
+                            ActionList[i].CallbackObject();
+                            //Will somehow result in calling ALL non-internal marked classes of the called assembly and causes NullReferenceExceptions.
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
+
+                    ActionList.RemoveAt(i);
+                }
+            }
+        }
+
+        #endregion
+
+        public struct Action
+        {
+            #region Fields
+
+            public Callback CallbackObject;
+
+            public int Time;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            public Action(int time, Callback callback)
+            {
+                this.Time = time + Environment.TickCount;
+                this.CallbackObject = callback;
+            }
+
+            #endregion
+        }
     }
 }

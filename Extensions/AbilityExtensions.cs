@@ -174,6 +174,25 @@
             return data.Count > 1 ? data.GetValue(lvl - 1) : data.Value;
         }
 
+        /// <summary>
+        ///     Returns castpoint of given ability
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
+        public static double GetCastPoint(this Ability ability)
+        {
+            if (ability is Item)
+            {
+                return 0;
+            }
+            var castPoint = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).StringValue;
+            if (castPoint.Length > 7)
+            {
+                castPoint = castPoint.Split(' ')[ability.Level - 1];
+            }
+            return Convert.ToSingle(castPoint);
+        }
+
         public static float GetCastRange(this Ability ability)
         {
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
@@ -195,25 +214,6 @@
                 radius = data.Radius;
             }
             return radius;
-        }
-
-        /// <summary>
-        ///     Returns castpoint of given ability
-        /// </summary>
-        /// <param name="ability"></param>
-        /// <returns></returns>
-        public static double GetCastPoint(this Ability ability)
-        {
-            if (ability is Item)
-            {
-                return 0;
-            }
-            var castPoint = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).StringValue;
-            if (castPoint.Length > 7)
-            {
-                castPoint = castPoint.Split(' ')[ability.Level - 1];
-            }
-            return Convert.ToSingle(castPoint);
         }
 
         #endregion
