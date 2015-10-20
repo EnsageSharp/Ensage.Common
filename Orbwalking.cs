@@ -154,7 +154,7 @@
         public static bool CanCancelAnimation()
         {
             var time = (tick - LastAttackStart);
-            var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping;
+            var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping + 50;
             return time > cancelDur;
         }
 
@@ -204,7 +204,7 @@
                     (float)((Game.Ping / 1000 + me.GetTurnTime(target.Position)) * me.MovementSpeed));
                 distance = pos.Distance2D(target) - me.Distance2D(target);
             }
-            var isValid = target != null && target.IsValid
+            var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible
                           && target.Distance2D(me)
                           <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + distance);
             if (isValid || (target != null && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))
