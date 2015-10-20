@@ -30,59 +30,61 @@
             double tinfoHeroDown;
             double panelHeroSizeX;
             float compareWidth;
-            var ratio = Math.Floor((double)((Drawing.Width / Drawing.Height) * 100));
+            var screenSize = new Vector2(Drawing.Width, Drawing.Height);
+            var ratio = Math.Floor((decimal)(screenSize.X / screenSize.Y * 100));
+            Console.WriteLine(ratio);
             if (ratio == 177)
             {
                 compareWidth = 1600;
-                panelHeroSizeX = 55;
+                panelHeroSizeX = 55.65;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.535;
-                RadiantCompare = 3.485;
+                DireCompare = 2.545;
+                RadiantCompare = 4.59;
             }
             else if (ratio == 166)
             {
                 compareWidth = 1280;
-                panelHeroSizeX = 47.1;
+                panelHeroSizeX = 47.19;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.558;
-                RadiantCompare = 3.62;
+                DireCompare = 2.56;
+                RadiantCompare = 4.95;
             }
             else if (ratio == 160)
             {
                 compareWidth = 1280;
-                panelHeroSizeX = 48.5;
+                panelHeroSizeX = 48.95;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.579;
-                RadiantCompare = 3.74;
+                DireCompare = 2.609;
+                RadiantCompare = 5.32;
             }
             else if (ratio == 133)
             {
                 compareWidth = 1024;
-                panelHeroSizeX = 47;
+                panelHeroSizeX = 47.42;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.78;
-                RadiantCompare = 4.63;
+                DireCompare = 2.8;
+                RadiantCompare = 8.1;
             }
             else if (ratio == 125)
             {
                 compareWidth = 1280;
-                panelHeroSizeX = 58;
+                panelHeroSizeX = 59.2;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.747;
-                RadiantCompare = 4.54;
+                DireCompare = 2.786;
+                RadiantCompare = 8.14;
             }
             else
             {
                 compareWidth = 1600;
-                panelHeroSizeX = 55;
+                panelHeroSizeX = 65;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.535;
-                RadiantCompare = 3.485;
+                DireCompare = 2.655;
+                RadiantCompare = 5.985;
             }
-            var monitor = Drawing.Width / compareWidth;
+            var monitor = screenSize.X / compareWidth;
             Rate = Math.Max(monitor, 1);
             X = panelHeroSizeX * monitor;
-            y = Drawing.Height / tinfoHeroDown;
+            y = screenSize.Y / tinfoHeroDown;
         }
 
         #endregion
@@ -117,11 +119,12 @@
 
         private static double GetXX(Hero hero)
         {
+            var screenSize = new Vector2(Drawing.Width, Drawing.Height);
             if (hero.Team == Team.Radiant)
             {
-                return Drawing.Width / RadiantCompare + 1;
+                return screenSize.X / RadiantCompare + 1;
             }
-            return Drawing.Width / DireCompare;
+            return screenSize.X / DireCompare + 1;
         }
 
         #endregion
