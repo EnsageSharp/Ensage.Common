@@ -1,15 +1,21 @@
 ﻿namespace Ensage.Common.AbilityInfo
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Ensage.Common.Extensions;
+
 
     /// <summary>
     ///     Class used to calculate damage from most abilities
     /// </summary>
     public class AbilityDamage
     {
+        private static readonly Dictionary<Ability,float> damageDictionary = new Dictionary<Ability, float>();
+        public static Dictionary<Ability,AbilityInfo> dataDictionary = new Dictionary<Ability, AbilityInfo>();
+        public static Dictionary<Ability,uint> levelDictionary = new Dictionary<Ability, uint>(); 
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -23,17 +29,46 @@
         {
             var name = ability.Name;
             var level = ability.Level;
-            var data = AbilityDatabase.Find(name);
-            if (data == null || data.IsNuke == false)
+            AbilityInfo data;
+            if (!dataDictionary.TryGetValue(ability, out data))
+            {
+                data = AbilityDatabase.Find(name);
+                if (data != null && data.IsNuke)
+                {
+                    dataDictionary.Add(ability,data);
+                }
+            }
+
+            //var data = AbilityDatabase.Find(name);
+            if (data == null || !data.IsNuke)
             {
                 return 0;
             }
+
             var outgoingDamage = 0f;
+            float bonusDamage;
             switch (name)
             {
                 case "ember_spirit_sleight_of_fist":
                     outgoingDamage = source.MinimumDamage + source.BonusDamage;
-                    outgoingDamage += ability.GetAbilityData(data.BonusDamageString);
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    {
+                        bonusDamage = ability.GetAbilityData(data.BonusDamageString);
+                        outgoingDamage += bonusDamage;
+                        damageDictionary.Add(ability,bonusDamage);
+                        levelDictionary.Add(ability,ability.Level);
+                    }
+                    else if (levelDictionary[ability] != ability.Level)
+                    {
+                        levelDictionary[ability] = ability.Level;
+                        bonusDamage = ability.GetAbilityData(data.BonusDamageString);
+                        damageDictionary[ability] = bonusDamage;
+                        outgoingDamage += bonusDamage;
+                    }
+                    else
+                    {
+                        outgoingDamage += bonusDamage;
+                    }
                     outgoingDamage = target.DamageTaken(
                         outgoingDamage,
                         DamageType.Physical,
@@ -41,9 +76,21 @@
                         data.MagicImmunityPierce);
                     break;
                 case "doom_bringer_lvl_death":
-                    var tempDmg = ability.GetAbilityData(data.DamageString);
+                    float tempDmg;
+                    if (!damageDictionary.TryGetValue(ability, out tempDmg))
+                    {
+                        tempDmg = ability.GetAbilityData(data.DamageString);
+                        damageDictionary.Add(ability, tempDmg);
+                        levelDictionary.Add(ability, ability.Level);
+                    }
+                    else if (levelDictionary[ability] != ability.Level)
+                    {
+                        levelDictionary[ability] = ability.Level;
+                        tempDmg = ability.GetAbilityData(data.DamageString);
+                        damageDictionary[ability] = tempDmg;
+                    }
                     var multiplier = ability.GetAbilityData("lvl_bonus_multiple");
-                    var bonusDamage = ability.GetAbilityData("lvl_bonus_damage");
+                    bonusDamage = ability.GetAbilityData("lvl_bonus_damage");
                     var levelc = target.Level / multiplier;
                     if (levelc == Math.Floor(levelc) || target.Level == 25)
                     {
@@ -55,7 +102,19 @@
                     var crit = source.Spellbook.SpellR;
                     if (crit.Level > 0)
                     {
-                        var critMulti = crit.GetAbilityData("crit_bonus");
+                        float critMulti;
+                        if (!damageDictionary.TryGetValue(crit, out critMulti))
+                        {
+                            critMulti = crit.GetAbilityData("crit_bonus");
+                            damageDictionary.Add(crit, critMulti);
+                            levelDictionary.Add(crit, crit.Level);
+                        }
+                        else if (levelDictionary[crit] != crit.Level)
+                        {
+                            levelDictionary[crit] = crit.Level;
+                            critMulti = crit.GetAbilityData("crit_bonus");
+                            damageDictionary[crit] = critMulti;
+                        }
                         outgoingDamage = (source.MinimumDamage + source.BonusDamage) * (critMulti / 100);
                     }
                     outgoingDamage = target.DamageTaken(
@@ -64,14 +123,52 @@
                         source,
                         data.MagicImmunityPierce);
                     break;
+                case "templar_assassin_meld":
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    {
+                        bonusDamage = ability.GetAbilityData(data.DamageString);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, ability.Level);
+                    }
+                    else if (levelDictionary[ability] != ability.Level)
+                    {
+                        levelDictionary[ability] = ability.Level;
+                        bonusDamage = ability.GetAbilityData(data.DamageString);
+                        damageDictionary[ability] = bonusDamage;
+                    }
+                    //var minusArmor = ability.GetAbilityData("bonus_armor");
+                    var minusArmors = new [] { -2, -4, -6, -8 };
+                    var minusArmor = target.Armor + minusArmors[ability.Level - 1];
+                    //Console.WriteLine(minusArmor);
+                    var damageIncrease = 1 - 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor));
+                    //Console.WriteLine(damageIncrease);
+                    outgoingDamage = (float)(target.DamageTaken(
+                        ((source.MaximumDamage + source.BonusDamage)),
+                        DamageType.Physical,
+                        source,
+                        data.MagicImmunityPierce) + bonusDamage * damageIncrease);
+                    break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
-                    outgoingDamage =
-                        Convert.ToSingle(
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    {
+                        bonusDamage = Convert.ToSingle(
                             Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability).StringValue.Split(' ')[
                                 level - 1]);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, ability.Level);
+                    }
+                    else if (levelDictionary[ability] != ability.Level)
+                    {
+                        levelDictionary[ability] = ability.Level;
+                        bonusDamage =
+                            Convert.ToSingle(
+                                Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
+                                    .StringValue.Split(' ')[level - 1]);
+                        damageDictionary[ability] = bonusDamage;
+                    }
                     outgoingDamage = target.DamageTaken(
-                        outgoingDamage,
+                        bonusDamage,
                         DamageType.Magical,
                         source,
                         data.MagicImmunityPierce);

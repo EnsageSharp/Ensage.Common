@@ -1,6 +1,7 @@
 ﻿namespace Ensage.Common.Extensions
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Ensage.Common.AbilityInfo;
@@ -152,6 +153,8 @@
             return true;
         }
 
+        private static readonly Dictionary<string, AbilityData> dataDictionary = new Dictionary<string, AbilityData>();
+
         /// <summary>
         ///     Returns ability data with given name, checks if data are level dependent or not
         /// </summary>
@@ -162,11 +165,16 @@
         public static float GetAbilityData(this Ability ability, string dataName, uint level = 0)
         {
             var lvl = ability.Level;
+            AbilityData data;
+            if (!dataDictionary.TryGetValue(ability.Name + "_" + dataName, out data))
+            {
+                data = ability.AbilityData.FirstOrDefault(x => x.Name == dataName);
+                dataDictionary.Add(ability.Name + "_" + dataName, data);
+            }
             if (level > 0)
             {
                 lvl = level;
             }
-            var data = ability.AbilityData.FirstOrDefault(x => x.Name == dataName);
             if (data == null)
             {
                 return 0;
@@ -195,12 +203,21 @@
 
         public static float GetCastRange(this Ability ability)
         {
+            if (ability.Name == "templar_assassin_meld")
+            {
+                return (ability.Owner as Hero).GetAttackRange() + 50;
+            }
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
                 return ability.CastRange;
             }
             var radius = 0f;
-            var data = AbilityDatabase.Find(ability.Name);
+            AbilityInfo data;
+            if (!AbilityDamage.dataDictionary.TryGetValue(ability, out data))
+            {
+                data = AbilityDatabase.Find(ability.Name);
+                AbilityDamage.dataDictionary.Add(ability, data);
+            }
             if (data.Width != null)
             {
                 radius = ability.GetAbilityData(data.Width);
