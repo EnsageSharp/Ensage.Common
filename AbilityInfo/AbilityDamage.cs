@@ -6,15 +6,20 @@
 
     using Ensage.Common.Extensions;
 
-
     /// <summary>
     ///     Class used to calculate damage from most abilities
     /// </summary>
     public class AbilityDamage
     {
-        private static readonly Dictionary<Ability,float> damageDictionary = new Dictionary<Ability, float>();
-        public static Dictionary<Ability,AbilityInfo> dataDictionary = new Dictionary<Ability, AbilityInfo>();
-        public static Dictionary<Ability,uint> levelDictionary = new Dictionary<Ability, uint>(); 
+        #region Static Fields
+
+        public static Dictionary<Ability, AbilityInfo> dataDictionary = new Dictionary<Ability, AbilityInfo>();
+
+        public static Dictionary<Ability, uint> levelDictionary = new Dictionary<Ability, uint>();
+
+        private static readonly Dictionary<Ability, float> damageDictionary = new Dictionary<Ability, float>();
+
+        #endregion
 
         #region Public Methods and Operators
 
@@ -35,7 +40,7 @@
                 data = AbilityDatabase.Find(name);
                 if (data != null && data.IsNuke)
                 {
-                    dataDictionary.Add(ability,data);
+                    dataDictionary.Add(ability, data);
                 }
             }
 
@@ -55,8 +60,8 @@
                     {
                         bonusDamage = ability.GetAbilityData(data.BonusDamageString);
                         outgoingDamage += bonusDamage;
-                        damageDictionary.Add(ability,bonusDamage);
-                        levelDictionary.Add(ability,ability.Level);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, ability.Level);
                     }
                     else if (levelDictionary[ability] != ability.Level)
                     {
@@ -137,24 +142,27 @@
                         damageDictionary[ability] = bonusDamage;
                     }
                     //var minusArmor = ability.GetAbilityData("bonus_armor");
-                    var minusArmors = new [] { -2, -4, -6, -8 };
+                    var minusArmors = new[] { -2, -4, -6, -8 };
                     var minusArmor = target.Armor + minusArmors[ability.Level - 1];
                     //Console.WriteLine(minusArmor);
                     var damageIncrease = 1 - 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor));
                     //Console.WriteLine(damageIncrease);
-                    outgoingDamage = (float)(target.DamageTaken(
-                        ((source.MaximumDamage + source.BonusDamage)),
-                        DamageType.Physical,
-                        source,
-                        data.MagicImmunityPierce) + bonusDamage * damageIncrease);
+                    outgoingDamage =
+                        (float)
+                        (target.DamageTaken(
+                            ((source.MaximumDamage + source.BonusDamage)),
+                            DamageType.Physical,
+                            source,
+                            data.MagicImmunityPierce) + bonusDamage * damageIncrease);
                     break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
                     if (!damageDictionary.TryGetValue(ability, out bonusDamage))
                     {
-                        bonusDamage = Convert.ToSingle(
-                            Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability).StringValue.Split(' ')[
-                                level - 1]);
+                        bonusDamage =
+                            Convert.ToSingle(
+                                Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
+                                    .StringValue.Split(' ')[level - 1]);
                         damageDictionary.Add(ability, bonusDamage);
                         levelDictionary.Add(ability, ability.Level);
                     }

@@ -10,6 +10,12 @@
     /// </summary>
     public static class AbilityExtensions
     {
+        #region Static Fields
+
+        private static readonly Dictionary<string, AbilityData> dataDictionary = new Dictionary<string, AbilityData>();
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -153,8 +159,6 @@
             return true;
         }
 
-        private static readonly Dictionary<string, AbilityData> dataDictionary = new Dictionary<string, AbilityData>();
-
         /// <summary>
         ///     Returns ability data with given name, checks if data are level dependent or not
         /// </summary>
@@ -209,7 +213,7 @@
             }
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
-                return ability.CastRange;
+                return ability.CastRange + 50;
             }
             var radius = 0f;
             AbilityInfo data;
@@ -230,7 +234,7 @@
             {
                 radius = data.Radius;
             }
-            return radius;
+            return radius + 50;
         }
 
         #endregion
