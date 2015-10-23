@@ -20,6 +20,7 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Text;
 
     using Ensage.Common.Properties;
@@ -95,6 +96,28 @@ namespace Ensage.Common
                 Game.FindKeyValues(name + "/AttackAnimationPoint", KeyValueSource.Hero).FloatValue;
             var attackSpeed = GetAttackSpeed(unit);
             return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
+        }
+
+        /// <summary>
+        /// Returns units projectile speed
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static double GetProjectileSpeed(Hero unit)
+        {
+            if (unit == null || !unit.IsRanged)
+            {
+                return double.MaxValue;
+            }
+            var name = unit.Name;
+            try
+            {
+                return Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Hero).FloatValue;
+            }
+            catch (Exception)
+            {
+                return double.MaxValue;
+            }
         }
 
         /// <summary>

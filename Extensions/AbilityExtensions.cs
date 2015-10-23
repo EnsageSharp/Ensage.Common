@@ -12,7 +12,7 @@
     {
         #region Static Fields
 
-        private static readonly Dictionary<string, AbilityData> dataDictionary = new Dictionary<string, AbilityData>();
+        private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
 
         #endregion
 
@@ -76,11 +76,11 @@
                 }
                 if (data.Speed != null)
                 {
-                    speed = ability.AbilityData.FirstOrDefault(x => x.Name == data.Speed).GetValue(ability.Level - 1);
+                    speed = ability.GetAbilityData(data.Speed);
                 }
                 if (data.Width != null)
                 {
-                    radius = ability.AbilityData.FirstOrDefault(x => x.Name == data.Width).GetValue(ability.Level - 1);
+                    radius = ability.GetAbilityData(data.Width);
                 }
             }
             var xyz = Prediction.SkillShotXYZ(owner, target, delay, speed, radius);
@@ -120,8 +120,7 @@
                 }
                 if (data.Speed != null)
                 {
-                    var speed = ability.AbilityData.FirstOrDefault(x => x.Name == data.Speed)
-                        .GetValue(ability.Level - 1);
+                    var speed = ability.GetAbilityData(data.Speed);
                     delay += owner.Distance2D(target) / speed;
                 }
                 if (data.Radius != 0)
@@ -130,12 +129,11 @@
                 }
                 else if (data.StringRadius != null)
                 {
-                    radius =
-                        ability.AbilityData.FirstOrDefault(x => x.Name == data.StringRadius).GetValue(ability.Level - 1);
+                    radius = ability.GetAbilityData(data.StringRadius);
                 }
                 else if (data.Width != null)
                 {
-                    radius = ability.AbilityData.FirstOrDefault(x => x.Name == data.Width).GetValue(ability.Level - 1);
+                    radius = ability.GetAbilityData(data.Width);
                 }
             }
             var canUse = Utils.ChainStun(target, delay, null, false);
@@ -174,10 +172,10 @@
         {
             var lvl = ability.Level;
             AbilityData data;
-            if (!dataDictionary.TryGetValue(ability.Name + "_" + dataName, out data))
+            if (!DataDictionary.TryGetValue(ability.Name + "_" + dataName, out data))
             {
                 data = ability.AbilityData.FirstOrDefault(x => x.Name == dataName);
-                dataDictionary.Add(ability.Name + "_" + dataName, data);
+                DataDictionary.Add(ability.Name + "_" + dataName, data);
             }
             if (level > 0)
             {

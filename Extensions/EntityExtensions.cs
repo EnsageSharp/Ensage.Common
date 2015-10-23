@@ -655,6 +655,16 @@
             return unit1.Position.Distance2D(unit2.Position);
         }
 
+        public static float Distance2D(this Projectile projectile, Entity unit2)
+        {
+            return projectile.Position.Distance2D(unit2.Position);
+        }
+
+        public static float Distance2D(this Projectile p1, Projectile p2)
+        {
+            return p1.Position.Distance2D(p2.Position);
+        }
+
         /// <summary>
         ///     Angle between a unit and a vector in degrees
         /// </summary>
