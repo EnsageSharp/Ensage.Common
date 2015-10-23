@@ -28,7 +28,8 @@
             //return ability != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0;
             var hero = ObjectMgr.LocalHero;
            // Console.WriteLine(ability.Owner.Name + " " + ability.Cooldown + " " + ability.ManaCost);
-            return hero != null && (ability.Cooldown <= 0 && ability.ManaCost <= hero.Mana);
+            return ability != null && hero != null && ability.Level > 0 && ability.Cooldown <= 0
+                   && ability.ManaCost <= hero.Mana;
         }
 
         /// <summary>
@@ -208,6 +209,11 @@
             return Convert.ToSingle(castPoint);
         }
 
+        /// <summary>
+        /// Returns cast range of ability, if ability is NonTargeted it will return its radius!
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
         public static float GetCastRange(this Ability ability)
         {
             if (ability.Name == "templar_assassin_meld")
