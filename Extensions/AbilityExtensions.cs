@@ -25,11 +25,10 @@
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
-            //return ability != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0;
-            var hero = ObjectMgr.LocalHero;
-           // Console.WriteLine(ability.Owner.Name + " " + ability.Cooldown + " " + ability.ManaCost);
-            return ability != null && hero != null && ability.Level > 0 && ability.Cooldown <= 0
-                   && ability.ManaCost <= hero.Mana;
+            return ability != null && ability.Owner != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+            //var hero = ObjectMgr.LocalHero;
+            //return ability != null && hero != null && ability.Level > 0 && ability.Cooldown <= 0
+            //       && ability.ManaCost <= hero.Mana;
         }
 
         /// <summary>

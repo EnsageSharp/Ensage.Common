@@ -151,10 +151,10 @@
         ///     Checks if attack animation can be safely canceled
         /// </summary>
         /// <returns></returns>
-        public static bool CanCancelAnimation()
+        public static bool CanCancelAnimation(float delay = 0f)
         {
             var time = (tick - LastAttackStart);
-            var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping + 50;
+            var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping + 50 - delay;
             return time > cancelDur;
         }
 

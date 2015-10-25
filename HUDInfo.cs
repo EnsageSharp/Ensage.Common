@@ -17,6 +17,8 @@
 
         private static readonly float Rate;
 
+        private static readonly float Monitor;
+
         private static readonly double X;
 
         private static double y;
@@ -33,13 +35,21 @@
             var screenSize = new Vector2(Drawing.Width, Drawing.Height);
             var ratio = Math.Floor((decimal)(screenSize.X / screenSize.Y * 100));
             Console.WriteLine(ratio);
-            if (ratio == 177)
+            if (ratio == 213)
             {
                 compareWidth = 1600;
-                panelHeroSizeX = 55.65;
+                panelHeroSizeX = 45.28;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.545;
-                RadiantCompare = 4.59;
+                DireCompare = 2.402;
+                RadiantCompare = 3.08;
+            }
+            else if (ratio == 177)
+            {
+                compareWidth = 1600;
+                panelHeroSizeX = 55.09;
+                tinfoHeroDown = 25.714;
+                DireCompare = 2.5401;
+                RadiantCompare = 3.499;
             }
             else if (ratio == 166)
             {
@@ -60,18 +70,18 @@
             else if (ratio == 133)
             {
                 compareWidth = 1024;
-                panelHeroSizeX = 47.42;
+                panelHeroSizeX = 47.21;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.8;
-                RadiantCompare = 8.1;
+                DireCompare = 2.775;
+                RadiantCompare = 4.57;
             }
             else if (ratio == 125)
             {
                 compareWidth = 1280;
-                panelHeroSizeX = 59.2;
+                panelHeroSizeX = 58.3;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.786;
-                RadiantCompare = 8.14;
+                DireCompare = 2.78;
+                RadiantCompare = 4.65;
             }
             else
             {
@@ -81,9 +91,9 @@
                 DireCompare = 2.655;
                 RadiantCompare = 5.985;
             }
-            var monitor = screenSize.X / compareWidth;
-            Rate = Math.Max(monitor, 1);
-            X = panelHeroSizeX * monitor;
+            Monitor = screenSize.X / compareWidth;
+            Rate = Math.Max(Monitor, 1);
+            X = panelHeroSizeX * Monitor;
             y = screenSize.Y / tinfoHeroDown;
         }
 
@@ -94,7 +104,7 @@
         public static Vector2 GetTopPanelPosition(Hero hero)
         {
             var id = hero.Player.ID;
-            return new Vector2((float)(GetXX(hero) - 20 + X * id), 0);
+            return new Vector2((float)(GetXX(hero) - 20 * Monitor + X * id), 0);
         }
 
         public static double[] GetTopPanelSize(Hero hero)
