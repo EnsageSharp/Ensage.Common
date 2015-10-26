@@ -52,6 +52,7 @@
 
             var outgoingDamage = 0f;
             float bonusDamage;
+            Hero hero;
             switch (name)
             {
                 case "ember_spirit_sleight_of_fist":
@@ -155,6 +156,46 @@
                             source,
                             data.MagicImmunityPierce) + bonusDamage * damageIncrease);
                     break;
+                case "undying_decay":
+                    var strengthSteal = ability.GetAbilityData("str_steal");
+                    if (source.AghanimState())
+                    {
+                        strengthSteal = ability.GetAbilityData("str_Steal_scepter");
+                    }
+                    outgoingDamage = strengthSteal * 10 + target.DamageTaken(ability.GetAbilityData(data.DamageString),DamageType.Magical,source);
+                    break;
+                case "visage_soul_assumption":
+                    var dmg = target.DamageTaken(ability.GetAbilityData(data.DamageString), DamageType.Magical, source);
+                    var modif = target.Modifiers.FirstOrDefault(x => x.Name == "modifier_visage_soul_assumption");
+                    if (modif != null)
+                    {
+                        dmg += modif.StackCount * ability.GetAbilityData("soul_charge_damage");
+                    }
+                    outgoingDamage = target.DamageTaken(dmg, DamageType.Magical, source);
+                    break;
+                case "morphling_adaptive_Strike":
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    {
+                        bonusDamage = ability.GetAbilityData(data.DamageString);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, ability.Level);
+                    }
+                    else if (levelDictionary[ability] != ability.Level)
+                    {
+                        levelDictionary[ability] = ability.Level;
+                        bonusDamage = ability.GetAbilityData(data.DamageString);
+                        damageDictionary[ability] = bonusDamage;
+                    }
+                    hero = source;
+                    var agi = hero.TotalAgility;
+                    var str = hero.TotalStrength;
+                    var multi = ability.GetAbilityData("damage_min");
+                    if (agi / str > 1.5)
+                    {
+                        multi = ability.GetAbilityData("damage_max");
+                    }
+                    outgoingDamage = target.DamageTaken(bonusDamage + agi * multi, DamageType.Magical, source);
+                    break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
                     if (!damageDictionary.TryGetValue(ability, out bonusDamage))
@@ -187,7 +228,7 @@
                     break;
                 case "nyx_assassin_mana_burn":
                     var intMultiplier = ability.GetAbilityData("float_multiplier");
-                    var hero = target as Hero;
+                    hero = target as Hero;
                     outgoingDamage = target.ManaBurnDamageTaken(
                         hero.TotalIntelligence * intMultiplier,
                         1,

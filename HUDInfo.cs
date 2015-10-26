@@ -19,6 +19,14 @@
 
         private static readonly float Monitor;
 
+        private static readonly double HpBarWidth;
+
+        private static readonly double HpBarHeight;
+
+        private static readonly double HpBarX;
+
+        private static readonly float HpBarY;
+
         private static readonly double X;
 
         private static double y;
@@ -42,6 +50,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.402;
                 RadiantCompare = 3.08;
+                HpBarHeight = 10;
+                HpBarWidth = 83.5;
+                HpBarX = 43;
+                HpBarY = 28;
             }
             else if (ratio == 177)
             {
@@ -50,6 +62,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.5401;
                 RadiantCompare = 3.499;
+                HpBarHeight = 8.7;
+                HpBarWidth = 87.6;
+                HpBarX = 44.8;
+                HpBarY = 27;
             }
             else if (ratio == 166)
             {
@@ -58,6 +74,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.56;
                 RadiantCompare = 4.95;
+                HpBarHeight = 7;
+                HpBarWidth = 71;
+                HpBarX = 37;
+                HpBarY = 23;
             }
             else if (ratio == 160)
             {
@@ -66,6 +86,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.609;
                 RadiantCompare = 5.32;
+                HpBarHeight = 8;
+                HpBarWidth = 74;
+                HpBarX = 40;
+                HpBarY = 25;
             }
             else if (ratio == 133)
             {
@@ -74,6 +98,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.775;
                 RadiantCompare = 4.57;
+                HpBarHeight = 10;
+                HpBarWidth = 72;
+                HpBarX = 37;
+                HpBarY = 23;
             }
             else if (ratio == 125)
             {
@@ -82,6 +110,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.78;
                 RadiantCompare = 4.65;
+                HpBarHeight = 10;
+                HpBarWidth = 94;
+                HpBarX = 48;
+                HpBarY = 32;
             }
             else
             {
@@ -90,6 +122,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.655;
                 RadiantCompare = 5.985;
+                HpBarHeight = 10;
+                HpBarWidth = 83.5;
+                HpBarX = 43;
+                HpBarY = 28;
             }
             Monitor = screenSize.X / compareWidth;
             Rate = Math.Max(Monitor, 1);
@@ -121,6 +157,31 @@
         public static double GetTopPanelSizeY(Hero hero)
         {
             return 35 * Rate;
+        }
+
+        public static Vector2 GetHPbarPosition(Unit unit)
+        {
+            var pos = unit.Position + new Vector3(0, 0, unit.HealthBarOffset);
+            Vector2 screenPos;
+            if (!Drawing.WorldToScreen(pos, out screenPos))
+            {
+                return Vector2.Zero;
+            }
+            if (unit.Equals(ObjectMgr.LocalHero))
+            {
+                return screenPos + new Vector2((float)(-HpBarX * Monitor), (-HpBarY-10) * Monitor);
+            }
+            return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
+        }
+
+        public static float GetHPBarSizeX(Unit unit)
+        {
+            return (float)HpBarWidth * Monitor;
+        }
+
+        public static float GetHpBarSizeY(Unit unit)
+        {
+            return (float)(HpBarHeight * Monitor);
         }
 
         #endregion
