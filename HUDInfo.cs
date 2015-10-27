@@ -50,10 +50,10 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.402;
                 RadiantCompare = 3.08;
-                HpBarHeight = 10;
-                HpBarWidth = 83.5;
-                HpBarX = 43;
-                HpBarY = 28;
+                HpBarHeight = 6;
+                HpBarWidth = 70;
+                HpBarX = 36;
+                HpBarY = 23;
             }
             else if (ratio == 177)
             {
@@ -72,8 +72,8 @@
                 compareWidth = 1280;
                 panelHeroSizeX = 47.19;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.56;
-                RadiantCompare = 4.95;
+                DireCompare = 2.59;
+                RadiantCompare = 3.64;
                 HpBarHeight = 7;
                 HpBarWidth = 71;
                 HpBarX = 37;
@@ -85,10 +85,22 @@
                 panelHeroSizeX = 48.95;
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.609;
-                RadiantCompare = 5.32;
+                RadiantCompare = 3.78;
                 HpBarHeight = 8;
-                HpBarWidth = 74;
-                HpBarX = 40;
+                HpBarWidth = 76;
+                HpBarX = 38.5;
+                HpBarY = 25;
+            }
+            else if (ratio == 150)
+            {
+                compareWidth = 1280;
+                panelHeroSizeX = 51.39;
+                tinfoHeroDown = 25.714;
+                DireCompare = 2.64;
+                RadiantCompare = 4.02;
+                HpBarHeight = 7;
+                HpBarWidth = 80;
+                HpBarX = 41;
                 HpBarY = 25;
             }
             else if (ratio == 133)
@@ -98,8 +110,8 @@
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.775;
                 RadiantCompare = 4.57;
-                HpBarHeight = 10;
-                HpBarWidth = 72;
+                HpBarHeight = 7;
+                HpBarWidth = 73;
                 HpBarX = 37;
                 HpBarY = 23;
             }
@@ -111,8 +123,8 @@
                 DireCompare = 2.78;
                 RadiantCompare = 4.65;
                 HpBarHeight = 10;
-                HpBarWidth = 94;
-                HpBarX = 48;
+                HpBarWidth = 97;
+                HpBarX = 49;
                 HpBarY = 32;
             }
             else
