@@ -311,8 +311,7 @@
             "IsDisable": true
         },
         {
-            "AbilityName": "wisp_spirits",
-            "Radius": 0
+            "AbilityName": "wisp_spirits"
         },
         {
             "AbilityName": "warlock_fatal_bonds"
@@ -349,7 +348,7 @@
         {
             "AbilityName": "templar_assassin_meld",
             "IsNuke": true,
-            "DamageStrin": "bonus_damage"
+            "DamageString": "bonus_damage"
         },
         {
             "AbilityName": "disruptor_glimpse",
@@ -626,7 +625,8 @@
         {
             "AbilityName": "morphling_adaptive_strike",
             "IsDisable": true,
-            "IsNuke": true
+            "IsNuke": true,
+            "DamageString": "damage_base"
         },
         {
             "AbilityName": "lone_druid_true_form",

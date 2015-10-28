@@ -162,22 +162,24 @@
                     {
                         strengthSteal = ability.GetAbilityData("str_Steal_scepter");
                     }
-                    outgoingDamage = strengthSteal * 10
+                    outgoingDamage = strengthSteal * 19
                                      + target.DamageTaken(
                                          ability.GetAbilityData(data.DamageString),
                                          DamageType.Magical,
                                          source);
+                    //Console.WriteLine(outgoingDamage);
                     break;
                 case "visage_soul_assumption":
-                    var dmg = target.DamageTaken(ability.GetAbilityData(data.DamageString), DamageType.Magical, source);
-                    var modif = target.Modifiers.FirstOrDefault(x => x.Name == "modifier_visage_soul_assumption");
+                    var dmg = ability.GetAbilityData(data.DamageString);
+                    var modif = source.Modifiers.FirstOrDefault(x => x.Name == "modifier_visage_soul_assumption");
                     if (modif != null)
                     {
                         dmg += modif.StackCount * ability.GetAbilityData("soul_charge_damage");
                     }
                     outgoingDamage = target.DamageTaken(dmg, DamageType.Magical, source);
+                    //Console.WriteLine(outgoingDamage);
                     break;
-                case "morphling_adaptive_Strike":
+                case "morphling_adaptive_strike":
                     if (!damageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.DamageString);
@@ -191,14 +193,22 @@
                         damageDictionary[ability] = bonusDamage;
                     }
                     hero = source;
-                    var agi = hero.TotalAgility;
-                    var str = hero.TotalStrength;
-                    var multi = ability.GetAbilityData("damage_min");
-                    if (agi / str > 1.5)
+                    var agi = Math.Floor(hero.TotalAgility);
+                    var str = Math.Floor(hero.TotalStrength);
+                    var difference = agi / str;
+                    var multimin = ability.GetAbilityData("damage_min");
+                    var multimax = ability.GetAbilityData("damage_max");
+                    var multi = multimin + ((difference - 0.5) * (multimax - multimin));
+                    if (difference > 1.5)
                     {
-                        multi = ability.GetAbilityData("damage_max");
+                        multi = multimax;
                     }
-                    outgoingDamage = target.DamageTaken(bonusDamage + agi * multi, DamageType.Magical, source);
+                    else if (difference < 0.5)
+                    {
+                        multi = multimin;
+                    }
+                    outgoingDamage = target.DamageTaken((float)(bonusDamage + agi * multi), DamageType.Magical, source);
+                    // Console.WriteLine(outgoingDamage + " " + multi + " " + difference + " " + agi + " " + str);
                     break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
@@ -258,17 +268,18 @@
                         ObjectMgr.GetEntities<Unit>()
                             .Where(
                                 x =>
-                                (x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
-                                 || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
-                                 || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
-                                 || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
-                                 || x.ClassID == ClassID.CDOTA_BaseNPC_Creature
-                                 || x.ClassID == ClassID.CDOTA_BaseNPC_Invoker_Forged_Spirit
-                                 || x.ClassID == ClassID.CDOTA_Unit_Undying_Zombie
-                                 || x.ClassID == ClassID.CDOTA_BaseNPC_Warlock_Golem
-                                 || (x is Hero
-                                     && (x.Team == source.Team
-                                         || (x.Team == source.GetEnemyTeam() && !x.IsMagicImmune())))) && x.IsAlive
+                                !x.Equals(source) && !x.Equals(target)
+                                && (x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creature
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Invoker_Forged_Spirit
+                                    || x.ClassID == ClassID.CDOTA_Unit_Undying_Zombie
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Warlock_Golem
+                                    || (x is Hero
+                                        && (x.Team == source.Team
+                                            || (x.Team == source.GetEnemyTeam() && !x.IsMagicImmune())))) && x.IsAlive
                                 && x.IsVisible && x.Distance2D(source) < (radius + x.HullRadius));
                     var damagePerUnit = ability.GetAbilityData("damage_per_unit");
                     var maxUnits = ability.GetAbilityData("max_units");

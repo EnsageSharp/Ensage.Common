@@ -80,13 +80,13 @@
     <Compile Include="HUDInfo.cs" />
     <Compile Include="JungleCamps.cs" />
     <Compile Include="Orbwalking.cs" />
+    <Compile Include="AbilityInfo\AbilityInfo.cs" />
+    <Compile Include="AbilityInfo\AbilityDatabase.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="AbilityInfo\AbilityInfo.cs" />
-    <Compile Include="AbilityInfo\AbilityDatabase.cs" />
     <Compile Include="TargetSelector.cs" />
     <Compile Include="UnitDatabase.cs" />
     <Compile Include="Prediction.cs" />
@@ -108,10 +108,10 @@
     <Analyzer Include="packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
     <Analyzer Include="packages\StyleCop.Analyzers.1.0.0-beta013\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

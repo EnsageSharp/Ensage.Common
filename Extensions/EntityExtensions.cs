@@ -354,7 +354,7 @@
                 return 0;
             }
 
-            var tempDmg = dmg;
+            var tempDmg = Math.Floor(dmg);
             var amp = 0d;
             var ampFromME = 0d;
             var reduceProc = 0d;
@@ -651,7 +651,7 @@
                     throw new ArgumentOutOfRangeException("dmgType", dmgType, null);
             }
 
-            return Math.Max(tempDmg, 0);
+            return (float)Math.Max(tempDmg, 0);
         }
 
         /// <summary>
