@@ -162,7 +162,11 @@
                     {
                         strengthSteal = ability.GetAbilityData("str_Steal_scepter");
                     }
-                    outgoingDamage = strengthSteal * 10 + target.DamageTaken(ability.GetAbilityData(data.DamageString),DamageType.Magical,source);
+                    outgoingDamage = strengthSteal * 10
+                                     + target.DamageTaken(
+                                         ability.GetAbilityData(data.DamageString),
+                                         DamageType.Magical,
+                                         source);
                     break;
                 case "visage_soul_assumption":
                     var dmg = target.DamageTaken(ability.GetAbilityData(data.DamageString), DamageType.Magical, source);

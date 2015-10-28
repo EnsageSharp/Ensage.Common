@@ -25,7 +25,8 @@
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
-            return ability != null && ability.Owner != null && ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+            return ability != null && ability.Owner != null && ability.AbilityState == AbilityState.Ready
+                   && ability.Level > 0;
             //var hero = ObjectMgr.LocalHero;
             //return ability != null && hero != null && ability.Level > 0 && ability.Cooldown <= 0
             //       && ability.ManaCost <= hero.Mana;
@@ -207,7 +208,7 @@
         }
 
         /// <summary>
-        /// Returns cast range of ability, if ability is NonTargeted it will return its radius!
+        ///     Returns cast range of ability, if ability is NonTargeted it will return its radius!
         /// </summary>
         /// <param name="ability"></param>
         /// <returns></returns>

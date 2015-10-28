@@ -193,13 +193,6 @@
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_abaddon_borrowed_time", SourceSpellName = "abaddon_borrowed_time",
-                        Type = 1
-                    });
-
-            ExternalDmgReductions.Add(
-                new ExternalDmgReductions
-                    {
                         ModifierName = "modifier_treant_living_armor", Type = 0, SourceTeam = 1,
                         SourceSpellName = "treant_living_armor", HeroID = ClassID.CDOTA_Unit_Hero_Treant,
                         Reduce = "damage_block"
@@ -208,7 +201,7 @@
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_abaddon_aphotic_shield", Type = 0, SourceTeam = 1,
+                        ModifierName = "modifier_abaddon_aphotic_shield", Type = 2, SourceTeam = 1,
                         SourceSpellName = "abaddon_aphotic_shield", HeroID = ClassID.CDOTA_Unit_Hero_Abaddon,
                         Reduce = "damage_absorb"
                     });
@@ -274,29 +267,6 @@
         }
 
         /// <summary>
-        ///     Checks if given unit is not muted
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool CanUseItems( this Unit unit ) 
-        {
-            return !IsStunned( unit ) && 
-                    unit.IsAlive && 
-                   !unit.Modifiers.Any( x =>
-                            x.Name == "modifier_sheepstick_debuff" ||
-                            x.Name == "modifier_doom_bringer_doom" ||
-                            x.Name == "modifier_legion_commander_duel" ||
-                            x.Name == "modifier_tusk_snowball_movement" ||
-                            x.Name == "modifier_tusk_snowball_movement_friendly" ||
-                            x.Name == "modifier_enigma_black_hole_pull" ||
-                            ( x.Name == "modifier_disruptor_static_storm" &&
-                                ObjectMgr.GetEntities<Hero>().Where(
-                                        y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor
-                                    ).First().Modifiers.Any( z => z.Name == "modifier_item_ultimate_scepter" )
-                                ) );
-        }
-
-        /// <summary>
         ///     Checks if given unit can become invisible
         /// </summary>
         /// <param name="unit"></param>
@@ -321,6 +291,26 @@
         {
             return !IsRooted(unit) && !IsStunned(unit)
                    && unit.Modifiers.Any(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
+        }
+
+        /// <summary>
+        ///     Checks if given unit is not muted
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool CanUseItems(this Unit unit)
+        {
+            return !IsStunned(unit) && unit.IsAlive
+                   && !unit.Modifiers.Any(
+                       x =>
+                       x.Name == "modifier_sheepstick_debuff" || x.Name == "modifier_doom_bringer_doom"
+                       || x.Name == "modifier_legion_commander_duel" || x.Name == "modifier_tusk_snowball_movement"
+                       || x.Name == "modifier_tusk_snowball_movement_friendly"
+                       || x.Name == "modifier_enigma_black_hole_pull"
+                       || (x.Name == "modifier_disruptor_static_storm"
+                           && ObjectMgr.GetEntities<Hero>()
+                                  .First(y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor)
+                                  .Modifiers.Any(z => z.Name == "modifier_item_ultimate_scepter")));
         }
 
         /// <summary>
@@ -374,21 +364,31 @@
             var ManaShield = 0d;
             var MagOnly = 0d;
             var AA = 0d;
+            var modifiers = target.Modifiers;
 
-            foreach (var v in ExternalDmgAmps.Where(v => target.Modifiers.Any(x => x.Name == v.ModifierName)))
+            var enumerable1 = modifiers as Modifier[] ?? modifiers.ToArray();
+            var enumerable = modifiers as Modifier[] ?? enumerable1.ToArray();
+
+            if (enumerable.Any(x => x.Name == "modifier_winter_wyvern_cold_embrace") && dmgType == DamageType.Physical)
+            {
+                return 0;
+            }
+
+            if (enumerable.Any(x => x.Name == "modifier_abaddon_borrowed_time"))
+            {
+                return 0;
+            }
+
+            foreach (var v in ExternalDmgAmps.Where(v => enumerable1.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName)
                               ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
-                var burst = 0f;
+                //var burst = 0f;
                 if (ability == null)
                 {
                     continue;
                 }
-                var firstOrDefault = ability.AbilityData.FirstOrDefault(x => x.Name == v.Amp);
-                if (firstOrDefault != null)
-                {
-                    burst = firstOrDefault.GetValue(ability.Level - 1) / 100;
-                }
+                var burst = ability.GetAbilityData(v.Amp) / 100;
                 if (v.SourceTeam == -1 && ability.Owner.Team != target.Team)
                 {
                     amp += burst;
@@ -410,29 +410,50 @@
                 }
             }
 
-            foreach (var v in ExternalDmgReductions.Where(v => target.Modifiers.Any(x => x.Name == v.ModifierName)))
+            foreach (var v in ExternalDmgReductions.Where(v => enumerable1.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName)
                               ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
-                var burst = 0f;
+                //var burst = 0f;
                 if (ability == null)
                 {
                     continue;
                 }
-                var firstOrDefault = ability.AbilityData.FirstOrDefault(x => x.Name == v.Reduce);
-                if (firstOrDefault != null)
-                {
-                    burst = firstOrDefault.GetValue(ability.Level - 1) / 100;
-                }
+                var burst = ability.GetAbilityData(v.Reduce) / 100;
                 if (v.Type == 1)
                 {
                     if (v.SourceTeam == 1 && ability.Owner.Team == target.Team)
                     {
-                        reduceProc += burst;
+                        if (burst > 1)
+                        {
+                            reduceBlock += burst;
+                        }
+                        else
+                        {
+                            reduceProc += burst;
+                        }
                     }
                     else if (v.SourceTeam == 0)
                     {
-                        reduceProc += burst;
+                        if (burst > 1)
+                        {
+                            reduceBlock += burst;
+                        }
+                        else
+                        {
+                            reduceProc += burst;
+                        }
+                    }
+                }
+                else if (v.Type == 2)
+                {
+                    if (v.SourceTeam == 1 && ability.Owner.Team == target.Team)
+                    {
+                        reduceBlock += burst * 100;
+                    }
+                    else if (v.SourceTeam == 0)
+                    {
+                        reduceBlock += burst * 100;
                     }
                 }
                 else if (!v.MagicOnly || dmgType == DamageType.Magical)
@@ -466,7 +487,7 @@
                 }
             }
 
-            if (target.Modifiers.Any(x => x.Name == "modifier_bristleback_bristleback"))
+            if (enumerable.Any(x => x.Name == "modifier_bristleback_bristleback"))
             {
                 var spell = target.FindSpell("bristleback_bristleback");
                 if (spell != null)
@@ -485,7 +506,7 @@
                 }
             }
 
-            if (target.Modifiers.Any(x => x.Name == "modifier_centaur_stampede"))
+            if (enumerable.Any(x => x.Name == "modifier_centaur_stampede"))
             {
                 var heroes =
                     ObjectMgr.GetEntities<Hero>()
@@ -497,7 +518,7 @@
                 reduceProc = heroes.Aggregate(reduceProc, (current, hero) => (current + 0.7));
             }
 
-            if (target.Modifiers.Any(x => x.Name == "modifier_medusa_mana_shield"))
+            if (enumerable.Any(x => x.Name == "modifier_medusa_mana_shield"))
             {
                 var spell = target.FindSpell("medusa_mana_shield");
                 if (spell != null)
@@ -520,7 +541,7 @@
                 }
             }
 
-            if (target.Modifiers.Any(x => x.Name == "modifier_undying_flesh_golem_plague_aura"))
+            if (enumerable.Any(x => x.Name == "modifier_undying_flesh_golem_plague_aura"))
             {
                 var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "undying_flesh_golem");
                 if (spell != null)
@@ -547,11 +568,11 @@
                 }
             }
 
-            if (target.Modifiers.Any(x => x.Name == "modifier_abaddon_borrowed_time_damage_redirect"))
+            if (enumerable.Any(x => x.Name == "modifier_abaddon_borrowed_time_damage_redirect"))
             {
                 reduceOther += 0.35;
             }
-            else if (target.Modifiers.Any(x => x.Name == "modifier_kunkka_ghost_ship_damage_absorb"))
+            else if (enumerable.Any(x => x.Name == "modifier_kunkka_ghost_ship_damage_absorb"))
             {
                 reduceOther += 0.5;
             }
@@ -579,7 +600,7 @@
                 ampFromME -= 0.4;
             }
 
-            if (target.Modifiers.Any(x => x.Name == "modifier_ice_blast"))
+            if (enumerable.Any(x => x.Name == "modifier_ice_blast"))
             {
                 var spell =
                     ObjectMgr.GetEntities<Ability>()

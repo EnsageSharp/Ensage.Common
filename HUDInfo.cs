@@ -13,19 +13,19 @@
 
         private static readonly double DireCompare;
 
-        private static readonly double RadiantCompare;
-
-        private static readonly float Rate;
-
-        private static readonly float Monitor;
+        private static readonly double HpBarHeight;
 
         private static readonly double HpBarWidth;
-
-        private static readonly double HpBarHeight;
 
         private static readonly double HpBarX;
 
         private static readonly float HpBarY;
+
+        private static readonly float Monitor;
+
+        private static readonly double RadiantCompare;
+
+        private static readonly float Rate;
 
         private static readonly double X;
 
@@ -149,6 +149,31 @@
 
         #region Public Methods and Operators
 
+        public static Vector2 GetHPbarPosition(Unit unit)
+        {
+            var pos = unit.Position + new Vector3(0, 0, unit.HealthBarOffset);
+            Vector2 screenPos;
+            if (!Drawing.WorldToScreen(pos, out screenPos))
+            {
+                return Vector2.Zero;
+            }
+            if (unit.Equals(ObjectMgr.LocalHero))
+            {
+                return screenPos + new Vector2((float)(-HpBarX * Monitor), (-HpBarY - 10) * Monitor);
+            }
+            return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
+        }
+
+        public static float GetHPBarSizeX(Unit unit)
+        {
+            return (float)HpBarWidth * Monitor;
+        }
+
+        public static float GetHpBarSizeY(Unit unit)
+        {
+            return (float)(HpBarHeight * Monitor);
+        }
+
         public static Vector2 GetTopPanelPosition(Hero hero)
         {
             var id = hero.Player.ID;
@@ -169,31 +194,6 @@
         public static double GetTopPanelSizeY(Hero hero)
         {
             return 35 * Rate;
-        }
-
-        public static Vector2 GetHPbarPosition(Unit unit)
-        {
-            var pos = unit.Position + new Vector3(0, 0, unit.HealthBarOffset);
-            Vector2 screenPos;
-            if (!Drawing.WorldToScreen(pos, out screenPos))
-            {
-                return Vector2.Zero;
-            }
-            if (unit.Equals(ObjectMgr.LocalHero))
-            {
-                return screenPos + new Vector2((float)(-HpBarX * Monitor), (-HpBarY-10) * Monitor);
-            }
-            return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
-        }
-
-        public static float GetHPBarSizeX(Unit unit)
-        {
-            return (float)HpBarWidth * Monitor;
-        }
-
-        public static float GetHpBarSizeY(Unit unit)
-        {
-            return (float)(HpBarHeight * Monitor);
         }
 
         #endregion
