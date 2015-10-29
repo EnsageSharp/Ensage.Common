@@ -199,12 +199,21 @@
             {
                 return 0;
             }
-            var castPoint = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).StringValue;
-            if (castPoint.Length > 7)
+            try
             {
-                castPoint = castPoint.Split(' ')[ability.Level - 1];
+                var value =
+                    Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability).StringValue;
+                if (value.Length > 7)
+                {
+                    return Convert.ToSingle(value.Split(' ')[ability.Level - 1]);
+                }
+                return Convert.ToSingle(value);
             }
-            return Convert.ToSingle(castPoint);
+            catch (Exception)
+            {
+                return 0;
+            }
+            return 0;
         }
 
         /// <summary>

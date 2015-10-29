@@ -164,12 +164,12 @@
             return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
         }
 
-        public static float GetHPBarSizeX(Unit unit)
+        public static float GetHPBarSizeX(Unit unit = null)
         {
             return (float)HpBarWidth * Monitor;
         }
 
-        public static float GetHpBarSizeY(Unit unit)
+        public static float GetHpBarSizeY(Unit unit = null)
         {
             return (float)(HpBarHeight * Monitor);
         }

@@ -616,6 +616,7 @@
             switch (dmgType)
             {
                 case DamageType.Magical:
+                    //Console.WriteLine(target.MagicDamageResist + " " + target.Name);
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)

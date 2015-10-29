@@ -130,18 +130,17 @@
         /// <param name="target"></param>
         /// <param name="bonusWindupMs"></param>
         /// <returns></returns>
-        public static bool AttackOnCooldown(Entity target, float bonusWindupMs = 0)
+        public static bool AttackOnCooldown(Entity target = null, float bonusWindupMs = 0)
         {
             if (me == null)
             {
                 return false;
             }
-            var validTarget = target != null;
-            if (!validTarget)
+            var turnTime = 0d;
+            if (target != null)
             {
-                return false;
+                turnTime = me.GetTurnTime(target);
             }
-            var turnTime = me.GetTurnTime(target);
             //Console.WriteLine(turnTime*1000);
             return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 75
                     + bonusWindupMs) > tick;

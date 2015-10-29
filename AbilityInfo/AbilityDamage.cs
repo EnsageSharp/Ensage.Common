@@ -208,7 +208,6 @@
                         multi = multimin;
                     }
                     outgoingDamage = target.DamageTaken((float)(bonusDamage + agi * multi), DamageType.Magical, source);
-                    // Console.WriteLine(outgoingDamage + " " + multi + " " + difference + " " + agi + " " + str);
                     break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
@@ -319,14 +318,16 @@
                         {
                             outgoingDamage = outgoingDamage * data.DamageMultiplier;
                         }
-                        outgoingDamage = target.DamageTaken(
+                        //Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));
+                    }
+                    outgoingDamage = target.DamageTaken(
                             outgoingDamage,
                             GetDamageType(ability),
                             source,
                             data.MagicImmunityPierce);
-                    }
                     break;
             }
+            //Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));
             return outgoingDamage;
         }
 
@@ -377,6 +378,11 @@
             {
                 type = DamageType.Magical;
             }
+            else if (ability.Name == "item_ethereal_blade")
+            {
+                type = DamageType.Magical;
+            }
+            //Console.WriteLine(ability.Name.Substring(0, "item_dagon".Length));
             return type;
         }
 
