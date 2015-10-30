@@ -196,7 +196,8 @@
             "IsNuke": true,
             "AdditionalDelay": -0.1,
             "DamageString": "damage",
-            "DamageScepterString": "damage_scepter"
+            "DamageScepterString": "damage_scepter",
+            "Radius":  99999
         },
         {
             "AbilityName": "shredder_chakram_2",
@@ -1145,7 +1146,8 @@
             "IsNuke": true
         },
         {
-            "AbilityName": "zuus_arc_lightning"
+            "AbilityName": "zuus_arc_lightning",
+            "IsNuke": true
         },
         {
             "AbilityName": "tidehunter_anchor_smash",

@@ -327,6 +327,15 @@
                             data.MagicImmunityPierce);
                     break;
             }
+            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && source.Distance2D(target) <= 1200)
+            {
+                var staticField = source.Spellbook.Spell3;
+                if (staticField.Level > 0)
+                {
+                    var bonusDmg = (staticField.GetAbilityData("damage_health_pct") / 100) * target.Health;
+                    outgoingDamage += target.DamageTaken(bonusDmg, DamageType.Magical, source);
+                }
+            }
             //Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));
             return outgoingDamage;
         }
