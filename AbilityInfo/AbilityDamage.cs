@@ -327,7 +327,7 @@
                             data.MagicImmunityPierce);
                     break;
             }
-            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && source.Distance2D(target) <= 1200)
+            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && (source.Distance2D(target) <= 1200 || ability.Name != "zuus_thundergods_wrath"))
             {
                 var staticField = source.Spellbook.Spell3;
                 if (staticField.Level > 0)

@@ -31,6 +31,8 @@
 
         private static double y;
 
+        private static readonly Vector2 ScreenSize;
+
         #endregion
 
         #region Constructors and Destructors
@@ -40,8 +42,8 @@
             double tinfoHeroDown;
             double panelHeroSizeX;
             float compareWidth;
-            var screenSize = new Vector2(Drawing.Width, Drawing.Height);
-            var ratio = Math.Floor((decimal)(screenSize.X / screenSize.Y * 100));
+            ScreenSize = new Vector2(Drawing.Width, Drawing.Height);
+            var ratio = Math.Floor((decimal)(ScreenSize.X / ScreenSize.Y * 100));
             Console.WriteLine(ratio);
             if (ratio == 213)
             {
@@ -139,16 +141,21 @@
                 HpBarX = 43;
                 HpBarY = 28;
             }
-            Monitor = screenSize.X / compareWidth;
+            Monitor = ScreenSize.X / compareWidth;
             Rate = Math.Max(Monitor, 1);
             X = panelHeroSizeX * Monitor;
-            y = screenSize.Y / tinfoHeroDown;
+            y = ScreenSize.Y / tinfoHeroDown;
         }
 
         #endregion
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// Returns HealthBar position for given unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static Vector2 GetHPbarPosition(Unit unit)
         {
             var pos = unit.Position + new Vector3(0, 0, unit.HealthBarOffset);
@@ -164,36 +171,84 @@
             return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
         }
 
+        /// <summary>
+        /// Returns HealthBar X position for given unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static float GetHPBarSizeX(Unit unit = null)
         {
             return (float)HpBarWidth * Monitor;
         }
 
+        /// <summary>
+        /// Returns HealthBar Y position for given unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static float GetHpBarSizeY(Unit unit = null)
         {
             return (float)(HpBarHeight * Monitor);
         }
 
+        /// <summary>
+        /// Returns top panel position for given hero
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static Vector2 GetTopPanelPosition(Hero hero)
         {
             var id = hero.Player.ID;
             return new Vector2((float)(GetXX(hero) - 20 * Monitor + X * id), 0);
         }
 
+        /// <summary>
+        /// Returns top panel size
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static double[] GetTopPanelSize(Hero hero)
         {
             double[] size = { GetTopPanelSizeX(hero), GetTopPanelSizeY(hero) };
             return size;
         }
 
+        /// <summary>
+        /// Returns top panel hero icon width
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static double GetTopPanelSizeX(Hero hero)
         {
             return X;
         }
 
+        /// <summary>
+        /// Returns top panel hero icon height
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
         public static double GetTopPanelSizeY(Hero hero)
         {
             return 35 * Rate;
+        }
+
+        /// <summary>
+        /// Returns screen width
+        /// </summary>
+        /// <returns></returns>
+        public static float ScreenSizeX()
+        {
+            return ScreenSize.X;
+        }
+
+        /// <summary>
+        /// Returns screen height
+        /// </summary>
+        /// <returns></returns>
+        public static float ScreenSizeY()
+        {
+            return ScreenSize.Y;
         }
 
         #endregion
