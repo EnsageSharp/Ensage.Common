@@ -27,11 +27,11 @@
 
         private static readonly float Rate;
 
+        private static readonly Vector2 ScreenSize;
+
         private static readonly double X;
 
         private static double y;
-
-        private static readonly Vector2 ScreenSize;
 
         #endregion
 
@@ -152,7 +152,7 @@
         #region Public Methods and Operators
 
         /// <summary>
-        /// Returns HealthBar position for given unit
+        ///     Returns HealthBar position for given unit
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -172,7 +172,7 @@
         }
 
         /// <summary>
-        /// Returns HealthBar X position for given unit
+        ///     Returns HealthBar X position for given unit
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -182,7 +182,7 @@
         }
 
         /// <summary>
-        /// Returns HealthBar Y position for given unit
+        ///     Returns HealthBar Y position for given unit
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -192,7 +192,7 @@
         }
 
         /// <summary>
-        /// Returns top panel position for given hero
+        ///     Returns top panel position for given hero
         /// </summary>
         /// <param name="hero"></param>
         /// <returns></returns>
@@ -203,7 +203,7 @@
         }
 
         /// <summary>
-        /// Returns top panel size
+        ///     Returns top panel size
         /// </summary>
         /// <param name="hero"></param>
         /// <returns></returns>
@@ -214,7 +214,7 @@
         }
 
         /// <summary>
-        /// Returns top panel hero icon width
+        ///     Returns top panel hero icon width
         /// </summary>
         /// <param name="hero"></param>
         /// <returns></returns>
@@ -224,7 +224,7 @@
         }
 
         /// <summary>
-        /// Returns top panel hero icon height
+        ///     Returns top panel hero icon height
         /// </summary>
         /// <param name="hero"></param>
         /// <returns></returns>
@@ -233,8 +233,13 @@
             return 35 * Rate;
         }
 
+        public static float RatioPercentage()
+        {
+            return Monitor;
+        }
+
         /// <summary>
-        /// Returns screen width
+        ///     Returns screen width
         /// </summary>
         /// <returns></returns>
         public static float ScreenSizeX()
@@ -243,7 +248,7 @@
         }
 
         /// <summary>
-        /// Returns screen height
+        ///     Returns screen height
         /// </summary>
         /// <returns></returns>
         public static float ScreenSizeY()

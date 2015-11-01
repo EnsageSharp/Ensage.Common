@@ -75,11 +75,7 @@
                     {
                         outgoingDamage += bonusDamage;
                     }
-                    outgoingDamage = target.DamageTaken(
-                        outgoingDamage,
-                        DamageType.Physical,
-                        source,
-                        data.MagicImmunityPierce);
+                    outgoingDamage = target.DamageTaken(outgoingDamage, DamageType.Physical, source, true);
                     break;
                 case "doom_bringer_lvl_death":
                     float tempDmg;
@@ -166,7 +162,8 @@
                                      + target.DamageTaken(
                                          ability.GetAbilityData(data.DamageString),
                                          DamageType.Magical,
-                                         source);
+                                         source,
+                                         false);
                     //Console.WriteLine(outgoingDamage);
                     break;
                 case "visage_soul_assumption":
@@ -176,7 +173,7 @@
                     {
                         dmg += modif.StackCount * ability.GetAbilityData("soul_charge_damage");
                     }
-                    outgoingDamage = target.DamageTaken(dmg, DamageType.Magical, source);
+                    outgoingDamage = target.DamageTaken(dmg, DamageType.Magical, source, false);
                     //Console.WriteLine(outgoingDamage);
                     break;
                 case "morphling_adaptive_strike":
@@ -207,7 +204,11 @@
                     {
                         multi = multimin;
                     }
-                    outgoingDamage = target.DamageTaken((float)(bonusDamage + agi * multi), DamageType.Magical, source);
+                    outgoingDamage = target.DamageTaken(
+                        (float)(bonusDamage + agi * multi),
+                        DamageType.Magical,
+                        source,
+                        false);
                     break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
@@ -321,13 +322,14 @@
                         //Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));
                     }
                     outgoingDamage = target.DamageTaken(
-                            outgoingDamage,
-                            GetDamageType(ability),
-                            source,
-                            data.MagicImmunityPierce);
+                        outgoingDamage,
+                        GetDamageType(ability),
+                        source,
+                        data.MagicImmunityPierce);
                     break;
             }
-            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && (source.Distance2D(target) <= 1200 || ability.Name != "zuus_thundergods_wrath"))
+            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus
+                && (source.Distance2D(target) <= 1200 || ability.Name != "zuus_thundergods_wrath"))
             {
                 var staticField = source.Spellbook.Spell3;
                 if (staticField.Level > 0)

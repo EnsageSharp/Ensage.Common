@@ -106,7 +106,7 @@
             }
             var data = AbilityDatabase.Find(ability.Name);
             var owner = ability.Owner;
-            var delay = Game.Ping / 1000 + ability.GetCastPoint();
+            var delay = Game.Ping / 1000;
             var radius = 0f;
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
@@ -224,7 +224,7 @@
             }
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
-                return ability.CastRange + 50;
+                return ability.CastRange + 150;
             }
             var radius = 0f;
             AbilityInfo data;
