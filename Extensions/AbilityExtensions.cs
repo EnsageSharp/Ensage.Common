@@ -14,6 +14,8 @@
 
         private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
 
+        private static readonly Dictionary<string, double> CastPointDictionary = new Dictionary<string, double>();
+
         #endregion
 
         #region Public Methods and Operators
@@ -25,8 +27,20 @@
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
-            return ability != null && ability.Owner != null && ability.AbilityState == AbilityState.Ready
-                   && ability.Level > 0;
+            var owner = ability.Owner as Hero;
+            if (owner == null || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
+            {
+                return ability != null && owner != null && ability.AbilityState == AbilityState.Ready
+                       && ability.Level > 0;
+            }
+            var spell4 = owner.Spellbook.Spell4;
+            var spell5 = owner.Spellbook.Spell5;
+            if (ability.Name != "invoker_invoke" && ability.Name != "invoker_quas" && ability.Name != "invoker_wex"
+                && ability.Name != "invoker_exort" && !ability.Equals(spell4) && !ability.Equals(spell5))
+            {
+                return false;
+            }
+            return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
             //var hero = ObjectMgr.LocalHero;
             //return ability != null && hero != null && ability.Level > 0 && ability.Cooldown <= 0
             //       && ability.ManaCost <= hero.Mana;
@@ -65,8 +79,9 @@
         {
             var data = AbilityDatabase.Find(ability.Name);
             var owner = ability.Owner as Unit;
-            var delay = Game.Ping / 1000 + (float)owner.GetTurnTime(target);
-            var speed = 0f;
+            var delay = Game.Ping / 1000 + ability.FindCastPoint();
+           // Console.WriteLine(ability.FindCastPoint());
+            var speed = float.MaxValue;
             var radius = 0f;
             if (data != null)
             {
@@ -83,8 +98,9 @@
                     radius = ability.GetAbilityData(data.Width);
                 }
             }
-            var xyz = Prediction.SkillShotXYZ(owner, target, delay, speed, radius);
-            if (!(owner.Distance2D(xyz) <= (ability.CastRange + radius / 2)))
+            var xyz = Prediction.SkillShotXYZ(owner, target, (float)(delay * 1000), speed, radius);
+            xyz = Prediction.SkillShotXYZ(owner, target, (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000), speed, radius);
+            if (!(owner.Distance2D(xyz) <= (ability.GetCastRange() + radius / 2)))
             {
                 return false;
             }
@@ -145,7 +161,8 @@
             {
                 ability.UseAbility(target);
             }
-            else if (ability.AbilityBehavior.HasFlag(AbilityBehavior.AreaOfEffect))
+            else if (ability.AbilityBehavior.HasFlag(AbilityBehavior.AreaOfEffect)
+                     || ability.AbilityBehavior.HasFlag(AbilityBehavior.Point))
             {
                 ability.CastSkillShot(target);
             }
@@ -159,6 +176,31 @@
             }
             Utils.Sleep(delay * 1000, "CHAINSTUN_SLEEP");
             return true;
+        }
+
+        /// <summary>
+        ///     Returns castpoint of given ability
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
+        public static double FindCastPoint(this Ability ability)
+        {
+            if (ability is Item)
+            {
+                return 0;
+            }
+            if (ability.OverrideCastPoint != -1)
+            {
+                return 0.1;
+            }
+
+            double castPoint;
+            if (!CastPointDictionary.TryGetValue(ability.Name + " " + ability.Level, out castPoint))
+            {
+                castPoint = ability.GetCastPoint(ability.Level);
+                CastPointDictionary.Add(ability.Name + " " + ability.Level, castPoint);
+            }
+            return castPoint;
         }
 
         /// <summary>
@@ -189,29 +231,6 @@
         }
 
         /// <summary>
-        ///     Returns castpoint of given ability
-        /// </summary>
-        /// <param name="ability"></param>
-        /// <returns></returns>
-        public static double GetCastPoint(this Ability ability)
-        {
-            if (ability is Item)
-            {
-                return 0;
-            }
-            var keyvalue = Game.FindKeyValues(ability.Name + "/AbilityCastPoint", KeyValueSource.Ability);
-            try
-            {
-                var value = keyvalue.StringValue;
-                return Convert.ToSingle(value.Length > 7 ? value.Split(' ')[ability.Level - 1] : value);
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-        }
-
-        /// <summary>
         ///     Returns cast range of ability, if ability is NonTargeted it will return its radius!
         /// </summary>
         /// <param name="ability"></param>
@@ -224,7 +243,12 @@
             }
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
-                return ability.CastRange + 150;
+                var castRange = ability.CastRange;
+                if (castRange <= 0)
+                {
+                    castRange = 999999;
+                }
+                return castRange + 100;
             }
             var radius = 0f;
             AbilityInfo data;
@@ -246,6 +270,16 @@
                 radius = data.Radius;
             }
             return radius + 50;
+        }
+
+        public static double GetCastDelay(this Ability ability, Hero source, Unit target)
+        {
+            var castPoint = ability.FindCastPoint();
+            if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
+            {
+                return castPoint + source.GetTurnTime(target);
+            }
+            return castPoint;
         }
 
         #endregion
