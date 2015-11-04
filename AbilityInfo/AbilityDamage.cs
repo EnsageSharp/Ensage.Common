@@ -13,11 +13,17 @@
     {
         #region Static Fields
 
-        public static Dictionary<Ability, AbilityInfo> dataDictionary = new Dictionary<Ability, AbilityInfo>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Dictionary<Ability, AbilityInfo> DataDictionary = new Dictionary<Ability, AbilityInfo>();
 
-        public static Dictionary<Ability, uint> levelDictionary = new Dictionary<Ability, uint>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Dictionary<Ability, uint> LevelDictionary = new Dictionary<Ability, uint>();
 
-        private static readonly Dictionary<Ability, float> damageDictionary = new Dictionary<Ability, float>();
+        private static readonly Dictionary<Ability, float> DamageDictionary = new Dictionary<Ability, float>();
 
         #endregion
 
@@ -29,18 +35,29 @@
         /// <param name="ability"></param>
         /// <param name="source"></param>
         /// <param name="target"></param>
+        /// <param name="minusArmor"></param>
+        /// <param name="minusDamageResistancePerc"></param>
+        /// <param name="minusMagicResistancePerc"></param>
+        /// <param name="minusHealth"></param>
         /// <returns></returns>
-        public static float CalculateDamage(Ability ability, Hero source, Unit target)
+        public static float CalculateDamage(
+            Ability ability,
+            Hero source,
+            Unit target,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
+            double minusMagicResistancePerc = 0d,
+            float minusHealth = 0f)
         {
             var name = ability.Name;
             var level = ability.Level;
             AbilityInfo data;
-            if (!dataDictionary.TryGetValue(ability, out data))
+            if (!DataDictionary.TryGetValue(ability, out data))
             {
                 data = AbilityDatabase.Find(name);
                 if (data != null && data.IsNuke)
                 {
-                    dataDictionary.Add(ability, data);
+                    DataDictionary.Add(ability, data);
                 }
             }
 
@@ -57,18 +74,18 @@
             {
                 case "ember_spirit_sleight_of_fist":
                     outgoingDamage = source.MinimumDamage + source.BonusDamage;
-                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.BonusDamageString);
                         outgoingDamage += bonusDamage;
-                        damageDictionary.Add(ability, bonusDamage);
-                        levelDictionary.Add(ability, ability.Level);
+                        DamageDictionary.Add(ability, bonusDamage);
+                        LevelDictionary.Add(ability, ability.Level);
                     }
-                    else if (levelDictionary[ability] != ability.Level)
+                    else if (LevelDictionary[ability] != ability.Level)
                     {
-                        levelDictionary[ability] = ability.Level;
+                        LevelDictionary[ability] = ability.Level;
                         bonusDamage = ability.GetAbilityData(data.BonusDamageString);
-                        damageDictionary[ability] = bonusDamage;
+                        DamageDictionary[ability] = bonusDamage;
                         outgoingDamage += bonusDamage;
                     }
                     else
@@ -79,17 +96,17 @@
                     break;
                 case "doom_bringer_lvl_death":
                     float tempDmg;
-                    if (!damageDictionary.TryGetValue(ability, out tempDmg))
+                    if (!DamageDictionary.TryGetValue(ability, out tempDmg))
                     {
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        damageDictionary.Add(ability, tempDmg);
-                        levelDictionary.Add(ability, ability.Level);
+                        DamageDictionary.Add(ability, tempDmg);
+                        LevelDictionary.Add(ability, ability.Level);
                     }
-                    else if (levelDictionary[ability] != ability.Level)
+                    else if (LevelDictionary[ability] != ability.Level)
                     {
-                        levelDictionary[ability] = ability.Level;
+                        LevelDictionary[ability] = ability.Level;
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        damageDictionary[ability] = tempDmg;
+                        DamageDictionary[ability] = tempDmg;
                     }
                     var multiplier = ability.GetAbilityData("lvl_bonus_multiple");
                     bonusDamage = ability.GetAbilityData("lvl_bonus_damage");
@@ -105,17 +122,17 @@
                     if (crit.Level > 0)
                     {
                         float critMulti;
-                        if (!damageDictionary.TryGetValue(crit, out critMulti))
+                        if (!DamageDictionary.TryGetValue(crit, out critMulti))
                         {
                             critMulti = crit.GetAbilityData("crit_bonus");
-                            damageDictionary.Add(crit, critMulti);
-                            levelDictionary.Add(crit, crit.Level);
+                            DamageDictionary.Add(crit, critMulti);
+                            LevelDictionary.Add(crit, crit.Level);
                         }
-                        else if (levelDictionary[crit] != crit.Level)
+                        else if (LevelDictionary[crit] != crit.Level)
                         {
-                            levelDictionary[crit] = crit.Level;
+                            LevelDictionary[crit] = crit.Level;
                             critMulti = crit.GetAbilityData("crit_bonus");
-                            damageDictionary[crit] = critMulti;
+                            DamageDictionary[crit] = critMulti;
                         }
                         outgoingDamage = (source.MinimumDamage + source.BonusDamage) * (critMulti / 100);
                     }
@@ -126,23 +143,23 @@
                         data.MagicImmunityPierce);
                     break;
                 case "templar_assassin_meld":
-                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        damageDictionary.Add(ability, bonusDamage);
-                        levelDictionary.Add(ability, ability.Level);
+                        DamageDictionary.Add(ability, bonusDamage);
+                        LevelDictionary.Add(ability, ability.Level);
                     }
-                    else if (levelDictionary[ability] != ability.Level)
+                    else if (LevelDictionary[ability] != ability.Level)
                     {
-                        levelDictionary[ability] = ability.Level;
+                        LevelDictionary[ability] = ability.Level;
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        damageDictionary[ability] = bonusDamage;
+                        DamageDictionary[ability] = bonusDamage;
                     }
                     //var minusArmor = ability.GetAbilityData("bonus_armor");
                     var minusArmors = new[] { -2, -4, -6, -8 };
-                    var minusArmor = target.Armor + minusArmors[ability.Level - 1];
+                    var meldminusArmor = target.Armor + minusArmors[ability.Level - 1];
                     //Console.WriteLine(minusArmor);
-                    var damageIncrease = 1 - 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor));
+                    var damageIncrease = 1 - 0.06 * meldminusArmor / (1 + 0.06 * Math.Abs(meldminusArmor));
                     //Console.WriteLine(damageIncrease);
                     outgoingDamage =
                         (float)
@@ -177,17 +194,17 @@
                     //Console.WriteLine(outgoingDamage);
                     break;
                 case "morphling_adaptive_strike":
-                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        damageDictionary.Add(ability, bonusDamage);
-                        levelDictionary.Add(ability, ability.Level);
+                        DamageDictionary.Add(ability, bonusDamage);
+                        LevelDictionary.Add(ability, ability.Level);
                     }
-                    else if (levelDictionary[ability] != ability.Level)
+                    else if (LevelDictionary[ability] != ability.Level)
                     {
-                        levelDictionary[ability] = ability.Level;
+                        LevelDictionary[ability] = ability.Level;
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        damageDictionary[ability] = bonusDamage;
+                        DamageDictionary[ability] = bonusDamage;
                     }
                     hero = source;
                     var agi = Math.Floor(hero.TotalAgility);
@@ -212,23 +229,23 @@
                     break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
-                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage =
                             Convert.ToSingle(
                                 Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
                                     .StringValue.Split(' ')[level - 1]);
-                        damageDictionary.Add(ability, bonusDamage);
-                        levelDictionary.Add(ability, ability.Level);
+                        DamageDictionary.Add(ability, bonusDamage);
+                        LevelDictionary.Add(ability, ability.Level);
                     }
-                    else if (levelDictionary[ability] != ability.Level)
+                    else if (LevelDictionary[ability] != ability.Level)
                     {
-                        levelDictionary[ability] = ability.Level;
+                        LevelDictionary[ability] = ability.Level;
                         bonusDamage =
                             Convert.ToSingle(
                                 Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
                                     .StringValue.Split(' ')[level - 1]);
-                        damageDictionary[ability] = bonusDamage;
+                        DamageDictionary[ability] = bonusDamage;
                     }
                     outgoingDamage = target.DamageTaken(
                         bonusDamage,

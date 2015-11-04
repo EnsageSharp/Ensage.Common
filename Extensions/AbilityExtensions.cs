@@ -28,9 +28,13 @@
         public static bool CanBeCasted(this Ability ability)
         {
             var owner = ability.Owner as Hero;
-            if (owner == null || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
+            if (owner == null)
             {
-                return ability != null && owner != null && ability.AbilityState == AbilityState.Ready
+                return ability.Level > 0 && ability.Cooldown <= 0;
+            }
+            if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
+            {
+                return ability.AbilityState == AbilityState.Ready
                        && ability.Level > 0;
             }
             var spell4 = owner.Spellbook.Spell4;
@@ -41,9 +45,6 @@
                 return false;
             }
             return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
-            //var hero = ObjectMgr.LocalHero;
-            //return ability != null && hero != null && ability.Level > 0 && ability.Cooldown <= 0
-            //       && ability.ManaCost <= hero.Mana;
         }
 
         /// <summary>
@@ -252,10 +253,10 @@
             }
             var radius = 0f;
             AbilityInfo data;
-            if (!AbilityDamage.dataDictionary.TryGetValue(ability, out data))
+            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
             {
                 data = AbilityDatabase.Find(ability.Name);
-                AbilityDamage.dataDictionary.Add(ability, data);
+                AbilityDamage.DataDictionary.Add(ability, data);
             }
             if (data.Width != null)
             {

@@ -340,6 +340,10 @@
         /// <param name="dmgType">Type of damage (Magical/Physical/Pure/Health removal)</param>
         /// <param name="source">source of the damage</param>
         /// <param name="throughBKB">true if the damage pierces magic immunity</param>
+        /// <param name="minusArmor"></param>
+        /// <param name="minusDamageResistancePerc"></param>
+        /// <param name="minusMagicResistancePerc"></param>
+        /// <param name="minusHealth"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static float DamageTaken(
@@ -347,7 +351,10 @@
             float dmg,
             DamageType dmgType,
             Unit source,
-            bool throughBKB = false)
+            bool throughBKB = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
+            double minusMagicResistancePerc = 0d)
         {
             if (target.IsInvul())
             {
@@ -620,7 +627,7 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.MagicDamageResist) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - (target.MagicDamageResist* (1 - minusMagicResistancePerc/100))) - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -644,7 +651,7 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.DamageResist) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - (target.DamageResist * (1 - minusDamageResistancePerc/100)) + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + AA);
                     break;
                 case DamageType.HealthRemoval:
                     break;
