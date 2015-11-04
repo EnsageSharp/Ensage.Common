@@ -1,6 +1,5 @@
 ﻿namespace Ensage.Common.Extensions
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -12,9 +11,9 @@
     {
         #region Static Fields
 
-        private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
-
         private static readonly Dictionary<string, double> CastPointDictionary = new Dictionary<string, double>();
+
+        private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
 
         #endregion
 
@@ -34,8 +33,7 @@
             }
             if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
             {
-                return ability.AbilityState == AbilityState.Ready
-                       && ability.Level > 0;
+                return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
             }
             var spell4 = owner.Spellbook.Spell4;
             var spell5 = owner.Spellbook.Spell5;
@@ -81,7 +79,7 @@
             var data = AbilityDatabase.Find(ability.Name);
             var owner = ability.Owner as Unit;
             var delay = Game.Ping / 1000 + ability.FindCastPoint();
-           // Console.WriteLine(ability.FindCastPoint());
+            // Console.WriteLine(ability.FindCastPoint());
             var speed = float.MaxValue;
             var radius = 0f;
             if (data != null)
@@ -100,7 +98,12 @@
                 }
             }
             var xyz = Prediction.SkillShotXYZ(owner, target, (float)(delay * 1000), speed, radius);
-            xyz = Prediction.SkillShotXYZ(owner, target, (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000), speed, radius);
+            xyz = Prediction.SkillShotXYZ(
+                owner,
+                target,
+                (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000),
+                speed,
+                radius);
             if (!(owner.Distance2D(xyz) <= (ability.GetCastRange() + radius / 2)))
             {
                 return false;
@@ -196,11 +199,12 @@
             }
 
             double castPoint;
-            if (!CastPointDictionary.TryGetValue(ability.Name + " " + ability.Level, out castPoint))
+            if (CastPointDictionary.TryGetValue(ability.Name + " " + ability.Level, out castPoint))
             {
-                castPoint = ability.GetCastPoint(ability.Level);
-                CastPointDictionary.Add(ability.Name + " " + ability.Level, castPoint);
+                return castPoint;
             }
+            castPoint = ability.GetCastPoint(ability.Level);
+            CastPointDictionary.Add(ability.Name + " " + ability.Level, castPoint);
             return castPoint;
         }
 
@@ -229,6 +233,28 @@
                 return 0;
             }
             return data.Count > 1 ? data.GetValue(lvl - 1) : data.Value;
+        }
+
+        /// <summary>
+        /// Returns delay before ability is casted
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="usePing"></param>
+        /// <returns></returns>
+        public static double GetCastDelay(this Ability ability, Hero source, Unit target, bool usePing)
+        {
+            var castPoint = ability.FindCastPoint();
+            if (usePing)
+            {
+                castPoint += Game.Ping / 1000;
+            }
+            if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
+            {
+                return castPoint + source.GetTurnTime(target);
+            }
+            return castPoint;
         }
 
         /// <summary>
@@ -273,14 +299,30 @@
             return radius + 50;
         }
 
-        public static double GetCastDelay(this Ability ability, Hero source, Unit target)
+        /// <summary>
+        ///     Checks if this ability can be casted by Invoker, if the ability is not currently invoked, it is gonna check for
+        ///     both invoke and the ability manacost.
+        /// </summary>
+        /// <param name="ability">given ability</param>
+        /// <param name="invoke">invoker ultimate</param>
+        /// <param name="spell4">current spell on slot 4</param>
+        /// <param name="spell5">current spell on slot 5</param>
+        /// <returns></returns>
+        public static bool InvoCanBeCasted(this Ability ability, Ability invoke, Ability spell4, Ability spell5)
         {
-            var castPoint = ability.FindCastPoint();
-            if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
+            var owner = ability.Owner as Hero;
+            if (owner == null)
             {
-                return castPoint + source.GetTurnTime(target);
+                return false;
             }
-            return castPoint;
+            if (!(ability is Item) && ability.Name != "invoker_invoke" && ability.Name != "invoker_quas"
+                && ability.Name != "invoker_wex" && ability.Name != "invoker_exort" && !ability.Equals(spell4)
+                && !ability.Equals(spell5))
+            {
+                return invoke.Level > 0 && invoke.Cooldown <= 0 && ability.Cooldown <= 0
+                       && (ability.ManaCost + invoke.ManaCost) <= owner.Mana;
+            }
+            return ability.AbilityState == AbilityState.Ready;
         }
 
         #endregion
