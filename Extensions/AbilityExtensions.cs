@@ -243,7 +243,7 @@
         /// <param name="target"></param>
         /// <param name="usePing"></param>
         /// <returns></returns>
-        public static double GetCastDelay(this Ability ability, Hero source, Unit target, bool usePing)
+        public static double GetCastDelay(this Ability ability, Hero source, Unit target, bool usePing = false)
         {
             var castPoint = ability.FindCastPoint();
             if (usePing)
