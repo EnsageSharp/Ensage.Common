@@ -359,7 +359,9 @@
             if (target.IsInvul())
             {
                 return 0;
-            }
+            };
+
+            //Console.WriteLine(minusMagicResistancePerc/100);
 
             var tempDmg = Math.Floor(dmg);
             var amp = 0d;
@@ -627,7 +629,7 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - (target.MagicDamageResist* (1 - minusMagicResistancePerc/100))) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - target.MagicDamageResist + minusMagicResistancePerc/100) - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -1104,14 +1106,17 @@
             double multiplier,
             DamageType dmgType,
             Unit source,
-            bool throughBKB = false)
+            bool throughBKB = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
+            double minusMagicResistancePerc = 0d)
         {
             var tempBurn = burnAmount;
             if (unit.Mana < tempBurn)
             {
                 tempBurn = unit.Mana;
             }
-            return unit.DamageTaken((float)(tempBurn * multiplier), dmgType, source, throughBKB);
+            return unit.DamageTaken((float)(tempBurn * multiplier), dmgType, source, throughBKB, minusArmor, minusDamageResistancePerc, minusMagicResistancePerc);
         }
 
         /// <summary>
