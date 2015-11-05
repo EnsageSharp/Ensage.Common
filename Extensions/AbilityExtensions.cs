@@ -27,11 +27,11 @@
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
-            var owner = ability.Owner as Hero;
-            if (owner == null)
+            if (ability.Owner == null)
             {
                 return ability.Level > 0 && ability.Cooldown <= 0;
             }
+            var owner = ability.Owner as Hero;
             if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
             {
                 return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
