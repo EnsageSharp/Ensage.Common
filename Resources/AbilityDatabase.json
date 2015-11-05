@@ -661,6 +661,12 @@
             "StringRadius": "radius"
         },
         {
+            "AbilityName": "meepo_earthbind",
+            "StringRadius": "radius",
+            "Speed": "speed",
+            "IsDisable": true
+        },
+        {
             "AbilityName": "phoenix_sun_ray",
             "OnlyForKillSteal": true
         },
