@@ -629,7 +629,7 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.MagicDamageResist + minusMagicResistancePerc/100) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - target.MagicDamageResist) * (1 + minusMagicResistancePerc/100) - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())

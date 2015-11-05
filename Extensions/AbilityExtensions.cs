@@ -1,5 +1,6 @@
 ﻿namespace Ensage.Common.Extensions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -82,6 +83,7 @@
             // Console.WriteLine(ability.FindCastPoint());
             var speed = float.MaxValue;
             var radius = 0f;
+            delay += ability.GetChannelTime(ability.Level - 1);
             if (data != null)
             {
                 if (data.AdditionalDelay > 0)
@@ -245,7 +247,7 @@
         /// <returns></returns>
         public static double GetCastDelay(this Ability ability, Hero source, Unit target, bool usePing = false)
         {
-            var castPoint = ability.FindCastPoint();
+            var castPoint = Math.Max(ability.FindCastPoint(),0.1);
             if (usePing)
             {
                 castPoint += Game.Ping / 1000;

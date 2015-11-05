@@ -151,6 +151,18 @@
                         source,
                         data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
+                case "tusk_walrus_punch":
+                    if (!MultiplierDictionary.TryGetValue(ability, out multi))
+                    {
+                        multi = ability.GetAbilityData("crit_multiplier");
+                        MultiplierDictionary.Add(ability, multi);
+                    }
+                    outgoingDamage = target.DamageTaken(
+                        (float)((source.MinimumDamage+source.BonusDamage)*(multi/100)),
+                        DamageType.Physical,
+                        source,
+                        data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                    break;
                 case "necrolyte_reapers_scythe":
                     if (!MultiplierDictionary.TryGetValue(ability, out multi))
                     {
@@ -384,11 +396,11 @@
                         }
                         if (source.AghanimState() && data.DamageScepterString != null)
                         {
-                            outgoingDamage = ability.GetAbilityData(data.DamageScepterString, level);
+                            outgoingDamage = ability.GetAbilityData(data.DamageScepterString);
                         }
                         else
                         {
-                            outgoingDamage = ability.GetAbilityData(damageString, level);
+                            outgoingDamage = ability.GetAbilityData(damageString);
                         }
 
                         if (data.DamageMultiplier > 0)
@@ -468,6 +480,14 @@
             else if (ability.Name == "item_ethereal_blade")
             {
                 type = DamageType.Magical;
+            }
+            else if (ability.Name == "tusk_walrus_kick")
+            {
+                type = DamageType.Magical;
+            }
+            else if (ability.Name == "tusk_walrus_punch")
+            {
+                type = DamageType.Physical;
             }
             //Console.WriteLine(ability.Name.Substring(0, "item_dagon".Length));
             return type;

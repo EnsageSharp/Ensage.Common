@@ -560,7 +560,9 @@
         },
         {
             "AbilityName": "tusk_walrus_kick",
-            "IsDisable": true
+            "IsDisable": true,
+            "IsNuke": true,
+            "DamageString":  "damage"
         },
         {
             "AbilityName": "brewmaster_thunder_clap",
@@ -647,7 +649,9 @@
         {
             "AbilityName": "tusk_snowball",
             "IsDisable": true,
-            "Speed": "snowball_speed"
+            "Speed": "snowball_speed",
+            "DamageString": "snowball_damage",
+            "IsNuke": true
         },
         {
             "AbilityName": "phoenix_sun_ray_toggle_move"
