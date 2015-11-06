@@ -128,7 +128,7 @@
             }
             var data = AbilityDatabase.Find(ability.Name);
             var owner = ability.Owner;
-            var delay = Game.Ping / 1000;
+            var delay = Game.Ping / 1000 + ability.FindCastPoint();
             var radius = 0f;
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
@@ -180,7 +180,7 @@
                 }
                 ability.UseAbility();
             }
-            Utils.Sleep(delay * 1000, "CHAINSTUN_SLEEP");
+            Utils.Sleep(delay * 1000 + 100, "CHAINSTUN_SLEEP");
             return true;
         }
 

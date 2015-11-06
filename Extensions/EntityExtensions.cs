@@ -620,7 +620,7 @@
                     AA = Math.Floor(treshold / target.MaximumHealth);
                 }
             }
-
+            
             switch (dmgType)
             {
                 case DamageType.Magical:
