@@ -20,6 +20,7 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
 
     using Ensage.Common.Properties;
@@ -90,11 +91,19 @@ namespace Ensage.Common
             {
                 return 0;
             }
-            var name = unit.Name;
-            var attackAnimationPoint =
-                Game.FindKeyValues(name + "/AttackAnimationPoint", KeyValueSource.Hero).FloatValue;
-            var attackSpeed = GetAttackSpeed(unit);
-            return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
+            try
+            {
+                var name = unit.Name;
+                var attackAnimationPoint =
+                    Game.FindKeyValues(name + "/AttackAnimationPoint", KeyValueSource.Hero).FloatValue;
+                var attackSpeed = GetAttackSpeed(unit);
+                return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(@"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                return 0;
+            }
         }
 
         /// <summary>
@@ -108,45 +117,55 @@ namespace Ensage.Common
         /// </returns>
         public static double GetAttackRate(Hero unit)
         {
-            var attackSpeed = GetAttackSpeed(unit);
-            var attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
-            Ability spell = null;
-            if (
-                !unit.Modifiers.Any(
-                    x =>
-                    (x.Name == "modifier_alchemist_chemical_rage" || x.Name == "modifier_terrorblade_metamorphosis"
-                     || x.Name == "modifier_lone_druid_true_form" || x.Name == "modifier_troll_warlord_berserkers_rage")))
+            try
             {
+                var attackSpeed = GetAttackSpeed(unit);
+                var attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
+                Ability spell = null;
+                if (
+                    !unit.Modifiers.Any(
+                        x =>
+                        (x.Name == "modifier_alchemist_chemical_rage" || x.Name == "modifier_terrorblade_metamorphosis"
+                         || x.Name == "modifier_lone_druid_true_form"
+                         || x.Name == "modifier_troll_warlord_berserkers_rage")))
+                {
+                    return attackBaseTime / (1 + (attackSpeed - 100) / 100);
+                }
+
+                switch (unit.ClassID)
+                {
+                    case ClassID.CDOTA_Unit_Hero_Alchemist:
+                        spell = unit.Spellbook.Spells.First(x => x.Name == "alchemist_chemical_rage");
+                        break;
+                    case ClassID.CDOTA_Unit_Hero_Terrorblade:
+                        spell = unit.Spellbook.Spells.First(x => x.Name == "terrorblade_metamorphosis");
+                        break;
+                    case ClassID.CDOTA_Unit_Hero_LoneDruid:
+                        spell = unit.Spellbook.Spells.First(x => x.Name == "lone_druid_true_form");
+                        break;
+                    case ClassID.CDOTA_Unit_Hero_TrollWarlord:
+                        spell = unit.Spellbook.Spells.First(x => x.Name == "troll_warlord_berserkers_rage");
+                        break;
+                }
+
+                if (spell == null)
+                {
+                    return attackBaseTime / (1 + (attackSpeed - 100) / 100);
+                }
+                var baseAttackTime = spell.AbilityData.FirstOrDefault(x => x.Name == "base_attack_time");
+                if (baseAttackTime != null)
+                {
+                    attackBaseTime = baseAttackTime.GetValue(spell.Level - 1);
+                }
+
                 return attackBaseTime / (1 + (attackSpeed - 100) / 100);
             }
-
-            switch (unit.ClassID)
+            catch (Exception)
             {
-                case ClassID.CDOTA_Unit_Hero_Alchemist:
-                    spell = unit.Spellbook.Spells.First(x => x.Name == "alchemist_chemical_rage");
-                    break;
-                case ClassID.CDOTA_Unit_Hero_Terrorblade:
-                    spell = unit.Spellbook.Spells.First(x => x.Name == "terrorblade_metamorphosis");
-                    break;
-                case ClassID.CDOTA_Unit_Hero_LoneDruid:
-                    spell = unit.Spellbook.Spells.First(x => x.Name == "lone_druid_true_form");
-                    break;
-                case ClassID.CDOTA_Unit_Hero_TrollWarlord:
-                    spell = unit.Spellbook.Spells.First(x => x.Name == "troll_warlord_berserkers_rage");
-                    break;
+                Console.WriteLine(
+                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                return 0;
             }
-
-            if (spell == null)
-            {
-                return attackBaseTime / (1 + (attackSpeed - 100) / 100);
-            }
-            var baseAttackTime = spell.AbilityData.FirstOrDefault(x => x.Name == "base_attack_time");
-            if (baseAttackTime != null)
-            {
-                attackBaseTime = baseAttackTime.GetValue(spell.Level - 1);
-            }
-
-            return attackBaseTime / (1 + (attackSpeed - 100) / 100);
         }
 
         /// <summary>
@@ -161,18 +180,27 @@ namespace Ensage.Common
         public static float GetAttackSpeed(Hero unit)
         {
             //Console.WriteLine(unit.AttacksPerSecond * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01);
-            var attackSpeed =
-                Math.Min(
-                    unit.AttacksPerSecond
-                    * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01,
-                    600);
-
-            if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
+            try
             {
-                attackSpeed = 600;
-            }
+                var attackSpeed =
+                    Math.Min(
+                        unit.AttacksPerSecond
+                        * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01,
+                        600);
 
-            return (float)attackSpeed;
+                if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
+                {
+                    attackSpeed = 600;
+                }
+
+                return (float)attackSpeed;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(
+                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                return 0;
+            }
         }
 
         /// <summary>
@@ -221,6 +249,8 @@ namespace Ensage.Common
             }
             catch (Exception)
             {
+                Console.WriteLine(
+                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
                 return double.MaxValue;
             }
         }

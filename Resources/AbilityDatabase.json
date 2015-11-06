@@ -662,8 +662,9 @@
         },
         {
             "AbilityName": "meepo_earthbind",
-            "StringRadius": "radius",
+            "Width": "radius",
             "Speed": "speed",
+            "IsSkillShot": true,
             "IsDisable": true
         },
         {
