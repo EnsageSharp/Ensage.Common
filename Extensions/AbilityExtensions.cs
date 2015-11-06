@@ -120,7 +120,7 @@
         /// <param name="ability"></param>
         /// <param name="target"></param>
         /// <returns>returns true in case of successfull cast</returns>
-        public static bool CastStun(this Ability ability, Unit target)
+        public static bool CastStun(this Ability ability, Unit target, float straightTimeforSkillShot = 0, bool chainStun = true)
         {
             if (!ability.CanBeCasted())
             {
@@ -159,7 +159,7 @@
                 }
             }
             var canUse = Utils.ChainStun(target, delay, null, false);
-            if (!canUse)
+            if (!canUse && chainStun)
             {
                 return false;
             }
@@ -167,10 +167,15 @@
             {
                 ability.UseAbility(target);
             }
-            else if (ability.AbilityBehavior.HasFlag(AbilityBehavior.AreaOfEffect)
-                     || ability.AbilityBehavior.HasFlag(AbilityBehavior.Point))
+            else if ((ability.AbilityBehavior.HasFlag(AbilityBehavior.AreaOfEffect)
+                     || ability.AbilityBehavior.HasFlag(AbilityBehavior.Point)))
             {
-                ability.CastSkillShot(target);
+                if (Prediction.StraightTime(target) > straightTimeforSkillShot*1000 && ability.CastSkillShot(target))
+                {
+                    Utils.Sleep(delay * 1000 + 100, "CHAINSTUN_SLEEP");
+                    return true;
+                }
+                return false;
             }
             else if (ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
