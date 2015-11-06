@@ -594,7 +594,7 @@
                     var firstOrDefault = spell.AbilityData.FirstOrDefault(x => x.Name == "damage_increase_pct");
                     if (firstOrDefault != null)
                     {
-                        var bloodrite = firstOrDefault.GetValue(spell.Level - 1);
+                        var bloodrite = firstOrDefault.GetValue(spell.Level - 1)/100;
                         if (target.Distance2D(source) > 2200)
                         {
                             bloodrite /= 2;
@@ -616,8 +616,7 @@
                         .FirstOrDefault(x => x.Name == "ancient_apparition_ice_blast" && x.Owner.Team != target.Team);
                 if (spell != null)
                 {
-                    var treshold = spell.AbilityData.FirstOrDefault(x => x.Name == "kill_pct").GetValue(spell.Level - 1)
-                                   / 100;
+                    var treshold = spell.GetAbilityData("kill_pct") / 100;
                     AA = Math.Floor(treshold / target.MaximumHealth);
                 }
             }
