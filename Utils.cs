@@ -154,7 +154,7 @@
                     "modifier_shadow_shaman_voodoo", "modifier_lion_voodoo", "modifier_sheepstick",
                     "modifier_brewmaster_storm_cyclone", "modifier_puck_phase_shift",
                     "modifier_dark_troll_warlord_ensnare",
-                    "modifier_invoker_deafening_blast_knockback"
+                    "modifier_invoker_deafening_blast_knockback", "modifier_pudge_meat_hook"
                 };
             var modifiers = unit.Modifiers.OrderByDescending(x => x.RemainingTime);
             foreach (var m in

@@ -27,11 +27,12 @@
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
-            if (ability.Owner == null)
+            //Console.WriteLine((ability == null) + " " + ability.Level + " " + ability.Cooldown + " " + ((ability.Owner as Hero) == null));
+            var owner = ability.Owner as Hero;
+            if (owner == null)
             {
                 return ability.Level > 0 && ability.Cooldown <= 0;
             }
-            var owner = ability.Owner as Hero;
             if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
             {
                 return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
@@ -290,6 +291,11 @@
             {
                 data = AbilityDatabase.Find(ability.Name);
                 AbilityDamage.DataDictionary.Add(ability, data);
+            }
+            Console.WriteLine((data == null) + " " + ability.Name);
+            if (data == null)
+            {
+                return ability.CastRange;
             }
             if (data.Width != null)
             {

@@ -158,6 +158,10 @@ namespace Ensage.Common
             {
                 return 0;
             }
+            if (IsIdle(unit))
+            {
+                return 5000;
+            }
             return Environment.TickCount - RotTimeDictionary[unit.Handle] + Game.Ping;
         }
 

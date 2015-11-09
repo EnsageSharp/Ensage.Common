@@ -585,7 +585,6 @@
             {
                 reduceOther += 0.5;
             }
-
             if (source.Modifiers.Any(x => x.Name == "modifier_bloodseeker_bloodrage"))
             {
                 var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "bloodseeker_bloodrage");
