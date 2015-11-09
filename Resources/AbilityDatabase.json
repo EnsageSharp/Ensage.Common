@@ -859,6 +859,12 @@
             "AdditionalDelay": -0.1
         },
         {
+            "AbilityName": "furion_wrath_of_nature",
+            "IsSkillShot": true,
+            "IsNuke": true,
+            "DamageString": "damage"
+        },
+        {
             "AbilityName": "kunkka_ghostship",
             "IsDisable": true,
             "Speed": "ghostship_speed"
