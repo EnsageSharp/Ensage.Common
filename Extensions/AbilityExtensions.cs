@@ -253,7 +253,7 @@
         /// <returns></returns>
         public static double GetCastDelay(this Ability ability, Hero source, Unit target, bool usePing = false)
         {
-            var castPoint = Math.Max(ability.FindCastPoint(),0.1);
+            var castPoint = Math.Max(ability.FindCastPoint(),0.05);
             if (usePing)
             {
                 castPoint += Game.Ping / 1000;

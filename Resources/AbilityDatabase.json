@@ -679,7 +679,9 @@
         },
         {
             "AbilityName": "silencer_last_word",
-            "AdditionalDelay": 4
+            "AdditionalDelay": 4,
+            "IsNuke": true,
+            "DamageString": "damage"
         },
         {
             "AbilityName": "phantom_lancer_spirit_lance",
@@ -816,7 +818,7 @@
         },
         {
             "AbilityName": "sniper_assassinate",
-            "OnlyForKillSteal": true
+            "IsNuke": true
         },
         {
             "AbilityName": "elder_titan_echo_stomp",

@@ -20,6 +20,8 @@ namespace Ensage.Common
 
         public static Dictionary<float, float> RotTimeDictionary = new Dictionary<float, float>(); 
 
+        private static Dictionary<float,ParticleEffect> PredictionDrawings = new Dictionary<float, ParticleEffect>(); 
+
         #endregion
 
         #region Fields
@@ -126,8 +128,8 @@ namespace Ensage.Common
         public static bool IsIdle(Unit unit)
         {
             return unit.Modifiers.Any(x => x.Name == "modifier_eul_cyclone" || x.Name == "modifier_invoker_tornado")
-                   || (unit.NetworkActivity == NetworkActivity.Idle && !AbilityMove(unit)
-                       && unit.Modifiers.Any(x => x.Name == "modifier_invoker_deafening_blast_knockback"))
+                   || (unit.NetworkActivity == NetworkActivity.Idle && !AbilityMove(unit))
+                   || unit.Modifiers.Any(x => x.Name == "modifier_invoker_deafening_blast_knockback")
                    || unit.IsAttacking();
         }
 
@@ -215,7 +217,7 @@ namespace Ensage.Common
             {
                 return PredictedXYZ(target, delay + reachTime);
             }
-            sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius - 100)
+            sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius - target.HullRadius)
                         / sourcePos.Distance2D(predict) + predict;
             if (!(speed < 6000))
             {
@@ -279,10 +281,14 @@ namespace Ensage.Common
                     }
                     var speed = (unit.Position - data.LastPosition) / (tick - data.Lasttick);
                     //Console.WriteLine(data.RotSpeed + " rot");
-                    if (Math.Abs(data.RotSpeed) > 0.05 && data.Speed != new Vector3(0, 0, 0))
-                    {
-                        data.Speed = unit.Vector3FromPolarAngle(data.RotSpeed) / (tick - data.Lasttick);
+                    if (Math.Abs(data.RotSpeed) > 0.09 && data.Speed != new Vector3(0, 0, 0))
+                    {                       
                         RotTimeDictionary[unit.Handle] = tick;
+                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * (unit.MovementSpeed) / 3000;
+                    }
+                    else if (StraightTime(unit) < 500)
+                    {
+                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * (unit.MovementSpeed) / 3000;
                     }
                     else
                     {
@@ -295,7 +301,7 @@ namespace Ensage.Common
                             {
                                 var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
                                 //Console.WriteLine(ballSpeed);
-                                var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (ballSpeed / 1000);
+                                var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed) * (ballSpeed / 1000);
                                 data.Speed = newpredict;
                             }
                         }
@@ -305,18 +311,18 @@ namespace Ensage.Common
                         }
                         else
                         {
-                            var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (unit.MovementSpeed) / 1000;
+                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed*10) * (unit.MovementSpeed) / 1000;
                             data.Speed = newpredict;
                             //Console.WriteLine("speed" + " " + newpredict + " " + (unit.MovementSpeed / 1000) + " " + unit.Vector3FromPolarAngle(unit.RotationRad + data.RotSpeed) + " " + data.RotSpeed);
                         }
                     }
-                    var predict = unit.Position + data.Speed * 1000;
-                    var realspeed = predict.Distance2D(unit.Position);
-                    if ((realspeed + 100 > unit.MovementSpeed) && unit.NetworkActivity == NetworkActivity.Move)
-                    {
-                        var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (unit.MovementSpeed) / 1000;
-                        data.Speed = newpredict;
-                    }
+                    //var predict = unit.Position + data.Speed * 1000;
+                    //var realspeed = predict.Distance2D(unit.Position);
+                    //if ((realspeed + 100 > unit.MovementSpeed) && unit.NetworkActivity == NetworkActivity.Move)
+                    //{
+                    //    var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (unit.MovementSpeed) / 1000;
+                    //    data.Speed = newpredict;
+                    //}
                     data.LastPosition = unit.Position;
                     data.LastRotR = unit.RotationRad;
                     data.Lasttick = tick;
@@ -337,6 +343,22 @@ namespace Ensage.Common
                         RotSpeedDictionary[unit.Handle] = data.RotSpeed;
                     }
                 }
+            }
+        }
+
+        public static void DrawPredictions(float delay = 1000)
+        {
+            var heroes = ObjectMgr.GetEntities<Hero>().Where(x => !x.IsIllusion);
+            foreach (var unit in heroes)
+            {
+                ParticleEffect effect;
+                if (!PredictionDrawings.TryGetValue(unit.Handle, out effect))
+                {
+                    effect = new ParticleEffect(@"particles\ui_mouseactions\range_display.vpcf", PredictedXYZ(unit, delay));
+                    effect.SetControlPoint(1, new Vector3(unit.HullRadius+20, 0, 0));
+                    PredictionDrawings.Add(unit.Handle,effect);                   
+                }
+                effect.SetControlPoint(0, PredictedXYZ(unit, delay));
             }
         }
 
