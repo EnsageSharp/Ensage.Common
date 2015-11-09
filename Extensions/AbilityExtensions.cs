@@ -292,7 +292,6 @@
                 data = AbilityDatabase.Find(ability.Name);
                 AbilityDamage.DataDictionary.Add(ability, data);
             }
-            Console.WriteLine((data == null) + " " + ability.Name);
             if (data == null)
             {
                 return ability.CastRange;
