@@ -28,23 +28,30 @@
         public static bool CanBeCasted(this Ability ability)
         {
             //Console.WriteLine((ability == null) + " " + ability.Level + " " + ability.Cooldown + " " + ((ability.Owner as Hero) == null));
-            var owner = ability.Owner as Hero;
-            if (owner == null)
+            try
             {
-                return ability.Level > 0 && ability.Cooldown <= 0;
-            }
-            if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
-            {
+                var owner = ability.Owner as Hero;
+                if (owner == null)
+                {
+                    return ability.Level > 0 && ability.Cooldown <= 0;
+                }
+                if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
+                {
+                    return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                }
+                var spell4 = owner.Spellbook.Spell4;
+                var spell5 = owner.Spellbook.Spell5;
+                if (ability.Name != "invoker_invoke" && ability.Name != "invoker_quas" && ability.Name != "invoker_wex"
+                    && ability.Name != "invoker_exort" && !ability.Equals(spell4) && !ability.Equals(spell5))
+                {
+                    return false;
+                }
                 return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
             }
-            var spell4 = owner.Spellbook.Spell4;
-            var spell5 = owner.Spellbook.Spell5;
-            if (ability.Name != "invoker_invoke" && ability.Name != "invoker_quas" && ability.Name != "invoker_wex"
-                && ability.Name != "invoker_exort" && !ability.Equals(spell4) && !ability.Equals(spell5))
+            catch (Exception)
             {
                 return false;
             }
-            return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
         }
 
         /// <summary>
