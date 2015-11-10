@@ -279,13 +279,16 @@
         /// <returns></returns>
         public static float GetCastRange(this Ability ability)
         {
-            if (ability.Name == "templar_assassin_meld") {
+            if (ability.Name == "templar_assassin_meld")
+            {
                 return (ability.Owner as Hero).GetAttackRange() + 50;
             }
-            if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget)) {
+            if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
+            {
                 var castRange = ability.CastRange;
                 var bonusRange = 0;
-                if (castRange <= 0) {
+                if (castRange <= 0)
+                {
                     castRange = 999999;
                 }
                 if (ability.Name == "dragon_knight_dragon_tail"
@@ -301,20 +304,25 @@
             }
             var radius = 0f;
             AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data)) {
+            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
+            {
                 data = AbilityDatabase.Find(ability.Name);
                 AbilityDamage.DataDictionary.Add(ability, data);
             }
-            if (data == null) {
+            if (data == null)
+            {
                 return ability.CastRange;
             }
-            if (data.Width != null) {
+            if (data.Width != null)
+            {
                 radius = ability.GetAbilityData(data.Width);
             }
-            if (data.StringRadius != null) {
+            if (data.StringRadius != null)
+            {
                 radius = ability.GetAbilityData(data.StringRadius);
             }
-            if (data.Radius > 0) {
+            if (data.Radius > 0)
+            {
                 radius = data.Radius;
             }
             return radius + 50;
