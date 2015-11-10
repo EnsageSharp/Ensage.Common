@@ -279,44 +279,46 @@
         /// <returns></returns>
         public static float GetCastRange(this Ability ability)
         {
-            if (ability.Name == "templar_assassin_meld")
-            {
-                return (ability.Owner as Hero).GetAttackRange() + 50;
-            }
-            if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
-            {
-                var castRange = ability.CastRange;
-                if (castRange <= 0)
-                {
-                    castRange = 999999;
-                }
-                return castRange + 100;
-            }
-            var radius = 0f;
-            AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            {
-                data = AbilityDatabase.Find(ability.Name);
-                AbilityDamage.DataDictionary.Add(ability, data);
-            }
-            if (data == null)
-            {
-                return ability.CastRange;
-            }
-            if (data.Width != null)
-            {
-                radius = ability.GetAbilityData(data.Width);
-            }
-            if (data.StringRadius != null)
-            {
-                radius = ability.GetAbilityData(data.StringRadius);
-            }
-            if (data.Radius > 0)
-            {
-                radius = data.Radius;
-            }
-            return radius + 50;
-        }
+			if (ability.Name == "templar_assassin_meld") {
+				return (ability.Owner as Hero).GetAttackRange() + 50;
+			}
+			if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget)) {
+				var castRange = ability.CastRange;
+				var bonusRange = 0;
+				if (castRange <= 0) {
+					castRange = 999999;
+				}
+				if (ability.Name == "dragon_knight_dragon_tail"
+					&& (ability.Owner as Hero).Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form")) 
+				{
+					bonusRange = 250;
+				} 
+				else if (ability.Name == "beastmaster_primal_roar" && (ability.Owner as Hero).AghanimState()) 
+				{
+					bonusRange = 350;
+				}
+				return castRange + bonusRange + 100;
+			}
+			var radius = 0f;
+			AbilityInfo data;
+			if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data)) {
+				data = AbilityDatabase.Find(ability.Name);
+				AbilityDamage.DataDictionary.Add(ability, data);
+			}
+			if (data == null) {
+				return ability.CastRange;
+			}
+			if (data.Width != null) {
+				radius = ability.GetAbilityData(data.Width);
+			}
+			if (data.StringRadius != null) {
+				radius = ability.GetAbilityData(data.StringRadius);
+			}
+			if (data.Radius > 0) {
+				radius = data.Radius;
+			}
+			return radius + 50;
+		}
 
         /// <summary>
         ///     Checks if this ability can be casted by Invoker, if the ability is not currently invoked, it is gonna check for
