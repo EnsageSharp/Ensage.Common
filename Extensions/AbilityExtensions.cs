@@ -291,11 +291,21 @@
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
                 var castRange = ability.CastRange;
+                var bonusRange = 0;
                 if (castRange <= 0)
                 {
                     castRange = 999999;
                 }
-                return castRange + 100;
+                if (ability.Name == "dragon_knight_dragon_tail"
+                    && (ability.Owner as Hero).Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form")) 
+                {
+                    bonusRange = 250;
+                } 
+                else if (ability.Name == "beastmaster_primal_roar" && (ability.Owner as Hero).AghanimState()) 
+                {
+                    bonusRange = 350;
+                }
+                return castRange + bonusRange + 100;
             }
             var radius = 0f;
             AbilityInfo data;
