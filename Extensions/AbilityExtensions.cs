@@ -128,7 +128,11 @@
         /// <param name="ability"></param>
         /// <param name="target"></param>
         /// <returns>returns true in case of successfull cast</returns>
-        public static bool CastStun(this Ability ability, Unit target, float straightTimeforSkillShot = 0, bool chainStun = true)
+        public static bool CastStun(
+            this Ability ability,
+            Unit target,
+            float straightTimeforSkillShot = 0,
+            bool chainStun = true)
         {
             if (!ability.CanBeCasted())
             {
@@ -176,9 +180,10 @@
                 ability.UseAbility(target);
             }
             else if ((ability.AbilityBehavior.HasFlag(AbilityBehavior.AreaOfEffect)
-                     || ability.AbilityBehavior.HasFlag(AbilityBehavior.Point)))
+                      || ability.AbilityBehavior.HasFlag(AbilityBehavior.Point)))
             {
-                if (Prediction.StraightTime(target) > straightTimeforSkillShot*1000 && ability.CastSkillShot(target))
+                if (Prediction.StraightTime(target) > straightTimeforSkillShot * 1000
+                    && ability.CastSkillShot(target))
                 {
                     Utils.Sleep(delay * 1000 + 100, "CHAINSTUN_SLEEP");
                     return true;
@@ -251,7 +256,7 @@
         }
 
         /// <summary>
-        /// Returns delay before ability is casted
+        ///     Returns delay before ability is casted
         /// </summary>
         /// <param name="ability"></param>
         /// <param name="source"></param>
@@ -260,7 +265,7 @@
         /// <returns></returns>
         public static double GetCastDelay(this Ability ability, Hero source, Unit target, bool usePing = false)
         {
-            var castPoint = Math.Max(ability.FindCastPoint(),0.05);
+            var castPoint = Math.Max(ability.FindCastPoint(), 0.05);
             if (usePing)
             {
                 castPoint += Game.Ping / 1000;

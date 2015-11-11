@@ -309,8 +309,7 @@
                        || x.Name == "modifier_enigma_black_hole_pull"
                        || (x.Name == "modifier_disruptor_static_storm"
                            && ObjectMgr.GetEntities<Hero>()
-                                  .First(y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor)
-                                  .Modifiers.Any(z => z.Name == "modifier_item_ultimate_scepter")));
+                                  .Any(y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor && y.AghanimState())));
         }
 
         /// <summary>
@@ -359,7 +358,8 @@
             if (target.IsInvul())
             {
                 return 0;
-            };
+            }
+            ;
 
             //Console.WriteLine(minusMagicResistancePerc/100);
 
@@ -593,7 +593,7 @@
                     var firstOrDefault = spell.AbilityData.FirstOrDefault(x => x.Name == "damage_increase_pct");
                     if (firstOrDefault != null)
                     {
-                        var bloodrite = firstOrDefault.GetValue(spell.Level - 1)/100;
+                        var bloodrite = firstOrDefault.GetValue(spell.Level - 1) / 100;
                         if (target.Distance2D(source) > 2200)
                         {
                             bloodrite /= 2;
@@ -619,7 +619,7 @@
                     AA = Math.Floor(treshold / target.MaximumHealth);
                 }
             }
-            
+
             switch (dmgType)
             {
                 case DamageType.Magical:
@@ -627,7 +627,8 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.MagicDamageResist) * (1 + minusMagicResistancePerc/100) - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - target.MagicDamageResist) * (1 + minusMagicResistancePerc / 100)
+                         - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -651,7 +652,9 @@
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - (target.DamageResist * (1 - minusDamageResistancePerc/100)) + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + AA);
+                          * (1 + ampFromME))
+                         * (1 - (target.DamageResist * (1 - minusDamageResistancePerc / 100))
+                            + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + AA);
                     break;
                 case DamageType.HealthRemoval:
                     break;
@@ -1026,6 +1029,20 @@
         }
 
         /// <summary>
+        ///     Checks if enemy have a modifier which can be purged
+        /// </summary>
+        /// <param name="hero"></param>
+        /// <returns></returns>
+        public static bool IsPurgable(this Unit hero)
+        {
+            return
+                hero.Modifiers.Any(
+                    x =>
+                    x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow"
+                    || x.Name == "modifier_omninight_guardian_angel");
+        }
+
+        /// <summary>
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -1114,7 +1131,14 @@
             {
                 tempBurn = unit.Mana;
             }
-            return unit.DamageTaken((float)(tempBurn * multiplier), dmgType, source, throughBKB, minusArmor, minusDamageResistancePerc, minusMagicResistancePerc);
+            return unit.DamageTaken(
+                (float)(tempBurn * multiplier),
+                dmgType,
+                source,
+                throughBKB,
+                minusArmor,
+                minusDamageResistancePerc,
+                minusMagicResistancePerc);
         }
 
         /// <summary>

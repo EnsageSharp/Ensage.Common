@@ -17,6 +17,10 @@
         #region Static Fields
 
         /// <summary>
+        /// </summary>
+        public static Dictionary<string, AbilityInfo> AbilityinfoDictionary;
+
+        /// <summary>
         ///     The abilities.
         /// </summary>
         public static List<AbilityInfo> Spells;
@@ -33,6 +37,7 @@
             {
                 Spells = JsonConvert.DeserializeObject<AbilityInfo[]>(@object.ToString()).ToList();
             }
+            AbilityinfoDictionary = new Dictionary<string, AbilityInfo>();
         }
 
         #endregion
@@ -48,7 +53,17 @@
         /// </returns>
         public static AbilityInfo Find(string abilityName)
         {
-            return Spells.FirstOrDefault(data => data.AbilityName == abilityName);
+            AbilityInfo info;
+            if (AbilityinfoDictionary.TryGetValue(abilityName, out info))
+            {
+                return info;
+            }
+            info = Spells.FirstOrDefault(data => data.AbilityName == abilityName);
+            if (info != null)
+            {
+                AbilityinfoDictionary.Add(abilityName, info);
+            }
+            return info;
         }
 
         #endregion

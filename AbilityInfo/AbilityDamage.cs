@@ -16,12 +16,10 @@
         #region Static Fields
 
         /// <summary>
-        /// 
         /// </summary>
         public static Dictionary<Ability, AbilityInfo> DataDictionary = new Dictionary<Ability, AbilityInfo>();
 
         /// <summary>
-        /// 
         /// </summary>
         public static Dictionary<Ability, uint> LevelDictionary = new Dictionary<Ability, uint>();
 
@@ -102,7 +100,12 @@
                     {
                         outgoingDamage += bonusDamage;
                     }
-                    outgoingDamage = target.DamageTaken(outgoingDamage, DamageType.Physical, source, true, minusMagicResistancePerc: minusMagicResistancePerc);
+                    outgoingDamage = target.DamageTaken(
+                        outgoingDamage,
+                        DamageType.Physical,
+                        source,
+                        true,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "doom_bringer_lvl_death":
                     if (!DamageDictionary.TryGetValue(ability, out tempDmg))
@@ -124,7 +127,12 @@
                     {
                         tempDmg += target.MaximumHealth * (bonusDamage / 100);
                     }
-                    outgoingDamage = target.DamageTaken(tempDmg, DamageType.Magical, source, data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                    outgoingDamage = target.DamageTaken(
+                        tempDmg,
+                        DamageType.Magical,
+                        source,
+                        data.MagicImmunityPierce,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "phantom_assassin_phantom_strike":
                     var crit = source.Spellbook.SpellR;
@@ -149,7 +157,8 @@
                         outgoingDamage,
                         DamageType.Physical,
                         source,
-                        data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                        data.MagicImmunityPierce,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "tusk_walrus_punch":
                     if (!MultiplierDictionary.TryGetValue(ability, out multi))
@@ -157,11 +166,13 @@
                         multi = ability.GetAbilityData("crit_multiplier");
                         MultiplierDictionary.Add(ability, multi);
                     }
-                    outgoingDamage = target.DamageTaken(
-                        (float)((source.MinimumDamage+source.BonusDamage)*(multi/100)),
-                        DamageType.Physical,
-                        source,
-                        data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                    outgoingDamage =
+                        target.DamageTaken(
+                            (float)((source.MinimumDamage + source.BonusDamage) * (multi / 100)),
+                            DamageType.Physical,
+                            source,
+                            data.MagicImmunityPierce,
+                            minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "necrolyte_reapers_scythe":
                     if (!MultiplierDictionary.TryGetValue(ability, out multi))
@@ -177,7 +188,11 @@
                         MultiplierDictionary[ability] = multi;
                     }
                     var missingHp = target.MaximumHealth - target.Health + minusHealth;
-                    outgoingDamage = target.DamageTaken((float)(missingHp * multi), DamageType.Magical, source, minusMagicResistancePerc: minusMagicResistancePerc);
+                    outgoingDamage = target.DamageTaken(
+                        (float)(missingHp * multi),
+                        DamageType.Magical,
+                        source,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "templar_assassin_meld":
                     if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
@@ -204,7 +219,8 @@
                             ((source.MaximumDamage + source.BonusDamage)),
                             DamageType.Physical,
                             source,
-                            data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc) + bonusDamage * damageIncrease);
+                            data.MagicImmunityPierce,
+                            minusMagicResistancePerc: minusMagicResistancePerc) + bonusDamage * damageIncrease);
                     break;
                 case "undying_decay":
                     var strengthSteal = ability.GetAbilityData("str_steal");
@@ -217,7 +233,8 @@
                                          ability.GetAbilityData(data.DamageString),
                                          DamageType.Magical,
                                          source,
-                                         false, minusMagicResistancePerc: minusMagicResistancePerc);
+                                         false,
+                                         minusMagicResistancePerc: minusMagicResistancePerc);
                     //Console.WriteLine(outgoingDamage);
                     break;
                 case "visage_soul_assumption":
@@ -227,7 +244,12 @@
                     {
                         dmg += modif.StackCount * ability.GetAbilityData("soul_charge_damage");
                     }
-                    outgoingDamage = target.DamageTaken(dmg, DamageType.Magical, source, false, minusMagicResistancePerc: minusMagicResistancePerc);
+                    outgoingDamage = target.DamageTaken(
+                        dmg,
+                        DamageType.Magical,
+                        source,
+                        false,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     //Console.WriteLine(outgoingDamage);
                     break;
                 case "morphling_adaptive_strike":
@@ -262,7 +284,8 @@
                         (float)(bonusDamage + agi * multi),
                         DamageType.Magical,
                         source,
-                        false, minusMagicResistancePerc: minusMagicResistancePerc);
+                        false,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
@@ -288,7 +311,8 @@
                         bonusDamage,
                         DamageType.Magical,
                         source,
-                        data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                        data.MagicImmunityPierce,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     if (source.Distance2D(target) < radiusMax)
                     {
                         outgoingDamage *= 2;
@@ -335,20 +359,27 @@
                         hero.TotalIntelligence * intMultiplier,
                         1,
                         DamageType.Magical,
-                        source, minusMagicResistancePerc: minusMagicResistancePerc);
+                        source,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "riki_blink_strike":
                     var damage = ability.GetAbilityData(data.DamageString);
                     var backstab = source.Spellbook.SpellE;
                     var agiMultiplier = backstab.GetAbilityData("damage_multiplier");
-                    var blinkdamage = target.DamageTaken(damage, DamageType.Magical, source, data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                    var blinkdamage = target.DamageTaken(
+                        damage,
+                        DamageType.Magical,
+                        source,
+                        data.MagicImmunityPierce,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     outgoingDamage = blinkdamage
                                      + target.DamageTaken(
                                          agiMultiplier * source.TotalAgility
                                          + (source.MinimumDamage + source.BonusDamage),
                                          DamageType.Physical,
                                          source,
-                                         data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                                         data.MagicImmunityPierce,
+                                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "undying_soul_rip":
                     var radius = ability.GetAbilityData("radius");
@@ -376,7 +407,8 @@
                         outgoingDamage,
                         DamageType.Magical,
                         source,
-                        data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                        data.MagicImmunityPierce,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 default:
                     var damageString = data.DamageString;
@@ -413,7 +445,8 @@
                         outgoingDamage,
                         GetDamageType(ability),
                         source,
-                        data.MagicImmunityPierce, minusMagicResistancePerc: minusMagicResistancePerc);
+                        data.MagicImmunityPierce,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
             }
             if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus
@@ -423,7 +456,11 @@
                 if (staticField.Level > 0)
                 {
                     var bonusDmg = (staticField.GetAbilityData("damage_health_pct") / 100) * target.Health;
-                    outgoingDamage += target.DamageTaken(bonusDmg, DamageType.Magical, source, minusMagicResistancePerc: minusMagicResistancePerc);
+                    outgoingDamage += target.DamageTaken(
+                        bonusDmg,
+                        DamageType.Magical,
+                        source,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
                 }
             }
             //Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));

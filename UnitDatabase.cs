@@ -101,7 +101,8 @@ namespace Ensage.Common
             }
             catch (Exception)
             {
-                Console.WriteLine(@"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                Console.WriteLine(
+                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
                 return 0;
             }
         }

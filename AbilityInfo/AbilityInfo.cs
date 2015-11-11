@@ -56,9 +56,19 @@
         public bool FakeCastRange;
 
         /// <summary>
+        ///     Ability buffs unit
+        /// </summary>
+        public bool IsBuff;
+
+        /// <summary>
         ///     Spell disables the target
         /// </summary>
         public bool IsDisable;
+
+        /// <summary>
+        ///     Ability is good for harrasing
+        /// </summary>
+        public bool IsHarras;
 
         /// <summary>
         /// </summary>
@@ -68,6 +78,11 @@
         ///     Spell has low castpoint and high damage input
         /// </summary>
         public bool IsNuke;
+
+        /// <summary>
+        ///     Ability purges unit
+        /// </summary>
+        public bool IsPurge;
 
         /// <summary>
         ///     Spell is applied on an ally in order to prevent them from taking damage or reduce taken damage(Increasing armor,
@@ -130,6 +145,16 @@
         public string StringRadius;
 
         /// <summary>
+        ///     Ability provides true sight
+        /// </summary>
+        public bool TrueSight;
+
+        /// <summary>
+        ///     Ability weakens enemy
+        /// </summary>
+        public bool WeakensEnemy;
+
+        /// <summary>
         ///     Width of a projectile
         /// </summary>
         public string Width;
@@ -168,7 +193,12 @@
             bool aaDamage,
             string damageScepterString,
             string spellLevel,
-            bool manaBurn)
+            bool manaBurn,
+            bool isBuff,
+            bool weakensEnemy,
+            bool isPurge,
+            bool isHarras,
+            bool trueSight)
         {
             this.ManaBurn = manaBurn;
             this.SpellLevel = spellLevel;
@@ -196,6 +226,11 @@
             this.DamageString = damageString;
             this.DamageMultiplier = damageMultiplier;
             this.BonusDamageString = bonusDamagestring;
+            this.IsBuff = isBuff;
+            this.WeakensEnemy = weakensEnemy;
+            this.IsPurge = isPurge;
+            this.IsHarras = isHarras;
+            this.TrueSight = trueSight;
         }
 
         #endregion

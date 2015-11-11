@@ -12,15 +12,15 @@ namespace Ensage.Common
     {
         #region Static Fields
 
+        public static Dictionary<float, double> RotSpeedDictionary = new Dictionary<float, double>();
+
+        public static Dictionary<float, float> RotTimeDictionary = new Dictionary<float, float>();
+
+        public static Dictionary<float, Vector3> SpeedDictionary = new Dictionary<float, Vector3>();
+
         public static List<Prediction> TrackTable = new List<Prediction>();
 
-        public static Dictionary<float,Vector3> SpeedDictionary = new Dictionary<float, Vector3>();
-
-        public static Dictionary<float,double> RotSpeedDictionary = new Dictionary<float, double>();
-
-        public static Dictionary<float, float> RotTimeDictionary = new Dictionary<float, float>(); 
-
-        private static Dictionary<float,ParticleEffect> PredictionDrawings = new Dictionary<float, ParticleEffect>(); 
+        private static Dictionary<float, ParticleEffect> PredictionDrawings = new Dictionary<float, ParticleEffect>();
 
         #endregion
 
@@ -93,7 +93,8 @@ namespace Ensage.Common
         public static float CalculateReachTime(Unit target, float speed, Vector3 dePos)
         {
             Vector3 targetSpeed;
-            if ((!SpeedDictionary.TryGetValue(target.Handle, out targetSpeed) || targetSpeed == new Vector3(0, 0, 0)) && target.NetworkActivity == NetworkActivity.Move)
+            if ((!SpeedDictionary.TryGetValue(target.Handle, out targetSpeed) || targetSpeed == new Vector3(0, 0, 0))
+                && target.NetworkActivity == NetworkActivity.Move)
             {
                 var rotSpeed = 0d;
                 if (RotSpeedDictionary.ContainsKey(target.Handle))
@@ -106,6 +107,24 @@ namespace Ensage.Common
             var b = 2 * (dePos.X * targetSpeed.X + dePos.Y * targetSpeed.Y);
             var c = Math.Pow(dePos.X, 2) + Math.Pow(dePos.Y, 2);
             return (float)((-b - Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a));
+        }
+
+        public static void DrawPredictions(float delay = 1000)
+        {
+            var heroes = ObjectMgr.GetEntities<Hero>().Where(x => !x.IsIllusion);
+            foreach (var unit in heroes)
+            {
+                ParticleEffect effect;
+                if (!PredictionDrawings.TryGetValue(unit.Handle, out effect))
+                {
+                    effect = new ParticleEffect(
+                        @"particles\ui_mouseactions\range_display.vpcf",
+                        PredictedXYZ(unit, delay));
+                    effect.SetControlPoint(1, new Vector3(unit.HullRadius + 20, 0, 0));
+                    PredictionDrawings.Add(unit.Handle, effect);
+                }
+                effect.SetControlPoint(0, PredictedXYZ(unit, delay));
+            }
         }
 
         /// <summary>
@@ -150,24 +169,6 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        /// Returns in miliseconds how long is unit walking straight
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static float StraightTime(Unit unit)
-        {
-            if (!RotTimeDictionary.ContainsKey(unit.Handle))
-            {
-                return 0;
-            }
-            if (IsIdle(unit))
-            {
-                return 5000;
-            }
-            return Environment.TickCount - RotTimeDictionary[unit.Handle] + Game.Ping;
-        }
-
-        /// <summary>
         ///     Returns predicted location of given unit after given delay in ms
         /// </summary>
         /// <param name="unit"></param>
@@ -176,7 +177,8 @@ namespace Ensage.Common
         public static Vector3 PredictedXYZ(Unit unit, float delay)
         {
             Vector3 targetSpeed;
-            if ((!SpeedDictionary.TryGetValue(unit.Handle, out targetSpeed) || targetSpeed == new Vector3(0,0,0)) && unit.NetworkActivity == NetworkActivity.Move)
+            if ((!SpeedDictionary.TryGetValue(unit.Handle, out targetSpeed) || targetSpeed == new Vector3(0, 0, 0))
+                && unit.NetworkActivity == NetworkActivity.Move)
             {
                 var rotSpeed = 0d;
                 if (RotSpeedDictionary.ContainsKey(unit.Handle))
@@ -204,9 +206,9 @@ namespace Ensage.Common
         /// <returns></returns>
         public static Vector3 SkillShotXYZ(Unit source, Unit target, float delay, float speed, float radius)
         {
-           // Console.WriteLine(IsIdle(target) + " and " + (data == null) + " and " + (data.Speed));
+            // Console.WriteLine(IsIdle(target) + " and " + (data == null) + " and " + (data.Speed));
             if (IsIdle(target))
-            {                
+            {
                 return target.Position;
             }
             var predict = PredictedXYZ(target, delay);
@@ -217,8 +219,8 @@ namespace Ensage.Common
             {
                 return PredictedXYZ(target, delay + reachTime);
             }
-            sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius - target.HullRadius)
-                        / sourcePos.Distance2D(predict) + predict;
+            sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius) / sourcePos.Distance2D(predict)
+                        + predict;
             if (!(speed < 6000))
             {
                 return PredictedXYZ(target, delay);
@@ -246,14 +248,14 @@ namespace Ensage.Common
             var tick = Environment.TickCount;
             foreach (var unit in heroes)
             {
-                var data = 
+                var data =
                     TrackTable.FirstOrDefault(
                         unitData => unitData.UnitName == unit.Name || unitData.UnitClassID == unit.ClassID);
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
                     data = new Prediction(unit.Name, unit.ClassID, new Vector3(0, 0, 0), 0, new Vector3(0, 0, 0), 0, 0);
                     TrackTable.Add(data);
-                    return; 
+                    return;
                 }
                 if (data != null && (!unit.IsAlive || !unit.IsVisible))
                 {
@@ -277,12 +279,12 @@ namespace Ensage.Common
                     data.RotSpeed = data.LastRotR - unit.RotationRad;
                     if (!RotTimeDictionary.ContainsKey(unit.Handle))
                     {
-                        RotTimeDictionary.Add(unit.Handle,tick);
+                        RotTimeDictionary.Add(unit.Handle, tick);
                     }
                     var speed = (unit.Position - data.LastPosition) / (tick - data.Lasttick);
                     //Console.WriteLine(data.RotSpeed + " rot");
                     if (Math.Abs(data.RotSpeed) > 0.09 && data.Speed != new Vector3(0, 0, 0))
-                    {                       
+                    {
                         RotTimeDictionary[unit.Handle] = tick;
                         data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * (unit.MovementSpeed) / 3000;
                     }
@@ -311,7 +313,8 @@ namespace Ensage.Common
                         }
                         else
                         {
-                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed*10) * (unit.MovementSpeed) / 1000;
+                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * (unit.MovementSpeed)
+                                             / 1000;
                             data.Speed = newpredict;
                             //Console.WriteLine("speed" + " " + newpredict + " " + (unit.MovementSpeed / 1000) + " " + unit.Vector3FromPolarAngle(unit.RotationRad + data.RotSpeed) + " " + data.RotSpeed);
                         }
@@ -328,7 +331,7 @@ namespace Ensage.Common
                     data.Lasttick = tick;
                     if (!SpeedDictionary.ContainsKey(unit.Handle))
                     {
-                        SpeedDictionary.Add(unit.Handle,data.Speed);
+                        SpeedDictionary.Add(unit.Handle, data.Speed);
                     }
                     else
                     {
@@ -346,20 +349,22 @@ namespace Ensage.Common
             }
         }
 
-        public static void DrawPredictions(float delay = 1000)
+        /// <summary>
+        ///     Returns in miliseconds how long is unit walking straight
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static float StraightTime(Unit unit)
         {
-            var heroes = ObjectMgr.GetEntities<Hero>().Where(x => !x.IsIllusion);
-            foreach (var unit in heroes)
+            if (!RotTimeDictionary.ContainsKey(unit.Handle))
             {
-                ParticleEffect effect;
-                if (!PredictionDrawings.TryGetValue(unit.Handle, out effect))
-                {
-                    effect = new ParticleEffect(@"particles\ui_mouseactions\range_display.vpcf", PredictedXYZ(unit, delay));
-                    effect.SetControlPoint(1, new Vector3(unit.HullRadius+20, 0, 0));
-                    PredictionDrawings.Add(unit.Handle,effect);                   
-                }
-                effect.SetControlPoint(0, PredictedXYZ(unit, delay));
+                return 0;
             }
+            if (IsIdle(unit))
+            {
+                return 5000;
+            }
+            return Environment.TickCount - RotTimeDictionary[unit.Handle] + Game.Ping;
         }
 
         #endregion
