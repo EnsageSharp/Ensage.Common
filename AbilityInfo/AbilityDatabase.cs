@@ -1,5 +1,6 @@
 ﻿namespace Ensage.Common.AbilityInfo
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -56,6 +57,7 @@
             AbilityInfo info;
             if (AbilityinfoDictionary.TryGetValue(abilityName, out info))
             {
+                //Console.WriteLine(info == null);
                 return info;
             }
             info = Spells.FirstOrDefault(data => data.AbilityName == abilityName);

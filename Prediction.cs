@@ -219,13 +219,23 @@ namespace Ensage.Common
             {
                 return PredictedXYZ(target, delay + reachTime);
             }
-            sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius) / sourcePos.Distance2D(predict)
-                        + predict;
-            if (!(speed < 6000))
+            if ((target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed)) < radius)
+            {
+                sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius)
+                            / sourcePos.Distance2D(predict) + predict;
+                reachTime = CalculateReachTime(target, speed, predict - sourcePos);
+            }
+            else
+            {
+                sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) + (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed))-radius)
+                            / sourcePos.Distance2D(predict) + predict;
+                reachTime = CalculateReachTime(target, speed, predict - sourcePos);
+            }
+
+            if (!(speed < 6000) || speed <= 0)
             {
                 return PredictedXYZ(target, delay);
-            }
-            reachTime = CalculateReachTime(target, speed, predict - sourcePos);
+            }  
             return PredictedXYZ(target, delay + reachTime);
         }
 
