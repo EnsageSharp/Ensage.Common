@@ -125,6 +125,8 @@
             return key;
         }
 
+        private static string lastStunAbility;
+
         /// <summary>
         ///     Checks if given unit wont be stunned after given delay in seconds.
         /// </summary>
@@ -133,12 +135,13 @@
         /// <param name="except">Entering a modifier name will ignore that modifier</param>
         /// <param name="onlychain">Entering true will make the function return true only in case enemy is already stunned</param>
         /// <returns></returns>
-        public static bool ChainStun(Unit unit, double delay, string except, bool onlychain)
+        public static bool ChainStun(Unit unit, double delay, string except, bool onlychain, string abilityName = "")
         {
-            if (!SleepCheck("CHAINSTUN_SLEEP"))
+            if (!SleepCheck("CHAINSTUN_SLEEP") && abilityName != lastStunAbility)
             {
                 return false;
             }
+            lastStunAbility = abilityName;
             var chain = false;
             var stunned = false;
             string[] modifiersList =

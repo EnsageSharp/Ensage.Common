@@ -421,18 +421,26 @@
                     }
                     else
                     {
+                        if (source.AghanimState() && ability.AbilityType.HasFlag(AbilityType.Ultimate) && level > 0)
+                        {
+                            level -= 1;
+                        }
                         if (data.SpellLevel != null)
                         {
                             var spellLevel = source.FindSpell(data.SpellLevel);
                             level = spellLevel.Level;
                         }
+                        if (source.AghanimState() && ability.Name == "invoker_sun_strike" && level > 0)
+                        {
+                            level += 1;
+                        }
                         if (source.AghanimState() && data.DamageScepterString != null)
                         {
-                            outgoingDamage = ability.GetAbilityData(data.DamageScepterString);
+                            outgoingDamage = ability.GetAbilityData(data.DamageScepterString, level);
                         }
                         else
                         {
-                            outgoingDamage = ability.GetAbilityData(damageString);
+                            outgoingDamage = ability.GetAbilityData(damageString,level);
                         }
 
                         if (data.DamageMultiplier > 0)

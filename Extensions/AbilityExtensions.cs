@@ -176,6 +176,10 @@
             {
                 return false;
             }
+            if (position.Distance2D(xyz) > ability.GetCastRange())
+            {
+                xyz = (position - xyz) * ability.GetCastRange() / position.Distance2D(xyz) + xyz;
+            }
            // Console.WriteLine(ability.GetCastRange() + " " + radius);
             if (ability.Name.Substring(0, Math.Min("nevermore_shadowraze".Length,ability.Name.Length)) == "nevermore_shadowraze")
             {
@@ -212,9 +216,10 @@
             this Ability ability,
             Unit target,
             float straightTimeforSkillShot = 0,
-            bool chainStun = true)
+            bool chainStun = true,
+            bool useSleep = true)
         {
-            return CastStun(ability,target,ability.Owner.Position,straightTimeforSkillShot,chainStun);
+            return CastStun(ability,target,ability.Owner.Position,straightTimeforSkillShot,chainStun,useSleep);
         }
 
         /// <summary>
@@ -230,7 +235,8 @@
             this Ability ability,
             Unit target, Vector3 sourcePosition,
             float straightTimeforSkillShot = 0,
-            bool chainStun = true)
+            bool chainStun = true,
+            bool useSleep = true)
         {
             var owner = ability.Owner as Unit;
             var position = owner.Position;
@@ -244,12 +250,12 @@
             }
             var delay = ability.GetHitDelay(target);
             var radius = ability.GetRadius();
-            var canUse = Utils.ChainStun(target, delay, null, false);
+            var canUse = Utils.ChainStun(target, delay, null, false, ability.Name);
             if (!canUse && chainStun)
             {
                 return false;
             }
-            if (ability.AbilityBehavior.HasFlag(AbilityBehavior.UnitTarget))
+            if (ability.AbilityBehavior.HasFlag(AbilityBehavior.UnitTarget) && ability.Name != "lion_impale")
             {
                 ability.UseAbility(target);
             }
@@ -259,7 +265,10 @@
                 if (Prediction.StraightTime(target) > straightTimeforSkillShot * 1000
                     && ability.CastSkillShot(target))
                 {
-                    Utils.Sleep(delay * 1000 + 100, "CHAINSTUN_SLEEP");
+                    if (useSleep)
+                    {
+                        Utils.Sleep(Math.Max(delay, 0.2) * 1000 + 250, "CHAINSTUN_SLEEP");
+                    }
                     return true;
                 }
                 return false;
@@ -272,7 +281,10 @@
                 }
                 ability.UseAbility();
             }
-            Utils.Sleep(delay * 1000 + 100, "CHAINSTUN_SLEEP");
+            if (useSleep)
+            {
+                Utils.Sleep(Math.Max(delay,0.2) * 1000 + 250, "CHAINSTUN_SLEEP");
+            }
             return true;
         }
 
@@ -361,7 +373,7 @@
             }
             else
             {
-                delay = 0.01;
+                delay = 0.08;
             }
             if (usePing)
             {
