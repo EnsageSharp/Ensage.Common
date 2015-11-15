@@ -1,5 +1,5 @@
 ﻿// <copyright file="Enumerable.cs" company="EnsageSharp">
-//    Copyright (c) 2015 LeagueSharp.
+//    Copyright (c) 2015 EnsageSharp.
 // 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by

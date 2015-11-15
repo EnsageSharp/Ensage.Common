@@ -1,5 +1,5 @@
 // <copyright file="Load.cs" company="EnsageSharp">
-//    Copyright (c) 2015 LeagueSharp.
+//    Copyright (c) 2015 EnsageSharp.
 // 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ namespace Ensage.Common
     using System.Reflection;
 
     /// <summary>
-    ///     Provides an event for when the game starts.
+    ///     Provides custom events
     /// </summary>
     public class Events
     {
@@ -67,36 +67,45 @@ namespace Ensage.Common
         #region Delegates
 
         /// <summary>
+        ///     OnClose Delegate
+        /// </summary>
+        /// <param name="sender">the sender</param>
+        /// <param name="e"><see cref="EventArgs" /> event data</param>
+        public delegate void OnCloseDelegate(object sender, EventArgs e);
+
+        /// <summary>
         ///     OnLoad Delegate.
         /// </summary>
         /// <param name="sender">The sender</param>
         /// <param name="e"><see cref="EventArgs" /> event data</param>
         public delegate void OnLoadDelegate(object sender, EventArgs e);
 
-        /// <summary>
-        /// OnClose Delegate
-        /// </summary>
-        /// <param name="sender">the sender</param>
-        /// <param name="e"><see cref="EventArgs" /> event data</param>
-        public delegate void OnCloseDelegate(object sender, EventArgs e);
-
         #endregion
 
         #region Public Events
+
+        /// <summary>
+        ///     OnClose is getting called after game ends
+        /// </summary>
+        public static event OnLoadDelegate OnClose;
 
         /// <summary>
         ///     OnLoad is getting called after you pick a hero (doesn't matter if started or restarted while game is already
         ///     running) and when reloading an assembly.
         /// </summary>
         public static event OnLoadDelegate OnLoad;
-        /// <summary>
-        ///     OnClose is getting called after game ends
-        /// </summary>
-        public static event OnLoadDelegate OnClose;
 
         #endregion
 
         #region Methods
+
+        private static void CallOnClose()
+        {
+            if (OnClose != null)
+            {
+                OnClose(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
+            }
+        }
 
         /// <summary>
         ///     Calls the OnLoad event.
@@ -106,14 +115,6 @@ namespace Ensage.Common
             if (OnLoad != null)
             {
                 OnLoad(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
-            }
-        }
-
-        private static void CallOnClose()
-        {
-            if (OnClose != null)
-            {
-                OnClose(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
             }
         }
 
