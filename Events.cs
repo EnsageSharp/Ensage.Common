@@ -1,4 +1,4 @@
-﻿// <copyright file="Load.cs" company="EnsageSharp">
+// <copyright file="Load.cs" company="EnsageSharp">
 //    Copyright (c) 2015 LeagueSharp.
 // 
 //    This program is free software: you can redistribute it and/or modify
@@ -15,47 +15,51 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
 
-namespace Ensage.Common.Events
+namespace Ensage.Common
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
 
     /// <summary>
     ///     Provides an event for when the game starts.
     /// </summary>
-    public class Load
+    public class Events
     {
         #region Static Fields
 
-        /// <summary>
-        ///     The invocation list.
-        /// </summary>
-        private static readonly List<Delegate> InvocationList = new List<Delegate>();
+        private static bool loaded;
+
+        private static bool unloaded;
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Initializes static members of the <see cref="Load" /> class.
+        ///     Initializes static members of the <see cref="Events" /> class.
         /// </summary>
-        static Load()
+        static Events()
         {
-            if (!Game.IsInGame)
-            {
-                CallOnLoad();
-                Game.OnUpdate += OnUpdate;
-            }
-            else
-            {
-                Game.OnUpdate += args =>
+            Game.OnUpdate += args =>
+                {
+                    if (!Game.IsInGame || ObjectMgr.LocalHero == null || !ObjectMgr.LocalHero.IsValid)
                     {
-                        CallOnLoad();
-                        Game.OnUpdate += OnUpdate;
-                    };
-            }
+                        if (!unloaded)
+                        {
+                            CallOnClose();
+                            unloaded = true;
+                        }
+                        loaded = false;
+                        return;
+                    }
+                    if (loaded)
+                    {
+                        return;
+                    }
+                    unloaded = false;
+                    loaded = true;
+                    CallOnLoad();
+                };
         }
 
         #endregion
@@ -69,15 +73,26 @@ namespace Ensage.Common.Events
         /// <param name="e"><see cref="EventArgs" /> event data</param>
         public delegate void OnLoadDelegate(object sender, EventArgs e);
 
+        /// <summary>
+        /// OnClose Delegate
+        /// </summary>
+        /// <param name="sender">the sender</param>
+        /// <param name="e"><see cref="EventArgs" /> event data</param>
+        public delegate void OnCloseDelegate(object sender, EventArgs e);
+
         #endregion
 
         #region Public Events
 
         /// <summary>
-        ///     OnLoad is getting called when you get in-game (doesn't matter if started or restarted while game is already
+        ///     OnLoad is getting called after you pick a hero (doesn't matter if started or restarted while game is already
         ///     running) and when reloading an assembly.
         /// </summary>
         public static event OnLoadDelegate OnLoad;
+        /// <summary>
+        ///     OnClose is getting called after game ends
+        /// </summary>
+        public static event OnLoadDelegate OnClose;
 
         #endregion
 
@@ -88,38 +103,17 @@ namespace Ensage.Common.Events
         /// </summary>
         private static void CallOnLoad()
         {
-            if (OnLoad == null)
+            if (OnLoad != null)
             {
-                return;
+                OnLoad(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
             }
-            InvocationList.AddRange(OnLoad.GetInvocationList());
-            OnLoad(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
         }
 
-        /// <summary>
-        ///     OnUpdate event.
-        /// </summary>
-        /// <param name="args">
-        ///     The event data
-        /// </param>
-        private static void OnUpdate(EventArgs args)
+        private static void CallOnClose()
         {
-            if (OnLoad == null)
+            if (OnClose != null)
             {
-                return;
-            }
-
-            foreach (var invocation in OnLoad.GetInvocationList().Where(i => InvocationList.All(l => l != i)))
-            {
-                InvocationList.Add(invocation);
-                try
-                {
-                    invocation.DynamicInvoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
-                }
-                catch (Exception)
-                {
-                    //
-                }
+                OnClose(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
             }
         }
 
