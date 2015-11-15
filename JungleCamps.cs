@@ -6,6 +6,8 @@
 
     using SharpDX;
 
+    /// <summary>
+    /// </summary>
     public class JungleCamp
     {
         #region Fields
@@ -19,6 +21,8 @@
         /// </summary>
         public Vector3 CampPosition;
 
+        /// <summary>
+        /// </summary>
         public uint ID;
 
         /// <summary>
@@ -45,10 +49,21 @@
 
         #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
         public JungleCamp()
         {
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="campPosition"></param>
+        /// <param name="stackPosition"></param>
+        /// <param name="waitPosition"></param>
+        /// <param name="team"></param>
+        /// <param name="id"></param>
+        /// <param name="stackTime"></param>
+        /// <param name="ancients"></param>
         public JungleCamp(
             Vector3 campPosition,
             Vector3 stackPosition,
@@ -70,6 +85,8 @@
         #endregion
     }
 
+    /// <summary>
+    /// </summary>
     public class JungleCamps
     {
         #region Static Fields
@@ -187,6 +204,10 @@
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public static JungleCamp FindClosestCamp(Vector3 pos)
         {
             JungleCamp bestResult = null;

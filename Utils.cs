@@ -24,6 +24,8 @@
         /// </summary>
         public static readonly Dictionary<string, double> Sleeps = new Dictionary<string, double>();
 
+        private static string lastStunAbility;
+
         #endregion
 
         #region Enums
@@ -108,6 +110,10 @@
             return Math.PI * angle / 180.0;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static byte FixVirtualKey(byte key)
         {
             switch (key)
@@ -125,8 +131,6 @@
             return key;
         }
 
-        private static string lastStunAbility;
-
         /// <summary>
         ///     Checks if given unit wont be stunned after given delay in seconds.
         /// </summary>
@@ -134,6 +138,7 @@
         /// <param name="delay">Delay of possible stun in seconds</param>
         /// <param name="except">Entering a modifier name will ignore that modifier</param>
         /// <param name="onlychain">Entering true will make the function return true only in case enemy is already stunned</param>
+        /// <param name="abilityName"></param>
         /// <returns></returns>
         public static bool ChainStun(Unit unit, double delay, string except, bool onlychain, string abilityName = "")
         {
@@ -307,88 +312,5 @@
         }
 
         #endregion
-    }
-
-    public static class DelayAction
-    {
-        #region Static Fields
-
-        public static List<Action> ActionList = new List<Action>();
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        static DelayAction()
-        {
-            Game.OnUpdate += GameOnOnGameUpdate;
-        }
-
-        #endregion
-
-        #region Delegates
-
-        public delegate void Callback();
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        public static void Add(int time, Callback func)
-        {
-            var action = new Action(time, func);
-            ActionList.Add(action);
-        }
-
-        #endregion
-
-        #region Methods
-
-        private static void GameOnOnGameUpdate(EventArgs args)
-        {
-            for (var i = ActionList.Count - 1; i >= 0; i--)
-            {
-                if (ActionList[i].Time <= Environment.TickCount)
-                {
-                    try
-                    {
-                        if (ActionList[i].CallbackObject != null)
-                        {
-                            ActionList[i].CallbackObject();
-                            //Will somehow result in calling ALL non-internal marked classes of the called assembly and causes NullReferenceExceptions.
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        // ignored
-                    }
-
-                    ActionList.RemoveAt(i);
-                }
-            }
-        }
-
-        #endregion
-
-        public struct Action
-        {
-            #region Fields
-
-            public Callback CallbackObject;
-
-            public int Time;
-
-            #endregion
-
-            #region Constructors and Destructors
-
-            public Action(int time, Callback callback)
-            {
-                this.Time = time + Environment.TickCount;
-                this.CallbackObject = callback;
-            }
-
-            #endregion
-        }
     }
 }

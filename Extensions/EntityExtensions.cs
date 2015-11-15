@@ -98,6 +98,8 @@
         #endregion
     }
 
+    /// <summary>
+    /// </summary>
     public static class EntityExtensions
     {
         #region Static Fields
@@ -342,7 +344,6 @@
         /// <param name="minusArmor"></param>
         /// <param name="minusDamageResistancePerc"></param>
         /// <param name="minusMagicResistancePerc"></param>
-        /// <param name="minusHealth"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static float DamageTaken(
@@ -687,11 +688,21 @@
             return unit1.Position.Distance2D(unit2.Position);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="unit2"></param>
+        /// <returns></returns>
         public static float Distance2D(this Projectile projectile, Entity unit2)
         {
             return projectile.Position.Distance2D(unit2.Position);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
         public static float Distance2D(this Projectile p1, Projectile p2)
         {
             return p1.Position.Distance2D(p2.Position);
@@ -709,6 +720,11 @@
             return unit.Position.ToVector2().FindAngleBetween(second.ToVector2(), radian);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
         public static float FindAngleForTurnTime(this Entity unit, Vector3 position)
         {
             var first = unit.Position;
@@ -1079,6 +1095,13 @@
             return unit.UnitState.HasFlag(state);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="range"></param>
+        /// <param name="checkTeam"></param>
+        /// <param name="from"></param>
+        /// <returns></returns>
         public static bool IsValidTarget(
             this Unit unit,
             float range = float.MaxValue,
@@ -1113,7 +1136,10 @@
         /// <param name="multiplier"></param>
         /// <param name="dmgType"></param>
         /// <param name="source"></param>
-        /// <param name="throughBKB"></param>
+        /// <param name="throughBkb"></param>
+        /// <param name="minusArmor"></param>
+        /// <param name="minusDamageResistancePerc"></param>
+        /// <param name="minusMagicResistancePerc"></param>
         /// <returns></returns>
         public static float ManaBurnDamageTaken(
             this Unit unit,
@@ -1121,7 +1147,7 @@
             double multiplier,
             DamageType dmgType,
             Unit source,
-            bool throughBKB = false,
+            bool throughBkb = false,
             double minusArmor = 0d,
             double minusDamageResistancePerc = 0d,
             double minusMagicResistancePerc = 0d)
@@ -1135,7 +1161,7 @@
                 (float)(tempBurn * multiplier),
                 dmgType,
                 source,
-                throughBKB,
+                throughBkb,
                 minusArmor,
                 minusDamageResistancePerc,
                 minusMagicResistancePerc);

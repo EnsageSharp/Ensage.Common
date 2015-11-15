@@ -163,10 +163,45 @@
 
         #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
         public AbilityInfo()
         {
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="abilityName"></param>
+        /// <param name="isDisable"></param>
+        /// <param name="isSlow"></param>
+        /// <param name="isSilence"></param>
+        /// <param name="isNuke"></param>
+        /// <param name="isSkillShot"></param>
+        /// <param name="isHeal"></param>
+        /// <param name="isShield"></param>
+        /// <param name="additionalDelay"></param>
+        /// <param name="radius"></param>
+        /// <param name="stringRadius"></param>
+        /// <param name="speed"></param>
+        /// <param name="width"></param>
+        /// <param name="allyBlock"></param>
+        /// <param name="enemyBlock"></param>
+        /// <param name="magicImmunityPierce"></param>
+        /// <param name="fakeCastRange"></param>
+        /// <param name="realCastRange"></param>
+        /// <param name="onlyForKillSteal"></param>
+        /// <param name="damageString"></param>
+        /// <param name="damageMultiplier"></param>
+        /// <param name="bonusDamagestring"></param>
+        /// <param name="aaDamage"></param>
+        /// <param name="damageScepterString"></param>
+        /// <param name="spellLevel"></param>
+        /// <param name="manaBurn"></param>
+        /// <param name="isBuff"></param>
+        /// <param name="weakensEnemy"></param>
+        /// <param name="isPurge"></param>
+        /// <param name="isHarras"></param>
+        /// <param name="trueSight"></param>
         public AbilityInfo(
             string abilityName,
             bool isDisable,

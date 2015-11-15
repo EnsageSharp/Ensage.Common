@@ -233,6 +233,9 @@
             return 35 * Rate;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
         public static float RatioPercentage()
         {
             return Monitor;

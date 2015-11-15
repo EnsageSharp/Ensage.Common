@@ -56,10 +56,9 @@
                 {
                     return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                 }
-                var spell4 = owner.Spellbook.Spell4;
-                var spell5 = owner.Spellbook.Spell5;
                 if (ability.Name != "invoker_invoke" && ability.Name != "invoker_quas" && ability.Name != "invoker_wex"
-                    && ability.Name != "invoker_exort" && !ability.Equals(spell4) && !ability.Equals(spell5))
+                    && ability.Name != "invoker_exort" && ability.AbilitySlot != (int)AbilitySlot.Slot_4
+                    && ability.AbilitySlot != (int)AbilitySlot.Slot_5)
                 {
                     return false;
                 }
@@ -101,14 +100,13 @@
 
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="ability"></param>
         /// <param name="target"></param>
         /// <returns></returns>
         public static bool CanHit(this Ability ability, Hero target)
         {
-            return CanHit(ability,target,target.Position);
+            return CanHit(ability, target, target.Position);
         }
 
         /// <summary>
@@ -137,7 +135,8 @@
                 {
                     return true;
                 }
-                if (ability.Name == "pudge_dismember" && target.Modifiers.Any(x => x.Name == "modifier_pudge_meat_hook") && position.Distance2D(target) < 600)
+                if (ability.Name == "pudge_dismember" && target.Modifiers.Any(x => x.Name == "modifier_pudge_meat_hook")
+                    && position.Distance2D(target) < 600)
                 {
                     return true;
                 }
@@ -147,14 +146,13 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="ability"></param>
         /// <param name="target"></param>
         /// <returns></returns>
         public static bool CastSkillShot(this Ability ability, Unit target)
         {
-            return CastSkillShot(ability,target,ability.Owner.Position);
+            return CastSkillShot(ability, target, ability.Owner.Position);
         }
 
         /// <summary>
@@ -180,8 +178,9 @@
             {
                 xyz = (position - xyz) * ability.GetCastRange() / position.Distance2D(xyz) + xyz;
             }
-           // Console.WriteLine(ability.GetCastRange() + " " + radius);
-            if (ability.Name.Substring(0, Math.Min("nevermore_shadowraze".Length,ability.Name.Length)) == "nevermore_shadowraze")
+            // Console.WriteLine(ability.GetCastRange() + " " + radius);
+            if (ability.Name.Substring(0, Math.Min("nevermore_shadowraze".Length, ability.Name.Length))
+                == "nevermore_shadowraze")
             {
                 xyz = Prediction.SkillShotXYZ(
                     owner,
@@ -203,14 +202,13 @@
             return true;
         }
 
-
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="ability"></param>
         /// <param name="target"></param>
         /// <param name="straightTimeforSkillShot"></param>
         /// <param name="chainStun"></param>
+        /// <param name="useSleep"></param>
         /// <returns></returns>
         public static bool CastStun(
             this Ability ability,
@@ -219,7 +217,7 @@
             bool chainStun = true,
             bool useSleep = true)
         {
-            return CastStun(ability,target,ability.Owner.Position,straightTimeforSkillShot,chainStun,useSleep);
+            return CastStun(ability, target, ability.Owner.Position, straightTimeforSkillShot, chainStun, useSleep);
         }
 
         /// <summary>
@@ -230,10 +228,12 @@
         /// <param name="sourcePosition"></param>
         /// <param name="straightTimeforSkillShot"></param>
         /// <param name="chainStun"></param>
+        /// <param name="useSleep"></param>
         /// <returns>returns true in case of successfull cast</returns>
         public static bool CastStun(
             this Ability ability,
-            Unit target, Vector3 sourcePosition,
+            Unit target,
+            Vector3 sourcePosition,
             float straightTimeforSkillShot = 0,
             bool chainStun = true,
             bool useSleep = true)
@@ -283,7 +283,7 @@
             }
             if (useSleep)
             {
-                Utils.Sleep(Math.Max(delay,0.2) * 1000 + 250, "CHAINSTUN_SLEEP");
+                Utils.Sleep(Math.Max(delay, 0.2) * 1000 + 250, "CHAINSTUN_SLEEP");
             }
             return true;
         }
@@ -348,8 +348,14 @@
         /// <param name="source"></param>
         /// <param name="target"></param>
         /// <param name="usePing"></param>
+        /// <param name="useCastPoint"></param>
         /// <returns></returns>
-        public static double GetCastDelay(this Ability ability, Hero source, Unit target, bool usePing = false, bool useCastPoint = true)
+        public static double GetCastDelay(
+            this Ability ability,
+            Hero source,
+            Unit target,
+            bool usePing = false,
+            bool useCastPoint = true)
         {
             double delay;
             if (useCastPoint)
@@ -383,7 +389,7 @@
             delay += ability.GetChannelTime(ability.Level - 1);
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
-                return delay + (useCastPoint ? source.GetTurnTime(target) : source.GetTurnTime(target)/2);
+                return delay + (useCastPoint ? source.GetTurnTime(target) : source.GetTurnTime(target) / 2);
             }
             return delay;
         }
@@ -496,7 +502,12 @@
             var delay = ability.GetCastDelay(owner as Hero, target, true);
             var speed = ability.GetProjectileSpeed();
             var radius = ability.GetRadius();
-            var xyz = Prediction.SkillShotXYZ(owner, target, (float)((delay + owner.GetTurnTime(target.Position)) * 1000), speed, radius);
+            var xyz = Prediction.SkillShotXYZ(
+                owner,
+                target,
+                (float)((delay + owner.GetTurnTime(target.Position)) * 1000),
+                speed,
+                radius);
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
                 xyz = Prediction.SkillShotXYZ(

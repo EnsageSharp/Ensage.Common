@@ -430,7 +430,7 @@
                             var spellLevel = source.FindSpell(data.SpellLevel);
                             level = spellLevel.Level;
                         }
-                        if (source.AghanimState() && ability.Name == "invoker_sun_strike" && level > 0)
+                        if (source.AghanimState() && source.ClassID == ClassID.CDOTA_Unit_Hero_Invoker && level > 0)
                         {
                             level += 1;
                         }
@@ -440,7 +440,7 @@
                         }
                         else
                         {
-                            outgoingDamage = ability.GetAbilityData(damageString,level);
+                            outgoingDamage = ability.GetAbilityData(damageString, level);
                         }
 
                         if (data.DamageMultiplier > 0)

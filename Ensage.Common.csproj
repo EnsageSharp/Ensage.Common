@@ -64,19 +64,24 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityInfo\AbilityDamage.cs" />
     <Compile Include="Algorithm.cs" />
+    <Compile Include="Events\Load.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\SharpDX\Generic.cs" />
     <Compile Include="Extensions\SharpDX\Vector2Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector3Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
+    <Compile Include="Geometry.cs" />
     <Compile Include="HUDInfo.cs" />
     <Compile Include="JungleCamps.cs" />
     <Compile Include="Orbwalking.cs" />
@@ -95,6 +100,7 @@
     <Compile Include="Unit\UnitInfo.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
+    <Compile Include="WindowsMessages.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -112,8 +118,10 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

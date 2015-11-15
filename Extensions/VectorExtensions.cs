@@ -250,6 +250,10 @@
             return Rotate(vector, delta, Vector2.Zero);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         public static Vector3 SwitchYZ(this Vector3 v)
         {
             return new Vector3(v.X, v.Z, v.Y);

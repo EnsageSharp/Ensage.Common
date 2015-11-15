@@ -8,16 +8,26 @@ namespace Ensage.Common
 
     using SharpDX;
 
+    /// <summary>
+    /// </summary>
     public class Prediction
     {
         #region Static Fields
 
+        /// <summary>
+        /// </summary>
         public static Dictionary<float, double> RotSpeedDictionary = new Dictionary<float, double>();
 
+        /// <summary>
+        /// </summary>
         public static Dictionary<float, float> RotTimeDictionary = new Dictionary<float, float>();
 
+        /// <summary>
+        /// </summary>
         public static Dictionary<float, Vector3> SpeedDictionary = new Dictionary<float, Vector3>();
 
+        /// <summary>
+        /// </summary>
         public static List<Prediction> TrackTable = new List<Prediction>();
 
         private static Dictionary<float, ParticleEffect> PredictionDrawings = new Dictionary<float, ParticleEffect>();
@@ -26,18 +36,32 @@ namespace Ensage.Common
 
         #region Fields
 
+        /// <summary>
+        /// </summary>
         public Vector3 LastPosition;
 
+        /// <summary>
+        /// </summary>
         public float LastRotR;
 
+        /// <summary>
+        /// </summary>
         public float Lasttick;
 
+        /// <summary>
+        /// </summary>
         public float RotSpeed;
 
+        /// <summary>
+        /// </summary>
         public Vector3 Speed;
 
+        /// <summary>
+        /// </summary>
         public ClassID UnitClassID;
 
+        /// <summary>
+        /// </summary>
         public string UnitName;
 
         #endregion
@@ -49,10 +73,21 @@ namespace Ensage.Common
             Game.OnUpdate += SpeedTrack;
         }
 
+        /// <summary>
+        /// </summary>
         public Prediction()
         {
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="unitName"></param>
+        /// <param name="unitClassID"></param>
+        /// <param name="speed"></param>
+        /// <param name="rotSpeed"></param>
+        /// <param name="lastPosition"></param>
+        /// <param name="lastRotR"></param>
+        /// <param name="lasttick"></param>
         public Prediction(
             string unitName,
             ClassID unitClassID,
@@ -75,6 +110,10 @@ namespace Ensage.Common
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool AbilityMove(Unit unit)
         {
             return
@@ -90,6 +129,12 @@ namespace Ensage.Common
                     || x.Name == "modifier_mirana_leap" || x.Name == "modifier_slark_pounce");
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="speed"></param>
+        /// <param name="dePos"></param>
+        /// <returns></returns>
         public static float CalculateReachTime(Unit target, float speed, Vector3 dePos)
         {
             Vector3 targetSpeed;
@@ -109,6 +154,9 @@ namespace Ensage.Common
             return (float)((-b - Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a));
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="delay"></param>
         public static void DrawPredictions(float delay = 1000)
         {
             var heroes = ObjectMgr.GetEntities<Hero>().Where(x => !x.IsIllusion);
@@ -227,7 +275,9 @@ namespace Ensage.Common
             }
             else
             {
-                sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) + (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed))-radius)
+                sourcePos = (sourcePos - predict)
+                            * (sourcePos.Distance2D(predict)
+                               + (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed)) - radius)
                             / sourcePos.Distance2D(predict) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             }
@@ -235,7 +285,7 @@ namespace Ensage.Common
             if (!(speed < 6000) || speed <= 0)
             {
                 return PredictedXYZ(target, delay);
-            }  
+            }
             return PredictedXYZ(target, delay + reachTime);
         }
 
