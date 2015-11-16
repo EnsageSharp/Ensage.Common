@@ -162,7 +162,7 @@
         public void AddElement(Vector2 position, Vector2 size, DotaTexture texture)
         {
             var element = new AMessageComponent(position, size, texture)
-                              { Parent = this, ComponentType = "DrawRect_Color" };
+                              { Parent = this, ComponentType = "DrawRect_Texture" };
             this.components.Add(this.elements, element);
             this.elements++;
         }
