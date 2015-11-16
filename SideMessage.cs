@@ -1,15 +1,30 @@
-﻿namespace Ensage.Common
+﻿// <copyright file="SideMessage.cs" company="EnsageSharp">
+//    Copyright (c) 2015 EnsageSharp.
+// 
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+// 
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+// 
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+
+namespace Ensage.Common
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Ensage;
-
     using SharpDX;
 
     /// <summary>
-    /// Provides side message notifications
+    ///     Provides side message notifications
     /// </summary>
     public class SideMessage
     {
@@ -24,7 +39,7 @@
         #region Fields
 
         /// <summary>
-        /// Position of side message
+        ///     Position of side message
         /// </summary>
         public Vector2 MessagePosition;
 
@@ -37,7 +52,6 @@
         #region Constructors and Destructors
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="name"></param>
         /// <param name="size"></param>
@@ -71,52 +85,42 @@
         #region Public Properties
 
         /// <summary>
-        /// 
         /// </summary>
         public static int? LastTick { get; set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public Color BackgroundColor { get; private set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public Color BackgroundOutlineColor { get; private set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public int CreateTick { get; set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public int EnterTime { get; private set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public int ExitTime { get; private set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public string MessageName { get; set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public Vector2 Size { get; set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public int StayTime { get; private set; }
 
         /// <summary>
-        /// 
         /// </summary>
         public bool Visible { get; set; }
 
@@ -125,7 +129,6 @@
         #region Public Methods and Operators
 
         /// <summary>
-        /// 
         /// </summary>
         public static void Intialize()
         {
@@ -139,7 +142,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="position"></param>
         /// <param name="size"></param>
@@ -154,7 +156,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="position"></param>
         /// <param name="size"></param>
@@ -168,7 +169,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="text"></param>
         /// <param name="position"></param>
@@ -183,7 +183,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="text"></param>
         /// <param name="position"></param>
@@ -199,7 +198,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="text"></param>
         /// <param name="fontName"></param>
@@ -222,7 +220,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="position1"></param>
         /// <param name="position2"></param>
@@ -236,7 +233,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         public void CreateMessage()
         {
@@ -250,7 +246,6 @@
         }
 
         /// <summary>
-        /// 
         /// </summary>
         public void DestroyMessage()
         {
@@ -330,14 +325,12 @@
         #endregion
 
         /// <summary>
-        /// 
         /// </summary>
         public class AMessageComponent
         {
             #region Constructors and Destructors
 
             /// <summary>
-            /// 
             /// </summary>
             /// <param name="position"></param>
             /// <param name="size"></param>
@@ -352,7 +345,6 @@
             }
 
             /// <summary>
-            /// 
             /// </summary>
             /// <param name="position"></param>
             /// <param name="size"></param>
@@ -365,7 +357,6 @@
             }
 
             /// <summary>
-            /// 
             /// </summary>
             /// <param name="text"></param>
             /// <param name="position"></param>
@@ -380,7 +371,6 @@
             }
 
             /// <summary>
-            /// 
             /// </summary>
             /// <param name="text"></param>
             /// <param name="position"></param>
@@ -397,7 +387,6 @@
             }
 
             /// <summary>
-            /// 
             /// </summary>
             /// <param name="text"></param>
             /// <param name="fontName"></param>
@@ -422,7 +411,6 @@
             }
 
             /// <summary>
-            /// 
             /// </summary>
             /// <param name="position"></param>
             /// <param name="size"></param>
@@ -439,12 +427,10 @@
             #region Public Properties
 
             /// <summary>
-            /// 
             /// </summary>
             public string ComponentType { get; set; }
 
             /// <summary>
-            /// 
             /// </summary>
             public SideMessage Parent { get; set; }
 
@@ -473,7 +459,6 @@
             #region Public Methods and Operators
 
             /// <summary>
-            /// 
             /// </summary>
             public void Draw()
             {

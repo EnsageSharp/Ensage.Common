@@ -1,4 +1,4 @@
-﻿// <copyright file="Enumerable.cs" company="EnsageSharp">
+﻿// <copyright file="EnumerableExtensions.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
 // 
 //    This program is free software: you can redistribute it and/or modify

@@ -1,4 +1,4 @@
-// <copyright file="Load.cs" company="EnsageSharp">
+// <copyright file="Events.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
 // 
 //    This program is free software: you can redistribute it and/or modify

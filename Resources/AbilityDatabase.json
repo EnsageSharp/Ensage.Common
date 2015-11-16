@@ -1,5 +1,22 @@
+// <copyright file="AbilityDatabase.json" company="EnsageSharp">
+//    Copyright (c) 2015 EnsageSharp.
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+
 {
-    "Abilities":[
+    "Abilities": [
         {
             "AbilityName": "dark_seer_ion_shell",
             "StringRadius": "radius",
@@ -11,7 +28,7 @@
             "IsSkillShot": true,
             "Speed": "shock_speed",
             "Width": "shock_width",
-            "DamageString":  "shock_damage"
+            "DamageString": "shock_damage"
         },
         {
             "AbilityName": "ursa_earthshock",
@@ -57,7 +74,7 @@
         },
         {
             "AbilityName": "lone_druid_rabid",
-            "IsBuff":  true
+            "IsBuff": true
         },
         {
             "AbilityName": "rattletrap_battery_assault",
@@ -81,7 +98,7 @@
             "IsSlow": true,
             "IsNuke": true,
             "Speed": "dagger_speed",
-            "DamageString":  "hero_damage"
+            "DamageString": "hero_damage"
         },
         {
             "AbilityName": "bounty_hunter_track",
@@ -201,7 +218,7 @@
             "AdditionalDelay": -0.1,
             "DamageString": "damage",
             "DamageScepterString": "damage_scepter",
-            "Radius":  99999
+            "Radius": 99999
         },
         {
             "AbilityName": "shredder_chakram_2",
@@ -227,7 +244,7 @@
             "IsNuke": true,
             "IsHeal": true,
             "StringRadius": "radius",
-            "DamageString":  "heal"
+            "DamageString": "heal"
         },
         {
             "AbilityName": "keeper_of_the_light_blinding_light",
@@ -269,7 +286,7 @@
         },
         {
             "AbilityName": "dark_seer_surge",
-            "IsBuff":  true
+            "IsBuff": true
         },
         {
             "AbilityName": "mirana_starfall",
@@ -362,7 +379,7 @@
         },
         {
             "AbilityName": "disruptor_thunder_strike",
-            "IsHarras":  true
+            "IsHarras": true
         },
         {
             "AbilityName": "disruptor_kinetic_field",
@@ -379,7 +396,7 @@
         },
         {
             "AbilityName": "venomancer_plague_ward",
-            "IsHarras":  true
+            "IsHarras": true
         },
         {
             "AbilityName": "phoenix_icarus_dive_stop"
@@ -493,7 +510,7 @@
             "AbilityName": "undying_decay",
             "IsNuke": true,
             "IsSkillShot": true,
-            "DamageString":  "decay_damage"
+            "DamageString": "decay_damage"
         },
         {
             "AbilityName": "gyrocopter_flak_cannon",
@@ -571,7 +588,7 @@
             "AbilityName": "tusk_walrus_kick",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString":  "damage"
+            "DamageString": "damage"
         },
         {
             "AbilityName": "brewmaster_thunder_clap",
@@ -608,7 +625,7 @@
             "Speed": "shard_speed",
             "DamageString": "shard_damage"
         },
-        //mark 
+        //mark
         {
             "AbilityName": "brewmaster_drunken_haze",
             "IsSlow": true
@@ -1332,13 +1349,13 @@
         },
         {
             "AbilityName": "item_abyssal_blade",
-            "IsDisable": true             
+            "IsDisable": true
         },
         {
             "AbilityName": "item_ethereal_blade",
             "IsSlow": true,
             "IsNuke": true,
-            "DamageString": "blast_damage_base"  
+            "DamageString": "blast_damage_base"
         },
         {
             "AbilityName": "item_dagon",
