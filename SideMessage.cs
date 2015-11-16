@@ -30,7 +30,7 @@ namespace Ensage.Common
     {
         #region Static Fields
 
-        private static bool mSideMessageIntialized;
+        private static bool mSideMessageInitialized;
 
         private static IDictionary<string, SideMessage> sideMessages;
 
@@ -50,6 +50,11 @@ namespace Ensage.Common
         #endregion
 
         #region Constructors and Destructors
+
+        static SideMessage()
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// </summary>
@@ -130,14 +135,14 @@ namespace Ensage.Common
 
         /// <summary>
         /// </summary>
-        public static void Intialize()
+        public static void Initialize()
         {
-            if (mSideMessageIntialized)
+            if (mSideMessageInitialized)
             {
                 return;
             }
             sideMessages = new Dictionary<string, SideMessage>();
-            mSideMessageIntialized = true;
+            mSideMessageInitialized = true;
             Drawing.OnDraw += OnDraw;
         }
 
