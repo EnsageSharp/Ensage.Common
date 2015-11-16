@@ -23,7 +23,7 @@ Want to contribute? Heres a guide on how to push a pull request:
   `git clone git@github.com:EnsageSharp/Ensage.Common.git`
   
   
- 2.  Push to your fork, and [submit a PR](https://github.com/EnsageSharp/Ensage.Common/compare)("pull request")
+ 2.  Push to your fork, and [submit a Pull Request](https://github.com/EnsageSharp/Ensage.Common/compare)
 
 
 Here are some tips to get your pull request accepted.
