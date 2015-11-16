@@ -1218,6 +1218,28 @@ namespace Ensage.Common.Extensions
             return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static bool IsIllusion(this Entity entity)
+        {
+            var unit = entity as Unit;
+            return unit != null && unit.IsIllusion;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static Spellbook Spellbook(this Entity entity)
+        {
+            var unit = entity as Unit;
+            return unit != null ? unit.Spellbook : null;
+        }
+
         #endregion
     }
 }
