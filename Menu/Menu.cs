@@ -1186,14 +1186,19 @@ namespace Ensage.Common.Menu
         internal void OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, uint key, WndEventArgs args = null)
         {
             //Spread the message to the menu's children recursively
-            foreach (var child in this.Children)
-            {
-                child.OnReceiveMessage(message, cursorPos, key);
-            }
+            
             foreach (var item in this.Items)
             {
                 item.OnReceiveMessage(message, cursorPos, key, args);
                 //Console.WriteLine(args != null && item.IsInside(cursorPos));
+            }
+            if (!this.Visible)
+            {
+                return;
+            }
+            foreach (var child in this.Children)
+            {
+                child.OnReceiveMessage(message, cursorPos, key);
             }
             //Handle the left clicks on the menus to hide or show the submenus.
             if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
