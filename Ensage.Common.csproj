@@ -69,10 +69,12 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityInfo\AbilityDamage.cs" />
     <Compile Include="Algorithm.cs" />
+    <Compile Include="DelayAction.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
@@ -84,6 +86,14 @@
     <Compile Include="HUDInfo.cs" />
     <Compile Include="JungleCamps.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="Menu\Menu.cs" />
+    <Compile Include="Menu\MenuConfig.cs" />
+    <Compile Include="Menu\MenuUtils.cs" />
+    <Compile Include="Menu\MultiLanguage.cs" />
+    <Compile Include="Menu\NotificationData\INotification.cs" />
+    <Compile Include="Menu\NotificationData\Notification.cs" />
+    <Compile Include="Menu\Notifications.cs" />
+    <Compile Include="Menu\Render.cs" />
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />
     <Compile Include="AbilityInfo\AbilityDatabase.cs" />
@@ -93,6 +103,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SideMessage.cs" />
+    <Compile Include="Signals\Signal.cs" />
+    <Compile Include="Signals\SignalManager.cs" />
     <Compile Include="TargetSelector.cs" />
     <Compile Include="UnitDatabase.cs" />
     <Compile Include="Prediction.cs" />
@@ -123,6 +135,15 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\CPActiveSlider.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CPForm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SliderDisabled.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

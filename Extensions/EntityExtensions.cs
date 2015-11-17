@@ -1033,6 +1033,16 @@ namespace Ensage.Common.Extensions
 
         /// <summary>
         /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static bool IsIllusion(this Entity entity)
+        {
+            var unit = entity as Unit;
+            return unit != null && unit.IsIllusion;
+        }
+
+        /// <summary>
+        /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
         /// <summary>
@@ -1197,6 +1207,16 @@ namespace Ensage.Common.Extensions
 
         /// <summary>
         /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static Spellbook Spellbook(this Entity entity)
+        {
+            var unit = entity as Unit;
+            return unit != null ? unit.Spellbook : null;
+        }
+
+        /// <summary>
+        /// </summary>
         /// <param name="unit"></param>
         /// <param name="delta"></param>
         /// <param name="radial"></param>
@@ -1216,28 +1236,6 @@ namespace Ensage.Common.Extensions
         public static Vector3 Vector3FromPolarAngle(this Entity unit, float delta = 0f, float radial = 1f)
         {
             return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public static bool IsIllusion(this Entity entity)
-        {
-            var unit = entity as Unit;
-            return unit != null && unit.IsIllusion;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public static Spellbook Spellbook(this Entity entity)
-        {
-            var unit = entity as Unit;
-            return unit != null ? unit.Spellbook : null;
         }
 
         #endregion
