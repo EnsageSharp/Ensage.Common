@@ -325,7 +325,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Color.FromArgb(120, Color.DimGray);
+                return Color.FromArgb(160, 50,50,50);
             }
         }
 
@@ -386,6 +386,10 @@ namespace Ensage.Common.Menu
 
         private static void Game_OnWndProc(WndEventArgs args)
         {
+            if (Game.IsChatOpen)
+            {
+                return;
+            }
             if ((args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP || args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN)
                 && args.WParam == CommonMenu.MenuConfig.Item("pressKey").GetValue<KeyBind>().Key)
             {
@@ -448,7 +452,7 @@ namespace Ensage.Common.Menu
                 item.Height,
                 1,
                 Color.FromArgb(37, 37, 37).ToSharpDxColor(),
-                SharpDX.Color.Black);
+                color.ToSharpDxColor());
 
             //Font.DrawText(
             //    null,
@@ -462,19 +466,27 @@ namespace Ensage.Common.Menu
                 s,
                 textPos,
                 new Vector2(item.Height / 2, item.Height / 2),
-                Color.White.ToSharpDxColor(),
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                Utils.IsUnderRectangle(Game.MouseScreenPosition,position.X,position.Y,item.Height,item.Height) ? Color.DarkOrange.ToSharpDxColor() : Color.White.ToSharpDxColor(),
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
         internal static void DrawOnOff(bool on, Vector2 position, MenuItem item)
         {
+            var alpha = Utils.IsUnderRectangle(
+                Game.MouseScreenPosition,
+                position.X,
+                position.Y,
+                item.Height,
+                item.Height)
+                            ? 35
+                            : 0;
             MenuUtils.DrawBoxBordered(
                 position.X,
                 position.Y,
                 item.Height,
                 item.Height,
                 1f,
-                on ? Color.FromArgb(180, 120, 1).ToSharpDxColor() : Color.FromArgb(37, 37, 37).ToSharpDxColor(),
+                on ? Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor() : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor(),
                 SharpDX.Color.Black);
 
             var s = on ? "ON" : "OFF";
@@ -497,9 +509,9 @@ namespace Ensage.Common.Menu
             Drawing.DrawText(
                 s,
                 textPos,
-                new Vector2(item.Height / 2, item.Width / 2),
+                new Vector2(item.Height / 2, item.Width / 2+20),
                 Color.White.ToSharpDxColor(),
-                FontFlags.Italic);
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
         internal static void DrawSlider(Vector2 position, MenuItem item, int width = -1, bool drawText = true)
@@ -555,7 +567,7 @@ namespace Ensage.Common.Menu
                     textPos,
                     new Vector2(item.Height / 2, item.Width / 2),
                     Color.DarkOrange.ToSharpDxColor(),
-                    FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                    FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
             }
         }
 
@@ -586,7 +598,7 @@ namespace Ensage.Common.Menu
                 textPos,
                 new Vector2(item.Height / 2, item.Width / 2),
                 Color.DarkGray.ToSharpDxColor(),
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
         internal static void DrawToolTip_Text(Vector2 position, MenuItem item, SharpDX.Color? TextColor = null)
@@ -602,7 +614,7 @@ namespace Ensage.Common.Menu
                 Font.MeasureText(item.Tooltip).Width + 8,
                 item.Height,
                 1,
-                MenuSettings.BackgroundColor.ToSharpDxColor(),
+                new SharpDX.Color(40,30,5,80), 
                 SharpDX.Color.Black);
 
             var s = item.Tooltip;
@@ -617,12 +629,12 @@ namespace Ensage.Common.Menu
             //    FontDrawFlags.VerticalCenter,
             //    TextColor ?? SharpDX.Color.White);
             //var textSize = Drawing.MeasureText(s, "Arial", new Vector2(item.Height, item.Width), FontFlags.AntiAlias);
-            var textPos = item.Position + new Vector2(item.Width - 33 + item.Height + 10, 9);
+            var textPos = item.Position + new Vector2(item.Width - 33 + item.Height + 8, 9);
             Drawing.DrawText(
                 s,
-                textPos,
+                textPos, new Vector2(15,14), 
                 Color.White.ToSharpDxColor(),
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
         private static void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
@@ -734,12 +746,12 @@ namespace Ensage.Common.Menu
                 new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
             Root.AddItem(
                 new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
-            //Root.AddItem(
-            //    new MenuItem("FontSize", "Font Size:").SetValue(new Slider(14, 12, 20)).SetTooltip("TOOLTIP asd"));
-            //var qualities = Enum.GetValues(typeof(FontQuality)).Cast<FontQuality>().Select(v => v.ToString()).ToArray();
-            //Root.AddItem(
-            //    new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
-            //        .SetValue(new StringList(qualities, 4)));
+           Root.AddItem(
+                new MenuItem("FontSize", "Font Size:").SetValue(new Slider(14, 12, 20)).SetTooltip("TOOLTIP asd"));
+            var qualities = Enum.GetValues(typeof(FontQuality)).Cast<FontQuality>().Select(v => v.ToString()).ToArray();
+           Root.AddItem(
+                new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
+                    .SetValue(new StringList(qualities, 4)));
             Root.AddItem(
                 new MenuItem("EnsageSharp.Common.TooltipDuration", "Tooltip Notification Duration").SetValue(
                     new Slider(1500, 0, 5000)));
@@ -839,10 +851,10 @@ namespace Ensage.Common.Menu
             {
                 if (this.IsRootMenu || this.Parent == null)
                 {
-                    return MenuSettings.BasePosition + this.MenuCount * new Vector2(0, MenuSettings.MenuItemHeight);
+                    return MenuSettings.BasePosition + this.MenuCount * new Vector2(0, MenuSettings.MenuItemHeight) + new Vector2(5, 0);
                 }
 
-                return this.Parent.MyBasePosition;
+                return this.Parent.MyBasePosition + new Vector2(5, 0);
             }
         }
 
@@ -1061,8 +1073,7 @@ namespace Ensage.Common.Menu
                 1,
                 (this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible)
                     ? MenuSettings.ActiveBackgroundColor.ToSharpDxColor()
-                    : MenuSettings.BackgroundColor.ToSharpDxColor(),
-                SharpDX.Color.Black);
+                    : MenuSettings.BackgroundColor.ToSharpDxColor(), SharpDX.Color.Black);
 
             //MenuDrawHelper.Font.DrawText(
             //    null,
@@ -1075,8 +1086,9 @@ namespace Ensage.Common.Menu
             Drawing.DrawText(
                 MultiLanguage._(this.DisplayName),
                 textPos,
+                new Vector2(15, 100),
                 this.Color,
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
 
             //MenuDrawHelper.Font.DrawText(
             //    null,
@@ -1084,12 +1096,18 @@ namespace Ensage.Common.Menu
             //    new Rectangle((int)this.Position.X - 5, (int)this.Position.Y, this.Width, this.Height),
             //    FontDrawFlags.Right | FontDrawFlags.VerticalCenter,
             //    this.Color);
-            //textSize = Drawing.MeasureText(">", "Arial", new Vector2(this.Height, this.Width), FontFlags.AntiAlias);
-            textPos = textPos + new Vector2(this.Width - 15, 0);
-            Drawing.DrawText(">", textPos, this.Color, FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+            var textSize = Drawing.MeasureText(">", "Arial", new Vector2(18,12), FontFlags.AntiAlias);
+            textPos = textPos + new Vector2(this.Width - 15- textSize.X/2, - textSize.Y/6);
+            Drawing.DrawText(
+                "»",
+                textPos,
+                new Vector2(18, 12),
+                System.Drawing.Color.FromArgb(225, System.Drawing.Color.Orange).ToSharpDxColor(),
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut
+                | FontFlags.Outline);
 
             //Draw the menu submenus
-            foreach (var child in this.Children.Where(child => child.Visible))
+            foreach (var child in this.Children.Where(child => child.Visible))  
             {
                 child.Drawing_OnDraw(args);
             }
@@ -1157,7 +1175,7 @@ namespace Ensage.Common.Menu
 
         internal void Game_OnWndProc(WndEventArgs args)
         {
-            this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam);
+            this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam, args);
         }
 
         internal bool IsInside(Vector2 position)
@@ -1165,19 +1183,18 @@ namespace Ensage.Common.Menu
             return Utils.IsUnderRectangle(position, this.Position.X, this.Position.Y, this.Width, this.Height);
         }
 
-        internal void OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, uint key)
+        internal void OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, uint key, WndEventArgs args = null)
         {
             //Spread the message to the menu's children recursively
             foreach (var child in this.Children)
             {
                 child.OnReceiveMessage(message, cursorPos, key);
             }
-
             foreach (var item in this.Items)
             {
-                item.OnReceiveMessage(message, cursorPos, key);
+                item.OnReceiveMessage(message, cursorPos, key, args);
+                //Console.WriteLine(args != null && item.IsInside(cursorPos));
             }
-
             //Handle the left clicks on the menus to hide or show the submenus.
             if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
             {
@@ -1520,7 +1537,7 @@ namespace Ensage.Common.Menu
                     xOffset = (int)(this.Parent.Position.X + this.Parent.Width);
                 }
 
-                return new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
+                return new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset + 1, 0)
                        + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
             }
         }
@@ -1842,15 +1859,23 @@ namespace Ensage.Common.Menu
                     var textSize = Drawing.MeasureText(
                         "[" + Utils.KeyToText(val.Key) + "]",
                         "Arial",
-                        new Vector2(this.Height / 2, this.Width / 2),
+                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10),
                         FontFlags.AntiAlias);
-                    var textPos = this.Position + new Vector2(this.Width - this.Height - textSize.X - 20, 6);
+                    var textPos = this.Position + new Vector2(this.Width - this.Height - textSize.X - 22, 6);
+                    var alpha = Utils.IsUnderRectangle(
+                        Game.MouseScreenPosition,
+                        textPos.X,
+                        textPos.Y,
+                        textSize.X,
+                        textSize.Y)
+                                    ? 60
+                                    : 0;
                     Drawing.DrawText(
                         "[" + Utils.KeyToText(val.Key) + "]",
                         textPos,
-                        new Vector2(this.Height / 2, this.Width / 2),
-                        new SharpDX.Color(234, 169, 1, 225),
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                        new Vector2(this.Height / 2+1, this.Width / 2+10),
+                        new SharpDX.Color(195 + alpha, 139 + alpha, 12 + alpha, 225),
+                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
                     //font.DrawText(
                     //    null,
                     //    "[" + Utils.KeyToText(val.Key) + "]",
@@ -1878,7 +1903,7 @@ namespace Ensage.Common.Menu
                         textPos,
                         new Vector2(this.Height / 2, this.Width / 2),
                         new SharpDX.Color(255, 255, 255, 225),
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
                     break;
 
                 case MenuValueType.Circle:
@@ -1935,7 +1960,7 @@ namespace Ensage.Common.Menu
                         textPos,
                         new Vector2(14, 80),
                         new SharpDX.Color(255, 255, 255, 225),
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
                     break;
             }
 
@@ -1949,9 +1974,9 @@ namespace Ensage.Common.Menu
             var textPos1 = this.Position + new Vector2(5, 8);
             Drawing.DrawText(
                 s,
-                textPos1,
-                this.FontColor,
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Outline);
+                textPos1,new Vector2(15,20), 
+                (s == MultiLanguage._("Press new key")) ? new SharpDX.Color(150,100,0) : (SharpDX.Color)this.FontColor,
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
 
             if (!string.IsNullOrEmpty(this.Tooltip))
             {
@@ -2106,7 +2131,7 @@ namespace Ensage.Common.Menu
                 this.Height);
         }
 
-        internal void OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, uint key)
+        internal void OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, uint key, WndEventArgs wargs)
         {
             if (message == Utils.WindowsMessages.WM_MOUSEMOVE)
             {
@@ -2275,6 +2300,10 @@ namespace Ensage.Common.Menu
                                             this.SetValue(val);
                                         }
                                     }
+                                    if (wargs != null)
+                                    {
+                                        wargs.Process = false;
+                                    }
                                 }
                                 break;
                             case Utils.WindowsMessages.WM_KEYUP:
@@ -2292,6 +2321,10 @@ namespace Ensage.Common.Menu
                                         val2.Active = !val2.Active;
                                         this.SetValue(val2);
                                     }
+                                    if (wargs != null)
+                                    {
+                                        wargs.Process = false;
+                                    }
                                 }
                                 break;
                         }
@@ -2303,6 +2336,10 @@ namespace Ensage.Common.Menu
                         val.Key = key;
                         this.SetValue(val);
                         this.Interacting = false;
+                        if (wargs.Process != null)
+                        {
+                            wargs.Process = false;
+                        }
                     }
 
                     if (!this.Visible)
