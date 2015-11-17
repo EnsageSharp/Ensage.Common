@@ -746,12 +746,12 @@ namespace Ensage.Common.Menu
                 new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
             Root.AddItem(
                 new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
-           Root.AddItem(
-                new MenuItem("FontSize", "Font Size:").SetValue(new Slider(14, 12, 20)).SetTooltip("TOOLTIP asd"));
-            var qualities = Enum.GetValues(typeof(FontQuality)).Cast<FontQuality>().Select(v => v.ToString()).ToArray();
-           Root.AddItem(
-                new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
-                    .SetValue(new StringList(qualities, 4)));
+           //Root.AddItem(
+           //     new MenuItem("FontSize", "Font Size:").SetValue(new Slider(14, 12, 20)).SetTooltip("TOOLTIP asd"));
+           // var qualities = Enum.GetValues(typeof(FontQuality)).Cast<FontQuality>().Select(v => v.ToString()).ToArray();
+           //Root.AddItem(
+           //     new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
+           //         .SetValue(new StringList(qualities, 4)));
             Root.AddItem(
                 new MenuItem("EnsageSharp.Common.TooltipDuration", "Tooltip Notification Duration").SetValue(
                     new Slider(1500, 0, 5000)));
