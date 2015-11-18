@@ -434,9 +434,9 @@ namespace Ensage.Common.Menu
                         Quality = FontQuality.Antialiased
                     });
 
-            Drawing.OnPreReset += Drawing_OnPreReset;
-            Drawing.OnPostReset += DrawingOnOnPostReset;
-            AppDomain.CurrentDomain.DomainUnload += CurrentDomainOnDomainUnload;
+            //Drawing.OnPreReset += Drawing_OnPreReset;
+            //Drawing.OnPostReset += DrawingOnOnPostReset;
+            //AppDomain.CurrentDomain.DomainUnload += CurrentDomainOnDomainUnload;
         }
 
         #endregion

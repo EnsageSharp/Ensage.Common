@@ -629,9 +629,9 @@ namespace Ensage.Common.Menu
                 if (!_initialized)
                 {
                     _initialized = true;
-                    Drawing.OnPreReset += OnPreReset;
-                    Drawing.OnPreReset += OnPostReset;
-                    AppDomain.CurrentDomain.DomainUnload += Dispose;
+                    //Drawing.OnPreReset += OnPreReset;
+                    //Drawing.OnPreReset += OnPostReset;
+                    //AppDomain.CurrentDomain.DomainUnload += Dispose;
                 }
             }
 
