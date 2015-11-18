@@ -741,7 +741,7 @@ namespace Ensage.Common.Menu
 
         static Menu()
         {
-            Root.AddItem(new MenuItem("Dim", "Dim the screen").SetValue(true));
+            //Root.AddItem(new MenuItem("Dim", "Dim the screen").SetValue(true));
             Root.AddItem(
                 new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
             Root.AddItem(
@@ -1060,11 +1060,11 @@ namespace Ensage.Common.Menu
                 return;
             }
 
-            if (CommonMenu.MenuConfig.Item("Dim").GetValue<bool>())
-            {
-                //Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaBlendEnable, true);
-                Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaTestEnable, true);
-            }
+            //if (CommonMenu.MenuConfig.Item("Dim").GetValue<bool>())
+            //{
+            //    //Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaBlendEnable, true);
+            //    Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaTestEnable, true);
+            //}
             MenuUtils.DrawBoxBordered(
                 this.Position.X,
                 this.Position.Y,
