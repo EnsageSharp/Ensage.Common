@@ -2107,6 +2107,7 @@ namespace Ensage.Common.Menu
                     var size = new Vector2(this.Height-6,this.Height-6);
                     var dictionary = this.GetValue<AbilityToggler>().Dictionary;
                     var positionDictionary = Menu.PositionDictionary;
+                    var textureDictionary = Menu.TextureDictionary;
                     //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
                     foreach (var v in dictionary)
                     {                      
@@ -2129,11 +2130,11 @@ namespace Ensage.Common.Menu
                                 : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());                 
                         if (v.Key.Contains("item"))
                         {
-                            Drawing.DrawRect(pos - new Vector2(- 3, -3), size + new Vector2(11, 0), Menu.TextureDictionary[v.Key]);
+                            Drawing.DrawRect(pos - new Vector2(-3, -3), size + new Vector2(11, 0), textureDictionary[v.Key]);
                         }
                         else
                         {
-                            Drawing.DrawRect(pos - new Vector2(-3, -3), size, Menu.TextureDictionary[v.Key]);
+                            Drawing.DrawRect(pos - new Vector2(-3, -3), size, textureDictionary[v.Key]);
                         }
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, SharpDX.Color.Black, true);
                         Drawing.DrawRect(pos, size + new Vector2(6, 6), SharpDX.Color.Black, true);
