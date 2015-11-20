@@ -857,7 +857,7 @@ namespace Ensage.Common.Extensions
                     {
                         bonus = -423;
                     }
-                    else if (unit.Modifiers.Any(x => (x.Name == "modifier_dragon_knight_elder_dragon_form")))
+                    else if (unit.Modifiers.Any(x => (x.Name == "modifier_dragon_knight_dragon_form")))
                     {
                         bonus = 372;
                     }
