@@ -833,17 +833,17 @@ namespace Ensage.Common.Menu
            //Root.AddItem(
            //     new MenuItem("FontSize", "Font Size:").SetValue(new Slider(14, 12, 20)).SetTooltip("TOOLTIP asd"));
            // var qualities = Enum.GetValues(typeof(FontQuality)).Cast<FontQuality>().Select(v => v.ToString()).ToArray();
-           // var dict = new Dictionary<string, bool>
-           //     {
-           //         {"ursa_enrage", true},
-           //         {"ursa_overpower", true},
-           //         {"ursa_earthshock", true},
-           //         {"item_sheepstick",true},
-           //         {"item_abyssal_blade",true},
-           //         {"item_blink",true}
-           //     };
-           // Root.AddItem(
-           //     new MenuItem("enabledAbilities", "Abilities:").SetValue(new AbilityToggler(dict)));
+            var dict = new Dictionary<string, bool>
+                {
+                    {"ursa_enrage", true},
+                    {"ursa_overpower", true},
+                    {"ursa_earthshock", true},
+                    {"item_sheepstick",true},
+                    {"item_abyssal_blade",true},
+                    {"item_blink",true}
+                };
+            Root.AddItem(
+                new MenuItem("enabledAbilities", "Abilities:").SetValue(new AbilityToggler(dict)));
            //Root.AddItem(
            //     new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
            //         .SetValue(new StringList(qualities, 4)));
@@ -2108,10 +2108,10 @@ namespace Ensage.Common.Menu
                     var dictionary = this.GetValue<AbilityToggler>().Dictionary;
                     var positionDictionary = Menu.PositionDictionary;
                     //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
-                    foreach (var dotaTexture in Menu.TextureDictionary)
+                    foreach (var v in dictionary)
                     {                      
-                        positionDictionary[dotaTexture.Key][0] = basePosition.X - width;
-                        positionDictionary[dotaTexture.Key][1] = basePosition.Y;
+                        positionDictionary[v.Key][0] = basePosition.X - width;
+                        positionDictionary[v.Key][1] = basePosition.Y;
                         var pos = basePosition - new Vector2(width, 0);
                         alpha = Utils.IsUnderRectangle(
                             Game.MouseScreenPosition,
@@ -2124,16 +2124,16 @@ namespace Ensage.Common.Menu
                         Drawing.DrawRect(pos
                             ,
                             size + new Vector2(6, 6),
-                            dictionary[dotaTexture.Key]
+                            v.Value
                                 ? Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
                                 : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());                 
-                        if (dotaTexture.Key.Contains("item"))
+                        if (v.Key.Contains("item"))
                         {
-                            Drawing.DrawRect(pos - new Vector2(- 3, -3), size + new Vector2(11, 0), dotaTexture.Value);
+                            Drawing.DrawRect(pos - new Vector2(- 3, -3), size + new Vector2(11, 0), Menu.TextureDictionary[v.Key]);
                         }
                         else
                         {
-                            Drawing.DrawRect(pos - new Vector2(- 3, -3), size, dotaTexture.Value);
+                            Drawing.DrawRect(pos - new Vector2(-3, -3), size, Menu.TextureDictionary[v.Key]);
                         }
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, SharpDX.Color.Black, true);
                         Drawing.DrawRect(pos, size + new Vector2(6, 6), SharpDX.Color.Black, true);
