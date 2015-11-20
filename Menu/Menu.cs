@@ -833,6 +833,17 @@ namespace Ensage.Common.Menu
            //Root.AddItem(
            //     new MenuItem("FontSize", "Font Size:").SetValue(new Slider(14, 12, 20)).SetTooltip("TOOLTIP asd"));
            // var qualities = Enum.GetValues(typeof(FontQuality)).Cast<FontQuality>().Select(v => v.ToString()).ToArray();
+           // var dict = new Dictionary<string, bool>
+           //     {
+           //         {"ursa_enrage", true},
+           //         {"ursa_overpower", true},
+           //         {"ursa_earthshock", true},
+           //         {"item_sheepstick",true},
+           //         {"item_abyssal_blade",true},
+           //         {"item_blink",true}
+           //     };
+           // Root.AddItem(
+           //     new MenuItem("enabledAbilities", "Abilities:").SetValue(new AbilityToggler(dict)));
            //Root.AddItem(
            //     new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
            //         .SetValue(new StringList(qualities, 4)));

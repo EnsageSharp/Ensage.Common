@@ -847,7 +847,7 @@ namespace Ensage.Common.Extensions
                     break;
                 case ClassID.CDOTA_Unit_Hero_Enchantress:
                     var impetus = unit.Spellbook.SpellR;
-                    if (impetus.Level > 0 && unit.Inventory.Items.Any(x => (x.Name == "item_ultimate_scepter")))
+                    if (impetus.Level > 0 && unit.AghanimState())
                     {
                         bonus = 190;
                     }
@@ -857,11 +857,11 @@ namespace Ensage.Common.Extensions
                     {
                         bonus = -423;
                     }
-                    else if (unit.Modifiers.Any(x => (x.Name == "dragon_knight_elder_dragon_form")))
+                    else if (unit.Modifiers.Any(x => (x.Name == "modifier_dragon_knight_elder_dragon_form")))
                     {
                         bonus = 372;
                     }
-                    else if (unit.Modifiers.Any(x => (x.Name == "terrorblade_metamorphosis")))
+                    else if (unit.Modifiers.Any(x => (x.Name == "modifier_terrorblade_metamorphosis")))
                     {
                         bonus = 422;
                     }
