@@ -196,6 +196,74 @@ namespace Ensage.Common.Menu
         #endregion
     }
 
+    /// <summary>
+    /// Creates 
+    /// </summary>
+    [Serializable]
+    public struct AbilityToggler
+    {
+        #region Fields
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, bool> Dictionary;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="abilityDictionary"></param>
+        public AbilityToggler(Dictionary<string, bool> abilityDictionary)
+        {
+            this.Dictionary = abilityDictionary;
+            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
+            {
+                Menu.TextureDictionary.Add(
+                    v.Key,
+                    v.Key.Substring(0, "item".Length) == "item"
+                        ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+                Menu.PositionDictionary.Add(v.Key,new float[]{0,0});
+            }
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsEnabled(string name)
+        {
+            return this.Dictionary.ContainsKey(name) && this.Dictionary[name];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Remove(string name)
+        {
+            if (this.Dictionary.ContainsKey(name))
+            {
+                this.Dictionary.Remove(name);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Add(string name, bool defaultValue = true)
+        {
+            if (!this.Dictionary.ContainsKey(name))
+            {
+                this.Dictionary.Add(name, defaultValue);
+            }
+        }
+
+        #endregion
+    }
+
     public enum KeyBindType
     {
         Toggle,
@@ -386,6 +454,10 @@ namespace Ensage.Common.Menu
 
         private static void Game_OnWndProc(WndEventArgs args)
         {
+            if (!Game.IsInGame)
+            {
+                return;
+            }   
             if (Game.IsChatOpen)
             {
                 return;
@@ -573,7 +645,7 @@ namespace Ensage.Common.Menu
 
         internal static void DrawToolTip_Button(Vector2 position, MenuItem item)
         {
-            if (item.ValueType == MenuValueType.StringList)
+            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler)
             {
                 return;
             }
@@ -603,7 +675,7 @@ namespace Ensage.Common.Menu
 
         internal static void DrawToolTip_Text(Vector2 position, MenuItem item, SharpDX.Color? TextColor = null)
         {
-            if (item.ValueType == MenuValueType.StringList)
+            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler)
             {
                 return;
             }
@@ -683,6 +755,16 @@ namespace Ensage.Common.Menu
         /// </summary>
         public static Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Dictionary<string, DotaTexture> TextureDictionary;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Dictionary<string, float[]> PositionDictionary;
+
         #endregion
 
         #region Fields
@@ -741,6 +823,8 @@ namespace Ensage.Common.Menu
 
         static Menu()
         {
+            TextureDictionary = new Dictionary<string, DotaTexture>();
+            PositionDictionary = new Dictionary<string, float[]>();
             //Root.AddItem(new MenuItem("Dim", "Dim the screen").SetValue(true));
             Root.AddItem(
                 new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
@@ -760,6 +844,7 @@ namespace Ensage.Common.Menu
                     FontStyle.Bold,
                     SharpDX.Color.Yellow));
             CommonMenu.MenuConfig.AddSubMenu(Root);
+
         }
 
         public Menu(string displayName, string name, bool isRootMenu = false)
@@ -1055,6 +1140,10 @@ namespace Ensage.Common.Menu
 
         internal void Drawing_OnDraw(EventArgs args)
         {
+            if (!Game.IsInGame)
+            {
+                return;
+            }
             if (!this.Visible)
             {
                 return;
@@ -1175,6 +1264,10 @@ namespace Ensage.Common.Menu
 
         internal void Game_OnWndProc(WndEventArgs args)
         {
+            if (!Game.IsInGame)
+            {
+                return;
+            }
             this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam, args);
         }
 
@@ -1344,7 +1437,9 @@ namespace Ensage.Common.Menu
 
         Circle,
 
-        StringList
+        StringList,
+
+        AbilityToggler
     }
 
     public class OnValueChangeEventArgs
@@ -1515,6 +1610,11 @@ namespace Ensage.Common.Menu
                     extra += max;
                 }
 
+                if (this.ValueType == MenuValueType.AbilityToggler)
+                {
+                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height-10);
+                }
+
                 if (this.ValueType == MenuValueType.KeyBind)
                 {
                     var val = this.GetValue<KeyBind>();
@@ -1681,6 +1781,10 @@ namespace Ensage.Common.Menu
             {
                 this.ValueType = MenuValueType.StringList;
             }
+            else if (newValue.GetType().ToString().Contains("AbilityToggler"))
+            {
+                this.ValueType = MenuValueType.AbilityToggler;
+            }
             else if (newValue.GetType().ToString().Contains("Color"))
             {
                 this.ValueType = MenuValueType.Color;
@@ -1734,6 +1838,16 @@ namespace Ensage.Common.Menu
                             }
                             break;
 
+                        case MenuValueType.AbilityToggler:
+                            var savedDictionaryValue = (AbilityToggler)(object)Utils.Deserialize<T>(readBytes);
+                            var newDictionaryValue = ((AbilityToggler)(object)newValue);
+                            var saveddict = savedDictionaryValue.Dictionary;
+                            if (newDictionaryValue.Dictionary.All(b => saveddict.ContainsKey(b.Key)))
+                            {
+                                newValue = (T)(object)savedDictionaryValue;
+                            }
+                            break;
+
                         default:
                             newValue = Utils.Deserialize<T>(readBytes);
                             break;
@@ -1770,7 +1884,14 @@ namespace Ensage.Common.Menu
                 this._value = newValue;
             }
             this._valueSet = true;
-            this._serialized = Utils.Serialize(this._value);
+            //try
+            //{
+                this._serialized = Utils.Serialize(this._value);
+           // }
+            //catch (Exception)
+            //{
+                //
+            //}           
             return this;
         }
 
@@ -1966,6 +2087,58 @@ namespace Ensage.Common.Menu
                         new Vector2(14, 80),
                         new SharpDX.Color(255, 255, 255, 225),
                         FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+                    break;
+
+                case MenuValueType.AbilityToggler:
+
+                    var width = 0f;
+                    var basePosition = this.Position + new Vector2(this.Width-this.Height, 0);
+                    var size = new Vector2(this.Height-6,this.Height-6);
+                    var dictionary = this.GetValue<AbilityToggler>().Dictionary;
+                    var positionDictionary = Menu.PositionDictionary;
+                    //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
+                    foreach (var dotaTexture in Menu.TextureDictionary)
+                    {                      
+                        positionDictionary[dotaTexture.Key][0] = basePosition.X - width;
+                        positionDictionary[dotaTexture.Key][1] = basePosition.Y;
+                        var pos = basePosition - new Vector2(width, 0);
+                        alpha = Utils.IsUnderRectangle(
+                            Game.MouseScreenPosition,
+                            pos.X,
+                            pos.Y,
+                            size.X + 6,
+                            size.Y + 6)
+                                        ? 35
+                                        : 0;
+                        Drawing.DrawRect(pos
+                            ,
+                            size + new Vector2(6, 6),
+                            dictionary[dotaTexture.Key]
+                                ? Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
+                                : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());                 
+                        if (dotaTexture.Key.Contains("item"))
+                        {
+                            Drawing.DrawRect(pos - new Vector2(- 3, -3), size + new Vector2(11, 0), dotaTexture.Value);
+                        }
+                        else
+                        {
+                            Drawing.DrawRect(pos - new Vector2(- 3, -3), size, dotaTexture.Value);
+                        }
+                        Drawing.DrawRect(pos - new Vector2(-3, -3), size, SharpDX.Color.Black, true);
+                        Drawing.DrawRect(pos, size + new Vector2(6, 6), SharpDX.Color.Black, true);
+                        //textPos = basePosition - new Vector2(width, 5) + new Vector2(this.Height / 2 - textSize.X / 2, this.Height / 2 - textSize.Y / 2);
+                        //Drawing.DrawText(
+                        //    "x",
+                        //    textPos,
+                        //    size + new Vector2(30, 30),
+                        //    new SharpDX.Color(225, 150, 0),
+                        //    FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                        //    | FontFlags.StrikeOut);
+                        //
+                        width += size.X + 6;
+                        width += -1;
+                    }
+                    
                     break;
             }
 
@@ -2416,6 +2589,34 @@ namespace Ensage.Common.Menu
                     }
 
                     break;
+
+                case MenuValueType.AbilityToggler:
+                    if (!this.Visible)
+                    {
+                        return;
+                    }
+
+                    if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
+                    {
+                        return;
+                    }
+                    var positionDictionary = Menu.PositionDictionary;
+                    var dictionary = this.GetValue<AbilityToggler>().Dictionary;
+                    foreach (var v in from v in positionDictionary
+                                      let pos = new Vector2(v.Value[0],v.Value[1])
+                                      where
+                                          Utils.IsUnderRectangle(
+                                              cursorPos,
+                                              pos.X,
+                                              pos.Y,
+                                              this.Height - 2,
+                                              this.Height - 2)
+                                      select v)
+                    {
+                        dictionary[v.Key] = !dictionary[v.Key];
+                    }
+                    this.SetValue(new AbilityToggler(dictionary));
+                    break;
             }
         }
 
@@ -2653,6 +2854,7 @@ namespace Ensage.Common.Menu
 
         private static void Game_OnWndProc(WndEventArgs args)
         {
+
             if (!_visible)
             {
                 return;

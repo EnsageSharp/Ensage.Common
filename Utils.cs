@@ -19,8 +19,11 @@ namespace Ensage.Common
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Security.Cryptography;
     using System.Text;
@@ -316,7 +319,7 @@ namespace Ensage.Common
         }
 
         // Convert an object to a byte array
-        internal static byte[] Serialize(Object obj)
+        internal static byte[] Serialize(object obj)
         {
             if (obj == null)
             {
