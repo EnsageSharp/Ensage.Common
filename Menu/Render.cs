@@ -1428,32 +1428,26 @@ namespace Ensage.Common.Menu
             #region Fields
 
             /// <summary>
-            /// 
             /// </summary>
             public bool Centered = false;
 
             /// <summary>
-            /// 
             /// </summary>
             public Vector2 Offset;
 
             /// <summary>
-            /// 
             /// </summary>
             public bool OutLined = false;
 
             /// <summary>
-            /// 
             /// </summary>
             public PositionDelegate PositionUpdate;
 
             /// <summary>
-            /// 
             /// </summary>
             public TextDelegate TextUpdate;
 
             /// <summary>
-            /// 
             /// </summary>
             public Unit Unit;
 
@@ -1532,12 +1526,10 @@ namespace Ensage.Common.Menu
             #region Delegates
 
             /// <summary>
-            /// 
             /// </summary>
             public delegate Vector2 PositionDelegate();
 
             /// <summary>
-            /// 
             /// </summary>
             public delegate string TextDelegate();
 
@@ -1570,7 +1562,6 @@ namespace Ensage.Common.Menu
             }
 
             /// <summary>
-            /// 
             /// </summary>
             public FontDescription TextFontDescription
             {
@@ -1587,12 +1578,10 @@ namespace Ensage.Common.Menu
             }
 
             /// <summary>
-            /// 
             /// </summary>
             public int Width { get; private set; }
 
             /// <summary>
-            /// 
             /// </summary>
             public int X
             {
@@ -1611,7 +1600,6 @@ namespace Ensage.Common.Menu
             }
 
             /// <summary>
-            /// 
             /// </summary>
             public int Y
             {

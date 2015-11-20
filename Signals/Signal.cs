@@ -44,9 +44,9 @@ namespace Ensage.Common.Signals
         ///     The properties
         /// </param>
         private Signal(
-            OnRaisedDelegate signalRaised, 
-            SignalWaverDelegate signalWaver, 
-            DateTimeOffset expiration, 
+            OnRaisedDelegate signalRaised,
+            SignalWaverDelegate signalWaver,
+            DateTimeOffset expiration,
             IDictionary<string, object> properties)
         {
             if (signalRaised != null)
@@ -145,7 +145,8 @@ namespace Ensage.Common.Signals
         /// <value>
         ///     <c>true</c> if expired; otherwise, <c>false</c>.
         /// </value>
-        public bool Expired {
+        public bool Expired
+        {
             get
             {
                 return DateTimeOffset.Now >= this.Expiration;
@@ -203,9 +204,9 @@ namespace Ensage.Common.Signals
         /// <param name="defaultProperties">A dictionary that contents will be dumped into <see cref="Properties" /></param>
         /// <returns>The <see cref="Signal" /></returns>
         public static Signal Create(
-            OnRaisedDelegate onRaised = null, 
-            SignalWaverDelegate signalWaver = null, 
-            DateTimeOffset expiration = default(DateTimeOffset), 
+            OnRaisedDelegate onRaised = null,
+            SignalWaverDelegate signalWaver = null,
+            DateTimeOffset expiration = default(DateTimeOffset),
             IDictionary<string, object> defaultProperties = null)
         {
             if (expiration == default(DateTimeOffset))
@@ -214,9 +215,9 @@ namespace Ensage.Common.Signals
             }
 
             var signal = new Signal(
-                onRaised, 
-                signalWaver, 
-                expiration, 
+                onRaised,
+                signalWaver,
+                expiration,
                 defaultProperties ?? new Dictionary<string, object>());
 
             SignalManager.AddSignal(signal);
@@ -334,7 +335,10 @@ namespace Ensage.Common.Signals
         /// <param name="enabled">Signal enabled or not..</param>
         internal void TriggerEnabledStatusChanged(object sender, bool enabled)
         {
-            if(this.OnEnabledStatusChanged != null) this.OnEnabledStatusChanged.Invoke(sender, new EnabledStatusChangedArgs(enabled));
+            if (this.OnEnabledStatusChanged != null)
+            {
+                this.OnEnabledStatusChanged.Invoke(sender, new EnabledStatusChangedArgs(enabled));
+            }
         }
 
         /// <summary>
@@ -343,7 +347,10 @@ namespace Ensage.Common.Signals
         /// <param name="sender">The sender.</param>
         internal void TriggerOnExipired(object sender)
         {
-            if (this.OnExpired != null) this.OnExpired.Invoke(sender, new EventArgs());
+            if (this.OnExpired != null)
+            {
+                this.OnExpired.Invoke(sender, new EventArgs());
+            }
         }
 
         /// <summary>
@@ -362,7 +369,10 @@ namespace Ensage.Common.Signals
             this.LastSignaled = DateTimeOffset.Now;
             this.OnRaised(sender, new RaisedArgs(reason, this));
 
-            if (OnSignalRaised != null) OnSignalRaised.Invoke(sender, this);
+            if (OnSignalRaised != null)
+            {
+                OnSignalRaised.Invoke(sender, this);
+            }
         }
 
         #endregion

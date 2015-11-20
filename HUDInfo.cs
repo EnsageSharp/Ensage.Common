@@ -227,7 +227,7 @@ namespace Ensage.Common
         public static double[] GetTopPanelSize(Hero hero)
         {
             double[] size = { GetTopPanelSizeX(hero), GetTopPanelSizeY(hero) };
-            return size;    
+            return size;
         }
 
         /// <summary>

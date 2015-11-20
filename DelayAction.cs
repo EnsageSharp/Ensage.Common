@@ -82,21 +82,21 @@ namespace Ensage.Common
         {
             Signal.Create(
                 (sender, args) =>
-                {
-                    var delayActionItem = (DelayActionItem)args.Signal.Properties["DelayActionItem"];
-
-                    if (delayActionItem.Token.IsCancellationRequested)
                     {
-                        return;
-                    }
+                        var delayActionItem = (DelayActionItem)args.Signal.Properties["DelayActionItem"];
 
-                    delayActionItem.Function();
-                },
+                        if (delayActionItem.Token.IsCancellationRequested)
+                        {
+                            return;
+                        }
+
+                        delayActionItem.Function();
+                    },
                 signal =>
-                {
-                    var delayActionItem = (DelayActionItem)signal.Properties["DelayActionItem"];
-                    return Environment.TickCount >= delayActionItem.Time;
-                },
+                    {
+                        var delayActionItem = (DelayActionItem)signal.Properties["DelayActionItem"];
+                        return Environment.TickCount >= delayActionItem.Time;
+                    },
                 default(DateTimeOffset),
                 new Dictionary<string, object> { { "DelayActionItem", item } });
         }

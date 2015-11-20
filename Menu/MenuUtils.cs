@@ -169,9 +169,9 @@ namespace Ensage.Common.Menu
             if (smoothing)
             {
                 DrawCircleFilled(x + radius, y + radius, radius - 1, 0, CircleType.Quarter, true, 16, color);
-                    // Top-left corner
+                // Top-left corner
                 DrawCircleFilled(x + w - radius - 1, y + radius, radius - 1, 90, CircleType.Quarter, true, 16, color);
-                    // Top-right corner
+                // Top-right corner
                 DrawCircleFilled(
                     x + w - radius - 1,
                     y + h - radius - 1,
@@ -182,16 +182,16 @@ namespace Ensage.Common.Menu
                     16,
                     color); // Bottom-right corner
                 DrawCircleFilled(x + radius, y + h - radius - 1, radius - 1, 270, CircleType.Quarter, true, 16, color);
-                    // Bottom-left corner
+                // Bottom-left corner
 
                 DrawCircle(x + radius + 1, y + radius + 1, radius, 0, CircleType.Quarter, true, 16, bcolor);
-                    // Top-left corner
+                // Top-left corner
                 DrawCircle(x + w - radius - 1, y + radius + 1, radius, 90, CircleType.Quarter, true, 16, bcolor);
-                    // Top-right corner
+                // Top-right corner
                 DrawCircle(x + w - radius - 1, y + h - radius - 1, radius, 180, CircleType.Quarter, true, 16, bcolor);
-                    // Bottom-right corner
+                // Bottom-right corner
                 DrawCircle(x + radius + 1, y + h - radius - 1, radius, 270, CircleType.Quarter, true, 16, bcolor);
-                    // Bottom-left corner
+                // Bottom-left corner
 
                 DrawLine(x + radius, y + 1, x + w - radius - 1, y + 1, 1, bcolor); // Top line
                 DrawLine(x + radius, y + h - 2, x + w - radius - 1, y + h - 2, 1, bcolor); // Bottom line
@@ -201,9 +201,9 @@ namespace Ensage.Common.Menu
             else
             {
                 DrawCircleFilled(x + radius, y + radius, radius, 0, CircleType.Quarter, false, 16, color);
-                    // Top-left corner
+                // Top-left corner
                 DrawCircleFilled(x + w - radius - 1, y + radius, radius, 90, CircleType.Quarter, false, 16, color);
-                    // Top-right corner
+                // Top-right corner
                 DrawCircleFilled(
                     x + w - radius - 1,
                     y + h - radius - 1,
@@ -214,7 +214,7 @@ namespace Ensage.Common.Menu
                     16,
                     color); // Bottom-right corner
                 DrawCircleFilled(x + radius, y + h - radius - 1, radius, 270, CircleType.Quarter, false, 16, color);
-                    // Bottom-left corner
+                // Bottom-left corner
             }
         }
 
