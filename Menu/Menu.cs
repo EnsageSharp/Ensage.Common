@@ -2514,7 +2514,7 @@ namespace Ensage.Common.Menu
                         val.Key = key;
                         this.SetValue(val);
                         this.Interacting = false;
-                        if (wargs.Process != null)
+                        if (wargs != null)
                         {
                             wargs.Process = false;
                         }
