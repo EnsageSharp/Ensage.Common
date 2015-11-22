@@ -932,37 +932,9 @@ namespace Ensage.Common.Menu
         {
             TextureDictionary = new Dictionary<string, DotaTexture>();
             ItemDictionary = new Dictionary<string, MenuItem>();
-            //Root.AddItem(new MenuItem("Dim", "Dim the screen").SetValue(true));
             Root.AddItem(new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
             Root.AddItem(new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
-            //Root.AddItem(
-            //     new MenuItem("FontSize", "Font Size:").SetValue(new Slider(14, 12, 20)).SetTooltip("TOOLTIP asd"));
-            // var qualities = Enum.GetValues(typeof(FontQuality)).Cast<FontQuality>().Select(v => v.ToString()).ToArray();
-            //var dict = new Dictionary<string, bool>
-            //    {
-            //        {"ursa_enrage", true},
-            //        {"ursa_overpower", true},
-            //        {"ursa_earthshock", true},
-            //        {"item_sheepstick",true},
-            //        {"item_abyssal_blade",true},
-            //        {"item_blink",true}
-            //    };
-            //Root.AddItem(
-            //    new MenuItem("enabledAbilities", "Abilities:").SetValue(new AbilityToggler(dict)));
-            //var dict2 = new Dictionary<string, bool>
-            //    {
-            //        {"ursa_enrage", true},
-            //        {"ursa_overpower", true},
-            //        {"ursa_earthshock", true},
-            //        {"item_sheepstick",true},
-            //        {"item_abyssal_blade",true},
-            //        {"item_blink",true}
-            //    };
-            //Root.AddItem(
-            //    new MenuItem("Abilities", "Abilities:").SetValue(new AbilityToggler(dict2)));
-            //Root.AddItem(
-            //     new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
-            //         .SetValue(new StringList(qualities, 4)));
+            
             Root.AddItem(
                 new MenuItem("EnsageSharp.Common.TooltipDuration", "Tooltip Notification Duration").SetValue(
                     new Slider(1500, 0, 5000)));
@@ -970,74 +942,6 @@ namespace Ensage.Common.Menu
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(
                     FontStyle.Bold,
                     SharpDX.Color.Yellow));
-            //var heromenu = new Menu("heromenu", "heromenu");
-            //var ursa = new Menu("A","npc_dota_hero_ursa",false,"npc_dota_hero_ursa");
-            //var aba = new Menu("b", "npc_dota_hero_abaddon", false, "npc_dota_hero_abaddon");
-            //var cent = new Menu("c", "npc_dota_hero_centaur", false, "npc_dota_hero_centaur");
-            //var meepo = new Menu("d", "npc_dota_hero_meepo", false, "npc_dota_hero_meepo");
-            //var lina = new Menu("e", "npc_dota_hero_lina", false, "npc_dota_hero_lina");
-            //ursa.AddItem(new MenuItem("aa", "Config1").SetValue(true));
-            //aba.AddItem(new MenuItem("bb", "Config1").SetValue(true));
-            //cent.AddItem(new MenuItem("cc", "Config1").SetValue(true));
-            //meepo.AddItem(new MenuItem("dd", "Config1").SetValue(true));
-            //lina.AddItem(new MenuItem("ee", "Config1").SetValue(true));
-            //ursa.AddItem(new MenuItem("aa1", "Config2").SetValue(false));
-            //aba.AddItem(new MenuItem("bb1", "Config2").SetValue(false));
-            //cent.AddItem(new MenuItem("cc1", "Config2").SetValue(false));
-            //meepo.AddItem(new MenuItem("dd1", "Config2").SetValue(false));
-            //lina.AddItem(new MenuItem("ee1", "Config2").SetValue(false));
-
-            //var dict3 = new Dictionary<string, bool>
-            //    {
-            //        {"item_sheepstick",true},
-            //        {"item_abyssal_blade",true},
-            //        {"item_orchid",true}
-            //    };
-            //ursa.AddItem(
-            //    new MenuItem("Abilities", "Abilities:").SetValue(new AbilityToggler(dict3)));
-
-            //var abilitymenu = new Menu("abilitymenu", "abilitymenu");
-            //var earthshock = new Menu("A", "npc_dota_hero_ursa", false, "ursa_earthshock");
-            //var mistcoil = new Menu("b", "npc_dota_hero_abaddon", false, "item_sheepstick");
-            //var doubleedge = new Menu("c", "npc_dota_hero_centaur", false, "item_blink");
-            //var poof = new Menu("d", "npc_dota_hero_meepo", false, "meepo_poof");
-            //var dragonslave = new Menu("e", "npc_dota_hero_lina", false, "lina_dragon_slave");
-            //earthshock.AddItem(new MenuItem("aa", "Config1").SetValue(true));
-            //mistcoil.AddItem(new MenuItem("bb", "Config1").SetValue(true));
-            //doubleedge.AddItem(new MenuItem("cc", "Config1").SetValue(true));
-            //poof.AddItem(new MenuItem("dd", "Config1").SetValue(true));
-            //dragonslave.AddItem(new MenuItem("ee", "Config1").SetValue(true));
-            //earthshock.AddItem(new MenuItem("aa1", "Config2").SetValue(false));
-            //mistcoil.AddItem(new MenuItem("bb1", "Config2").SetValue(false));
-            //doubleedge.AddItem(new MenuItem("cc1", "Config2").SetValue(false));
-            //poof.AddItem(new MenuItem("dd1", "Config2").SetValue(false));
-            //dragonslave.AddItem(new MenuItem("ee1", "Config2").SetValue(false));
-            //abilitymenu.AddSubMenu(earthshock);
-            //abilitymenu.AddSubMenu(mistcoil);
-            //abilitymenu.AddSubMenu(doubleedge);
-            //abilitymenu.AddSubMenu(poof);
-            //abilitymenu.AddSubMenu(dragonslave);
-
-            //heromenu.AddSubMenu(ursa);
-            //heromenu.AddSubMenu(aba);
-            //heromenu.AddSubMenu(cent);
-            //heromenu.AddSubMenu(meepo);
-            //heromenu.AddSubMenu(lina);
-            var aaaaa = new Menu("Dragon Slave", "npc_dota_hero_lina", false, "lina_dragon_slave", true);
-            //var bbbbb = new Menu("aaaaaaA", "npc_dota_hero_ursa", false, "npc_dota_hero_ursa");
-            var dict4 = new Dictionary<string, bool>
-                {
-                    {"npc_dota_hero_ursa",true},
-                    {"npc_dota_hero_abaddon",true},
-                    {"npc_dota_hero_centaur",true},
-                    {"npc_dota_hero_meepo",true},
-                    {"npc_dota_hero_luna",true}
-                };
-            aaaaa.AddItem(new MenuItem("item1", "Use on:").SetValue(new HeroToggler(dict4)));
-            CommonMenu.MenuConfig.AddSubMenu(aaaaa);
-            //CommonMenu.MenuConfig.AddSubMenu(bbbbb);
-            //CommonMenu.MenuConfig.AddSubMenu(heromenu);
-            //CommonMenu.MenuConfig.AddSubMenu(abilitymenu);
             CommonMenu.MenuConfig.AddSubMenu(Root);
         }
 
