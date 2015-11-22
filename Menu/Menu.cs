@@ -32,6 +32,7 @@ namespace Ensage.Common.Menu
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
 
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Menu.NotificationData;
@@ -198,6 +199,10 @@ namespace Ensage.Common.Menu
         /// </summary>
         public Dictionary<string, bool> Dictionary;
 
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, float[]> PositionDictionary;
+
         #endregion
 
         #region Constructors and Destructors
@@ -208,6 +213,7 @@ namespace Ensage.Common.Menu
         public AbilityToggler(Dictionary<string, bool> abilityDictionary)
         {
             this.Dictionary = abilityDictionary;
+            this.PositionDictionary = new Dictionary<string, float[]>();
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
@@ -215,7 +221,11 @@ namespace Ensage.Common.Menu
                     v.Key.Substring(0, "item".Length) == "item"
                         ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
                         : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
-                Menu.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            }
+            var posDict = this.PositionDictionary;
+            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            {
+                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
             }
         }
 
@@ -227,10 +237,114 @@ namespace Ensage.Common.Menu
         /// </summary>
         public void Add(string name, bool defaultValue = true)
         {
-            if (!this.Dictionary.ContainsKey(name))
+            if (this.Dictionary.ContainsKey(name))
             {
-                this.Dictionary.Add(name, defaultValue);
+                Console.WriteLine(@"This ability(" + name + @") is already added in AbilityToggler");
+                return;
             }
+            this.Dictionary.Add(name, defaultValue);
+            if (!Menu.TextureDictionary.ContainsKey(name))
+            {
+                Menu.TextureDictionary.Add(
+                    name,
+                    name.Substring(0, "item".Length) == "item"
+                        ? Drawing.GetTexture("materials/ensage_ui/items/" + name.Substring("item_".Length) + ".vmat")
+                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + name + ".vmat"));
+            }
+            if (this.PositionDictionary.ContainsKey(name))
+            {
+                return;
+            }
+            this.PositionDictionary.Add(name, new float[] { 0, 0 });
+        }
+
+        /// <summary>
+        /// </summary>
+        public bool IsEnabled(string name)
+        {
+            return this.Dictionary.ContainsKey(name) && this.Dictionary[name];
+        }
+
+        /// <summary>
+        /// </summary>
+        public void Remove(string name)
+        {
+            if (this.Dictionary.ContainsKey(name))
+            {
+                this.Dictionary.Remove(name);
+            }
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///     Creates
+    /// </summary>
+    [Serializable]
+    public struct HeroToggler
+    {
+        #region Fields
+
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, bool> Dictionary;
+
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, float[]> PositionDictionary;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// </summary>
+        /// <param name="abilityDictionary"></param>
+        public HeroToggler(Dictionary<string, bool> abilityDictionary)
+        {
+            this.Dictionary = abilityDictionary;
+            this.PositionDictionary = new Dictionary<string, float[]>();
+            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
+            {
+                Menu.TextureDictionary.Add(
+                    v.Key,
+                    Drawing.GetTexture(
+                        "materials/ensage_ui/heroes_horizontal/" + v.Key.Substring("npc_dota_hero_".Length) + ".vmat"));
+            }
+            var posDict = this.PositionDictionary;
+            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            {
+                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// </summary>
+        public void Add(string name, bool defaultValue = true)
+        {
+            if (this.Dictionary.ContainsKey(name))
+            {
+                Console.WriteLine(@"This hero(" + name + @") is already added in HeroToggler");
+                return;
+            }
+            this.Dictionary.Add(name, defaultValue);
+            if (!Menu.TextureDictionary.ContainsKey(name))
+            {
+                Menu.TextureDictionary.Add(
+                    name,
+                    Drawing.GetTexture(
+                        "materials/ensage_ui/heroes_horizontal/" + name.Substring("npc_dota_hero_".Length) + ".vmat"));
+            }
+            if (this.PositionDictionary.ContainsKey(name))
+            {
+                return;
+            }
+            this.PositionDictionary.Add(name, new float[] { 0, 0 });
         }
 
         /// <summary>
@@ -639,7 +753,8 @@ namespace Ensage.Common.Menu
 
         internal static void DrawToolTip_Button(Vector2 position, MenuItem item)
         {
-            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler)
+            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler
+                || item.ValueType == MenuValueType.HeroToggler)
             {
                 return;
             }
@@ -669,7 +784,8 @@ namespace Ensage.Common.Menu
 
         internal static void DrawToolTip_Text(Vector2 position, MenuItem item, SharpDX.Color? TextColor = null)
         {
-            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler)
+            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler
+                || item.ValueType == MenuValueType.HeroToggler)
             {
                 return;
             }
@@ -701,7 +817,8 @@ namespace Ensage.Common.Menu
                 textPos,
                 new Vector2(15, 14),
                 Color.White.ToSharpDxColor(),
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                    | FontFlags.StrikeOut);
         }
 
         private static void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
@@ -747,10 +864,6 @@ namespace Ensage.Common.Menu
 
         /// <summary>
         /// </summary>
-        public static Dictionary<string, float[]> PositionDictionary;
-
-        /// <summary>
-        /// </summary>
         public static Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
         /// <summary>
@@ -793,6 +906,16 @@ namespace Ensage.Common.Menu
         /// </summary>
         public FontStyle Style;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TextureName;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ShowTextWithTexture;
+
         private int cachedMenuCount = 2;
 
         private int cachedMenuCountT;
@@ -808,7 +931,6 @@ namespace Ensage.Common.Menu
         static Menu()
         {
             TextureDictionary = new Dictionary<string, DotaTexture>();
-            PositionDictionary = new Dictionary<string, float[]>();
             ItemDictionary = new Dictionary<string, MenuItem>();
             //Root.AddItem(new MenuItem("Dim", "Dim the screen").SetValue(true));
             Root.AddItem(new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
@@ -827,6 +949,17 @@ namespace Ensage.Common.Menu
             //    };
             //Root.AddItem(
             //    new MenuItem("enabledAbilities", "Abilities:").SetValue(new AbilityToggler(dict)));
+            //var dict2 = new Dictionary<string, bool>
+            //    {
+            //        {"ursa_enrage", true},
+            //        {"ursa_overpower", true},
+            //        {"ursa_earthshock", true},
+            //        {"item_sheepstick",true},
+            //        {"item_abyssal_blade",true},
+            //        {"item_blink",true}
+            //    };
+            //Root.AddItem(
+            //    new MenuItem("Abilities", "Abilities:").SetValue(new AbilityToggler(dict2)));
             //Root.AddItem(
             //     new MenuItem("FontQuality", "Font Quality").SetTooltip("TOOLTIP asd")
             //         .SetValue(new StringList(qualities, 4)));
@@ -837,17 +970,119 @@ namespace Ensage.Common.Menu
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(
                     FontStyle.Bold,
                     SharpDX.Color.Yellow));
+            //var heromenu = new Menu("heromenu", "heromenu");
+            //var ursa = new Menu("A","npc_dota_hero_ursa",false,"npc_dota_hero_ursa");
+            //var aba = new Menu("b", "npc_dota_hero_abaddon", false, "npc_dota_hero_abaddon");
+            //var cent = new Menu("c", "npc_dota_hero_centaur", false, "npc_dota_hero_centaur");
+            //var meepo = new Menu("d", "npc_dota_hero_meepo", false, "npc_dota_hero_meepo");
+            //var lina = new Menu("e", "npc_dota_hero_lina", false, "npc_dota_hero_lina");
+            //ursa.AddItem(new MenuItem("aa", "Config1").SetValue(true));
+            //aba.AddItem(new MenuItem("bb", "Config1").SetValue(true));
+            //cent.AddItem(new MenuItem("cc", "Config1").SetValue(true));
+            //meepo.AddItem(new MenuItem("dd", "Config1").SetValue(true));
+            //lina.AddItem(new MenuItem("ee", "Config1").SetValue(true));
+            //ursa.AddItem(new MenuItem("aa1", "Config2").SetValue(false));
+            //aba.AddItem(new MenuItem("bb1", "Config2").SetValue(false));
+            //cent.AddItem(new MenuItem("cc1", "Config2").SetValue(false));
+            //meepo.AddItem(new MenuItem("dd1", "Config2").SetValue(false));
+            //lina.AddItem(new MenuItem("ee1", "Config2").SetValue(false));
+
+            //var dict3 = new Dictionary<string, bool>
+            //    {
+            //        {"item_sheepstick",true},
+            //        {"item_abyssal_blade",true},
+            //        {"item_orchid",true}
+            //    };
+            //ursa.AddItem(
+            //    new MenuItem("Abilities", "Abilities:").SetValue(new AbilityToggler(dict3)));
+
+            //var abilitymenu = new Menu("abilitymenu", "abilitymenu");
+            //var earthshock = new Menu("A", "npc_dota_hero_ursa", false, "ursa_earthshock");
+            //var mistcoil = new Menu("b", "npc_dota_hero_abaddon", false, "item_sheepstick");
+            //var doubleedge = new Menu("c", "npc_dota_hero_centaur", false, "item_blink");
+            //var poof = new Menu("d", "npc_dota_hero_meepo", false, "meepo_poof");
+            //var dragonslave = new Menu("e", "npc_dota_hero_lina", false, "lina_dragon_slave");
+            //earthshock.AddItem(new MenuItem("aa", "Config1").SetValue(true));
+            //mistcoil.AddItem(new MenuItem("bb", "Config1").SetValue(true));
+            //doubleedge.AddItem(new MenuItem("cc", "Config1").SetValue(true));
+            //poof.AddItem(new MenuItem("dd", "Config1").SetValue(true));
+            //dragonslave.AddItem(new MenuItem("ee", "Config1").SetValue(true));
+            //earthshock.AddItem(new MenuItem("aa1", "Config2").SetValue(false));
+            //mistcoil.AddItem(new MenuItem("bb1", "Config2").SetValue(false));
+            //doubleedge.AddItem(new MenuItem("cc1", "Config2").SetValue(false));
+            //poof.AddItem(new MenuItem("dd1", "Config2").SetValue(false));
+            //dragonslave.AddItem(new MenuItem("ee1", "Config2").SetValue(false));
+            //abilitymenu.AddSubMenu(earthshock);
+            //abilitymenu.AddSubMenu(mistcoil);
+            //abilitymenu.AddSubMenu(doubleedge);
+            //abilitymenu.AddSubMenu(poof);
+            //abilitymenu.AddSubMenu(dragonslave);
+
+            //heromenu.AddSubMenu(ursa);
+            //heromenu.AddSubMenu(aba);
+            //heromenu.AddSubMenu(cent);
+            //heromenu.AddSubMenu(meepo);
+            //heromenu.AddSubMenu(lina);
+            var aaaaa = new Menu("Dragon Slave", "npc_dota_hero_lina", false, "lina_dragon_slave", true);
+            //var bbbbb = new Menu("aaaaaaA", "npc_dota_hero_ursa", false, "npc_dota_hero_ursa");
+            var dict4 = new Dictionary<string, bool>
+                {
+                    {"npc_dota_hero_ursa",true},
+                    {"npc_dota_hero_abaddon",true},
+                    {"npc_dota_hero_centaur",true},
+                    {"npc_dota_hero_meepo",true},
+                    {"npc_dota_hero_luna",true}
+                };
+            aaaaa.AddItem(new MenuItem("item1", "Use on:").SetValue(new HeroToggler(dict4)));
+            CommonMenu.MenuConfig.AddSubMenu(aaaaa);
+            //CommonMenu.MenuConfig.AddSubMenu(bbbbb);
+            //CommonMenu.MenuConfig.AddSubMenu(heromenu);
+            //CommonMenu.MenuConfig.AddSubMenu(abilitymenu);
             CommonMenu.MenuConfig.AddSubMenu(Root);
         }
 
-        public Menu(string displayName, string name, bool isRootMenu = false)
+        /// <summary>
+        ///     Creates a Menu in Common.Menu class
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="name"></param>
+        /// <param name="isRootMenu"></param>
+        /// <param name="textureName"></param>
+        /// <param name="showTextWithTexture"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public Menu(string displayName, string name, bool isRootMenu = false, string textureName = null, bool showTextWithTexture = false)
         {
             this.DisplayName = displayName;
             this.Name = name;
             this.IsRootMenu = isRootMenu;
             this.Style = FontStyle.Regular;
             this.Color = SharpDX.Color.White;
-
+            this.TextureName = textureName;
+            this.ShowTextWithTexture = showTextWithTexture;
+            if (textureName != null && !TextureDictionary.ContainsKey(textureName))
+            {
+                if (textureName.Contains("npc_dota_hero_"))
+                {
+                    TextureDictionary.Add(
+                        textureName,
+                        Drawing.GetTexture(
+                            "materials/ensage_ui/heroes_horizontal/" + textureName.Substring("npc_dota_hero_".Length)
+                            + ".vmat"));
+                }
+                else if (textureName.Contains("item_"))
+                {
+                    TextureDictionary.Add(
+                        textureName,
+                        Drawing.GetTexture(
+                            "materials/ensage_ui/items/" + textureName.Substring("item_".Length) + ".vmat"));
+                }
+                else
+                {
+                    TextureDictionary.Add(
+                        textureName,
+                        Drawing.GetTexture("materials/ensage_ui/spellicons/" + textureName + ".vmat"));
+                }
+            }
             if (isRootMenu)
             {
                 AppDomain.CurrentDomain.DomainUnload += delegate { SaveAll(); };
@@ -941,9 +1176,30 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return
-                    MenuDrawHelper.Font.MeasureText(null, MultiLanguage._(this.DisplayName), FontDrawFlags.Center).Width
-                    + 25;
+                var bonus = 0;
+                if (this.TextureName == null || this.ShowTextWithTexture)
+                {
+                    bonus +=
+                        MenuDrawHelper.Font.MeasureText(null, MultiLanguage._(this.DisplayName), FontDrawFlags.Center)
+                            .Width + 25;
+                }
+                if (this.TextureName != null)
+                {
+                    var tName = this.TextureName;
+                    if (tName.Contains("npc_dota_hero"))
+                    {
+                        bonus += 15 + 25;
+                    }
+                    else if (tName.Contains("item_"))
+                    {
+                        bonus += 15 + 25;
+                    }
+                    else
+                    {
+                        bonus += -4 + 25;
+                    }
+                }
+                return this.Height + bonus;
             }
         }
 
@@ -1165,12 +1421,70 @@ namespace Ensage.Common.Menu
             //    this.Color);
             //var textSize = Drawing.MeasureText(MultiLanguage._(this.DisplayName), "Arial", new Vector2(this.Width, this.Height), FontFlags.AntiAlias);
             var textPos = this.Position + new Vector2(5, this.Height / 3 - 2);
-            Drawing.DrawText(
-                MultiLanguage._(this.DisplayName),
-                textPos,
-                new Vector2(15, 100),
-                this.Color,
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+            if (this.TextureName == null)
+            {
+                Drawing.DrawText(
+                    MultiLanguage._(this.DisplayName),
+                    textPos,
+                    new Vector2(15, 100),
+                    this.Color,
+                    FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                    | FontFlags.StrikeOut);
+            }
+            else
+            {
+                var tName = this.TextureName;
+                var bonusWidth = 0;
+                if (tName.Contains("npc_dota_hero"))
+                {
+                    Drawing.DrawRect(
+                        this.Position + new Vector2(3, 3),
+                        new Vector2(this.Height + 13, this.Height - 6),
+                        TextureDictionary[tName]);
+                    Drawing.DrawRect(
+                        this.Position + new Vector2(2, 2),
+                        new Vector2(this.Height + 15, this.Height - 4),
+                        SharpDX.Color.Black,
+                        true);
+                    bonusWidth = this.Height + 17;
+                }
+                else if (tName.Contains("item_"))
+                {
+                    Drawing.DrawRect(
+                        this.Position + new Vector2(3, 3),
+                        new Vector2(this.Height + 20, this.Height - 6),
+                        TextureDictionary[tName]);
+                    Drawing.DrawRect(
+                        this.Position + new Vector2(2, 2),
+                        new Vector2(this.Height + 6, this.Height - 4),
+                        SharpDX.Color.Black,
+                        true);
+                    bonusWidth = this.Height + 8;
+                }
+                else
+                {
+                    Drawing.DrawRect(
+                        this.Position + new Vector2(3, 3),
+                        new Vector2(this.Height - 6, this.Height - 6),
+                        TextureDictionary[tName]);
+                    Drawing.DrawRect(
+                        this.Position + new Vector2(2, 2),
+                        new Vector2(this.Height - 4, this.Height - 4),
+                        SharpDX.Color.Black,
+                        true);
+                    bonusWidth = this.Height - 2;
+                }
+                if (this.ShowTextWithTexture)
+                {
+                    Drawing.DrawText(
+                        MultiLanguage._(this.DisplayName),
+                        textPos + new Vector2(bonusWidth,0),
+                        new Vector2(15, 100),
+                        this.Color,
+                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                        | FontFlags.StrikeOut);
+                }
+            }
 
             //MenuDrawHelper.Font.DrawText(
             //    null,
@@ -1436,7 +1750,9 @@ namespace Ensage.Common.Menu
 
         StringList,
 
-        AbilityToggler
+        AbilityToggler,
+
+        HeroToggler
     }
 
     public class OnValueChangeEventArgs
@@ -1612,6 +1928,11 @@ namespace Ensage.Common.Menu
                     extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 10);
                 }
 
+                if (this.ValueType == MenuValueType.HeroToggler)
+                {
+                    extra += this.GetValue<HeroToggler>().Dictionary.Count * (this.Height + 5);
+                }
+
                 if (this.ValueType == MenuValueType.KeyBind)
                 {
                     var val = this.GetValue<KeyBind>();
@@ -1782,6 +2103,10 @@ namespace Ensage.Common.Menu
             {
                 this.ValueType = MenuValueType.AbilityToggler;
             }
+            else if (newValue.GetType().ToString().Contains("HeroToggler"))
+            {
+                this.ValueType = MenuValueType.HeroToggler;
+            }
             else if (newValue.GetType().ToString().Contains("Color"))
             {
                 this.ValueType = MenuValueType.Color;
@@ -1839,9 +2164,25 @@ namespace Ensage.Common.Menu
                             var savedDictionaryValue = (AbilityToggler)(object)Utils.Deserialize<T>(readBytes);
                             var newDictionaryValue = ((AbilityToggler)(object)newValue);
                             var saveddict = savedDictionaryValue.Dictionary;
-                            if (newDictionaryValue.Dictionary.All(b => saveddict.ContainsKey(b.Key)))
+                            if (newDictionaryValue.Dictionary.All(b => saveddict.ContainsKey(b.Key))
+                                && savedDictionaryValue.PositionDictionary != null
+                                && newDictionaryValue.PositionDictionary.All(
+                                    b => savedDictionaryValue.PositionDictionary.ContainsKey(b.Key)))
                             {
                                 newValue = (T)(object)savedDictionaryValue;
+                            }
+                            break;
+
+                        case MenuValueType.HeroToggler:
+                            var savedHeroDictionaryValue = (HeroToggler)(object)Utils.Deserialize<T>(readBytes);
+                            var newHeroDictionaryValue = ((HeroToggler)(object)newValue);
+                            var savedHerodict = savedHeroDictionaryValue.Dictionary;
+                            if (newHeroDictionaryValue.Dictionary.All(b => savedHerodict.ContainsKey(b.Key))
+                                && savedHeroDictionaryValue.PositionDictionary != null
+                                && newHeroDictionaryValue.PositionDictionary.All(
+                                    b => savedHeroDictionaryValue.PositionDictionary.ContainsKey(b.Key)))
+                            {
+                                newValue = (T)(object)savedHeroDictionaryValue;
                             }
                             break;
 
@@ -2077,13 +2418,13 @@ namespace Ensage.Common.Menu
                     textSize = Drawing.MeasureText(
                         MultiLanguage._(t),
                         "Arial",
-                        new Vector2(16, 12),
+                        new Vector2(16, 25),
                         FontFlags.AntiAlias);
-                    textPos = this.Position + new Vector2((float)(-this.Height * 2 + this.Width - textSize.X - 3), 8);
+                    textPos = this.Position + new Vector2((float)(-this.Height * 2 + this.Width - textSize.X - 3), 7);
                     Drawing.DrawText(
                         MultiLanguage._(t),
                         textPos,
-                        new Vector2(16, 12),
+                        new Vector2(16, 25),
                         new SharpDX.Color(255, 255, 255, 225),
                         FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
                         | FontFlags.StrikeOut);
@@ -2095,7 +2436,7 @@ namespace Ensage.Common.Menu
                     var basePosition = this.Position + new Vector2(this.Width - this.Height, 0);
                     var size = new Vector2(this.Height - 6, this.Height - 6);
                     var dictionary = this.GetValue<AbilityToggler>().Dictionary;
-                    var positionDictionary = Menu.PositionDictionary;
+                    var positionDictionary = this.GetValue<AbilityToggler>().PositionDictionary;
                     var textureDictionary = Menu.TextureDictionary;
                     //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
                     foreach (var v in dictionary)
@@ -2123,6 +2464,47 @@ namespace Ensage.Common.Menu
                         {
                             Drawing.DrawRect(pos - new Vector2(-3, -3), size, textureDictionary[v.Key]);
                         }
+                        Drawing.DrawRect(pos - new Vector2(-3, -3), size, SharpDX.Color.Black, true);
+                        Drawing.DrawRect(pos, size + new Vector2(6, 6), SharpDX.Color.Black, true);
+                        //textPos = basePosition - new Vector2(width, 5) + new Vector2(this.Height / 2 - textSize.X / 2, this.Height / 2 - textSize.Y / 2);
+                        //Drawing.DrawText(
+                        //    "x",
+                        //    textPos,
+                        //    size + new Vector2(30, 30),
+                        //    new SharpDX.Color(225, 150, 0),
+                        //    FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                        //    | FontFlags.StrikeOut);
+                        //
+                        width += size.X + 6;
+                        width += -1;
+                    }
+
+                    break;
+
+                case MenuValueType.HeroToggler:
+
+                    width = 0f;
+                    basePosition = this.Position + new Vector2(this.Width - this.Height, 0);
+                    size = new Vector2(this.Height + 10, this.Height - 6);
+                    dictionary = this.GetValue<HeroToggler>().Dictionary;
+                    positionDictionary = this.GetValue<HeroToggler>().PositionDictionary;
+                    textureDictionary = Menu.TextureDictionary;
+                    //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
+                    foreach (var v in dictionary)
+                    {
+                        positionDictionary[v.Key][0] = basePosition.X - width;
+                        positionDictionary[v.Key][1] = basePosition.Y;
+                        var pos = basePosition - new Vector2(width, 0);
+                        alpha = Utils.IsUnderRectangle(Game.MouseScreenPosition, pos.X, pos.Y, size.X + 6, size.Y + 6)
+                                    ? 35
+                                    : 0;
+                        Drawing.DrawRect(
+                            pos,
+                            size + new Vector2(6, 6),
+                            v.Value
+                                ? Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
+                                : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());
+                        Drawing.DrawRect(pos - new Vector2(-3, -3), size, textureDictionary[v.Key]);
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, SharpDX.Color.Black, true);
                         Drawing.DrawRect(pos, size + new Vector2(6, 6), SharpDX.Color.Black, true);
                         //textPos = basePosition - new Vector2(width, 5) + new Vector2(this.Height / 2 - textSize.X / 2, this.Height / 2 - textSize.Y / 2);
@@ -2600,10 +2982,10 @@ namespace Ensage.Common.Menu
                     {
                         return;
                     }
-                    var positionDictionary = Menu.PositionDictionary;
+                    var positionDictionary = this.GetValue<AbilityToggler>().PositionDictionary;
                     var dictionary = this.GetValue<AbilityToggler>().Dictionary;
-                    foreach (var v in from v in positionDictionary
-                                      let pos = new Vector2(v.Value[0], v.Value[1])
+                    foreach (var v in from v in dictionary
+                                      let pos = new Vector2(positionDictionary[v.Key][0], positionDictionary[v.Key][1])
                                       where
                                           Utils.IsUnderRectangle(
                                               cursorPos,
@@ -2613,9 +2995,39 @@ namespace Ensage.Common.Menu
                                               this.Height - 2)
                                       select v)
                     {
-                        dictionary[v.Key] = !dictionary[v.Key];
+                        this.GetValue<AbilityToggler>().Dictionary[v.Key] = !dictionary[v.Key];
+                        break;
                     }
                     this.SetValue(new AbilityToggler(dictionary));
+                    break;
+
+                case MenuValueType.HeroToggler:
+                    if (!this.Visible)
+                    {
+                        return;
+                    }
+
+                    if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
+                    {
+                        return;
+                    }
+                    positionDictionary = this.GetValue<HeroToggler>().PositionDictionary;
+                    dictionary = this.GetValue<HeroToggler>().Dictionary;
+                    foreach (var v in from v in dictionary
+                                      let pos = new Vector2(positionDictionary[v.Key][0], positionDictionary[v.Key][1])
+                                      where
+                                          Utils.IsUnderRectangle(
+                                              cursorPos,
+                                              pos.X,
+                                              pos.Y,
+                                              this.Height + 15,
+                                              this.Height - 2)
+                                      select v)
+                    {
+                        this.GetValue<HeroToggler>().Dictionary[v.Key] = !dictionary[v.Key];
+                        break;
+                    }
+                    this.SetValue(new HeroToggler(dictionary));
                     break;
             }
         }

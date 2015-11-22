@@ -258,10 +258,11 @@ namespace Ensage.Common.Extensions
         /// <summary>
         /// </summary>
         /// <param name="source"></param>
+        /// <param name="bonusRange"></param>
         /// <returns></returns>
-        public static Hero BestAATarget(this Hero source)
+        public static Hero BestAATarget(this Hero source, float bonusRange = 0)
         {
-            return TargetSelector.BestAutoAttackTarget(source);
+            return TargetSelector.BestAutoAttackTarget(source, bonusRange);
         }
 
         /// <summary>

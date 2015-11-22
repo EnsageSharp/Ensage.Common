@@ -33,8 +33,9 @@ namespace Ensage.Common
         ///     Find enemy hero that takes least hits to kill
         /// </summary>
         /// <param name="source">Source hero</param>
+        /// <param name="bonusRange"></param>
         /// <returns></returns>
-        public static Hero BestAutoAttackTarget(Hero source)
+        public static Hero BestAutoAttackTarget(Hero source, float bonusRange = 0)
         {
             var attackRange = source.GetAttackRange();
             var enemyHeroes =
@@ -42,7 +43,7 @@ namespace Ensage.Common
                     .Where(
                         x =>
                         x.Team == source.GetEnemyTeam() && !x.IsIllusion && x.IsAlive && x.IsVisible
-                        && x.Distance2D(source) <= (attackRange + x.HullRadius + source.HullRadius + 50));
+                        && x.Distance2D(source) <= (attackRange + x.HullRadius + bonusRange + source.HullRadius + 50));
             var aaDmg = source.MinimumDamage + source.BonusDamage;
             Hero bestTarget = null;
             var lastHitsToKill = 0f;
