@@ -74,8 +74,8 @@ namespace Ensage.Common.Extensions
                     return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                 }
                 if (ability.Name != "invoker_invoke" && ability.Name != "invoker_quas" && ability.Name != "invoker_wex"
-                    && ability.Name != "invoker_exort" && ability.AbilitySlot != (int)AbilitySlot.Slot_4
-                    && ability.AbilitySlot != (int)AbilitySlot.Slot_5)
+                    && ability.Name != "invoker_exort" && (Ensage.AbilitySlot)ability.AbilitySlot != AbilitySlot.Slot_4
+                    && (Ensage.AbilitySlot)ability.AbilitySlot != AbilitySlot.Slot_5)
                 {
                     return false;
                 }
