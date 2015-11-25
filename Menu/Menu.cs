@@ -32,8 +32,8 @@ namespace Ensage.Common.Menu
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.CompilerServices;
 
+    using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Menu.NotificationData;
     using Ensage.Common.Properties;
@@ -203,6 +203,10 @@ namespace Ensage.Common.Menu
         /// </summary>
         public Dictionary<string, float[]> PositionDictionary;
 
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, bool> SValuesDictionary;
+
         #endregion
 
         #region Constructors and Destructors
@@ -214,6 +218,7 @@ namespace Ensage.Common.Menu
         {
             this.Dictionary = abilityDictionary;
             this.PositionDictionary = new Dictionary<string, float[]>();
+            this.SValuesDictionary = new Dictionary<string, bool>();
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
@@ -226,6 +231,11 @@ namespace Ensage.Common.Menu
             foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
             {
                 this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            }
+            var svDict = this.SValuesDictionary;
+            foreach (var v in this.Dictionary.Where(v => !svDict.ContainsKey(v.Key)))
+            {
+                this.SValuesDictionary.Add(v.Key, v.Value);
             }
         }
 
@@ -242,6 +252,10 @@ namespace Ensage.Common.Menu
                 Console.WriteLine(@"This ability(" + name + @") is already added in AbilityToggler");
                 return;
             }
+            if (this.SValuesDictionary.ContainsKey(name))
+            {
+                defaultValue = this.SValuesDictionary[name];
+            }
             this.Dictionary.Add(name, defaultValue);
             if (!Menu.TextureDictionary.ContainsKey(name))
             {
@@ -250,6 +264,10 @@ namespace Ensage.Common.Menu
                     name.Substring(0, "item".Length) == "item"
                         ? Drawing.GetTexture("materials/ensage_ui/items/" + name.Substring("item_".Length) + ".vmat")
                         : Drawing.GetTexture("materials/ensage_ui/spellicons/" + name + ".vmat"));
+            }
+            if (!this.SValuesDictionary.ContainsKey(name))
+            {
+                this.SValuesDictionary.Add(name, defaultValue);
             }
             if (this.PositionDictionary.ContainsKey(name))
             {
@@ -294,17 +312,37 @@ namespace Ensage.Common.Menu
         /// </summary>
         public Dictionary<string, float[]> PositionDictionary;
 
+        /// <summary>
+        /// </summary>
+        public Dictionary<string, bool> SValuesDictionary;
+
+        /// <summary>
+        /// </summary>
+        public bool UseAllyHeroes;
+
+        /// <summary>
+        /// </summary>
+        public bool UseEnemyHeroes;
+
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
         /// </summary>
-        /// <param name="abilityDictionary"></param>
-        public HeroToggler(Dictionary<string, bool> abilityDictionary)
+        /// <param name="heroDictionary"></param>
+        /// <param name="useEnemyHeroes"></param>
+        /// <param name="useAllyHeroes"></param>
+        public HeroToggler(
+            Dictionary<string, bool> heroDictionary,
+            bool useEnemyHeroes = false,
+            bool useAllyHeroes = false)
         {
-            this.Dictionary = abilityDictionary;
+            this.Dictionary = heroDictionary;
             this.PositionDictionary = new Dictionary<string, float[]>();
+            this.UseEnemyHeroes = useEnemyHeroes;
+            this.UseAllyHeroes = useAllyHeroes;
+            this.SValuesDictionary = new Dictionary<string, bool>();
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
@@ -316,6 +354,11 @@ namespace Ensage.Common.Menu
             foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
             {
                 this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            }
+            var svDict = this.SValuesDictionary;
+            foreach (var v in this.Dictionary.Where(v => !svDict.ContainsKey(v.Key)))
+            {
+                this.SValuesDictionary.Add(v.Key, v.Value);
             }
         }
 
@@ -332,6 +375,10 @@ namespace Ensage.Common.Menu
                 Console.WriteLine(@"This hero(" + name + @") is already added in HeroToggler");
                 return;
             }
+            if (this.SValuesDictionary.ContainsKey(name))
+            {
+                defaultValue = this.SValuesDictionary[name];
+            }
             this.Dictionary.Add(name, defaultValue);
             if (!Menu.TextureDictionary.ContainsKey(name))
             {
@@ -339,6 +386,10 @@ namespace Ensage.Common.Menu
                     name,
                     Drawing.GetTexture(
                         "materials/ensage_ui/heroes_horizontal/" + name.Substring("npc_dota_hero_".Length) + ".vmat"));
+            }
+            if (!this.SValuesDictionary.ContainsKey(name))
+            {
+                this.SValuesDictionary.Add(name, defaultValue);
             }
             if (this.PositionDictionary.ContainsKey(name))
             {
@@ -496,7 +547,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Color.FromArgb(160, 50, 50, 50);
+                return Color.FromArgb(170, 54, 54, 54);
             }
         }
 
@@ -504,7 +555,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Color.FromArgb(160, Color.Black);
+                return Color.FromArgb(180, Color.Black);
             }
         }
 
@@ -817,8 +868,7 @@ namespace Ensage.Common.Menu
                 textPos,
                 new Vector2(15, 14),
                 Color.White.ToSharpDxColor(),
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                    | FontFlags.StrikeOut);
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
         private static void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
@@ -860,6 +910,8 @@ namespace Ensage.Common.Menu
         /// </summary>
         public static readonly Menu Root = new Menu("Menu Settings", "Menu Settings");
 
+        /// <summary>
+        /// </summary>
         public static Dictionary<string, MenuItem> ItemDictionary;
 
         /// <summary>
@@ -904,17 +956,15 @@ namespace Ensage.Common.Menu
 
         /// <summary>
         /// </summary>
+        public bool ShowTextWithTexture;
+
+        /// <summary>
+        /// </summary>
         public FontStyle Style;
 
         /// <summary>
-        /// 
         /// </summary>
         public string TextureName;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool ShowTextWithTexture;
 
         private int cachedMenuCount = 2;
 
@@ -934,7 +984,7 @@ namespace Ensage.Common.Menu
             ItemDictionary = new Dictionary<string, MenuItem>();
             Root.AddItem(new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
             Root.AddItem(new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
-            
+
             Root.AddItem(
                 new MenuItem("EnsageSharp.Common.TooltipDuration", "Tooltip Notification Duration").SetValue(
                     new Slider(1500, 0, 5000)));
@@ -954,7 +1004,12 @@ namespace Ensage.Common.Menu
         /// <param name="textureName"></param>
         /// <param name="showTextWithTexture"></param>
         /// <exception cref="ArgumentException"></exception>
-        public Menu(string displayName, string name, bool isRootMenu = false, string textureName = null, bool showTextWithTexture = false)
+        public Menu(
+            string displayName,
+            string name,
+            bool isRootMenu = false,
+            string textureName = null,
+            bool showTextWithTexture = false)
         {
             this.DisplayName = displayName;
             this.Name = name;
@@ -1005,9 +1060,10 @@ namespace Ensage.Common.Menu
 
         ~Menu()
         {
-            if (RootMenus.ContainsKey(this.Name))
+            var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
+            if (RootMenus.ContainsKey(rootName))
             {
-                RootMenus.Remove(this.Name);
+                RootMenus.Remove(rootName);
             }
         }
 
@@ -1096,7 +1152,7 @@ namespace Ensage.Common.Menu
                     }
                     else if (tName.Contains("item_"))
                     {
-                        bonus += 15 + 25;
+                        bonus += -4 + 25;
                     }
                     else
                     {
@@ -1111,7 +1167,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                var xOffset = 0;
+                int xOffset;
 
                 if (this.Parent != null)
                 {
@@ -1232,6 +1288,8 @@ namespace Ensage.Common.Menu
         public MenuItem AddItem(MenuItem item)
         {
             item.Parent = this;
+            item.Visible = (this.Children.Count > 0 && this.Children[0].Visible
+                            || this.Items.Count > 0 && this.Items[0].Visible);
             this.Items.Add(item);
             return item;
         }
@@ -1239,17 +1297,15 @@ namespace Ensage.Common.Menu
         public Menu AddSubMenu(Menu subMenu)
         {
             subMenu.Parent = this;
+            subMenu.Visible = this.Visible;
             this.Children.Add(subMenu);
-
             return subMenu;
         }
 
         public void AddToMainMenu()
         {
-            //Console.WriteLine("AAAA");
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
             AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
-            //Drawing.OnEndScene += this.Drawing_OnEndScene;
             Drawing.OnDraw += this.Drawing_OnDraw;
             Game.OnWndProc += this.Game_OnWndProc;
         }
@@ -1269,6 +1325,36 @@ namespace Ensage.Common.Menu
                        ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
                               .FirstOrDefault();
             return tempItem;
+        }
+
+        public void RemoveFromMainMenu()
+        {
+            try
+            {
+                var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
+                if (RootMenus.ContainsKey(rootName))
+                {
+                    RootMenus.Remove(rootName);
+                    Drawing.OnDraw -= this.Drawing_OnDraw;
+                    Game.OnWndProc -= this.Game_OnWndProc;
+                    this.UnloadMenuState();
+                }
+            }
+            catch (Exception)
+            {
+                //
+            }
+        }
+
+        public void RemoveSubMenu(string name)
+        {
+            var subMenu = this.Children.FirstOrDefault(x => x.Name == name);
+            if (subMenu == null)
+            {
+                return;
+            }
+            subMenu.Parent = null;
+            this.Children.Remove(subMenu);
         }
 
         public Menu SetFontStyle(FontStyle fontStyle = FontStyle.Regular, SharpDX.Color? fontColor = null)
@@ -1292,6 +1378,17 @@ namespace Ensage.Common.Menu
 
         internal void Drawing_OnDraw(EventArgs args)
         {
+            this.SetHeroTogglers();
+
+            foreach (var child in this.Children)
+            {
+                child.SetHeroTogglers();
+                foreach (var child1 in child.Children)
+                {
+                    child1.SetHeroTogglers();
+                }
+            }
+
             if (!Game.IsInGame)
             {
                 return;
@@ -1300,7 +1397,6 @@ namespace Ensage.Common.Menu
             {
                 return;
             }
-
             //if (CommonMenu.MenuConfig.Item("Dim").GetValue<bool>())
             //{
             //    //Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaBlendEnable, true);
@@ -1356,14 +1452,14 @@ namespace Ensage.Common.Menu
                 {
                     Drawing.DrawRect(
                         this.Position + new Vector2(3, 3),
-                        new Vector2(this.Height + 20, this.Height - 6),
+                        new Vector2(this.Height + 6, this.Height - 6),
                         TextureDictionary[tName]);
                     Drawing.DrawRect(
                         this.Position + new Vector2(2, 2),
-                        new Vector2(this.Height + 6, this.Height - 4),
+                        new Vector2(this.Height - 4, this.Height - 4),
                         SharpDX.Color.Black,
                         true);
-                    bonusWidth = this.Height + 8;
+                    bonusWidth = this.Height - 2;
                 }
                 else
                 {
@@ -1382,7 +1478,7 @@ namespace Ensage.Common.Menu
                 {
                     Drawing.DrawText(
                         MultiLanguage._(this.DisplayName),
-                        textPos + new Vector2(bonusWidth,0),
+                        textPos + new Vector2(bonusWidth, 0),
                         new Vector2(15, 100),
                         this.Color,
                         FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
@@ -1406,6 +1502,19 @@ namespace Ensage.Common.Menu
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut
                 | FontFlags.Outline);
 
+            Drawing.DrawRect(
+                new Vector2(this.Position.X, this.Position.Y),
+                new Vector2(this.Width, this.Height),
+                (this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible)
+                    ? new SharpDX.Color(0, 0, 0, 5)
+                    : (Utils.IsUnderRectangle(
+                        Game.MouseScreenPosition,
+                        this.Position.X,
+                        this.Position.Y,
+                        this.Width,
+                        this.Height)
+                           ? new SharpDX.Color(0, 0, 0, 10)
+                           : new SharpDX.Color(0, 0, 0, 90)));
             //Draw the menu submenus
             foreach (var child in this.Children.Where(child => child.Visible))
             {
@@ -1602,6 +1711,61 @@ namespace Ensage.Common.Menu
                 }
 
                 SavedSettings.Save(dictionary.Key, dicToSave);
+            }
+        }
+
+        internal void SetHeroTogglers()
+        {
+            foreach (var child in this.Children)
+            {
+                child.SetHeroTogglers();
+            }
+            for (var i = this.Items.Count - 1; i >= 0; i--)
+            {
+                var item = this.Items[i];
+                if (!Utils.SleepCheck("SetHeroTogglers" + item.Name))
+                {
+                    continue;
+                }
+                if (item.ValueType != MenuValueType.HeroToggler)
+                {
+                    continue;
+                }
+                if (item.GetValue<HeroToggler>().UseEnemyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 5)
+                {
+                    var dict = item.GetValue<HeroToggler>().Dictionary;
+                    var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
+                    var players =
+                        ObjectMgr.GetEntities<Player>()
+                            .Where(
+                                x =>
+                                x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
+                                && !dict.ContainsKey(x.Hero.Name));
+                    foreach (var x in
+                        players)
+                    {
+                        item.GetValue<HeroToggler>()
+                            .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+                    }
+                    item.SetValue(new HeroToggler(item.GetValue<HeroToggler>().Dictionary, true));
+                }
+                else if (item.GetValue<HeroToggler>().UseAllyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 4)
+                {
+                    var dict = item.GetValue<HeroToggler>().Dictionary;
+                    var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
+                    foreach (var x in
+                        ObjectMgr.GetEntities<Player>()
+                            .Where(
+                                x =>
+                                x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.Team
+                                && !dict.ContainsKey(x.Hero.Name)))
+                    {
+                        item.GetValue<HeroToggler>()
+                            .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+                    }
+                    item.SetValue(new HeroToggler(item.GetValue<HeroToggler>().Dictionary, false, true));
+                }
+                Utils.Sleep(20000, "SetHeroTogglers" + item.Name);
             }
         }
 
@@ -2067,27 +2231,51 @@ namespace Ensage.Common.Menu
                         case MenuValueType.AbilityToggler:
                             var savedDictionaryValue = (AbilityToggler)(object)Utils.Deserialize<T>(readBytes);
                             var newDictionaryValue = ((AbilityToggler)(object)newValue);
-                            var saveddict = savedDictionaryValue.Dictionary;
-                            if (newDictionaryValue.Dictionary.All(b => saveddict.ContainsKey(b.Key))
-                                && savedDictionaryValue.PositionDictionary != null
-                                && newDictionaryValue.PositionDictionary.All(
-                                    b => savedDictionaryValue.PositionDictionary.ContainsKey(b.Key)))
+                            var tempValue = newDictionaryValue;
+                            if (savedDictionaryValue.SValuesDictionary != null)
                             {
-                                newValue = (T)(object)savedDictionaryValue;
+                                foreach (var b in savedDictionaryValue.SValuesDictionary)
+                                {
+                                    if (!tempValue.SValuesDictionary.ContainsKey(b.Key))
+                                    {
+                                        tempValue.SValuesDictionary.Add(b.Key, b.Value);
+                                    }
+                                    else
+                                    {
+                                        tempValue.SValuesDictionary[b.Key] = b.Value;
+                                    }
+                                    if (tempValue.Dictionary.ContainsKey(b.Key))
+                                    {
+                                        tempValue.Dictionary[b.Key] = b.Value;
+                                    }
+                                }
                             }
+                            newValue = (T)(object)tempValue;
                             break;
 
                         case MenuValueType.HeroToggler:
                             var savedHeroDictionaryValue = (HeroToggler)(object)Utils.Deserialize<T>(readBytes);
                             var newHeroDictionaryValue = ((HeroToggler)(object)newValue);
-                            var savedHerodict = savedHeroDictionaryValue.Dictionary;
-                            if (newHeroDictionaryValue.Dictionary.All(b => savedHerodict.ContainsKey(b.Key))
-                                && savedHeroDictionaryValue.PositionDictionary != null
-                                && newHeroDictionaryValue.PositionDictionary.All(
-                                    b => savedHeroDictionaryValue.PositionDictionary.ContainsKey(b.Key)))
+                            var tempHValue = newHeroDictionaryValue;
+                            if (savedHeroDictionaryValue.SValuesDictionary != null)
                             {
-                                newValue = (T)(object)savedHeroDictionaryValue;
+                                foreach (var b in savedHeroDictionaryValue.SValuesDictionary)
+                                {
+                                    if (!tempHValue.SValuesDictionary.ContainsKey(b.Key))
+                                    {
+                                        tempHValue.SValuesDictionary.Add(b.Key, b.Value);
+                                    }
+                                    else
+                                    {
+                                        tempHValue.SValuesDictionary[b.Key] = b.Value;
+                                    }
+                                    if (tempHValue.Dictionary.ContainsKey(b.Key))
+                                    {
+                                        tempHValue.Dictionary[b.Key] = b.Value;
+                                    }
+                                }
                             }
+                            newValue = (T)(object)tempHValue;
                             break;
 
                         default:
@@ -2174,7 +2362,7 @@ namespace Ensage.Common.Menu
                 this.Width,
                 this.Height,
                 1,
-                MenuSettings.BackgroundColor.ToSharpDxColor(),
+                Color.FromArgb(140, 35, 35, 35).ToSharpDxColor(),
                 SharpDX.Color.Black);
             var s = MultiLanguage._(this.DisplayName);
             if (this.DrawingTooltip)
@@ -2184,7 +2372,43 @@ namespace Ensage.Common.Menu
                     this,
                     this.TooltipColor);
             }
-
+            //if (this.ValueType == MenuValueType.HeroToggler)
+            //{
+            //    if (this.GetValue<HeroToggler>().UseEnemyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 5)
+            //    {
+            //        var dict = this.GetValue<HeroToggler>().Dictionary;
+            //        var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
+            //        var players =
+            //            ObjectMgr.GetEntities<Player>()
+            //                .Where(
+            //                    x =>
+            //                    x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
+            //                    && !dict.ContainsKey(x.Hero.Name));
+            //        foreach (var x in
+            //            players)
+            //        {
+            //            this.GetValue<HeroToggler>()
+            //                .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+            //        }
+            //        this.SetValue(new HeroToggler(this.GetValue<HeroToggler>().Dictionary, true));
+            //    }
+            //    else if (this.GetValue<HeroToggler>().UseAllyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 4)
+            //    {
+            //        var dict = this.GetValue<HeroToggler>().Dictionary;
+            //        var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
+            //        foreach (var x in
+            //            ObjectMgr.GetEntities<Player>()
+            //                .Where(
+            //                    x =>
+            //                    x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.Team
+            //                    && !dict.ContainsKey(x.Hero.Name)))
+            //        {
+            //            this.GetValue<HeroToggler>()
+            //                .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+            //        }
+            //        this.SetValue(new HeroToggler(this.GetValue<HeroToggler>().Dictionary, false, true));
+            //    }
+            //}
             //Font font;
             //switch (this.FontStyle)
             //{
@@ -2388,7 +2612,7 @@ namespace Ensage.Common.Menu
                 case MenuValueType.HeroToggler:
 
                     width = 0f;
-                    basePosition = this.Position + new Vector2(this.Width - this.Height, 0);
+                    basePosition = this.Position + new Vector2(this.Width - this.Height - 16, 0);
                     size = new Vector2(this.Height + 10, this.Height - 6);
                     dictionary = this.GetValue<HeroToggler>().Dictionary;
                     positionDictionary = this.GetValue<HeroToggler>().PositionDictionary;
@@ -2931,7 +3155,11 @@ namespace Ensage.Common.Menu
                         this.GetValue<HeroToggler>().Dictionary[v.Key] = !dictionary[v.Key];
                         break;
                     }
-                    this.SetValue(new HeroToggler(dictionary));
+                    this.SetValue(
+                        new HeroToggler(
+                            dictionary,
+                            this.GetValue<HeroToggler>().UseEnemyHeroes,
+                            this.GetValue<HeroToggler>().UseAllyHeroes));
                     break;
             }
         }

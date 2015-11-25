@@ -20,6 +20,7 @@ namespace Ensage.Common.Extensions
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
 
     using Ensage.Heroes;
 
@@ -933,11 +934,20 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static double GetTurnTime(this Entity unit, Vector3 position)
         {
-            var turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
-            return
-                (Math.Max(
-                    Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69,
-                    0) / (turnRate * (1 / 0.03)));
+            try
+            {
+                var turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
+                return
+                    (Math.Max(
+                        Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69,
+                        0) / (turnRate * (1 / 0.03)));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(
+                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                return 0;
+            }
         }
 
         /// <summary>

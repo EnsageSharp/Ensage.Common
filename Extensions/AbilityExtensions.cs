@@ -607,6 +607,12 @@ namespace Ensage.Common.Extensions
                     RadiusDictionary.Add(ability.Name + " " + ability.Level, radius);
                     return radius;
                 }
+                else if (data.IsBuff)
+                {
+                    radius = (ability.Owner as Hero).GetAttackRange();
+                    RadiusDictionary.Add(ability.Name + " " + ability.Level, radius);
+                    return radius;
+                }
             }
             return radius;
         }
