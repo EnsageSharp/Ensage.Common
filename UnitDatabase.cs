@@ -40,6 +40,12 @@ namespace Ensage.Common
         /// </summary>
         public static List<AttackAnimationData> Units;
 
+        private static readonly Dictionary<uint, double> AttackPointDictionary = new Dictionary<uint, double>();
+
+        private static readonly Dictionary<uint, double> AttackRateDictionary = new Dictionary<uint, double>();
+
+        private static Dictionary<uint, double> projSpeedDictionary = new Dictionary<uint, double>();
+
         #endregion
 
         #region Constructors and Destructors
@@ -94,8 +100,13 @@ namespace Ensage.Common
             try
             {
                 var name = unit.Name;
-                var attackAnimationPoint =
-                    Game.FindKeyValues(name + "/AttackAnimationPoint", KeyValueSource.Hero).FloatValue;
+                double attackAnimationPoint;
+                if (!AttackPointDictionary.TryGetValue(unit.Handle, out attackAnimationPoint))
+                {
+                    attackAnimationPoint =
+                        Game.FindKeyValues(name + "/AttackAnimationPoint", KeyValueSource.Hero).FloatValue;
+                    AttackPointDictionary.Add(unit.Handle, attackAnimationPoint);
+                }
                 var attackSpeed = GetAttackSpeed(unit);
                 return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
             }
@@ -121,7 +132,12 @@ namespace Ensage.Common
             try
             {
                 var attackSpeed = GetAttackSpeed(unit);
-                var attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
+                double attackBaseTime;
+                if (!AttackRateDictionary.TryGetValue(unit.Handle, out attackBaseTime))
+                {
+                    attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
+                    AttackRateDictionary.Add(unit.Handle, attackBaseTime);
+                }
                 Ability spell = null;
                 if (
                     !unit.Modifiers.Any(
@@ -183,11 +199,13 @@ namespace Ensage.Common
             //Console.WriteLine(unit.AttacksPerSecond * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01);
             try
             {
-                var attackSpeed =
-                    Math.Min(
-                        unit.AttacksPerSecond
-                        * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01,
-                        600);
+                double attackBaseTime;
+                if (!AttackRateDictionary.TryGetValue(unit.Handle, out attackBaseTime))
+                {
+                    attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
+                    AttackRateDictionary.Add(unit.Handle, attackBaseTime);
+                }
+                var attackSpeed = Math.Min(unit.AttacksPerSecond * attackBaseTime / 0.01, 600);
 
                 if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
                 {
@@ -246,7 +264,12 @@ namespace Ensage.Common
             var name = unit.Name;
             try
             {
-                return Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Hero).FloatValue;
+                double projSpeed;
+                if (!projSpeedDictionary.TryGetValue(unit.Handle, out projSpeed))
+                {
+                    projSpeed = Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Hero).FloatValue;
+                }
+                return projSpeed;
             }
             catch (Exception)
             {

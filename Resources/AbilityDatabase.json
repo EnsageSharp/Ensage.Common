@@ -123,10 +123,10 @@
         {
             "AbilityName": "batrider_flamebreak",
             "IsDisable": true,
-            "IsNuke": true,
             "IsSkillShot": true,
             "AdditionalDelay": 0.3,
-            "DamageString": "damage"
+            "Speed": "speed",
+            "DamageString": "damage_total_tooltip"
         },
         {
             "AbilityName": "mirana_arrow",

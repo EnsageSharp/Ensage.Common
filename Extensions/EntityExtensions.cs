@@ -126,6 +126,8 @@ namespace Ensage.Common.Extensions
 
         private static readonly List<ExternalDmgReductions> ExternalDmgReductions = new List<ExternalDmgReductions>();
 
+        private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
+
         #endregion
 
         #region Constructors and Destructors
@@ -936,7 +938,17 @@ namespace Ensage.Common.Extensions
         {
             try
             {
-                var turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
+                double turnRate;
+                if (TurnrateDictionary.TryGetValue(unit.Handle, out turnRate))
+                {
+                    return
+                        (Math.Max(
+                            Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position)))
+                            - 0.69,
+                            0) / (turnRate * (1 / 0.03)));
+                }
+                turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
+                TurnrateDictionary.Add(unit.Handle, turnRate);
                 return
                     (Math.Max(
                         Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69,
@@ -1019,9 +1031,8 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool IsChanneling(this Unit unit)
         {
-            var channelingItem = unit.Inventory.Items.ToList().Any(v => v.IsChanneling);
-            var channelingAbility = unit.Spellbook.Spells.ToList().Any(v => v.IsChanneling);
-            return channelingAbility || channelingItem;
+            return unit.Inventory.Items.ToList().Any(v => v.IsChanneling)
+                   || unit.Spellbook.Spells.ToList().Any(v => v.IsChanneling);
         }
 
         /// <summary>

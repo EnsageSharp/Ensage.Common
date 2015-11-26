@@ -1795,7 +1795,7 @@ namespace Ensage.Common.Menu
             for (var i = this.Items.Count - 1; i >= 0; i--)
             {
                 var item = this.Items[i];
-                if (!Utils.SleepCheck("SetHeroTogglers" + item.Name))
+                if (!Utils.SleepCheck("SetHeroTogglers" + this.Name + item.Name))
                 {
                     continue;
                 }
@@ -1837,7 +1837,7 @@ namespace Ensage.Common.Menu
                     }
                     item.SetValue(new HeroToggler(item.GetValue<HeroToggler>().Dictionary, false, true));
                 }
-                Utils.Sleep(20000, "SetHeroTogglers" + item.Name);
+                Utils.Sleep(20000, "SetHeroTogglers" + this.Name + item.Name);
             }
         }
 

@@ -122,7 +122,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanHit(this Ability ability, Hero target)
         {
-            return CanHit(ability, target, target.Position);
+            return CanHit(ability, target, ability.Owner.Position);
         }
 
         /// <summary>
@@ -395,7 +395,14 @@ namespace Ensage.Common.Extensions
             }
             else
             {
-                delay = 0.08;
+                if (ability is Item)
+                {
+                    delay = 0;
+                }
+                else
+                {
+                    delay = 0.05;
+                }
             }
             if (usePing)
             {
@@ -585,7 +592,7 @@ namespace Ensage.Common.Extensions
                 }
                 if (data == null)
                 {
-                    radius = float.MaxValue;
+                    radius = 0;
                     RadiusDictionary.Add(ability.Name + " " + ability.Level, radius);
                     return radius;
                 }
