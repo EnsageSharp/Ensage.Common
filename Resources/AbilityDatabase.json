@@ -1227,7 +1227,8 @@
         {
             "AbilityName": "skywrath_mage_arcane_bolt",
             "IsNuke": true,
-            "DamageString": "bolt_damage"
+            "DamageString": "bolt_damage",
+            "IsHarras": true
         },
         {
             "AbilityName": "invoker_chaos_meteor",

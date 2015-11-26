@@ -184,7 +184,6 @@ namespace Ensage.Common.Extensions
             var position = sourcePosition;
             var xyz = ability.GetPrediction(target);
             var radius = ability.GetRadius();
-            var delay = ability.GetCastDelay(owner as Hero, target, true);
             var speed = ability.GetProjectileSpeed();
             if (!(position.Distance2D(xyz) <= (ability.GetCastRange() + radius)))
             {
@@ -198,6 +197,14 @@ namespace Ensage.Common.Extensions
             if (ability.Name.Substring(0, Math.Min("nevermore_shadowraze".Length, ability.Name.Length))
                 == "nevermore_shadowraze")
             {
+                var delay = ability.GetCastDelay(owner as Hero, target, true);
+                AbilityInfo data;
+                if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
+                {
+                    data = AbilityDatabase.Find(ability.Name);
+                    AbilityDamage.DataDictionary.Add(ability, data);
+                }
+                delay += data.AdditionalDelay;
                 xyz = Prediction.SkillShotXYZ(
                     owner,
                     target,
@@ -379,13 +386,6 @@ namespace Ensage.Common.Extensions
                 if (!DelayDictionary.TryGetValue(ability.Name + " " + ability.Level, out delay))
                 {
                     delay = Math.Max(ability.FindCastPoint(), 0.05);
-                    AbilityInfo data;
-                    if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-                    {
-                        data = AbilityDatabase.Find(ability.Name);
-                        AbilityDamage.DataDictionary.Add(ability, data);
-                    }
-                    delay += data.AdditionalDelay;
                     DelayDictionary.Add(ability.Name + " " + ability.Level, delay);
                 }
                 if ((ability.Name == "item_diffusal_blade" || ability.Name == "item_diffusal_blade_2"))
@@ -496,6 +496,10 @@ namespace Ensage.Common.Extensions
             }
             var owner = ability.Owner as Unit;
             var delay = ability.GetCastDelay(owner as Hero, target, true);
+            if (data != null)
+            {
+                delay += data.AdditionalDelay;
+            }
             var speed = ability.GetProjectileSpeed();
             var radius = ability.GetRadius();
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget) && speed < 6000 && speed > 0)
@@ -523,6 +527,10 @@ namespace Ensage.Common.Extensions
             }
             var owner = ability.Owner as Unit;
             var delay = ability.GetCastDelay(owner as Hero, target, true);
+            if (data != null)
+            {
+                delay += data.AdditionalDelay;
+            }
             var speed = ability.GetProjectileSpeed();
             var radius = ability.GetRadius();
             var xyz = Prediction.SkillShotXYZ(
