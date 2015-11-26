@@ -1472,7 +1472,7 @@ namespace Ensage.Common.Menu
                 (this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible)
                     ? MenuSettings.ActiveBackgroundColor.ToSharpDxColor()
                     : MenuSettings.BackgroundColor.ToSharpDxColor(),
-                SharpDX.Color.Black);
+                new SharpDX.Color(35,30,25,255));
 
             //MenuDrawHelper.Font.DrawText(
             //    null,
@@ -1585,8 +1585,8 @@ namespace Ensage.Common.Menu
                         this.Position.Y,
                         this.Width,
                         this.Height)
-                           ? new SharpDX.Color(0, 0, 0, 10)
-                           : new SharpDX.Color(0, 0, 0, 90)));
+                           ? new SharpDX.Color(0, 0, 0, 8)
+                           : new SharpDX.Color(0, 0, 0, 120)));
             //Draw the menu submenus
             foreach (var child in this.Children.Where(child => child.Visible))
             {
