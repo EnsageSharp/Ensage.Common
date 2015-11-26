@@ -962,6 +962,8 @@ namespace Ensage.Common.Menu
         /// </summary>
         public FontStyle Style;
 
+        private static StringList newMessageType;
+
         /// <summary>
         /// </summary>
         public string TextureName;
@@ -984,7 +986,11 @@ namespace Ensage.Common.Menu
             ItemDictionary = new Dictionary<string, MenuItem>();
             Root.AddItem(new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
             Root.AddItem(new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
-
+            Root.AddItem(new MenuItem("showMessage", "Show OnLoad message: ").SetValue(true));
+            var message =
+                Root.AddItem(
+                    new MenuItem("messageType", "Show the message in: ").SetValue(
+                        new StringList(new[] { "SideLog", "Chat", "Console" })));
             Root.AddItem(
                 new MenuItem("EnsageSharp.Common.TooltipDuration", "Tooltip Notification Duration").SetValue(
                     new Slider(1500, 0, 5000)));
@@ -992,7 +998,39 @@ namespace Ensage.Common.Menu
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(
                     FontStyle.Bold,
                     SharpDX.Color.Yellow));
+            Events.OnLoad += Events_OnLoad;
             CommonMenu.MenuConfig.AddSubMenu(Root);
+            message.ValueChanged += MessageValueChanged;
+            newMessageType = Root.Item("messageType").GetValue<StringList>();
+        }
+
+        static void MessageValueChanged(object sender, OnValueChangeEventArgs e)
+        {
+            newMessageType = e.GetNewValue<StringList>();
+            Events_OnLoad(null, null);
+        }
+
+        static void Events_OnLoad(object sender, EventArgs e)
+        {
+            var console = newMessageType.SelectedIndex == 2;
+            if (Root.Item("showMessage").GetValue<bool>() && !console)
+            {
+                Game.PrintMessage(
+                    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
+                    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
+                    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>",
+                    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
+                        ? MessageType.LogMessage
+                        : MessageType.ChatMessage);
+            }
+            else if (console && Root.Item("showMessage").GetValue<bool>())
+            {
+                Console.WriteLine(
+                    @"[Menu Hotkeys] Press: " + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                    + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key));
+            }
+
         }
 
         /// <summary>
