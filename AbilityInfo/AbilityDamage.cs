@@ -474,13 +474,13 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
             }
-            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus
+            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && !(ability is Item)
                 && (source.Distance2D(target) <= 1200 || ability.Name != "zuus_thundergods_wrath"))
             {
                 var staticField = source.Spellbook.Spell3;
                 if (staticField.Level > 0)
                 {
-                    var bonusDmg = (staticField.GetAbilityData("damage_health_pct") / 100) * target.Health;
+                    var bonusDmg = ((float)staticField.GetAbilityData("damage_health_pct") / 100) * (target.Health - minusHealth);
                     outgoingDamage += target.DamageTaken(
                         bonusDmg,
                         DamageType.Magical,
@@ -550,6 +550,10 @@ namespace Ensage.Common.AbilityInfo
             else if (ability.Name == "tusk_walrus_punch")
             {
                 type = DamageType.Physical;
+            }
+            else if (ability.Name == "item_shivas_guard")
+            {
+                type = DamageType.Magical;
             }
             //Console.WriteLine(ability.Name.Substring(0, "item_dagon".Length));
             return type;

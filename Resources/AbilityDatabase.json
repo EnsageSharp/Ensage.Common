@@ -1345,7 +1345,9 @@
         {
             "AbilityName": "item_shivas_guard",
             "IsSlow": true,
-            "Radius": 1000
+            "IsNuke": true,
+            "Radius": 900,
+            "DamageString": "blast_damage"
         },
         {
             "AbilityName": "item_abyssal_blade",
