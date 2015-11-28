@@ -1681,13 +1681,13 @@ namespace Ensage.Common.Menu
                 item.OnReceiveMessage(message, cursorPos, key, args);
                 //Console.WriteLine(args != null && item.IsInside(cursorPos));
             }
-            if (!this.Visible)
-            {
-                return;
-            }
             foreach (var child in this.Children)
             {
                 child.OnReceiveMessage(message, cursorPos, key);
+            }
+            if (!this.Visible)
+            {
+                return;
             }
             //Handle the left clicks on the menus to hide or show the submenus.
             if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
@@ -1713,11 +1713,6 @@ namespace Ensage.Common.Menu
                         }
                     }
                 }
-            }
-
-            if (!this.Visible)
-            {
-                return;
             }
 
             if (!this.IsInside(cursorPos))
