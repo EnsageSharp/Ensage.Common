@@ -737,6 +737,7 @@
             "IsDisable": true,
             "IsNuke": true,
             "IsSkillShot": true,
+            "Width": "radius_start",
             "StringRadius": "travel_distance",
             "Speed": "travel_speed",
             "DamageString": "damage",

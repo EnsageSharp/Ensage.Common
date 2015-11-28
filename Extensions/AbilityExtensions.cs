@@ -182,6 +182,18 @@ namespace Ensage.Common.Extensions
         {
             var owner = ability.Owner as Unit;
             var position = sourcePosition;
+            var delay = ability.GetHitDelay(target);
+            //AbilityInfo data;
+            //if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
+            //{
+            //    data = AbilityDatabase.Find(ability.Name);
+            //    AbilityDamage.DataDictionary.Add(ability, data);
+            //}
+            //delay += data.AdditionalDelay;
+            if (target.IsInvul() && !Utils.ChainStun(target, delay, null, false))
+            {
+                return false;
+            }
             var xyz = ability.GetPrediction(target);
             var radius = ability.GetRadius();
             var speed = ability.GetProjectileSpeed();
@@ -197,14 +209,6 @@ namespace Ensage.Common.Extensions
             if (ability.Name.Substring(0, Math.Min("nevermore_shadowraze".Length, ability.Name.Length))
                 == "nevermore_shadowraze")
             {
-                var delay = ability.GetCastDelay(owner as Hero, target, true);
-                AbilityInfo data;
-                if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-                {
-                    data = AbilityDatabase.Find(ability.Name);
-                    AbilityDamage.DataDictionary.Add(ability, data);
-                }
-                delay += data.AdditionalDelay;
                 xyz = Prediction.SkillShotXYZ(
                     owner,
                     target,
