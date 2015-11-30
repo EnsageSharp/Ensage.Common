@@ -344,7 +344,7 @@ namespace Ensage.Common
                 return;
             }
             var heroes = playerList.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero);
-            DrawPredictions();
+            //DrawPredictions();
             var tick = Environment.TickCount;
             var tempTable = TrackTable;
             foreach (var unit in heroes)
