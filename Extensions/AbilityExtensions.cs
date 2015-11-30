@@ -139,7 +139,7 @@ namespace Ensage.Common.Extensions
                 || ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
                 var pred = ability.GetPrediction(target);
-                if (position.Distance2D(pred) <= (ability.GetCastRange() + ability.GetRadius()))
+                if (position.Distance2D(pred) <= (ability.GetCastRange()))
                 {
                     return true;
                 }
@@ -180,6 +180,10 @@ namespace Ensage.Common.Extensions
         /// <returns>returns true in case of successfull cast</returns>
         public static bool CastSkillShot(this Ability ability, Unit target, Vector3 sourcePosition)
         {
+            if (!Utils.SleepCheck("CastSkillshot" + ability.Handle))
+            {
+                return false;
+            }
             var owner = ability.Owner as Unit;
             var position = sourcePosition;
             var delay = ability.GetHitDelay(target);
@@ -197,13 +201,14 @@ namespace Ensage.Common.Extensions
             var xyz = ability.GetPrediction(target);
             var radius = ability.GetRadius();
             var speed = ability.GetProjectileSpeed();
-            if (!(position.Distance2D(xyz) <= (ability.GetCastRange() + radius)))
+            var distanceXyz = xyz.Distance2D(position);
+            if (!(distanceXyz <= (ability.GetCastRange() + radius)))
             {
                 return false;
             }
-            if (position.Distance2D(xyz) > ability.GetCastRange())
+            if (distanceXyz > ability.GetCastRange())
             {
-                xyz = (position - xyz) * ability.GetCastRange() / position.Distance2D(xyz) + xyz;
+                xyz = (position - xyz) * ability.GetCastRange() / distanceXyz + xyz;
             }
             // Console.WriteLine(ability.GetCastRange() + " " + radius);
             if (ability.Name.Substring(0, Math.Min("nevermore_shadowraze".Length, ability.Name.Length))
@@ -215,12 +220,39 @@ namespace Ensage.Common.Extensions
                     (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000),
                     speed,
                     radius);
-                if (position.Distance2D(xyz) < (ability.GetCastRange() + radius / 2)
-                    && position.Distance2D(xyz) > (ability.GetCastRange() - radius / 2))
+                if (distanceXyz < (ability.GetCastRange() + radius)
+                    && distanceXyz > (ability.GetCastRange() - radius))
                 {
-                    owner.Move((position - xyz) * 10 / position.Distance2D(xyz) + xyz);
-                    owner.Stop();
-                    ability.UseAbility();
+                    if (owner.GetTurnTime(xyz) > 0.01)
+                    {
+                        owner.Move((position - xyz) * 50 / position.Distance2D(xyz) + xyz);
+                    }
+                    else
+                    {
+                        ability.UseAbility();
+                    }
+                    return true;
+                }
+                return false;
+            }
+            if (ability.Name == "invoker_ice_wall" && distanceXyz-50 > 200 && distanceXyz-50 < 610)
+            {
+                var mepred = (position - target.Position) * 50 / position.Distance2D(target) + target.Position;
+                var v1 = xyz.X - mepred.X;
+                var v2 = xyz.Y - mepred.Y;
+                var a = Math.Acos(175 / xyz.Distance(mepred));
+                var x1 = v1 * Math.Cos(a) - v2 * Math.Sin(a);
+                var y1 = v2 * Math.Cos(a) + v1 * Math.Sin(a);
+                var b = Math.Sqrt((x1 * x1) + (y1 * y1));
+                var k1 = x1 * 50 / b;
+                var k2 = y1 * 50 / b;
+                var vec1 = new Vector3((float)(k1 + mepred.X), (float)(k2 + mepred.Y), mepred.Z);
+                if (vec1.Distance2D(mepred) > 0)
+                {
+                    owner.Move(mepred);
+                    owner.Move(vec1,true);
+                    ability.UseAbility(true);
+
                     return true;
                 }
                 return false;
@@ -302,11 +334,14 @@ namespace Ensage.Common.Extensions
             }
             else if (ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
-                if (target.Distance2D(position) > radius)
+                if (ability.Name == "invoker_ice_wall")
                 {
-                    return false;
+                    ability.CastSkillShot(target);
                 }
-                ability.UseAbility();
+                else
+                {
+                    ability.UseAbility();
+                }
             }
             if (useSleep)
             {
@@ -428,7 +463,8 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static float GetCastRange(this Ability ability)
         {
-            if (ability.Name == "templar_assassin_meld")
+            var name = ability.Name;
+            if (name == "templar_assassin_meld")
             {
                 return (ability.Owner as Hero).GetAttackRange() + 50;
             }
@@ -440,12 +476,12 @@ namespace Ensage.Common.Extensions
                 {
                     castRange = 999999;
                 }
-                if (ability.Name == "dragon_knight_dragon_tail"
+                if (name == "dragon_knight_dragon_tail"
                     && (ability.Owner as Hero).Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
                 {
                     bonusRange = 250;
                 }
-                else if (ability.Name == "beastmaster_primal_roar" && (ability.Owner as Hero).AghanimState())
+                else if (name == "beastmaster_primal_roar" && (ability.Owner as Hero).AghanimState())
                 {
                     bonusRange = 350;
                 }
@@ -455,7 +491,7 @@ namespace Ensage.Common.Extensions
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
             {
-                data = AbilityDatabase.Find(ability.Name);
+                data = AbilityDatabase.Find(name);
                 AbilityDamage.DataDictionary.Add(ability, data);
             }
             if (data == null)

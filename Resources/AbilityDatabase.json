@@ -1388,7 +1388,7 @@
         {
             "AbilityName": "item_dust",
             "TrueSight": true,
-            "Radius": 1050
+            "Radius": 1000
         },
         {
             "AbilityName": "item_mask_of_madness",
