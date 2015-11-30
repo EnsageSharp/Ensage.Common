@@ -225,9 +225,9 @@ namespace Ensage.Common
         /// <returns></returns>
         public static bool IsIdle(Unit unit)
         {
-            return unit.Modifiers.Any(x => x.Name == "modifier_eul_cyclone" || x.Name == "modifier_invoker_tornado")
-                   || (unit.NetworkActivity == NetworkActivity.Idle && !AbilityMove(unit))
-                   || unit.Modifiers.Any(x => x.Name == "modifier_invoker_deafening_blast_knockback")
+            //var modifiers = unit.Modifiers;
+            return unit.IsInvul() || unit.IsStunned()
+                   || (unit.NetworkActivity == NetworkActivity.Idle && SpeedDictionary[unit.Handle] == Vector3.Zero)
                    || unit.IsAttacking();
         }
 

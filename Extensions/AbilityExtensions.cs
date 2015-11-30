@@ -297,18 +297,11 @@ namespace Ensage.Common.Extensions
             bool chainStun = true,
             bool useSleep = true)
         {
-            var owner = ability.Owner as Unit;
-            var position = owner.Position;
-            if (sourcePosition != Vector3.Zero)
-            {
-                position = sourcePosition;
-            }
             if (!ability.CanBeCasted())
             {
                 return false;
             }
             var delay = ability.GetHitDelay(target);
-            var radius = ability.GetRadius();
             var canUse = Utils.ChainStun(target, delay, null, false, ability.Name);
             if (!canUse && chainStun)
             {
@@ -403,6 +396,8 @@ namespace Ensage.Common.Extensions
             return data.Count > 1 ? data.GetValue(lvl - 1) : data.Value;
         }
 
+        private static Dictionary<string,float> ChannelDictionary = new Dictionary<string, float>(); 
+
         /// <summary>
         ///     Returns delay before ability is casted
         /// </summary>
@@ -419,15 +414,16 @@ namespace Ensage.Common.Extensions
             bool usePing = false,
             bool useCastPoint = true)
         {
+            var name = ability.Name;
             double delay;
             if (useCastPoint)
             {
-                if (!DelayDictionary.TryGetValue(ability.Name + " " + ability.Level, out delay))
+                if (!DelayDictionary.TryGetValue(name + " " + ability.Level, out delay))
                 {
                     delay = Math.Max(ability.FindCastPoint(), 0.05);
-                    DelayDictionary.Add(ability.Name + " " + ability.Level, delay);
+                    DelayDictionary.Add(name + " " + ability.Level, delay);
                 }
-                if ((ability.Name == "item_diffusal_blade" || ability.Name == "item_diffusal_blade_2"))
+                if ((name == "item_diffusal_blade" || name == "item_diffusal_blade_2"))
                 {
                     delay += 2;
                 }
@@ -447,8 +443,14 @@ namespace Ensage.Common.Extensions
             {
                 delay += Game.Ping / 1000;
             }
-            //Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + ability.Name);
-            delay += ability.GetChannelTime(ability.Level - 1);
+            float channel;
+            if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
+            {
+                channel = ability.GetChannelTime(ability.Level - 1);
+                ChannelDictionary.Add(name + ability.Level, channel);
+            }
+            //Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
+            delay += channel;
             if (!ability.AbilityBehavior.HasFlag(AbilityBehavior.NoTarget))
             {
                 return delay + (useCastPoint ? source.GetTurnTime(target) : source.GetTurnTime(target) / 2);
@@ -517,7 +519,7 @@ namespace Ensage.Common.Extensions
             {
                 radius = ability.GetAbilityData(data.RealCastRange);
             }
-            return radius + 50;
+            return radius;
         }
 
         /// <summary>
