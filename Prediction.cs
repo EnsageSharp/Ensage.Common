@@ -89,8 +89,8 @@ namespace Ensage.Common
 
         static Prediction()
         {
-            Game.OnUpdate += SpeedTrack;
             Events.OnLoad += Events_OnLoad;
+            Events.OnClose += Events_OnClose;
         }
 
         /// <summary>
@@ -276,6 +276,8 @@ namespace Ensage.Common
         public static Vector3 SkillShotXYZ(Unit source, Unit target, float delay, float speed, float radius)
         {
             // Console.WriteLine(IsIdle(target) + " and " + (data == null) + " and " + (data.Speed));
+
+            return target.Position;
             if (IsIdle(target))
             {
                 return target.Position;
@@ -336,7 +338,7 @@ namespace Ensage.Common
             var heroes = playerList.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero);
             //DrawPredictions();
             var tick = Environment.TickCount;
-            var tempTable = TrackTable;
+            var tempTable = new List<Prediction>(TrackTable);
             foreach (var unit in heroes)
             {
                 var data =
@@ -345,7 +347,7 @@ namespace Ensage.Common
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
                     data = new Prediction(unit.Name, unit.ClassID, new Vector3(0, 0, 0), 0, new Vector3(0, 0, 0), 0, 0);
-                    tempTable.Add(data);
+                    TrackTable.Add(data);
                 }
                 if (data != null && (!unit.IsAlive || !unit.IsVisible))
                 {
@@ -437,7 +439,7 @@ namespace Ensage.Common
                     }
                 }
             }
-            TrackTable = tempTable;
+            //TrackTable = tempTable;
         }
 
         /// <summary>
@@ -462,6 +464,17 @@ namespace Ensage.Common
 
         #region Methods
 
+        private static void Events_OnClose(object sender, EventArgs e)
+        {
+            Game.OnUpdate -= SpeedTrack;
+            playerList = new List<Player>();
+            RotSpeedDictionary = new Dictionary<float, double>();
+            RotTimeDictionary = new Dictionary<float, float>();
+            SpeedDictionary = new Dictionary<float, Vector3>();
+            TrackTable = new List<Prediction>();
+            predictionDrawings = new Dictionary<float, ParticleEffect>();
+        }
+
         private static void Events_OnLoad(object sender, EventArgs e)
         {
             playerList = new List<Player>();
@@ -470,6 +483,7 @@ namespace Ensage.Common
             SpeedDictionary = new Dictionary<float, Vector3>();
             TrackTable = new List<Prediction>();
             predictionDrawings = new Dictionary<float, ParticleEffect>();
+            Game.OnUpdate += SpeedTrack;
         }
 
         #endregion

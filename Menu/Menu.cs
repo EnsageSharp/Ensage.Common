@@ -2663,11 +2663,12 @@ namespace Ensage.Common.Menu
                     var width = 0f;
                     var basePosition = this.Position + new Vector2(this.Width - this.Height, 0);
                     var size = new Vector2(this.Height - 6, this.Height - 6);
-                    var dictionary = this.GetValue<AbilityToggler>().Dictionary;
-                    var positionDictionary = this.GetValue<AbilityToggler>().PositionDictionary;
-                    var textureDictionary = Menu.TextureDictionary;
+                    var dictionary = new Dictionary<string, bool>(this.GetValue<AbilityToggler>().Dictionary);
+                    var positionDictionary =
+                        new Dictionary<string, float[]>(this.GetValue<AbilityToggler>().PositionDictionary);
+                    var textureDictionary = new Dictionary<string, DotaTexture>(Menu.TextureDictionary);
                     //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
-                    foreach (var v in dictionary)
+                    foreach (var v in new Dictionary<string, bool>(dictionary))
                     {
                         positionDictionary[v.Key][0] = basePosition.X - width;
                         positionDictionary[v.Key][1] = basePosition.Y;
@@ -2714,9 +2715,10 @@ namespace Ensage.Common.Menu
                     width = 0f;
                     basePosition = this.Position + new Vector2(this.Width - this.Height - 16, 0);
                     size = new Vector2(this.Height + 10, this.Height - 6);
-                    dictionary = this.GetValue<HeroToggler>().Dictionary;
-                    positionDictionary = this.GetValue<HeroToggler>().PositionDictionary;
-                    textureDictionary = Menu.TextureDictionary;
+                    dictionary = new Dictionary<string, bool>(this.GetValue<HeroToggler>().Dictionary);
+                    positionDictionary = new Dictionary<string, float[]>(
+                        this.GetValue<HeroToggler>().PositionDictionary);
+                    textureDictionary = new Dictionary<string, DotaTexture>(Menu.TextureDictionary);
                     //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
                     foreach (var v in dictionary)
                     {
