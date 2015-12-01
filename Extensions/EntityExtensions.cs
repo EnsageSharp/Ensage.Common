@@ -313,7 +313,7 @@ namespace Ensage.Common.Extensions
         public static bool CanMove(this Unit unit)
         {
             return !IsRooted(unit) && !IsStunned(unit)
-                   && unit.Modifiers.Any(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
+                   && unit.Modifiers.All(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
         }
 
         /// <summary>
@@ -381,7 +381,6 @@ namespace Ensage.Common.Extensions
             {
                 return 0;
             }
-            ;
 
             //Console.WriteLine(minusMagicResistancePerc/100);
 
@@ -395,22 +394,19 @@ namespace Ensage.Common.Extensions
             var ManaShield = 0d;
             var MagOnly = 0d;
             var AA = 0d;
-            var modifiers = target.Modifiers;
+            var modifiers = target.Modifiers.ToList();
 
-            var enumerable1 = modifiers as Modifier[] ?? modifiers.ToArray();
-            var enumerable = modifiers as Modifier[] ?? enumerable1.ToArray();
-
-            if (enumerable.Any(x => x.Name == "modifier_winter_wyvern_cold_embrace") && dmgType == DamageType.Physical)
+            if (modifiers.Any(x => x.Name == "modifier_winter_wyvern_cold_embrace") && dmgType == DamageType.Physical)
             {
                 return 0;
             }
 
-            if (enumerable.Any(x => x.Name == "modifier_abaddon_borrowed_time"))
+            if (modifiers.Any(x => x.Name == "modifier_abaddon_borrowed_time"))
             {
                 return 0;
             }
 
-            foreach (var v in ExternalDmgAmps.Where(v => enumerable1.Any(x => x.Name == v.ModifierName)))
+            foreach (var v in ExternalDmgAmps.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName)
                               ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
@@ -441,7 +437,7 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            foreach (var v in ExternalDmgReductions.Where(v => enumerable1.Any(x => x.Name == v.ModifierName)))
+            foreach (var v in ExternalDmgReductions.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName)
                               ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
@@ -518,7 +514,7 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (enumerable.Any(x => x.Name == "modifier_bristleback_bristleback"))
+            if (modifiers.Any(x => x.Name == "modifier_bristleback_bristleback"))
             {
                 var spell = target.FindSpell("bristleback_bristleback");
                 if (spell != null)
@@ -537,7 +533,7 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (enumerable.Any(x => x.Name == "modifier_centaur_stampede"))
+            if (modifiers.Any(x => x.Name == "modifier_centaur_stampede"))
             {
                 var heroes =
                     ObjectMgr.GetEntities<Hero>()
@@ -549,7 +545,7 @@ namespace Ensage.Common.Extensions
                 reduceProc = heroes.Aggregate(reduceProc, (current, hero) => (current + 0.7));
             }
 
-            if (enumerable.Any(x => x.Name == "modifier_medusa_mana_shield"))
+            if (modifiers.Any(x => x.Name == "modifier_medusa_mana_shield"))
             {
                 var spell = target.FindSpell("medusa_mana_shield");
                 if (spell != null)
@@ -572,7 +568,7 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (enumerable.Any(x => x.Name == "modifier_undying_flesh_golem_plague_aura"))
+            if (modifiers.Any(x => x.Name == "modifier_undying_flesh_golem_plague_aura"))
             {
                 var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "undying_flesh_golem");
                 if (spell != null)
@@ -599,11 +595,11 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (enumerable.Any(x => x.Name == "modifier_abaddon_borrowed_time_damage_redirect"))
+            if (modifiers.Any(x => x.Name == "modifier_abaddon_borrowed_time_damage_redirect"))
             {
                 reduceOther += 0.35;
             }
-            else if (enumerable.Any(x => x.Name == "modifier_kunkka_ghost_ship_damage_absorb"))
+            else if (modifiers.Any(x => x.Name == "modifier_kunkka_ghost_ship_damage_absorb"))
             {
                 reduceOther += 0.5;
             }
@@ -630,7 +626,7 @@ namespace Ensage.Common.Extensions
                 ampFromME -= 0.4;
             }
 
-            if (enumerable.Any(x => x.Name == "modifier_ice_blast"))
+            if (modifiers.Any(x => x.Name == "modifier_ice_blast"))
             {
                 var spell =
                     ObjectMgr.GetEntities<Ability>()
@@ -1082,10 +1078,10 @@ namespace Ensage.Common.Extensions
         public static bool IsInvul(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Invulnerable);
-                   //|| unit.Modifiers.Any(
-                   //    x =>
-                   //    x.Name == "modifier_invoker_tornado" || x.Name == "modifier_eul_cyclone"
-                   //    || x.Name == "modifier_cyclone");
+            //|| unit.Modifiers.Any(
+            //    x =>
+            //    x.Name == "modifier_invoker_tornado" || x.Name == "modifier_eul_cyclone"
+            //    || x.Name == "modifier_cyclone");
         }
 
         /// <summary>

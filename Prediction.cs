@@ -20,7 +20,6 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.SessionState;
 
     using Ensage.Common.Extensions;
 
@@ -48,9 +47,9 @@ namespace Ensage.Common
         /// </summary>
         public static List<Prediction> TrackTable = new List<Prediction>();
 
-        private static Dictionary<float, ParticleEffect> predictionDrawings = new Dictionary<float, ParticleEffect>();
+        private static List<Player> playerList = new List<Player>();
 
-        private static List<Player> playerList = new List<Player>(); 
+        private static Dictionary<float, ParticleEffect> predictionDrawings = new Dictionary<float, ParticleEffect>();
 
         #endregion
 
@@ -92,16 +91,6 @@ namespace Ensage.Common
         {
             Game.OnUpdate += SpeedTrack;
             Events.OnLoad += Events_OnLoad;
-        }
-
-        static void Events_OnLoad(object sender, EventArgs e)
-        {
-            playerList = new List<Player>();
-            RotSpeedDictionary = new Dictionary<float, double>();
-            RotTimeDictionary = new Dictionary<float, float>();
-            SpeedDictionary = new Dictionary<float, Vector3>();
-            TrackTable = new List<Prediction>();
-            predictionDrawings = new Dictionary<float, ParticleEffect>();
         }
 
         /// <summary>
@@ -227,7 +216,8 @@ namespace Ensage.Common
         {
             //var modifiers = unit.Modifiers;
             return unit.IsInvul() || unit.IsStunned()
-                   || (unit.NetworkActivity == NetworkActivity.Idle && SpeedDictionary[unit.Handle] == Vector3.Zero)
+                   || (unit.NetworkActivity == NetworkActivity.Idle
+                       && (!SpeedDictionary.ContainsKey(unit.Handle) || SpeedDictionary[unit.Handle] == Vector3.Zero))
                    || unit.IsAttacking();
         }
 
@@ -315,7 +305,7 @@ namespace Ensage.Common
                                + (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed)) - radius)
                             / sourcePos.Distance2D(predict) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
-            }        
+            }
             return PredictedXYZ(target, delay + reachTime);
         }
 
@@ -466,6 +456,20 @@ namespace Ensage.Common
                 return 5000;
             }
             return Environment.TickCount - RotTimeDictionary[unit.Handle] + Game.Ping;
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void Events_OnLoad(object sender, EventArgs e)
+        {
+            playerList = new List<Player>();
+            RotSpeedDictionary = new Dictionary<float, double>();
+            RotTimeDictionary = new Dictionary<float, float>();
+            SpeedDictionary = new Dictionary<float, Vector3>();
+            TrackTable = new List<Prediction>();
+            predictionDrawings = new Dictionary<float, ParticleEffect>();
         }
 
         #endregion

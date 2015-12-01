@@ -480,7 +480,8 @@ namespace Ensage.Common.AbilityInfo
                 var staticField = source.Spellbook.Spell3;
                 if (staticField.Level > 0)
                 {
-                    var bonusDmg = ((float)staticField.GetAbilityData("damage_health_pct") / 100) * (target.Health - minusHealth);
+                    var bonusDmg = ((float)staticField.GetAbilityData("damage_health_pct") / 100)
+                                   * (target.Health - minusHealth);
                     outgoingDamage += target.DamageTaken(
                         bonusDmg,
                         DamageType.Magical,

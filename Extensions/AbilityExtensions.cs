@@ -50,6 +50,8 @@ namespace Ensage.Common.Extensions
 
         private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
 
+        private static Dictionary<string, float> ChannelDictionary = new Dictionary<string, float>();
+
         #endregion
 
         #region Public Methods and Operators
@@ -74,8 +76,8 @@ namespace Ensage.Common.Extensions
                     return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                 }
                 if (ability.Name != "invoker_invoke" && ability.Name != "invoker_quas" && ability.Name != "invoker_wex"
-                    && ability.Name != "invoker_exort" && (Ensage.AbilitySlot)ability.AbilitySlot != AbilitySlot.Slot_4
-                    && (Ensage.AbilitySlot)ability.AbilitySlot != AbilitySlot.Slot_5)
+                    && ability.Name != "invoker_exort" && (AbilitySlot)ability.AbilitySlot != AbilitySlot.Slot_4
+                    && (AbilitySlot)ability.AbilitySlot != AbilitySlot.Slot_5)
                 {
                     return false;
                 }
@@ -220,8 +222,7 @@ namespace Ensage.Common.Extensions
                     (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000),
                     speed,
                     radius);
-                if (distanceXyz < (ability.GetCastRange() + radius)
-                    && distanceXyz > (ability.GetCastRange() - radius))
+                if (distanceXyz < (ability.GetCastRange() + radius) && distanceXyz > (ability.GetCastRange() - radius))
                 {
                     if (owner.GetTurnTime(xyz) > 0.01)
                     {
@@ -235,7 +236,7 @@ namespace Ensage.Common.Extensions
                 }
                 return false;
             }
-            if (ability.Name == "invoker_ice_wall" && distanceXyz-50 > 200 && distanceXyz-50 < 610)
+            if (ability.Name == "invoker_ice_wall" && distanceXyz - 50 > 200 && distanceXyz - 50 < 610)
             {
                 var mepred = (position - target.Position) * 50 / position.Distance2D(target) + target.Position;
                 var v1 = xyz.X - mepred.X;
@@ -250,7 +251,7 @@ namespace Ensage.Common.Extensions
                 if (vec1.Distance2D(mepred) > 0)
                 {
                     owner.Move(mepred);
-                    owner.Move(vec1,true);
+                    owner.Move(vec1, true);
                     ability.UseAbility(true);
 
                     return true;
@@ -395,8 +396,6 @@ namespace Ensage.Common.Extensions
             }
             return data.Count > 1 ? data.GetValue(lvl - 1) : data.Value;
         }
-
-        private static Dictionary<string,float> ChannelDictionary = new Dictionary<string, float>(); 
 
         /// <summary>
         ///     Returns delay before ability is casted
