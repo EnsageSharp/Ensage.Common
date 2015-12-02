@@ -276,8 +276,6 @@ namespace Ensage.Common
         public static Vector3 SkillShotXYZ(Unit source, Unit target, float delay, float speed, float radius)
         {
             // Console.WriteLine(IsIdle(target) + " and " + (data == null) + " and " + (data.Speed));
-
-            return target.Position;
             if (IsIdle(target))
             {
                 return target.Position;

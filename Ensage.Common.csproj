@@ -93,7 +93,6 @@
     <Compile Include="Menu\NotificationData\INotification.cs" />
     <Compile Include="Menu\NotificationData\Notification.cs" />
     <Compile Include="Menu\Notifications.cs" />
-    <Compile Include="Menu\Render.cs" />
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />
     <Compile Include="AbilityInfo\AbilityDatabase.cs" />
@@ -116,7 +115,9 @@
     <Compile Include="WindowsMessages.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\UnitDatabase.json" />
     <None Include="Resources\AbilityDatabase.json" />
   </ItemGroup>
@@ -135,15 +136,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Resources\CPActiveSlider.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CPForm.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SliderDisabled.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

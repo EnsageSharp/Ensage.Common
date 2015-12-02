@@ -36,13 +36,10 @@ namespace Ensage.Common.Menu
     using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Menu.NotificationData;
-    using Ensage.Common.Properties;
 
     using SharpDX;
-    using SharpDX.Direct3D9;
 
     using Color = System.Drawing.Color;
-    using Font = SharpDX.Direct3D9.Font;
 
     internal class CommonMenu
     {
@@ -57,31 +54,6 @@ namespace Ensage.Common.Menu
         static CommonMenu()
         {
             MenuConfig.AddToMainMenu();
-        }
-
-        #endregion
-    }
-
-    [Serializable]
-    public struct Circle
-    {
-        #region Fields
-
-        public bool Active;
-
-        public Color Color;
-
-        public float Radius;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        public Circle(bool enabled, Color color, float radius = 100)
-        {
-            this.Active = enabled;
-            this.Color = color;
-            this.Radius = radius;
         }
 
         #endregion
@@ -634,39 +606,6 @@ namespace Ensage.Common.Menu
 
     internal static class MenuDrawHelper
     {
-        #region Static Fields
-
-        internal static Font Font, FontBold;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        static MenuDrawHelper()
-        {
-            Font = new Font(
-                Drawing.Direct3DDevice9,
-                new FontDescription
-                    {
-                        FaceName = "Arial", Height = 15, OutputPrecision = FontPrecision.Default,
-                        Quality = FontQuality.Antialiased
-                    });
-
-            FontBold = new Font(
-                Drawing.Direct3DDevice9,
-                new FontDescription
-                    {
-                        FaceName = "Arial", Height = 15, OutputPrecision = FontPrecision.Default, Weight = FontWeight.Bold,
-                        Quality = FontQuality.Antialiased
-                    });
-
-            //Drawing.OnPreReset += Drawing_OnPreReset;
-            //Drawing.OnPostReset += DrawingOnOnPostReset;
-            //AppDomain.CurrentDomain.DomainUnload += CurrentDomainOnDomainUnload;
-        }
-
-        #endregion
-
         #region Methods
 
         internal static void DrawArrow(string s, Vector2 position, MenuItem item, Color color)
@@ -889,32 +828,6 @@ namespace Ensage.Common.Menu
                 new Vector2((float)(item.Height * 0.51), 14),
                 Color.White.ToSharpDxColor(),
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
-        }
-
-        private static void CurrentDomainOnDomainUnload(object sender, EventArgs eventArgs)
-        {
-            if (Font != null)
-            {
-                Font.Dispose();
-                Font = null;
-            }
-            if (FontBold != null)
-            {
-                FontBold.Dispose();
-                FontBold = null;
-            }
-        }
-
-        private static void Drawing_OnPreReset(EventArgs args)
-        {
-            Font.OnLostDevice();
-            FontBold.OnLostDevice();
-        }
-
-        private static void DrawingOnOnPostReset(EventArgs args)
-        {
-            Font.OnResetDevice();
-            FontBold.OnResetDevice();
         }
 
         #endregion
@@ -1585,56 +1498,6 @@ namespace Ensage.Common.Menu
             }
         }
 
-        internal void Drawing_OnEndScene(EventArgs args)
-        {
-            if (!this.Visible)
-            {
-                return;
-            }
-
-            Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaBlendEnable, true);
-            MenuUtils.DrawBoxBordered(
-                this.Position.X,
-                this.Position.Y,
-                this.Width,
-                this.Height,
-                1,
-                (this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible)
-                    ? MenuSettings.ActiveBackgroundColor.ToSharpDxColor()
-                    : MenuSettings.BackgroundColor.ToSharpDxColor(),
-                SharpDX.Color.Black);
-
-            //MenuDrawHelper.Font.DrawText(
-            //    null,
-            //    MultiLanguage._(this.DisplayName),
-            //    new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
-            //    FontDrawFlags.VerticalCenter,
-            //    this.Color);
-
-            //MenuDrawHelper.Font.DrawText(
-            //    null,
-            //    ">",
-            //    new Rectangle((int)this.Position.X - 5, (int)this.Position.Y, this.Width, this.Height),
-            //    FontDrawFlags.Right | FontDrawFlags.VerticalCenter,
-            //    this.Color);
-
-            //Draw the menu submenus
-            foreach (var child in this.Children.Where(child => child.Visible))
-            {
-                child.Drawing_OnEndScene(args);
-            }
-
-            //Draw the items
-            for (var i = this.Items.Count - 1; i >= 0; i--)
-            {
-                var item = this.Items[i];
-                if (item.Visible)
-                {
-                    item.Drawing_OnEndScene();
-                }
-            }
-        }
-
         internal void Game_OnWndProc(WndEventArgs args)
         {
             if (!Game.IsInGame)
@@ -1911,6 +1774,10 @@ namespace Ensage.Common.Menu
 
         #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         public OnValueChangeEventArgs(object oldValue, object newValue)
         {
             this._oldValue = oldValue;
@@ -1922,17 +1789,27 @@ namespace Ensage.Common.Menu
 
         #region Public Properties
 
+        /// <summary>
+        /// </summary>
         public bool Process { get; set; }
 
         #endregion
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T GetNewValue<T>()
         {
             return (T)this._newValue;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T GetOldValue<T>()
         {
             return (T)this._oldValue;
@@ -1941,12 +1818,18 @@ namespace Ensage.Common.Menu
         #endregion
     }
 
+    /// <summary>
+    /// </summary>
     public class MenuItem
     {
         #region Fields
 
+        /// <summary>
+        /// </summary>
         public string DisplayName;
 
+        /// <summary>
+        /// </summary>
         public ColorBGRA FontColor;
 
         public FontStyle FontStyle;
@@ -2198,8 +2081,6 @@ namespace Ensage.Common.Menu
             {
                 case MenuValueType.Boolean:
                     return this.GetValue<bool>();
-                case MenuValueType.Circle:
-                    return this.GetValue<Circle>().Active;
                 case MenuValueType.KeyBind:
                     return this.GetValue<KeyBind>().Active;
             }
@@ -2294,13 +2175,6 @@ namespace Ensage.Common.Menu
                                 savedKeyValue.Active = false;
                             }
                             newValue = (T)(object)savedKeyValue;
-                            break;
-
-                        case MenuValueType.Circle:
-                            var savedCircleValue = (Circle)(object)Utils.Deserialize<T>(readBytes);
-                            var newCircleValue = (Circle)(object)newValue;
-                            savedCircleValue.Radius = newCircleValue.Radius;
-                            newValue = (T)(object)savedCircleValue;
                             break;
 
                         case MenuValueType.Slider:
@@ -2597,23 +2471,6 @@ namespace Ensage.Common.Menu
                         | FontFlags.StrikeOut);
                     break;
 
-                case MenuValueType.Circle:
-                    var circleVal = this.GetValue<Circle>();
-                    //var circlePos = Position + new Vector2(Width - Height * 2, 0);
-
-                    //MenuUtils.DrawBoxBordered(
-                    //    circlePos.X,
-                    //    circlePos.Y,
-                    //    this.Height,
-                    //    this.Height, 1f,
-                    //    circleVal.Color.ToSharpDxColor(), SharpDX.Color.Black);
-
-                    MenuDrawHelper.DrawOnOff(
-                        circleVal.Active,
-                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y),
-                        this);
-                    break;
-
                 case MenuValueType.StringList:
                     var slVal = this.GetValue<StringList>();
                     var t = slVal.SList[slVal.SelectedIndex];
@@ -2778,143 +2635,6 @@ namespace Ensage.Common.Menu
             }
         }
 
-        internal void Drawing_OnEndScene()
-        {
-            var s = MultiLanguage._(this.DisplayName);
-            MenuUtils.DrawBoxBordered(
-                this.Position.X,
-                this.Position.Y,
-                this.Width,
-                this.Height,
-                1,
-                MenuSettings.BackgroundColor.ToSharpDxColor(),
-                SharpDX.Color.Black);
-
-            if (this.DrawingTooltip)
-            {
-                MenuDrawHelper.DrawToolTip_Text(
-                    new Vector2(this.Position.X + this.Width, this.Position.Y),
-                    this,
-                    this.TooltipColor);
-            }
-
-            Font font;
-            switch (this.FontStyle)
-            {
-                case FontStyle.Bold:
-                    font = MenuDrawHelper.FontBold;
-                    break;
-                default:
-                    font = MenuDrawHelper.Font;
-                    break;
-            }
-
-            switch (this.ValueType)
-            {
-                case MenuValueType.Slider:
-                    MenuDrawHelper.DrawSlider(this.Position, this);
-                    break;
-                case MenuValueType.Boolean:
-                    MenuDrawHelper.DrawOnOff(
-                        this.GetValue<bool>(),
-                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y),
-                        this);
-                    break;
-
-                case MenuValueType.KeyBind:
-                    var val = this.GetValue<KeyBind>();
-                    if (this.Interacting)
-                    {
-                        s = MultiLanguage._("Press new key");
-                    }
-
-                    var x = (int)this.Position.X + this.Width - this.Height
-                            - font.MeasureText(null, "[" + Utils.KeyToText(val.Key) + "]", FontDrawFlags.Center).Width
-                            - 10;
-
-                    MenuDrawHelper.DrawOnOff(
-                        val.Active,
-                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y),
-                        this);
-
-                    //font.DrawText(
-                    //    null,
-                    //    "[" + Utils.KeyToText(val.Key) + "]",
-                    //    new Rectangle(x, (int)this.Position.Y, this.Width, this.Height),
-                    //    FontDrawFlags.VerticalCenter,
-                    //    new ColorBGRA(1, 169, 234, 255));
-                    break;
-
-                case MenuValueType.Integer:
-                    var intVal = this.GetValue<int>();
-                    //MenuDrawHelper.Font.DrawText(
-                    //    null,
-                    //    intVal.ToString(),
-                    //    new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
-                    //    FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
-                    //    new ColorBGRA(255, 255, 255, 255));
-                    break;
-
-                case MenuValueType.Circle:
-                    var circleVal = this.GetValue<Circle>();
-                    var circlePos = this.Position + new Vector2(this.Width - this.Height * 2, 0);
-
-                    MenuUtils.DrawBoxBordered(
-                        circlePos.X,
-                        circlePos.Y,
-                        this.Height,
-                        this.Height,
-                        1f,
-                        circleVal.Color.ToSharpDxColor(),
-                        SharpDX.Color.Black);
-
-                    MenuDrawHelper.DrawOnOff(
-                        circleVal.Active,
-                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y),
-                        this);
-                    break;
-
-                case MenuValueType.StringList:
-                    var slVal = this.GetValue<StringList>();
-                    var t = slVal.SList[slVal.SelectedIndex];
-
-                    MenuDrawHelper.DrawArrow(
-                        "<<",
-                        this.Position + new Vector2(this.Width - this.Height * 2, 0),
-                        this,
-                        Color.Black);
-                    MenuDrawHelper.DrawArrow(
-                        ">>",
-                        this.Position + new Vector2(this.Width - this.Height, 0),
-                        this,
-                        Color.Black);
-
-                    //MenuDrawHelper.Font.DrawText(
-                    //    null,
-                    //    MultiLanguage._(t),
-                    //    new Rectangle(
-                    //        (int)this.Position.X - 5 - 2 * this.Height,
-                    //        (int)this.Position.Y,
-                    //        this.Width,
-                    //        this.Height),
-                    //    FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
-                    //    new ColorBGRA(255, 255, 255, 255));
-                    break;
-            }
-
-            //font.DrawText(
-            //    null,
-            //    s,
-            //    new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
-            //    FontDrawFlags.VerticalCenter,
-            //    this.FontColor);
-
-            if (!string.IsNullOrEmpty(this.Tooltip))
-            {
-                MenuDrawHelper.DrawToolTip_Button(new Vector2(this.Position.X + this.Width, this.Position.Y), this);
-            }
-        }
-
         internal bool IsInside(Vector2 position)
         {
             return Utils.IsUnderRectangle(
@@ -3003,78 +2723,6 @@ namespace Ensage.Common.Menu
                     }
 
                     this.Interacting = message == Utils.WindowsMessages.WM_LBUTTONDOWN;
-                    break;
-
-                case MenuValueType.Color:
-
-                    if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
-                    {
-                        return;
-                    }
-
-                    if (!this.Visible)
-                    {
-                        return;
-                    }
-
-                    if (!this.IsInside(cursorPos))
-                    {
-                        return;
-                    }
-
-                    if (cursorPos.X > this.Position.X + this.Width)
-                    {
-                        break;
-                    }
-
-                    if (cursorPos.X > this.Position.X + this.Width - this.Height)
-                    {
-                        var c = this.GetValue<Color>();
-                        ColorPicker.Load(delegate(Color args) { SetValue(args); }, c);
-                    }
-
-                    break;
-                case MenuValueType.Circle:
-
-                    if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
-                    {
-                        return;
-                    }
-
-                    if (!this.Visible)
-                    {
-                        return;
-                    }
-
-                    if (!this.IsInside(cursorPos))
-                    {
-                        return;
-                    }
-
-                    if (cursorPos.X > this.Position.X + this.Width)
-                    {
-                        break;
-                    }
-
-                    if (cursorPos.X - this.Position.X > this.Width - this.Height)
-                    {
-                        var val = this.GetValue<Circle>();
-                        val.Active = !val.Active;
-                        this.SetValue(val);
-                    }
-                    else if (cursorPos.X - this.Position.X > this.Width - 2 * this.Height)
-                    {
-                        var c = this.GetValue<Circle>();
-                        ColorPicker.Load(
-                            delegate(Color args)
-                                {
-                                    var val = GetValue<Circle>();
-                                    val.Color = args;
-                                    SetValue(val);
-                                },
-                            c.Color);
-                    }
-
                     break;
                 case MenuValueType.KeyBind:
 
@@ -3284,728 +2932,5 @@ namespace Ensage.Common.Menu
         }
 
         #endregion
-    }
-
-    public static class ColorPicker
-    {
-        #region Static Fields
-
-        public static CPSlider AlphaSlider;
-
-        public static Render.Sprite BackgroundSprite;
-
-        public static Bitmap LuminityBitmap;
-
-        public static Render.Sprite LuminitySprite;
-
-        public static CPSlider LuminositySlider;
-
-        public static OnSelectColor OnChangeColor;
-
-        public static Bitmap OpacityBitmap;
-
-        public static Render.Sprite OpacitySprite;
-
-        public static Render.Rectangle PreviewRectangle;
-
-        private static bool _moving;
-
-        private static Vector2 _prevPos;
-
-        private static bool _selecting;
-
-        private static bool _visible;
-
-        private static int _x = 100;
-
-        private static int _y = 100;
-
-        private static Color InitialColor;
-
-        private static int LastBitmapUpdate;
-
-        private static int LastBitmapUpdate2;
-
-        private static HSLColor SColor = new HSLColor(255, 255, 255);
-
-        private static double SHue;
-
-        private static double SSaturation;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        static ColorPicker()
-        {
-            LuminityBitmap = new Bitmap(9, 238);
-            OpacityBitmap = new Bitmap(9, 238);
-
-            UpdateLuminosityBitmap(Color.White, true);
-            UpdateOpacityBitmap(Color.White, true);
-
-            BackgroundSprite = (Render.Sprite)new Render.Sprite(Resources.CPForm, new Vector2(X, Y)).Add(1);
-
-            LuminitySprite = (Render.Sprite)new Render.Sprite(LuminityBitmap, new Vector2(X + 285, Y + 40)).Add(0);
-            OpacitySprite = (Render.Sprite)new Render.Sprite(OpacityBitmap, new Vector2(X + 349, Y + 40)).Add(0);
-
-            PreviewRectangle =
-                (Render.Rectangle)
-                new Render.Rectangle(X + 375, Y + 44, 54, 80, new ColorBGRA(255, 255, 255, 255)).Add(0);
-
-            LuminositySlider = new CPSlider(285 - Resources.CPActiveSlider.Width / 3, 35, 248);
-            AlphaSlider = new CPSlider(350 - Resources.CPActiveSlider.Width / 3, 35, 248);
-
-            Game.OnWndProc += Game_OnWndProc;
-        }
-
-        #endregion
-
-        #region Delegates
-
-        public delegate void OnSelectColor(Color color);
-
-        #endregion
-
-        #region Public Properties
-
-        public static int ColorPickerH
-        {
-            get
-            {
-                return 282 - 61;
-            }
-        }
-
-        public static int ColorPickerW
-        {
-            get
-            {
-                return 252 - 18;
-            }
-        }
-
-        public static int ColorPickerX
-        {
-            get
-            {
-                return X + 18;
-            }
-        }
-
-        public static int ColorPickerY
-        {
-            get
-            {
-                return Y + 61;
-            }
-        }
-
-        public static bool Visible
-        {
-            get
-            {
-                return _visible;
-            }
-            set
-            {
-                LuminitySprite.Visible = value;
-                OpacitySprite.Visible = value;
-                BackgroundSprite.Visible = value;
-                LuminositySlider.Visible = value;
-                AlphaSlider.Visible = value;
-                PreviewRectangle.Visible = value;
-                _visible = value;
-            }
-        }
-
-        public static int X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                var oldX = _x;
-                _x = value;
-                BackgroundSprite.X += value - oldX;
-                LuminitySprite.X += value - oldX;
-                OpacitySprite.X += value - oldX;
-                PreviewRectangle.X += value - oldX;
-                LuminositySlider.sX += value - oldX;
-                AlphaSlider.sX += value - oldX;
-            }
-        }
-
-        public static int Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                var oldY = _y;
-                _y = value;
-                BackgroundSprite.Y += value - oldY;
-                LuminitySprite.Y += value - oldY;
-                OpacitySprite.Y += value - oldY;
-                PreviewRectangle.Y += value - oldY;
-                LuminositySlider.sY += value - oldY;
-                AlphaSlider.sY += value - oldY;
-            }
-        }
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        public static void FireOnChangeColor(Color color)
-        {
-            if (OnChangeColor != null)
-            {
-                OnChangeColor(color);
-            }
-        }
-
-        public static void Load(OnSelectColor onSelectcolor, Color color)
-        {
-            OnChangeColor = onSelectcolor;
-            SColor = color;
-            SHue = ((HSLColor)color).Hue;
-            SSaturation = ((HSLColor)color).Saturation;
-
-            LuminositySlider.Percent = (float)SColor.Luminosity / 100f;
-            AlphaSlider.Percent = color.A / 255f;
-            X = (Drawing.Width - BackgroundSprite.Width) / 2;
-            Y = (Drawing.Height - BackgroundSprite.Height) / 2;
-
-            Visible = true;
-            UpdateLuminosityBitmap(color);
-            UpdateOpacityBitmap(color);
-            InitialColor = color;
-        }
-
-        #endregion
-
-        #region Methods
-
-        private static void Close()
-        {
-            _selecting = false;
-            _moving = false;
-            AlphaSlider.Moving = false;
-            LuminositySlider.Moving = false;
-            AlphaSlider.Visible = false;
-            LuminositySlider.Visible = false;
-            Visible = false;
-        }
-
-        private static void Game_OnWndProc(WndEventArgs args)
-        {
-            if (!_visible)
-            {
-                return;
-            }
-
-            LuminositySlider.OnWndProc(args);
-            AlphaSlider.OnWndProc(args);
-
-            if (args.Msg == (uint)Utils.WindowsMessages.WM_LBUTTONDOWN)
-            {
-                var pos = Game.MouseScreenPosition;
-
-                if (Utils.IsUnderRectangle(pos, X, Y, BackgroundSprite.Width, 25))
-                {
-                    _moving = true;
-                }
-
-                //Apply button:
-                if (Utils.IsUnderRectangle(pos, X + 290, Y + 297, 74, 12))
-                {
-                    Close();
-                    return;
-                }
-
-                //Cancel button:
-                if (Utils.IsUnderRectangle(pos, X + 370, Y + 296, 73, 14))
-                {
-                    FireOnChangeColor(InitialColor);
-                    Close();
-                    return;
-                }
-
-                if (Utils.IsUnderRectangle(pos, ColorPickerX, ColorPickerY, ColorPickerW, ColorPickerH))
-                {
-                    _selecting = true;
-                    UpdateColor();
-                }
-            }
-            else if (args.Msg == (uint)Utils.WindowsMessages.WM_LBUTTONUP)
-            {
-                _moving = false;
-                _selecting = false;
-            }
-            else if (args.Msg == (uint)Utils.WindowsMessages.WM_MOUSEMOVE)
-            {
-                if (_selecting)
-                {
-                    var pos = Game.MouseScreenPosition;
-                    if (Utils.IsUnderRectangle(pos, ColorPickerX, ColorPickerY, ColorPickerW, ColorPickerH))
-                    {
-                        UpdateColor();
-                    }
-                }
-
-                if (_moving)
-                {
-                    var pos = Game.MouseScreenPosition;
-                    X += (int)(pos.X - _prevPos.X);
-                    Y += (int)(pos.Y - _prevPos.Y);
-                }
-                _prevPos = Game.MouseScreenPosition;
-            }
-        }
-
-        private static void UpdateColor()
-        {
-            if (_selecting)
-            {
-                var pos = Game.MouseScreenPosition;
-                var color = BackgroundSprite.Bitmap.GetPixel((int)pos.X - X, (int)pos.Y - Y);
-                SHue = ((HSLColor)color).Hue;
-                SSaturation = ((HSLColor)color).Saturation;
-                UpdateLuminosityBitmap(color);
-            }
-
-            SColor.Hue = SHue;
-            SColor.Saturation = SSaturation;
-            SColor.Luminosity = (LuminositySlider.Percent * 100d);
-            var r = Color.FromArgb(((int)(AlphaSlider.Percent * 255)), SColor);
-            PreviewRectangle.Color = new ColorBGRA(r.R, r.G, r.B, r.A);
-            UpdateOpacityBitmap(r);
-            FireOnChangeColor(r);
-        }
-
-        private static void UpdateLuminosityBitmap(HSLColor color, bool force = false)
-        {
-            if (Environment.TickCount - LastBitmapUpdate < 100 && !force)
-            {
-                return;
-            }
-            LastBitmapUpdate = Environment.TickCount;
-
-            color.Luminosity = 0d;
-            for (var y = 0; y < LuminityBitmap.Height; y++)
-            {
-                for (var x = 0; x < LuminityBitmap.Width; x++)
-                {
-                    LuminityBitmap.SetPixel(x, y, color);
-                }
-
-                color.Luminosity += 100d / LuminityBitmap.Height;
-            }
-
-            if (LuminitySprite != null)
-            {
-                LuminitySprite.UpdateTextureBitmap(LuminityBitmap);
-            }
-        }
-
-        private static void UpdateOpacityBitmap(HSLColor color, bool force = false)
-        {
-            if (Environment.TickCount - LastBitmapUpdate2 < 100 && !force)
-            {
-                return;
-            }
-            LastBitmapUpdate2 = Environment.TickCount;
-
-            color.Luminosity = 0d;
-            for (var y = 0; y < OpacityBitmap.Height; y++)
-            {
-                for (var x = 0; x < OpacityBitmap.Width; x++)
-                {
-                    OpacityBitmap.SetPixel(x, y, color);
-                }
-
-                color.Luminosity += 40d / LuminityBitmap.Height;
-            }
-
-            if (OpacitySprite != null)
-            {
-                OpacitySprite.UpdateTextureBitmap(OpacityBitmap);
-            }
-        }
-
-        #endregion
-
-        //From: https://richnewman.wordpress.com/about/code-listings-and-diagrams/hslcolor-class/
-
-        public class CPSlider
-        {
-            #region Fields
-
-            public int Height;
-
-            public bool Moving;
-
-            internal Render.Sprite ActiveSprite;
-
-            internal Render.Sprite InactiveSprite;
-
-            private readonly int _x;
-
-            private readonly int _y;
-
-            private float _percent;
-
-            private bool _visible = true;
-
-            #endregion
-
-            #region Constructors and Destructors
-
-            public CPSlider(int x, int y, int height, float percent = 1)
-            {
-                this._x = x;
-                this._y = y;
-                this.Height = height - Resources.CPActiveSlider.Height;
-                this.Percent = percent;
-                this.ActiveSprite = new Render.Sprite(Resources.CPActiveSlider, new Vector2(this.sX, this.sY));
-                this.InactiveSprite = new Render.Sprite(Resources.SliderDisabled, new Vector2(this.sX, this.sY));
-
-                this.ActiveSprite.Add(2);
-                this.InactiveSprite.Add(2);
-            }
-
-            #endregion
-
-            #region Public Properties
-
-            public float Percent
-            {
-                get
-                {
-                    return this._percent;
-                }
-                set
-                {
-                    var newValue = Math.Max(0f, Math.Min(1f, value));
-                    this._percent = newValue;
-                }
-            }
-
-            public int sX
-            {
-                set
-                {
-                    this.ActiveSprite.X = this.sX;
-                    this.InactiveSprite.X = this.sX;
-                }
-                get
-                {
-                    return this._x + X;
-                }
-            }
-
-            public int sY
-            {
-                set
-                {
-                    this.ActiveSprite.Y = this.sY;
-                    this.InactiveSprite.Y = this.sY;
-                    this.ActiveSprite.Y = this.sY + (int)(this.Percent * this.Height);
-                    this.InactiveSprite.Y = this.sY + (int)(this.Percent * this.Height);
-                }
-                get
-                {
-                    return this._y + Y;
-                }
-            }
-
-            public bool Visible
-            {
-                get
-                {
-                    return this._visible;
-                }
-                set
-                {
-                    this.ActiveSprite.Visible = value;
-                    this.InactiveSprite.Visible = value;
-                    this._visible = value;
-                }
-            }
-
-            public int Width
-            {
-                get
-                {
-                    return Resources.CPActiveSlider.Width;
-                }
-            }
-
-            #endregion
-
-            #region Public Methods and Operators
-
-            public void OnWndProc(WndEventArgs args)
-            {
-                switch (args.Msg)
-                {
-                    case (uint)Utils.WindowsMessages.WM_LBUTTONDOWN:
-                        var pos = Game.MouseScreenPosition;
-                        if (Utils.IsUnderRectangle(
-                            pos,
-                            this.sX,
-                            this.sY,
-                            this.Width,
-                            this.Height + Resources.CPActiveSlider.Height))
-                        {
-                            this.Moving = true;
-                            this.ActiveSprite.Visible = this.Moving;
-                            this.InactiveSprite.Visible = !this.Moving;
-                            this.UpdatePercent();
-                        }
-                        break;
-                    case (uint)Utils.WindowsMessages.WM_MOUSEMOVE:
-                        if (this.Moving)
-                        {
-                            this.UpdatePercent();
-                        }
-                        break;
-                    case (uint)Utils.WindowsMessages.WM_LBUTTONUP:
-                        this.Moving = false;
-                        this.ActiveSprite.Visible = this.Moving;
-                        this.InactiveSprite.Visible = !this.Moving;
-                        break;
-                }
-            }
-
-            #endregion
-
-            #region Methods
-
-            private void UpdatePercent()
-            {
-                var pos = Game.MouseScreenPosition;
-                this.Percent = (pos.Y - Resources.CPActiveSlider.Height / 2 - this.sY) / this.Height;
-                UpdateColor();
-                this.ActiveSprite.Y = this.sY + (int)(this.Percent * this.Height);
-                this.InactiveSprite.Y = this.sY + (int)(this.Percent * this.Height);
-            }
-
-            #endregion
-        }
-
-        public class HSLColor
-        {
-            #region Constants
-
-            //from: https://richnewman.wordpress.com/about/code-listings-and-diagrams/hslcolor-class/
-            // Private data members below are on scale 0-1
-            // They are scaled for use externally based on scale
-            private const double scale = 100.0;
-
-            #endregion
-
-            #region Fields
-
-            private double hue = 1.0;
-
-            private double luminosity = 1.0;
-
-            private double saturation = 1.0;
-
-            #endregion
-
-            #region Constructors and Destructors
-
-            public HSLColor()
-            {
-            }
-
-            public HSLColor(Color color)
-            {
-                this.SetRGB(color.R, color.G, color.B);
-            }
-
-            public HSLColor(int red, int green, int blue)
-            {
-                this.SetRGB(red, green, blue);
-            }
-
-            public HSLColor(double hue, double saturation, double luminosity)
-            {
-                this.Hue = hue;
-                this.Saturation = saturation;
-                this.Luminosity = luminosity;
-            }
-
-            #endregion
-
-            #region Public Properties
-
-            public double Hue
-            {
-                get
-                {
-                    return this.hue * scale;
-                }
-                set
-                {
-                    this.hue = this.CheckRange(value / scale);
-                }
-            }
-
-            public double Luminosity
-            {
-                get
-                {
-                    return this.luminosity * scale;
-                }
-                set
-                {
-                    this.luminosity = this.CheckRange(value / scale);
-                }
-            }
-
-            public double Saturation
-            {
-                get
-                {
-                    return this.saturation * scale;
-                }
-                set
-                {
-                    this.saturation = this.CheckRange(value / scale);
-                }
-            }
-
-            #endregion
-
-            #region Public Methods and Operators
-
-            public static implicit operator Color(HSLColor hslColor)
-            {
-                double r = 0, g = 0, b = 0;
-                if (hslColor.luminosity != 0)
-                {
-                    if (hslColor.saturation == 0)
-                    {
-                        r = g = b = hslColor.luminosity;
-                    }
-                    else
-                    {
-                        var temp2 = GetTemp2(hslColor);
-                        var temp1 = 2.0 * hslColor.luminosity - temp2;
-
-                        r = GetColorComponent(temp1, temp2, hslColor.hue + 1.0 / 3.0);
-                        g = GetColorComponent(temp1, temp2, hslColor.hue);
-                        b = GetColorComponent(temp1, temp2, hslColor.hue - 1.0 / 3.0);
-                    }
-                }
-                return Color.FromArgb((int)(255 * r), (int)(255 * g), (int)(255 * b));
-            }
-
-            public static implicit operator HSLColor(Color color)
-            {
-                var hslColor = new HSLColor
-                                   {
-                                       hue = color.GetHue() / 360.0, luminosity = color.GetBrightness(),
-                                       saturation = color.GetSaturation()
-                                   };
-                // we store hue as 0-1 as opposed to 0-360 
-                return hslColor;
-            }
-
-            public void SetRGB(int red, int green, int blue)
-            {
-                HSLColor hslColor = Color.FromArgb(red, green, blue);
-                this.hue = hslColor.hue;
-                this.saturation = hslColor.saturation;
-                this.luminosity = hslColor.luminosity;
-            }
-
-            public string ToRGBString()
-            {
-                Color color = this;
-                return String.Format("R: {0:#0.##} G: {1:#0.##} B: {2:#0.##}", color.R, color.G, color.B);
-            }
-
-            public override string ToString()
-            {
-                return String.Format(
-                    "H: {0:#0.##} S: {1:#0.##} L: {2:#0.##}",
-                    this.Hue,
-                    this.Saturation,
-                    this.Luminosity);
-            }
-
-            #endregion
-
-            #region Methods
-
-            private static double GetColorComponent(double temp1, double temp2, double temp3)
-            {
-                temp3 = MoveIntoRange(temp3);
-                if (temp3 < 1.0 / 6.0)
-                {
-                    return temp1 + (temp2 - temp1) * 6.0 * temp3;
-                }
-                if (temp3 < 0.5)
-                {
-                    return temp2;
-                }
-                if (temp3 < 2.0 / 3.0)
-                {
-                    return temp1 + ((temp2 - temp1) * ((2.0 / 3.0) - temp3) * 6.0);
-                }
-                return temp1;
-            }
-
-            private static double GetTemp2(HSLColor hslColor)
-            {
-                double temp2;
-                if (hslColor.luminosity < 0.5) //<=??
-                {
-                    temp2 = hslColor.luminosity * (1.0 + hslColor.saturation);
-                }
-                else
-                {
-                    temp2 = hslColor.luminosity + hslColor.saturation - (hslColor.luminosity * hslColor.saturation);
-                }
-                return temp2;
-            }
-
-            private static double MoveIntoRange(double temp3)
-            {
-                if (temp3 < 0.0)
-                {
-                    temp3 += 1.0;
-                }
-                else if (temp3 > 1.0)
-                {
-                    temp3 -= 1.0;
-                }
-                return temp3;
-            }
-
-            private double CheckRange(double value)
-            {
-                if (value < 0.0)
-                {
-                    value = 0.0;
-                }
-                else if (value > 1.0)
-                {
-                    value = 1.0;
-                }
-                return value;
-            }
-
-            #endregion
-        }
     }
 }

@@ -30,105 +30,115 @@ namespace Ensage.Common.Menu
 
     using EnsageSharp.Sandbox;
 
+    /// <summary>
+    /// </summary>
     public static class MenuConfig
     {
         #region Static Fields
 
-        private static string _appDataDirectory;
+        private static string appDataDirectory;
 
-        private static string _selectedLanguage;
+        private static string selectedLanguage;
 
-        private static byte _showMenuHotkey;
+        private static byte showMenuHotkey;
 
-        private static byte _showMenuToggleHotkey;
+        private static byte showMenuToggleHotkey;
 
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        /// </summary>
         public static string AppDataDirectory
         {
             get
             {
-                if (_appDataDirectory == null)
+                if (appDataDirectory == null)
                 {
-                    _appDataDirectory = SandboxConfig.AppDataDirectory;
+                    appDataDirectory = SandboxConfig.AppDataDirectory;
                 }
 
-                return _appDataDirectory;
+                return appDataDirectory;
             }
         }
 
+        /// <summary>
+        /// </summary>
         public static string SelectedLanguage
         {
             get
             {
-                if (_selectedLanguage == null)
+                if (selectedLanguage == null)
                 {
                     try
                     {
-                        _selectedLanguage = SandboxConfig.SelectedLanguage;
-                        if (_selectedLanguage == "Traditional-Chinese")
+                        selectedLanguage = SandboxConfig.SelectedLanguage;
+                        if (selectedLanguage == "Traditional-Chinese")
                         {
-                            _selectedLanguage = "Chinese";
+                            selectedLanguage = "Chinese";
                         }
                     }
                     catch (Exception)
                     {
-                        _selectedLanguage = "";
+                        selectedLanguage = "";
                         Console.WriteLine(@"Could not get the menu language");
                     }
                 }
 
-                return _selectedLanguage;
+                return selectedLanguage;
             }
         }
 
+        /// <summary>
+        /// </summary>
         public static byte ShowMenuPressKey
         {
             get
             {
-                if (_showMenuHotkey == 0)
+                if (showMenuHotkey == 0)
                 {
                     try
                     {
-                        _showMenuHotkey = (byte)SandboxConfig.MenuKey;
-                        _showMenuHotkey = _showMenuHotkey == 0 ? (byte)16 : _showMenuHotkey;
-                        _showMenuHotkey = Utils.FixVirtualKey(_showMenuHotkey);
-                        Console.WriteLine(@"Menu press key set to {0}", _showMenuHotkey);
+                        showMenuHotkey = (byte)SandboxConfig.MenuKey;
+                        showMenuHotkey = showMenuHotkey == 0 ? (byte)16 : showMenuHotkey;
+                        showMenuHotkey = Utils.FixVirtualKey(showMenuHotkey);
+                        Console.WriteLine(@"Menu press key set to {0}", showMenuHotkey);
                     }
                     catch
                     {
-                        _showMenuHotkey = 16;
+                        showMenuHotkey = 16;
                         Console.WriteLine(@"Could not get the menu press key");
                     }
                 }
 
-                return _showMenuHotkey;
+                return showMenuHotkey;
             }
         }
 
+        /// <summary>
+        /// </summary>
         public static byte ShowMenuToggleKey
         {
             get
             {
-                if (_showMenuToggleHotkey == 0)
+                if (showMenuToggleHotkey == 0)
                 {
                     try
                     {
-                        _showMenuToggleHotkey = (byte)SandboxConfig.MenuToggleKey;
-                        _showMenuToggleHotkey = _showMenuToggleHotkey == 0 ? (byte)120 : _showMenuToggleHotkey;
-                        _showMenuToggleHotkey = Utils.FixVirtualKey(_showMenuToggleHotkey);
-                        Console.WriteLine(@"Menu toggle key set to {0}", _showMenuToggleHotkey);
+                        showMenuToggleHotkey = (byte)SandboxConfig.MenuToggleKey;
+                        showMenuToggleHotkey = showMenuToggleHotkey == 0 ? (byte)120 : showMenuToggleHotkey;
+                        showMenuToggleHotkey = Utils.FixVirtualKey(showMenuToggleHotkey);
+                        Console.WriteLine(@"Menu toggle key set to {0}", showMenuToggleHotkey);
                     }
                     catch
                     {
-                        _showMenuToggleHotkey = 120;
+                        showMenuToggleHotkey = 120;
                         Console.WriteLine(@"Could not get the menu toggle key");
                     }
                 }
 
-                return _showMenuToggleHotkey;
+                return showMenuToggleHotkey;
             }
         }
 

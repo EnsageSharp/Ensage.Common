@@ -726,7 +726,8 @@
             "AbilityName": "ursa_enrage",
             "Radius": 0,
             "MagicImmunityPierce": true,
-            "IsBuff": true
+            "IsBuff": true,
+            "IsShield": true
         },
         {
             "AbilityName": "chen_penitence",
@@ -1397,6 +1398,74 @@
         {
             "AbilityName": "item_veil_of_discord",
             "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "item_armlet",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_satanic",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_mekansm",
+            "IsHeal": true,
+            "RadiusString": "heal_radius"
+        },
+        {
+            "AbilityName": "item_guardian_greaves",
+            "IsHeal": true,
+            "RadiusString": "heal_radius"
+        },
+        {
+            "AbilityName": "item_urn_of_shadows",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "item_tango",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "item_blade_mail",
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_buckler",
+            "IsShield": true,
+            "RadiusString": "bonus_aoe_radius"
+        },
+        {
+            "AbilityName": "item_crimson_guard",
+            "IsShield": true,
+            "RadiusString": "bonus_aoe_radius"
+        },
+        {
+            "AbilityName": "item_pipe",
+            "IsShield": true,
+            "RadiusString": "aura_radius"
+        },
+        {
+            "AbilityName": "item_black_king_bar",
+            "IsShield": true
+        },
+        {
+            "AbilityName": "chen_hand_of_god",
+            "IsHeal": true,
+            "Radius": 99999
+        },
+        {
+            "AbilityName": "treant_living_armor",
+            "IsHeal": true,
+            "IsShield": true,
+            "Radius": 99999
+        },
+        {
+            "AbilityName": "dazzle_shadow_wave",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "dazzle_shallow_grave",
+            "IsShield": true
         }
     ]
 }

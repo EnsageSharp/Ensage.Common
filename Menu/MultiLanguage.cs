@@ -33,11 +33,13 @@ namespace Ensage.Common.Menu
 
     using Ensage.Common.Properties;
 
+    /// <summary>
+    /// </summary>
     public static class MultiLanguage
     {
         #region Static Fields
 
-        private static Dictionary<string, string> Translations = new Dictionary<string, string>();
+        private static Dictionary<string, string> translations = new Dictionary<string, string>();
 
         #endregion
 
@@ -52,14 +54,22 @@ namespace Ensage.Common.Menu
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// </summary>
+        /// <param name="textToTranslate"></param>
+        /// <returns></returns>
         public static string _(string textToTranslate)
         {
             var textToTranslateToLower = textToTranslate.ToLower();
-            return Translations.ContainsKey(textToTranslateToLower)
-                       ? Translations[textToTranslateToLower]
+            return translations.ContainsKey(textToTranslateToLower)
+                       ? translations[textToTranslateToLower]
                        : textToTranslate;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="languageName"></param>
+        /// <returns></returns>
         public static bool LoadLanguage(string languageName)
         {
             try
@@ -73,7 +83,7 @@ namespace Ensage.Common.Menu
                     return false;
                 }
 
-                Translations = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(languageStrings);
+                translations = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(languageStrings);
                 return true;
             }
             catch (Exception ex)
