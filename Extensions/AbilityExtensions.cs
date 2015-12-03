@@ -143,6 +143,10 @@ namespace Ensage.Common.Extensions
         public static bool CanHit(this Ability ability, Hero target, Vector3 sourcePosition, string abilityName = null)
         {
             var name = abilityName ?? ability.Name;
+            if (ability.Owner.Equals(target))
+            {
+                return true;
+            }
             var position = sourcePosition;
             if (ability.IsAbilityBehavior(AbilityBehavior.Point, name)
                 || ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
@@ -439,6 +443,7 @@ namespace Ensage.Common.Extensions
         /// <param name="usePing"></param>
         /// <param name="useCastPoint"></param>
         /// <param name="abilityName"></param>
+        /// <param name="useChannel"></param>
         /// <returns></returns>
         public static double GetCastDelay(
             this Ability ability,
@@ -446,10 +451,11 @@ namespace Ensage.Common.Extensions
             Unit target,
             bool usePing = false,
             bool useCastPoint = true,
-            string abilityName = null)
+            string abilityName = null,
+            bool useChannel = false)
         {
             var name = abilityName ?? ability.Name;
-            double delay;
+            var delay = 0d;
             if (useCastPoint)
             {
                 if (!DelayDictionary.TryGetValue(name + " " + ability.Level, out delay))
@@ -477,19 +483,21 @@ namespace Ensage.Common.Extensions
             {
                 delay += Game.Ping / 1000;
             }
-            float channel;
-            if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
+            if (useChannel)
             {
-                channel = ability.GetChannelTime(ability.Level - 1);
-                ChannelDictionary.Add(name + ability.Level, channel);
+                delay += ability.ChannelTime(name);
             }
-            //Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
-            delay += channel;
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
             {
-                return delay + (useCastPoint ? source.GetTurnTime(target) : source.GetTurnTime(target) / 2);
+                return
+                    Math.Max(
+                        delay
+                        + (!target.Equals(source)
+                               ? (useCastPoint ? source.GetTurnTime(target) : source.GetTurnTime(target) / 2)
+                               : 0),
+                        0);
             }
-            return delay;
+            return Math.Max(delay, 0);
         }
 
         /// <summary>
@@ -719,6 +727,25 @@ namespace Ensage.Common.Extensions
                 }
             }
             return radius;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="abilityName"></param>
+        /// <returns></returns>
+        public static float ChannelTime(this Ability ability, string abilityName = null)
+        {
+            var name = abilityName ?? ability.Name;
+            float channel;
+            if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
+            {
+                channel = ability.GetChannelTime(ability.Level - 1);
+                ChannelDictionary.Add(name + ability.Level, channel);
+            }
+            //Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
+            return channel;
         }
 
         /// <summary>

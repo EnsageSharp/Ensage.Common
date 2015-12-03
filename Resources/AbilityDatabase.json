@@ -1401,11 +1401,13 @@
         },
         {
             "AbilityName": "item_armlet",
-            "IsBuff": true
+            "IsBuff": true,
+            "Radius":  700
         },
         {
             "AbilityName": "item_satanic",
-            "IsBuff": true
+            "IsBuff": true,
+            "Radius":  700
         },
         {
             "AbilityName": "item_mekansm",

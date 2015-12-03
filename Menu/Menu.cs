@@ -276,6 +276,8 @@ namespace Ensage.Common.Menu
     {
         #region Fields
 
+        public bool DefaultValues;
+
         /// <summary>
         /// </summary>
         public Dictionary<string, bool> Dictionary;
@@ -305,16 +307,19 @@ namespace Ensage.Common.Menu
         /// <param name="heroDictionary"></param>
         /// <param name="useEnemyHeroes"></param>
         /// <param name="useAllyHeroes"></param>
+        /// <param name="defaultValues"></param>
         public HeroToggler(
             Dictionary<string, bool> heroDictionary,
             bool useEnemyHeroes = false,
-            bool useAllyHeroes = false)
+            bool useAllyHeroes = false,
+            bool defaultValues = true)
         {
             this.Dictionary = heroDictionary;
             this.PositionDictionary = new Dictionary<string, float[]>();
             this.UseEnemyHeroes = useEnemyHeroes;
             this.UseAllyHeroes = useAllyHeroes;
             this.SValuesDictionary = new Dictionary<string, bool>();
+            this.DefaultValues = defaultValues;
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
@@ -1656,9 +1661,18 @@ namespace Ensage.Common.Menu
                         players)
                     {
                         item.GetValue<HeroToggler>()
-                            .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+                            .Add(
+                                x.Hero.Name,
+                                sdict.ContainsKey(x.Hero.Name)
+                                    ? sdict[x.Hero.Name]
+                                    : item.GetValue<HeroToggler>().DefaultValues);
                     }
-                    item.SetValue(new HeroToggler(item.GetValue<HeroToggler>().Dictionary, true));
+                    item.SetValue(
+                        new HeroToggler(
+                            item.GetValue<HeroToggler>().Dictionary,
+                            true,
+                            false,
+                            item.GetValue<HeroToggler>().DefaultValues));
                 }
                 else if (item.GetValue<HeroToggler>().UseAllyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 4)
                 {
@@ -1672,9 +1686,18 @@ namespace Ensage.Common.Menu
                                 && !dict.ContainsKey(x.Hero.Name)))
                     {
                         item.GetValue<HeroToggler>()
-                            .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+                            .Add(
+                                x.Hero.Name,
+                                sdict.ContainsKey(x.Hero.Name)
+                                    ? sdict[x.Hero.Name]
+                                    : item.GetValue<HeroToggler>().DefaultValues);
                     }
-                    item.SetValue(new HeroToggler(item.GetValue<HeroToggler>().Dictionary, false, true));
+                    item.SetValue(
+                        new HeroToggler(
+                            item.GetValue<HeroToggler>().Dictionary,
+                            false,
+                            true,
+                            item.GetValue<HeroToggler>().DefaultValues));
                 }
                 Utils.Sleep(20000, "SetHeroTogglers" + this.Name + item.Name);
             }
