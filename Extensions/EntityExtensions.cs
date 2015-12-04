@@ -918,8 +918,8 @@ namespace Ensage.Common.Extensions
         {
             return
                 unit.Inventory.Items.ToList()
-                    .OrderByDescending(x => x.Name)
-                    .FirstOrDefault(x => x.Name.Substring(0, name.Length) == name);
+                    .OrderByDescending(x => x.Level)
+                    .FirstOrDefault(x => x.Name.StartsWith(name));
         }
 
         /// <summary>
