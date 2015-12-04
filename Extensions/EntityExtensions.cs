@@ -1075,7 +1075,8 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool IsInvul(this Unit unit)
         {
-            return IsUnitState(unit, UnitState.Invulnerable);
+            return IsUnitState(unit, UnitState.Invulnerable)
+            || unit.Modifiers.Any(x => x.Name == "modifier_skeleton_king_reincarnation_scepter_active");
             //|| unit.Modifiers.Any(
             //    x =>
             //    x.Name == "modifier_invoker_tornado" || x.Name == "modifier_eul_cyclone"
