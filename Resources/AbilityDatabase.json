@@ -313,7 +313,7 @@
             "AbilityName": "rattletrap_power_cogs",
             "IsDisable": true,
             "AdditionalDelay": 0.1,
-            "Radius": 0.1
+            "Radius": 200
         },
         {
             "AbilityName": "dark_seer_wall_of_replica",
@@ -1412,12 +1412,12 @@
         {
             "AbilityName": "item_mekansm",
             "IsHeal": true,
-            "RadiusString": "heal_radius"
+            "StringRadius": "aura_radius"
         },
         {
             "AbilityName": "item_guardian_greaves",
             "IsHeal": true,
-            "RadiusString": "heal_radius"
+            "StringRadius": "aura_radius"
         },
         {
             "AbilityName": "item_urn_of_shadows",
@@ -1434,17 +1434,17 @@
         {
             "AbilityName": "item_buckler",
             "IsShield": true,
-            "RadiusString": "bonus_aoe_radius"
+            "StringRadius": "bonus_aoe_radius"
         },
         {
             "AbilityName": "item_crimson_guard",
             "IsShield": true,
-            "RadiusString": "bonus_aoe_radius"
+            "StringRadius": "bonus_aoe_radius"
         },
         {
             "AbilityName": "item_pipe",
             "IsShield": true,
-            "RadiusString": "aura_radius"
+            "StringRadius": "aura_radius"
         },
         {
             "AbilityName": "item_black_king_bar",

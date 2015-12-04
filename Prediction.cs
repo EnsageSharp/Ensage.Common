@@ -51,6 +51,8 @@ namespace Ensage.Common
 
         private static Dictionary<float, ParticleEffect> predictionDrawings = new Dictionary<float, ParticleEffect>();
 
+        private static bool loaded;
+
         #endregion
 
         #region Fields
@@ -91,6 +93,7 @@ namespace Ensage.Common
         {
             Events.OnLoad += Events_OnLoad;
             Events.OnClose += Events_OnClose;
+            Events_OnLoad(null,null);
         }
 
         /// <summary>
@@ -329,10 +332,12 @@ namespace Ensage.Common
                 playerList = ObjectMgr.GetEntities<Player>().ToList();
                 Utils.Sleep(1000, "Prediction.SpeedTrack");
             }
+
             if (!playerList.Any())
             {
                 return;
             }
+
             var heroes = playerList.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero);
             //DrawPredictions();
             var tick = Environment.TickCount;
@@ -464,6 +469,7 @@ namespace Ensage.Common
 
         private static void Events_OnClose(object sender, EventArgs e)
         {
+            loaded = false;
             Game.OnUpdate -= SpeedTrack;
             playerList = new List<Player>();
             RotSpeedDictionary = new Dictionary<float, double>();
@@ -475,6 +481,11 @@ namespace Ensage.Common
 
         private static void Events_OnLoad(object sender, EventArgs e)
         {
+            if (loaded)
+            {
+                return;
+            }
+            loaded = true;
             playerList = new List<Player>();
             RotSpeedDictionary = new Dictionary<float, double>();
             RotTimeDictionary = new Dictionary<float, float>();

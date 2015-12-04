@@ -1122,10 +1122,17 @@ namespace Ensage.Common.Menu
             }
         }
 
+        public static Dictionary<string, Vector2> menuPositionDictionary = new Dictionary<string, Vector2>(); 
+
         internal Vector2 Position
         {
             get
             {
+                var n = this.Name + this.DisplayName;
+                if (!Utils.SleepCheck(n))
+                {
+                    return menuPositionDictionary[n];
+                }
                 int xOffset;
 
                 if (this.Parent != null)
@@ -1136,9 +1143,18 @@ namespace Ensage.Common.Menu
                 {
                     xOffset = (int)this.MyBasePosition.X;
                 }
-
-                return new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
-                       + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
+                var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
+                          + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
+                if (!menuPositionDictionary.ContainsKey(n))
+                {
+                    menuPositionDictionary.Add(n, pos);
+                }
+                else
+                {
+                    menuPositionDictionary[n] = pos;
+                }
+                Utils.Sleep(1000, n);
+                return pos;
             }
         }
 
@@ -2021,15 +2037,29 @@ namespace Ensage.Common.Menu
         {
             get
             {
+                var n = this.Parent.Name + this.DisplayName + this.Name + "position";
+                if (!Utils.SleepCheck(n))
+                {
+                    return Menu.menuPositionDictionary[n];
+                }
                 var xOffset = 0;
 
                 if (this.Parent != null)
                 {
                     xOffset = (int)(this.Parent.Position.X + this.Parent.Width);
                 }
-
-                return new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset + 1, 0)
-                       + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
+                var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset + 1, 0)
+                          + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
+                if (!Menu.menuPositionDictionary.ContainsKey(n))
+                {
+                    Menu.menuPositionDictionary.Add(n, pos);
+                }
+                else
+                {
+                    Menu.menuPositionDictionary[n] = pos;
+                }
+                Utils.Sleep(1000, n);
+                return pos;
             }
         }
 

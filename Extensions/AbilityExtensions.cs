@@ -57,7 +57,28 @@ namespace Ensage.Common.Extensions
 
         #endregion
 
+        private static readonly Dictionary<string,bool> BoolDictionary = new Dictionary<string, bool>(); 
+
         #region Public Methods and Operators
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="abilityName"></param>
+        /// <returns></returns>
+        public static bool RequiresCharges(this Ability ability, string abilityName = null)
+        {            
+            var name = abilityName ?? ability.Name;
+            try
+            {
+                return Game.FindKeyValues(name + "/ItemRequiresCharges", KeyValueSource.Ability).IntValue == 1;
+            }
+            catch (KeyValuesNotFoundException)
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         ///     Checks if given ability can be used
@@ -66,29 +87,54 @@ namespace Ensage.Common.Extensions
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
-            //Console.WriteLine((ability == null) + " " + ability.Level + " " + ability.Cooldown + " " + ((ability.Owner as Hero) == null));
+            var dictiKey = ability.Handle + "CanBeCasted";
+            if (!Utils.SleepCheck(dictiKey))
+            {
+                return BoolDictionary[dictiKey];
+            }
             try
             {
                 var owner = ability.Owner as Hero;
+                bool canBeCasted;
+                if (!BoolDictionary.ContainsKey(dictiKey))
+                {
+                    BoolDictionary.Add(dictiKey, false);
+                }
                 if (owner == null)
                 {
-                    return ability.Level > 0 && ability.Cooldown <= 0;
+                    //if (ability.RequiresCharges())
+                    //{
+                    //    canBeCasted = ability.Level > 0 && ability.IsInIndefiniteCooldown <= 0;
+                    //}
+                    canBeCasted = ability.Level > 0 && ability.Cooldown <= 0;
+                    BoolDictionary[dictiKey] = canBeCasted;
+                    Utils.Sleep(100, dictiKey);
+                    return canBeCasted;
                 }
                 if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
-                    return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                    canBeCasted = ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                    BoolDictionary[dictiKey] = canBeCasted;
+                    Utils.Sleep(100, dictiKey);
+                    return canBeCasted;
                 }
                 var name = ability.Name;
                 if (name != "invoker_invoke" && name != "invoker_quas" && name != "invoker_wex"
                     && name != "invoker_exort" && ability.AbilitySlot != AbilitySlot.Slot_4
                     && ability.AbilitySlot != AbilitySlot.Slot_5)
                 {
+                    BoolDictionary[dictiKey] = false;
+                    Utils.Sleep(100, dictiKey);
                     return false;
                 }
-                return ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                canBeCasted = ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                BoolDictionary[dictiKey] = canBeCasted;
+                Utils.Sleep(100, dictiKey);
+                return canBeCasted;
             }
             catch (Exception)
             {
+                //Console.WriteLine(e.GetBaseException());
                 return false;
             }
         }
