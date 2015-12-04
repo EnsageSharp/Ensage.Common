@@ -347,8 +347,23 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanMove(this Unit unit)
         {
-            return !IsRooted(unit) && !IsStunned(unit)
-                   && unit.Modifiers.All(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
+            var n = unit.Handle + "CanMove";
+            if (!Utils.SleepCheck(n))
+            {
+                return BoolDictionary[n];
+            }
+            var canMove = !IsRooted(unit) && !IsStunned(unit)
+                          && unit.Modifiers.All(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
+            if (!BoolDictionary.ContainsKey(n))
+            {
+                BoolDictionary.Add(n, canMove);
+            }
+            else
+            {
+                BoolDictionary[n] = canMove;
+            }
+            Utils.Sleep(150, n);
+            return canMove;
         }
 
         /// <summary>
