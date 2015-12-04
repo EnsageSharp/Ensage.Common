@@ -322,13 +322,12 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanUseItems(this Unit unit)
         {
-            return !IsStunned(unit) && unit.IsAlive
+            return !IsStunned(unit) && !IsHexed(unit) && unit.IsAlive
                    && !unit.Modifiers.Any(
                        x =>
-                       x.Name == "modifier_sheepstick_debuff" || x.Name == "modifier_doom_bringer_doom"
-                       || x.Name == "modifier_legion_commander_duel" || x.Name == "modifier_tusk_snowball_movement"
-                       || x.Name == "modifier_tusk_snowball_movement_friendly"
-                       || x.Name == "modifier_enigma_black_hole_pull"
+                       x.Name == "modifier_doom_bringer_doom" || x.Name == "modifier_legion_commander_duel"
+                       || x.Name == "modifier_tusk_snowball_movement" || x.Name == "modifier_axe_berserkers_call"
+                       || x.Name == "modifier_phoenix_supernova_hiding" 
                        || (x.Name == "modifier_disruptor_static_storm"
                            && ObjectMgr.GetEntities<Hero>()
                                   .Any(y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor && y.AghanimState())));
