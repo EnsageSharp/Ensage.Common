@@ -745,7 +745,8 @@
             "SpellLevel": "invoker_exort"
         },
         {
-            "AbilityName": "warlock_shadow_word"
+            "AbilityName": "warlock_shadow_word",
+            "IsHeal": true
         },
         {
             "AbilityName": "centaur_double_edge",
@@ -1129,6 +1130,10 @@
         },
         {
             "AbilityName": "omniknight_repel",
+            "IsShield": true
+        },
+        {
+            "AbilityName": "omniknight_guardian_angel",
             "IsShield": true
         },
         {

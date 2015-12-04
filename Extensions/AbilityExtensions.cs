@@ -87,6 +87,10 @@ namespace Ensage.Common.Extensions
         /// <returns>returns true in case ability can be used</returns>
         public static bool CanBeCasted(this Ability ability)
         {
+            if (ability == null)
+            {
+                return false;
+            }
             var dictiKey = ability.Handle + "CanBeCasted";
             if (!Utils.SleepCheck(dictiKey))
             {
@@ -578,6 +582,7 @@ namespace Ensage.Common.Extensions
                 }
                 return castRange + bonusRange + 100;
             }
+            
             var radius = 0f;
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))

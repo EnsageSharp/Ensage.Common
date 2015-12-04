@@ -342,7 +342,7 @@ namespace Ensage.Common
             //DrawPredictions();
             var tick = Environment.TickCount;
             var tempTable = new List<Prediction>(TrackTable);
-            foreach (var unit in heroes)
+            foreach (var unit in heroes.Where(x => x.IsValid))
             {
                 var data =
                     tempTable.FirstOrDefault(

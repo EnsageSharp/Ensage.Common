@@ -122,6 +122,8 @@ namespace Ensage.Common.Extensions
     {
         #region Static Fields
 
+        private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
+
         private static readonly List<ExternalDmgAmps> ExternalDmgAmps = new List<ExternalDmgAmps>();
 
         private static readonly List<ExternalDmgReductions> ExternalDmgReductions = new List<ExternalDmgReductions>();
@@ -254,7 +256,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool AghanimState(this Unit hero)
         {
-            return hero.Modifiers.Any(x => x.Name.StartsWith("modifier_item_ultimate_scepter"));    
+            return hero.Modifiers.Any(x => x.Name.StartsWith("modifier_item_ultimate_scepter"));
         }
 
         /// <summary>
@@ -295,13 +297,47 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanGoInvis(this Unit unit)
         {
-            var invis =
-                unit.Spellbook.Spells.FirstOrDefault(
-                    x => x.Name == "bounty_hunter_wind_walk" || x.Name == "clinkz_skeleton_walk")
-                ?? unit.Inventory.Items.FirstOrDefault(
-                    x => x.Name == "item_invis_sword" || x.Name == "item_silver_edge" || x.Name == "item_glimmer_cape");
-            var riki = FindSpell(unit, "riki_permanent_invisibility");
-            return (invis != null && invis.CanBeCasted()) || (riki != null && riki.Level > 0);
+            var n = unit.Handle + "CanGoInvis";
+            if (!Utils.SleepCheck(n))
+            {
+                return BoolDictionary[n];
+            }
+            Ability invis = null;
+            Ability riki = null;
+            foreach (var x in unit.Spellbook.Spells)
+            {
+                var name = x.Name;
+                if (name == "bounty_hunter_wind_walk" || name == "clinkz_skeleton_walk"
+                    || name == "templar_assassin_meld")
+                {
+                    invis = x;
+                    break;
+                }
+                if (name == "riki_permanent_invisibility")
+                {
+                    riki = x;
+                }
+            }
+
+            if (invis == null)
+            {
+                invis =
+                    unit.Inventory.Items.FirstOrDefault(
+                        x =>
+                        x.Name == "item_invis_sword" || x.Name == "item_silver_edge" || x.Name == "item_glimmer_cape");
+            }
+            var canGoInvis = (invis != null && unit.CanCast() && invis.CanBeCasted())
+                             || (riki != null && riki.Level > 0 && !unit.IsSilenced());
+            if (!BoolDictionary.ContainsKey(n))
+            {
+                BoolDictionary.Add(n, canGoInvis);
+            }
+            else
+            {
+                BoolDictionary[n] = canGoInvis;
+            }
+            Utils.Sleep(150, n);
+            return canGoInvis;
         }
 
         /// <summary>
@@ -311,8 +347,23 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanMove(this Unit unit)
         {
-            return !IsRooted(unit) && !IsStunned(unit)
-                   && unit.Modifiers.All(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
+            var n = unit.Handle + "CanMove";
+            if (!Utils.SleepCheck(n))
+            {
+                return BoolDictionary[n];
+            }
+            var canMove = !IsRooted(unit) && !IsStunned(unit)
+                          && unit.Modifiers.All(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
+            if (!BoolDictionary.ContainsKey(n))
+            {
+                BoolDictionary.Add(n, canMove);
+            }
+            else
+            {
+                BoolDictionary[n] = canMove;
+            }
+            Utils.Sleep(150, n);
+            return canMove;
         }
 
         /// <summary>
@@ -322,16 +373,17 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanUseItems(this Unit unit)
         {
-            return !IsStunned(unit) && unit.IsAlive
-                   && !unit.Modifiers.Any(
-                       x =>
-                       x.Name == "modifier_sheepstick_debuff" || x.Name == "modifier_doom_bringer_doom"
-                       || x.Name == "modifier_legion_commander_duel" || x.Name == "modifier_tusk_snowball_movement"
-                       || x.Name == "modifier_tusk_snowball_movement_friendly"
-                       || x.Name == "modifier_enigma_black_hole_pull"
-                       || (x.Name == "modifier_disruptor_static_storm"
-                           && ObjectMgr.GetEntities<Hero>()
-                                  .Any(y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor && y.AghanimState())));
+            return !unit.IsUnitState(UnitState.Muted) && !IsStunned(unit) && unit.IsAlive;
+            //return !IsStunned(unit) && unit.IsAlive
+            //       && !unit.Modifiers.Any(
+            //           x =>
+            //           x.Name == "modifier_sheepstick_debuff" || x.Name == "modifier_doom_bringer_doom"
+            //           || x.Name == "modifier_legion_commander_duel" || x.Name == "modifier_tusk_snowball_movement"
+            //           || x.Name == "modifier_tusk_snowball_movement_friendly"
+            //           || x.Name == "modifier_enigma_black_hole_pull"
+            //           || (x.Name == "modifier_disruptor_static_storm"
+            //               && ObjectMgr.GetEntities<Hero>()
+            //                      .Any(y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor && y.AghanimState())));
         }
 
         /// <summary>
