@@ -254,8 +254,8 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool AghanimState(this Unit hero)
         {
-            return hero.FindItem("item_ultimate_scepter") != null
-                   || hero.Modifiers.Any(x => x.Name == "modifier_item_ultimate_scepter_consumed");
+            return hero.Modifiers.Any(x => x.Name.Length >= 30 
+                   && x.Name.Substring(0, 30) == "modifier_item_ultimate_scepter");    
         }
 
         /// <summary>
