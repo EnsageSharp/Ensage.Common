@@ -1140,7 +1140,8 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool IsLinkensProtected(this Unit hero)
         {
-            return (hero.FindItem("item_sphere") != null && hero.FindItem("item_sphere").Cooldown == 0)
+            var linkensphere = hero.FindItem("item_sphere");
+            return (linkensphere != null && linkensphere.Cooldown == 0)
                     || hero.Modifiers.Any(x => x.Name == "modifier_item_sphere_target");
         }
 
