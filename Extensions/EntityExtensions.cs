@@ -1138,6 +1138,17 @@ namespace Ensage.Common.Extensions
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
+        public static bool IsLinkensProtected(this Unit hero)
+        {
+            var linkensphere = hero.FindItem("item_sphere");
+            return (linkensphere != null && linkensphere.Cooldown == 0)
+                    || hero.Modifiers.Any(x => x.Name == "modifier_item_sphere_target");
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static bool IsMagicImmune(this Unit unit)
         {
             return IsUnitState(unit, UnitState.MagicImmune);
