@@ -106,10 +106,17 @@ namespace Ensage.Common.Extensions
                 }
                 if (owner == null)
                 {
-                    //if (ability.RequiresCharges())
-                    //{
-                    //    canBeCasted = ability.Level > 0 && ability.IsInIndefiniteCooldown <= 0;
-                    //}
+                    if (ability.RequiresCharges())
+                    {
+                        var item = ability as Item;
+                        if (item != null)
+                        {
+                            canBeCasted = ability.Level > 0 && item.CurrentCharges > 0;
+                            BoolDictionary[dictiKey] = canBeCasted;
+                            Utils.Sleep(100, dictiKey);
+                            return canBeCasted;
+                        }
+                    }
                     canBeCasted = ability.Level > 0 && ability.Cooldown <= 0;
                     BoolDictionary[dictiKey] = canBeCasted;
                     Utils.Sleep(100, dictiKey);
@@ -117,6 +124,14 @@ namespace Ensage.Common.Extensions
                 }
                 if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
+                    var item = ability as Item;
+                    if (item != null && item.IsRequiringCharges)
+                    {
+                        canBeCasted = ability.Level > 0 && item.CurrentCharges > 0;
+                        BoolDictionary[dictiKey] = canBeCasted;
+                        Utils.Sleep(100, dictiKey);
+                        return canBeCasted;
+                    }
                     canBeCasted = ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                     BoolDictionary[dictiKey] = canBeCasted;
                     Utils.Sleep(100, dictiKey);
@@ -138,7 +153,7 @@ namespace Ensage.Common.Extensions
             }
             catch (Exception)
             {
-                //Console.WriteLine(e.GetBaseException());
+               // Console.WriteLine(e.GetBaseException());
                 return false;
             }
         }
