@@ -34,6 +34,8 @@ namespace Ensage.Common.Menu
 
     using Ensage.Common.Menu.NotificationData;
 
+    /// <summary>
+    /// </summary>
     public class Notifications
     {
         #region Static Fields
@@ -176,6 +178,10 @@ namespace Ensage.Common.Menu
             return array[array.Count - 0x1] + 0x1E;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
         public static int GetLocation(FileStream stream)
         {
             var i = stream.Name;

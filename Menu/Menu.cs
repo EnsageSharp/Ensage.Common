@@ -276,6 +276,8 @@ namespace Ensage.Common.Menu
     {
         #region Fields
 
+        /// <summary>
+        /// </summary>
         public bool DefaultValues;
 
         /// <summary>
@@ -395,28 +397,47 @@ namespace Ensage.Common.Menu
         #endregion
     }
 
+    /// <summary>
+    /// </summary>
     public enum KeyBindType
     {
+        /// <summary>
+        /// </summary>
         Toggle,
 
+        /// <summary>
+        /// </summary>
         Press
     }
 
+    /// <summary>
+    /// </summary>
     [Serializable]
     public struct KeyBind
     {
         #region Fields
 
+        /// <summary>
+        /// </summary>
         public bool Active;
 
+        /// <summary>
+        /// </summary>
         public uint Key;
 
+        /// <summary>
+        /// </summary>
         public KeyBindType Type;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="type"></param>
+        /// <param name="defaultValue"></param>
         public KeyBind(uint key, KeyBindType type, bool defaultValue = false)
         {
             this.Key = key;
@@ -487,12 +508,18 @@ namespace Ensage.Common.Menu
         #endregion
     }
 
+    /// <summary>
+    /// </summary>
     public static class MenuGlobals
     {
         #region Static Fields
 
+        /// <summary>
+        /// </summary>
         public static bool DrawMenu;
 
+        /// <summary>
+        /// </summary>
         public static List<string> MenuState = new List<string>();
 
         #endregion
@@ -854,6 +881,10 @@ namespace Ensage.Common.Menu
 
         /// <summary>
         /// </summary>
+        public static Dictionary<string, Vector2> menuPositionDictionary = new Dictionary<string, Vector2>();
+
+        /// <summary>
+        /// </summary>
         public static Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
         /// <summary>
@@ -1006,6 +1037,8 @@ namespace Ensage.Common.Menu
             }
         }
 
+        /// <summary>
+        /// </summary>
         ~Menu()
         {
             var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
@@ -1122,8 +1155,6 @@ namespace Ensage.Common.Menu
             }
         }
 
-        public static Dictionary<string, Vector2> menuPositionDictionary = new Dictionary<string, Vector2>(); 
-
         internal Vector2 Position
         {
             get
@@ -1228,19 +1259,31 @@ namespace Ensage.Common.Menu
 
         #region Public Methods and Operators
 
-        public static Menu GetMenu(string Assemblyname, string menuname)
+        /// <summary>
+        /// </summary>
+        /// <param name="assemblyname"></param>
+        /// <param name="menuname"></param>
+        /// <returns></returns>
+        public static Menu GetMenu(string assemblyname, string menuname)
         {
-            var menu = RootMenus.FirstOrDefault(x => x.Key == Assemblyname + "." + menuname).Value;
+            var menu = RootMenus.FirstOrDefault(x => x.Key == assemblyname + "." + menuname).Value;
             return menu;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="assemblyname"></param>
+        /// <param name="menuname"></param>
+        /// <param name="itemname"></param>
+        /// <param name="submenu"></param>
+        /// <returns></returns>
         public static MenuItem GetValueGlobally(
-            string Assemblyname,
+            string assemblyname,
             string menuname,
             string itemname,
             string submenu = null)
         {
-            var menu = RootMenus.FirstOrDefault(x => x.Key == Assemblyname + "." + menuname).Value;
+            var menu = RootMenus.FirstOrDefault(x => x.Key == assemblyname + "." + menuname).Value;
 
             if (submenu != null)
             {
@@ -1252,6 +1295,10 @@ namespace Ensage.Common.Menu
             return menuitem;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="message"></param>
         public static void SendMessage(uint key, Utils.WindowsMessages message)
         {
             foreach (var menu in RootMenus)
@@ -1260,6 +1307,10 @@ namespace Ensage.Common.Menu
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public MenuItem AddItem(MenuItem item)
         {
             item.Parent = this;
@@ -1269,6 +1320,10 @@ namespace Ensage.Common.Menu
             return item;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="subMenu"></param>
+        /// <returns></returns>
         public Menu AddSubMenu(Menu subMenu)
         {
             subMenu.Parent = this;
@@ -1277,6 +1332,8 @@ namespace Ensage.Common.Menu
             return subMenu;
         }
 
+        /// <summary>
+        /// </summary>
         public void AddToMainMenu()
         {
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
@@ -1285,6 +1342,11 @@ namespace Ensage.Common.Menu
             Game.OnWndProc += this.Game_OnWndProc;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="makeChampionUniq"></param>
+        /// <returns></returns>
         public MenuItem Item(string name, bool makeChampionUniq = false)
         {
             if (makeChampionUniq)
@@ -1302,6 +1364,8 @@ namespace Ensage.Common.Menu
             return tempItem;
         }
 
+        /// <summary>
+        /// </summary>
         public void RemoveFromMainMenu()
         {
             try
@@ -1321,6 +1385,9 @@ namespace Ensage.Common.Menu
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="name"></param>
         public void RemoveSubMenu(string name)
         {
             var subMenu = this.Children.FirstOrDefault(x => x.Name == name);
@@ -1332,6 +1399,11 @@ namespace Ensage.Common.Menu
             this.Children.Remove(subMenu);
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="fontStyle"></param>
+        /// <param name="fontColor"></param>
+        /// <returns></returns>
         public Menu SetFontStyle(FontStyle fontStyle = FontStyle.Regular, SharpDX.Color? fontColor = null)
         {
             this.Style = fontStyle;
@@ -1340,6 +1412,10 @@ namespace Ensage.Common.Menu
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Menu SubMenu(string name)
         {
             //Search in submenus and if it doesn't exist add it.
@@ -1801,6 +1877,8 @@ namespace Ensage.Common.Menu
         HeroToggler
     }
 
+    /// <summary>
+    /// </summary>
     public class OnValueChangeEventArgs
     {
         #region Fields
@@ -1871,27 +1949,43 @@ namespace Ensage.Common.Menu
         /// </summary>
         public ColorBGRA FontColor;
 
+        /// <summary>
+        /// </summary>
         public FontStyle FontStyle;
 
+        /// <summary>
+        /// </summary>
         public int MenuFontSize;
 
+        /// <summary>
+        /// </summary>
         public string Name;
 
+        /// <summary>
+        /// </summary>
         public Menu Parent;
 
+        /// <summary>
+        /// </summary>
         public bool ShowItem;
 
+        /// <summary>
+        /// </summary>
         public int Tag;
 
+        /// <summary>
+        /// </summary>
         public string Tooltip;
 
+        /// <summary>
+        /// </summary>
         public SharpDX.Color TooltipColor;
-
-        internal bool _valueSet;
 
         internal bool DrawingTooltip;
 
         internal bool Interacting;
+
+        internal bool ValueSet;
 
         internal MenuValueType ValueType;
 
@@ -1911,6 +2005,11 @@ namespace Ensage.Common.Menu
 
         #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="displayName"></param>
+        /// <param name="makeChampionUniq"></param>
         public MenuItem(string name, string displayName, bool makeChampionUniq = false)
         {
             if (makeChampionUniq)
@@ -1932,12 +2031,16 @@ namespace Ensage.Common.Menu
 
         #region Public Events
 
+        /// <summary>
+        /// </summary>
         public event EventHandler<OnValueChangeEventArgs> ValueChanged;
 
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        /// </summary>
         public int TooltipDuration
         {
             get
@@ -2117,17 +2220,27 @@ namespace Ensage.Common.Menu
 
         #region Public Methods and Operators
 
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
         public MenuItem DontSave()
         {
             this._dontSave = true;
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T GetValue<T>()
         {
             return (T)this._value;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
         public bool IsActive()
         {
             switch (this.ValueType)
@@ -2140,6 +2253,11 @@ namespace Ensage.Common.Menu
             return false;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="fontStyle"></param>
+        /// <param name="fontColor"></param>
+        /// <returns></returns>
         public MenuItem SetFontStyle(FontStyle fontStyle = FontStyle.Regular, SharpDX.Color? fontColor = null)
         {
             this.FontStyle = fontStyle;
@@ -2148,12 +2266,19 @@ namespace Ensage.Common.Menu
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
         public MenuItem SetShared()
         {
             this._isShared = true;
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public MenuItem SetTag(int tag = 0)
         {
             this.Tag = tag;
@@ -2161,6 +2286,11 @@ namespace Ensage.Common.Menu
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="tooltip"></param>
+        /// <param name="tooltipColor"></param>
+        /// <returns></returns>
         public MenuItem SetTooltip(string tooltip, SharpDX.Color? tooltipColor = null)
         {
             this.Tooltip = tooltip;
@@ -2168,6 +2298,11 @@ namespace Ensage.Common.Menu
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="newValue"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public MenuItem SetValue<T>(T newValue)
         {
             this.ValueType = MenuValueType.None;
@@ -2217,7 +2352,7 @@ namespace Ensage.Common.Menu
             var v = newValue;
             try
             {
-                if (!this._valueSet && readBytes != null)
+                if (!this.ValueSet && readBytes != null)
                 {
                     switch (this.ValueType)
                     {
@@ -2313,7 +2448,7 @@ namespace Ensage.Common.Menu
 
             OnValueChangeEventArgs valueChangedEvent = null;
 
-            if (this._valueSet)
+            if (this.ValueSet)
             {
                 var handler = this.ValueChanged;
                 if (handler != null)
@@ -2334,7 +2469,7 @@ namespace Ensage.Common.Menu
             {
                 this._value = newValue;
             }
-            this._valueSet = true;
+            this.ValueSet = true;
             //try
             //{
             this._serialized = Utils.Serialize(this._value);
@@ -2346,6 +2481,10 @@ namespace Ensage.Common.Menu
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="showItem"></param>
+        /// <returns></returns>
         public MenuItem Show(bool showItem = true)
         {
             this.ShowItem = showItem;
@@ -2353,6 +2492,9 @@ namespace Ensage.Common.Menu
             return this;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="hide"></param>
         public void ShowTooltip(bool hide = false)
         {
             if (!string.IsNullOrEmpty(this.Tooltip))
@@ -2361,7 +2503,9 @@ namespace Ensage.Common.Menu
             }
         }
 
-        public void ShowTooltip_Notification()
+        /// <summary>
+        /// </summary>
+        public void ShowTooltipNotification()
         {
             if (!string.IsNullOrEmpty(this.Tooltip))
             {

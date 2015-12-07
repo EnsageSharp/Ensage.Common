@@ -22,6 +22,8 @@
 
 namespace Ensage.Common.Menu.NotificationData
 {
+    /// <summary>
+    /// </summary>
     public interface INotification
     {
         #region Public Methods and Operators

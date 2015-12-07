@@ -49,6 +49,8 @@ namespace Ensage.Common.Extensions
         private static readonly Dictionary<string, AbilityBehavior> AbilityBehaviorDictionary =
             new Dictionary<string, AbilityBehavior>();
 
+        private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
+
         private static readonly Dictionary<string, double> CastPointDictionary = new Dictionary<string, double>();
 
         private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
@@ -57,28 +59,7 @@ namespace Ensage.Common.Extensions
 
         #endregion
 
-        private static readonly Dictionary<string,bool> BoolDictionary = new Dictionary<string, bool>(); 
-
         #region Public Methods and Operators
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
-        public static bool RequiresCharges(this Ability ability, string abilityName = null)
-        {            
-            var name = abilityName ?? ability.Name;
-            try
-            {
-                return Game.FindKeyValues(name + "/ItemRequiresCharges", KeyValueSource.Ability).IntValue == 1;
-            }
-            catch (KeyValuesNotFoundException)
-            {
-                return false;
-            }
-        }
 
         /// <summary>
         ///     Checks if given ability can be used
@@ -153,7 +134,7 @@ namespace Ensage.Common.Extensions
             }
             catch (Exception)
             {
-               // Console.WriteLine(e.GetBaseException());
+                // Console.WriteLine(e.GetBaseException());
                 return false;
             }
         }
@@ -597,7 +578,7 @@ namespace Ensage.Common.Extensions
                 }
                 return castRange + bonusRange + 100;
             }
-            
+
             var radius = 0f;
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
@@ -692,20 +673,28 @@ namespace Ensage.Common.Extensions
             }
             var speed = ability.GetProjectileSpeed(name);
             var radius = ability.GetRadius(name);
-            var xyz = Prediction.SkillShotXYZ(
-                owner,
-                target,
-                (float)((delay + owner.GetTurnTime(target.Position)) * 1000),
-                speed,
-                radius);
-            if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
+            Vector3 xyz;
+            if (speed > 0 && speed < 6000)
             {
                 xyz = Prediction.SkillShotXYZ(
                     owner,
                     target,
-                    (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000),
+                    (float)((delay + owner.GetTurnTime(target.Position)) * 1000),
                     speed,
                     radius);
+                if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
+                {
+                    xyz = Prediction.SkillShotXYZ(
+                        owner,
+                        target,
+                        (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000),
+                        speed,
+                        radius);
+                }
+            }
+            else
+            {
+                xyz = Prediction.PredictedXYZ(target, (float)(delay * 1000));
             }
             return xyz;
         }
@@ -796,7 +785,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="ability"></param>
         /// <param name="abilityName"></param>
@@ -858,6 +846,24 @@ namespace Ensage.Common.Extensions
             data = ability.AbilityBehavior;
             AbilityBehaviorDictionary.Add(name, data);
             return data.HasFlag(flag);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="abilityName"></param>
+        /// <returns></returns>
+        public static bool RequiresCharges(this Ability ability, string abilityName = null)
+        {
+            var name = abilityName ?? ability.Name;
+            try
+            {
+                return Game.FindKeyValues(name + "/ItemRequiresCharges", KeyValueSource.Ability).IntValue == 1;
+            }
+            catch (KeyValuesNotFoundException)
+            {
+                return false;
+            }
         }
 
         #endregion

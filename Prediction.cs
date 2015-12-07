@@ -47,11 +47,11 @@ namespace Ensage.Common
         /// </summary>
         public static List<Prediction> TrackTable = new List<Prediction>();
 
+        private static bool loaded;
+
         private static List<Player> playerList = new List<Player>();
 
         private static Dictionary<float, ParticleEffect> predictionDrawings = new Dictionary<float, ParticleEffect>();
-
-        private static bool loaded;
 
         #endregion
 
@@ -93,7 +93,7 @@ namespace Ensage.Common
         {
             Events.OnLoad += Events_OnLoad;
             Events.OnClose += Events_OnClose;
-            Events_OnLoad(null,null);
+            Events_OnLoad(null, null);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Ensage.Common
             {
                 return unit.Position;
             }
-            var v = unit.Position + targetSpeed * delay;
+            var v = unit.Position + targetSpeed * (float)delay;
             return new Vector3(v.X, v.Y, 0);
         }
 

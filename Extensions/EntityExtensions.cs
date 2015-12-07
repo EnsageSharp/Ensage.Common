@@ -122,13 +122,13 @@ namespace Ensage.Common.Extensions
     {
         #region Static Fields
 
+        private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
+
         private static readonly List<ExternalDmgAmps> ExternalDmgAmps = new List<ExternalDmgAmps>();
 
         private static readonly List<ExternalDmgReductions> ExternalDmgReductions = new List<ExternalDmgReductions>();
 
         private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
-
-        private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
 
         #endregion
 
@@ -256,7 +256,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool AghanimState(this Unit hero)
         {
-            return hero.Modifiers.Any(x => x.Name.StartsWith("modifier_item_ultimate_scepter"));    
+            return hero.Modifiers.Any(x => x.Name.StartsWith("modifier_item_ultimate_scepter"));
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Ensage.Common.Extensions
                        x =>
                        x.Name == "modifier_doom_bringer_doom" || x.Name == "modifier_legion_commander_duel"
                        || x.Name == "modifier_tusk_snowball_movement" || x.Name == "modifier_axe_berserkers_call"
-                       || x.Name == "modifier_phoenix_supernova_hiding" 
+                       || x.Name == "modifier_phoenix_supernova_hiding"
                        || (x.Name == "modifier_disruptor_static_storm"
                            && ObjectMgr.GetEntities<Hero>()
                                   .Any(y => y.ClassID == ClassID.CDOTA_Unit_Hero_Disruptor && y.AghanimState())));
@@ -1136,13 +1136,13 @@ namespace Ensage.Common.Extensions
 
         /// <summary>
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="hero"></param>
         /// <returns></returns>
         public static bool IsLinkensProtected(this Unit hero)
         {
             var linkensphere = hero.FindItem("item_sphere");
             return (linkensphere != null && linkensphere.Cooldown == 0)
-                    || hero.Modifiers.Any(x => x.Name == "modifier_item_sphere_target");
+                   || hero.Modifiers.Any(x => x.Name == "modifier_item_sphere_target");
         }
 
         /// <summary>

@@ -556,7 +556,7 @@ namespace Ensage.Common.AbilityInfo
             {
                 type = DamageType.Magical;
             }
-            
+
             //Console.WriteLine(ability.Name.Substring(0, "item_dagon".Length));
             return type;
         }

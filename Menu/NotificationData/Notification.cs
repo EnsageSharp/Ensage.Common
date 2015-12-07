@@ -205,16 +205,28 @@ namespace Ensage.Common.Menu.NotificationData
 
         #region Enums
 
+        /// <summary>
+        /// </summary>
         public enum NotificationState
         {
+            /// <summary>
+            /// </summary>
             Idle,
 
+            /// <summary>
+            /// </summary>
             AnimationMove,
 
+            /// <summary>
+            /// </summary>
             AnimationShowShrink,
 
+            /// <summary>
+            /// </summary>
             AnimationShowMove,
 
+            /// <summary>
+            /// </summary>
             AnimationShowGrow
         }
 
@@ -385,6 +397,8 @@ namespace Ensage.Common.Menu.NotificationData
             #endregion
         }
 
+        /// <summary>
+        /// </summary>
         public void OnPostReset()
         {
             this.line.OnResetDevice();
@@ -392,6 +406,8 @@ namespace Ensage.Common.Menu.NotificationData
             this.sprite.OnResetDevice();
         }
 
+        /// <summary>
+        /// </summary>
         public void OnPreReset()
         {
             this.Font.OnLostDevice();
