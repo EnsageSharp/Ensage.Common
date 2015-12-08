@@ -300,7 +300,7 @@ namespace Ensage.Common.Extensions
         {
             var cullingBlade = sourceAbilityName != null && sourceAbilityName == "axe_culling_blade";
             return (!ignoreReincarnation && !unit.CanReincarnate())
-                   || !unit.Modifiers.Any(
+                   && !unit.Modifiers.Any(
                        x =>
                        (!cullingBlade && x.Name == "modifier_dazzle_shallow_grave")
                        || x.Name == "modifier_skeleton_king_reincarnation_scepter_active"
