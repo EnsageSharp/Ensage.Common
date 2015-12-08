@@ -61,6 +61,26 @@ namespace Ensage.Common.Extensions
 
         #region Public Methods and Operators
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="type"></param>
+        /// <param name="abilityName"></param>
+        /// <returns></returns>
+        public static bool IsAbilityType(this Ability ability, AbilityType type, string abilityName = null)
+        {
+            var name = abilityName ?? ability.Name;
+            var n = name + "abilityType" + type.ToString();
+            if (BoolDictionary.ContainsKey(n))
+            {
+                return BoolDictionary[n];
+            }
+            var value = ability.AbilityType == type;
+            BoolDictionary.Add(n, value);
+            return value;
+        }
         /// <summary>
         ///     Checks if given ability can be used
         /// </summary>
@@ -88,13 +108,10 @@ namespace Ensage.Common.Extensions
                 if (owner == null)
                 {
                     canBeCasted = ability.Level > 0 && ability.Cooldown <= 0;
-                    if (ability.RequiresCharges())
+                    var item = ability as Item;
+                    if (item != null && item.IsRequiringCharges)
                     {
-                        var item = ability as Item;
-                        if (item != null)
-                        {
-                            canBeCasted = canBeCasted && item.CurrentCharges > 0;
-                        }
+                        canBeCasted = canBeCasted && item.CurrentCharges > 0;
                     }
                     BoolDictionary[dictiKey] = canBeCasted;
                     Utils.Sleep(100, dictiKey);
@@ -103,13 +120,10 @@ namespace Ensage.Common.Extensions
                 if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
                     canBeCasted = ability.AbilityState == AbilityState.Ready && ability.Level > 0;
-                    if (ability.RequiresCharges())
+                    var item = ability as Item;
+                    if (item != null && item.IsRequiringCharges)
                     {
-                        var item = ability as Item;
-                        if (item != null)
-                        {
-                            canBeCasted = canBeCasted && item.CurrentCharges > 0;
-                        }
+                        canBeCasted = canBeCasted && item.CurrentCharges > 0;
                     }
                     BoolDictionary[dictiKey] = canBeCasted;
                     Utils.Sleep(100, dictiKey);
