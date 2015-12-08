@@ -32,7 +32,7 @@ namespace Ensage.Common.Extensions
 
         public string Amp;
 
-        public ClassID HeroID;
+        public ClassID HeroId;
 
         public string ModifierName;
 
@@ -55,14 +55,14 @@ namespace Ensage.Common.Extensions
             double sourceTeam,
             string amp,
             string sourceSpellName,
-            ClassID heroID,
+            ClassID heroId,
             DamageType type)
         {
             this.ModifierName = modifierName;
             this.SourceTeam = sourceTeam;
             this.Amp = amp;
             this.SourceSpellName = sourceSpellName;
-            this.HeroID = heroID;
+            this.HeroId = heroId;
             this.Type = type;
         }
 
@@ -100,7 +100,7 @@ namespace Ensage.Common.Extensions
             double sourceTeam,
             string reduce,
             string sourceSpellName,
-            ClassID heroID,
+            ClassID heroId,
             float type,
             bool magicOnly)
         {
@@ -108,7 +108,7 @@ namespace Ensage.Common.Extensions
             this.SourceTeam = sourceTeam;
             this.Reduce = reduce;
             this.SourceSpellName = sourceSpellName;
-            this.HeroID = heroID;
+            this.HeroID = heroId;
             this.Type = type;
             this.MagicOnly = magicOnly;
         }
@@ -140,7 +140,7 @@ namespace Ensage.Common.Extensions
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_shadow_demon_soul_catcher", SourceTeam = -1, Amp = "bonus_damage_taken",
-                        SourceSpellName = "shadow_demon_soul_catcher", HeroID = ClassID.CDOTA_Unit_Hero_Shadow_Demon,
+                        SourceSpellName = "shadow_demon_soul_catcher", HeroId = ClassID.CDOTA_Unit_Hero_Shadow_Demon,
                         Type = DamageType.Pure
                     });
 
@@ -148,7 +148,7 @@ namespace Ensage.Common.Extensions
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_bloodseeker_bloodrage", SourceTeam = -2, Amp = "damage_increase_pct",
-                        SourceSpellName = "bloodseeker_bloodrage", HeroID = ClassID.CDOTA_Unit_Hero_Bloodseeker,
+                        SourceSpellName = "bloodseeker_bloodrage", HeroId = ClassID.CDOTA_Unit_Hero_Bloodseeker,
                         Type = DamageType.Pure
                     });
 
@@ -291,6 +291,23 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="sourceAbilityName"></param>
+        /// <param name="ignoreReincarnation"></param>
+        /// <returns></returns>
+        public static bool CanDie(this Unit unit, string sourceAbilityName = null, bool ignoreReincarnation = false)
+        {
+            var cullingBlade = sourceAbilityName != null && sourceAbilityName == "axe_culling_blade";
+            return (!ignoreReincarnation && unit.CanReincarnate())
+                   || unit.Modifiers.Any(
+                       x =>
+                       (!cullingBlade && x.Name == "modifier_dazzle_shallow_grave")
+                       || x.Name == "modifier_skeleton_king_reincarnation_scepter_active"
+                       || x.Name == "modifier_oracle_purifying_flames");
+        }
+
+        /// <summary>
         ///     Checks if given unit can become invisible
         /// </summary>
         /// <param name="unit"></param>
@@ -364,6 +381,15 @@ namespace Ensage.Common.Extensions
             }
             Utils.Sleep(150, n);
             return canMove;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool CanReincarnate(this Unit unit)
+        {
+            return unit.FindItem("item_aegis") != null || unit.FindSpell("skeleton_king_reincarnation").CanBeCasted();
         }
 
         /// <summary>
