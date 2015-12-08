@@ -37,7 +37,8 @@
         },
         {
             "AbilityName": "chaos_knight_reality_rift",
-            "IsNuke": true
+            "IsNuke": true,
+            "DamageString": "bonus_damage"
         },
         {
             "AbilityName": "skywrath_mage_mystic_flare",

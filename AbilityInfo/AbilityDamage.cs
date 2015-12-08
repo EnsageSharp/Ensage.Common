@@ -501,60 +501,65 @@ namespace Ensage.Common.AbilityInfo
         public static DamageType GetDamageType(Ability ability)
         {
             var type = ability.DamageType;
-            if (ability.Name == "abaddon_aphotiv_shield")
+            var name = ability.Name;
+            if (name == "abaddon_aphotic_shield")
             {
                 type = DamageType.Magical;
             }
-            else if (ability.Name == "meepo_poof")
+            else if (name == "meepo_poof")
             {
                 type = DamageType.Magical;
             }
-            else if (ability.Name == "axe_culling_blade")
+            else if (name == "axe_culling_blade")
             {
                 type = DamageType.Pure;
             }
-            else if (ability.Name == "invoker_sun_strinke")
+            else if (name == "invoker_sun_strinke")
             {
                 type = DamageType.Pure;
             }
-            else if (ability.Name == "alchemist_unstable_concoction_throw")
+            else if (name == "alchemist_unstable_concoction_throw")
             {
                 type = DamageType.Physical;
             }
-            else if (ability.Name == "centaur_stampede")
+            else if (name == "centaur_stampede")
             {
                 type = DamageType.Physical;
             }
-            else if (ability.Name == "lina_laguna_blade")
+            else if (name == "lina_laguna_blade")
             {
                 if ((ability.Owner as Hero).AghanimState())
                 {
                     type = DamageType.Pure;
                 }
             }
-            else if (ability.Name == "legion_commander_duel")
+            else if (name == "legion_commander_duel")
             {
                 type = DamageType.Physical;
             }
-            else if (ability.Name.StartsWith("item_dagon"))
+            else if (name.StartsWith("item_dagon"))
             {
                 type = DamageType.Magical;
             }
-            else if (ability.Name == "item_ethereal_blade")
+            else if (name == "item_ethereal_blade")
             {
                 type = DamageType.Magical;
             }
-            else if (ability.Name == "tusk_walrus_kick")
+            else if (name == "tusk_walrus_kick")
             {
                 type = DamageType.Magical;
             }
-            else if (ability.Name == "tusk_walrus_punch")
+            else if (name == "tusk_walrus_punch")
             {
                 type = DamageType.Physical;
             }
-            else if (ability.Name == "item_shivas_guard")
+            else if (name == "item_shivas_guard")
             {
                 type = DamageType.Magical;
+            }
+            else if (name == "chaos_knight_reality_rift")
+            {
+                type = DamageType.Physical;
             }
 
             //Console.WriteLine(ability.Name.Substring(0, "item_dagon".Length));
