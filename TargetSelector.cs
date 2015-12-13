@@ -74,7 +74,7 @@ namespace Ensage.Common
                 ObjectMgr.GetEntities<Hero>()
                     .Where(
                         x =>
-                        x.Team == source.GetEnemyTeam() && !x.IsIllusion && x.IsAlive && x.IsVisible
+                        x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
                         && x.Distance2D(mousePosition) <= range);
             Hero closestHero = null;
             foreach (var enemyHero in enemyHeroes)
