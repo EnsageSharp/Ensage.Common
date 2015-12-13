@@ -67,7 +67,7 @@ namespace Ensage.Common
         /// <param name="source"></param>
         /// <param name="range"></param>
         /// <returns></returns>
-        public static Hero ClosestToMouse(Hero source, float range = 1000)
+        public static Hero ClosestToMouse(Hero source, float range = 1000, bool ignoreMagicImmune = false)
         {
             var mousePosition = Game.MousePosition;
             var enemyHeroes =
@@ -75,7 +75,7 @@ namespace Ensage.Common
                     .Where(
                         x =>
                         x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
-                        && x.Distance2D(mousePosition) <= range);
+                        && x.Distance2D(mousePosition) <= range && ((!x.UnitState.HasFlag(UnitState.MagicImmune) && ignoreMagicImmune) || !ignoreMagicImmune));
             Hero closestHero = null;
             foreach (var enemyHero in enemyHeroes)
             {
