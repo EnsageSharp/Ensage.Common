@@ -75,7 +75,14 @@ namespace Ensage.Common
                     .Where(
                         x =>
                         x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
-                        && x.Distance2D(mousePosition) <= range && ((!x.UnitState.HasFlag(UnitState.MagicImmune) && ignoreMagicImmune) || !ignoreMagicImmune));
+                        && x.Distance2D(mousePosition) <= range && (!target.IsMagicImmune() || !ignoreMagicImmune));
+            if (enemyHeroes.Count() == 0) 
+                enemyHeroes =
+                    ObjectMgr.GetEntities<Hero>()
+                        .Where(
+                            x =>
+                            x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
+                            && x.Distance2D(mousePosition) <= range);
             Hero closestHero = null;
             foreach (var enemyHero in enemyHeroes)
             {
