@@ -66,6 +66,7 @@ namespace Ensage.Common
         /// </summary>
         /// <param name="source"></param>
         /// <param name="range"></param>
+        /// <param name="ignoreMagicImmune"></param>
         /// <returns></returns>
         public static Hero ClosestToMouse(Hero source, float range = 1000, bool ignoreMagicImmune = false)
         {
