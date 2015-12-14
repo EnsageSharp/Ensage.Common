@@ -1482,6 +1482,20 @@
         {
             "AbilityName": "item_magic_wand",
             "IsHeal": true
+        },
+        {
+            "AbilityName": "item_solar_crest",
+            "WeakensEnemy": true,
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_medallion_of_courage",
+            "WeakensEnemy": true,
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_tango_single",
+            "IsHeal": true
         }
     ]
 }

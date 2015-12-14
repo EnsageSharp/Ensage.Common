@@ -205,11 +205,20 @@ namespace Ensage.Common.Extensions
                 return true;
             }
             var position = sourcePosition;
-            if (ability.IsAbilityBehavior(AbilityBehavior.Point, name)
-                || ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
+            if (ability.IsAbilityBehavior(AbilityBehavior.Point, name))
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
-                if (position.Distance2D(pred) <= (ability.GetCastRange(name)))
+                if (position.Distance2D(pred) <= (ability.GetCastRange(name)+50))
+                {
+                    return true;
+                }
+                return false;
+            }
+            if (ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
+            {
+                var pred = ability.GetPrediction(target, abilityName: name);
+                if (position.Distance2D(pred) <= (ability.GetCastRange(name))
+                    && position.Distance2D(target.Position) <= (ability.GetCastRange(name) + 50))
                 {
                     return true;
                 }
@@ -217,7 +226,7 @@ namespace Ensage.Common.Extensions
             }
             if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name))
             {
-                if (position.Distance2D(target.Position) <= ability.GetCastRange(name))
+                if (position.Distance2D(target.Position) <= ability.GetCastRange(name)+70)
                 {
                     return true;
                 }
