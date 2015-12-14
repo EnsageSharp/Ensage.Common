@@ -211,6 +211,25 @@ namespace Ensage.Common.AbilityInfo
                         source,
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
+                case "chaos_knight_reality_rift":
+                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
+                    {
+                        bonusDamage = ability.GetAbilityData(data.DamageString);
+                        DamageDictionary.Add(ability, bonusDamage);
+                        LevelDictionary.Add(ability, level);
+                    }
+                    else if (LevelDictionary[ability] != level)
+                    {
+                        LevelDictionary[ability] = level;
+                        bonusDamage = ability.GetAbilityData(data.DamageString);
+                        DamageDictionary[ability] = bonusDamage;
+                    }
+                    outgoingDamage = target.DamageTaken(
+                        ((source.MaximumDamage + source.BonusDamage)) + bonusDamage,
+                        DamageType.Physical,
+                        source,
+                        data.MagicImmunityPierce);
+                    break;
                 case "templar_assassin_meld":
                     if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
                     {
@@ -375,6 +394,27 @@ namespace Ensage.Common.AbilityInfo
                     outgoingDamage = target.ManaBurnDamageTaken(
                         hero.TotalIntelligence * intMultiplier,
                         1,
+                        DamageType.Magical,
+                        source,
+                        minusMagicResistancePerc: minusMagicResistancePerc);
+                    break;
+                case "antimage_mana_void":
+                    if (!DamageDictionary.TryGetValue(ability, out tempDmg))
+                    {
+                        tempDmg = ability.GetAbilityData(data.DamageString);
+                        DamageDictionary.Add(ability, tempDmg);
+                        LevelDictionary.Add(ability, level);
+                    }
+                    else if (LevelDictionary[ability] != level)
+                    {
+                        LevelDictionary[ability] = level;
+                        tempDmg = ability.GetAbilityData(data.DamageString);
+                        DamageDictionary[ability] = tempDmg;
+                    }
+                    hero = target as Hero;
+                    var missingMana = hero.MaximumMana - hero.Mana;
+                    outgoingDamage = target.DamageTaken(
+                        missingMana * tempDmg,
                         DamageType.Magical,
                         source,
                         minusMagicResistancePerc: minusMagicResistancePerc);

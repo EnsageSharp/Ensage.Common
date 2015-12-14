@@ -445,7 +445,9 @@
             "AbilityName": "puck_illusory_orb",
             "IsNuke": true,
             "IsSkillShot": true,
-            "Speed": "orb_speed"
+            "Speed": "orb_speed",
+            "FakeCastRange": true,
+            "RealCastRange": "max_distance"
         },
         {
             "AbilityName": "legion_commander_duel",
@@ -1075,6 +1077,7 @@
         {
             "AbilityName": "bristleback_quill_spray",
             "IsNuke": true,
+            "IsHarras": true,
             "DamageString": "quill_base_damage"
         },
         {
