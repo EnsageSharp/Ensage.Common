@@ -1499,6 +1499,15 @@
         {
             "AbilityName": "item_tango_single",
             "IsHeal": true
+        },
+        {
+            "AbilityName": "rubick_fade_bolt",
+            "IsNuke": true,
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "rubick_telekinesis",
+            "IsDisable": true
         }
     ]
 }

@@ -2102,7 +2102,7 @@ namespace Ensage.Common.Menu
 
                 if (this.ValueType == MenuValueType.AbilityToggler)
                 {
-                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 10);
+                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 5);
                 }
 
                 if (this.ValueType == MenuValueType.HeroToggler)
@@ -2129,10 +2129,9 @@ namespace Ensage.Common.Menu
                     Drawing.MeasureText(
                         MultiLanguage._(this.DisplayName),
                         "Arial",
-                        new Vector2(
-                        (float)(MenuSettings.MenuItemHeight * 0.51),
-                        (float)(MenuSettings.MenuItemWidth * 0.7)),
-                        FontFlags.None).X + this.Height * 2 + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8) + extra;
+                        new Vector2((float)(this.Height * 0.51), 20),
+                        FontFlags.AntiAlias).X + this.Height*2 + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8)
+                    + extra;
             }
         }
 
