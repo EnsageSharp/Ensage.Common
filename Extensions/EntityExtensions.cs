@@ -936,6 +936,14 @@ namespace Ensage.Common.Extensions
                     }
                     break;
             }
+            //if (unit.IsRanged)
+            //{
+                //var dragonLance = unit.FindItem("item_dragon_lance");
+                //if (dragonLance != null)
+                //{
+                //    bonus += 130;
+                //}
+            //}
             return (float)(unit.AttackRange + bonus + unit.HullRadius / 2);
         }
 
@@ -957,14 +965,7 @@ namespace Ensage.Common.Extensions
         public static Team GetEnemyTeam(this Unit unit)
         {
             var team = unit.Team;
-            switch (team)
-            {
-                case Team.Dire:
-                    return Team.Radiant;
-                case Team.Radiant:
-                    return Team.Dire;
-            }
-            return team;
+            return team == Team.Dire ? Team.Radiant : Team.Dire;
         }
 
         /// <summary>

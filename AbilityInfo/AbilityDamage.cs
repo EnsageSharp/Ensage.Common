@@ -89,7 +89,12 @@ namespace Ensage.Common.AbilityInfo
             {
                 return 0;
             }
-
+            //var aetherLens = source.FindItem("item_aether_lens");
+            //var aetherMult = 0d;
+            //if (aetherLens != null)
+            //{
+            //    aetherMult = 1.08;
+            //}
             var outgoingDamage = 0f;
             float bonusDamage = 0;
             Hero hero;

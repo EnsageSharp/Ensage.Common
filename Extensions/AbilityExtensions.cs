@@ -587,15 +587,21 @@ namespace Ensage.Common.Extensions
                 {
                     castRange = 999999;
                 }
+                var owner = ability.Owner as Hero;
                 if (name == "dragon_knight_dragon_tail"
-                    && (ability.Owner as Hero).Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
+                    && owner.Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
                 {
                     bonusRange = 250;
                 }
-                else if (name == "beastmaster_primal_roar" && (ability.Owner as Hero).AghanimState())
+                else if (name == "beastmaster_primal_roar" && owner.AghanimState())
                 {
                     bonusRange = 350;
                 }
+                //var aetherLens = owner.FindItem("item_aether_lens");
+                //if (aetherLens != null)
+                //{
+                //    bonusRange += 200;
+                //}
                 return castRange + bonusRange + 100;
             }
 
