@@ -276,7 +276,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanAttack(this Unit unit)
         {
-            return unit.AttackCapabilities != AttackCapabilities.None && !IsDisarmed(unit) && !IsStunned(unit)
+            return unit.AttackCapability != AttackCapability.None && !IsDisarmed(unit) && !IsStunned(unit)
                    && unit.IsAlive;
         }
 
