@@ -1508,6 +1508,11 @@
         {
             "AbilityName": "rubick_telekinesis",
             "IsDisable": true
+        },
+        {
+            "AbilityName": "obsidian_destroyer_astral_imprisonment",
+            "IsNuke": true,
+            "DamageString": "damage"
         }
     ]
 }
