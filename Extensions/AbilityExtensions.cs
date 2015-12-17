@@ -61,26 +61,6 @@ namespace Ensage.Common.Extensions
 
         #region Public Methods and Operators
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="type"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
-        public static bool IsAbilityType(this Ability ability, AbilityType type, string abilityName = null)
-        {
-            var name = abilityName ?? ability.Name;
-            var n = name + "abilityType" + type.ToString();
-            if (BoolDictionary.ContainsKey(n))
-            {
-                return BoolDictionary[n];
-            }
-            var value = ability.AbilityType == type;
-            BoolDictionary.Add(n, value);
-            return value;
-        }
         /// <summary>
         ///     Checks if given ability can be used
         /// </summary>
@@ -208,7 +188,7 @@ namespace Ensage.Common.Extensions
             if (ability.IsAbilityBehavior(AbilityBehavior.Point, name))
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
-                if (position.Distance2D(pred) <= (ability.GetCastRange(name)+50))
+                if (position.Distance2D(pred) <= (ability.GetCastRange(name) + 50))
                 {
                     return true;
                 }
@@ -226,7 +206,7 @@ namespace Ensage.Common.Extensions
             }
             if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name))
             {
-                if (position.Distance2D(target.Position) <= ability.GetCastRange(name)+70)
+                if (position.Distance2D(target.Position) <= ability.GetCastRange(name) + 70)
                 {
                     return true;
                 }
@@ -582,7 +562,7 @@ namespace Ensage.Common.Extensions
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
             {
                 var castRange = ability.CastRange;
-                var bonusRange = 0;
+                var bonusRange = 0f;
                 if (castRange <= 0)
                 {
                     castRange = 999999;
@@ -597,11 +577,11 @@ namespace Ensage.Common.Extensions
                 {
                     bonusRange = 350;
                 }
-                //var aetherLens = owner.FindItem("item_aether_lens");
-                //if (aetherLens != null)
-                //{
-                //    bonusRange += 200;
-                //}
+                var aetherLens = owner.FindItem("item_aether_lens");
+                if (aetherLens != null)
+                {
+                    bonusRange += aetherLens.GetAbilityData("cast_range_bonus");
+                }
                 return castRange + bonusRange + 100;
             }
 
@@ -872,6 +852,25 @@ namespace Ensage.Common.Extensions
             data = ability.AbilityBehavior;
             AbilityBehaviorDictionary.Add(name, data);
             return data.HasFlag(flag);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="type"></param>
+        /// <param name="abilityName"></param>
+        /// <returns></returns>
+        public static bool IsAbilityType(this Ability ability, AbilityType type, string abilityName = null)
+        {
+            var name = abilityName ?? ability.Name;
+            var n = name + "abilityType" + type.ToString();
+            if (BoolDictionary.ContainsKey(n))
+            {
+                return BoolDictionary[n];
+            }
+            var value = ability.AbilityType == type;
+            BoolDictionary.Add(n, value);
+            return value;
         }
 
         /// <summary>

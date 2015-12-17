@@ -122,6 +122,10 @@ namespace Ensage.Common.Extensions
     {
         #region Static Fields
 
+        /// <summary>
+        /// </summary>
+        public static Dictionary<string, Item> ItemDictionary = new Dictionary<string, Item>();
+
         private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
 
         private static readonly List<ExternalDmgAmps> ExternalDmgAmps = new List<ExternalDmgAmps>();
@@ -276,7 +280,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanAttack(this Unit unit)
         {
-            return unit.AttackCapabilities != AttackCapabilities.None && !IsDisarmed(unit) && !IsStunned(unit)
+            return unit.AttackCapability != AttackCapability.None && !IsDisarmed(unit) && !IsStunned(unit)
                    && unit.IsAlive;
         }
 
@@ -400,8 +404,8 @@ namespace Ensage.Common.Extensions
         public static bool CanUseItems(this Unit unit)
         {
             return !unit.IsUnitState(UnitState.Muted) && !IsStunned(unit) && unit.IsAlive
-                   && !unit.Modifiers.Any(x =>
-                       x.Name == "modifier_axe_berserkers_call" || x.Name == "modifier_phoenix_supernova_hiding");
+                   && !unit.Modifiers.Any(
+                       x => x.Name == "modifier_axe_berserkers_call" || x.Name == "modifier_phoenix_supernova_hiding");
         }
 
         /// <summary>
@@ -854,7 +858,24 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static Item FindItem(this Unit unit, string name)
         {
-            return unit.Inventory.Items.FirstOrDefault(x => x.Name == name);
+            Item item;
+            var n = unit.Handle + name;
+            if (!ItemDictionary.TryGetValue(n, out item) || (item != null && !item.IsValid))
+            {
+                item = unit.Inventory.Items.FirstOrDefault(x => x.Name == name);
+                if (item != null)
+                {
+                    if (ItemDictionary.ContainsKey(n))
+                    {
+                        ItemDictionary[n] = item;
+                    }
+                    else
+                    {
+                        ItemDictionary.Add(n, item);
+                    }
+                }
+            }
+            return item;
         }
 
         /// <summary>
@@ -936,14 +957,14 @@ namespace Ensage.Common.Extensions
                     }
                     break;
             }
-            //if (unit.IsRanged)
-            //{
-                //var dragonLance = unit.FindItem("item_dragon_lance");
-                //if (dragonLance != null)
-                //{
-                //    bonus += 130;
-                //}
-            //}
+            if (unit.IsRanged)
+            {
+                var dragonLance = unit.FindItem("item_dragon_lance");
+                if (dragonLance != null)
+                {
+                    bonus += dragonLance.GetAbilityData("base_attack_range");
+                }
+            }
             return (float)(unit.AttackRange + bonus + unit.HullRadius / 2);
         }
 

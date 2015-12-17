@@ -89,12 +89,7 @@ namespace Ensage.Common.AbilityInfo
             {
                 return 0;
             }
-            //var aetherLens = source.FindItem("item_aether_lens");
-            //var aetherMult = 0d;
-            //if (aetherLens != null)
-            //{
-            //    aetherMult = 1.08;
-            //}
+            
             var outgoingDamage = 0f;
             float bonusDamage = 0;
             Hero hero;
@@ -511,6 +506,7 @@ namespace Ensage.Common.AbilityInfo
                         }
                         //Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));
                     }
+                    //Console.WriteLine(outgoingDamage);
                     outgoingDamage = target.DamageTaken(
                         outgoingDamage,
                         GetDamageType(ability),
@@ -518,6 +514,11 @@ namespace Ensage.Common.AbilityInfo
                         data.MagicImmunityPierce,
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
+            }
+            var aetherLens = source.FindItem("item_aether_lens");
+            if (aetherLens != null)
+            {
+                outgoingDamage *= 1 + aetherLens.GetAbilityData("spell_amp") / 100;
             }
             if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && !(ability is Item)
                 && (source.Distance2D(target) <= 1200 || ability.Name != "zuus_thundergods_wrath"))
@@ -531,10 +532,9 @@ namespace Ensage.Common.AbilityInfo
                         bonusDmg,
                         DamageType.Magical,
                         source,
-                        minusMagicResistancePerc: minusMagicResistancePerc);
+                        minusMagicResistancePerc: minusMagicResistancePerc) * ((aetherLens == null) ? 1 : 1.08f);
                 }
             }
-            //Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));
             return outgoingDamage;
         }
 

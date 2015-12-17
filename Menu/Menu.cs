@@ -2130,7 +2130,7 @@ namespace Ensage.Common.Menu
                         MultiLanguage._(this.DisplayName),
                         "Arial",
                         new Vector2((float)(this.Height * 0.51), 20),
-                        FontFlags.AntiAlias).X + this.Height*2 + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8)
+                        FontFlags.AntiAlias).X + this.Height * 2 + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8)
                     + extra;
             }
         }

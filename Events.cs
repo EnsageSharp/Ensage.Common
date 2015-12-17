@@ -18,7 +18,10 @@
 namespace Ensage.Common
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
+
+    using Ensage.Common.Extensions;
 
     /// <summary>
     ///     Provides custom events
@@ -47,6 +50,7 @@ namespace Ensage.Common
                         if (!unloaded)
                         {
                             CallOnClose();
+                            Load();
                             unloaded = true;
                         }
                         loaded = false;
@@ -59,6 +63,7 @@ namespace Ensage.Common
                     unloaded = false;
                     loaded = true;
                     CallOnLoad();
+                    Load();
                 };
         }
 
@@ -116,6 +121,11 @@ namespace Ensage.Common
             {
                 OnLoad(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
             }
+        }
+
+        private static void Load()
+        {
+            EntityExtensions.ItemDictionary = new Dictionary<string, Item>();
         }
 
         #endregion
