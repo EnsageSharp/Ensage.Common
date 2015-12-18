@@ -197,8 +197,21 @@ namespace Ensage.Common.Extensions
             if (ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
-                if (position.Distance2D(pred) <= (ability.GetCastRange(name))
-                    && position.Distance2D(target.Position) <= (ability.GetCastRange(name) + 50))
+                var distanceXyz = position.Distance2D(pred);
+                var radius = ability.GetRadius(name);
+                var range = ability.GetCastRange(name);
+                if (name.StartsWith("nevermore_shadowraze") && (distanceXyz > (range + radius)
+                    || distanceXyz < (range - radius)))
+                {
+                    return false;
+                }
+                if (distanceXyz <= range
+                    && position.Distance2D(target.Position) <= range)
+                {
+                    return true;
+                }
+                if (name == "pudge_rot" && target.Modifiers.Any(x => x.Name == "modifier_pudge_meat_hook")
+                    && position.Distance2D(target) < 600)
                 {
                     return true;
                 }
@@ -278,7 +291,7 @@ namespace Ensage.Common.Extensions
                 xyz = (position - xyz) * range / distanceXyz + xyz;
             }
             // Console.WriteLine(ability.GetCastRange() + " " + radius);
-            if (name.Substring(0, Math.Min("nevermore_shadowraze".Length, name.Length)) == "nevermore_shadowraze")
+            if (name.StartsWith("nevermore_shadowraze"))
             {
                 xyz = Prediction.SkillShotXYZ(
                     owner,
@@ -290,7 +303,8 @@ namespace Ensage.Common.Extensions
                 {
                     if (owner.GetTurnTime(xyz) > 0.01)
                     {
-                        owner.Move((position - xyz) * 50 / position.Distance2D(xyz) + xyz);
+                        owner.Move((position - xyz) * 15 / distanceXyz + xyz);
+                        owner.Stop();
                     }
                     else
                     {

@@ -1202,7 +1202,9 @@
         },
         {
             "AbilityName": "troll_warlord_whirling_axes_melee",
-            "Radius": 0
+            "Radius": 300,
+            "IsNuke": true,
+            "DamageString": "damage"
         },
         {
             "AbilityName": "leshrac_pulse_nova",
