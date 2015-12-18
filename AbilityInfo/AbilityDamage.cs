@@ -528,11 +528,12 @@ namespace Ensage.Common.AbilityInfo
                 {
                     var bonusDmg = ((float)staticField.GetAbilityData("damage_health_pct") / 100)
                                    * (target.Health - minusHealth);
-                    outgoingDamage += target.DamageTaken(
+                    bonusDmg = target.DamageTaken(
                         bonusDmg,
                         DamageType.Magical,
                         source,
                         minusMagicResistancePerc: minusMagicResistancePerc) * ((aetherLens == null) ? 1 : 1.08f);
+                    outgoingDamage += bonusDmg;
                 }
             }
             return outgoingDamage;
@@ -605,6 +606,10 @@ namespace Ensage.Common.AbilityInfo
             else if (name == "chaos_knight_reality_rift")
             {
                 type = DamageType.Physical;
+            }
+            else if (name == "item_veil_of_discord")
+            {
+                type = DamageType.Magical;
             }
 
             //Console.WriteLine(ability.Name.Substring(0, "item_dagon".Length));

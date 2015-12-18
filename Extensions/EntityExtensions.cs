@@ -714,12 +714,12 @@ namespace Ensage.Common.Extensions
             switch (dmgType)
             {
                 case DamageType.Magical:
-                    //Console.WriteLine(target.MagicDamageResist + " " + target.Name);
+                    //Console.WriteLine(minusMagicResistancePerc/100);
+                    var resist = (1 - (1 - target.MagicDamageResist) * (1 + ((float)minusMagicResistancePerc / 100)));
                     tempDmg =
                         (float)
                         (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - target.MagicDamageResist) * (1 + minusMagicResistancePerc / 100)
-                         - reduceStatic + AA);
+                          * (1 + ampFromME)) * (1 - resist) - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())

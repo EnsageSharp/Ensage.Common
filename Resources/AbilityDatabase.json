@@ -1408,7 +1408,9 @@
         },
         {
             "AbilityName": "item_veil_of_discord",
-            "WeakensEnemy": true
+            "WeakensEnemy": true,
+            "IsNuke": true,
+            "DamageString": "bonus_damage"
         },
         {
             "AbilityName": "item_armlet",
