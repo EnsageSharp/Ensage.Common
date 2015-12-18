@@ -1517,6 +1517,11 @@
             "AbilityName": "obsidian_destroyer_astral_imprisonment",
             "IsNuke": true,
             "DamageString": "damage"
+        },
+        {
+            "AbilityName": "pudge_rot",
+            "IsSlow": true,
+            "StringRadius": "rot_radius"
         }
     ]
 }

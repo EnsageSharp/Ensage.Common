@@ -188,7 +188,7 @@ namespace Ensage.Common.Extensions
             if (ability.IsAbilityBehavior(AbilityBehavior.Point, name))
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
-                if (position.Distance2D(pred) <= (ability.GetCastRange(name) + 50))
+                if (position.Distance2D(pred) <= (ability.GetCastRange(name) + ability.GetRadius(name) / 1.5))
                 {
                     return true;
                 }
@@ -200,10 +200,9 @@ namespace Ensage.Common.Extensions
                 var distanceXyz = position.Distance2D(pred);
                 var radius = ability.GetRadius(name);
                 var range = ability.GetCastRange(name);
-                if (name.StartsWith("nevermore_shadowraze") && (distanceXyz > (range + radius)
-                    || distanceXyz < (range - radius)))
+                if (name.StartsWith("nevermore_shadowraze"))
                 {
-                    return false;
+                    range += radius / 2;
                 }
                 if (distanceXyz <= range
                     && position.Distance2D(target.Position) <= range)
@@ -286,10 +285,10 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
-            if (distanceXyz > range)
-            {
-                xyz = (position - xyz) * range / distanceXyz + xyz;
-            }
+            //if (distanceXyz > range)
+            //{
+            //    xyz = ((position - xyz) * range) / (distanceXyz + xyz);
+            //}
             // Console.WriteLine(ability.GetCastRange() + " " + radius);
             if (name.StartsWith("nevermore_shadowraze"))
             {
@@ -299,11 +298,12 @@ namespace Ensage.Common.Extensions
                     (float)((delay + (float)owner.GetTurnTime(xyz)) * 1000),
                     speed,
                     radius);
+                //Console.WriteLine(distanceXyz + " " + range + " " + radius);
                 if (distanceXyz < (range + radius) && distanceXyz > (range - radius))
                 {
                     if (owner.GetTurnTime(xyz) > 0.01)
                     {
-                        owner.Move((position - xyz) * 15 / distanceXyz + xyz);
+                        owner.Move((owner.Position - xyz) * 25 / distanceXyz + xyz);
                         owner.Stop();
                     }
                     else
