@@ -18,6 +18,7 @@
 namespace Ensage.Common
 {
     using System;
+    using System.Linq;
 
     using Ensage.Common.Extensions;
 
@@ -225,6 +226,8 @@ namespace Ensage.Common
                 distance = pos.Distance2D(target) - me.Distance2D(target);
             }
             var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible
+                          && !target.Modifiers.Any(
+                              x => x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow")
                           && target.Distance2D(me)
                           <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + distance);
             if (isValid || (target != null && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))

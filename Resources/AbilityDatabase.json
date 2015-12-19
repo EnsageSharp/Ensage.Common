@@ -662,7 +662,8 @@
             "AbilityName": "morphling_adaptive_strike",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString": "damage_base"
+            "DamageString": "damage_base",
+            "Speed": "projectile_speed"
         },
         {
             "AbilityName": "lone_druid_true_form",
@@ -829,7 +830,8 @@
             "AbilityName": "morphling_waveform",
             "IsNuke": true,
             "IsSkillShot": true,
-            "Speed": "projectile_speed"
+            "Speed": "speed",
+            "Width": "width"
         },
         {
             "AbilityName": "axe_culling_blade",
@@ -1368,7 +1370,6 @@
         },
         {
             "AbilityName": "item_ethereal_blade",
-            "IsSlow": true,
             "IsNuke": true,
             "DamageString": "blast_damage_base"
         },

@@ -218,7 +218,7 @@ namespace Ensage.Common.Extensions
             }
             if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name))
             {
-                if (position.Distance2D(target.Position) <= ability.GetCastRange(name) + 70)
+                if (position.Distance2D(target.Position) <= ability.GetCastRange(name) + 100)
                 {
                     return true;
                 }
@@ -596,7 +596,7 @@ namespace Ensage.Common.Extensions
                 {
                     bonusRange += aetherLens.GetAbilityData("cast_range_bonus");
                 }
-                return castRange + bonusRange + 100;
+                return castRange + bonusRange;
             }
 
             var radius = 0f;
