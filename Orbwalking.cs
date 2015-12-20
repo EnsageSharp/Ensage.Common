@@ -208,10 +208,10 @@ namespace Ensage.Common
             {
                 return;
             }
-            if (!Utils.SleepCheck("GlobalCasting"))
-            {
-                return;
-            }
+            //if (!Utils.SleepCheck("GlobalCasting"))
+            //{
+            //    return;
+            //}
             var targetHull = 0f;
             if (target != null)
             {

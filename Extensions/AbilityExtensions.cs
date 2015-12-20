@@ -72,19 +72,10 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
-            var dictiKey = ability.Handle + "CanBeCasted";
-            if (!Utils.SleepCheck(dictiKey))
-            {
-                return BoolDictionary[dictiKey];
-            }
             try
             {
                 var owner = ability.Owner as Hero;
                 bool canBeCasted;
-                if (!BoolDictionary.ContainsKey(dictiKey))
-                {
-                    BoolDictionary.Add(dictiKey, false);
-                }
                 if (owner == null)
                 {
                     canBeCasted = ability.Level > 0 && ability.Cooldown <= 0;
@@ -93,8 +84,6 @@ namespace Ensage.Common.Extensions
                     {
                         canBeCasted = canBeCasted && item.CurrentCharges > 0;
                     }
-                    BoolDictionary[dictiKey] = canBeCasted;
-                    Utils.Sleep(100, dictiKey);
                     return canBeCasted;
                 }
                 if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
@@ -105,8 +94,6 @@ namespace Ensage.Common.Extensions
                     {
                         canBeCasted = canBeCasted && item.CurrentCharges > 0;
                     }
-                    BoolDictionary[dictiKey] = canBeCasted;
-                    Utils.Sleep(100, dictiKey);
                     return canBeCasted;
                 }
                 var name = ability.Name;
@@ -114,13 +101,9 @@ namespace Ensage.Common.Extensions
                     && name != "invoker_exort" && ability.AbilitySlot != AbilitySlot.Slot_4
                     && ability.AbilitySlot != AbilitySlot.Slot_5)
                 {
-                    BoolDictionary[dictiKey] = false;
-                    Utils.Sleep(100, dictiKey);
                     return false;
                 }
                 canBeCasted = ability.AbilityState == AbilityState.Ready && ability.Level > 0;
-                BoolDictionary[dictiKey] = canBeCasted;
-                Utils.Sleep(100, dictiKey);
                 return canBeCasted;
             }
             catch (Exception)
@@ -520,7 +503,7 @@ namespace Ensage.Common.Extensions
             {
                 if (!DelayDictionary.TryGetValue(name + " " + ability.Level, out delay))
                 {
-                    delay = ability.FindCastPoint(name);
+                    delay = Math.Max(ability.FindCastPoint(name),0.07);
                     DelayDictionary.Add(name + " " + ability.Level, delay);
                 }
                 if (name == "templar_assassin_meld")

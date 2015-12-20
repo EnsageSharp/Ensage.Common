@@ -22,6 +22,7 @@ namespace Ensage.Common.Extensions
     using System.Linq;
     using System.Reflection;
 
+    using Ensage.Common.Signals;
     using Ensage.Heroes;
 
     using global::SharpDX;
@@ -902,6 +903,8 @@ namespace Ensage.Common.Extensions
             return unit.Spellbook.Spells.FirstOrDefault(x => x.Name == name);
         }
 
+        private static Dictionary<float,float> RangeDictionary = new Dictionary<float, float>(); 
+
         /// <summary>
         ///     Returns actual attack range of a unit
         /// </summary>
@@ -910,60 +913,75 @@ namespace Ensage.Common.Extensions
         public static float GetAttackRange(this Unit unit)
         {
             var bonus = 0.0;
-            var classId = unit.ClassID;
-            switch (classId)
+            float range;
+            if (!RangeDictionary.TryGetValue(unit.Handle, out range) || Utils.SleepCheck("Common.GetAttackRange." + unit.Handle))
             {
-                case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
-                    var psi = unit.Spellbook.SpellE;
-                    if (psi != null && psi.Level > 0)
-                    {
-                        var firstOrDefault = psi.AbilityData.FirstOrDefault(x => x.Name == "bonus_attack_range");
-                        if (firstOrDefault != null)
-                        {
-                            bonus = firstOrDefault.GetValue(psi.Level - 1);
-                        }
-                    }
-                    break;
-                case ClassID.CDOTA_Unit_Hero_Sniper:
-                    var aim = unit.Spellbook.SpellE;
-                    if (aim != null && aim.Level > 0)
-                    {
-                        var firstOrDefault = aim.AbilityData.FirstOrDefault(x => x.Name == "bonus_attack_range");
-                        if (firstOrDefault != null)
-                        {
-                            bonus = firstOrDefault.GetValue(aim.Level - 1);
-                        }
-                    }
-                    break;
-                case ClassID.CDOTA_Unit_Hero_Enchantress:
-                    var impetus = unit.Spellbook.SpellR;
-                    if (impetus.Level > 0 && unit.AghanimState())
-                    {
-                        bonus = 190;
-                    }
-                    break;
-                default:
-                    if (unit.Modifiers.Any(x => (x.Name == "modifier_lone_druid_true_form")))
-                    {
-                        bonus = -423;
-                    }
-                    else if (unit.Modifiers.Any(x => (x.Name == "modifier_dragon_knight_dragon_form")))
-                    {
-                        bonus = 372;
-                    }
-                    else if (unit.Modifiers.Any(x => (x.Name == "modifier_terrorblade_metamorphosis")))
-                    {
-                        bonus = 422;
-                    }
-                    break;
-            }
-            if (unit.IsRanged)
-            {
-                var dragonLance = unit.FindItem("item_dragon_lance");
-                if (dragonLance != null)
+
+                var classId = unit.ClassID;
+                switch (classId)
                 {
-                    bonus += dragonLance.GetAbilityData("base_attack_range");
+                    case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
+                        var psi = unit.Spellbook.SpellE;
+                        if (psi != null && psi.Level > 0)
+                        {
+                            var firstOrDefault = psi.AbilityData.FirstOrDefault(x => x.Name == "bonus_attack_range");
+                            if (firstOrDefault != null)
+                            {
+                                bonus = firstOrDefault.GetValue(psi.Level - 1);
+                            }
+                        }
+                        break;
+                    case ClassID.CDOTA_Unit_Hero_Sniper:
+                        var aim = unit.Spellbook.SpellE;
+                        if (aim != null && aim.Level > 0)
+                        {
+                            var firstOrDefault = aim.AbilityData.FirstOrDefault(x => x.Name == "bonus_attack_range");
+                            if (firstOrDefault != null)
+                            {
+                                bonus = firstOrDefault.GetValue(aim.Level - 1);
+                            }
+                        }
+                        break;
+                    case ClassID.CDOTA_Unit_Hero_Enchantress:
+                        var impetus = unit.Spellbook.SpellR;
+                        if (impetus.Level > 0 && unit.AghanimState())
+                        {
+                            bonus = 190;
+                        }
+                        break;
+                    default:
+                        if (unit.Modifiers.Any(x => (x.Name == "modifier_lone_druid_true_form")))
+                        {
+                            bonus = -423;
+                        }
+                        else if (unit.Modifiers.Any(x => (x.Name == "modifier_dragon_knight_dragon_form")))
+                        {
+                            bonus = 372;
+                        }
+                        else if (unit.Modifiers.Any(x => (x.Name == "modifier_terrorblade_metamorphosis")))
+                        {
+                            bonus = 422;
+                        }
+                        break;
                 }
+                if (unit.IsRanged)
+                {
+                    var dragonLance = unit.FindItem("item_dragon_lance");
+                    if (dragonLance != null)
+                    {
+                        bonus += dragonLance.GetAbilityData("base_attack_range");
+                    }
+                }
+                range = (float)(unit.AttackRange + bonus + unit.HullRadius / 2);
+                if (!RangeDictionary.ContainsKey(unit.Handle))
+                {
+                    RangeDictionary.Add(unit.Handle, range);
+                }
+                else
+                {
+                    RangeDictionary[unit.Handle] = range;
+                }
+                Utils.Sleep(500,"Common.GetAttackRange." + unit.Handle);
             }
             return (float)(unit.AttackRange + bonus + unit.HullRadius / 2);
         }
