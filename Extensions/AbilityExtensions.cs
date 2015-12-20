@@ -520,8 +520,12 @@ namespace Ensage.Common.Extensions
             {
                 if (!DelayDictionary.TryGetValue(name + " " + ability.Level, out delay))
                 {
-                    delay = Math.Max(ability.FindCastPoint(name), 0.05);
+                    delay = ability.FindCastPoint(name);
                     DelayDictionary.Add(name + " " + ability.Level, delay);
+                }
+                if (name == "templar_assassin_meld")
+                {
+                    delay += UnitDatabase.GetAttackPoint(source);
                 }
                 if ((name == "item_diffusal_blade" || name == "item_diffusal_blade_2"))
                 {

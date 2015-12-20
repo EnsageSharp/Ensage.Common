@@ -1203,6 +1203,12 @@
             "IsBuff": true
         },
         {
+            "AbilityName": "templar_assassin_psionic_trap",
+            "IsSlow": true,
+            "Radius": 400,
+            "AdditionalDelay": 0.2
+        },
+        {
             "AbilityName": "troll_warlord_whirling_axes_melee",
             "Radius": 300,
             "IsNuke": true,
@@ -1299,7 +1305,8 @@
         },
         {
             "AbilityName": "skywrath_mage_ancient_seal",
-            "IsSilence": true
+            "IsSilence": true,
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "antimage_mana_void",
@@ -1371,7 +1378,8 @@
         {
             "AbilityName": "item_ethereal_blade",
             "IsNuke": true,
-            "DamageString": "blast_damage_base"
+            "DamageString": "blast_damage_base",
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "item_dagon",
