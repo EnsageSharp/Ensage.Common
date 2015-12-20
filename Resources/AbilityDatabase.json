@@ -1446,8 +1446,8 @@
             "IsHeal": true
         },
         {
-            "AbilityName": "item_tango",
-            "IsHeal": true
+            "AbilityName": "item_tango"
+            //"IsHeal": true
         },
         {
             "AbilityName": "item_blade_mail",
@@ -1510,8 +1510,8 @@
             "IsShield": true
         },
         {
-            "AbilityName": "item_tango_single",
-            "IsHeal": true
+            "AbilityName": "item_tango_single"
+            //"IsHeal": true
         },
         {
             "AbilityName": "rubick_fade_bolt",
