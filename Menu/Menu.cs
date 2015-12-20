@@ -1327,7 +1327,7 @@ namespace Ensage.Common.Menu
         public Menu AddSubMenu(Menu subMenu)
         {
             subMenu.Parent = this;
-            subMenu.Visible = this.Visible;
+            subMenu.Visible = this.Children.Count > 0 && this.Children[0].Visible;
             this.Children.Add(subMenu);
             return subMenu;
         }
