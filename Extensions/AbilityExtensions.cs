@@ -648,6 +648,11 @@ namespace Ensage.Common.Extensions
                 var xyz = ability.GetPrediction(target, abilityName: name);
                 delay += (Math.Max((owner.Distance2D(xyz) - radius / 2), 100) / speed);
             }
+            if (name == "tinker_heat_seeking_missile")
+            {
+                var xyz = ability.GetPrediction(target, abilityName: name);
+                delay += (Math.Max((owner.Distance2D(xyz)), 100) / speed);
+            }
             return delay;
         }
 
