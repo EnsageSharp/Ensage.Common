@@ -983,9 +983,7 @@
         },
         {
             "AbilityName": "bristleback_viscous_nasal_goo",
-            "IsSlow": true,
-            "StringRadius": "radius",
-            "MagicImmunityPierce": true
+            "IsSlow": true
         },
         {
             "AbilityName": "shadow_demon_shadow_poison",
@@ -1080,7 +1078,9 @@
             "AbilityName": "bristleback_quill_spray",
             "IsNuke": true,
             "IsHarras": true,
-            "DamageString": "quill_base_damage"
+            "DamageString": "quill_base_damage",
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "legion_commander_overwhelming_odds",
