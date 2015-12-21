@@ -22,7 +22,7 @@ namespace Ensage.Common.Extensions
     using System.Linq;
     using System.Reflection;
 
-    using Ensage.Common.Signals;
+    using Ensage.Common.Objects;
     using Ensage.Heroes;
 
     using global::SharpDX;
@@ -134,6 +134,8 @@ namespace Ensage.Common.Extensions
         private static readonly List<ExternalDmgReductions> ExternalDmgReductions = new List<ExternalDmgReductions>();
 
         private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
+
+        private static Dictionary<float, float> RangeDictionary = new Dictionary<float, float>();
 
         #endregion
 
@@ -307,8 +309,8 @@ namespace Ensage.Common.Extensions
             return (!ignoreReincarnation && !unit.CanReincarnate())
                    && !unit.Modifiers.Any(
                        x =>
-                       (!cullingBlade && (x.Name == "modifier_dazzle_shallow_grave"
-                           || x.Name == "modifier_oracle_false_promise"))
+                       (!cullingBlade
+                        && (x.Name == "modifier_dazzle_shallow_grave" || x.Name == "modifier_oracle_false_promise"))
                        || x.Name == "modifier_skeleton_king_reincarnation_scepter_active");
         }
 
@@ -861,20 +863,19 @@ namespace Ensage.Common.Extensions
         {
             Item item;
             var n = unit.Handle + name;
-            if (!ItemDictionary.TryGetValue(n, out item) || (item != null && !item.IsValid))
+            if (!ItemDictionary.TryGetValue(n, out item) || item == null || !item.IsValid
+                || Utils.SleepCheck("Common.FindItem." + name))
             {
                 item = unit.Inventory.Items.FirstOrDefault(x => x.Name == name);
-                if (item != null)
+                if (ItemDictionary.ContainsKey(n))
                 {
-                    if (ItemDictionary.ContainsKey(n))
-                    {
-                        ItemDictionary[n] = item;
-                    }
-                    else
-                    {
-                        ItemDictionary.Add(n, item);
-                    }
+                    ItemDictionary[n] = item;
                 }
+                else
+                {
+                    ItemDictionary.Add(n, item);
+                }
+                Utils.Sleep(500, "Common.FindItem." + name);
             }
             return item;
         }
@@ -903,8 +904,6 @@ namespace Ensage.Common.Extensions
             return unit.Spellbook.Spells.FirstOrDefault(x => x.Name == name);
         }
 
-        private static Dictionary<float,float> RangeDictionary = new Dictionary<float, float>(); 
-
         /// <summary>
         ///     Returns actual attack range of a unit
         /// </summary>
@@ -914,9 +913,9 @@ namespace Ensage.Common.Extensions
         {
             var bonus = 0.0;
             float range;
-            if (!RangeDictionary.TryGetValue(unit.Handle, out range) || Utils.SleepCheck("Common.GetAttackRange." + unit.Handle))
+            if (!RangeDictionary.TryGetValue(unit.Handle, out range)
+                || Utils.SleepCheck("Common.GetAttackRange." + unit.Handle))
             {
-
                 var classId = unit.ClassID;
                 switch (classId)
                 {
@@ -981,7 +980,7 @@ namespace Ensage.Common.Extensions
                 {
                     RangeDictionary[unit.Handle] = range;
                 }
-                Utils.Sleep(500,"Common.GetAttackRange." + unit.Handle);
+                Utils.Sleep(500, "Common.GetAttackRange." + unit.Handle);
             }
             return range;
         }

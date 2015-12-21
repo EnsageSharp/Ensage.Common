@@ -21,6 +21,7 @@ namespace Ensage.Common
     using System.Linq;
 
     using Ensage.Common.Extensions;
+    using Ensage.Common.Objects;
 
     /// <summary>
     ///     Class used to find targets based on conditions
@@ -39,11 +40,10 @@ namespace Ensage.Common
         {
             var attackRange = source.GetAttackRange();
             var enemyHeroes =
-                ObjectMgr.GetEntities<Hero>()
-                    .Where(
-                        x =>
-                        x.Team == source.GetEnemyTeam() && !x.IsIllusion && x.IsAlive && x.IsVisible
-                        && x.Distance2D(source) <= (attackRange + x.HullRadius + bonusRange + source.HullRadius + 50));
+                Heroes.All.Where(
+                    x =>
+                    x.Team != source.Team && x.IsAlive && x.IsVisible
+                    && x.Distance2D(source) <= (attackRange + x.HullRadius + bonusRange + source.HullRadius + 50));
             var aaDmg = source.MinimumDamage + source.BonusDamage;
             Hero bestTarget = null;
             var lastHitsToKill = 0f;
@@ -71,11 +71,10 @@ namespace Ensage.Common
         {
             var mousePosition = Game.MousePosition;
             var enemyHeroes =
-                ObjectMgr.GetEntities<Hero>()
-                    .Where(
-                        x =>
-                        x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
-                        && x.Distance2D(mousePosition) <= range);
+                Heroes.All.Where(
+                    x =>
+                    x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
+                    && x.Distance2D(mousePosition) <= range);
             Hero closestHero = null;
             foreach (var enemyHero in enemyHeroes)
             {

@@ -1033,6 +1033,7 @@
             "AbilityName": "invoker_tornado",
             "IsDisable": true,
             "IsSkillShot": true,
+            "Width": "area_of_effect",
             "StringRadius": "travel_distance",
             "Speed": "travel_speed"
         },

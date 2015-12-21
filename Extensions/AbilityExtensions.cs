@@ -187,8 +187,7 @@ namespace Ensage.Common.Extensions
                 {
                     range += radius / 2;
                 }
-                if (distanceXyz <= range
-                    && position.Distance2D(target.Position) <= range)
+                if (distanceXyz <= range && position.Distance2D(target.Position) <= range)
                 {
                     return true;
                 }
@@ -503,7 +502,7 @@ namespace Ensage.Common.Extensions
             {
                 if (!DelayDictionary.TryGetValue(name + " " + ability.Level, out delay))
                 {
-                    delay = Math.Max(ability.FindCastPoint(name),0.07);
+                    delay = Math.Max(ability.FindCastPoint(name), 0.07);
                     DelayDictionary.Add(name + " " + ability.Level, delay);
                 }
                 if (name == "templar_assassin_meld")

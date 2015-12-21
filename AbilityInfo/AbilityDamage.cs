@@ -89,7 +89,7 @@ namespace Ensage.Common.AbilityInfo
             {
                 return 0;
             }
-            
+
             var outgoingDamage = 0f;
             float bonusDamage = 0;
             Hero hero;

@@ -84,7 +84,8 @@
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
     <Compile Include="Geometry.cs" />
     <Compile Include="HUDInfo.cs" />
-    <Compile Include="JungleCamps.cs" />
+    <Compile Include="Objects\Heroes.cs" />
+    <Compile Include="Objects\JungleCamps.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Menu\Menu.cs" />
     <Compile Include="Menu\MenuConfig.cs" />
@@ -93,6 +94,8 @@
     <Compile Include="Menu\NotificationData\INotification.cs" />
     <Compile Include="Menu\NotificationData\Notification.cs" />
     <Compile Include="Menu\Notifications.cs" />
+    <Compile Include="Objects\Names.cs" />
+    <Compile Include="Objects\Players.cs" />
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />
     <Compile Include="AbilityInfo\AbilityDatabase.cs" />

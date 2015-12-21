@@ -15,7 +15,7 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
 
-namespace Ensage.Common
+namespace Ensage.Common.Objects
 {
     using System.Collections.Generic;
 
