@@ -983,7 +983,7 @@ namespace Ensage.Common.Extensions
                 }
                 Utils.Sleep(500,"Common.GetAttackRange." + unit.Handle);
             }
-            return (float)(unit.AttackRange + bonus + unit.HullRadius / 2);
+            return range;
         }
 
         /// <summary>
