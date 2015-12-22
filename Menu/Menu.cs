@@ -1800,14 +1800,14 @@ namespace Ensage.Common.Menu
             var console = newMessageType.SelectedIndex == 2;
             if (Root.Item("showMessage").GetValue<bool>() && !console)
             {
-                Game.PrintMessage(
-                    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>",
-                    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
-                        ? MessageType.LogMessage
-                        : MessageType.ChatMessage);
+                //Game.PrintMessage(
+                //    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
+                //    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                //    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
+                //    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>",
+                //    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
+                //        ? MessageType.LogMessage
+                //        : MessageType.ChatMessage);
             }
             else if (console && Root.Item("showMessage").GetValue<bool>())
             {
