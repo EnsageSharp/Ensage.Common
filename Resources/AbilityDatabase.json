@@ -20,7 +20,7 @@
         {
             "AbilityName": "dark_seer_ion_shell",
             "StringRadius": "radius",
-            "IsHarras": true
+            "IsBuff": true
         },
         {
             "AbilityName": "magnataur_shockwave",
@@ -249,7 +249,8 @@
         },
         {
             "AbilityName": "keeper_of_the_light_blinding_light",
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "IsDisable": true
         },
         {
             "AbilityName": "queenofpain_shadow_strike",
@@ -270,6 +271,7 @@
         {
             "AbilityName": "undying_soul_rip",
             "IsNuke": true,
+            "IsHeal": true,
             "IsSkillShot": true
         },
         {
@@ -774,6 +776,10 @@
             "IsDisable": true
         },
         {
+            "AbilityName": "enchantress_natures_attendants",
+            "IsHeal": true
+        },
+        {
             "AbilityName": "earth_spirit_rolling_boulder",
             "IsSlow": true,
             "AdditionalDelay": 0.6
@@ -1000,6 +1006,7 @@
         {
             "AbilityName": "ancient_apparition_ice_vortex",
             "IsSlow": true,
+            "AdditionalDelay": 0.2,
             "IsSkillShot": true
         },
         {
@@ -1291,8 +1298,16 @@
             "AbilityName": "lion_impale",
             "IsDisable": true,
             "IsNuke": true,
-            "Radius": 325,
+            "Width": "width",
             "Speed": "speed"
+        },
+        {
+            "AbilityName": "lycan_howl",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "magnataur_empower",
+            "IsBuff": true
         },
         {
             "AbilityName": "lina_dragon_slave",
@@ -1325,6 +1340,14 @@
             "AbilityName": "huskar_life_break",
             "IsSlow": true,
             "Speed": "charge_speed"
+        },
+        {
+            "AbilityName": "life_stealer_rage",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "huskar_inner_vitality",
+            "IsHeal": true
         },
         {
             "AbilityName": "dragon_knight_dragon_tail",
@@ -1426,12 +1449,12 @@
         {
             "AbilityName": "item_armlet",
             "IsBuff": true,
-            "Radius":  700
+            "Radius": 700
         },
         {
             "AbilityName": "item_satanic",
             "IsBuff": true,
-            "Radius":  700
+            "Radius": 700
         },
         {
             "AbilityName": "item_mekansm",
@@ -1492,6 +1515,18 @@
         {
             "AbilityName": "dazzle_shallow_grave",
             "IsShield": true
+        },
+        {
+            "AbilityName": "dazzle_poison_touch",
+            "IsSlow": true
+        },
+        {
+            "AbilityName": "doom_bringer_infernal_blade",
+            "IsDisable": true
+        },
+        {
+            "AbilityName": "death_prophet_spirit_siphon",
+            "IsSlow": true
         },
         {
             "AbilityName": "item_magic_stick",

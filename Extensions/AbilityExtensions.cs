@@ -168,10 +168,11 @@ namespace Ensage.Common.Extensions
                 return true;
             }
             var position = sourcePosition;
-            if (ability.IsAbilityBehavior(AbilityBehavior.Point, name))
+            if (ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale")
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
-                if (position.Distance2D(pred) <= (ability.GetCastRange(name) + ability.GetRadius(name) / 1.5))
+                var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
+                if (position.Distance2D(pred) <= (ability.GetCastRange(name) + ability.GetRadius(name) / 2 + lion))
                 {
                     return true;
                 }
@@ -263,14 +264,18 @@ namespace Ensage.Common.Extensions
             var speed = ability.GetProjectileSpeed(name);
             var distanceXyz = xyz.Distance2D(position);
             var range = ability.GetCastRange(name);
-            if (!(distanceXyz <= (range + radius)))
+            var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
+            if (!(distanceXyz <= (range + radius + lion)))
             {
                 return false;
             }
-            //if (distanceXyz > range)
-            //{
-            //    xyz = ((position - xyz) * range) / (distanceXyz + xyz);
-            //}
+            if (distanceXyz > range)
+            {
+                xyz = xyz - position;
+                xyz /= xyz.Length();
+                xyz *= range;
+                xyz += position;
+            }
             // Console.WriteLine(ability.GetCastRange() + " " + radius);
             if (name.StartsWith("nevermore_shadowraze"))
             {
@@ -380,12 +385,12 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
-            if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name) && name != "lion_impale")
+            if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name) && name != "lion_impale" && !target.IsInvul())
             {
                 ability.UseAbility(target);
             }
             else if ((ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
-                      || ability.IsAbilityBehavior(AbilityBehavior.Point, name)))
+                      || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"))
             {
                 if (Prediction.StraightTime(target) > straightTimeforSkillShot * 1000
                     && ability.CastSkillShot(target, name))
@@ -598,18 +603,7 @@ namespace Ensage.Common.Extensions
             }
             if (!data.FakeCastRange)
             {
-                if (data.Width != null)
-                {
-                    radius = ability.GetAbilityData(data.Width, abilityName: name);
-                }
-                if (data.StringRadius != null)
-                {
-                    radius = ability.GetAbilityData(data.StringRadius, abilityName: name);
-                }
-                if (data.Radius > 0)
-                {
-                    radius = data.Radius;
-                }
+                radius = ability.GetRadius(name);
             }
             else
             {
@@ -677,7 +671,7 @@ namespace Ensage.Common.Extensions
                 AbilityDamage.DataDictionary.Add(ability, data);
             }
             var owner = ability.Owner as Unit;
-            var delay = ability.GetCastDelay(owner as Hero, target, true, abilityName: name);
+            var delay = ability.GetCastDelay(owner as Hero, target, true, abilityName: name, useChannel: true);
             if (data != null)
             {
                 delay += data.AdditionalDelay;

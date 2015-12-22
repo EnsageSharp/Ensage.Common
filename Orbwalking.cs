@@ -248,7 +248,7 @@ namespace Ensage.Common
                     (float)((Game.Ping / 1000 + me.GetTurnTime(target.Position)) * me.MovementSpeed));
                 distance = pos.Distance2D(target) - me.Distance2D(target);
             }
-            var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible
+            var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible && !target.IsInvul()
                           && !target.Modifiers.Any(
                               x => x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow")
                           && target.Distance2D(me)
