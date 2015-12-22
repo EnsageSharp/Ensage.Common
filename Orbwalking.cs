@@ -180,6 +180,29 @@ namespace Ensage.Common
         /// </summary>
         public static void Load()
         {
+            Events.OnLoad += Events_OnLoad;
+            Events.OnClose += Events_OnClose;
+            if (Game.IsInGame)
+            {
+                Events_OnLoad(null,null);
+            }
+        }
+
+        static void Events_OnClose(object sender, EventArgs e)
+        {
+            if (!loaded)
+            {
+                return;
+            }
+            Game.OnUpdate -= Game_OnUpdate;
+            LastAttackStart = 0;
+            lastActivity = 0;
+            me = null;
+            loaded = false;
+        }
+
+        static void Events_OnLoad(object sender, EventArgs e)
+        {
             if (loaded)
             {
                 return;

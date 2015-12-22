@@ -49,7 +49,7 @@ namespace Ensage.Common
 
         private static bool loaded;
 
-        private static List<Player> playerList = new List<Player>();
+        private static List<Hero> playerList = new List<Hero>();
 
         private static Dictionary<float, ParticleEffect> predictionDrawings = new Dictionary<float, ParticleEffect>();
 
@@ -329,7 +329,7 @@ namespace Ensage.Common
             }
             if (playerList == null || (playerList.Count < 10 && Utils.SleepCheck("Prediction.SpeedTrack")))
             {
-                playerList = ObjectMgr.GetEntities<Player>().ToList();
+                playerList = Objects.Heroes.All;
                 Utils.Sleep(1000, "Prediction.SpeedTrack");
             }
 
@@ -338,11 +338,10 @@ namespace Ensage.Common
                 return;
             }
 
-            var heroes = playerList.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero);
             //DrawPredictions();
             var tick = Environment.TickCount;
             var tempTable = new List<Prediction>(TrackTable);
-            foreach (var unit in heroes.Where(x => x.IsValid))
+            foreach (var unit in playerList.Where(x => x.IsValid))
             {
                 var data =
                     tempTable.FirstOrDefault(
@@ -471,7 +470,7 @@ namespace Ensage.Common
         {
             loaded = false;
             Game.OnUpdate -= SpeedTrack;
-            playerList = new List<Player>();
+            playerList = new List<Hero>();
             RotSpeedDictionary = new Dictionary<float, double>();
             RotTimeDictionary = new Dictionary<float, float>();
             SpeedDictionary = new Dictionary<float, Vector3>();
@@ -486,7 +485,7 @@ namespace Ensage.Common
                 return;
             }
             loaded = true;
-            playerList = new List<Player>();
+            playerList = new List<Hero>();
             RotSpeedDictionary = new Dictionary<float, double>();
             RotTimeDictionary = new Dictionary<float, float>();
             SpeedDictionary = new Dictionary<float, Vector3>();

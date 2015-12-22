@@ -1744,11 +1744,10 @@ namespace Ensage.Common.Menu
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var players =
-                        ObjectMgr.GetEntities<Player>()
-                            .Where(
-                                x =>
-                                x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
-                                && !dict.ContainsKey(x.Hero.Name));
+                        Objects.Players.All.Where(
+                            x =>
+                            x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
+                            && !dict.ContainsKey(x.Hero.Name));
                     foreach (var x in
                         players)
                     {
@@ -1800,14 +1799,14 @@ namespace Ensage.Common.Menu
             var console = newMessageType.SelectedIndex == 2;
             if (Root.Item("showMessage").GetValue<bool>() && !console)
             {
-                //Game.PrintMessage(
-                //    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-                //    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                //    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-                //    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>",
-                //    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
-                //        ? MessageType.LogMessage
-                //        : MessageType.ChatMessage);
+                Game.PrintMessage(
+                    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
+                    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
+                    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>",
+                    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
+                        ? MessageType.LogMessage
+                        : MessageType.ChatMessage);
             }
             else if (console && Root.Item("showMessage").GetValue<bool>())
             {
@@ -2160,7 +2159,7 @@ namespace Ensage.Common.Menu
                 {
                     Menu.menuPositionDictionary[n] = pos;
                 }
-                Utils.Sleep(1000, n);
+                Utils.Sleep(500, n);
                 return pos;
             }
         }
