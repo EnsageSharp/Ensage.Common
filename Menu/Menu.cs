@@ -1796,24 +1796,31 @@ namespace Ensage.Common.Menu
 
         private static void Events_OnLoad(object sender, EventArgs e)
         {
-            var console = newMessageType.SelectedIndex == 2;
-            if (Root.Item("showMessage").GetValue<bool>() && !console)
-            {
-                Game.PrintMessage(
-                    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>",
-                    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
-                        ? MessageType.LogMessage
-                        : MessageType.ChatMessage);
-            }
-            else if (console && Root.Item("showMessage").GetValue<bool>())
-            {
-                Console.WriteLine(
-                    @"[Menu Hotkeys] Press: " + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                    + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key));
-            }
+            //var console = newMessageType.SelectedIndex == 2;
+            //if (Root.Item("showMessage").GetValue<bool>() && !console)
+            //{
+                //var msg =
+                //    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
+                //    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                //    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
+                //    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
+            const string Msg1 =
+                "<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> Merry Christmas and Happy New Year <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
+            const string Msg2 =
+            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
+            Game.PrintMessage(Msg1, MessageType.LogMessage);
+            Game.PrintMessage(Msg2, MessageType.LogMessage);
+            //Game.PrintMessage(Msg,
+            //    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
+            //        ? MessageType.LogMessage
+            //        : MessageType.ChatMessage);
+            //}
+            //else if (console && Root.Item("showMessage").GetValue<bool>())
+            //{
+            //    var msg = @"[Menu Hotkeys] Press: " + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+            //              + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
+            //    Console.WriteLine(msg);
+            //}
         }
 
         private static void MessageValueChanged(object sender, OnValueChangeEventArgs e)
