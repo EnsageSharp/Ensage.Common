@@ -23,6 +23,11 @@
             "IsBuff": true
         },
         {
+            "AbilityName": "witch_doctor_paralyzing_cask",
+            "IsDisable": true,
+            "Speed": "speed"
+        },
+        {
             "AbilityName": "magnataur_shockwave",
             "IsNuke": true,
             "IsSkillShot": true,
@@ -1327,7 +1332,8 @@
         },
         {
             "AbilityName": "item_arcane_boots",
-            "IsHeal": true
+            "IsHeal": true,
+            "StringRadius": "replenish_radius"
         },
         {
             "AbilityName": "item_soul_ring",
