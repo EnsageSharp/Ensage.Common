@@ -220,10 +220,11 @@ namespace Ensage.Common.Extensions
         /// <param name="ability"></param>
         /// <param name="target"></param>
         /// <param name="abilityName"></param>
+        /// <param name="soulRing"></param>
         /// <returns></returns>
-        public static bool CastSkillShot(this Ability ability, Unit target, string abilityName = null)
+        public static bool CastSkillShot(this Ability ability, Unit target, string abilityName = null, Ability soulRing = null)
         {
-            return CastSkillShot(ability, target, ability.Owner.Position, abilityName);
+            return CastSkillShot(ability, target, ability.Owner.Position, abilityName, soulRing);
         }
 
         /// <summary>
@@ -233,12 +234,14 @@ namespace Ensage.Common.Extensions
         /// <param name="target"></param>
         /// <param name="sourcePosition"></param>
         /// <param name="abilityName"></param>
+        /// <param name="soulRing"></param>
         /// <returns>returns true in case of successfull cast</returns>
         public static bool CastSkillShot(
             this Ability ability,
             Unit target,
             Vector3 sourcePosition,
-            string abilityName = null)
+            string abilityName = null,
+            Ability soulRing = null)
         {
             if (!Utils.SleepCheck("CastSkillshot" + ability.Handle))
             {
@@ -323,6 +326,10 @@ namespace Ensage.Common.Extensions
                 }
                 return false;
             }
+            if (ability.ManaCost > 0 && soulRing.CanBeCasted())
+            {
+                soulRing.UseAbility();
+            }
             ability.UseAbility(xyz);
             return true;
         }
@@ -335,6 +342,7 @@ namespace Ensage.Common.Extensions
         /// <param name="chainStun"></param>
         /// <param name="useSleep"></param>
         /// <param name="abilityName"></param>
+        /// <param name="soulRing"></param>
         /// <returns></returns>
         public static bool CastStun(
             this Ability ability,
@@ -342,7 +350,8 @@ namespace Ensage.Common.Extensions
             float straightTimeforSkillShot = 0,
             bool chainStun = true,
             bool useSleep = true,
-            string abilityName = null)
+            string abilityName = null,
+            Ability soulRing = null)
         {
             return CastStun(
                 ability,
@@ -351,7 +360,8 @@ namespace Ensage.Common.Extensions
                 straightTimeforSkillShot,
                 chainStun,
                 useSleep,
-                abilityName);
+                abilityName,
+                soulRing);
         }
 
         /// <summary>
@@ -364,6 +374,7 @@ namespace Ensage.Common.Extensions
         /// <param name="chainStun"></param>
         /// <param name="useSleep"></param>
         /// <param name="abilityName"></param>
+        /// <param name="soulRing"></param>
         /// <returns>returns true in case of successfull cast</returns>
         public static bool CastStun(
             this Ability ability,
@@ -372,7 +383,8 @@ namespace Ensage.Common.Extensions
             float straightTimeforSkillShot = 0,
             bool chainStun = true,
             bool useSleep = true,
-            string abilityName = null)
+            string abilityName = null,
+            Ability soulRing = null)
         {
             if (!ability.CanBeCasted())
             {
@@ -387,13 +399,17 @@ namespace Ensage.Common.Extensions
             }
             if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name) && name != "lion_impale" && !target.IsInvul())
             {
+                if (ability.ManaCost > 0 && soulRing.CanBeCasted())
+                {
+                    soulRing.UseAbility();
+                }
                 ability.UseAbility(target);
             }
             else if ((ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
                       || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"))
             {
                 if (Prediction.StraightTime(target) > straightTimeforSkillShot * 1000
-                    && ability.CastSkillShot(target, name))
+                    && ability.CastSkillShot(target, name, soulRing: soulRing))
                 {
                     if (useSleep)
                     {
@@ -411,6 +427,10 @@ namespace Ensage.Common.Extensions
                 }
                 else
                 {
+                    if (ability.ManaCost > 0 && soulRing.CanBeCasted())
+                    {
+                        soulRing.UseAbility();
+                    }
                     ability.UseAbility();
                 }
             }

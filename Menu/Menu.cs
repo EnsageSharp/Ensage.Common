@@ -569,7 +569,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Math.Min(Math.Max((int)(HUDInfo.GetHpBarSizeY() * 3), 21), 33); //32
+                return Math.Min(Math.Max((int)(HUDInfo.GetHpBarSizeY() * 3), 21), 33) + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 2; //32
             }
         }
 
@@ -577,7 +577,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180); //160
+                return Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180) + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value; //160
             }
         }
 
@@ -961,8 +961,13 @@ namespace Ensage.Common.Menu
                     new MenuItem("messageType", "Show the message in: ").SetValue(
                         new StringList(new[] { "SideLog", "Chat", "Console" })));
             Root.AddItem(
+                new MenuItem("EnsageSharp.Common.IncreaseSize", "Size increase: ").SetValue(new Slider(0, 0, 25)))
+                .SetTooltip("Increases size of text and boxes");
+            Root.AddItem(
                 new MenuItem("EnsageSharp.Common.TooltipDuration", "Tooltip Notification Duration").SetValue(
                     new Slider(1500, 0, 5000)));
+            Root.AddItem(
+                new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true));
             Root.AddItem(
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(
                     FontStyle.Bold,
@@ -1624,7 +1629,7 @@ namespace Ensage.Common.Menu
             }
             foreach (var child in this.Children)
             {
-                child.OnReceiveMessage(message, cursorPos, key);
+                child.OnReceiveMessage(message, cursorPos, key, args);
             }
             if (!this.Visible)
             {
@@ -1831,10 +1836,9 @@ namespace Ensage.Common.Menu
 
         private void InitMenuState(string assemblyName)
         {
-            List<string> globalMenuList;
             this.uniqueId = assemblyName + "." + this.Name;
 
-            globalMenuList = MenuGlobals.MenuState;
+            var globalMenuList = MenuGlobals.MenuState;
 
             if (globalMenuList == null)
             {
@@ -2944,7 +2948,7 @@ namespace Ensage.Common.Menu
                                             this.SetValue(val);
                                         }
                                     }
-                                    if (wargs != null)
+                                    if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
                                     {
                                         wargs.Process = false;
                                     }
@@ -2965,7 +2969,7 @@ namespace Ensage.Common.Menu
                                         val2.Active = !val2.Active;
                                         this.SetValue(val2);
                                     }
-                                    if (wargs != null)
+                                    if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
                                     {
                                         wargs.Process = false;
                                     }

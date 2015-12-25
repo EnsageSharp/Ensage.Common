@@ -1326,6 +1326,14 @@
             "WeakensEnemy": true
         },
         {
+            "AbilityName": "item_arcane_boots",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "item_soul_ring",
+            "IsHeal": true
+        },
+        {
             "AbilityName": "antimage_mana_void",
             "IsDisable": true,
             "IsNuke": true,
