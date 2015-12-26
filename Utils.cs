@@ -118,37 +118,6 @@ namespace Ensage.Common
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Switches given degrees to radians
-        /// </summary>
-        /// <param name="angle"></param>
-        /// <returns></returns>
-        public static double DegreeToRadian(double angle)
-        {
-            return Math.PI * angle / 180.0;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public static byte FixVirtualKey(byte key)
-        {
-            switch (key)
-            {
-                case 160:
-                    return 0x10;
-                case 161:
-                    return 0x10;
-                case 162:
-                    return 0x11;
-                case 163:
-                    return 0x11;
-            }
-
-            return key;
-        }
-
-        /// <summary>
         ///     Checks if given unit wont be stunned after given delay in seconds.
         /// </summary>
         /// <param name="unit"></param>
@@ -195,6 +164,37 @@ namespace Ensage.Common
                 chain = remainingTime <= delay;
             }
             return ((((!(stunned || unit.IsStunned()) || chain) && !onlychain) || (onlychain && chain)));
+        }
+
+        /// <summary>
+        ///     Switches given degrees to radians
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static double DegreeToRadian(double angle)
+        {
+            return Math.PI * angle / 180.0;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static byte FixVirtualKey(byte key)
+        {
+            switch (key)
+            {
+                case 160:
+                    return 0x10;
+                case 161:
+                    return 0x10;
+                case 162:
+                    return 0x11;
+                case 163:
+                    return 0x11;
+            }
+
+            return key;
         }
 
         /// <summary>

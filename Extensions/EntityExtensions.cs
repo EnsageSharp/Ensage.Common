@@ -986,6 +986,18 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     Finds spell/item which is currently being channeled by given unit
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static Ability GetChanneledAbility(this Unit unit)
+        {
+            var channelingItem = unit.Inventory.Items.ToList().FirstOrDefault(v => v.IsChanneling);
+            var channelingAbility = unit.Spellbook.Spells.ToList().FirstOrDefault(v => v.IsChanneling);
+            return channelingItem ?? channelingAbility;
+        }
+
+        /// <summary>
         ///     Finds a dagon in the units inventory
         /// </summary>
         /// <param name="unit"></param>
@@ -1004,18 +1016,6 @@ namespace Ensage.Common.Extensions
         {
             var team = unit.Team;
             return team == Team.Dire ? Team.Radiant : Team.Dire;
-        }
-
-        /// <summary>
-        ///     Finds spell/item which is currently being channeled by given unit
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static Ability GetChanneledAbility(this Unit unit)
-        {
-            var channelingItem = unit.Inventory.Items.ToList().FirstOrDefault(v => v.IsChanneling);
-            var channelingAbility = unit.Spellbook.Spells.ToList().FirstOrDefault(v => v.IsChanneling);
-            return channelingItem ?? channelingAbility;
         }
 
         /// <summary>
@@ -1111,6 +1111,17 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     Checks if unit is currently channeling
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsChanneling(this Unit unit)
+        {
+            return unit.Inventory.Items.ToList().Any(v => v.IsChanneling)
+                   || unit.Spellbook.Spells.ToList().Any(v => v.IsChanneling);
+        }
+
+        /// <summary>
         /// </summary>
         /// <param name="unit"></param>
         /// <returns></returns>
@@ -1126,17 +1137,6 @@ namespace Ensage.Common.Extensions
         public static bool IsHexed(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Hexed);
-        }
-
-        /// <summary>
-        ///     Checks if unit is currently channeling
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool IsChanneling(this Unit unit)
-        {
-            return unit.Inventory.Items.ToList().Any(v => v.IsChanneling)
-                   || unit.Spellbook.Spells.ToList().Any(v => v.IsChanneling);
         }
 
         /// <summary>

@@ -53,9 +53,9 @@ namespace Ensage.Common.Extensions
 
         private static readonly Dictionary<string, double> CastPointDictionary = new Dictionary<string, double>();
 
-        private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
-
         private static readonly Dictionary<string, float> ChannelDictionary = new Dictionary<string, float>();
+
+        private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
 
         #endregion
 
@@ -222,7 +222,11 @@ namespace Ensage.Common.Extensions
         /// <param name="abilityName"></param>
         /// <param name="soulRing"></param>
         /// <returns></returns>
-        public static bool CastSkillShot(this Ability ability, Unit target, string abilityName = null, Ability soulRing = null)
+        public static bool CastSkillShot(
+            this Ability ability,
+            Unit target,
+            string abilityName = null,
+            Ability soulRing = null)
         {
             return CastSkillShot(ability, target, ability.Owner.Position, abilityName, soulRing);
         }
@@ -397,7 +401,8 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
-            if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name) && name != "lion_impale" && !target.IsInvul())
+            if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name) && name != "lion_impale"
+                && !target.IsInvul())
             {
                 if (ability.ManaCost > 0 && soulRing.CanBeCasted())
                 {
@@ -439,6 +444,24 @@ namespace Ensage.Common.Extensions
                 Utils.Sleep(Math.Max(delay, 0.2) * 1000 + 250, "CHAINSTUN_SLEEP");
             }
             return true;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <param name="abilityName"></param>
+        /// <returns></returns>
+        public static float ChannelTime(this Ability ability, string abilityName = null)
+        {
+            var name = abilityName ?? ability.Name;
+            float channel;
+            if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
+            {
+                channel = ability.GetChannelTime(ability.Level - 1);
+                ChannelDictionary.Add(name + ability.Level, channel);
+            }
+            //Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
+            return channel;
         }
 
         /// <summary>
@@ -807,24 +830,6 @@ namespace Ensage.Common.Extensions
                 }
             }
             return radius;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
-        public static float ChannelTime(this Ability ability, string abilityName = null)
-        {
-            var name = abilityName ?? ability.Name;
-            float channel;
-            if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
-            {
-                channel = ability.GetChannelTime(ability.Level - 1);
-                ChannelDictionary.Add(name + ability.Level, channel);
-            }
-            //Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
-            return channel;
         }
 
         /// <summary>

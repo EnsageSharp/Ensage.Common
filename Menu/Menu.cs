@@ -36,6 +36,7 @@ namespace Ensage.Common.Menu
     using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Menu.NotificationData;
+    using Ensage.Common.Objects;
 
     using SharpDX;
 
@@ -529,7 +530,7 @@ namespace Ensage.Common.Menu
     {
         #region Static Fields
 
-        public static Vector2 BasePosition = new Vector2(10, 60);
+        public static Vector2 BasePosition = new Vector2(10, (float)(HUDInfo.ScreenSizeY() * 0.06));
 
         private static bool _drawTheMenu;
 
@@ -569,7 +570,8 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Math.Min(Math.Max((int)(HUDInfo.GetHpBarSizeY() * 3), 21), 33) + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 2; //32
+                return Math.Min(Math.Max((int)(HUDInfo.GetHpBarSizeY() * 3), 21), 33)
+                       + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 2; //32
             }
         }
 
@@ -577,7 +579,8 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180) + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value; //160
+                return Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180)
+                       + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value; //160
             }
         }
 
@@ -899,15 +902,15 @@ namespace Ensage.Common.Menu
 
         /// <summary>
         /// </summary>
+        public List<Menu> Children = new List<Menu>();
+
+        /// <summary>
+        /// </summary>
         public SharpDX.Color Color;
 
         /// <summary>
         /// </summary>
         public string DisplayName;
-
-        /// <summary>
-        /// </summary>
-        public List<Menu> Children = new List<Menu>();
 
         /// <summary>
         /// </summary>
@@ -1057,14 +1060,6 @@ namespace Ensage.Common.Menu
 
         #region Properties
 
-        internal int Height
-        {
-            get
-            {
-                return MenuSettings.MenuItemHeight;
-            }
-        }
-
         internal int ChildrenMenuWidth
         {
             get
@@ -1072,6 +1067,14 @@ namespace Ensage.Common.Menu
                 var result = this.Children.Select(item => item.NeededWidth).Concat(new[] { 0 }).Max();
 
                 return this.Items.Select(item => item.NeededWidth).Concat(new[] { result }).Max();
+            }
+        }
+
+        internal int Height
+        {
+            get
+            {
+                return MenuSettings.MenuItemHeight;
             }
         }
 
@@ -1749,7 +1752,7 @@ namespace Ensage.Common.Menu
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var players =
-                        Objects.Players.All.Where(
+                        Players.All.Where(
                             x =>
                             x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
                             && !dict.ContainsKey(x.Hero.Name));
@@ -1804,15 +1807,15 @@ namespace Ensage.Common.Menu
             //var console = newMessageType.SelectedIndex == 2;
             //if (Root.Item("showMessage").GetValue<bool>() && !console)
             //{
-                //var msg =
-                //    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-                //    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                //    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-                //    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
+            //var msg =
+            //    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
+            //    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+            //    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
+            //    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
             const string Msg1 =
                 "<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> Merry Christmas and Happy New Year <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
             const string Msg2 =
-            "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
+                "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
             Game.PrintMessage(Msg1, MessageType.LogMessage);
             Game.PrintMessage(Msg2, MessageType.LogMessage);
             //Game.PrintMessage(Msg,

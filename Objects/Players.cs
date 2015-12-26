@@ -5,24 +5,20 @@
     using System.Linq;
 
     /// <summary>
-    /// 
     /// </summary>
     public class Players
     {
         #region Static Fields
 
         /// <summary>
-        /// 
         /// </summary>
         public static List<Player> All;
 
         /// <summary>
-        /// 
         /// </summary>
         public static List<Player> Dire;
 
         /// <summary>
-        /// 
         /// </summary>
         public static List<Player> Radiant;
 
@@ -49,7 +45,6 @@
         #region Public Methods and Operators
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="args"></param>
         public static void Update(EventArgs args)
@@ -78,6 +73,5 @@
         }
 
         #endregion
-
     }
 }

@@ -22,6 +22,7 @@ namespace Ensage.Common
     using System.Linq;
 
     using Ensage.Common.Extensions;
+    using Ensage.Common.Objects;
 
     using SharpDX;
 
@@ -329,7 +330,7 @@ namespace Ensage.Common
             }
             if (playerList == null || (playerList.Count < 10 && Utils.SleepCheck("Prediction.SpeedTrack")))
             {
-                playerList = Objects.Heroes.All;
+                playerList = Heroes.All;
                 Utils.Sleep(1000, "Prediction.SpeedTrack");
             }
 

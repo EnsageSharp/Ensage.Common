@@ -184,34 +184,8 @@ namespace Ensage.Common
             Events.OnClose += Events_OnClose;
             if (Game.IsInGame)
             {
-                Events_OnLoad(null,null);
+                Events_OnLoad(null, null);
             }
-        }
-
-        static void Events_OnClose(object sender, EventArgs e)
-        {
-            if (!loaded)
-            {
-                return;
-            }
-            Game.OnUpdate -= Game_OnUpdate;
-            LastAttackStart = 0;
-            lastActivity = 0;
-            me = null;
-            loaded = false;
-        }
-
-        static void Events_OnLoad(object sender, EventArgs e)
-        {
-            if (loaded)
-            {
-                return;
-            }
-            Game.OnUpdate += Game_OnUpdate;
-            LastAttackStart = 0;
-            lastActivity = 0;
-            me = null;
-            loaded = true;
         }
 
         /// <summary>
@@ -277,6 +251,32 @@ namespace Ensage.Common
         #endregion
 
         #region Methods
+
+        private static void Events_OnClose(object sender, EventArgs e)
+        {
+            if (!loaded)
+            {
+                return;
+            }
+            Game.OnUpdate -= Game_OnUpdate;
+            LastAttackStart = 0;
+            lastActivity = 0;
+            me = null;
+            loaded = false;
+        }
+
+        private static void Events_OnLoad(object sender, EventArgs e)
+        {
+            if (loaded)
+            {
+                return;
+            }
+            Game.OnUpdate += Game_OnUpdate;
+            LastAttackStart = 0;
+            lastActivity = 0;
+            me = null;
+            loaded = true;
+        }
 
         private static void Game_OnUpdate(EventArgs args)
         {
