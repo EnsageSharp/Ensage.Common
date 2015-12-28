@@ -1154,7 +1154,8 @@
         },
         {
             "AbilityName": "omniknight_guardian_angel",
-            "IsShield": true
+            "IsShield": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "batrider_sticky_napalm",
@@ -1582,6 +1583,11 @@
             "AbilityName": "pudge_rot",
             "IsSlow": true,
             "StringRadius": "rot_radius"
+        },
+        {
+            "AbilityName": "item_blink",
+            "FakeCastRange": true,
+            "RealCastRange": "blink_range"
         }
     ]
 }

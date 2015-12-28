@@ -31,13 +31,24 @@
             All = new List<Hero>();
             Dire = new List<Hero>();
             Radiant = new List<Hero>();
+            var loaded = false;
             Events.OnLoad += (sender, args) =>
                 {
                     All = new List<Hero>();
                     Dire = new List<Hero>();
                     Radiant = new List<Hero>();
+                    Game.OnUpdate += Update;
+                    loaded = true;
                 };
-            Game.OnUpdate += Update;
+            if (loaded == false && ObjectMgr.LocalHero != null && Game.IsInGame)
+            {
+                All = new List<Hero>();
+                Dire = new List<Hero>();
+                Radiant = new List<Hero>();
+                Game.OnUpdate += Update;
+            }
+            Events.OnClose += (sender, args) =>
+                { Game.OnUpdate -= Update; };
         }
 
         #endregion
@@ -62,7 +73,7 @@
             {
                 return;
             }
-            if (!Utils.SleepCheck("Common.Heroes.Update") || All.Count(x => x.IsValid) == 10)
+            if (!Utils.SleepCheck("Common.Heroes.Update") || All.Count(x => x.IsValid) >= 10)
             {
                 return;
             }
@@ -74,11 +85,11 @@
         /// </summary>
         public static void UpdateHeroes()
         {
-            var list = new List<Player>(Players.All);
+            var list = Players.All;
             var herolist = new List<Hero>(All);
             var herolistRadiant = new List<Hero>(Radiant);
             var herolistDire = new List<Hero>(Dire);
-            foreach (var hero in list.Where(x => x.Hero != null).Select(p => p.Hero))
+            foreach (var hero in list.Where(x => x.Hero != null && x.Hero.IsValid).Select(p => p.Hero))
             {
                 if (!All.Contains(hero))
                 {

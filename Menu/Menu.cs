@@ -976,6 +976,10 @@ namespace Ensage.Common.Menu
                     FontStyle.Bold,
                     SharpDX.Color.Yellow));
             Events.OnLoad += Events_OnLoad;
+            if (Game.IsInGame && ObjectMgr.LocalHero != null)
+            {
+                Events_OnLoad(null, null);
+            }
             CommonMenu.MenuConfig.AddSubMenu(Root);
             message.ValueChanged += MessageValueChanged;
             newMessageType = Root.Item("messageType").GetValue<StringList>();
@@ -1747,6 +1751,7 @@ namespace Ensage.Common.Menu
                 {
                     continue;
                 }
+                var set = false;
                 if (item.GetValue<HeroToggler>().UseEnemyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 5)
                 {
                     var dict = item.GetValue<HeroToggler>().Dictionary;
@@ -1755,7 +1760,11 @@ namespace Ensage.Common.Menu
                         Players.All.Where(
                             x =>
                             x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
-                            && !dict.ContainsKey(x.Hero.Name));
+                            && !dict.ContainsKey(x.Hero.Name)).ToList();
+                    if (players.Any())
+                    {
+                        set = true;
+                    }
                     foreach (var x in
                         players)
                     {
@@ -1777,12 +1786,16 @@ namespace Ensage.Common.Menu
                 {
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
-                    foreach (var x in
-                        ObjectMgr.GetEntities<Player>()
-                            .Where(
-                                x =>
-                                x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.Team
-                                && !dict.ContainsKey(x.Hero.Name)))
+                    var players =
+                        Players.All.Where(
+                            x =>
+                            x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.Team
+                            && !dict.ContainsKey(x.Hero.Name)).ToList();
+                    if (players.Any())
+                    {
+                        set = true;
+                    }
+                    foreach (var x in players)
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
@@ -1798,7 +1811,7 @@ namespace Ensage.Common.Menu
                             true,
                             item.GetValue<HeroToggler>().DefaultValues));
                 }
-                Utils.Sleep(20000, "SetHeroTogglers" + this.Name + item.Name);
+                Utils.Sleep(set ? 20000 : 2000, "SetHeroTogglers" + this.Name + item.Name);
             }
         }
 

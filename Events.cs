@@ -62,8 +62,8 @@ namespace Ensage.Common
                     }
                     unloaded = false;
                     loaded = true;
-                    CallOnLoad();
                     Load();
+                    DelayAction.Add(2000, CallOnLoad);
                 };
         }
 

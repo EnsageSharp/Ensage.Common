@@ -66,7 +66,7 @@ namespace Ensage.Common.Extensions
         /// </summary>
         /// <param name="ability"></param>
         /// <returns>returns true in case ability can be used</returns>
-        public static bool CanBeCasted(this Ability ability)
+        public static bool CanBeCasted(this Ability ability, float bonusMana = 0)
         {
             if (ability == null)
             {
@@ -88,7 +88,10 @@ namespace Ensage.Common.Extensions
                 }
                 if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
-                    canBeCasted = ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                    canBeCasted = (bonusMana > 0)
+                                      ? (ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
+                                         && ability.Cooldown <= 0)
+                                      : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                     var item = ability as Item;
                     if (item != null && item.IsRequiringCharges)
                     {
@@ -103,7 +106,10 @@ namespace Ensage.Common.Extensions
                 {
                     return false;
                 }
-                canBeCasted = ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                canBeCasted = (bonusMana > 0)
+                                      ? (ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
+                                         && ability.Cooldown <= 0)
+                                      : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                 return canBeCasted;
             }
             catch (Exception)
@@ -607,10 +613,20 @@ namespace Ensage.Common.Extensions
             {
                 return (ability.Owner as Hero).GetAttackRange() + 50;
             }
+            AbilityInfo data;
+            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
+            {
+                data = AbilityDatabase.Find(name);
+                AbilityDamage.DataDictionary.Add(ability, data);
+            }
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
             {
-                var castRange = ability.CastRange;
+                var castRange = (float)ability.CastRange;
                 var bonusRange = 0f;
+                if (data != null && data.RealCastRange != null)
+                {
+                    castRange = ability.GetAbilityData(data.RealCastRange, abilityName: name);
+                }
                 if (castRange <= 0)
                 {
                     castRange = 999999;
@@ -634,12 +650,6 @@ namespace Ensage.Common.Extensions
             }
 
             var radius = 0f;
-            AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            {
-                data = AbilityDatabase.Find(name);
-                AbilityDamage.DataDictionary.Add(ability, data);
-            }
             if (data == null)
             {
                 return ability.CastRange;
