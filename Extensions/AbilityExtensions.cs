@@ -561,7 +561,7 @@ namespace Ensage.Common.Extensions
                 }
                 if (name == "templar_assassin_meld")
                 {
-                    delay += UnitDatabase.GetAttackPoint(source);
+                    delay += UnitDatabase.GetAttackPoint(source) + Game.Ping/500 + 0.1 + source.GetTurnTime(target);
                 }
                 if ((name == "item_diffusal_blade" || name == "item_diffusal_blade_2"))
                 {
@@ -589,13 +589,7 @@ namespace Ensage.Common.Extensions
             }
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
             {
-                return
-                    Math.Max(
-                        delay
-                        + (!target.Equals(source)
-                               ? (useCastPoint ? source.GetTurnTime(target) : source.GetTurnTime(target) / 2)
-                               : 0),
-                        0);
+                return Math.Max(delay + (!target.Equals(source) ? source.GetTurnTime(target) : 0), 0);
             }
             return Math.Max(delay, 0);
         }

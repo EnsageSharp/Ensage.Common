@@ -253,6 +253,10 @@
             "DamageString": "heal"
         },
         {
+            "AbilityName": "juggernaut_blade_fury",
+            "IsShield": true
+        },
+        {
             "AbilityName": "keeper_of_the_light_blinding_light",
             "IsSkillShot": true,
             "IsDisable": true
@@ -1221,7 +1225,7 @@
             "AbilityName": "templar_assassin_psionic_trap",
             "IsSlow": true,
             "Radius": 400,
-            "AdditionalDelay": 0.2
+            "AdditionalDelay": 0.4
         },
         {
             "AbilityName": "troll_warlord_whirling_axes_melee",

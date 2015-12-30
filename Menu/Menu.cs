@@ -1759,7 +1759,7 @@ namespace Ensage.Common.Menu
                     var players =
                         Players.All.Where(
                             x =>
-                            x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
+                            x.Hero != null && x.Hero.IsValid && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
                             && !dict.ContainsKey(x.Hero.Name)).ToList();
                     if (players.Any())
                     {
@@ -1789,7 +1789,7 @@ namespace Ensage.Common.Menu
                     var players =
                         Players.All.Where(
                             x =>
-                            x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.Team
+                            x.Hero != null && x.Hero.IsValid && x.Hero.Team == ObjectMgr.LocalHero.Team
                             && !dict.ContainsKey(x.Hero.Name)).ToList();
                     if (players.Any())
                     {

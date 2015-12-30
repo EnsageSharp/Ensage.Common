@@ -86,7 +86,7 @@ namespace Ensage.Common
                 }
                 else if (me.ClassID == ClassID.CDOTA_Unit_Hero_Viper && !target.IsMagicImmune())
                 {
-                    var poison = me.Spellbook.Spell1;
+                    var poison = me.Spellbook.SpellQ;
                     if (poison.Level > 0 && me.Mana > poison.ManaCost)
                     {
                         poison.UseAbility(target);
@@ -161,7 +161,7 @@ namespace Ensage.Common
             }
             //Console.WriteLine(turnTime*1000);
             return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 75
-                    + bonusWindupMs) > tick;
+                    + bonusWindupMs) >= tick;
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Ensage.Common
         public static bool CanCancelAnimation(float delay = 0f)
         {
             var time = (tick - LastAttackStart);
-            var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping + 50 - delay;
-            return time > cancelDur;
+            var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping + 100 - delay;
+            return time >= cancelDur;
         }
 
         /// <summary>
@@ -226,21 +226,23 @@ namespace Ensage.Common
                           && !target.Modifiers.Any(
                               x => x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow")
                           && target.Distance2D(me)
-                          <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + distance);
+                          <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + Math.Max(distance, 0));
             if (isValid || (target != null && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))
             {
-                var canAttack = (!AttackOnCooldown(target, bonusWindupMs) || !CanCancelAnimation())
+                var canAttack = !AttackOnCooldown(target, bonusWindupMs)
                                 && !target.IsAttackImmune() && !target.IsInvul() && me.CanAttack();
                 if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
                 {
                     Attack(target, attackmodifiers);
-                    Utils.Sleep(100, "Orbwalk.Attack");
+                    Utils.Sleep(
+                        UnitDatabase.GetAttackPoint(me) * 1000 + me.GetTurnTime(target) * 1000,
+                        "Orbwalk.Attack");
                     return;
                 }
             }
             var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs))
-                            || (!isValid && !me.IsAttacking());
-            if (!canCancel || !Utils.SleepCheck("Orbwalk.Move"))
+                            || (!isValid && !me.IsAttacking() && CanCancelAnimation());
+            if (!canCancel || !Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))
             {
                 return;
             }
@@ -258,7 +260,7 @@ namespace Ensage.Common
             {
                 return;
             }
-            Game.OnUpdate -= Game_OnUpdate;
+            Drawing.OnDraw -= Game_OnUpdate;
             LastAttackStart = 0;
             lastActivity = 0;
             me = null;
@@ -271,7 +273,7 @@ namespace Ensage.Common
             {
                 return;
             }
-            Game.OnUpdate += Game_OnUpdate;
+            Drawing.OnDraw += Game_OnUpdate;
             LastAttackStart = 0;
             lastActivity = 0;
             me = null;
@@ -305,6 +307,12 @@ namespace Ensage.Common
             //Console.WriteLine(lastActivity);
             if (!me.IsAttacking())
             {
+                if (CanCancelAnimation())
+                {
+                    return;
+                }
+                LastAttackStart = 0;
+                lastActivity = 0;
                 return;
             }
 
@@ -314,7 +322,7 @@ namespace Ensage.Common
             //}
             //else
             //{
-            LastAttackStart = tick;
+            LastAttackStart = tick - Game.Ping;
             // }
         }
 
