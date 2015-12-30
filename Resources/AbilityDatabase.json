@@ -549,6 +549,11 @@
             "DamageString": "soul_base_damage"
         },
         {
+            "AbilityName": "viper_viper_strike",
+            "IsSlow": true,
+            "Speed": "projectile_speed"
+        },
+        {
             "AbilityName": "earthshaker_echo_slam",
             "IsDisable": true,
             "Radius": 0
