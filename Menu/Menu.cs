@@ -1826,11 +1826,11 @@ namespace Ensage.Common.Menu
             //    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
             //    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
             const string Msg1 =
-                "<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> Merry Christmas and Happy New Year <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
-            const string Msg2 =
-                "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
+                "<font face='Verdana' color='#ffffff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team wishes You Happy New Year <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
+            //const string Msg2 =
+            //    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
             Game.PrintMessage(Msg1, MessageType.LogMessage);
-            Game.PrintMessage(Msg2, MessageType.LogMessage);
+            //Game.PrintMessage(Msg2, MessageType.LogMessage);
             //Game.PrintMessage(Msg,
             //    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
             //        ? MessageType.LogMessage
