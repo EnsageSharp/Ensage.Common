@@ -376,7 +376,7 @@ namespace Ensage.Common.Menu.NotificationData
                         continue;
                     }
 
-                    finalText = (text == this.Text) ? text : text.Substring(0x0, text.Length - 0x3) + "...";
+                    finalText = text == this.Text ? text : text.Substring(0x0, text.Length - 0x3) + "...";
                     break;
                 }
             }
@@ -626,8 +626,8 @@ namespace Ensage.Common.Menu.NotificationData
                         if (Math.Abs(this.position.Y - this.updatePosition.Y) > float.Epsilon)
                         {
                             var value =
-                                (this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y - 0x1))
-                                 < this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y + 0x1)))
+                                this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y - 0x1))
+                                < this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y + 0x1))
                                     ? -0x1
                                     : 0x1;
                             this.position.Y += value;
@@ -677,8 +677,8 @@ namespace Ensage.Common.Menu.NotificationData
                         if (Math.Abs(this.position.Y - this.updatePosition.Y) > float.Epsilon)
                         {
                             var value =
-                                (this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y - 0.5f))
-                                 < this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y + 0.5f)))
+                                this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y - 0.5f))
+                                < this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y + 0.5f))
                                     ? -0.5f
                                     : 0.5f;
                             this.position.Y += value;
@@ -884,7 +884,7 @@ namespace Ensage.Common.Menu.NotificationData
         /// <returns>Decreasement Tick</returns>
         private int GetNextDecreasementTick()
         {
-            return Environment.TickCount + ((this.duration / 0xFF));
+            return Environment.TickCount + this.duration / 0xFF;
         }
 
         #endregion

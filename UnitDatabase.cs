@@ -142,9 +142,9 @@ namespace Ensage.Common
                 if (
                     !unit.Modifiers.Any(
                         x =>
-                        (x.Name == "modifier_alchemist_chemical_rage" || x.Name == "modifier_terrorblade_metamorphosis"
-                         || x.Name == "modifier_lone_druid_true_form"
-                         || x.Name == "modifier_troll_warlord_berserkers_rage")))
+                        x.Name == "modifier_alchemist_chemical_rage" || x.Name == "modifier_terrorblade_metamorphosis"
+                        || x.Name == "modifier_lone_druid_true_form"
+                        || x.Name == "modifier_troll_warlord_berserkers_rage"))
                 {
                     return attackBaseTime / (1 + (attackSpeed - 100) / 100);
                 }
@@ -207,7 +207,7 @@ namespace Ensage.Common
                 }
                 var attackSpeed = Math.Min(unit.AttacksPerSecond * attackBaseTime / 0.01, 600);
 
-                if (unit.Modifiers.Any(x => (x.Name == "modifier_ursa_overpower")))
+                if (unit.Modifiers.Any(x => x.Name == "modifier_ursa_overpower"))
                 {
                     attackSpeed = 600;
                 }

@@ -88,9 +88,9 @@ namespace Ensage.Common.Extensions
                 }
                 if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
-                    canBeCasted = (bonusMana > 0)
-                                      ? (ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
-                                         && ability.Cooldown <= 0)
+                    canBeCasted = bonusMana > 0
+                                      ? ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
+                                        && ability.Cooldown <= 0
                                       : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                     var item = ability as Item;
                     if (item != null && item.IsRequiringCharges)
@@ -106,10 +106,10 @@ namespace Ensage.Common.Extensions
                 {
                     return false;
                 }
-                canBeCasted = (bonusMana > 0)
-                                      ? (ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
-                                         && ability.Cooldown <= 0)
-                                      : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                canBeCasted = bonusMana > 0
+                                  ? ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
+                                    && ability.Cooldown <= 0
+                                  : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
                 return canBeCasted;
             }
             catch (Exception)
@@ -178,7 +178,7 @@ namespace Ensage.Common.Extensions
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
                 var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
-                if (position.Distance2D(pred) <= (ability.GetCastRange(name) + ability.GetRadius(name) / 2 + lion))
+                if (position.Distance2D(pred) <= ability.GetCastRange(name) + ability.GetRadius(name) / 2 + lion)
                 {
                     return true;
                 }
@@ -278,7 +278,7 @@ namespace Ensage.Common.Extensions
             var distanceXyz = xyz.Distance2D(position);
             var range = ability.GetCastRange(name);
             var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
-            if (!(distanceXyz <= (range + radius + lion)))
+            if (!(distanceXyz <= range + radius + lion))
             {
                 return false;
             }
@@ -299,7 +299,7 @@ namespace Ensage.Common.Extensions
                     speed,
                     radius);
                 //Console.WriteLine(distanceXyz + " " + range + " " + radius);
-                if (distanceXyz < (range + radius) && distanceXyz > (range - radius))
+                if (distanceXyz < range + radius && distanceXyz > range - radius)
                 {
                     if (owner.GetTurnTime(xyz) > 0.01)
                     {
@@ -322,7 +322,7 @@ namespace Ensage.Common.Extensions
                 var a = Math.Acos(175 / xyz.Distance(mepred));
                 var x1 = v1 * Math.Cos(a) - v2 * Math.Sin(a);
                 var y1 = v2 * Math.Cos(a) + v1 * Math.Sin(a);
-                var b = Math.Sqrt((x1 * x1) + (y1 * y1));
+                var b = Math.Sqrt(x1 * x1 + y1 * y1);
                 var k1 = x1 * 50 / b;
                 var k2 = y1 * 50 / b;
                 var vec1 = new Vector3((float)(k1 + mepred.X), (float)(k2 + mepred.Y), mepred.Z);
@@ -416,8 +416,8 @@ namespace Ensage.Common.Extensions
                 }
                 ability.UseAbility(target);
             }
-            else if ((ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
-                      || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"))
+            else if (ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
+                     || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale")
             {
                 if (Prediction.StraightTime(target) > straightTimeforSkillShot * 1000
                     && ability.CastSkillShot(target, name, soulRing: soulRing))
@@ -561,9 +561,9 @@ namespace Ensage.Common.Extensions
                 }
                 if (name == "templar_assassin_meld")
                 {
-                    delay += UnitDatabase.GetAttackPoint(source) + Game.Ping/500 + 0.1 + source.GetTurnTime(target);
+                    delay += UnitDatabase.GetAttackPoint(source) + Game.Ping / 500 + 0.1 + source.GetTurnTime(target);
                 }
-                if ((name == "item_diffusal_blade" || name == "item_diffusal_blade_2"))
+                if (name == "item_diffusal_blade" || name == "item_diffusal_blade_2")
                 {
                     delay += 2;
                 }
@@ -686,12 +686,12 @@ namespace Ensage.Common.Extensions
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name) && speed < 6000 && speed > 0)
             {
                 var xyz = ability.GetPrediction(target, abilityName: name);
-                delay += (Math.Max((owner.Distance2D(xyz) - radius / 2), 100) / speed);
+                delay += Math.Max((int)(owner.Distance2D(xyz) - radius / 2), 100) / speed;
             }
             if (name == "tinker_heat_seeking_missile")
             {
                 var xyz = ability.GetPrediction(target, abilityName: name);
-                delay += (Math.Max((owner.Distance2D(xyz)), 100) / speed);
+                delay += Math.Max(owner.Distance2D(xyz), 100) / speed;
             }
             return delay;
         }
@@ -857,7 +857,7 @@ namespace Ensage.Common.Extensions
                 && !ability.Equals(spell5))
             {
                 return invoke.Level > 0 && invoke.Cooldown <= 0 && ability.Cooldown <= 0
-                       && (ability.ManaCost + invoke.ManaCost) <= owner.Mana;
+                       && ability.ManaCost + invoke.ManaCost <= owner.Mana;
             }
             return ability.AbilityState == AbilityState.Ready;
         }

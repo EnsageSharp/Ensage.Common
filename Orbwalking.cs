@@ -160,8 +160,8 @@ namespace Ensage.Common
                 turnTime = me.GetTurnTime(target);
             }
             //Console.WriteLine(turnTime*1000);
-            return (LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 75
-                    + bonusWindupMs) >= tick;
+            return LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 75
+                   + bonusWindupMs >= tick;
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Ensage.Common
         /// <returns></returns>
         public static bool CanCancelAnimation(float delay = 0f)
         {
-            var time = (tick - LastAttackStart);
+            var time = tick - LastAttackStart;
             var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping + 100 - delay;
             return time >= cancelDur;
         }
@@ -226,11 +226,11 @@ namespace Ensage.Common
                           && !target.Modifiers.Any(
                               x => x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow")
                           && target.Distance2D(me)
-                          <= (me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + Math.Max(distance, 0));
+                          <= me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + Math.Max(distance, 0);
             if (isValid || (target != null && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))
             {
-                var canAttack = !AttackOnCooldown(target, bonusWindupMs)
-                                && !target.IsAttackImmune() && !target.IsInvul() && me.CanAttack();
+                var canAttack = !AttackOnCooldown(target, bonusWindupMs) && !target.IsAttackImmune()
+                                && !target.IsInvul() && me.CanAttack();
                 if (canAttack && Utils.SleepCheck("Orbwalk.Attack"))
                 {
                     Attack(target, attackmodifiers);

@@ -163,7 +163,7 @@ namespace Ensage.Common
                 }
                 chain = remainingTime <= delay;
             }
-            return ((((!(stunned || unit.IsStunned()) || chain) && !onlychain) || (onlychain && chain)));
+            return ((!(stunned || unit.IsStunned()) || chain) && !onlychain) || (onlychain && chain);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Ensage.Common
         /// </summary>
         public static bool IsUnderRectangle(Vector2 point, float x, float y, float width, float height)
         {
-            return (point.X > x && point.X < x + width && point.Y > y && point.Y < y + height);
+            return point.X > x && point.X < x + width && point.Y > y && point.Y < y + height;
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Ensage.Common
             /*F1-F12*/
             if (vKey >= 112 && vKey <= 123)
             {
-                return ("F" + (vKey - 111));
+                return "F" + (vKey - 111);
             }
 
             switch (vKey)

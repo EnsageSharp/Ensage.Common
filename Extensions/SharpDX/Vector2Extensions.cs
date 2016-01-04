@@ -240,7 +240,7 @@ namespace Ensage.Common.Extensions.SharpDX
         {
             var objects = point.ProjectOn(segmentStart, segmentEnd);
 
-            return (objects.IsOnSegment || onlyIfOnSegment == false)
+            return objects.IsOnSegment || onlyIfOnSegment == false
                        ? Vector2.Distance(objects.SegmentPoint, point)
                        : float.MaxValue;
         }
@@ -294,7 +294,7 @@ namespace Ensage.Common.Extensions.SharpDX
         {
             var objects = point.ProjectOn(segmentStart, segmentEnd);
 
-            return (objects.IsOnSegment || onlyIfOnSegment == false)
+            return objects.IsOnSegment || onlyIfOnSegment == false
                        ? Vector2.DistanceSquared(objects.SegmentPoint, point)
                        : float.MaxValue;
         }
@@ -445,7 +445,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <returns>The <see cref="bool" />.</returns>
         public static bool IsOrthogonal(this Vector2 vector2, Vector3 toVector3)
         {
-            return Math.Abs((vector2.X * toVector3.X) + (vector2.Y * toVector3.Y)) < float.Epsilon;
+            return Math.Abs(vector2.X * toVector3.X + vector2.Y * toVector3.Y) < float.Epsilon;
         }
 
         /// <summary>
@@ -523,7 +523,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <returns>Magnitude in float-units</returns>
         public static float Magnitude(this Vector2 vector2)
         {
-            return (float)Math.Sqrt((vector2.X * vector2.X) + (vector2.Y * vector2.Y));
+            return (float)Math.Sqrt(vector2.X * vector2.X + vector2.Y * vector2.Y);
         }
 
         /// <summary>
@@ -565,7 +565,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <returns>Perpendicular Vector2</returns>
         public static Vector2 Perpendicular(this Vector2 vector2, int offset = 0)
         {
-            return (offset == 0) ? new Vector2(-vector2.Y, vector2.X) : new Vector2(vector2.Y, -vector2.X);
+            return offset == 0 ? new Vector2(-vector2.Y, vector2.X) : new Vector2(vector2.Y, -vector2.X);
         }
 
         /// <summary>
@@ -577,7 +577,7 @@ namespace Ensage.Common.Extensions.SharpDX
         {
             if (Math.Abs(vector2.X - 0) <= (float)1e-9)
             {
-                return (vector2.Y > 0) ? 90 : (vector2.Y < 0) ? 270 : 0;
+                return vector2.Y > 0 ? 90 : vector2.Y < 0 ? 270 : 0;
             }
 
             var theta = (float)(Math.Atan(vector2.Y / vector2.X) * (180 / Math.PI));
@@ -778,7 +778,7 @@ namespace Ensage.Common.Extensions.SharpDX
             float d = eP1X - sP1X, e = eP1Y - sP1Y;
             float dist = (float)Math.Sqrt(d * d + e * e), t1 = float.NaN;
             float s = Math.Abs(dist) > float.Epsilon ? pointVelocityA * d / dist : 0,
-                  k = (Math.Abs(dist) > float.Epsilon) ? pointVelocityA * e / dist : 0f;
+                  k = Math.Abs(dist) > float.Epsilon ? pointVelocityA * e / dist : 0f;
 
             float r = sP2X - sP1X, j = sP2Y - sP1Y;
             var c = r * r + j * j;
@@ -802,12 +802,12 @@ namespace Ensage.Common.Extensions.SharpDX
                     {
                         if (Math.Abs(b) < float.Epsilon)
                         {
-                            t1 = (Math.Abs(c) < float.Epsilon) ? 0f : float.NaN;
+                            t1 = Math.Abs(c) < float.Epsilon ? 0f : float.NaN;
                         }
                         else
                         {
                             var t = -c / (2 * b);
-                            t1 = (pointVelocityB * t >= 0f) ? t : float.NaN;
+                            t1 = pointVelocityB * t >= 0f ? t : float.NaN;
                         }
                     }
                     else
@@ -819,7 +819,7 @@ namespace Ensage.Common.Extensions.SharpDX
                             var t = (-nom - b) / a;
                             t1 = pointVelocityB * t >= 0f ? t : float.NaN;
                             t = (nom - b) / a;
-                            var t2 = (pointVelocityB * t >= 0f) ? t : float.NaN;
+                            var t2 = pointVelocityB * t >= 0f ? t : float.NaN;
 
                             if (!float.IsNaN(t2) && !float.IsNaN(t1))
                             {
@@ -843,7 +843,7 @@ namespace Ensage.Common.Extensions.SharpDX
 
             return new MovementCollisionInfo(
                 t1,
-                (!float.IsNaN(t1)) ? new Vector2(sP1X + s * t1, sP1Y + k * t1) : new Vector2());
+                !float.IsNaN(t1) ? new Vector2(sP1X + s * t1, sP1Y + k * t1) : new Vector2());
         }
 
         #endregion

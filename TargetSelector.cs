@@ -43,7 +43,7 @@ namespace Ensage.Common
                 Heroes.All.Where(
                     x =>
                     x.Team != source.Team && x.IsAlive && x.IsVisible
-                    && x.Distance2D(source) <= (attackRange + x.HullRadius + bonusRange + source.HullRadius + 50));
+                    && x.Distance2D(source) <= attackRange + x.HullRadius + bonusRange + source.HullRadius + 50);
             var aaDmg = source.MinimumDamage + source.BonusDamage;
             Hero bestTarget = null;
             var lastHitsToKill = 0f;
@@ -108,7 +108,7 @@ namespace Ensage.Common
                              || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
                              || x.ClassID == ClassID.CDOTA_BaseNPC_Building
                              || x.ClassID == ClassID.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
-                            && x.Team != source.Team && x.Distance2D(source) < (attackRange + 100))
+                            && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
                         .OrderBy(creep => creep.Health)
                         .DefaultIfEmpty(null)
                         .FirstOrDefault();

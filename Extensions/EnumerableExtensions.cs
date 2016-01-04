@@ -131,7 +131,7 @@ namespace Ensage.Common.Extensions
         {
             var collection = new List<List<Vector2>>();
 
-            for (var counter = 0; counter < (1 << allValues.Count); ++counter)
+            for (var counter = 0; counter < 1 << allValues.Count; ++counter)
             {
                 collection.Add(allValues.Where((t, i) => (counter & (1 << i)) == 0).ToList());
             }

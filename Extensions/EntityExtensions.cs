@@ -306,7 +306,7 @@ namespace Ensage.Common.Extensions
         public static bool CanDie(this Unit unit, string sourceAbilityName = null, bool ignoreReincarnation = false)
         {
             var cullingBlade = sourceAbilityName != null && sourceAbilityName == "axe_culling_blade";
-            return (!ignoreReincarnation && !unit.CanReincarnate())
+            return !ignoreReincarnation && !unit.CanReincarnate()
                    && !unit.Modifiers.Any(
                        x =>
                        (!cullingBlade
@@ -596,14 +596,14 @@ namespace Ensage.Common.Extensions
                 if (spell != null)
                 {
                     var burst = 0d;
-                    var angle = ((target.FindRelativeAngle(source.Position)) % (2 * Math.PI)) * 180 / Math.PI;
+                    var angle = target.FindRelativeAngle(source.Position) % (2 * Math.PI) * 180 / Math.PI;
                     if (angle >= 110 && angle <= 250)
                     {
-                        burst = ((1 + spell.Level) * 0.08);
+                        burst = (1 + spell.Level) * 0.08;
                     }
                     else if (angle >= 70 && angle <= 290)
                     {
-                        burst = ((1 + spell.Level) * 0.04);
+                        burst = (1 + spell.Level) * 0.04;
                     }
                     reduceProc += burst;
                 }
@@ -618,7 +618,7 @@ namespace Ensage.Common.Extensions
                             !x.IsIllusion()
                             && (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur
                                 || x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick) && x.AghanimState());
-                reduceProc = heroes.Aggregate(reduceProc, (current, hero) => (current + 0.7));
+                reduceProc = heroes.Aggregate(reduceProc, (current, hero) => current + 0.7);
             }
 
             if (modifiers.Any(x => x.Name == "modifier_medusa_mana_shield"))
@@ -658,7 +658,7 @@ namespace Ensage.Common.Extensions
                     var distance = target.Distance2D(spell.Owner);
                     if (distance <= 200)
                     {
-                        amp += (baseAmp + 0.15);
+                        amp += baseAmp + 0.15;
                     }
                     else if (distance > 750)
                     {
@@ -666,7 +666,7 @@ namespace Ensage.Common.Extensions
                     }
                     else
                     {
-                        amp += (baseAmp + (750 - distance) * 0.03 / 110);
+                        amp += baseAmp + (750 - distance) * 0.03 / 110;
                     }
                 }
             }
@@ -718,11 +718,11 @@ namespace Ensage.Common.Extensions
             {
                 case DamageType.Magical:
                     //Console.WriteLine(minusMagicResistancePerc/100);
-                    var resist = (1 - (1 - target.MagicDamageResist) * (1 + ((float)minusMagicResistancePerc / 100)));
+                    var resist = 1 - (1 - target.MagicDamageResist) * (1 + (float)minusMagicResistancePerc / 100);
                     tempDmg =
                         (float)
-                        (((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromME)) * (1 - resist) - reduceStatic + AA);
+                        ((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc)
+                         * (1 + ampFromME) * (1 - resist) - reduceStatic + AA);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -733,7 +733,7 @@ namespace Ensage.Common.Extensions
                     {
                         tempDmg =
                             (float)
-                            (((tempDmg * (1 - ManaShield - reduceOther)) * (1 + amp - reduceProc) * (1 + ampFromME))
+                            (tempDmg * (1 - ManaShield - reduceOther) * (1 + amp - reduceProc) * (1 + ampFromME)
                              - reduceStatic + AA);
                     }
                     break;
@@ -745,9 +745,9 @@ namespace Ensage.Common.Extensions
                     // Console.WriteLine(target.DamageResist);
                     tempDmg =
                         (float)
-                        (((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
-                          * (1 + ampFromME))
-                         * (1 - (target.DamageResist * (1 - minusDamageResistancePerc / 100))
+                        ((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
+                         * (1 + ampFromME)
+                         * (1 - target.DamageResist * (1 - minusDamageResistancePerc / 100)
                             + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + AA);
                     break;
                 case DamageType.HealthRemoval:
@@ -889,8 +889,8 @@ namespace Ensage.Common.Extensions
         {
             return
                 (float)
-                (((Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad + Math.PI)
-                  % (2 * Math.PI)) - Math.PI);
+                ((Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad + Math.PI)
+                 % (2 * Math.PI) - Math.PI);
         }
 
         /// <summary>
@@ -949,15 +949,15 @@ namespace Ensage.Common.Extensions
                         }
                         break;
                     default:
-                        if (unit.Modifiers.Any(x => (x.Name == "modifier_lone_druid_true_form")))
+                        if (unit.Modifiers.Any(x => x.Name == "modifier_lone_druid_true_form"))
                         {
                             bonus = -423;
                         }
-                        else if (unit.Modifiers.Any(x => (x.Name == "modifier_dragon_knight_dragon_form")))
+                        else if (unit.Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
                         {
                             bonus = 372;
                         }
-                        else if (unit.Modifiers.Any(x => (x.Name == "modifier_terrorblade_metamorphosis")))
+                        else if (unit.Modifiers.Any(x => x.Name == "modifier_terrorblade_metamorphosis"))
                         {
                             bonus = 422;
                         }
@@ -1046,17 +1046,17 @@ namespace Ensage.Common.Extensions
                 if (TurnrateDictionary.TryGetValue(unit.Handle, out turnRate))
                 {
                     return
-                        (Math.Max(
+                        Math.Max(
                             Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position)))
                             - 0.69,
-                            0) / (turnRate * (1 / 0.03)));
+                            0) / (turnRate * (1 / 0.03));
                 }
                 turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
                 TurnrateDictionary.Add(unit.Handle, turnRate);
                 return
-                    (Math.Max(
+                    Math.Max(
                         Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69,
-                        0) / (turnRate * (1 / 0.03)));
+                        0) / (turnRate * (1 / 0.03));
             }
             catch (Exception)
             {
@@ -1085,7 +1085,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool HasItem(this Unit unit, ClassID classId)
         {
-            return (unit.Inventory.Items.Any(item => item.ClassID == classId));
+            return unit.Inventory.Items.Any(item => item.ClassID == classId);
         }
 
         /// <summary>
@@ -1104,10 +1104,10 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool IsAttacking(this Unit unit)
         {
-            return (unit.NetworkActivity == NetworkActivity.Attack || unit.NetworkActivity == NetworkActivity.Crit
-                    || unit.NetworkActivity == NetworkActivity.Attack2
-                    || unit.NetworkActivity == NetworkActivity.AttackEvent
-                    || unit.NetworkActivity == NetworkActivity.AttackEventBash);
+            return unit.NetworkActivity == NetworkActivity.Attack || unit.NetworkActivity == NetworkActivity.Crit
+                   || unit.NetworkActivity == NetworkActivity.Attack2
+                   || unit.NetworkActivity == NetworkActivity.AttackEvent
+                   || unit.NetworkActivity == NetworkActivity.AttackEventBash;
         }
 
         /// <summary>

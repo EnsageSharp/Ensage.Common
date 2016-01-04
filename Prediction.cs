@@ -170,7 +170,7 @@ namespace Ensage.Common
                 {
                     rotSpeed = RotSpeedDictionary[target.Handle];
                 }
-                targetSpeed = target.Vector3FromPolarAngle((float)rotSpeed) * (target.MovementSpeed) / 1000;
+                targetSpeed = target.Vector3FromPolarAngle((float)rotSpeed) * target.MovementSpeed / 1000;
             }
             var a = Math.Pow(targetSpeed.X, 2) + Math.Pow(targetSpeed.Y, 2) - Math.Pow(speed / 1000, 2);
             var b = 2 * (dePos.X * targetSpeed.X + dePos.Y * targetSpeed.Y);
@@ -258,7 +258,7 @@ namespace Ensage.Common
                 {
                     rotSpeed = RotSpeedDictionary[unit.Handle];
                 }
-                targetSpeed = unit.Vector3FromPolarAngle((float)rotSpeed) * (unit.MovementSpeed) / 1000;
+                targetSpeed = unit.Vector3FromPolarAngle((float)rotSpeed) * unit.MovementSpeed / 1000;
             }
             //Console.WriteLine(targetSpeed + " " + unit.Name);
             if (IsIdle(unit))
@@ -296,7 +296,7 @@ namespace Ensage.Common
             {
                 return PredictedXYZ(target, delay + reachTime);
             }
-            if ((target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed)) < radius)
+            if (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed) < radius)
             {
                 sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius)
                             / sourcePos.Distance2D(predict) + predict;
@@ -306,7 +306,7 @@ namespace Ensage.Common
             {
                 sourcePos = (sourcePos - predict)
                             * (sourcePos.Distance2D(predict)
-                               + (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed)) - radius)
+                               + target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed) - radius)
                             / sourcePos.Distance2D(predict) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             }
@@ -359,7 +359,7 @@ namespace Ensage.Common
                     data.Lasttick = 0;
                     continue;
                 }
-                if (data == null || (data.LastPosition != new Vector3(0, 0, 0) && !((tick - data.Lasttick) > 0)))
+                if (data == null || (data.LastPosition != new Vector3(0, 0, 0) && !(tick - data.Lasttick > 0)))
                 {
                     continue;
                 }
@@ -381,11 +381,11 @@ namespace Ensage.Common
                     if (Math.Abs(data.RotSpeed) > 0.09 && data.Speed != new Vector3(0, 0, 0))
                     {
                         RotTimeDictionary[unit.Handle] = tick;
-                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 6) * (unit.MovementSpeed) / 3000;
+                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 6) * unit.MovementSpeed / 3000;
                     }
                     else if (StraightTime(unit) < 500)
                     {
-                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 6) * (unit.MovementSpeed) / 3000;
+                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 6) * unit.MovementSpeed / 3000;
                     }
                     else
                     {
@@ -408,7 +408,7 @@ namespace Ensage.Common
                         }
                         else
                         {
-                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * (unit.MovementSpeed)
+                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * unit.MovementSpeed
                                              / 1000;
                             data.Speed = newpredict;
                             //Console.WriteLine("speed" + " " + newpredict + " " + (unit.MovementSpeed / 1000) + " " + unit.Vector3FromPolarAngle(unit.RotationRad + data.RotSpeed) + " " + data.RotSpeed);

@@ -43,15 +43,15 @@ namespace Ensage.Common.Menu
             {
                 DrawBoxFilled(x, y, w, 1, color); // Top
                 DrawBoxFilled(x, y + h - 1, w, 1, color); // Bottom
-                DrawBoxFilled(x, y + 1, 1, h - (2 * 1), color); // Left
-                DrawBoxFilled(x + w - 1, y + 1, 1, h - (2 * 1), color); // Right
+                DrawBoxFilled(x, y + 1, 1, h - 2 * 1, color); // Left
+                DrawBoxFilled(x + w - 1, y + 1, 1, h - 2 * 1, color); // Right
             }
             else
             {
                 DrawBoxFilled(x, y, w, linewidth, color); // Top
                 DrawBoxFilled(x, y + h - linewidth, w, linewidth, color); // Bottom
-                DrawBoxFilled(x, y + linewidth, linewidth, h - (2 * linewidth), color); // Left
-                DrawBoxFilled(x + w - linewidth, y + linewidth, linewidth, h - (2 * linewidth), color); // Right
+                DrawBoxFilled(x, y + linewidth, linewidth, h - 2 * linewidth, color); // Left
+                DrawBoxFilled(x + w - linewidth, y + linewidth, linewidth, h - 2 * linewidth, color); // Right
             }
         }
 
@@ -75,7 +75,7 @@ namespace Ensage.Common.Menu
             Color colorBorder)
         {
             DrawBoxFilled(x, y, w, h, color);
-            DrawBox(x - borderWidth, y - borderWidth, w + (2 * borderWidth), h + borderWidth, borderWidth, colorBorder);
+            DrawBox(x - borderWidth, y - borderWidth, w + 2 * borderWidth, h + borderWidth, borderWidth, colorBorder);
         }
 
         /// <summary>
@@ -154,15 +154,15 @@ namespace Ensage.Common.Menu
             pt[3].Y = y + iSmooth;
 
             // Draw cross 
-            DrawBoxFilled(x, y + iSmooth, w, h - (iSmooth * 2), color);
+            DrawBoxFilled(x, y + iSmooth, w, h - iSmooth * 2, color);
 
-            DrawBoxFilled(x + iSmooth, y, w - (iSmooth * 2), h, color);
+            DrawBoxFilled(x + iSmooth, y, w - iSmooth * 2, h, color);
 
             float fDegree = 0;
 
             for (var i = 0; i < 4; i++)
             {
-                for (var k = fDegree; k < fDegree + ((Math.PI * 2) / 4f); k += (float)(1 * (Math.PI / 180.0f)))
+                for (var k = fDegree; k < fDegree + Math.PI * 2 / 4f; k += (float)(1 * (Math.PI / 180.0f)))
                 {
                     // Draw quarter circles on every corner 
                     //DrawLine(

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.Remoting.Channels;
 
     /// <summary>
     /// </summary>
@@ -48,10 +47,7 @@
                 Radiant = new List<Player>();
                 Game.OnUpdate += Update;
             }
-            Events.OnClose += (sender, args) =>
-                {
-                    Game.OnUpdate -= Update;
-                };
+            Events.OnClose += (sender, args) => { Game.OnUpdate -= Update; };
         }
 
         #endregion

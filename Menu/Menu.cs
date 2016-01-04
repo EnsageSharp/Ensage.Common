@@ -743,10 +743,10 @@ namespace Ensage.Common.Menu
             int width,
             bool drawText)
         {
-            width = (width > 0 ? width : item.Width);
+            width = width > 0 ? width : item.Width;
             var percentage = 100 * (value - min) / (max - min);
-            var x = position.X + 3 + (percentage * (width - 3)) / 100;
-            var x2D = 3 + (percentage * (width - 3)) / 100;
+            var x = position.X + 3 + percentage * (width - 3) / 100;
+            var x2D = 3 + percentage * (width - 3) / 100;
 
             MenuUtils.DrawLine(
                 x,
@@ -1034,9 +1034,9 @@ namespace Ensage.Common.Menu
             }
             if (isRootMenu)
             {
-                AppDomain.CurrentDomain.DomainUnload += delegate { SaveAll(); };
-                AppDomain.CurrentDomain.ProcessExit += delegate { SaveAll(); };
-                Events.OnClose += delegate { SaveAll(); };
+                AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
+                AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
+                Events.OnClose += delegate { this.SaveAll(); };
 
                 var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + name;
 
@@ -1159,7 +1159,7 @@ namespace Ensage.Common.Menu
                     }
                 }
                 var arrow = Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17);
-                if ((5 + arrow + bonus) < (float)(MenuSettings.MenuItemWidth - MenuSettings.MenuItemHeight * 0.3))
+                if (5 + arrow + bonus < (float)(MenuSettings.MenuItemWidth - MenuSettings.MenuItemHeight * 0.3))
                 {
                     arrow = 4;
                 }
@@ -1326,8 +1326,8 @@ namespace Ensage.Common.Menu
         public MenuItem AddItem(MenuItem item)
         {
             item.Parent = this;
-            item.Visible = (this.Children.Count > 0 && this.Children[0].Visible
-                            || this.Items.Count > 0 && this.Items[0].Visible);
+            item.Visible = this.Children.Count > 0 && this.Children[0].Visible
+                           || this.Items.Count > 0 && this.Items[0].Visible;
             this.Items.Add(item);
             return item;
         }
@@ -1471,7 +1471,7 @@ namespace Ensage.Common.Menu
                 this.Width,
                 this.Height,
                 1,
-                (this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible)
+                this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible
                     ? MenuSettings.ActiveBackgroundColor.ToSharpDxColor()
                     : MenuSettings.BackgroundColor.ToSharpDxColor(),
                 new SharpDX.Color(35, 30, 25, 255));
@@ -1558,7 +1558,7 @@ namespace Ensage.Common.Menu
             //    FontDrawFlags.Right | FontDrawFlags.VerticalCenter,
             //    this.Color);
             //Console.WriteLine((3 + textSize.X + bonusWidth) + "   " + (float)(this.Width - this.Height * 0.5));
-            if ((5 + textSize.X + bonusWidth) < (float)(this.Width - this.Height * 0.3))
+            if (5 + textSize.X + bonusWidth < (float)(this.Width - this.Height * 0.3))
             {
                 textSize = Drawing.MeasureText(
                     "»",
@@ -1580,7 +1580,7 @@ namespace Ensage.Common.Menu
             Drawing.DrawRect(
                 new Vector2(this.Position.X, this.Position.Y),
                 new Vector2(this.Width, this.Height),
-                (this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible)
+                this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible
                     ? new SharpDX.Color(0, 0, 0, 5)
                     : (Utils.IsUnderRectangle(
                         Game.MouseScreenPosition,
@@ -1817,31 +1817,26 @@ namespace Ensage.Common.Menu
 
         private static void Events_OnLoad(object sender, EventArgs e)
         {
-            //var console = newMessageType.SelectedIndex == 2;
-            //if (Root.Item("showMessage").GetValue<bool>() && !console)
-            //{
-            //var msg =
-            //    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-            //    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-            //    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-            //    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
-            const string Msg1 =
-                "<font face='Verdana' color='#ffffff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team wishes You Happy New Year <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
-            //const string Msg2 =
-            //    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font face='Verdana' color='#b8e4ff'><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font> EnsageSharp Team <font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font><font color='#009e00'>~</font><font color='#ff3c33'>*</font></font>";
-            Game.PrintMessage(Msg1, MessageType.LogMessage);
-            //Game.PrintMessage(Msg2, MessageType.LogMessage);
-            //Game.PrintMessage(Msg,
-            //    (newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0)
-            //        ? MessageType.LogMessage
-            //        : MessageType.ChatMessage);
-            //}
-            //else if (console && Root.Item("showMessage").GetValue<bool>())
-            //{
-            //    var msg = @"[Menu Hotkeys] Press: " + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-            //              + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
-            //    Console.WriteLine(msg);
-            //}
+            var console = newMessageType.SelectedIndex == 2;
+            if (Root.Item("showMessage").GetValue<bool>() && !console)
+            {
+                var msg =
+                    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
+                    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
+                    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
+                Game.PrintMessage(
+                    msg,
+                    newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0
+                        ? MessageType.LogMessage
+                        : MessageType.ChatMessage);
+            }
+            else if (console && Root.Item("showMessage").GetValue<bool>())
+            {
+                var msg = @"[Menu Hotkeys] Press: " + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                          + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
+                Console.WriteLine(msg);
+            }
         }
 
         private static void MessageValueChanged(object sender, OnValueChangeEventArgs e)
@@ -2195,7 +2190,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return (this._isShared ? "SharedMenuConfig" : this._MenuConfigName);
+                return this._isShared ? "SharedMenuConfig" : this._MenuConfigName;
             }
         }
 
@@ -2411,7 +2406,7 @@ namespace Ensage.Common.Menu
 
                         case MenuValueType.AbilityToggler:
                             var savedDictionaryValue = (AbilityToggler)(object)Utils.Deserialize<T>(readBytes);
-                            var newDictionaryValue = ((AbilityToggler)(object)newValue);
+                            var newDictionaryValue = (AbilityToggler)(object)newValue;
                             var tempValue = newDictionaryValue;
                             if (savedDictionaryValue.SValuesDictionary != null)
                             {
@@ -2436,7 +2431,7 @@ namespace Ensage.Common.Menu
 
                         case MenuValueType.HeroToggler:
                             var savedHeroDictionaryValue = (HeroToggler)(object)Utils.Deserialize<T>(readBytes);
-                            var newHeroDictionaryValue = ((HeroToggler)(object)newValue);
+                            var newHeroDictionaryValue = (HeroToggler)(object)newValue;
                             var tempHValue = newHeroDictionaryValue;
                             if (savedHeroDictionaryValue.SValuesDictionary != null)
                             {
@@ -2848,7 +2843,7 @@ namespace Ensage.Common.Menu
                 s,
                 textPos1,
                 new Vector2((float)(this.Height * 0.51), 20),
-                (s == MultiLanguage._("Press new key")) ? new SharpDX.Color(150, 100, 0) : (SharpDX.Color)this.FontColor,
+                s == MultiLanguage._("Press new key") ? new SharpDX.Color(150, 100, 0) : (SharpDX.Color)this.FontColor,
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
 
             if (!string.IsNullOrEmpty(this.Tooltip))
@@ -2930,7 +2925,7 @@ namespace Ensage.Common.Menu
                     {
                         var val = this.GetValue<Slider>();
                         var t = val.MinValue
-                                + ((cursorPos.X - this.Position.X) * (val.MaxValue - val.MinValue)) / this.Width;
+                                + (cursorPos.X - this.Position.X) * (val.MaxValue - val.MinValue) / this.Width;
                         val.Value = (int)t;
                         this.SetValue(val);
                     }
@@ -3063,14 +3058,14 @@ namespace Ensage.Common.Menu
                     {
                         slVal.SelectedIndex = slVal.SelectedIndex == slVal.SList.Length - 1
                                                   ? 0
-                                                  : (slVal.SelectedIndex + 1);
+                                                  : slVal.SelectedIndex + 1;
                         this.SetValue(slVal);
                     }
                     else if (cursorPos.X > this.Position.X + this.Width - 2 * this.Height)
                     {
                         slVal.SelectedIndex = slVal.SelectedIndex == 0
                                                   ? slVal.SList.Length - 1
-                                                  : (slVal.SelectedIndex - 1);
+                                                  : slVal.SelectedIndex - 1;
                         this.SetValue(slVal);
                     }
 

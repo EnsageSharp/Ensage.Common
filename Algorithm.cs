@@ -82,13 +82,13 @@ namespace Ensage.Common
                         MaximalEnclosingCircleCompare(
                             vector,
                             radius,
-                            center + (delta * unitClockWise),
+                            center + delta * unitClockWise,
                             ref returnValue,
                             ref contain);
                         MaximalEnclosingCircleCompare(
                             vector,
                             radius,
-                            center + (delta * unitCounterClockWise),
+                            center + delta * unitCounterClockWise,
                             ref returnValue,
                             ref contain);
                     }

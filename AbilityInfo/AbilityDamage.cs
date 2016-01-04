@@ -225,7 +225,7 @@ namespace Ensage.Common.AbilityInfo
                         DamageDictionary[ability] = bonusDamage;
                     }
                     outgoingDamage = target.DamageTaken(
-                        ((source.MaximumDamage + source.BonusDamage)) + bonusDamage,
+                        source.MaximumDamage + source.BonusDamage + bonusDamage,
                         DamageType.Physical,
                         source,
                         data.MagicImmunityPierce);
@@ -252,7 +252,7 @@ namespace Ensage.Common.AbilityInfo
                     outgoingDamage =
                         (float)
                         (target.DamageTaken(
-                            ((source.MaximumDamage + source.BonusDamage)),
+                            source.MaximumDamage + source.BonusDamage,
                             DamageType.Physical,
                             source,
                             data.MagicImmunityPierce,
@@ -307,7 +307,7 @@ namespace Ensage.Common.AbilityInfo
                     var difference = agi / str;
                     var multimin = ability.GetAbilityData("damage_min");
                     var multimax = ability.GetAbilityData("damage_max");
-                    multi = multimin + ((difference - 0.5) * (multimax - multimin));
+                    multi = multimin + (difference - 0.5) * (multimax - multimin);
                     if (difference > 1.5)
                     {
                         multi = multimax;
@@ -456,7 +456,7 @@ namespace Ensage.Common.AbilityInfo
                                     || (x is Hero
                                         && (x.Team == source.Team
                                             || (x.Team == source.GetEnemyTeam() && !x.IsMagicImmune())))) && x.IsAlive
-                                && x.IsVisible && x.Distance2D(source) < (radius + x.HullRadius));
+                                && x.IsVisible && x.Distance2D(source) < radius + x.HullRadius);
                     var damagePerUnit = ability.GetAbilityData("damage_per_unit");
                     var maxUnits = ability.GetAbilityData("max_units");
                     outgoingDamage = Math.Min(nearUnits.Count(), maxUnits) * damagePerUnit;
@@ -526,13 +526,13 @@ namespace Ensage.Common.AbilityInfo
                 var staticField = source.Spellbook.Spell3;
                 if (staticField.Level > 0)
                 {
-                    var bonusDmg = ((float)staticField.GetAbilityData("damage_health_pct") / 100)
+                    var bonusDmg = (float)staticField.GetAbilityData("damage_health_pct") / 100
                                    * (target.Health - minusHealth);
                     bonusDmg = target.DamageTaken(
                         bonusDmg,
                         DamageType.Magical,
                         source,
-                        minusMagicResistancePerc: minusMagicResistancePerc) * ((aetherLens == null) ? 1 : 1.08f);
+                        minusMagicResistancePerc: minusMagicResistancePerc) * (aetherLens == null ? 1 : 1.08f);
                     outgoingDamage += bonusDmg;
                 }
             }

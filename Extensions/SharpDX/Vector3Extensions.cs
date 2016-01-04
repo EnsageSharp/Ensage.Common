@@ -282,7 +282,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <returns>Returns if the angle is orthogonal</returns>
         public static bool IsOrthogonal(Vector3 vector3, Vector3 toVector3)
         {
-            return Math.Abs((vector3.X * toVector3.X) + (vector3.Y * toVector3.Y)) < float.Epsilon;
+            return Math.Abs(vector3.X * toVector3.X + vector3.Y * toVector3.Y) < float.Epsilon;
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <returns>Magnitude in float-units</returns>
         public static float Magnitude(this Vector3 vector3)
         {
-            return (float)Math.Sqrt((vector3.X * vector3.X) + (vector3.Y * vector3.Y) + (vector3.Z * vector3.Z));
+            return (float)Math.Sqrt(vector3.X * vector3.X + vector3.Y * vector3.Y + vector3.Z * vector3.Z);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <returns>Perpendicular Vector3</returns>
         public static Vector3 Perpendicular(this Vector3 vector3, int offset = 0)
         {
-            return (offset == 0)
+            return offset == 0
                        ? new Vector3(-vector3.Y, vector3.X, vector3.Z)
                        : new Vector3(vector3.Y, -vector3.X, vector3.Z);
         }
@@ -411,7 +411,7 @@ namespace Ensage.Common.Extensions.SharpDX
         {
             if (Math.Abs(vector3.X - 0) <= (float)1e-9)
             {
-                return (vector3.Y > 0) ? 90 : (vector3.Y < 0) ? 270 : 0;
+                return vector3.Y > 0 ? 90 : vector3.Y < 0 ? 270 : 0;
             }
 
             var theta = (float)(Math.Atan(vector3.Y / vector3.X) * (180 / Math.PI));

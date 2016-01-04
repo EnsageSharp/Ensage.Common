@@ -47,8 +47,7 @@
                 Radiant = new List<Hero>();
                 Game.OnUpdate += Update;
             }
-            Events.OnClose += (sender, args) =>
-                { Game.OnUpdate -= Update; };
+            Events.OnClose += (sender, args) => { Game.OnUpdate -= Update; };
         }
 
         #endregion

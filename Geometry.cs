@@ -146,7 +146,7 @@ namespace Ensage.Common
             }
             else if (flags.HasFlag(CenteredFlags.HorizontalCenter))
             {
-                x = rectangle.TopLeft.X + ((rectangle.Width - dimensions.Width) / 2);
+                x = rectangle.TopLeft.X + (rectangle.Width - dimensions.Width) / 2;
             }
             else if (flags.HasFlag(CenteredFlags.HorizontalRight))
             {
@@ -159,7 +159,7 @@ namespace Ensage.Common
             }
             else if (flags.HasFlag(CenteredFlags.VerticalCenter))
             {
-                y = rectangle.TopLeft.Y + ((rectangle.Height - dimensions.Height) / 2);
+                y = rectangle.TopLeft.Y + (rectangle.Height - dimensions.Height) / 2;
             }
             else if (flags.HasFlag(CenteredFlags.VerticalDown))
             {
