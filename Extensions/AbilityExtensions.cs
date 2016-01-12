@@ -605,7 +605,7 @@ namespace Ensage.Common.Extensions
             var name = abilityName ?? ability.Name;
             if (name == "templar_assassin_meld")
             {
-                return (ability.Owner as Hero).GetAttackRange() + 50;
+                return (ability.Owner as Unit).GetAttackRange() + 50;
             }
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
@@ -625,7 +625,7 @@ namespace Ensage.Common.Extensions
                 {
                     castRange = 999999;
                 }
-                var owner = ability.Owner as Hero;
+                var owner = ability.Owner as Unit;
                 if (name == "dragon_knight_dragon_tail"
                     && owner.Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
                 {
