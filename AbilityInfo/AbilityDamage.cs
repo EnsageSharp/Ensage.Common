@@ -471,10 +471,10 @@ namespace Ensage.Common.AbilityInfo
                     var damageString = data.DamageString;
                     if (damageString == null)
                     {
-                        outgoingDamage =
-                            Convert.ToSingle(
-                                Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
-                                    .StringValue.Split(' ')[level - 1]);
+                        outgoingDamage = ability.GetDamage(level - 1);
+                            //Convert.ToSingle(
+                            //    Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
+                            //        .StringValue.Split(' ')[level - 1]);
                     }
                     else
                     {
