@@ -175,7 +175,12 @@ namespace Ensage.Common.AbilityInfo
         ///     Width of a projectile
         /// </summary>
         public string Width;
-
+        
+        /// <summary>
+        ///     Spell grants invisibility
+        /// </summary>
+        public bool IsInvis;
+        
         #endregion
 
         #region Constructors and Destructors
@@ -219,6 +224,7 @@ namespace Ensage.Common.AbilityInfo
         /// <param name="isPurge"></param>
         /// <param name="isHarras"></param>
         /// <param name="trueSight"></param>
+        /// <param name="isInvis"></param>
         public AbilityInfo(
             string abilityName,
             bool isDisable,
@@ -250,7 +256,8 @@ namespace Ensage.Common.AbilityInfo
             bool weakensEnemy,
             bool isPurge,
             bool isHarras,
-            bool trueSight)
+            bool trueSight,
+            bool isInvis)
         {
             this.ManaBurn = manaBurn;
             this.SpellLevel = spellLevel;
@@ -283,6 +290,7 @@ namespace Ensage.Common.AbilityInfo
             this.IsPurge = isPurge;
             this.IsHarras = isHarras;
             this.TrueSight = trueSight;
+            this.IsInvis = isInvis;
         }
 
         #endregion
