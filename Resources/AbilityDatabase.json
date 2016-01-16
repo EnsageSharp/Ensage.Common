@@ -18,6 +18,101 @@
 {
     "Abilities": [
         {
+            "AbilityName": "tidehunter_ravage",
+            "StringRadius": "radius",
+            "Speed": "speed",
+            "IsDisable": true
+        },
+        {
+            "AbilityName": "alchemist_unstable_concoction"
+        },
+        {
+            "AbilityName": "alchemist_unstable_concoction_throw",
+            "Speed": "movement_speed",
+            "StringRadius": "midair_explosion_radius",
+            "IsDisable": true
+        },
+        {
+            "AbilityName": "alchemist_acid_spray",
+            "StringRadius": "radius",
+            "WeakensEnemy": true,
+            "IsSkillShot": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "antimage_blink",
+            "IsSkillShot": true,
+            "FakeCastRange": true,
+            "RealCastRange": "blink_range"
+        },
+        {
+            "AbilityName": "arc_warden_flux",
+            "IsSlow": true
+        },
+        {
+            "AbilityName": "arc_warden_magnetic_field",
+            //"IsBuff": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "broodmother_spin_web",
+            //"IsBuff": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "broodmother_insatiable_hunger",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "centaur_stampede",
+            //"IsSlow": true,
+            "IsBuff": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "clinkz_death_pact",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "dazzle_weave",
+            "IsBuff": true,
+            "WeakensEnemy": true,
+            "IsSkillShot": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "death_prophet_exorcism",
+            "StringRadius": "radius",
+            "Speed": "spirit_speed",
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "disruptor_static_storm",
+            "IsSilence": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "doom_bringer_devour"
+        },
+        {
+            "AbilityName": "dragon_knight_elder_dragon_form",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "drow_ranger_frost_arrows",
+            "IsSlow": true
+        },
+        {
+            "AbilityName": "drow_ranger_trueshot"
+        },
+        {
+            "AbilityName": "earth_spirit_magnetize",
+            "StringRadius": "cast_radius"
+        },
+        {
             "AbilityName": "dark_seer_ion_shell",
             "StringRadius": "radius",
             "IsBuff": true
@@ -54,7 +149,9 @@
         {
             "AbilityName": "death_prophet_carrion_swarm",
             "IsNuke": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Width": "end_radius",
+            "Speed": "speed"
         },
         {
             "AbilityName": "zuus_lightning_bolt",
@@ -96,8 +193,7 @@
         },
         {
             "AbilityName": "chen_test_of_faith",
-            "IsNuke": true,
-            "WeakensEnemy": true
+            "IsNuke": true
         },
         {
             "AbilityName": "phantom_assassin_stifling_dagger",
@@ -132,7 +228,8 @@
             "IsSkillShot": true,
             "AdditionalDelay": 0.3,
             "Speed": "speed",
-            "DamageString": "damage_total_tooltip"
+            "DamageString": "damage_total_tooltip",
+            "StringRadius": "explosion_radius"
         },
         {
             "AbilityName": "mirana_arrow",
@@ -164,7 +261,8 @@
             "Width": "latch_radius",
             "AllyBlock": true,
             "EnemyBlock": true,
-            "MagicImmunityPierce": true
+            "MagicImmunityPierce": true,
+            "Speed": "speed"
         },
         {
             "AbilityName": "shadow_shaman_mass_serpent_ward",
@@ -196,12 +294,16 @@
         },
         {
             "AbilityName": "crystal_maiden_freezing_field",
-            "AdditionalDelay": -0.1
+            "AdditionalDelay": -0.1,
+            "IsSlow": true,
+            "WeakensEnemy": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "crystal_maiden_crystal_nova",
             "IsSlow": true,
-            "IsNuke": true
+            "IsNuke": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "lich_frost_armor",
@@ -319,7 +421,8 @@
             "AbilityName": "dark_seer_vacuum",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString": "damage"
+            "DamageString": "damage",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "rattletrap_power_cogs",
@@ -391,12 +494,14 @@
         },
         {
             "AbilityName": "disruptor_thunder_strike",
-            "IsHarras": true
+            "IsHarras": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "disruptor_kinetic_field",
             "IsSkillShot": true,
-            "AdditionalDelay": 1.2
+            "AdditionalDelay": 1.2,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "ember_spirit_searing_chains",
@@ -477,7 +582,8 @@
         },
         {
             "AbilityName": "clinkz_strafe",
-            "Radius": 0
+            "Radius": 0,
+            "IsBuff": true
         },
         {
             "AbilityName": "shadow_demon_disruption",
@@ -556,7 +662,7 @@
         {
             "AbilityName": "earthshaker_echo_slam",
             "IsDisable": true,
-            "Radius": 0
+            "StringRadius": "echo_slam_damage_range"
         },
         {
             "AbilityName": "invoker_ice_wall",
@@ -647,7 +753,9 @@
         //mark
         {
             "AbilityName": "brewmaster_drunken_haze",
-            "IsSlow": true
+            "IsSlow": true,
+            "StringRadius": "radius",
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "leshrac_lightning_storm",
@@ -751,7 +859,8 @@
         },
         {
             "AbilityName": "chen_penitence",
-            "IsSlow": true
+            "IsSlow": true,
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "invoker_deafening_blast",
@@ -774,7 +883,8 @@
             "DamageString": "edge_damage"
         },
         {
-            "AbilityName": "earth_spirit_stone_caller"
+            "AbilityName": "earth_spirit_stone_caller",
+            "IsSkillShot": true
         },
         {
             "AbilityName": "bane_fiends_grip",
@@ -787,7 +897,9 @@
         },
         {
             "AbilityName": "earthshaker_enchant_totem",
-            "IsDisable": true
+            "IsDisable": true,
+            "IsBuff": true,
+            "Radius": 300
         },
         {
             "AbilityName": "enchantress_natures_attendants",
@@ -796,7 +908,14 @@
         {
             "AbilityName": "earth_spirit_rolling_boulder",
             "IsSlow": true,
-            "AdditionalDelay": 0.6
+            "AdditionalDelay": 0.6,
+            "IsSkillShot": true,
+            "Speed": "rock_speed",
+            //"Speed": "speed",
+            "Width": "radius",
+            "FakeCastRange": true,
+            "RealCastRange": "rock_distance"
+            //"RealCastRange": "distance"
         },
         {
             "AbilityName": "visage_grave_chill",
@@ -830,7 +949,9 @@
         {
             "AbilityName": "earth_spirit_boulder_smash",
             "IsDisable": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Speed": "speed",
+            "Width": "radius"
         },
         {
             "AbilityName": "slardar_sprint"
@@ -873,7 +994,9 @@
         {
             "AbilityName": "earth_spirit_geomagnetic_grip",
             "IsSilence": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Width": "radius",
+            "Speed": "speed"
         },
         {
             "AbilityName": "enigma_midnight_pulse",
@@ -999,11 +1122,14 @@
             "AdditionalDelay": 2.9
         },
         {
-            "AbilityName": "bane_enfeeble"
+            "AbilityName": "bane_enfeeble",
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "bristleback_viscous_nasal_goo",
-            "IsSlow": true
+            "IsSlow": true,
+            "WeakensEnemy": true,
+            "Speed": "goo_speed"
         },
         {
             "AbilityName": "shadow_demon_shadow_poison",
@@ -1021,12 +1147,15 @@
             "AbilityName": "ancient_apparition_ice_vortex",
             "IsSlow": true,
             "AdditionalDelay": 0.2,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "bloodseeker_blood_bath",
             "IsSkillShot": true,
-            "AdditionalDelay": 2.6
+            "AdditionalDelay": 2.6,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "bloodseeker_bloodrage",
@@ -1048,7 +1177,8 @@
             "AbilityName": "drow_ranger_wave_of_silence",
             "IsSilence": true,
             "IsSkillShot": true,
-            "Speed": "wave_speed"
+            "Speed": "wave_speed",
+            "Width": "wave_width"
         },
         {
             "AbilityName": "invoker_tornado",
@@ -1060,7 +1190,10 @@
         },
         {
             "AbilityName": "dragon_knight_breathe_fire",
-            "IsNuke": true
+            "IsNuke": true,
+            "Speed": "speed",
+            "Width": "end_radius",
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "naga_siren_ensnare",
@@ -1094,12 +1227,14 @@
         {
             "AbilityName": "broodmother_spawn_spiderlings",
             "IsNuke": true,
-            "DamageString": "damage"
+            "DamageString": "damage",
+            "Speed": "projectile_speed"
         },
         {
             "AbilityName": "bristleback_quill_spray",
             "IsNuke": true,
             "IsHarras": true,
+            "IsBuff": true,
             "DamageString": "quill_base_damage",
             "StringRadius": "radius",
             "MagicImmunityPierce": true
@@ -1136,13 +1271,14 @@
             "AbilityName": "chaos_knight_chaos_bolt",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString": "damage_min"
+            "DamageString": "damage_min",
+            "Speed": "chaos_bolt_speed"
         },
         {
             "AbilityName": "legion_commander_press_the_attack",
             "IsHeal": true,
             "IsShield": true,
-            "ISBuff": true
+            "IsBuff": true
         },
         {
             "AbilityName": "kunkka_torrent",
@@ -1170,7 +1306,8 @@
             "AbilityName": "batrider_sticky_napalm",
             "IsSlow": true,
             "AdditionalDelay": 0.2,
-            "WeakensEnemy": true
+            "WeakensEnemy": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "pudge_dismember",
@@ -1354,7 +1491,8 @@
             "IsDisable": true,
             "IsNuke": true,
             "OnlyForKillSteal": true,
-            "DamageString": "mana_void_damage_per_mana"
+            "DamageString": "mana_void_damage_per_mana",
+            "StringRadius": "mana_void_aoe_radius"
         },
         {
             "AbilityName": "shadow_shaman_shackles",
@@ -1534,11 +1672,13 @@
         },
         {
             "AbilityName": "dazzle_shadow_wave",
-            "IsHeal": true
+            "IsHeal": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "dazzle_shallow_grave",
-            "IsShield": true
+            "IsShield": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "dazzle_poison_touch",
@@ -1550,7 +1690,8 @@
         },
         {
             "AbilityName": "death_prophet_spirit_siphon",
-            "IsSlow": true
+            "IsSlow": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "item_magic_stick",
@@ -1597,6 +1738,54 @@
             "AbilityName": "item_blink",
             "FakeCastRange": true,
             "RealCastRange": "blink_range"
+        },
+        {
+            "AbilityName": "item_vladmir",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_assault",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_ancient_janggo",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "item_ring_of_aquila",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_headdress",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_ring_of_basilius",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_glimmer_cape", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_radiance", 
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_hood_of_defiance", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_lotus_orb", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_sphere", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_heavens_halberd", 
+            "WeakensEnemy": true
         }
     ]
 }
