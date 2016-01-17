@@ -227,14 +227,16 @@ namespace Ensage.Common.Extensions
         /// <param name="target"></param>
         /// <param name="abilityName"></param>
         /// <param name="soulRing"></param>
+        /// <param name="otherTargets"></param>
         /// <returns></returns>
         public static bool CastSkillShot(
             this Ability ability,
             Unit target,
             string abilityName = null,
-            Ability soulRing = null)
+            Ability soulRing = null,
+            List<Unit> otherTargets = null)
         {
-            return CastSkillShot(ability, target, ability.Owner.Position, abilityName, soulRing);
+            return CastSkillShot(ability, target, ability.Owner.Position, abilityName, soulRing, otherTargets);
         }
 
         /// <summary>
@@ -245,13 +247,15 @@ namespace Ensage.Common.Extensions
         /// <param name="sourcePosition"></param>
         /// <param name="abilityName"></param>
         /// <param name="soulRing"></param>
+        /// <param name="otherTargets">Targets which are supposed to be hit by AOE SkillShot</param>
         /// <returns>returns true in case of successfull cast</returns>
         public static bool CastSkillShot(
             this Ability ability,
             Unit target,
             Vector3 sourcePosition,
             string abilityName = null,
-            Ability soulRing = null)
+            Ability soulRing = null,
+            List<Unit> otherTargets = null)
         {
             if (!Utils.SleepCheck("CastSkillshot" + ability.Handle))
             {
@@ -273,6 +277,12 @@ namespace Ensage.Common.Extensions
                 return false;
             }
             var xyz = ability.GetPrediction(target, abilityName: name);
+            if (otherTargets != null)
+            {
+                var avPosX = otherTargets.Average(x => ability.GetPrediction(x, abilityName: name).X);
+                var avPosY = otherTargets.Average(x => ability.GetPrediction(x, abilityName: name).Y);
+                xyz = (xyz + new Vector3(avPosX, avPosY, 0)) / 2;
+            }
             var radius = ability.GetRadius(name);
             var speed = ability.GetProjectileSpeed(name);
             var distanceXyz = xyz.Distance2D(position);
@@ -385,6 +395,7 @@ namespace Ensage.Common.Extensions
         /// <param name="useSleep"></param>
         /// <param name="abilityName"></param>
         /// <param name="soulRing"></param>
+        /// <param name="otherTargets"></param>
         /// <returns>returns true in case of successfull cast</returns>
         public static bool CastStun(
             this Ability ability,
@@ -394,7 +405,8 @@ namespace Ensage.Common.Extensions
             bool chainStun = true,
             bool useSleep = true,
             string abilityName = null,
-            Ability soulRing = null)
+            Ability soulRing = null,
+            List<Unit> otherTargets = null)
         {
             if (!ability.CanBeCasted())
             {
@@ -420,7 +432,7 @@ namespace Ensage.Common.Extensions
                      || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale")
             {
                 if (Prediction.StraightTime(target) > straightTimeforSkillShot * 1000
-                    && ability.CastSkillShot(target, name, soulRing: soulRing))
+                    && ability.CastSkillShot(target, name, soulRing, otherTargets))
                 {
                     if (useSleep)
                     {
