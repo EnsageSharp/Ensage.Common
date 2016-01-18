@@ -976,10 +976,6 @@ namespace Ensage.Common.Menu
                     FontStyle.Bold,
                     SharpDX.Color.Yellow));
             Events.OnLoad += Events_OnLoad;
-            if (Game.IsInGame && ObjectMgr.LocalHero != null)
-            {
-                Events_OnLoad(null, null);
-            }
             CommonMenu.MenuConfig.AddSubMenu(Root);
             message.ValueChanged += MessageValueChanged;
             newMessageType = Root.Item("messageType").GetValue<StringList>();

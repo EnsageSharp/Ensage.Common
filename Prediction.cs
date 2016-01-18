@@ -94,7 +94,6 @@ namespace Ensage.Common
         {
             Events.OnLoad += Events_OnLoad;
             Events.OnClose += Events_OnClose;
-            Events_OnLoad(null, null);
         }
 
         /// <summary>

@@ -31,22 +31,13 @@
             All = new List<Hero>();
             Dire = new List<Hero>();
             Radiant = new List<Hero>();
-            var loaded = false;
             Events.OnLoad += (sender, args) =>
                 {
                     All = new List<Hero>();
                     Dire = new List<Hero>();
                     Radiant = new List<Hero>();
                     Game.OnUpdate += Update;
-                    loaded = true;
                 };
-            if (loaded == false && ObjectMgr.LocalHero != null && Game.IsInGame)
-            {
-                All = new List<Hero>();
-                Dire = new List<Hero>();
-                Radiant = new List<Hero>();
-                Game.OnUpdate += Update;
-            }
             Events.OnClose += (sender, args) => { Game.OnUpdate -= Update; };
         }
 
