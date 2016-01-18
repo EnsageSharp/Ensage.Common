@@ -22,6 +22,8 @@
         /// </summary>
         public static List<Player> Radiant;
 
+        private static bool loaded;
+
         #endregion
 
         #region Constructors and Destructors
@@ -33,12 +35,29 @@
             Radiant = new List<Player>();
             Events.OnLoad += (sender, args) =>
                 {
+                    if (loaded)
+                    {
+                        return;
+                    }
                     All = new List<Player>();
                     Dire = new List<Player>();
                     Radiant = new List<Player>();
                     Game.OnUpdate += Update;
+                    loaded = true;
                 };
-            Events.OnClose += (sender, args) => { Game.OnUpdate -= Update; };
+            if (!loaded && Game.IsInGame && ObjectMgr.LocalHero != null)
+            {
+                All = new List<Player>();
+                Dire = new List<Player>();
+                Radiant = new List<Player>();
+                Game.OnUpdate += Update;
+                loaded = true;
+            }
+            Events.OnClose += (sender, args) =>
+                {
+                    Game.OnUpdate -= Update;
+                    loaded = false;
+                };
         }
 
         #endregion

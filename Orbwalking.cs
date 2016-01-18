@@ -182,6 +182,10 @@ namespace Ensage.Common
         {
             Events.OnLoad += Events_OnLoad;
             Events.OnClose += Events_OnClose;
+            if (Game.IsInGame)
+            {
+                Events_OnLoad(null, null);
+            }
         }
 
         /// <summary>

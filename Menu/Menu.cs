@@ -948,6 +948,8 @@ namespace Ensage.Common.Menu
 
         private bool visible;
 
+        private static bool loaded;
+
         #endregion
 
         #region Constructors and Destructors
@@ -975,7 +977,14 @@ namespace Ensage.Common.Menu
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(
                     FontStyle.Bold,
                     SharpDX.Color.Yellow));
+            loaded = false;
             Events.OnLoad += Events_OnLoad;
+            if (Game.IsInGame && ObjectMgr.LocalHero != null)
+            {
+                 Events_OnLoad(null, null);
+            }
+            Events.OnClose += (sender, args) =>
+                { loaded = false; };
             CommonMenu.MenuConfig.AddSubMenu(Root);
             message.ValueChanged += MessageValueChanged;
             newMessageType = Root.Item("messageType").GetValue<StringList>();
@@ -1813,6 +1822,10 @@ namespace Ensage.Common.Menu
 
         private static void Events_OnLoad(object sender, EventArgs e)
         {
+            if (loaded)
+            {
+                return;
+            }
             var console = newMessageType.SelectedIndex == 2;
             if (Root.Item("showMessage").GetValue<bool>() && !console)
             {
@@ -1833,6 +1846,7 @@ namespace Ensage.Common.Menu
                           + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
                 Console.WriteLine(msg);
             }
+            loaded = true;
         }
 
         private static void MessageValueChanged(object sender, OnValueChangeEventArgs e)
