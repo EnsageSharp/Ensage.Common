@@ -330,7 +330,7 @@ namespace Ensage.Common.Extensions
             Ability riki = null;
             foreach (var x in unit.Spellbook.Spells)
             {
-                var name = x.Name;
+                var name = x.StoredName();
                 if (name == "bounty_hunter_wind_walk" || name == "clinkz_skeleton_walk"
                     || name == "templar_assassin_meld")
                 {
@@ -348,7 +348,7 @@ namespace Ensage.Common.Extensions
                 invis =
                     unit.Inventory.Items.FirstOrDefault(
                         x =>
-                        x.Name == "item_invis_sword" || x.Name == "item_silver_edge" || x.Name == "item_glimmer_cape");
+                        x.StoredName() == "item_invis_sword" || x.StoredName() == "item_silver_edge" || x.StoredName() == "item_glimmer_cape");
             }
             var canGoInvis = (invis != null && unit.CanCast() && invis.CanBeCasted())
                              || (riki != null && riki.Level > 0 && !unit.IsSilenced());
@@ -484,8 +484,8 @@ namespace Ensage.Common.Extensions
 
             foreach (var v in ExternalDmgAmps.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName)
-                              ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
+                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName)
+                              ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
                 //var burst = 0f;
                 if (ability == null)
                 {
@@ -515,8 +515,8 @@ namespace Ensage.Common.Extensions
 
             foreach (var v in ExternalDmgReductions.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == v.SourceSpellName)
-                              ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.Name == v.SourceSpellName);
+                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName)
+                              ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
                 //var burst = 0f;
                 if (ability == null)
                 {
@@ -646,7 +646,7 @@ namespace Ensage.Common.Extensions
 
             if (modifiers.Any(x => x.Name == "modifier_undying_flesh_golem_plague_aura"))
             {
-                var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "undying_flesh_golem");
+                var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == "undying_flesh_golem");
                 if (spell != null)
                 {
                     var baseAmp = .05 * spell.Level;
@@ -681,7 +681,7 @@ namespace Ensage.Common.Extensions
             }
             if (source.Modifiers.Any(x => x.Name == "modifier_bloodseeker_bloodrage"))
             {
-                var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.Name == "bloodseeker_bloodrage");
+                var spell = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == "bloodseeker_bloodrage");
                 if (spell != null)
                 {
                     var firstOrDefault = spell.AbilityData.FirstOrDefault(x => x.Name == "damage_increase_pct");
@@ -706,7 +706,7 @@ namespace Ensage.Common.Extensions
             {
                 var spell =
                     ObjectMgr.GetEntities<Ability>()
-                        .FirstOrDefault(x => x.Name == "ancient_apparition_ice_blast" && x.Owner.Team != target.Team);
+                        .FirstOrDefault(x => x.StoredName() == "ancient_apparition_ice_blast" && x.Owner.Team != target.Team);
                 if (spell != null)
                 {
                     var treshold = spell.GetAbilityData("kill_pct") / 100;
@@ -858,15 +858,16 @@ namespace Ensage.Common.Extensions
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="name"></param>
+        /// <param name="cache">Store the item and use stored next time</param>
         /// <returns></returns>
-        public static Item FindItem(this Unit unit, string name)
+        public static Item FindItem(this Unit unit, string name, bool cache = false)
         {
             Item item;
             var n = unit.Handle + name;
             if (!ItemDictionary.TryGetValue(n, out item) || item == null || !item.IsValid
-                || Utils.SleepCheck("Common.FindItem." + name))
+                || (Utils.SleepCheck("Common.FindItem." + name) && !cache))
             {
-                item = unit.Inventory.Items.FirstOrDefault(x => x.Name == name);
+                item = unit.Inventory.Items.FirstOrDefault(x => x.StoredName() == name);
                 if (ItemDictionary.ContainsKey(n))
                 {
                     ItemDictionary[n] = item;
@@ -901,7 +902,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static Ability FindSpell(this Unit unit, string name)
         {
-            return unit.Spellbook.Spells.FirstOrDefault(x => x.Name == name);
+            return unit.Spellbook.Spells.FirstOrDefault(x => x.StoredName() == name);
         }
 
         /// <summary>
@@ -1029,7 +1030,7 @@ namespace Ensage.Common.Extensions
             return
                 unit.Inventory.Items.ToList()
                     .OrderByDescending(x => x.Level)
-                    .FirstOrDefault(x => x.Name.StartsWith(name));
+                    .FirstOrDefault(x => x.StoredName().StartsWith(name));
         }
 
         /// <summary>
@@ -1051,7 +1052,7 @@ namespace Ensage.Common.Extensions
                             - 0.69,
                             0) / (turnRate * (1 / 0.03));
                 }
-                turnRate = Game.FindKeyValues(unit.Name + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
+                turnRate = Game.FindKeyValues(unit.StoredName() + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
                 TurnrateDictionary.Add(unit.Handle, turnRate);
                 return
                     Math.Max(

@@ -22,6 +22,7 @@ namespace Ensage.Common.Extensions
     using System.Linq;
 
     using Ensage.Common.AbilityInfo;
+    using Ensage.Common.Objects;
 
     using global::SharpDX;
 
@@ -99,7 +100,7 @@ namespace Ensage.Common.Extensions
                     }
                     return canBeCasted;
                 }
-                var name = ability.Name;
+                var name = ability.StoredName();
                 if (name != "invoker_invoke" && name != "invoker_quas" && name != "invoker_wex"
                     && name != "invoker_exort" && ability.AbilitySlot != AbilitySlot.Slot_4
                     && ability.AbilitySlot != AbilitySlot.Slot_5)
@@ -141,7 +142,7 @@ namespace Ensage.Common.Extensions
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
             {
-                data = AbilityDatabase.Find(ability.Name);
+                data = AbilityDatabase.Find(ability.StoredName());
                 AbilityDamage.DataDictionary.Add(ability, data);
             }
             return data == null ? canBeCasted : data.MagicImmunityPierce;
@@ -168,7 +169,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool CanHit(this Ability ability, Hero target, Vector3 sourcePosition, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             if (ability.Owner.Equals(target))
             {
                 return true;
@@ -261,7 +262,7 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             var owner = ability.Owner as Unit;
             var position = sourcePosition;
             var delay = ability.GetHitDelay(target, name);
@@ -412,7 +413,7 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             var delay = ability.GetHitDelay(target, name);
             var canUse = Utils.ChainStun(target, delay, null, false, name);
             if (!canUse && chainStun)
@@ -471,7 +472,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static float ChannelTime(this Ability ability, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             float channel;
             if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
             {
@@ -498,7 +499,7 @@ namespace Ensage.Common.Extensions
             {
                 return 0.1;
             }
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             double castPoint;
             if (CastPointDictionary.TryGetValue(name + " " + ability.Level, out castPoint))
             {
@@ -524,7 +525,7 @@ namespace Ensage.Common.Extensions
             string abilityName = null)
         {
             var lvl = ability.Level;
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             AbilityData data;
             if (!DataDictionary.TryGetValue(name + "_" + dataName, out data))
             {
@@ -562,7 +563,7 @@ namespace Ensage.Common.Extensions
             string abilityName = null,
             bool useChannel = false)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             var delay = 0d;
             if (useCastPoint)
             {
@@ -606,6 +607,8 @@ namespace Ensage.Common.Extensions
             return Math.Max(delay, 0);
         }
 
+        private static Dictionary<string,float> castRangeDictionary = new Dictionary<string, float>(); 
+
         /// <summary>
         ///     Returns cast range of ability, if ability is NonTargeted it will return its radius!
         /// </summary>
@@ -614,7 +617,13 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static float GetCastRange(this Ability ability, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
+            var owner = ability.Owner as Unit;
+            var n = abilityName + owner.Handle;
+            if (castRangeDictionary.ContainsKey(n) && !Utils.SleepCheck("Common.GetCastRange." + n))
+            {
+                return castRangeDictionary[n];
+            }
             if (name == "templar_assassin_meld")
             {
                 return (ability.Owner as Unit).GetAttackRange() + 50;
@@ -637,7 +646,6 @@ namespace Ensage.Common.Extensions
                 {
                     castRange = 999999;
                 }
-                var owner = ability.Owner as Unit;
                 if (name == "dragon_knight_dragon_tail"
                     && owner.Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
                 {
@@ -647,10 +655,20 @@ namespace Ensage.Common.Extensions
                 {
                     bonusRange = 350;
                 }
-                var aetherLens = owner.FindItem("item_aether_lens");
+                var aetherLens = owner.FindItem("item_aether_lens",true);
                 if (aetherLens != null)
                 {
                     bonusRange += aetherLens.GetAbilityData("cast_range_bonus");
+                }
+                if (!castRangeDictionary.ContainsKey(n))
+                {
+                    castRangeDictionary.Add(n, castRange + bonusRange);
+                    Utils.Sleep(5000, "Common.GetCastRange." + n);
+                }
+                else
+                {
+                    castRangeDictionary[n] = castRange + bonusRange;
+                    Utils.Sleep(5000, "Common.GetCastRange." + n);
                 }
                 return castRange + bonusRange;
             }
@@ -668,6 +686,16 @@ namespace Ensage.Common.Extensions
             {
                 radius = ability.GetAbilityData(data.RealCastRange, abilityName: name);
             }
+            if (!castRangeDictionary.ContainsKey(n))
+            {
+                castRangeDictionary.Add(n, radius);
+                Utils.Sleep(5000, "Common.GetCastRange." + n);
+            }
+            else
+            {
+                castRangeDictionary[n] = radius;
+                Utils.Sleep(5000, "Common.GetCastRange." + n);
+            }
             return radius;
         }
 
@@ -680,7 +708,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static double GetHitDelay(this Ability ability, Unit target, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
             {
@@ -722,7 +750,7 @@ namespace Ensage.Common.Extensions
             double customDelay = 0,
             string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
             {
@@ -771,7 +799,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static float GetProjectileSpeed(this Ability ability, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             float speed;
             if (!SpeedDictionary.TryGetValue(name + " " + ability.Level, out speed))
             {
@@ -804,7 +832,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static float GetRadius(this Ability ability, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             float radius;
             if (!RadiusDictionary.TryGetValue(name + " " + ability.Level, out radius))
             {
@@ -864,8 +892,8 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
-            if (!(ability is Item) && ability.Name != "invoker_invoke" && ability.Name != "invoker_quas"
-                && ability.Name != "invoker_wex" && ability.Name != "invoker_exort" && !ability.Equals(spell4)
+            if (!(ability is Item) && ability.StoredName() != "invoker_invoke" && ability.StoredName() != "invoker_quas"
+                && ability.StoredName() != "invoker_wex" && ability.StoredName() != "invoker_exort" && !ability.Equals(spell4)
                 && !ability.Equals(spell5))
             {
                 return invoke.Level > 0 && invoke.Cooldown <= 0 && ability.Cooldown <= 0
@@ -883,7 +911,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool IsAbilityBehavior(this Ability ability, AbilityBehavior flag, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             AbilityBehavior data;
             if (AbilityBehaviorDictionary.TryGetValue(name, out data))
             {
@@ -902,8 +930,8 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool IsAbilityType(this Ability ability, AbilityType type, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
-            var n = name + "abilityType" + type.ToString();
+            var name = abilityName ?? ability.StoredName();
+            var n = name + "abilityType" + type;
             if (BoolDictionary.ContainsKey(n))
             {
                 return BoolDictionary[n];
@@ -920,7 +948,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool RequiresCharges(this Ability ability, string abilityName = null)
         {
-            var name = abilityName ?? ability.Name;
+            var name = abilityName ?? ability.StoredName();
             try
             {
                 return Game.FindKeyValues(name + "/ItemRequiresCharges", KeyValueSource.Ability).IntValue == 1;
