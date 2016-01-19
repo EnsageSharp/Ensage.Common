@@ -63,10 +63,16 @@ namespace Ensage.Common.Extensions
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Checks if given ability can be used
+        /// Checks if given ability can be used
         /// </summary>
-        /// <param name="ability"></param>
-        /// <returns>returns true in case ability can be used</returns>
+        /// <param name="ability">
+        /// </param>
+        /// <param name="bonusMana">
+        /// The bonus Mana.
+        /// </param>
+        /// <returns>
+        /// returns true in case ability can be used
+        /// </returns>
         public static bool CanBeCasted(this Ability ability, float bonusMana = 0)
         {
             if (ability == null)
@@ -154,7 +160,7 @@ namespace Ensage.Common.Extensions
         /// <param name="target"></param>
         /// <param name="abilityName"></param>
         /// <returns></returns>
-        public static bool CanHit(this Ability ability, Hero target, string abilityName = null)
+        public static bool CanHit(this Ability ability, Unit target, string abilityName = null)
         {
             return CanHit(ability, target, ability.Owner.Position, abilityName);
         }
@@ -167,7 +173,7 @@ namespace Ensage.Common.Extensions
         /// <param name="sourcePosition"></param>
         /// <param name="abilityName"></param>
         /// <returns></returns>
-        public static bool CanHit(this Ability ability, Hero target, Vector3 sourcePosition, string abilityName = null)
+        public static bool CanHit(this Ability ability, Unit target, Vector3 sourcePosition, string abilityName = null)
         {
             var name = abilityName ?? ability.StoredName();
             if (ability.Owner.Equals(target))

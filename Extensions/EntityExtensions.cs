@@ -862,12 +862,17 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static Item FindItem(this Unit unit, string name, bool cache = false)
         {
+            if (!unit.IsVisible)
+            {
+                return null;
+            }
+
             Item item;
             var n = unit.Handle + name;
             if (!ItemDictionary.TryGetValue(n, out item) || item == null || !item.IsValid
                 || (Utils.SleepCheck("Common.FindItem." + name) && !cache))
             {
-                item = unit.Inventory.Items.FirstOrDefault(x => x.StoredName() == name);
+                item = unit.Inventory.Items.FirstOrDefault(x => x != null && x.IsValid && x.StoredName() == name);
                 if (ItemDictionary.ContainsKey(n))
                 {
                     ItemDictionary[n] = item;
@@ -878,6 +883,12 @@ namespace Ensage.Common.Extensions
                 }
                 Utils.Sleep(500, "Common.FindItem." + name);
             }
+
+            if (item == null || !item.IsValid)
+            {
+                return null;
+            }
+
             return item;
         }
 
