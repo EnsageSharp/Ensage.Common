@@ -383,7 +383,8 @@
         },
         {
             "AbilityName": "mirana_invis",
-            "IsInvis": true
+            "IsInvis": true,
+            "Radius": 999999
         },
         {
             "AbilityName": "mirana_leap",
@@ -489,7 +490,8 @@
             "OnlyForKillSteal": true,
             "DamageString": "damage",
             "DamageScepterString": "damage_scepter",
-            "TrueSight": true
+            "TrueSight": true,
+            "Radius": 999999
         },
         {
             "AbilityName": "phantom_assassin_phantom_strike",
@@ -1316,7 +1318,8 @@
         {
             "AbilityName": "silencer_global_silence",
             //"IsShield": true,
-            "MagicImmunityPierce": true
+            "MagicImmunityPierce": true,
+            "Radius": 999999
         },
         {
             "AbilityName": "phantom_lancer_spirit_lance",
@@ -2152,7 +2155,8 @@
         },
         {
             "AbilityName": "lycan_howl",
-            "IsBuff": true
+            "IsBuff": true,
+            "Radius": 999999
         },
         {
             "AbilityName": "lycan_feral_impulse",
@@ -2376,7 +2380,8 @@
         },
         {
             "AbilityName": "chen_hand_of_god",
-            "IsHeal": true
+            "IsHeal": true,
+            "Radius": 999999
         },
         {
             "AbilityName": "treant_living_armor",
