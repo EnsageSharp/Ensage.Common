@@ -22,6 +22,7 @@ namespace Ensage.Common.Extensions
     using System.Linq;
 
     using Ensage.Common.AbilityInfo;
+    using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Objects;
 
     using global::SharpDX;
@@ -272,12 +273,12 @@ namespace Ensage.Common.Extensions
             var owner = ability.Owner as Unit;
             var position = sourcePosition;
             var delay = ability.GetHitDelay(target, name);
-            //AbilityInfo data;
-            //if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            //{
-            //    data = AbilityDatabase.Find(ability.Name);
-            //    AbilityDamage.DataDictionary.Add(ability, data);
-            //}
+            AbilityInfo data;
+            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
+            {
+                data = AbilityDatabase.Find(ability.Name);
+                AbilityDamage.DataDictionary.Add(ability, data);
+            }
             //delay += data.AdditionalDelay;
             if (target.IsInvul() && !Utils.ChainStun(target, delay, null, false))
             {
@@ -291,9 +292,58 @@ namespace Ensage.Common.Extensions
                 xyz = (xyz + new Vector3(avPosX, avPosY, 0)) / 2;
             }
             var radius = ability.GetRadius(name);
+            var range = ability.GetCastRange(name);
+            if (data.AllyBlock)
+            {
+                if (
+                    Creeps.All.Where(x => x.Team == owner.Team && x.Distance2D(xyz) <= range)
+                        .Any(
+                            creep =>
+                            creep.Position.ToVector2()
+                                .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                            <= radius + creep.HullRadius))
+                {
+                    return false;
+                }
+                if (
+                    Heroes.GetByTeam(owner.Team)
+                        .Any(
+                            hero =>
+                            !hero.Equals(owner) && !hero.Equals(target) && hero.Distance2D(xyz) <= range
+                            && hero.Position.ToVector2()
+                                   .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                            <= radius + hero.HullRadius))
+                {
+                    return false;
+                }
+            }
+
+            if (data.EnemyBlock)
+            {
+                if (
+                    Creeps.All.Where(x => x.Team != owner.Team && x.Distance2D(xyz) <= range)
+                        .Any(
+                            creep =>
+                            creep.Position.ToVector2()
+                                .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                            <= radius + creep.HullRadius))
+                {
+                    return false;
+                }
+                if (
+                    Heroes.GetByTeam(owner.GetEnemyTeam())
+                        .Any(
+                            hero =>
+                            !hero.Equals(target) && hero.Distance2D(xyz) <= range
+                            && hero.Position.ToVector2()
+                                   .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                            <= radius + hero.HullRadius))
+                {
+                    return false;
+                }
+            }
             var speed = ability.GetProjectileSpeed(name);
             var distanceXyz = xyz.Distance2D(position);
-            var range = ability.GetCastRange(name);
             var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
             if (!(distanceXyz <= range + radius + lion))
             {

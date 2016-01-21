@@ -179,11 +179,11 @@ namespace Ensage.Common.Extensions
                         Amp = "berserk_extra_damage"
                     });
 
-            ExternalDmgAmps.Add(
-                new ExternalDmgAmps
+            ExternalDmgReductions.Add(
+                new ExternalDmgReductions
                     {
                         ModifierName = "modifier_wisp_overcharge", SourceSpellName = "wisp_overcharge",
-                        Amp = "bonus_damage_pct"
+                        Reduce = "bonus_damage_pct", Type = 1, SourceTeam = 1
                     });
 
             ExternalDmgReductions.Add(
@@ -218,7 +218,7 @@ namespace Ensage.Common.Extensions
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_templar_assassin_refraction_absorb",
-                        SourceSpellName = "templar_assassin_refraction_absorb", Type = 1
+                        SourceSpellName = "templar_assassin_refraction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
@@ -522,7 +522,15 @@ namespace Ensage.Common.Extensions
                 {
                     continue;
                 }
-                var burst = ability.GetAbilityData(v.Reduce) / 100;
+                var burst = Math.Abs(ability.GetAbilityData(v.Reduce) / 100);
+                if (ability.StoredName() == "wisp_overcharge")
+                {
+                    burst = (float)new[] { 0.05, 0.10, 0.15, 0.20 }[ability.Level - 1];
+                }
+                if (ability.StoredName() == "templar_assassin_refraction")
+                {
+                    burst = 1;
+                }
                 if (v.Type == 1)
                 {
                     if (v.SourceTeam == 1 && ability.Owner.Team == target.Team)

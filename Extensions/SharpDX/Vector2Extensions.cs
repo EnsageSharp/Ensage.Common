@@ -232,7 +232,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <param name="segmentEnd">Vector2 Segment End</param>
         /// <param name="onlyIfOnSegment">Only if Segment</param>
         /// <returns>The distance between the point and the segment.</returns>
-        public static float Distance(
+        public static float DistanceToLineSegment(
             this Vector2 point,
             Vector2 segmentStart,
             Vector2 segmentEnd,
