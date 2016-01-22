@@ -17,11 +17,6 @@
  You should have received a copy of the GNU General Public License
  along with LeagueSharp.Common. If not, see <http://www.gnu.org/licenses/>.
 */
-
-#endregion
-
-#region
-
 #endregion
 
 namespace Ensage.Common.Menu
@@ -78,7 +73,7 @@ namespace Ensage.Common.Menu
                     new ResourceManager("Ensage.Common.Properties.Resources", typeof(Resources).Assembly).GetString(
                         languageName + "Json");
 
-                if (String.IsNullOrEmpty(languageStrings))
+                if (string.IsNullOrEmpty(languageStrings))
                 {
                     return false;
                 }

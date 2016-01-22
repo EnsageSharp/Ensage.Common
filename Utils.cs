@@ -1,20 +1,16 @@
 ﻿// <copyright file="Utils.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common
 {
     using System;
@@ -55,57 +51,57 @@ namespace Ensage.Common
             /// <summary>
             ///     Left mouse button double-click
             /// </summary>
-            WM_LBUTTONDBLCLCK = 0x203,
+            WM_LBUTTONDBLCLCK = 0x203, 
 
             /// <summary>
             ///     Right mouse button double click
             /// </summary>
-            WM_RBUTTONDBLCLCK = 0x206,
+            WM_RBUTTONDBLCLCK = 0x206, 
 
             /// <summary>
             ///     Middle mouse button double click
             /// </summary>
-            WM_MBUTTONDBLCLCK = 0x209,
+            WM_MBUTTONDBLCLCK = 0x209, 
 
             /// <summary>
             ///     Middle mouse button down
             /// </summary>
-            WM_MBUTTONDOWN = 0x207,
+            WM_MBUTTONDOWN = 0x207, 
 
             /// <summary>
             ///     Middle mouse button up
             /// </summary>
-            WM_MBUTTONUP = 0x208,
+            WM_MBUTTONUP = 0x208, 
 
             /// <summary>
             ///     Mouse being moved
             /// </summary>
-            WM_MOUSEMOVE = 0x200,
+            WM_MOUSEMOVE = 0x200, 
 
             /// <summary>
             ///     Left mouse button down
             /// </summary>
-            WM_LBUTTONDOWN = 0x201,
+            WM_LBUTTONDOWN = 0x201, 
 
             /// <summary>
             ///     Left mouse button up
             /// </summary>
-            WM_LBUTTONUP = 0x202,
+            WM_LBUTTONUP = 0x202, 
 
             /// <summary>
             ///     Right mouse button down
             /// </summary>
-            WM_RBUTTONDOWN = 0x204,
+            WM_RBUTTONDOWN = 0x204, 
 
             /// <summary>
             ///     Right mouse button up
             /// </summary>
-            WM_RBUTTONUP = 0x205,
+            WM_RBUTTONUP = 0x205, 
 
             /// <summary>
             ///     Key down
             /// </summary>
-            WM_KEYDOWN = 0x0100,
+            WM_KEYDOWN = 0x0100, 
 
             /// <summary>
             ///     Key up
@@ -132,22 +128,23 @@ namespace Ensage.Common
             {
                 return false;
             }
+
             lastStunAbility = abilityName;
             var chain = false;
             var stunned = false;
             string[] modifiersList =
                 {
-                    "modifier_shadow_demon_disruption",
-                    "modifier_obsidian_destroyer_astral_imprisonment_prison", "modifier_eul_cyclone",
-                    "modifier_invoker_tornado", "modifier_bane_nightmare",
-                    "modifier_shadow_shaman_shackles", "modifier_crystal_maiden_frostbite",
-                    "modifier_ember_spirit_searing_chains", "modifier_axe_berserkers_call",
-                    "modifier_lone_druid_spirit_bear_entangle_effect", "modifier_meepo_earthbind",
-                    "modifier_naga_siren_ensnare", "modifier_storm_spirit_electric_vortex_pull",
-                    "modifier_treant_overgrowth", "modifier_cyclone", "modifier_sheepstick_debuff",
-                    "modifier_shadow_shaman_voodoo", "modifier_lion_voodoo", "modifier_sheepstick",
-                    "modifier_brewmaster_storm_cyclone", "modifier_puck_phase_shift",
-                    "modifier_dark_troll_warlord_ensnare",
+                    "modifier_shadow_demon_disruption", 
+                    "modifier_obsidian_destroyer_astral_imprisonment_prison", "modifier_eul_cyclone", 
+                    "modifier_invoker_tornado", "modifier_bane_nightmare", 
+                    "modifier_shadow_shaman_shackles", "modifier_crystal_maiden_frostbite", 
+                    "modifier_ember_spirit_searing_chains", "modifier_axe_berserkers_call", 
+                    "modifier_lone_druid_spirit_bear_entangle_effect", "modifier_meepo_earthbind", 
+                    "modifier_naga_siren_ensnare", "modifier_storm_spirit_electric_vortex_pull", 
+                    "modifier_treant_overgrowth", "modifier_cyclone", "modifier_sheepstick_debuff", 
+                    "modifier_shadow_shaman_voodoo", "modifier_lion_voodoo", "modifier_sheepstick", 
+                    "modifier_brewmaster_storm_cyclone", "modifier_puck_phase_shift", 
+                    "modifier_dark_troll_warlord_ensnare", 
                     "modifier_invoker_deafening_blast_knockback", "modifier_pudge_meat_hook"
                 };
             var modifiers = unit.Modifiers.OrderByDescending(x => x.RemainingTime);
@@ -161,8 +158,10 @@ namespace Ensage.Common
                 {
                     remainingTime += 0.07f;
                 }
+
                 chain = remainingTime <= delay;
             }
+
             return ((!(stunned || unit.IsStunned()) || chain) && !onlychain) || (onlychain && chain);
         }
 
@@ -322,6 +321,7 @@ namespace Ensage.Common
             {
                 return null;
             }
+
             var bf = new BinaryFormatter();
             var ms = new MemoryStream();
             bf.Serialize(ms, obj);

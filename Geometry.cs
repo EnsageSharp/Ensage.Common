@@ -1,20 +1,16 @@
 ﻿// <copyright file="Geometry.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common
 {
     using System;
@@ -53,16 +49,16 @@ namespace Ensage.Common
                 return
                     ensageSharpFont =
                     new Font(
-                        Drawing.Direct3DDevice9,
-                        14,
-                        0,
-                        FontWeight.DoNotCare,
-                        0,
-                        false,
-                        FontCharacterSet.Default,
-                        FontPrecision.Default,
-                        FontQuality.Antialiased,
-                        FontPitchAndFamily.DontCare | FontPitchAndFamily.Decorative,
+                        Drawing.Direct3DDevice9, 
+                        14, 
+                        0, 
+                        FontWeight.DoNotCare, 
+                        0, 
+                        false, 
+                        FontCharacterSet.Default, 
+                        FontPrecision.Default, 
+                        FontQuality.Antialiased, 
+                        FontPitchAndFamily.DontCare | FontPitchAndFamily.Decorative, 
                         "Tahoma");
             }
         }
@@ -86,32 +82,32 @@ namespace Ensage.Common
             /// <summary>
             ///     None Flag
             /// </summary>
-            None = 0,
+            None = 0, 
 
             /// <summary>
             ///     Center Horizontally Left.
             /// </summary>
-            HorizontalLeft = 1 << 0,
+            HorizontalLeft = 1 << 0, 
 
             /// <summary>
             ///     Center Horizontally.
             /// </summary>
-            HorizontalCenter = 1 << 1,
+            HorizontalCenter = 1 << 1, 
 
             /// <summary>
             ///     Center Horizontally Right.
             /// </summary>
-            HorizontalRight = 1 << 2,
+            HorizontalRight = 1 << 2, 
 
             /// <summary>
             ///     Center Vertically Up.
             /// </summary>
-            VerticalUp = 1 << 3,
+            VerticalUp = 1 << 3, 
 
             /// <summary>
             ///     Center Vertically.
             /// </summary>
-            VerticalCenter = 1 << 4,
+            VerticalCenter = 1 << 4, 
 
             /// <summary>
             ///     Center Vertically Down.
@@ -132,9 +128,9 @@ namespace Ensage.Common
         /// <param name="flags">Centered Flags</param>
         /// <returns>Vector2 center position of the rendering object on the rectangle.</returns>
         public static Vector2 GetCenter(
-            this Rectangle rectangle,
-            Sprite sprite,
-            Rectangle dimensions,
+            this Rectangle rectangle, 
+            Sprite sprite, 
+            Rectangle dimensions, 
             CenteredFlags flags)
         {
             var x = 0;
@@ -192,10 +188,10 @@ namespace Ensage.Common
         /// <param name="flags">Centered Flags</param>
         /// <returns>Returns the center position of the text on the rectangle.</returns>
         public static Vector2 GetCenteredText(
-            this Rectangle rectangle,
-            Sprite sprite,
-            Font font,
-            string text,
+            this Rectangle rectangle, 
+            Sprite sprite, 
+            Font font, 
+            string text, 
             CenteredFlags flags)
         {
             return font == null

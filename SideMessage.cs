@@ -1,20 +1,16 @@
 ﻿// <copyright file="SideMessage.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common
 {
     using System;
@@ -66,12 +62,12 @@ namespace Ensage.Common
         /// <param name="stayTime"></param>
         /// <param name="exitTime"></param>
         public SideMessage(
-            string name,
-            Vector2 size,
-            Color? bgColor = null,
-            Color? bdColor = null,
-            int? enterTime = null,
-            int? stayTime = null,
+            string name, 
+            Vector2 size, 
+            Color? bgColor = null, 
+            Color? bdColor = null, 
+            int? enterTime = null, 
+            int? stayTime = null, 
             int? exitTime = null)
         {
             this.MessageName = name;
@@ -141,6 +137,7 @@ namespace Ensage.Common
             {
                 return;
             }
+
             sideMessages = new Dictionary<string, SideMessage>();
             mSideMessageInitialized = true;
             Drawing.OnDraw += OnDraw;
@@ -155,7 +152,9 @@ namespace Ensage.Common
         public void AddElement(Vector2 position, Vector2 size, Color color, bool outline = false)
         {
             var element = new AMessageComponent(position, size, color, outline)
-                              { Parent = this, ComponentType = "DrawRect_Color" };
+                              {
+                                 Parent = this, ComponentType = "DrawRect_Color" 
+                              };
             this.components.Add(this.elements, element);
             this.elements++;
         }
@@ -168,7 +167,9 @@ namespace Ensage.Common
         public void AddElement(Vector2 position, Vector2 size, DotaTexture texture)
         {
             var element = new AMessageComponent(position, size, texture)
-                              { Parent = this, ComponentType = "DrawRect_Texture" };
+                              {
+                                 Parent = this, ComponentType = "DrawRect_Texture" 
+                              };
             this.components.Add(this.elements, element);
             this.elements++;
         }
@@ -182,7 +183,9 @@ namespace Ensage.Common
         public void AddElement(string text, Vector2 position, Color color, FontFlags fontFlags)
         {
             var element = new AMessageComponent(text, position, color, fontFlags)
-                              { Parent = this, ComponentType = "DrawText" };
+                              {
+                                 Parent = this, ComponentType = "DrawText" 
+                              };
             this.components.Add(this.elements, element);
             this.elements++;
         }
@@ -197,7 +200,9 @@ namespace Ensage.Common
         public void AddElement(string text, Vector2 position, Vector2 size, Color color, FontFlags fontFlags)
         {
             var element = new AMessageComponent(text, position, size, color, fontFlags)
-                              { Parent = this, ComponentType = "DrawText_Size" };
+                              {
+                                 Parent = this, ComponentType = "DrawText_Size" 
+                              };
             this.components.Add(this.elements, element);
             this.elements++;
         }
@@ -211,15 +216,17 @@ namespace Ensage.Common
         /// <param name="color"></param>
         /// <param name="fontFlags"></param>
         public void AddElement(
-            string text,
-            string fontName,
-            Vector2 position,
-            Vector2 size,
-            Color color,
+            string text, 
+            string fontName, 
+            Vector2 position, 
+            Vector2 size, 
+            Color color, 
             FontFlags fontFlags)
         {
             var element = new AMessageComponent(text, fontName, position, size, color, fontFlags)
-                              { Parent = this, ComponentType = "DrawText_Font" };
+                              {
+                                 Parent = this, ComponentType = "DrawText_Font" 
+                              };
             this.components.Add(this.elements, element);
             this.elements++;
         }
@@ -232,7 +239,9 @@ namespace Ensage.Common
         public void AddElement(Vector2 position1, Vector2 position2, Color color)
         {
             var element = new AMessageComponent(position1, position2, color)
-                              { Parent = this, ComponentType = "DrawLine" };
+                              {
+                                 Parent = this, ComponentType = "DrawLine" 
+                              };
             this.components.Add(this.elements, element);
             this.elements++;
         }
@@ -246,6 +255,7 @@ namespace Ensage.Common
             {
                 message.Value.ShiftVec(new Vector2(0, -message.Value.Size.Y - 3));
             }
+
             this.Visible = true;
             sideMessages[this.MessageName] = this;
         }
@@ -269,6 +279,7 @@ namespace Ensage.Common
             {
                 return;
             }
+
             if (LastTick != null)
             {
                 for (var i = 0; i < sideMessages.Count; i++)
@@ -278,6 +289,7 @@ namespace Ensage.Common
                     {
                         continue;
                     }
+
                     var span = Environment.TickCount - message.CreateTick;
                     if (span < message.EnterTime)
                     {
@@ -299,6 +311,7 @@ namespace Ensage.Common
                         message.DestroyMessage();
                     }
                 }
+
                 for (var i = 0; i < sideMessages.Count; i++)
                 {
                     var message = sideMessages.ElementAt(i).Value;
@@ -306,6 +319,7 @@ namespace Ensage.Common
                     {
                         continue;
                     }
+
                     Drawing.DrawRect(message.MessagePosition, message.Size, message.BackgroundColor);
                     Drawing.DrawRect(message.MessagePosition, message.Size, message.BackgroundOutlineColor, true);
                     foreach (var component in message.components)
@@ -314,6 +328,7 @@ namespace Ensage.Common
                     }
                 }
             }
+
             LastTick = Environment.TickCount;
         }
 
@@ -400,11 +415,11 @@ namespace Ensage.Common
             /// <param name="color"></param>
             /// <param name="fontFlags"></param>
             public AMessageComponent(
-                string text,
-                string fontName,
-                Vector2 position,
-                Vector2 size,
-                Color color,
+                string text, 
+                string fontName, 
+                Vector2 position, 
+                Vector2 size, 
+                Color color, 
                 FontFlags fontFlags)
             {
                 this.Text = text;
@@ -467,7 +482,7 @@ namespace Ensage.Common
             /// </summary>
             public void Draw()
             {
-                //Console.Write("Called " + Texture + "; ");
+                // Console.Write("Called " + Texture + "; ");
                 if (this.ComponentType.Equals("DrawRect_Color"))
                 {
                     Drawing.DrawRect(this.Parent.MessagePosition + this.Position, this.Size, this.Color, this.IsOutline);
@@ -483,27 +498,27 @@ namespace Ensage.Common
                 else if (this.ComponentType.Equals("DrawText_Size"))
                 {
                     Drawing.DrawText(
-                        this.Text,
-                        this.Parent.MessagePosition + this.Position,
-                        this.Size,
-                        this.Color,
+                        this.Text, 
+                        this.Parent.MessagePosition + this.Position, 
+                        this.Size, 
+                        this.Color, 
                         this.Flags);
                 }
                 else if (this.ComponentType.Equals("DrawText_Font"))
                 {
                     Drawing.DrawText(
-                        this.Text,
-                        this.FontFace,
-                        this.Parent.MessagePosition + this.Position,
-                        this.Size,
-                        this.Color,
+                        this.Text, 
+                        this.FontFace, 
+                        this.Parent.MessagePosition + this.Position, 
+                        this.Size, 
+                        this.Color, 
                         this.Flags);
                 }
                 else if (this.ComponentType.Equals("DrawLine"))
                 {
                     Drawing.DrawLine(
-                        this.Parent.MessagePosition + this.Position,
-                        this.Parent.MessagePosition + this.Size,
+                        this.Parent.MessagePosition + this.Position, 
+                        this.Parent.MessagePosition + this.Size, 
                         this.Color);
                 }
             }

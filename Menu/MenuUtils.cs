@@ -1,20 +1,16 @@
 ﻿// <copyright file="Utils.cs" company="LeagueSharp">
 //    Copyright (c) 2015 LeagueSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Menu
 {
     using System;
@@ -66,12 +62,12 @@ namespace Ensage.Common.Menu
         /// <param name="color">Color</param>
         /// <param name="colorBorder">Border Color</param>
         public static void DrawBoxBordered(
-            float x,
-            float y,
-            float w,
-            float h,
-            float borderWidth,
-            Color color,
+            float x, 
+            float y, 
+            float w, 
+            float h, 
+            float borderWidth, 
+            Color color, 
             Color colorBorder)
         {
             DrawBoxFilled(x, y, w, h, color);
@@ -88,17 +84,17 @@ namespace Ensage.Common.Menu
         /// <param name="color">Color</param>
         public static void DrawBoxFilled(float x, float y, float w, float h, Color color)
         {
-            //var vLine = new Vector2[2];
-            //Line.Width = w;
-            //Line.Begin();
+            // var vLine = new Vector2[2];
+            // Line.Width = w;
+            // Line.Begin();
 
-            //vLine[0][0] = x + (w / 2);
-            //vLine[0][1] = y;
-            //vLine[1][0] = x + (w / 2);
-            //vLine[1][1] = y + h;
+            // vLine[0][0] = x + (w / 2);
+            // vLine[0][1] = y;
+            // vLine[1][0] = x + (w / 2);
+            // vLine[1][1] = y + h;
 
-            //Line.Draw(new[] { vLine[0], vLine[1] }, color);
-            //Line.End();
+            // Line.Draw(new[] { vLine[0], vLine[1] }, color);
+            // Line.End();
             Drawing.DrawRect(new Vector2(x, y), new Vector2(w, h), color);
         }
 
@@ -113,17 +109,17 @@ namespace Ensage.Common.Menu
         /// <param name="color">Color</param>
         public static void DrawLine(float xa, float ya, float xb, float yb, float dwWidth, Color color)
         {
-            //var vLine = new Vector2[2];
-            //Line.Width = dwWidth;
-            //Line.Begin();
+            // var vLine = new Vector2[2];
+            // Line.Width = dwWidth;
+            // Line.Begin();
 
-            //vLine[0][0] = xa; // Set points into array
-            //vLine[0][1] = ya;
-            //vLine[1][0] = xb;
-            //vLine[1][1] = yb;
+            // vLine[0][0] = xa; // Set points into array
+            // vLine[0][1] = ya;
+            // vLine[1][0] = xb;
+            // vLine[1][1] = yb;
 
-            //Line.Draw(new[] { vLine[0], vLine[1] }, color); // Draw with Line, number of lines, and color
-            //Line.End(); // finish
+            // Line.Draw(new[] { vLine[0], vLine[1] }, color); // Draw with Line, number of lines, and color
+            // Line.End(); // finish
             Drawing.DrawLine(new Vector2(xa, ya), new Vector2(xb, yb), color);
         }
 
@@ -165,16 +161,16 @@ namespace Ensage.Common.Menu
                 for (var k = fDegree; k < fDegree + Math.PI * 2 / 4f; k += (float)(1 * (Math.PI / 180.0f)))
                 {
                     // Draw quarter circles on every corner 
-                    //DrawLine(
-                    //    pt[i].X,
-                    //    pt[i].Y,
-                    //    pt[i].X + (float)(Math.Cos(k) * iSmooth),
-                    //    pt[i].Y + (float)(Math.Sin(k) * iSmooth),
-                    //    1,
-                    //    color); // 3 is with line width 
+                    // DrawLine(
+                    // pt[i].X,
+                    // pt[i].Y,
+                    // pt[i].X + (float)(Math.Cos(k) * iSmooth),
+                    // pt[i].Y + (float)(Math.Sin(k) * iSmooth),
+                    // 1,
+                    // color); // 3 is with line width 
                     Drawing.DrawLine(
-                        new Vector2(pt[i].X, pt[i].Y),
-                        new Vector2(pt[i].X + (float)(Math.Cos(k) * iSmooth), pt[i].Y + (float)(Math.Sin(k) * iSmooth)),
+                        new Vector2(pt[i].X, pt[i].Y), 
+                        new Vector2(pt[i].X + (float)(Math.Cos(k) * iSmooth), pt[i].Y + (float)(Math.Sin(k) * iSmooth)), 
                         color);
                 }
 

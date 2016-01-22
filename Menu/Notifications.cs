@@ -17,11 +17,6 @@
  You should have received a copy of the GNU General Public License
  along with LeagueSharp.Common. If not, see <http://www.gnu.org/licenses/>.
 */
-
-#endregion
-
-#region
-
 #endregion
 
 namespace Ensage.Common.Menu
@@ -49,16 +44,16 @@ namespace Ensage.Common.Menu
 
         static Notifications()
         {
-            //Game.OnUpdate += Game_OnGameUpdate;
-            //Drawing.OnDraw += Drawing_OnDraw;
-            //Drawing.OnPostReset += Drawing_OnPostReset;
-            //Drawing.OnPreReset += Drawing_OnPreReset;
-            //Game.OnWndProc += Game_OnWndProc;
+            // Game.OnUpdate += Game_OnGameUpdate;
+            // Drawing.OnDraw += Drawing_OnDraw;
+            // Drawing.OnPostReset += Drawing_OnPostReset;
+            // Drawing.OnPreReset += Drawing_OnPreReset;
+            // Game.OnWndProc += Game_OnWndProc;
 
-            //if (!Directory.Exists(Path))
-            //{
-            //    Directory.CreateDirectory(Path);
-            //}
+            // if (!Directory.Exists(Path))
+            // {
+            // Directory.CreateDirectory(Path);
+            // }
         }
 
         #endregion
@@ -320,6 +315,7 @@ namespace Ensage.Common.Menu
                         {
                             Free(old);
                         }
+
                         return stream;
                     }
                 }

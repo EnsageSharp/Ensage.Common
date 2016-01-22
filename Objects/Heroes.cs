@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
 
     /// <summary>
@@ -40,6 +39,7 @@
                     {
                         return;
                     }
+
                     All = new List<Hero>();
                     Dire = new List<Hero>();
                     Radiant = new List<Hero>();
@@ -54,6 +54,7 @@
                 Game.OnUpdate += Update;
                 loaded = true;
             }
+
             Events.OnClose += (sender, args) =>
                 {
                     All = new List<Hero>();
@@ -86,10 +87,12 @@
             {
                 return;
             }
+
             if (!Utils.SleepCheck("Common.Heroes.Update") || All.Count(x => x.IsValid) >= 10)
             {
                 return;
             }
+
             UpdateHeroes();
             Utils.Sleep(1000, "Common.Heroes.Update");
         }
@@ -108,15 +111,18 @@
                 {
                     herolist.Add(hero);
                 }
+
                 if (!Radiant.Contains(hero) && hero.Team == Team.Radiant)
                 {
                     herolistRadiant.Add(hero);
                 }
+
                 if (!Dire.Contains(hero) && hero.Team == Team.Dire)
                 {
                     herolistDire.Add(hero);
                 }
             }
+
             All = herolist;
             Radiant = herolistRadiant;
             Dire = herolistDire;

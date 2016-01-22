@@ -59,6 +59,7 @@
             {
                 return;
             }
+
             if (!Utils.SleepCheck("Common.Creeps.Update"))
             {
                 return;

@@ -39,6 +39,7 @@
                     {
                         return;
                     }
+
                     All = new List<Player>();
                     Dire = new List<Player>();
                     Radiant = new List<Player>();
@@ -53,6 +54,7 @@
                 Game.OnUpdate += Update;
                 loaded = true;
             }
+
             Events.OnClose += (sender, args) =>
                 {
                     All = new List<Player>();
@@ -76,22 +78,27 @@
             {
                 return;
             }
+
             if (!Utils.SleepCheck("Common.Players.Update"))
             {
                 return;
             }
+
             if (All.Count < 10)
             {
                 All = ObjectMgr.GetEntities<Player>().ToList();
             }
+
             if (Radiant.Count < 5)
             {
                 Radiant = ObjectMgr.GetEntities<Player>().Where(x => x.Team == Team.Radiant).ToList();
             }
+
             if (Dire.Count < 5)
             {
                 Dire = ObjectMgr.GetEntities<Player>().Where(x => x.Team == Team.Dire).ToList();
             }
+
             Utils.Sleep(1000, "Common.Players.Update");
         }
 

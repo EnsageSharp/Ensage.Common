@@ -17,11 +17,6 @@
  You should have received a copy of the GNU General Public License
  along with LeagueSharp.Common. If not, see <http://www.gnu.org/licenses/>.
 */
-
-#endregion
-
-#region
-
 #endregion
 
 namespace Ensage.Common.Menu
@@ -105,6 +100,7 @@ namespace Ensage.Common.Menu
             {
                 return this.value;
             }
+
             set
             {
                 this.value = Math.Min(Math.Max(value, this.MinValue), this.MaxValue);
@@ -195,16 +191,18 @@ namespace Ensage.Common.Menu
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
-                    v.Key,
+                    v.Key, 
                     v.Key.Substring(0, "item".Length) == "item"
                         ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
                         : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
             }
+
             var posDict = this.PositionDictionary;
             foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
             {
                 this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
             }
+
             var svDict = this.SValuesDictionary;
             foreach (var v in this.Dictionary.Where(v => !svDict.ContainsKey(v.Key)))
             {
@@ -225,27 +223,32 @@ namespace Ensage.Common.Menu
                 Console.WriteLine(@"This ability(" + name + @") is already added in AbilityToggler");
                 return;
             }
+
             if (this.SValuesDictionary.ContainsKey(name))
             {
                 defaultValue = this.SValuesDictionary[name];
             }
+
             this.Dictionary.Add(name, defaultValue);
             if (!Menu.TextureDictionary.ContainsKey(name))
             {
                 Menu.TextureDictionary.Add(
-                    name,
+                    name, 
                     name.Substring(0, "item".Length) == "item"
                         ? Drawing.GetTexture("materials/ensage_ui/items/" + name.Substring("item_".Length) + ".vmat")
                         : Drawing.GetTexture("materials/ensage_ui/spellicons/" + name + ".vmat"));
             }
+
             if (!this.SValuesDictionary.ContainsKey(name))
             {
                 this.SValuesDictionary.Add(name, defaultValue);
             }
+
             if (this.PositionDictionary.ContainsKey(name))
             {
                 return;
             }
+
             this.PositionDictionary.Add(name, new float[] { 0, 0 });
         }
 
@@ -312,9 +315,9 @@ namespace Ensage.Common.Menu
         /// <param name="useAllyHeroes"></param>
         /// <param name="defaultValues"></param>
         public HeroToggler(
-            Dictionary<string, bool> heroDictionary,
-            bool useEnemyHeroes = false,
-            bool useAllyHeroes = false,
+            Dictionary<string, bool> heroDictionary, 
+            bool useEnemyHeroes = false, 
+            bool useAllyHeroes = false, 
             bool defaultValues = true)
         {
             this.Dictionary = heroDictionary;
@@ -326,15 +329,17 @@ namespace Ensage.Common.Menu
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
-                    v.Key,
+                    v.Key, 
                     Drawing.GetTexture(
                         "materials/ensage_ui/heroes_horizontal/" + v.Key.Substring("npc_dota_hero_".Length) + ".vmat"));
             }
+
             var posDict = this.PositionDictionary;
             foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
             {
                 this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
             }
+
             var svDict = this.SValuesDictionary;
             foreach (var v in this.Dictionary.Where(v => !svDict.ContainsKey(v.Key)))
             {
@@ -355,26 +360,31 @@ namespace Ensage.Common.Menu
                 Console.WriteLine(@"This hero(" + name + @") is already added in HeroToggler");
                 return;
             }
+
             if (this.SValuesDictionary.ContainsKey(name))
             {
                 defaultValue = this.SValuesDictionary[name];
             }
+
             this.Dictionary.Add(name, defaultValue);
             if (!Menu.TextureDictionary.ContainsKey(name))
             {
                 Menu.TextureDictionary.Add(
-                    name,
+                    name, 
                     Drawing.GetTexture(
                         "materials/ensage_ui/heroes_horizontal/" + name.Substring("npc_dota_hero_".Length) + ".vmat"));
             }
+
             if (!this.SValuesDictionary.ContainsKey(name))
             {
                 this.SValuesDictionary.Add(name, defaultValue);
             }
+
             if (this.PositionDictionary.ContainsKey(name))
             {
                 return;
             }
+
             this.PositionDictionary.Add(name, new float[] { 0, 0 });
         }
 
@@ -404,7 +414,7 @@ namespace Ensage.Common.Menu
     {
         /// <summary>
         /// </summary>
-        Toggle,
+        Toggle, 
 
         /// <summary>
         /// </summary>
@@ -471,6 +481,7 @@ namespace Ensage.Common.Menu
             {
                 return null;
             }
+
             return dic.ContainsKey(key) ? dic[key] : null;
         }
 
@@ -571,7 +582,7 @@ namespace Ensage.Common.Menu
             get
             {
                 return Math.Min(Math.Max((int)(HUDInfo.GetHpBarSizeY() * 3), 21), 33)
-                       + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 2; //32
+                       + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 2; // 32
             }
         }
 
@@ -580,7 +591,7 @@ namespace Ensage.Common.Menu
             get
             {
                 return Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180)
-                       + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value; //160
+                       + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value; // 160
             }
         }
 
@@ -602,6 +613,7 @@ namespace Ensage.Common.Menu
             {
                 return _drawTheMenu;
             }
+
             set
             {
                 _drawTheMenu = value;
@@ -619,10 +631,12 @@ namespace Ensage.Common.Menu
             {
                 return;
             }
+
             if (Game.IsChatOpen)
             {
                 return;
             }
+
             if ((args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP || args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN)
                 && args.WParam == CommonMenu.MenuConfig.Item("pressKey").GetValue<KeyBind>().Key)
             {
@@ -646,85 +660,86 @@ namespace Ensage.Common.Menu
         internal static void DrawArrow(string s, Vector2 position, MenuItem item, Color color)
         {
             MenuUtils.DrawBoxBordered(
-                position.X,
-                position.Y,
-                item.Height,
-                item.Height,
-                1,
-                Color.FromArgb(37, 37, 37).ToSharpDxColor(),
+                position.X, 
+                position.Y, 
+                item.Height, 
+                item.Height, 
+                1, 
+                Color.FromArgb(37, 37, 37).ToSharpDxColor(), 
                 color.ToSharpDxColor());
 
-            //Font.DrawText(
-            //    null,
-            //    s,
-            //    new Rectangle((int)(position.X), (int)item.Position.Y, item.Height, item.Height),
-            //    FontDrawFlags.VerticalCenter | FontDrawFlags.Center,
-            //    new ColorBGRA(255, 255, 255, 255));
+            // Font.DrawText(
+            // null,
+            // s,
+            // new Rectangle((int)(position.X), (int)item.Position.Y, item.Height, item.Height),
+            // FontDrawFlags.VerticalCenter | FontDrawFlags.Center,
+            // new ColorBGRA(255, 255, 255, 255));
             var textSize = Drawing.MeasureText(
-                s,
-                "Arial",
-                new Vector2((float)(item.Height * 0.51), item.Height / 2),
+                s, 
+                "Arial", 
+                new Vector2((float)(item.Height * 0.51), item.Height / 2), 
                 FontFlags.AntiAlias);
             var textPos = position
                           + new Vector2(
-                                (float)(item.Height * 0.5 - textSize.X * 0.5),
+                                (float)(item.Height * 0.5 - textSize.X * 0.5), 
                                 (float)(item.Height * 0.5 - textSize.Y * 0.5) + 1);
             Drawing.DrawText(
-                s,
-                textPos,
-                new Vector2((float)(item.Height * 0.51), item.Height / 2),
+                s, 
+                textPos, 
+                new Vector2((float)(item.Height * 0.51), item.Height / 2), 
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
                     ? Color.DarkOrange.ToSharpDxColor()
-                    : Color.White.ToSharpDxColor(),
+                    : Color.White.ToSharpDxColor(), 
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
         internal static void DrawOnOff(bool on, Vector2 position, MenuItem item)
         {
             var alpha = Utils.IsUnderRectangle(
-                Game.MouseScreenPosition,
-                position.X,
-                position.Y,
-                item.Height,
+                Game.MouseScreenPosition, 
+                position.X, 
+                position.Y, 
+                item.Height, 
                 item.Height)
                             ? 35
                             : 0;
             MenuUtils.DrawBoxBordered(
-                position.X,
-                position.Y,
-                item.Height,
-                item.Height,
-                1f,
+                position.X, 
+                position.Y, 
+                item.Height, 
+                item.Height, 
+                1f, 
                 on
                     ? Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
-                    : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor(),
+                    : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor(), 
                 SharpDX.Color.Black);
 
             var s = on ? "ON" : "OFF";
-            //Font.DrawText(
-            //    null,
-            //    s,
-            //    new Rectangle(
-            //        (int)(item.Position.X + item.Width - item.Height),
-            //        (int)item.Position.Y,
-            //        item.Height,
-            //        item.Height),
-            //    FontDrawFlags.VerticalCenter | FontDrawFlags.Center,
-            //    new ColorBGRA(255, 255, 255, 255));
+
+            // Font.DrawText(
+            // null,
+            // s,
+            // new Rectangle(
+            // (int)(item.Position.X + item.Width - item.Height),
+            // (int)item.Position.Y,
+            // item.Height,
+            // item.Height),
+            // FontDrawFlags.VerticalCenter | FontDrawFlags.Center,
+            // new ColorBGRA(255, 255, 255, 255));
             var textSize = Drawing.MeasureText(
-                s,
-                "Arial",
-                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2),
+                s, 
+                "Arial", 
+                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
                 FontFlags.AntiAlias);
             var textPos = item.Position
                           + new Vector2(
-                                item.Width - item.Height / 2 - textSize.X / 2,
+                                item.Width - item.Height / 2 - textSize.X / 2, 
                                 (float)(+item.Height * 0.5 - textSize.Y / 2));
             Drawing.DrawText(
-                s,
-                textPos,
-                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2),
-                Color.White.ToSharpDxColor(),
+                s, 
+                textPos, 
+                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
+                Color.White.ToSharpDxColor(), 
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
@@ -735,12 +750,12 @@ namespace Ensage.Common.Menu
         }
 
         internal static void DrawSlider(
-            Vector2 position,
-            MenuItem item,
-            int min,
-            int max,
-            int value,
-            int width,
+            Vector2 position, 
+            MenuItem item, 
+            int min, 
+            int max, 
+            int value, 
+            int width, 
             bool drawText)
         {
             width = width > 0 ? width : item.Width;
@@ -749,41 +764,41 @@ namespace Ensage.Common.Menu
             var x2D = 3 + percentage * (width - 3) / 100;
 
             MenuUtils.DrawLine(
-                x,
-                position.Y,
-                x,
-                position.Y + item.Height - 2,
-                2,
+                x, 
+                position.Y, 
+                x, 
+                position.Y + item.Height - 2, 
+                2, 
                 Color.FromArgb(200, 120, 60).ToSharpDxColor());
             MenuUtils.DrawBoxFilled(
-                position.X,
-                position.Y - 1,
-                x2D - 1f,
-                item.Height,
+                position.X, 
+                position.Y - 1, 
+                x2D - 1f, 
+                item.Height, 
                 Color.FromArgb(30, 150, 110, 0).ToSharpDxColor());
 
             if (drawText)
             {
-                //Font.DrawText(
-                //    null,
-                //    value.ToString(),
-                //    new Rectangle((int)position.X - 5, (int)position.Y, item.Width, item.Height),
-                //    FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
-                //    new ColorBGRA(255, 255, 255, 255));
+                // Font.DrawText(
+                // null,
+                // value.ToString(),
+                // new Rectangle((int)position.X - 5, (int)position.Y, item.Width, item.Height),
+                // FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
+                // new ColorBGRA(255, 255, 255, 255));
                 var textSize = Drawing.MeasureText(
-                    value.ToString(),
-                    "Arial",
-                    new Vector2((float)(item.Height * 0.52), (float)item.Width / 2),
+                    value.ToString(), 
+                    "Arial", 
+                    new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
                     FontFlags.AntiAlias);
                 var textPos = position
                               + new Vector2(
-                                    (float)(item.Width - item.Height * 0.5 - 2 - textSize.X * 0.5),
+                                    (float)(item.Width - item.Height * 0.5 - 2 - textSize.X * 0.5), 
                                     (float)(+item.Height * 0.5 - textSize.Y * 0.5));
                 Drawing.DrawText(
-                    value.ToString(),
-                    textPos,
-                    new Vector2((float)(item.Height * 0.52), (float)item.Width / 2),
-                    Color.DarkOrange.ToSharpDxColor(),
+                    value.ToString(), 
+                    textPos, 
+                    new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
+                    Color.DarkOrange.ToSharpDxColor(), 
                     FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
                     | FontFlags.StrikeOut);
             }
@@ -798,28 +813,29 @@ namespace Ensage.Common.Menu
             }
 
             const string s = "[?]";
-            //var x = (int)item.Position.X + item.Width - item.Height - Font.MeasureText(s).Width - 7;
 
-            //Font.DrawText(
-            //    null,
-            //    s,
-            //    new Rectangle(x, (int)item.Position.Y, item.Width, item.Height),
-            //    FontDrawFlags.VerticalCenter,
-            //    new ColorBGRA(255, 255, 255, 255));
+            // var x = (int)item.Position.X + item.Width - item.Height - Font.MeasureText(s).Width - 7;
+
+            // Font.DrawText(
+            // null,
+            // s,
+            // new Rectangle(x, (int)item.Position.Y, item.Width, item.Height),
+            // FontDrawFlags.VerticalCenter,
+            // new ColorBGRA(255, 255, 255, 255));
             var textSize = Drawing.MeasureText(
-                s,
-                "Arial",
-                new Vector2((float)(item.Height * 0.53), item.Width / 2),
+                s, 
+                "Arial", 
+                new Vector2((float)(item.Height * 0.53), item.Width / 2), 
                 FontFlags.AntiAlias);
             var textPos = item.Position
                           + new Vector2(
-                                item.Width - item.Height - textSize.X - 2,
+                                item.Width - item.Height - textSize.X - 2, 
                                 (float)(item.Height * 0.5 - textSize.Y * 0.5 - 1));
             Drawing.DrawText(
-                s,
-                textPos,
-                new Vector2((float)(item.Height * 0.53), item.Width / 2),
-                Color.DarkGray.ToSharpDxColor(),
+                s, 
+                textPos, 
+                new Vector2((float)(item.Height * 0.53), item.Width / 2), 
+                Color.DarkGray.ToSharpDxColor(), 
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
@@ -830,38 +846,38 @@ namespace Ensage.Common.Menu
             {
                 return;
             }
+
             var s = item.Tooltip;
             var textSize = Drawing.MeasureText(
-                s,
-                "Arial",
-                new Vector2((float)(item.Height * 0.51), 14),
+                s, 
+                "Arial", 
+                new Vector2((float)(item.Height * 0.51), 14), 
                 FontFlags.AntiAlias);
             MenuUtils.DrawBoxBordered(
-                position.X + 3,
-                position.Y,
-                textSize.X + 8,
-                item.Height,
-                1,
-                new SharpDX.Color(45, 37, 13, 170),
+                position.X + 3, 
+                position.Y, 
+                textSize.X + 8, 
+                item.Height, 
+                1, 
+                new SharpDX.Color(45, 37, 13, 170), 
                 SharpDX.Color.Black);
 
-            //Font.DrawText(
-            //    null,
-            //    s,
-            //    new Rectangle(
-            //        (int)(item.Position.X + item.Width - 33 + item.Height + 8),
-            //        (int)item.Position.Y - 3,
-            //        Font.MeasureText(item.Tooltip).Width + 8,
-            //        item.Height + 8),
-            //    FontDrawFlags.VerticalCenter,
-            //    TextColor ?? SharpDX.Color.White);
-
+            // Font.DrawText(
+            // null,
+            // s,
+            // new Rectangle(
+            // (int)(item.Position.X + item.Width - 33 + item.Height + 8),
+            // (int)item.Position.Y - 3,
+            // Font.MeasureText(item.Tooltip).Width + 8,
+            // item.Height + 8),
+            // FontDrawFlags.VerticalCenter,
+            // TextColor ?? SharpDX.Color.White);
             var textPos = position + new Vector2(6, (float)(item.Height * 0.5 - textSize.Y * 0.5));
             Drawing.DrawText(
-                s,
-                textPos,
-                new Vector2((float)(item.Height * 0.51), 14),
-                Color.White.ToSharpDxColor(),
+                s, 
+                textPos, 
+                new Vector2((float)(item.Height * 0.51), 14), 
+                Color.White.ToSharpDxColor(), 
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
         }
 
@@ -893,6 +909,8 @@ namespace Ensage.Common.Menu
         /// <summary>
         /// </summary>
         public static Dictionary<string, DotaTexture> TextureDictionary;
+
+        private static bool loaded;
 
         private static StringList newMessageType;
 
@@ -948,8 +966,6 @@ namespace Ensage.Common.Menu
 
         private bool visible;
 
-        private static bool loaded;
-
         #endregion
 
         #region Constructors and Destructors
@@ -975,16 +991,16 @@ namespace Ensage.Common.Menu
                 new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true));
             Root.AddItem(
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(
-                    FontStyle.Bold,
+                    FontStyle.Bold, 
                     SharpDX.Color.Yellow));
             loaded = false;
             Events.OnLoad += Events_OnLoad;
             if (Game.IsInGame && ObjectMgr.LocalHero != null)
             {
-                 Events_OnLoad(null, null);
+                Events_OnLoad(null, null);
             }
-            Events.OnClose += (sender, args) =>
-                { loaded = false; };
+
+            Events.OnClose += (sender, args) => { loaded = false; };
             CommonMenu.MenuConfig.AddSubMenu(Root);
             message.ValueChanged += MessageValueChanged;
             newMessageType = Root.Item("messageType").GetValue<StringList>();
@@ -1000,10 +1016,10 @@ namespace Ensage.Common.Menu
         /// <param name="showTextWithTexture"></param>
         /// <exception cref="ArgumentException"></exception>
         public Menu(
-            string displayName,
-            string name,
-            bool isRootMenu = false,
-            string textureName = null,
+            string displayName, 
+            string name, 
+            bool isRootMenu = false, 
+            string textureName = null, 
             bool showTextWithTexture = false)
         {
             this.DisplayName = displayName;
@@ -1018,7 +1034,7 @@ namespace Ensage.Common.Menu
                 if (textureName.Contains("npc_dota_hero_"))
                 {
                     TextureDictionary.Add(
-                        textureName,
+                        textureName, 
                         Drawing.GetTexture(
                             "materials/ensage_ui/heroes_horizontal/" + textureName.Substring("npc_dota_hero_".Length)
                             + ".vmat"));
@@ -1026,17 +1042,18 @@ namespace Ensage.Common.Menu
                 else if (textureName.Contains("item_"))
                 {
                     TextureDictionary.Add(
-                        textureName,
+                        textureName, 
                         Drawing.GetTexture(
                             "materials/ensage_ui/items/" + textureName.Substring("item_".Length) + ".vmat"));
                 }
                 else
                 {
                     TextureDictionary.Add(
-                        textureName,
+                        textureName, 
                         Drawing.GetTexture("materials/ensage_ui/spellicons/" + textureName + ".vmat"));
                 }
             }
+
             if (isRootMenu)
             {
                 AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
@@ -1107,6 +1124,7 @@ namespace Ensage.Common.Menu
                         result = i;
                         break;
                     }
+
                     i++;
                 }
 
@@ -1140,13 +1158,14 @@ namespace Ensage.Common.Menu
                     bonus +=
                         (int)
                         Drawing.MeasureText(
-                            MultiLanguage._(this.DisplayName),
-                            "Arial",
+                            MultiLanguage._(this.DisplayName), 
+                            "Arial", 
                             new Vector2(
-                            (float)(MenuSettings.MenuItemHeight * 0.55),
-                            (float)(MenuSettings.MenuItemWidth * 0.7)),
+                            (float)(MenuSettings.MenuItemHeight * 0.55), 
+                            (float)(MenuSettings.MenuItemWidth * 0.7)), 
                             FontFlags.None).X;
                 }
+
                 if (this.TextureName != null)
                 {
                     var tName = this.TextureName;
@@ -1163,11 +1182,13 @@ namespace Ensage.Common.Menu
                         bonus += -4;
                     }
                 }
+
                 var arrow = Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17);
                 if (5 + arrow + bonus < (float)(MenuSettings.MenuItemWidth - MenuSettings.MenuItemHeight * 0.3))
                 {
                     arrow = 4;
                 }
+
                 return this.Height + bonus + arrow;
             }
         }
@@ -1181,6 +1202,7 @@ namespace Ensage.Common.Menu
                 {
                     return menuPositionDictionary[n];
                 }
+
                 int xOffset;
 
                 if (this.Parent != null)
@@ -1191,6 +1213,7 @@ namespace Ensage.Common.Menu
                 {
                     xOffset = (int)this.MyBasePosition.X;
                 }
+
                 var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
                           + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
                 if (!menuPositionDictionary.ContainsKey(n))
@@ -1201,6 +1224,7 @@ namespace Ensage.Common.Menu
                 {
                     menuPositionDictionary[n] = pos;
                 }
+
                 Utils.Sleep(1000, n);
                 return pos;
             }
@@ -1214,12 +1238,15 @@ namespace Ensage.Common.Menu
                 {
                     return false;
                 }
+
                 return this.IsRootMenu || this.visible;
             }
+
             set
             {
                 this.visible = value;
-                //Hide all the children
+
+                // Hide all the children
                 if (!this.visible)
                 {
                     foreach (var schild in this.Children)
@@ -1295,9 +1322,9 @@ namespace Ensage.Common.Menu
         /// <param name="submenu"></param>
         /// <returns></returns>
         public static MenuItem GetValueGlobally(
-            string assemblyname,
-            string menuname,
-            string itemname,
+            string assemblyname, 
+            string menuname, 
+            string itemname, 
             string submenu = null)
         {
             var menu = RootMenus.FirstOrDefault(x => x.Key == assemblyname + "." + menuname).Value;
@@ -1370,11 +1397,13 @@ namespace Ensage.Common.Menu
             {
                 name = ObjectMgr.LocalHero.Name + name;
             }
+
             MenuItem tempItem;
             if (ItemDictionary.TryGetValue(this.Name + name, out tempItem))
             {
                 return tempItem;
             }
+
             tempItem = this.Items.FirstOrDefault(x => x.Name == name)
                        ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
                               .FirstOrDefault();
@@ -1398,7 +1427,6 @@ namespace Ensage.Common.Menu
             }
             catch (Exception)
             {
-                //
             }
         }
 
@@ -1412,6 +1440,7 @@ namespace Ensage.Common.Menu
             {
                 return;
             }
+
             subMenu.Parent = null;
             this.Children.Remove(subMenu);
         }
@@ -1435,7 +1464,7 @@ namespace Ensage.Common.Menu
         /// <returns></returns>
         public Menu SubMenu(string name)
         {
-            //Search in submenus and if it doesn't exist add it.
+            // Search in submenus and if it doesn't exist add it.
             var subMenu = this.Children.FirstOrDefault(sm => sm.Name == name);
             return subMenu ?? this.AddSubMenu(new Menu(name, name));
         }
@@ -1461,46 +1490,48 @@ namespace Ensage.Common.Menu
             {
                 return;
             }
+
             if (!this.Visible)
             {
                 return;
             }
-            //if (CommonMenu.MenuConfig.Item("Dim").GetValue<bool>())
-            //{
-            //    //Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaBlendEnable, true);
-            //    Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaTestEnable, true);
-            //}
+
+            // if (CommonMenu.MenuConfig.Item("Dim").GetValue<bool>())
+            // {
+            // //Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaBlendEnable, true);
+            // Drawing.Direct3DDevice9.SetRenderState(RenderState.AlphaTestEnable, true);
+            // }
             MenuUtils.DrawBoxBordered(
-                this.Position.X,
-                this.Position.Y,
-                this.Width,
-                this.Height,
-                1,
+                this.Position.X, 
+                this.Position.Y, 
+                this.Width, 
+                this.Height, 
+                1, 
                 this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible
                     ? MenuSettings.ActiveBackgroundColor.ToSharpDxColor()
-                    : MenuSettings.BackgroundColor.ToSharpDxColor(),
+                    : MenuSettings.BackgroundColor.ToSharpDxColor(), 
                 new SharpDX.Color(35, 30, 25, 255));
 
-            //MenuDrawHelper.Font.DrawText(
-            //    null,
-            //    MultiLanguage._(this.DisplayName),
-            //    new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
-            //    FontDrawFlags.VerticalCenter,
-            //    this.Color);
+            // MenuDrawHelper.Font.DrawText(
+            // null,
+            // MultiLanguage._(this.DisplayName),
+            // new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
+            // FontDrawFlags.VerticalCenter,
+            // this.Color);
             var textSize = Drawing.MeasureText(
-                MultiLanguage._(this.DisplayName),
-                "Arial",
-                new Vector2((float)(this.Height * 0.55), 100),
+                MultiLanguage._(this.DisplayName), 
+                "Arial", 
+                new Vector2((float)(this.Height * 0.55), 100), 
                 FontFlags.AntiAlias);
             var textPos = this.Position + new Vector2(5, (float)(this.Height * 0.5 - textSize.Y * 0.5));
             var bonusWidth = 0;
             if (this.TextureName == null)
             {
                 Drawing.DrawText(
-                    MultiLanguage._(this.DisplayName),
-                    textPos,
-                    new Vector2((float)(this.Height * 0.55), 100),
-                    this.Color,
+                    MultiLanguage._(this.DisplayName), 
+                    textPos, 
+                    new Vector2((float)(this.Height * 0.55), 100), 
+                    this.Color, 
                     FontFlags.AntiAlias | FontFlags.Additive | FontFlags.Custom);
             }
             else
@@ -1509,99 +1540,102 @@ namespace Ensage.Common.Menu
                 if (tName.Contains("npc_dota_hero"))
                 {
                     Drawing.DrawRect(
-                        this.Position + new Vector2(3, 3),
-                        new Vector2(this.Height + 13, this.Height - 6),
+                        this.Position + new Vector2(3, 3), 
+                        new Vector2(this.Height + 13, this.Height - 6), 
                         TextureDictionary[tName]);
                     Drawing.DrawRect(
-                        this.Position + new Vector2(2, 2),
-                        new Vector2(this.Height + 15, this.Height - 4),
-                        SharpDX.Color.Black,
+                        this.Position + new Vector2(2, 2), 
+                        new Vector2(this.Height + 15, this.Height - 4), 
+                        SharpDX.Color.Black, 
                         true);
                     bonusWidth = this.Height + 17;
                 }
                 else if (tName.Contains("item_"))
                 {
                     Drawing.DrawRect(
-                        this.Position + new Vector2(3, 3),
-                        new Vector2(this.Height + (float)(this.Height * 0.16), this.Height - 6),
+                        this.Position + new Vector2(3, 3), 
+                        new Vector2(this.Height + (float)(this.Height * 0.16), this.Height - 6), 
                         TextureDictionary[tName]);
                     Drawing.DrawRect(
-                        this.Position + new Vector2(2, 2),
-                        new Vector2(this.Height - 4, this.Height - 4),
-                        SharpDX.Color.Black,
+                        this.Position + new Vector2(2, 2), 
+                        new Vector2(this.Height - 4, this.Height - 4), 
+                        SharpDX.Color.Black, 
                         true);
                     bonusWidth = this.Height - 2;
                 }
                 else
                 {
                     Drawing.DrawRect(
-                        this.Position + new Vector2(3, 3),
-                        new Vector2(this.Height - 6, this.Height - 6),
+                        this.Position + new Vector2(3, 3), 
+                        new Vector2(this.Height - 6, this.Height - 6), 
                         TextureDictionary[tName]);
                     Drawing.DrawRect(
-                        this.Position + new Vector2(2, 2),
-                        new Vector2(this.Height - 4, this.Height - 4),
-                        SharpDX.Color.Black,
+                        this.Position + new Vector2(2, 2), 
+                        new Vector2(this.Height - 4, this.Height - 4), 
+                        SharpDX.Color.Black, 
                         true);
                     bonusWidth = this.Height - 2;
                 }
+
                 if (this.ShowTextWithTexture)
                 {
                     Drawing.DrawText(
-                        MultiLanguage._(this.DisplayName),
-                        textPos + new Vector2(bonusWidth, 0),
-                        new Vector2((float)(this.Height * 0.55), 100),
-                        this.Color,
+                        MultiLanguage._(this.DisplayName), 
+                        textPos + new Vector2(bonusWidth, 0), 
+                        new Vector2((float)(this.Height * 0.55), 100), 
+                        this.Color, 
                         FontFlags.AntiAlias | FontFlags.Additive | FontFlags.Custom);
                 }
             }
 
-            //MenuDrawHelper.Font.DrawText(
-            //    null,
-            //    ">",
-            //    new Rectangle((int)this.Position.X - 5, (int)this.Position.Y, this.Width, this.Height),
-            //    FontDrawFlags.Right | FontDrawFlags.VerticalCenter,
-            //    this.Color);
-            //Console.WriteLine((3 + textSize.X + bonusWidth) + "   " + (float)(this.Width - this.Height * 0.5));
+            // MenuDrawHelper.Font.DrawText(
+            // null,
+            // ">",
+            // new Rectangle((int)this.Position.X - 5, (int)this.Position.Y, this.Width, this.Height),
+            // FontDrawFlags.Right | FontDrawFlags.VerticalCenter,
+            // this.Color);
+            // Console.WriteLine((3 + textSize.X + bonusWidth) + "   " + (float)(this.Width - this.Height * 0.5));
             if (5 + textSize.X + bonusWidth < (float)(this.Width - this.Height * 0.3))
             {
                 textSize = Drawing.MeasureText(
-                    "»",
-                    "Arial",
-                    new Vector2((float)(this.Height * 0.65), 12),
+                    "»", 
+                    "Arial", 
+                    new Vector2((float)(this.Height * 0.65), 12), 
                     FontFlags.AntiAlias);
                 textPos = this.Position
                           + new Vector2(
-                                (float)(this.Width - this.Height * 0.35 - textSize.X * 0.5),
+                                (float)(this.Width - this.Height * 0.35 - textSize.X * 0.5), 
                                 (float)(this.Height * 0.5 - textSize.Y * 0.5));
                 Drawing.DrawText(
-                    "»",
-                    textPos,
-                    new Vector2((float)(this.Height * 0.65), 12),
-                    System.Drawing.Color.FromArgb(225, System.Drawing.Color.Orange).ToSharpDxColor(),
+                    "»", 
+                    textPos, 
+                    new Vector2((float)(this.Height * 0.65), 12), 
+                    System.Drawing.Color.FromArgb(225, System.Drawing.Color.Orange).ToSharpDxColor(), 
                     FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
                     | FontFlags.StrikeOut | FontFlags.Outline);
             }
+
             Drawing.DrawRect(
-                new Vector2(this.Position.X, this.Position.Y),
-                new Vector2(this.Width, this.Height),
+                new Vector2(this.Position.X, this.Position.Y), 
+                new Vector2(this.Width, this.Height), 
                 this.Children.Count > 0 && this.Children[0].Visible || this.Items.Count > 0 && this.Items[0].Visible
                     ? new SharpDX.Color(0, 0, 0, 5)
                     : (Utils.IsUnderRectangle(
-                        Game.MouseScreenPosition,
-                        this.Position.X,
-                        this.Position.Y,
-                        this.Width,
+                        Game.MouseScreenPosition, 
+                        this.Position.X, 
+                        this.Position.Y, 
+                        this.Width, 
                         this.Height)
                            ? new SharpDX.Color(0, 0, 0, 8)
                            : new SharpDX.Color(0, 0, 0, 120)));
-            //Draw the menu submenus
+
+            // Draw the menu submenus
             foreach (var child in this.Children.Where(child => child.Visible))
             {
                 child.Drawing_OnDraw(args);
             }
 
-            //Draw the items
+            // Draw the items
             for (var i = this.Items.Count - 1; i >= 0; i--)
             {
                 var item = this.Items[i];
@@ -1618,6 +1652,7 @@ namespace Ensage.Common.Menu
             {
                 return;
             }
+
             this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam, args);
         }
 
@@ -1627,27 +1662,30 @@ namespace Ensage.Common.Menu
         }
 
         internal void OnReceiveMessage(
-            Utils.WindowsMessages message,
-            Vector2 cursorPos,
-            uint key,
+            Utils.WindowsMessages message, 
+            Vector2 cursorPos, 
+            uint key, 
             WndEventArgs args = null)
         {
-            //Spread the message to the menu's children recursively
-
+            // Spread the message to the menu's children recursively
             foreach (var item in this.Items)
             {
                 item.OnReceiveMessage(message, cursorPos, key, args);
-                //Console.WriteLine(args != null && item.IsInside(cursorPos));
+
+                // Console.WriteLine(args != null && item.IsInside(cursorPos));
             }
+
             foreach (var child in this.Children)
             {
                 child.OnReceiveMessage(message, cursorPos, key, args);
             }
+
             if (!this.Visible)
             {
                 return;
             }
-            //Handle the left clicks on the menus to hide or show the submenus.
+
+            // Handle the left clicks on the menus to hide or show the submenus.
             if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
             {
                 return;
@@ -1680,7 +1718,7 @@ namespace Ensage.Common.Menu
 
             if (!this.IsRootMenu && this.Parent != null)
             {
-                //Close all the submenus in the level 
+                // Close all the submenus in the level 
                 foreach (var child in this.Parent.Children.Where(child => child.Name != this.Name))
                 {
                     foreach (var schild in child.Children)
@@ -1695,13 +1733,13 @@ namespace Ensage.Common.Menu
                 }
             }
 
-            //Hide or Show the submenus.
+            // Hide or Show the submenus.
             foreach (var child in this.Children)
             {
                 child.Visible = !child.Visible;
             }
 
-            //Hide or Show the items.
+            // Hide or Show the items.
             foreach (var item in this.Items)
             {
                 item.Visible = !item.Visible;
@@ -1745,6 +1783,7 @@ namespace Ensage.Common.Menu
             {
                 child.SetHeroTogglers();
             }
+
             for (var i = this.Items.Count - 1; i >= 0; i--)
             {
                 var item = this.Items[i];
@@ -1752,10 +1791,12 @@ namespace Ensage.Common.Menu
                 {
                     continue;
                 }
+
                 if (item.ValueType != MenuValueType.HeroToggler)
                 {
                     continue;
                 }
+
                 var set = false;
                 if (item.GetValue<HeroToggler>().UseEnemyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 5)
                 {
@@ -1763,24 +1804,27 @@ namespace Ensage.Common.Menu
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
                         Heroes.GetByTeam(ObjectMgr.LocalHero.GetEnemyTeam())
-                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name)).ToList();
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name))
+                            .ToList();
                     if (heroes.Any())
                     {
                         set = true;
                     }
+
                     foreach (var x in
                         heroes)
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.Name,
+                                x.Name, 
                                 sdict.ContainsKey(x.Name) ? sdict[x.Name] : item.GetValue<HeroToggler>().DefaultValues);
                     }
+
                     item.SetValue(
                         new HeroToggler(
-                            item.GetValue<HeroToggler>().Dictionary,
-                            true,
-                            false,
+                            item.GetValue<HeroToggler>().Dictionary, 
+                            true, 
+                            false, 
                             item.GetValue<HeroToggler>().DefaultValues));
                 }
                 else if (item.GetValue<HeroToggler>().UseAllyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 4)
@@ -1789,25 +1833,31 @@ namespace Ensage.Common.Menu
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
                         Heroes.GetByTeam(ObjectMgr.LocalHero.Team)
-                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name)).ToList();
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name))
+                            .ToList();
                     if (heroes.Any())
                     {
                         set = true;
                     }
+
                     foreach (var x in heroes)
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.Name,
-                                sdict.ContainsKey(x.Name) ? sdict[x.Name] : item.GetValue<HeroToggler>().DefaultValues);
+                                x.Name, 
+                                sdict.ContainsKey(x.Name)
+                                    ? sdict[x.Name]
+                                    : item.GetValue<HeroToggler>().DefaultValues);
                     }
+
                     item.SetValue(
                         new HeroToggler(
-                            item.GetValue<HeroToggler>().Dictionary,
-                            false,
-                            true,
+                            item.GetValue<HeroToggler>().Dictionary, 
+                            false, 
+                            true, 
                             item.GetValue<HeroToggler>().DefaultValues));
                 }
+
                 Utils.Sleep(set ? 20000 : 2000, "SetHeroTogglers" + this.Name + item.Name);
             }
         }
@@ -1818,6 +1868,7 @@ namespace Ensage.Common.Menu
             {
                 return;
             }
+
             var console = newMessageType.SelectedIndex == 2;
             if (Root.Item("showMessage").GetValue<bool>() && !console)
             {
@@ -1827,7 +1878,7 @@ namespace Ensage.Common.Menu
                     + "</font> Hold: <font face='Verdana' color='#ff7700'>"
                     + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
                 Game.PrintMessage(
-                    msg,
+                    msg, 
                     newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0
                         ? MessageType.LogMessage
                         : MessageType.ChatMessage);
@@ -1838,6 +1889,7 @@ namespace Ensage.Common.Menu
                           + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
                 Console.WriteLine(msg);
             }
+
             loaded = true;
         }
 
@@ -1857,6 +1909,7 @@ namespace Ensage.Common.Menu
             {
                 globalMenuList = new List<string>();
             }
+
             while (globalMenuList.Contains(this.uniqueId))
             {
                 this.uniqueId += ".";
@@ -1879,23 +1932,23 @@ namespace Ensage.Common.Menu
 
     internal enum MenuValueType
     {
-        None,
+        None, 
 
-        Boolean,
+        Boolean, 
 
-        Slider,
+        Slider, 
 
-        KeyBind,
+        KeyBind, 
 
-        Integer,
+        Integer, 
 
-        Color,
+        Color, 
 
-        Circle,
+        Circle, 
 
-        StringList,
+        StringList, 
 
-        AbilityToggler,
+        AbilityToggler, 
 
         HeroToggler
     }
@@ -2111,11 +2164,11 @@ namespace Ensage.Common.Menu
                             v =>
                             (int)
                             Drawing.MeasureText(
-                                v,
-                                "Arial",
+                                v, 
+                                "Arial", 
                                 new Vector2(
-                                (float)(MenuSettings.MenuItemHeight * 0.51),
-                                (float)(MenuSettings.MenuItemWidth * 0.7)),
+                                (float)(MenuSettings.MenuItemHeight * 0.51), 
+                                (float)(MenuSettings.MenuItemWidth * 0.7)), 
                                 FontFlags.None).X + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17))
                             .Concat(new[] { 0 })
                             .Max();
@@ -2139,20 +2192,20 @@ namespace Ensage.Common.Menu
                     extra +=
                         (int)
                         Drawing.MeasureText(
-                            " [" + Utils.KeyToText(val.Key) + "]",
-                            "Arial",
+                            " [" + Utils.KeyToText(val.Key) + "]", 
+                            "Arial", 
                             new Vector2(
-                            (float)(MenuSettings.MenuItemHeight * 0.51),
-                            (float)(MenuSettings.MenuItemWidth * 0.7)),
+                            (float)(MenuSettings.MenuItemHeight * 0.51), 
+                            (float)(MenuSettings.MenuItemWidth * 0.7)), 
                             FontFlags.None).X;
                 }
 
                 return
                     (int)
                     Drawing.MeasureText(
-                        MultiLanguage._(this.DisplayName),
-                        "Arial",
-                        new Vector2((float)(this.Height * 0.51), 20),
+                        MultiLanguage._(this.DisplayName), 
+                        "Arial", 
+                        new Vector2((float)(this.Height * 0.51), 20), 
                         FontFlags.AntiAlias).X + this.Height * 2 + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8)
                     + extra;
             }
@@ -2167,12 +2220,14 @@ namespace Ensage.Common.Menu
                 {
                     return Menu.menuPositionDictionary[n];
                 }
+
                 var xOffset = 0;
 
                 if (this.Parent != null)
                 {
                     xOffset = (int)(this.Parent.Position.X + this.Parent.Width);
                 }
+
                 var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset + 1, 0)
                           + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
                 if (!Menu.menuPositionDictionary.ContainsKey(n))
@@ -2183,6 +2238,7 @@ namespace Ensage.Common.Menu
                 {
                     Menu.menuPositionDictionary[n] = pos;
                 }
+
                 Utils.Sleep(500, n);
                 return pos;
             }
@@ -2210,6 +2266,7 @@ namespace Ensage.Common.Menu
             {
                 return MenuSettings.DrawMenu && this._visible && this.ShowItem;
             }
+
             set
             {
                 this._visible = value;
@@ -2272,6 +2329,7 @@ namespace Ensage.Common.Menu
                 case MenuValueType.KeyBind:
                     return this.GetValue<KeyBind>().Active;
             }
+
             return false;
         }
 
@@ -2384,6 +2442,7 @@ namespace Ensage.Common.Menu
                             {
                                 savedKeyValue.Active = false;
                             }
+
                             newValue = (T)(object)savedKeyValue;
                             break;
 
@@ -2395,6 +2454,7 @@ namespace Ensage.Common.Menu
                             {
                                 newValue = (T)(object)savedSliderValue;
                             }
+
                             break;
 
                         case MenuValueType.StringList:
@@ -2404,6 +2464,7 @@ namespace Ensage.Common.Menu
                             {
                                 newValue = (T)(object)savedListValue;
                             }
+
                             break;
 
                         case MenuValueType.AbilityToggler:
@@ -2422,12 +2483,14 @@ namespace Ensage.Common.Menu
                                     {
                                         tempValue.SValuesDictionary[b.Key] = b.Value;
                                     }
+
                                     if (tempValue.Dictionary.ContainsKey(b.Key))
                                     {
                                         tempValue.Dictionary[b.Key] = b.Value;
                                     }
                                 }
                             }
+
                             newValue = (T)(object)tempValue;
                             break;
 
@@ -2447,12 +2510,14 @@ namespace Ensage.Common.Menu
                                     {
                                         tempHValue.SValuesDictionary[b.Key] = b.Value;
                                     }
+
                                     if (tempHValue.Dictionary.ContainsKey(b.Key))
                                     {
                                         tempHValue.Dictionary[b.Key] = b.Value;
                                     }
                                 }
                             }
+
                             newValue = (T)(object)tempHValue;
                             break;
 
@@ -2491,15 +2556,17 @@ namespace Ensage.Common.Menu
             {
                 this._value = newValue;
             }
+
             this.ValueSet = true;
-            //try
-            //{
+
+            // try
+            // {
             this._serialized = Utils.Serialize(this._value);
+
             // }
-            //catch (Exception)
-            //{
-            //
-            //}           
+            // catch (Exception)
+            // {
+            // }           
             return this;
         }
 
@@ -2544,69 +2611,69 @@ namespace Ensage.Common.Menu
         internal void Drawing_OnDraw()
         {
             MenuUtils.DrawBoxBordered(
-                this.Position.X,
-                this.Position.Y,
-                this.Width,
-                this.Height,
-                1,
-                Color.FromArgb(140, 28, 28, 28).ToSharpDxColor(),
+                this.Position.X, 
+                this.Position.Y, 
+                this.Width, 
+                this.Height, 
+                1, 
+                Color.FromArgb(140, 28, 28, 28).ToSharpDxColor(), 
                 SharpDX.Color.Black);
             var s = MultiLanguage._(this.DisplayName);
             if (this.DrawingTooltip)
             {
                 MenuDrawHelper.DrawToolTip_Text(
-                    new Vector2(this.Position.X + this.Width, this.Position.Y),
-                    this,
+                    new Vector2(this.Position.X + this.Width, this.Position.Y), 
+                    this, 
                     this.TooltipColor);
             }
-            //if (this.ValueType == MenuValueType.HeroToggler)
-            //{
-            //    if (this.GetValue<HeroToggler>().UseEnemyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 5)
-            //    {
-            //        var dict = this.GetValue<HeroToggler>().Dictionary;
-            //        var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
-            //        var players =
-            //            ObjectMgr.GetEntities<Player>()
-            //                .Where(
-            //                    x =>
-            //                    x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
-            //                    && !dict.ContainsKey(x.Hero.Name));
-            //        foreach (var x in
-            //            players)
-            //        {
-            //            this.GetValue<HeroToggler>()
-            //                .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
-            //        }
-            //        this.SetValue(new HeroToggler(this.GetValue<HeroToggler>().Dictionary, true));
-            //    }
-            //    else if (this.GetValue<HeroToggler>().UseAllyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 4)
-            //    {
-            //        var dict = this.GetValue<HeroToggler>().Dictionary;
-            //        var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
-            //        foreach (var x in
-            //            ObjectMgr.GetEntities<Player>()
-            //                .Where(
-            //                    x =>
-            //                    x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.Team
-            //                    && !dict.ContainsKey(x.Hero.Name)))
-            //        {
-            //            this.GetValue<HeroToggler>()
-            //                .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
-            //        }
-            //        this.SetValue(new HeroToggler(this.GetValue<HeroToggler>().Dictionary, false, true));
-            //    }
-            //}
-            //Font font;
-            //switch (this.FontStyle)
-            //{
-            //    case FontStyle.Bold:
-            //        font = MenuDrawHelper.FontBold;
-            //        break;
-            //    default:
-            //        font = MenuDrawHelper.Font;
-            //        break;
-            //}
 
+            // if (this.ValueType == MenuValueType.HeroToggler)
+            // {
+            // if (this.GetValue<HeroToggler>().UseEnemyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 5)
+            // {
+            // var dict = this.GetValue<HeroToggler>().Dictionary;
+            // var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
+            // var players =
+            // ObjectMgr.GetEntities<Player>()
+            // .Where(
+            // x =>
+            // x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
+            // && !dict.ContainsKey(x.Hero.Name));
+            // foreach (var x in
+            // players)
+            // {
+            // this.GetValue<HeroToggler>()
+            // .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+            // }
+            // this.SetValue(new HeroToggler(this.GetValue<HeroToggler>().Dictionary, true));
+            // }
+            // else if (this.GetValue<HeroToggler>().UseAllyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 4)
+            // {
+            // var dict = this.GetValue<HeroToggler>().Dictionary;
+            // var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
+            // foreach (var x in
+            // ObjectMgr.GetEntities<Player>()
+            // .Where(
+            // x =>
+            // x.Hero != null && x.Hero.Team == ObjectMgr.LocalHero.Team
+            // && !dict.ContainsKey(x.Hero.Name)))
+            // {
+            // this.GetValue<HeroToggler>()
+            // .Add(x.Hero.Name, !sdict.ContainsKey(x.Hero.Name) || sdict[x.Hero.Name]);
+            // }
+            // this.SetValue(new HeroToggler(this.GetValue<HeroToggler>().Dictionary, false, true));
+            // }
+            // }
+            // Font font;
+            // switch (this.FontStyle)
+            // {
+            // case FontStyle.Bold:
+            // font = MenuDrawHelper.FontBold;
+            // break;
+            // default:
+            // font = MenuDrawHelper.Font;
+            // break;
+            // }
             switch (this.ValueType)
             {
                 case MenuValueType.Slider:
@@ -2614,8 +2681,8 @@ namespace Ensage.Common.Menu
                     break;
                 case MenuValueType.Boolean:
                     MenuDrawHelper.DrawOnOff(
-                        this.GetValue<bool>(),
-                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y),
+                        this.GetValue<bool>(), 
+                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y), 
                         this);
                     break;
 
@@ -2626,66 +2693,66 @@ namespace Ensage.Common.Menu
                         s = MultiLanguage._("Press new key");
                     }
 
-                    //var x = (int)this.Position.X + this.Width - this.Height
-                    //        - font.MeasureText(null, "[" + Utils.KeyToText(val.Key) + "]", FontDrawFlags.Center).Width
-                    //        - 10;
-
+                    // var x = (int)this.Position.X + this.Width - this.Height
+                    // - font.MeasureText(null, "[" + Utils.KeyToText(val.Key) + "]", FontDrawFlags.Center).Width
+                    // - 10;
                     MenuDrawHelper.DrawOnOff(
-                        val.Active,
-                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y),
+                        val.Active, 
+                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y), 
                         this);
-                    //
                     var textSize = Drawing.MeasureText(
-                        "[" + Utils.KeyToText(val.Key) + "]",
-                        "Arial",
-                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10),
+                        "[" + Utils.KeyToText(val.Key) + "]", 
+                        "Arial", 
+                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10), 
                         FontFlags.AntiAlias);
                     var textPos = this.Position
                                   + new Vector2(
-                                        this.Width - this.Height - textSize.X - 22,
+                                        this.Width - this.Height - textSize.X - 22, 
                                         (float)(this.Height * 0.5 - textSize.Y * 0.5) - 1);
                     var alpha = Utils.IsUnderRectangle(
-                        Game.MouseScreenPosition,
-                        textPos.X,
-                        textPos.Y,
-                        textSize.X,
+                        Game.MouseScreenPosition, 
+                        textPos.X, 
+                        textPos.Y, 
+                        textSize.X, 
                         textSize.Y)
                                     ? 60
                                     : 0;
                     Drawing.DrawText(
-                        "[" + Utils.KeyToText(val.Key) + "]",
-                        textPos,
-                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10),
-                        new SharpDX.Color(195 + alpha, 139 + alpha, 12 + alpha, 225),
+                        "[" + Utils.KeyToText(val.Key) + "]", 
+                        textPos, 
+                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10), 
+                        new SharpDX.Color(195 + alpha, 139 + alpha, 12 + alpha, 225), 
                         FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
                         | FontFlags.StrikeOut);
-                    //font.DrawText(
-                    //    null,
-                    //    "[" + Utils.KeyToText(val.Key) + "]",
-                    //    new Rectangle(x, (int)this.Position.Y, this.Width, this.Height),
-                    //    FontDrawFlags.VerticalCenter,
-                    //    new ColorBGRA(1, 169, 234, 255));
+
+                    // font.DrawText(
+                    // null,
+                    // "[" + Utils.KeyToText(val.Key) + "]",
+                    // new Rectangle(x, (int)this.Position.Y, this.Width, this.Height),
+                    // FontDrawFlags.VerticalCenter,
+                    // new ColorBGRA(1, 169, 234, 255));
                     break;
 
                 case MenuValueType.Integer:
                     var intVal = this.GetValue<int>();
-                    //MenuDrawHelper.Font.DrawText(
-                    //    null,
-                    //    intVal.ToString(),
-                    //    new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
-                    //    FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
-                    //    new ColorBGRA(255, 255, 255, 255));
+
+                    // MenuDrawHelper.Font.DrawText(
+                    // null,
+                    // intVal.ToString(),
+                    // new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
+                    // FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
+                    // new ColorBGRA(255, 255, 255, 255));
                     textSize = Drawing.MeasureText(
-                        intVal.ToString(),
-                        "Arial",
-                        new Vector2(this.Height / 2, this.Width / 2),
+                        intVal.ToString(), 
+                        "Arial", 
+                        new Vector2(this.Height / 2, this.Width / 2), 
                         FontFlags.AntiAlias);
                     textPos = this.Position + new Vector2(this.Width - textSize.X - 1, 3);
                     Drawing.DrawText(
-                        intVal.ToString(),
-                        textPos,
-                        new Vector2(this.Height / 2, this.Width / 2),
-                        new SharpDX.Color(255, 255, 255, 225),
+                        intVal.ToString(), 
+                        textPos, 
+                        new Vector2(this.Height / 2, this.Width / 2), 
+                        new SharpDX.Color(255, 255, 255, 225), 
                         FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
                         | FontFlags.StrikeOut);
                     break;
@@ -2695,41 +2762,41 @@ namespace Ensage.Common.Menu
                     var t = slVal.SList[slVal.SelectedIndex];
 
                     MenuDrawHelper.DrawArrow(
-                        "<<",
-                        this.Position + new Vector2(this.Width - this.Height * 2, 0),
-                        this,
+                        "<<", 
+                        this.Position + new Vector2(this.Width - this.Height * 2, 0), 
+                        this, 
                         Color.Black);
                     MenuDrawHelper.DrawArrow(
-                        ">>",
-                        this.Position + new Vector2(this.Width - this.Height, 0),
-                        this,
+                        ">>", 
+                        this.Position + new Vector2(this.Width - this.Height, 0), 
+                        this, 
                         Color.Black);
 
-                    //MenuDrawHelper.Font.DrawText(
-                    //    null,
-                    //    MultiLanguage._(t),
-                    //    new Rectangle(
-                    //        (int)this.Position.X - 5 - 2 * this.Height,
-                    //        (int)this.Position.Y,
-                    //        this.Width,
-                    //        this.Height),
-                    //    FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
-                    //    new ColorBGRA(255, 255, 255, 255));
-                    //Console.WriteLine(this.Height + " " + this.Width);
+                    // MenuDrawHelper.Font.DrawText(
+                    // null,
+                    // MultiLanguage._(t),
+                    // new Rectangle(
+                    // (int)this.Position.X - 5 - 2 * this.Height,
+                    // (int)this.Position.Y,
+                    // this.Width,
+                    // this.Height),
+                    // FontDrawFlags.VerticalCenter | FontDrawFlags.Right,
+                    // new ColorBGRA(255, 255, 255, 255));
+                    // Console.WriteLine(this.Height + " " + this.Width);
                     textSize = Drawing.MeasureText(
-                        MultiLanguage._(t),
-                        "Arial",
-                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10),
+                        MultiLanguage._(t), 
+                        "Arial", 
+                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10), 
                         FontFlags.AntiAlias);
                     textPos = this.Position
                               + new Vector2(
-                                    (float)(-this.Height * 2 + this.Width - textSize.X - 5),
+                                    (float)(-this.Height * 2 + this.Width - textSize.X - 5), 
                                     (float)(this.Height * 0.5 - textSize.Y * 0.509));
                     Drawing.DrawText(
-                        MultiLanguage._(t),
-                        textPos,
-                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10),
-                        new SharpDX.Color(255, 255, 255, 225),
+                        MultiLanguage._(t), 
+                        textPos, 
+                        new Vector2(this.Height / 2 + 1, this.Width / 2 + 10), 
+                        new SharpDX.Color(255, 255, 255, 225), 
                         FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
                         | FontFlags.StrikeOut);
                     break;
@@ -2743,7 +2810,8 @@ namespace Ensage.Common.Menu
                     var positionDictionary =
                         new Dictionary<string, float[]>(this.GetValue<AbilityToggler>().PositionDictionary);
                     var textureDictionary = new Dictionary<string, DotaTexture>(Menu.TextureDictionary);
-                    //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
+
+                    // textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
                     foreach (var v in new Dictionary<string, bool>(dictionary))
                     {
                         positionDictionary[v.Key][0] = basePosition.X - width;
@@ -2753,33 +2821,34 @@ namespace Ensage.Common.Menu
                                     ? 35
                                     : 0;
                         Drawing.DrawRect(
-                            pos,
-                            size + new Vector2(6, 6),
+                            pos, 
+                            size + new Vector2(6, 6), 
                             v.Value
                                 ? Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
                                 : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());
                         if (v.Key.Contains("item"))
                         {
                             Drawing.DrawRect(
-                                pos - new Vector2(-3, -3),
-                                size + new Vector2((float)(this.Height * 0.35), 0),
+                                pos - new Vector2(-3, -3), 
+                                size + new Vector2((float)(this.Height * 0.35), 0), 
                                 textureDictionary[v.Key]);
                         }
                         else
                         {
                             Drawing.DrawRect(pos - new Vector2(-3, -3), size, textureDictionary[v.Key]);
                         }
+
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, SharpDX.Color.Black, true);
                         Drawing.DrawRect(pos, size + new Vector2(6, 6), SharpDX.Color.Black, true);
-                        //textPos = basePosition - new Vector2(width, 5) + new Vector2(this.Height / 2 - textSize.X / 2, this.Height / 2 - textSize.Y / 2);
-                        //Drawing.DrawText(
-                        //    "x",
-                        //    textPos,
-                        //    size + new Vector2(30, 30),
-                        //    new SharpDX.Color(225, 150, 0),
-                        //    FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        //    | FontFlags.StrikeOut);
-                        //
+
+                        // textPos = basePosition - new Vector2(width, 5) + new Vector2(this.Height / 2 - textSize.X / 2, this.Height / 2 - textSize.Y / 2);
+                        // Drawing.DrawText(
+                        // "x",
+                        // textPos,
+                        // size + new Vector2(30, 30),
+                        // new SharpDX.Color(225, 150, 0),
+                        // FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                        // | FontFlags.StrikeOut);
                         width += size.X + 6;
                         width += -1;
                     }
@@ -2795,7 +2864,8 @@ namespace Ensage.Common.Menu
                     positionDictionary = new Dictionary<string, float[]>(
                         this.GetValue<HeroToggler>().PositionDictionary);
                     textureDictionary = new Dictionary<string, DotaTexture>(Menu.TextureDictionary);
-                    //textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
+
+                    // textSize = Drawing.MeasureText("x", "Arial", size + new Vector2(30, 30), FontFlags.AntiAlias);
                     foreach (var v in dictionary)
                     {
                         positionDictionary[v.Key][0] = basePosition.X - width;
@@ -2805,23 +2875,23 @@ namespace Ensage.Common.Menu
                                     ? 35
                                     : 0;
                         Drawing.DrawRect(
-                            pos,
-                            size + new Vector2(6, 6),
+                            pos, 
+                            size + new Vector2(6, 6), 
                             v.Value
                                 ? Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
                                 : Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, textureDictionary[v.Key]);
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, SharpDX.Color.Black, true);
                         Drawing.DrawRect(pos, size + new Vector2(6, 6), SharpDX.Color.Black, true);
-                        //textPos = basePosition - new Vector2(width, 5) + new Vector2(this.Height / 2 - textSize.X / 2, this.Height / 2 - textSize.Y / 2);
-                        //Drawing.DrawText(
-                        //    "x",
-                        //    textPos,
-                        //    size + new Vector2(30, 30),
-                        //    new SharpDX.Color(225, 150, 0),
-                        //    FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        //    | FontFlags.StrikeOut);
-                        //
+
+                        // textPos = basePosition - new Vector2(width, 5) + new Vector2(this.Height / 2 - textSize.X / 2, this.Height / 2 - textSize.Y / 2);
+                        // Drawing.DrawText(
+                        // "x",
+                        // textPos,
+                        // size + new Vector2(30, 30),
+                        // new SharpDX.Color(225, 150, 0),
+                        // FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                        // | FontFlags.StrikeOut);
                         width += size.X + 6;
                         width += -1;
                     }
@@ -2829,23 +2899,23 @@ namespace Ensage.Common.Menu
                     break;
             }
 
-            //font.DrawText(
-            //    null,
-            //    s,
-            //    new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
-            //    FontDrawFlags.VerticalCenter,
-            //    this.FontColor);
+            // font.DrawText(
+            // null,
+            // s,
+            // new Rectangle((int)this.Position.X + 5, (int)this.Position.Y, this.Width, this.Height),
+            // FontDrawFlags.VerticalCenter,
+            // this.FontColor);
             var textSize1 = Drawing.MeasureText(
-                s,
-                "Arial",
-                new Vector2((float)(this.Height * 0.51), 20),
+                s, 
+                "Arial", 
+                new Vector2((float)(this.Height * 0.51), 20), 
                 FontFlags.AntiAlias);
             var textPos1 = this.Position + new Vector2(5, (float)(this.Height * 0.5 - textSize1.Y * 0.5));
             Drawing.DrawText(
-                s,
-                textPos1,
-                new Vector2((float)(this.Height * 0.51), 20),
-                s == MultiLanguage._("Press new key") ? new SharpDX.Color(150, 100, 0) : (SharpDX.Color)this.FontColor,
+                s, 
+                textPos1, 
+                new Vector2((float)(this.Height * 0.51), 20), 
+                s == MultiLanguage._("Press new key") ? new SharpDX.Color(150, 100, 0) : (SharpDX.Color)this.FontColor, 
                 FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
 
             if (!string.IsNullOrEmpty(this.Tooltip))
@@ -2857,10 +2927,10 @@ namespace Ensage.Common.Menu
         internal bool IsInside(Vector2 position)
         {
             return Utils.IsUnderRectangle(
-                position,
-                this.Position.X,
-                this.Position.Y,
-                !string.IsNullOrEmpty(this.Tooltip) ? this.Width + this.Height : this.Width,
+                position, 
+                this.Position.X, 
+                this.Position.Y, 
+                !string.IsNullOrEmpty(this.Tooltip) ? this.Width + this.Height : this.Width, 
                 this.Height);
         }
 
@@ -2936,6 +3006,7 @@ namespace Ensage.Common.Menu
                     {
                         return;
                     }
+
                     if (!this.IsInside(cursorPos) && message == Utils.WindowsMessages.WM_LBUTTONDOWN)
                     {
                         return;
@@ -2961,11 +3032,13 @@ namespace Ensage.Common.Menu
                                             this.SetValue(val);
                                         }
                                     }
+
                                     if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
                                     {
                                         wargs.Process = false;
                                     }
                                 }
+
                                 break;
                             case Utils.WindowsMessages.WM_KEYUP:
 
@@ -2982,11 +3055,13 @@ namespace Ensage.Common.Menu
                                         val2.Active = !val2.Active;
                                         this.SetValue(val2);
                                     }
+
                                     if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
                                     {
                                         wargs.Process = false;
                                     }
                                 }
+
                                 break;
                         }
                     }
@@ -3033,6 +3108,7 @@ namespace Ensage.Common.Menu
                     {
                         this.Interacting = !this.Interacting;
                     }
+
                     break;
                 case MenuValueType.StringList:
                     if (!this.Visible)
@@ -3083,22 +3159,24 @@ namespace Ensage.Common.Menu
                     {
                         return;
                     }
+
                     var positionDictionary = this.GetValue<AbilityToggler>().PositionDictionary;
                     var dictionary = this.GetValue<AbilityToggler>().Dictionary;
                     foreach (var v in from v in dictionary
                                       let pos = new Vector2(positionDictionary[v.Key][0], positionDictionary[v.Key][1])
                                       where
                                           Utils.IsUnderRectangle(
-                                              cursorPos,
-                                              pos.X,
-                                              pos.Y,
-                                              this.Height - 2,
+                                              cursorPos, 
+                                              pos.X, 
+                                              pos.Y, 
+                                              this.Height - 2, 
                                               this.Height - 2)
                                       select v)
                     {
                         this.GetValue<AbilityToggler>().Dictionary[v.Key] = !dictionary[v.Key];
                         break;
                     }
+
                     this.SetValue(new AbilityToggler(dictionary));
                     break;
 
@@ -3112,26 +3190,28 @@ namespace Ensage.Common.Menu
                     {
                         return;
                     }
+
                     positionDictionary = this.GetValue<HeroToggler>().PositionDictionary;
                     dictionary = this.GetValue<HeroToggler>().Dictionary;
                     foreach (var v in from v in dictionary
                                       let pos = new Vector2(positionDictionary[v.Key][0], positionDictionary[v.Key][1])
                                       where
                                           Utils.IsUnderRectangle(
-                                              cursorPos,
-                                              pos.X,
-                                              pos.Y,
-                                              this.Height + 15,
+                                              cursorPos, 
+                                              pos.X, 
+                                              pos.Y, 
+                                              this.Height + 15, 
                                               this.Height - 2)
                                       select v)
                     {
                         this.GetValue<HeroToggler>().Dictionary[v.Key] = !dictionary[v.Key];
                         break;
                     }
+
                     this.SetValue(
                         new HeroToggler(
-                            dictionary,
-                            this.GetValue<HeroToggler>().UseEnemyHeroes,
+                            dictionary, 
+                            this.GetValue<HeroToggler>().UseEnemyHeroes, 
                             this.GetValue<HeroToggler>().UseAllyHeroes));
                     break;
             }

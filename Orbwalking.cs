@@ -1,20 +1,16 @@
 ﻿// <copyright file="Orbwalking.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common
 {
     using System;
@@ -34,8 +30,7 @@ namespace Ensage.Common
         /// </summary>
         public static float LastAttackStart;
 
-        //public static Dictionary<float[], float> attackData = new Dictionary<float[], float>();
-
+        // public static Dictionary<float[], float> attackData = new Dictionary<float[], float>();
         private static NetworkActivity lastActivity;
 
         private static bool loaded;
@@ -139,6 +134,7 @@ namespace Ensage.Common
                     }
                 }
             }
+
             me.Attack(target);
         }
 
@@ -154,12 +150,14 @@ namespace Ensage.Common
             {
                 return false;
             }
+
             var turnTime = 0d;
             if (target != null)
             {
                 turnTime = me.GetTurnTime(target);
             }
-            //Console.WriteLine(turnTime*1000);
+
+            // Console.WriteLine(turnTime*1000);
             return LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 75
                    + bonusWindupMs >= tick;
         }
@@ -196,32 +194,35 @@ namespace Ensage.Common
         /// <param name="bonusRange"></param>
         /// <param name="attackmodifiers"></param>
         public static void Orbwalk(
-            Unit target,
-            float bonusWindupMs = 0,
-            float bonusRange = 0,
+            Unit target, 
+            float bonusWindupMs = 0, 
+            float bonusRange = 0, 
             bool attackmodifiers = false)
         {
             if (me == null)
             {
                 return;
             }
-            //if (!Utils.SleepCheck("GlobalCasting"))
-            //{
-            //    return;
-            //}
+
+            // if (!Utils.SleepCheck("GlobalCasting"))
+            // {
+            // return;
+            // }
             var targetHull = 0f;
             if (target != null)
             {
                 targetHull = target.HullRadius;
             }
+
             float distance = 0;
             if (target != null)
             {
                 var pos = Prediction.InFront(
-                    me,
+                    me, 
                     (float)((Game.Ping / 1000 + me.GetTurnTime(target.Position)) * me.MovementSpeed));
                 distance = pos.Distance2D(target) - me.Distance2D(target);
             }
+
             var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible && !target.IsInvul()
                           && !target.Modifiers.Any(
                               x => x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow")
@@ -235,17 +236,19 @@ namespace Ensage.Common
                 {
                     Attack(target, attackmodifiers);
                     Utils.Sleep(
-                        UnitDatabase.GetAttackPoint(me) * 1000 + me.GetTurnTime(target) * 1000,
+                        UnitDatabase.GetAttackPoint(me) * 1000 + me.GetTurnTime(target) * 1000, 
                         "Orbwalk.Attack");
                     return;
                 }
             }
+
             var canCancel = (CanCancelAnimation() && AttackOnCooldown(target, bonusWindupMs))
                             || (!isValid && !me.IsAttacking() && CanCancelAnimation());
             if (!canCancel || !Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))
             {
                 return;
             }
+
             me.Move(Game.MousePosition);
             Utils.Sleep(100, "Orbwalk.Move");
         }
@@ -260,6 +263,7 @@ namespace Ensage.Common
             {
                 return;
             }
+
             Drawing.OnDraw -= Game_OnUpdate;
             LastAttackStart = 0;
             lastActivity = 0;
@@ -273,6 +277,7 @@ namespace Ensage.Common
             {
                 return;
             }
+
             Drawing.OnDraw += Game_OnUpdate;
             LastAttackStart = 0;
             lastActivity = 0;
@@ -286,43 +291,50 @@ namespace Ensage.Common
             {
                 me = ObjectMgr.LocalHero;
             }
+
             if (!Game.IsInGame || me == null || Game.IsPaused)
             {
                 if (Game.IsInGame && me != null)
                 {
                     return;
                 }
+
                 LastAttackStart = 0;
                 lastActivity = 0;
                 me = null;
                 return;
             }
-            //Console.WriteLine("a");
+
+            // Console.WriteLine("a");
             tick = Environment.TickCount;
             if (me.NetworkActivity == lastActivity)
             {
                 return;
             }
+
             lastActivity = me.NetworkActivity;
-            //Console.WriteLine(lastActivity);
+
+            // Console.WriteLine(lastActivity);
             if (!me.IsAttacking())
             {
                 if (CanCancelAnimation())
                 {
                     return;
                 }
+
                 LastAttackStart = 0;
                 lastActivity = 0;
                 return;
             }
 
-            //if (orbwalkTarget != null)
-            //{
-            //    LastAttackStart = (float)(tick + me.GetTurnTime(orbwalkTarget) * 1000);
-            //}
-            //else
-            //{
+            // if (orbwalkTarget != null)
+            // {
+            // LastAttackStart = (float)(tick + me.GetTurnTime(orbwalkTarget) * 1000);
+            // }
+            // else
+            // {
             LastAttackStart = tick - Game.Ping;
+
             // }
         }
 

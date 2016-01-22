@@ -1,20 +1,16 @@
 ﻿// <copyright file="AbilityInfo.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.AbilityInfo
 {
     /// <summary>
@@ -90,6 +86,11 @@ namespace Ensage.Common.AbilityInfo
         /// <summary>
         /// </summary>
         public bool IsHeal;
+
+        /// <summary>
+        ///     Spell grants invisibility
+        /// </summary>
+        public bool IsInvis;
 
         /// <summary>
         ///     Spell has low castpoint and high damage input
@@ -175,12 +176,7 @@ namespace Ensage.Common.AbilityInfo
         ///     Width of a projectile
         /// </summary>
         public string Width;
-        
-        /// <summary>
-        ///     Spell grants invisibility
-        /// </summary>
-        public bool IsInvis;
-        
+
         #endregion
 
         #region Constructors and Destructors
@@ -226,37 +222,37 @@ namespace Ensage.Common.AbilityInfo
         /// <param name="trueSight"></param>
         /// <param name="isInvis"></param>
         public AbilityInfo(
-            string abilityName,
-            bool isDisable,
-            bool isSlow,
-            bool isSilence,
-            bool isNuke,
-            bool isSkillShot,
-            bool isHeal,
-            bool isShield,
-            double additionalDelay,
-            float radius,
-            string stringRadius,
-            string speed,
-            string width,
-            bool allyBlock,
-            bool enemyBlock,
-            bool magicImmunityPierce,
-            bool fakeCastRange,
-            string realCastRange,
-            bool onlyForKillSteal,
-            string damageString,
-            float damageMultiplier,
-            string bonusDamagestring,
-            bool aaDamage,
-            string damageScepterString,
-            string spellLevel,
-            bool manaBurn,
-            bool isBuff,
-            bool weakensEnemy,
-            bool isPurge,
-            bool isHarras,
-            bool trueSight,
+            string abilityName, 
+            bool isDisable, 
+            bool isSlow, 
+            bool isSilence, 
+            bool isNuke, 
+            bool isSkillShot, 
+            bool isHeal, 
+            bool isShield, 
+            double additionalDelay, 
+            float radius, 
+            string stringRadius, 
+            string speed, 
+            string width, 
+            bool allyBlock, 
+            bool enemyBlock, 
+            bool magicImmunityPierce, 
+            bool fakeCastRange, 
+            string realCastRange, 
+            bool onlyForKillSteal, 
+            string damageString, 
+            float damageMultiplier, 
+            string bonusDamagestring, 
+            bool aaDamage, 
+            string damageScepterString, 
+            string spellLevel, 
+            bool manaBurn, 
+            bool isBuff, 
+            bool weakensEnemy, 
+            bool isPurge, 
+            bool isHarras, 
+            bool trueSight, 
             bool isInvis)
         {
             this.ManaBurn = manaBurn;

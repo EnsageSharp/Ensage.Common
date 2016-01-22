@@ -1,20 +1,16 @@
 ﻿// <copyright file="HUDInfo.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common
 {
     using System;
@@ -158,6 +154,7 @@ namespace Ensage.Common
                 HpBarX = 43;
                 HpBarY = 28;
             }
+
             Monitor = ScreenSize.X / compareWidth;
             Rate = Math.Max(Monitor, 1);
             X = panelHeroSizeX * Monitor;
@@ -181,10 +178,12 @@ namespace Ensage.Common
             {
                 return Vector2.Zero;
             }
+
             if (unit.Equals(ObjectMgr.LocalHero))
             {
                 return screenPos + new Vector2((float)(-HpBarX * Monitor), (-HpBarY - 10) * Monitor);
             }
+
             return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
         }
 
@@ -287,6 +286,7 @@ namespace Ensage.Common
             {
                 return screenSize.X / RadiantCompare + 1;
             }
+
             return screenSize.X / DireCompare + 1;
         }
 

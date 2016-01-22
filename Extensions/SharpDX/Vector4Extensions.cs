@@ -1,20 +1,16 @@
 ﻿// <copyright file="Vector4Extensions.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Extensions.SharpDX
 {
     using System;
@@ -65,10 +61,12 @@ namespace Ensage.Common.Extensions.SharpDX
             {
                 theta = theta + 360;
             }
+
             if (theta > 180)
             {
                 theta = 360 - theta;
             }
+
             return theta;
         }
 
@@ -422,9 +420,9 @@ namespace Ensage.Common.Extensions.SharpDX
             var sin = Math.Sin(angle);
 
             return new Vector4(
-                (float)(vector4.X * cos - vector4.Y * sin),
-                (float)(vector4.Y * cos + vector4.X * sin),
-                vector4.Z,
+                (float)(vector4.X * cos - vector4.Y * sin), 
+                (float)(vector4.Y * cos + vector4.X * sin), 
+                vector4.Z, 
                 vector4.W);
         }
 

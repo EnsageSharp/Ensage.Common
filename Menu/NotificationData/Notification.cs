@@ -17,11 +17,6 @@
  You should have received a copy of the GNU General Public License
  along with LeagueSharp.Common. If not, see <http://www.gnu.org/licenses/>.
 */
-
-#endregion
-
-#region
-
 #endregion
 
 namespace Ensage.Common.Menu.NotificationData
@@ -57,16 +52,16 @@ namespace Ensage.Common.Menu.NotificationData
         ///     Notification's Font
         /// </summary>
         public Font Font = new Font(
-            Drawing.Direct3DDevice9,
-            0xE,
-            0x0,
-            FontWeight.DoNotCare,
-            0x0,
-            false,
-            FontCharacterSet.Default,
-            FontPrecision.Default,
-            FontQuality.Antialiased,
-            FontPitchAndFamily.DontCare | FontPitchAndFamily.Decorative,
+            Drawing.Direct3DDevice9, 
+            0xE, 
+            0x0, 
+            FontWeight.DoNotCare, 
+            0x0, 
+            false, 
+            FontCharacterSet.Default, 
+            FontPrecision.Default, 
+            FontQuality.Antialiased, 
+            FontPitchAndFamily.DontCare | FontPitchAndFamily.Decorative, 
             "Tahoma");
 
         /// <summary>
@@ -98,7 +93,9 @@ namespace Ensage.Common.Menu.NotificationData
         ///     Locally saved Line
         /// </summary>
         private readonly Line line = new Line(Drawing.Direct3DDevice9)
-                                         { Antialias = false, GLLines = true, Width = 190f };
+                                         {
+                                            Antialias = false, GLLines = true, Width = 190f 
+                                         };
 
         /// <summary>
         ///     Locally saved Sprite
@@ -211,19 +208,19 @@ namespace Ensage.Common.Menu.NotificationData
         {
             /// <summary>
             /// </summary>
-            Idle,
+            Idle, 
 
             /// <summary>
             /// </summary>
-            AnimationMove,
+            AnimationMove, 
 
             /// <summary>
             /// </summary>
-            AnimationShowShrink,
+            AnimationShowShrink, 
 
             /// <summary>
             /// </summary>
-            AnimationShowMove,
+            AnimationShowMove, 
 
             /// <summary>
             /// </summary>
@@ -311,20 +308,20 @@ namespace Ensage.Common.Menu.NotificationData
                 return;
             }
 
-            #region Box
+            
 
             this.line.Begin();
 
             var vertices = new[]
                                {
-                                   new Vector2(this.position.X + this.line.Width / 0x2, this.position.Y),
+                                   new Vector2(this.position.X + this.line.Width / 0x2, this.position.Y), 
                                    new Vector2(this.position.X + this.line.Width / 0x2, this.position.Y + 25f)
                                };
 
             this.line.Draw(vertices, this.BoxColor);
             this.line.End();
 
-            #endregion
+            
 
             #region Outline
 
@@ -386,10 +383,10 @@ namespace Ensage.Common.Menu.NotificationData
             var rectangle = new Rectangle((int)this.position.X, (int)this.position.Y, (int)this.line.Width, 0x19);
 
             this.Font.DrawText(
-                this.sprite,
-                finalText,
-                rectangle.TopLeft.X + (rectangle.Width - textDimension.Width) / 0x2,
-                rectangle.TopLeft.Y + (rectangle.Height - textDimension.Height) / 0x2,
+                this.sprite, 
+                finalText, 
+                rectangle.TopLeft.X + (rectangle.Width - textDimension.Width) / 0x2, 
+                rectangle.TopLeft.Y + (rectangle.Height - textDimension.Height) / 0x2, 
                 this.TextColor);
 
             this.sprite.End();
@@ -429,7 +426,7 @@ namespace Ensage.Common.Menu.NotificationData
             {
                 case NotificationState.Idle:
                     {
-                        #region Duration End Handler
+                        
 
                         if (!this.flashing && this.duration > 0x0 && this.TextColor.A == 0x0 && this.BoxColor.A == 0x0
                             && this.BorderColor.A == 0x0)
@@ -445,7 +442,7 @@ namespace Ensage.Common.Menu.NotificationData
                             return;
                         }
 
-                        #endregion
+                        
 
                         #region Decreasement Tick
 
@@ -455,10 +452,12 @@ namespace Ensage.Common.Menu.NotificationData
                             {
                                 this.TextColor.A--;
                             }
+
                             if (this.BoxColor.A > 0x0)
                             {
                                 this.BoxColor.A--;
                             }
+
                             if (this.BorderColor.A > 0x0)
                             {
                                 this.BorderColor.A--;
@@ -512,10 +511,12 @@ namespace Ensage.Common.Menu.NotificationData
                                     {
                                         this.TextColor.A--;
                                     }
+
                                     if (this.BoxColor.A > 0x0)
                                     {
                                         this.BoxColor.A--;
                                     }
+
                                     if (this.BorderColor.A > 0x0)
                                     {
                                         this.BorderColor.A--;
@@ -538,6 +539,7 @@ namespace Ensage.Common.Menu.NotificationData
                                         }
                                     }
                                 }
+
                                 this.flashTick = Environment.TickCount + this.flashInterval;
                             }
                         }
@@ -548,10 +550,10 @@ namespace Ensage.Common.Menu.NotificationData
 
                         var mouseLocation = Game.MouseScreenPosition;
                         if (Utils.IsUnderRectangle(
-                            mouseLocation,
-                            this.position.X,
-                            this.position.Y,
-                            this.line.Width,
+                            mouseLocation, 
+                            this.position.X, 
+                            this.position.Y, 
+                            this.line.Width, 
                             25f))
                         {
                             this.TextColor.A = 0xFF;
@@ -567,6 +569,7 @@ namespace Ensage.Common.Menu.NotificationData
                                     this.textFix = new Vector2(this.position.X, this.position.Y);
                                     this.updatePosition = new Vector2(this.position.X - extra, this.position.Y);
                                 }
+
                                 if (this.updatePosition != Vector2.Zero && this.position.X > this.updatePosition.X)
                                 {
                                     this.position.X -= 1f;
@@ -608,7 +611,7 @@ namespace Ensage.Common.Menu.NotificationData
                                     }
 
                                     this.updatePosition = new Vector2(
-                                        this.position.X,
+                                        this.position.X, 
                                         Notifications.GetLocation(this.handler));
                                     this.state = NotificationState.AnimationMove;
                                 }
@@ -619,17 +622,19 @@ namespace Ensage.Common.Menu.NotificationData
 
                         break;
                     }
+
                 case NotificationState.AnimationMove:
                     {
-                        #region Movement
+                        
 
                         if (Math.Abs(this.position.Y - this.updatePosition.Y) > float.Epsilon)
                         {
-                            var value =
-                                this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y - 0x1))
-                                < this.updatePosition.Distance(new Vector2(this.position.X, this.position.Y + 0x1))
-                                    ? -0x1
-                                    : 0x1;
+                            var value = this.updatePosition.Distance(
+                                new Vector2(this.position.X, this.position.Y - 0x1))
+                                        < this.updatePosition.Distance(
+                                            new Vector2(this.position.X, this.position.Y + 0x1))
+                                            ? -0x1
+                                            : 0x1;
                             this.position.Y += value;
                         }
                         else
@@ -638,13 +643,14 @@ namespace Ensage.Common.Menu.NotificationData
                             this.state = NotificationState.Idle;
                         }
 
-                        #endregion
+                        
 
                         break;
                     }
+
                 case NotificationState.AnimationShowShrink:
                     {
-                        #region Shrink
+                        
 
                         if (Math.Abs(this.line.Width - 0xB9) < float.Epsilon)
                         {
@@ -653,21 +659,24 @@ namespace Ensage.Common.Menu.NotificationData
                             {
                                 this.state = NotificationState.AnimationShowMove;
                                 this.updatePosition = new Vector2(
-                                    this.position.X,
+                                    this.position.X, 
                                     Notifications.GetLocation(this.handler));
                             }
+
                             return;
                         }
+
                         this.line.Width--;
                         this.position.X++;
 
-                        #endregion
+                        
 
                         break;
                     }
+
                 case NotificationState.AnimationShowMove:
                     {
-                        #region Movement
+                        
 
                         if (Math.Abs(Notifications.GetLocation() + 0x1E - this.updatePosition.Y) < float.Epsilon)
                         {
@@ -689,23 +698,25 @@ namespace Ensage.Common.Menu.NotificationData
                             this.state = NotificationState.AnimationShowGrow;
                         }
 
-                        #endregion
+                        
 
                         break;
                     }
+
                 case NotificationState.AnimationShowGrow:
                     {
-                        #region Growth
+                        
 
                         if (Math.Abs(this.line.Width - 0xBE) < float.Epsilon)
                         {
                             this.state = NotificationState.Idle;
                             return;
                         }
+
                         this.line.Width++;
                         this.position.X--;
 
-                        #endregion
+                        
 
                         break;
                     }
@@ -720,7 +731,7 @@ namespace Ensage.Common.Menu.NotificationData
         {
             if (Utils.IsUnderRectangle(Game.MouseScreenPosition, this.position.X, this.position.Y, this.line.Width, 25f))
             {
-                #region Mouse
+                
 
                 var message = (Utils.WindowsMessages)args.Msg;
                 if (message == Utils.WindowsMessages.WM_LBUTTONDOWN)
@@ -736,12 +747,14 @@ namespace Ensage.Common.Menu.NotificationData
                         {
                             this.Dispose();
                         }
+
                         return;
                     }
+
                     this.clickTick = Environment.TickCount;
                 }
 
-                #endregion
+                
             }
         }
 

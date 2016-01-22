@@ -17,11 +17,6 @@
  You should have received a copy of the GNU General Public License
  along with LeagueSharp.Common. If not, see <http://www.gnu.org/licenses/>.
 */
-
-#endregion
-
-#region
-
 #endregion
 
 namespace Ensage.Common.Menu
@@ -81,7 +76,7 @@ namespace Ensage.Common.Menu
                     }
                     catch (Exception)
                     {
-                        selectedLanguage = "";
+                        selectedLanguage = string.Empty;
                         Console.WriteLine(@"Could not get the menu language");
                     }
                 }

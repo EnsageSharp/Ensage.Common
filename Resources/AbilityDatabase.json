@@ -1996,9 +1996,9 @@
             "DamageString": "damage",
             "DamageScepterString": "damage_scepter"
         },
-        //{
-        //    "AbilityName": "tinker_rearm"
-        //},
+        {
+            "AbilityName": "tinker_rearm"
+        },
         {
             "AbilityName": "abaddon_death_coil",
             "IsNuke": true,

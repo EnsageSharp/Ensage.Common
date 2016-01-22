@@ -1,20 +1,16 @@
 // <copyright file="Prediction.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common
 {
     using System;
@@ -116,12 +112,12 @@ namespace Ensage.Common
         /// <param name="lastRotR"></param>
         /// <param name="lasttick"></param>
         public Prediction(
-            string unitName,
-            ClassID unitClassId,
-            Vector3 speed,
-            float rotSpeed,
-            Vector3 lastPosition,
-            float lastRotR,
+            string unitName, 
+            ClassID unitClassId, 
+            Vector3 speed, 
+            float rotSpeed, 
+            Vector3 lastPosition, 
+            float lastRotR, 
             float lasttick)
         {
             this.UnitName = unitName;
@@ -173,8 +169,10 @@ namespace Ensage.Common
                 {
                     rotSpeed = RotSpeedDictionary[target.Handle];
                 }
+
                 targetSpeed = target.Vector3FromPolarAngle((float)rotSpeed) * target.MovementSpeed / 1000;
             }
+
             var a = Math.Pow(targetSpeed.X, 2) + Math.Pow(targetSpeed.Y, 2) - Math.Pow(speed / 1000, 2);
             var b = 2 * (dePos.X * targetSpeed.X + dePos.Y * targetSpeed.Y);
             var c = Math.Pow(dePos.X, 2) + Math.Pow(dePos.Y, 2);
@@ -193,11 +191,12 @@ namespace Ensage.Common
                 if (!predictionDrawings.TryGetValue(unit.Handle, out effect))
                 {
                     effect = new ParticleEffect(
-                        @"particles\ui_mouseactions\range_display.vpcf",
+                        @"particles\ui_mouseactions\range_display.vpcf", 
                         PredictedXYZ(unit, delay));
                     effect.SetControlPoint(1, new Vector3(unit.HullRadius + 20, 0, 0));
                     predictionDrawings.Add(unit.Handle, effect);
                 }
+
                 effect.SetControlPoint(0, PredictedXYZ(unit, delay));
             }
         }
@@ -221,7 +220,7 @@ namespace Ensage.Common
         /// <returns></returns>
         public static bool IsIdle(Unit unit)
         {
-            //var modifiers = unit.Modifiers;
+            // var modifiers = unit.Modifiers;
             return unit.IsInvul() || unit.IsStunned()
                    || (unit.NetworkActivity == NetworkActivity.Idle
                        && (!SpeedDictionary.ContainsKey(unit.Handle) || SpeedDictionary[unit.Handle] == Vector3.Zero))
@@ -241,6 +240,7 @@ namespace Ensage.Common
             {
                 return false;
             }
+
             return Math.Abs(rotSpeed) > tolerancy;
         }
 
@@ -261,13 +261,16 @@ namespace Ensage.Common
                 {
                     rotSpeed = RotSpeedDictionary[unit.Handle];
                 }
+
                 targetSpeed = unit.Vector3FromPolarAngle((float)rotSpeed) * unit.MovementSpeed / 1000;
             }
-            //Console.WriteLine(targetSpeed + " " + unit.Name);
+
+            // Console.WriteLine(targetSpeed + " " + unit.Name);
             if (IsIdle(unit))
             {
                 return unit.Position;
             }
+
             var v = unit.Position + targetSpeed * (float)delay;
             return new Vector3(v.X, v.Y, 0);
         }
@@ -287,10 +290,12 @@ namespace Ensage.Common
             {
                 return target.Position;
             }
+
             if (!(speed < 6000) || speed <= 0)
             {
                 return PredictedXYZ(target, delay);
             }
+
             var predict = PredictedXYZ(target, delay);
             var sourcePos = source.Position;
             var reachTime = CalculateReachTime(target, speed, predict - sourcePos);
@@ -299,6 +304,7 @@ namespace Ensage.Common
             {
                 return PredictedXYZ(target, delay + reachTime);
             }
+
             if (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed) < radius)
             {
                 sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius)
@@ -313,6 +319,7 @@ namespace Ensage.Common
                             / sourcePos.Distance2D(predict) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             }
+
             return PredictedXYZ(target, delay + reachTime);
         }
 
@@ -326,11 +333,13 @@ namespace Ensage.Common
             {
                 return;
             }
+
             var me = ObjectMgr.LocalHero;
             if (me == null)
             {
                 return;
             }
+
             if (playerList == null || (playerList.Count < 10 && Utils.SleepCheck("Prediction.SpeedTrack")))
             {
                 playerList = Heroes.All;
@@ -342,7 +351,7 @@ namespace Ensage.Common
                 return;
             }
 
-            //DrawPredictions();
+            // DrawPredictions();
             var tick = Environment.TickCount;
             var tempTable = new List<Prediction>(TrackTable);
             foreach (var unit in playerList.Where(x => x.IsValid))
@@ -355,6 +364,7 @@ namespace Ensage.Common
                     data = new Prediction(unit.Name, unit.ClassID, new Vector3(0, 0, 0), 0, new Vector3(0, 0, 0), 0, 0);
                     TrackTable.Add(data);
                 }
+
                 if (data != null && (!unit.IsAlive || !unit.IsVisible))
                 {
                     data.LastPosition = new Vector3(0, 0, 0);
@@ -362,10 +372,12 @@ namespace Ensage.Common
                     data.Lasttick = 0;
                     continue;
                 }
+
                 if (data == null || (data.LastPosition != new Vector3(0, 0, 0) && !(tick - data.Lasttick > 0)))
                 {
                     continue;
                 }
+
                 if (data.LastPosition == new Vector3(0, 0, 0))
                 {
                     data.LastPosition = unit.Position;
@@ -379,9 +391,11 @@ namespace Ensage.Common
                     {
                         RotTimeDictionary.Add(unit.Handle, tick);
                     }
+
                     var speed = (unit.Position - data.LastPosition) / (tick - data.Lasttick);
-                    //Console.WriteLine(data.RotSpeed + " rot");
-                    if (Math.Abs(data.RotSpeed) > 0.09 && data.Speed != new Vector3(0, 0, 0))
+
+                    // Console.WriteLine(data.RotSpeed + " rot");
+                    if (Math.Abs(data.RotSpeed) > 0.0999999 && data.Speed != new Vector3(0, 0, 0))
                     {
                         RotTimeDictionary[unit.Handle] = tick;
                         data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 6) * unit.MovementSpeed / 3000;
@@ -400,7 +414,8 @@ namespace Ensage.Common
                             if (firstOrDefault != null)
                             {
                                 var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
-                                //Console.WriteLine(ballSpeed);
+
+                                // Console.WriteLine(ballSpeed);
                                 var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed) * (ballSpeed / 1000);
                                 data.Speed = newpredict;
                             }
@@ -411,19 +426,20 @@ namespace Ensage.Common
                         }
                         else
                         {
-                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * unit.MovementSpeed
-                                             / 1000;
+                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * unit.MovementSpeed / 1000;
                             data.Speed = newpredict;
-                            //Console.WriteLine("speed" + " " + newpredict + " " + (unit.MovementSpeed / 1000) + " " + unit.Vector3FromPolarAngle(unit.RotationRad + data.RotSpeed) + " " + data.RotSpeed);
+
+                            // Console.WriteLine("speed" + " " + newpredict + " " + (unit.MovementSpeed / 1000) + " " + unit.Vector3FromPolarAngle(unit.RotationRad + data.RotSpeed) + " " + data.RotSpeed);
                         }
                     }
-                    //var predict = unit.Position + data.Speed * 1000;
-                    //var realspeed = predict.Distance2D(unit.Position);
-                    //if ((realspeed + 100 > unit.MovementSpeed) && unit.NetworkActivity == NetworkActivity.Move)
-                    //{
-                    //    var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (unit.MovementSpeed) / 1000;
-                    //    data.Speed = newpredict;
-                    //}
+
+                    // var predict = unit.Position + data.Speed * 1000;
+                    // var realspeed = predict.Distance2D(unit.Position);
+                    // if ((realspeed + 100 > unit.MovementSpeed) && unit.NetworkActivity == NetworkActivity.Move)
+                    // {
+                    // var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (unit.MovementSpeed) / 1000;
+                    // data.Speed = newpredict;
+                    // }
                     data.LastPosition = unit.Position;
                     data.LastRotR = unit.RotationRad;
                     data.Lasttick = tick;
@@ -435,6 +451,7 @@ namespace Ensage.Common
                     {
                         SpeedDictionary[unit.Handle] = data.Speed;
                     }
+
                     if (!RotSpeedDictionary.ContainsKey(unit.Handle))
                     {
                         RotSpeedDictionary.Add(unit.Handle, data.RotSpeed);
@@ -445,7 +462,8 @@ namespace Ensage.Common
                     }
                 }
             }
-            //TrackTable = tempTable;
+
+            // TrackTable = tempTable;
         }
 
         /// <summary>
@@ -459,10 +477,12 @@ namespace Ensage.Common
             {
                 return 0;
             }
+
             if (IsIdle(unit))
             {
                 return 5000;
             }
+
             return Environment.TickCount - RotTimeDictionary[unit.Handle] + Game.Ping;
         }
 
@@ -488,6 +508,7 @@ namespace Ensage.Common
             {
                 return;
             }
+
             loaded = true;
             playerList = new List<Hero>();
             RotSpeedDictionary = new Dictionary<float, double>();

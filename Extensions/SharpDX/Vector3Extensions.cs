@@ -1,20 +1,16 @@
 ﻿// <copyright file="Vector3Extensions.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Extensions.SharpDX
 {
     using System;
@@ -43,10 +39,12 @@ namespace Ensage.Common.Extensions.SharpDX
             {
                 theta = theta + 360;
             }
+
             if (theta > 180)
             {
                 theta = 360 - theta;
             }
+
             return theta;
         }
 
@@ -321,7 +319,8 @@ namespace Ensage.Common.Extensions.SharpDX
                         tower =>
                         tower.ClassID == ClassID.CDOTA_BaseNPC_Tower
                         && tower.IsValidTarget(950, enemyTurretsOnly, position));
-            //return GameObjects.Turrets.Any(turret => turret.IsValidTarget(950, enemyTurretsOnly, position));
+
+            // return GameObjects.Turrets.Any(turret => turret.IsValidTarget(950, enemyTurretsOnly, position));
         }
 
         /// <summary>
@@ -345,7 +344,7 @@ namespace Ensage.Common.Extensions.SharpDX
         /// <returns>Is Vector3 position a wall position</returns>
         public static bool IsWall(this Vector3 vector3)
         {
-            return false; //NavMesh.GetCollisionFlags(vector3).HasFlag(CollisionFlags.Wall);
+            return false; // NavMesh.GetCollisionFlags(vector3).HasFlag(CollisionFlags.Wall);
         }
 
         /// <summary>
@@ -452,8 +451,8 @@ namespace Ensage.Common.Extensions.SharpDX
             var sin = Math.Sin(angle);
 
             return new Vector3(
-                (float)(vector3.X * cos - vector3.Y * sin),
-                (float)(vector3.Y * cos + vector3.X * sin),
+                (float)(vector3.X * cos - vector3.Y * sin), 
+                (float)(vector3.Y * cos + vector3.X * sin), 
                 vector3.Z);
         }
 

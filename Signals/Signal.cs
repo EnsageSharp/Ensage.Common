@@ -1,20 +1,16 @@
 ﻿// <copyright file="Signal.cs" company="EnsageSharp">
 //    Copyright (c) 2015 EnsageSharp.
-// 
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-// 
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-// 
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Signals
 {
     using System;
@@ -44,9 +40,9 @@ namespace Ensage.Common.Signals
         ///     The properties
         /// </param>
         private Signal(
-            OnRaisedDelegate signalRaised,
-            SignalWaverDelegate signalWaver,
-            DateTimeOffset expiration,
+            OnRaisedDelegate signalRaised, 
+            SignalWaverDelegate signalWaver, 
+            DateTimeOffset expiration, 
             IDictionary<string, object> properties)
         {
             if (signalRaised != null)
@@ -204,9 +200,9 @@ namespace Ensage.Common.Signals
         /// <param name="defaultProperties">A dictionary that contents will be dumped into <see cref="Properties" /></param>
         /// <returns>The <see cref="Signal" /></returns>
         public static Signal Create(
-            OnRaisedDelegate onRaised = null,
-            SignalWaverDelegate signalWaver = null,
-            DateTimeOffset expiration = default(DateTimeOffset),
+            OnRaisedDelegate onRaised = null, 
+            SignalWaverDelegate signalWaver = null, 
+            DateTimeOffset expiration = default(DateTimeOffset), 
             IDictionary<string, object> defaultProperties = null)
         {
             if (expiration == default(DateTimeOffset))
@@ -215,9 +211,9 @@ namespace Ensage.Common.Signals
             }
 
             var signal = new Signal(
-                onRaised,
-                signalWaver,
-                expiration,
+                onRaised, 
+                signalWaver, 
+                expiration, 
                 defaultProperties ?? new Dictionary<string, object>());
 
             SignalManager.AddSignal(signal);
