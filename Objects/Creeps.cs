@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    class Creeps
+    public class Creeps
     {
         #region Static Fields
 
