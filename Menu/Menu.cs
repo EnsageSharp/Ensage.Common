@@ -1761,24 +1761,20 @@ namespace Ensage.Common.Menu
                 {
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
-                    var players =
-                        Players.All.Where(
-                            x =>
-                            x.Hero != null && x.Hero.IsValid && x.Hero.Team == ObjectMgr.LocalHero.GetEnemyTeam()
-                            && !dict.ContainsKey(x.Hero.Name)).ToList();
-                    if (players.Any())
+                    var heroes =
+                        Heroes.GetByTeam(ObjectMgr.LocalHero.GetEnemyTeam())
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name)).ToList();
+                    if (heroes.Any())
                     {
                         set = true;
                     }
                     foreach (var x in
-                        players)
+                        heroes)
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.Hero.Name,
-                                sdict.ContainsKey(x.Hero.Name)
-                                    ? sdict[x.Hero.Name]
-                                    : item.GetValue<HeroToggler>().DefaultValues);
+                                x.Name,
+                                sdict.ContainsKey(x.Name) ? sdict[x.Name] : item.GetValue<HeroToggler>().DefaultValues);
                     }
                     item.SetValue(
                         new HeroToggler(
@@ -1791,23 +1787,19 @@ namespace Ensage.Common.Menu
                 {
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
-                    var players =
-                        Players.All.Where(
-                            x =>
-                            x.Hero != null && x.Hero.IsValid && x.Hero.Team == ObjectMgr.LocalHero.Team
-                            && !dict.ContainsKey(x.Hero.Name)).ToList();
-                    if (players.Any())
+                    var heroes =
+                        Heroes.GetByTeam(ObjectMgr.LocalHero.Team)
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name)).ToList();
+                    if (heroes.Any())
                     {
                         set = true;
                     }
-                    foreach (var x in players)
+                    foreach (var x in heroes)
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.Hero.Name,
-                                sdict.ContainsKey(x.Hero.Name)
-                                    ? sdict[x.Hero.Name]
-                                    : item.GetValue<HeroToggler>().DefaultValues);
+                                x.Name,
+                                sdict.ContainsKey(x.Name) ? sdict[x.Name] : item.GetValue<HeroToggler>().DefaultValues);
                     }
                     item.SetValue(
                         new HeroToggler(

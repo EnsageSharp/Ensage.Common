@@ -56,6 +56,9 @@
             }
             Events.OnClose += (sender, args) =>
                 {
+                    All = new List<Hero>();
+                    Dire = new List<Hero>();
+                    Radiant = new List<Hero>();
                     Game.OnUpdate -= Update;
                     loaded = false;
                 };
