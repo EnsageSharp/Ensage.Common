@@ -102,7 +102,7 @@
             var herolist = new List<Hero>(All);
             var herolistRadiant = new List<Hero>(Radiant);
             var herolistDire = new List<Hero>(Dire);
-            foreach (var hero in list.Where(x => x.Hero != null && x.Hero.IsValid).Select(p => p.Hero))
+            foreach (var hero in list.Where(x => x != null && x.Hero != null && x.Hero.IsValid).Select(p => p.Hero))
             {
                 if (!All.Contains(hero))
                 {
