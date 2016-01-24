@@ -14,6 +14,8 @@
 
         private static bool loaded;
 
+        private static List<Creep> tempList; 
+
         #endregion
 
         #region Constructors and Destructors
@@ -28,22 +30,53 @@
                         return;
                     }
 
-                    All = new List<Creep>();
-                    Game.OnUpdate += Update;
-                    loaded = true;
+                    Load();
                 };
             if (!loaded && ObjectMgr.LocalHero != null && Game.IsInGame)
             {
-                All = new List<Creep>();
-                Game.OnUpdate += Update;
-                loaded = true;
+                Load();
             }
 
             Events.OnClose += (sender, args) =>
                 {
                     Game.OnUpdate -= Update;
+                    ObjectMgr.OnAddEntity -= ObjectMgr_OnAddEntity;
+                    ObjectMgr.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
                 };
+        }
+
+        private static void Load()
+        {
+            All = new List<Creep>();
+            tempList = ObjectMgr.GetEntities<Creep>().ToList();
+            Game.OnUpdate += Update;
+            ObjectMgr.OnAddEntity += ObjectMgr_OnAddEntity;
+            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
+            loaded = true;
+        }
+
+        static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
+        {
+            var creep = args.Entity as Creep;
+            if (creep != null)
+            {
+                tempList.Remove(creep);
+            }
+        }
+
+        static void ObjectMgr_OnAddEntity(EntityEventArgs args)
+        {
+            var creep = args.Entity as Creep;
+            DelayAction.Add(
+                50,
+                () =>
+                    {
+                        if (creep != null)
+                        {
+                            tempList.Add(creep);
+                        }
+                    });
         }
 
         #endregion
@@ -65,6 +98,12 @@
                 return;
             }
 
+            if (Utils.SleepCheck("Common.Creeps.SpecialUpdate"))
+            {
+                tempList = ObjectMgr.GetEntities<Creep>().ToList();
+                Utils.Sleep(10000, "Common.Creeps.SpecialUpdate");
+            }
+
             UpdateCreeps();
             Utils.Sleep(500, "Common.Creeps.Update");
         }
@@ -73,10 +112,7 @@
         /// </summary>
         public static void UpdateCreeps()
         {
-            All =
-                ObjectMgr.GetEntities<Creep>()
-                    .Where(creep => creep.IsAlive && creep.IsSpawned && creep.IsVisible)
-                    .ToList();
+            All = tempList.Where(creep => creep.IsValid && creep.IsAlive && creep.IsSpawned && creep.IsVisible).ToList();
         }
 
         #endregion

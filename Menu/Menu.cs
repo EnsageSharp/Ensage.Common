@@ -1383,7 +1383,42 @@ namespace Ensage.Common.Menu
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
             AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
             Drawing.OnDraw += this.Drawing_OnDraw;
+            ObjectMgr.OnAddEntity += this.ObjectMgr_OnAddEntity;
             Game.OnWndProc += this.Game_OnWndProc;
+            DelayAction.Add(500, this.SetHeroTogglers);
+
+
+            //foreach (var child in this.Children)
+            //{
+            //    child.SetHeroTogglers();
+            //    foreach (var child1 in child.Children)
+            //    {
+            //        child1.SetHeroTogglers();
+            //    }
+            //}
+        }
+
+        void ObjectMgr_OnAddEntity(EntityEventArgs args)
+        {
+            DelayAction.Add(
+                2000,
+                () =>
+                    {
+                        var hero = args.Entity as Hero;
+                        if (hero != null)
+                        {
+                            this.SetHeroTogglers();
+                        }
+
+                        //foreach (var child in this.Children)
+                        //{
+                        //    child.SetHeroTogglers();
+                        //    foreach (var child1 in child.Children)
+                        //    {
+                        //        child1.SetHeroTogglers();
+                        //    }
+                        //}
+                    });
         }
 
         /// <summary>
@@ -1475,16 +1510,6 @@ namespace Ensage.Common.Menu
 
         internal void Drawing_OnDraw(EventArgs args)
         {
-            this.SetHeroTogglers();
-
-            foreach (var child in this.Children)
-            {
-                child.SetHeroTogglers();
-                foreach (var child1 in child.Children)
-                {
-                    child1.SetHeroTogglers();
-                }
-            }
 
             if (!Game.IsInGame)
             {
@@ -1784,20 +1809,9 @@ namespace Ensage.Common.Menu
                 child.SetHeroTogglers();
             }
 
-            for (var i = this.Items.Count - 1; i >= 0; i--)
+            foreach (var item in this.Items.Where(item => item.ValueType == MenuValueType.HeroToggler))
             {
-                var item = this.Items[i];
-                if (!Utils.SleepCheck("SetHeroTogglers" + this.Name + item.Name))
-                {
-                    continue;
-                }
 
-                if (item.ValueType != MenuValueType.HeroToggler)
-                {
-                    continue;
-                }
-
-                var set = false;
                 if (item.GetValue<HeroToggler>().UseEnemyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 5)
                 {
                     var dict = item.GetValue<HeroToggler>().Dictionary;
@@ -1806,10 +1820,6 @@ namespace Ensage.Common.Menu
                         Heroes.GetByTeam(ObjectMgr.LocalHero.GetEnemyTeam())
                             .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name))
                             .ToList();
-                    if (heroes.Any())
-                    {
-                        set = true;
-                    }
 
                     foreach (var x in
                         heroes)
@@ -1835,10 +1845,6 @@ namespace Ensage.Common.Menu
                         Heroes.GetByTeam(ObjectMgr.LocalHero.Team)
                             .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name))
                             .ToList();
-                    if (heroes.Any())
-                    {
-                        set = true;
-                    }
 
                     foreach (var x in heroes)
                     {
@@ -1857,8 +1863,6 @@ namespace Ensage.Common.Menu
                             true, 
                             item.GetValue<HeroToggler>().DefaultValues));
                 }
-
-                Utils.Sleep(set ? 20000 : 2000, "SetHeroTogglers" + this.Name + item.Name);
             }
         }
 

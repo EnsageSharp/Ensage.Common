@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ensage.Heroes;
+
     /// <summary>
     /// </summary>
     public class Heroes
@@ -21,6 +23,8 @@
         /// <summary>
         /// </summary>
         public static List<Hero> Radiant;
+
+        private static List<Hero> tempList; 
 
         private static bool loaded;
 
@@ -40,19 +44,11 @@
                         return;
                     }
 
-                    All = new List<Hero>();
-                    Dire = new List<Hero>();
-                    Radiant = new List<Hero>();
-                    Game.OnUpdate += Update;
-                    loaded = true;
+                    Load();
                 };
             if (!loaded && ObjectMgr.LocalHero != null && Game.IsInGame)
             {
-                All = new List<Hero>();
-                Dire = new List<Hero>();
-                Radiant = new List<Hero>();
-                Game.OnUpdate += Update;
-                loaded = true;
+                Load();
             }
 
             Events.OnClose += (sender, args) =>
@@ -60,9 +56,48 @@
                     All = new List<Hero>();
                     Dire = new List<Hero>();
                     Radiant = new List<Hero>();
+                    tempList = new List<Hero>();
                     Game.OnUpdate -= Update;
+                    ObjectMgr.OnAddEntity -= ObjectMgr_OnAddEntity;
+                    ObjectMgr.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
                 };
+        }
+
+        private static void Load()
+        {
+            All = new List<Hero>();
+            Dire = new List<Hero>();
+            Radiant = new List<Hero>();
+            tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
+            UpdateHeroes();
+            Game.OnUpdate += Update;
+            ObjectMgr.OnAddEntity += ObjectMgr_OnAddEntity;
+            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
+            loaded = true;
+        }
+
+        static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
+        {
+            var hero = args.Entity as Hero;
+            if (hero != null)
+            {
+                tempList.Remove(hero);
+            }
+        }
+
+        static void ObjectMgr_OnAddEntity(EntityEventArgs args)
+        {
+            DelayAction.Add(
+                200,
+                () =>
+                    {
+                        var hero = args.Entity as Hero;
+                        if (hero != null)
+                        {
+                            tempList.Add(hero);
+                        }
+                    });
         }
 
         #endregion
@@ -101,11 +136,10 @@
         /// </summary>
         public static void UpdateHeroes()
         {
-            var list = Players.All;
             var herolist = new List<Hero>(All);
             var herolistRadiant = new List<Hero>(Radiant);
             var herolistDire = new List<Hero>(Dire);
-            foreach (var hero in list.Where(x => x != null && x.Hero != null && x.Hero.IsValid).Select(p => p.Hero))
+            foreach (var hero in tempList.Where(x => x != null && x.IsValid))
             {
                 if (!All.Contains(hero))
                 {

@@ -40,19 +40,11 @@
                         return;
                     }
 
-                    All = new List<Player>();
-                    Dire = new List<Player>();
-                    Radiant = new List<Player>();
-                    Game.OnUpdate += Update;
-                    loaded = true;
+                    Load();
                 };
             if (!loaded && Game.IsInGame && ObjectMgr.LocalHero != null)
             {
-                All = new List<Player>();
-                Dire = new List<Player>();
-                Radiant = new List<Player>();
-                Game.OnUpdate += Update;
-                loaded = true;
+                Load();
             }
 
             Events.OnClose += (sender, args) =>
@@ -65,7 +57,17 @@
                 };
         }
 
-        #endregion
+        private static void Load()
+        {
+            All = new List<Player>();
+            Dire = new List<Player>();
+            Radiant = new List<Player>();
+            Game.OnUpdate += Update;
+            loaded = true;
+            Update(null);
+        }
+
+    #endregion
 
         #region Public Methods and Operators
 
