@@ -1361,6 +1361,62 @@ namespace Ensage.Common.Menu
             item.Visible = this.Children.Count > 0 && this.Children[0].Visible
                            || this.Items.Count > 0 && this.Items[0].Visible;
             this.Items.Add(item);
+            if (item.ValueType == MenuValueType.HeroToggler)
+            {
+                if (item.GetValue<HeroToggler>().UseEnemyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 5)
+                {
+                    var dict = item.GetValue<HeroToggler>().Dictionary;
+                    var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
+                    var heroes =
+                        Heroes.GetByTeam(ObjectMgr.LocalHero.GetEnemyTeam())
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
+                            .ToList();
+
+                    foreach (var x in
+                        heroes)
+                    {
+                        item.GetValue<HeroToggler>()
+                            .Add(
+                                x.StoredName(),
+                                sdict.ContainsKey(x.StoredName())
+                                    ? sdict[x.StoredName()]
+                                    : item.GetValue<HeroToggler>().DefaultValues);
+                    }
+
+                    item.SetValue(
+                        new HeroToggler(
+                            item.GetValue<HeroToggler>().Dictionary,
+                            true,
+                            false,
+                            item.GetValue<HeroToggler>().DefaultValues));
+                }
+                else if (item.GetValue<HeroToggler>().UseAllyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 4)
+                {
+                    var dict = item.GetValue<HeroToggler>().Dictionary;
+                    var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
+                    var heroes =
+                        Heroes.GetByTeam(ObjectMgr.LocalHero.Team)
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
+                            .ToList();
+
+                    foreach (var x in heroes)
+                    {
+                        item.GetValue<HeroToggler>()
+                            .Add(
+                                x.StoredName(),
+                                sdict.ContainsKey(x.StoredName())
+                                    ? sdict[x.StoredName()]
+                                    : item.GetValue<HeroToggler>().DefaultValues);
+                    }
+
+                    item.SetValue(
+                        new HeroToggler(
+                            item.GetValue<HeroToggler>().Dictionary,
+                            false,
+                            true,
+                            item.GetValue<HeroToggler>().DefaultValues));
+                }
+            }
             return item;
         }
 
@@ -1387,38 +1443,14 @@ namespace Ensage.Common.Menu
             Game.OnWndProc += this.Game_OnWndProc;
             DelayAction.Add(500, this.SetHeroTogglers);
 
-
-            //foreach (var child in this.Children)
-            //{
-            //    child.SetHeroTogglers();
-            //    foreach (var child1 in child.Children)
-            //    {
-            //        child1.SetHeroTogglers();
-            //    }
-            //}
-        }
-
-        void ObjectMgr_OnAddEntity(EntityEventArgs args)
-        {
-            DelayAction.Add(
-                2000,
-                () =>
-                    {
-                        var hero = args.Entity as Hero;
-                        if (hero != null)
-                        {
-                            this.SetHeroTogglers();
-                        }
-
-                        //foreach (var child in this.Children)
-                        //{
-                        //    child.SetHeroTogglers();
-                        //    foreach (var child1 in child.Children)
-                        //    {
-                        //        child1.SetHeroTogglers();
-                        //    }
-                        //}
-                    });
+            // foreach (var child in this.Children)
+            // {
+            // child.SetHeroTogglers();
+            // foreach (var child1 in child.Children)
+            // {
+            // child1.SetHeroTogglers();
+            // }
+            // }
         }
 
         /// <summary>
@@ -1430,7 +1462,7 @@ namespace Ensage.Common.Menu
         {
             if (makeChampionUniq)
             {
-                name = ObjectMgr.LocalHero.Name + name;
+                name = ObjectMgr.LocalHero.StoredName() + name;
             }
 
             MenuItem tempItem;
@@ -1510,7 +1542,6 @@ namespace Ensage.Common.Menu
 
         internal void Drawing_OnDraw(EventArgs args)
         {
-
             if (!Game.IsInGame)
             {
                 return;
@@ -1811,14 +1842,13 @@ namespace Ensage.Common.Menu
 
             foreach (var item in this.Items.Where(item => item.ValueType == MenuValueType.HeroToggler))
             {
-
                 if (item.GetValue<HeroToggler>().UseEnemyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 5)
                 {
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
                         Heroes.GetByTeam(ObjectMgr.LocalHero.GetEnemyTeam())
-                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name))
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
                             .ToList();
 
                     foreach (var x in
@@ -1826,8 +1856,10 @@ namespace Ensage.Common.Menu
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.Name, 
-                                sdict.ContainsKey(x.Name) ? sdict[x.Name] : item.GetValue<HeroToggler>().DefaultValues);
+                                x.StoredName(), 
+                                sdict.ContainsKey(x.StoredName())
+                                    ? sdict[x.StoredName()]
+                                    : item.GetValue<HeroToggler>().DefaultValues);
                     }
 
                     item.SetValue(
@@ -1843,16 +1875,16 @@ namespace Ensage.Common.Menu
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
                         Heroes.GetByTeam(ObjectMgr.LocalHero.Team)
-                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.Name))
+                            .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
                             .ToList();
 
                     foreach (var x in heroes)
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.Name, 
-                                sdict.ContainsKey(x.Name)
-                                    ? sdict[x.Name]
+                                x.StoredName(), 
+                                sdict.ContainsKey(x.StoredName())
+                                    ? sdict[x.StoredName()]
                                     : item.GetValue<HeroToggler>().DefaultValues);
                     }
 
@@ -1922,6 +1954,29 @@ namespace Ensage.Common.Menu
             globalMenuList.Add(this.uniqueId);
 
             MenuGlobals.MenuState = globalMenuList;
+        }
+
+        void ObjectMgr_OnAddEntity(EntityEventArgs args)
+        {
+            DelayAction.Add(
+                2000, 
+                () =>
+                    {
+                        var hero = args.Entity as Hero;
+                        if (hero != null)
+                        {
+                            this.SetHeroTogglers();
+                        }
+
+                        // foreach (var child in this.Children)
+                        // {
+                        // child.SetHeroTogglers();
+                        // foreach (var child1 in child.Children)
+                        // {
+                        // child1.SetHeroTogglers();
+                        // }
+                        // }
+                    });
         }
 
         private void UnloadMenuState()
@@ -2094,7 +2149,7 @@ namespace Ensage.Common.Menu
         {
             if (makeChampionUniq)
             {
-                name = ObjectMgr.LocalHero.Name + name;
+                name = ObjectMgr.LocalHero.StoredName() + name;
             }
 
             this.Name = name;

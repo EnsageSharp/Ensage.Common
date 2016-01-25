@@ -211,6 +211,7 @@ namespace Ensage.Common.Extensions
                 {
                     range += radius / 2;
                 }
+
                 if (distanceXyz <= range && position.Distance2D(target.Position) <= range)
                 {
                     return true;
@@ -292,7 +293,7 @@ namespace Ensage.Common.Extensions
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
             {
-                data = AbilityDatabase.Find(ability.Name);
+                data = AbilityDatabase.Find(ability.StoredName());
                 AbilityDamage.DataDictionary.Add(ability, data);
             }
 

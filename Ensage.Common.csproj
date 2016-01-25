@@ -80,6 +80,7 @@
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
     <Compile Include="Geometry.cs" />
     <Compile Include="HUDInfo.cs" />
+    <Compile Include="Objects\Abilities.cs" />
     <Compile Include="Objects\Creeps.cs" />
     <Compile Include="Objects\Heroes.cs" />
     <Compile Include="Objects\JungleCamps.cs" />

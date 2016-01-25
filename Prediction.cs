@@ -358,10 +358,17 @@ namespace Ensage.Common
             {
                 var data =
                     tempTable.FirstOrDefault(
-                        unitData => unitData.UnitName == unit.Name || unitData.UnitClassId == unit.ClassID);
+                        unitData => unitData.UnitName == unit.StoredName() || unitData.UnitClassId == unit.ClassID);
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
-                    data = new Prediction(unit.Name, unit.ClassID, new Vector3(0, 0, 0), 0, new Vector3(0, 0, 0), 0, 0);
+                    data = new Prediction(
+                        unit.StoredName(), 
+                        unit.ClassID, 
+                        new Vector3(0, 0, 0), 
+                        0, 
+                        new Vector3(0, 0, 0), 
+                        0, 
+                        0);
                     TrackTable.Add(data);
                 }
 

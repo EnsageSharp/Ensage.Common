@@ -57,17 +57,7 @@
                 };
         }
 
-        private static void Load()
-        {
-            All = new List<Player>();
-            Dire = new List<Player>();
-            Radiant = new List<Player>();
-            Game.OnUpdate += Update;
-            loaded = true;
-            Update(null);
-        }
-
-    #endregion
+        #endregion
 
         #region Public Methods and Operators
 
@@ -76,7 +66,7 @@
         /// <param name="args"></param>
         public static void Update(EventArgs args)
         {
-            if (!Game.IsInGame || Game.IsPaused)
+            if (!Game.IsInGame)
             {
                 return;
             }
@@ -102,6 +92,20 @@
             }
 
             Utils.Sleep(1000, "Common.Players.Update");
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void Load()
+        {
+            All = new List<Player>();
+            Dire = new List<Player>();
+            Radiant = new List<Player>();
+            Game.OnUpdate += Update;
+            loaded = true;
+            Update(null);
         }
 
         #endregion

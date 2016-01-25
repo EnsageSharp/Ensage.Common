@@ -308,8 +308,6 @@ namespace Ensage.Common.Menu.NotificationData
                 return;
             }
 
-            
-
             this.line.Begin();
 
             var vertices = new[]
@@ -322,8 +320,6 @@ namespace Ensage.Common.Menu.NotificationData
             this.line.End();
 
             
-
-            #region Outline
 
             if (this.border)
             {
@@ -352,7 +348,7 @@ namespace Ensage.Common.Menu.NotificationData
                 this.line.End();
             }
 
-            #endregion
+            
 
             #region Text
 
@@ -426,8 +422,6 @@ namespace Ensage.Common.Menu.NotificationData
             {
                 case NotificationState.Idle:
                     {
-                        
-
                         if (!this.flashing && this.duration > 0x0 && this.TextColor.A == 0x0 && this.BoxColor.A == 0x0
                             && this.BorderColor.A == 0x0)
                         {
@@ -443,8 +437,6 @@ namespace Ensage.Common.Menu.NotificationData
                         }
 
                         
-
-                        #region Decreasement Tick
 
                         if (!this.flashing && this.duration > 0x0 && Environment.TickCount - this.decreasementTick > 0x0)
                         {
@@ -466,7 +458,7 @@ namespace Ensage.Common.Menu.NotificationData
                             this.decreasementTick = this.GetNextDecreasementTick();
                         }
 
-                        #endregion
+                        
 
                         #region Flashing
 
@@ -625,8 +617,6 @@ namespace Ensage.Common.Menu.NotificationData
 
                 case NotificationState.AnimationMove:
                     {
-                        
-
                         if (Math.Abs(this.position.Y - this.updatePosition.Y) > float.Epsilon)
                         {
                             var value = this.updatePosition.Distance(
@@ -643,15 +633,11 @@ namespace Ensage.Common.Menu.NotificationData
                             this.state = NotificationState.Idle;
                         }
 
-                        
-
                         break;
                     }
 
                 case NotificationState.AnimationShowShrink:
                     {
-                        
-
                         if (Math.Abs(this.line.Width - 0xB9) < float.Epsilon)
                         {
                             this.handler = Notifications.Reserve(this.GetId(), this.handler);
@@ -669,15 +655,11 @@ namespace Ensage.Common.Menu.NotificationData
                         this.line.Width--;
                         this.position.X++;
 
-                        
-
                         break;
                     }
 
                 case NotificationState.AnimationShowMove:
                     {
-                        
-
                         if (Math.Abs(Notifications.GetLocation() + 0x1E - this.updatePosition.Y) < float.Epsilon)
                         {
                             this.updatePosition.Y = Notifications.GetLocation();
@@ -698,15 +680,11 @@ namespace Ensage.Common.Menu.NotificationData
                             this.state = NotificationState.AnimationShowGrow;
                         }
 
-                        
-
                         break;
                     }
 
                 case NotificationState.AnimationShowGrow:
                     {
-                        
-
                         if (Math.Abs(this.line.Width - 0xBE) < float.Epsilon)
                         {
                             this.state = NotificationState.Idle;
@@ -715,8 +693,6 @@ namespace Ensage.Common.Menu.NotificationData
 
                         this.line.Width++;
                         this.position.X--;
-
-                        
 
                         break;
                     }
@@ -731,8 +707,6 @@ namespace Ensage.Common.Menu.NotificationData
         {
             if (Utils.IsUnderRectangle(Game.MouseScreenPosition, this.position.X, this.position.Y, this.line.Width, 25f))
             {
-                
-
                 var message = (Utils.WindowsMessages)args.Msg;
                 if (message == Utils.WindowsMessages.WM_LBUTTONDOWN)
                 {
@@ -753,8 +727,6 @@ namespace Ensage.Common.Menu.NotificationData
 
                     this.clickTick = Environment.TickCount;
                 }
-
-                
             }
         }
 

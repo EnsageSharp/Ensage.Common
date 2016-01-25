@@ -18,6 +18,7 @@ namespace Ensage.Common.AbilityInfo
     using System.Linq;
 
     using Ensage.Common.Extensions;
+    using Ensage.Common.Objects;
 
     using Attribute = Ensage.Attribute;
 
@@ -64,7 +65,7 @@ namespace Ensage.Common.AbilityInfo
             double minusMagicResistancePerc = 0d, 
             float minusHealth = 0f)
         {
-            var name = ability.Name;
+            var name = ability.StoredName();
             var level = ability.Level;
             if (source.AghanimState() && ability.AbilityType.HasFlag(AbilityType.Ultimate) && level > 0)
             {
@@ -542,13 +543,13 @@ namespace Ensage.Common.AbilityInfo
             }
 
             var aetherLens = source.FindItem("item_aether_lens");
-            if (aetherLens != null && ability.Name != "axe_culling_blade")
+            if (aetherLens != null && ability.StoredName() != "axe_culling_blade")
             {
                 outgoingDamage *= 1 + aetherLens.GetAbilityData("spell_amp") / 100;
             }
 
             if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && !(ability is Item)
-                && (source.Distance2D(target) <= 1200 || ability.Name != "zuus_thundergods_wrath"))
+                && (source.Distance2D(target) <= 1200 || ability.StoredName() != "zuus_thundergods_wrath"))
             {
                 var staticField = source.Spellbook.Spell3;
                 if (staticField.Level > 0)
@@ -575,7 +576,7 @@ namespace Ensage.Common.AbilityInfo
         public static DamageType GetDamageType(Ability ability)
         {
             var type = ability.DamageType;
-            var name = ability.Name;
+            var name = ability.StoredName();
             if (name == "abaddon_aphotic_shield")
             {
                 type = DamageType.Magical;

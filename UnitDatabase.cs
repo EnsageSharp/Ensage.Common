@@ -16,9 +16,10 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Text;
 
+    using Ensage.Common.Extensions;
+    using Ensage.Common.Objects;
     using Ensage.Common.Properties;
 
     using Newtonsoft.Json;
@@ -96,7 +97,7 @@ namespace Ensage.Common
 
             try
             {
-                var name = unit.Name;
+                var name = unit.StoredName();
                 double attackAnimationPoint;
                 if (!AttackPointDictionary.TryGetValue(unit.Handle, out attackAnimationPoint))
                 {
@@ -116,8 +117,7 @@ namespace Ensage.Common
                 }
 
                 Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
-                Console.WriteLine(
-                    @"[[Please do not use demo mode for testing assemblies]]");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
@@ -139,7 +139,8 @@ namespace Ensage.Common
                 double attackBaseTime;
                 if (!AttackRateDictionary.TryGetValue(unit.Handle, out attackBaseTime))
                 {
-                    attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
+                    attackBaseTime =
+                        Game.FindKeyValues(unit.StoredName() + "/AttackRate", KeyValueSource.Hero).FloatValue;
                     AttackRateDictionary.Add(unit.Handle, attackBaseTime);
                 }
 
@@ -157,16 +158,16 @@ namespace Ensage.Common
                 switch (unit.ClassID)
                 {
                     case ClassID.CDOTA_Unit_Hero_Alchemist:
-                        spell = unit.Spellbook.Spells.First(x => x.Name == "alchemist_chemical_rage");
+                        spell = unit.Spellbook.Spells.First(x => x.StoredName() == "alchemist_chemical_rage");
                         break;
                     case ClassID.CDOTA_Unit_Hero_Terrorblade:
-                        spell = unit.Spellbook.Spells.First(x => x.Name == "terrorblade_metamorphosis");
+                        spell = unit.Spellbook.Spells.First(x => x.StoredName() == "terrorblade_metamorphosis");
                         break;
                     case ClassID.CDOTA_Unit_Hero_LoneDruid:
-                        spell = unit.Spellbook.Spells.First(x => x.Name == "lone_druid_true_form");
+                        spell = unit.Spellbook.Spells.First(x => x.StoredName() == "lone_druid_true_form");
                         break;
                     case ClassID.CDOTA_Unit_Hero_TrollWarlord:
-                        spell = unit.Spellbook.Spells.First(x => x.Name == "troll_warlord_berserkers_rage");
+                        spell = unit.Spellbook.Spells.First(x => x.StoredName() == "troll_warlord_berserkers_rage");
                         break;
                 }
 
@@ -175,11 +176,7 @@ namespace Ensage.Common
                     return attackBaseTime / (1 + (attackSpeed - 100) / 100);
                 }
 
-                var baseAttackTime = spell.AbilityData.FirstOrDefault(x => x.Name == "base_attack_time");
-                if (baseAttackTime != null)
-                {
-                    attackBaseTime = baseAttackTime.GetValue(spell.Level - 1);
-                }
+                attackBaseTime = spell.GetAbilityData("base_attack_time");
 
                 return attackBaseTime / (1 + (attackSpeed - 100) / 100);
             }
@@ -191,8 +188,7 @@ namespace Ensage.Common
                 }
 
                 Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
-                Console.WriteLine(
-                    @"[[Please do not use demo mode for testing assemblies]]");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
@@ -214,7 +210,8 @@ namespace Ensage.Common
                 double attackBaseTime;
                 if (!AttackRateDictionary.TryGetValue(unit.Handle, out attackBaseTime))
                 {
-                    attackBaseTime = Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue;
+                    attackBaseTime =
+                        Game.FindKeyValues(unit.StoredName() + "/AttackRate", KeyValueSource.Hero).FloatValue;
                     AttackRateDictionary.Add(unit.Handle, attackBaseTime);
                 }
 
@@ -235,8 +232,7 @@ namespace Ensage.Common
                 }
 
                 Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
-                Console.WriteLine(
-                    @"[[Please do not use demo mode for testing assemblies]]");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
@@ -281,7 +277,7 @@ namespace Ensage.Common
                 return double.MaxValue;
             }
 
-            var name = unit.Name;
+            var name = unit.StoredName();
             try
             {
                 double projSpeed;
@@ -300,8 +296,7 @@ namespace Ensage.Common
                 }
 
                 Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
-                Console.WriteLine(
-                    @"[[Please do not use demo mode for testing assemblies]]");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
                 return double.MaxValue;
             }
         }

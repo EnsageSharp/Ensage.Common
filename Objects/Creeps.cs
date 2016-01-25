@@ -14,7 +14,7 @@
 
         private static bool loaded;
 
-        private static List<Creep> tempList; 
+        private static List<Creep> tempList;
 
         #endregion
 
@@ -44,39 +44,6 @@
                     ObjectMgr.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
                 };
-        }
-
-        private static void Load()
-        {
-            All = new List<Creep>();
-            tempList = ObjectMgr.GetEntities<Creep>().ToList();
-            Game.OnUpdate += Update;
-            ObjectMgr.OnAddEntity += ObjectMgr_OnAddEntity;
-            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
-            loaded = true;
-        }
-
-        static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
-        {
-            var creep = args.Entity as Creep;
-            if (creep != null)
-            {
-                tempList.Remove(creep);
-            }
-        }
-
-        static void ObjectMgr_OnAddEntity(EntityEventArgs args)
-        {
-            var creep = args.Entity as Creep;
-            DelayAction.Add(
-                50,
-                () =>
-                    {
-                        if (creep != null)
-                        {
-                            tempList.Add(creep);
-                        }
-                    });
         }
 
         #endregion
@@ -113,6 +80,43 @@
         public static void UpdateCreeps()
         {
             All = tempList.Where(creep => creep.IsValid && creep.IsAlive && creep.IsSpawned && creep.IsVisible).ToList();
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void Load()
+        {
+            All = new List<Creep>();
+            tempList = ObjectMgr.GetEntities<Creep>().ToList();
+            Game.OnUpdate += Update;
+            ObjectMgr.OnAddEntity += ObjectMgr_OnAddEntity;
+            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
+            loaded = true;
+        }
+
+        static void ObjectMgr_OnAddEntity(EntityEventArgs args)
+        {
+            var creep = args.Entity as Creep;
+            DelayAction.Add(
+                50, 
+                () =>
+                    {
+                        if (creep != null)
+                        {
+                            tempList.Add(creep);
+                        }
+                    });
+        }
+
+        static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
+        {
+            var creep = args.Entity as Creep;
+            if (creep != null)
+            {
+                tempList.Remove(creep);
+            }
         }
 
         #endregion

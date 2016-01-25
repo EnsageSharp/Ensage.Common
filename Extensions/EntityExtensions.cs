@@ -16,7 +16,6 @@ namespace Ensage.Common.Extensions
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
 
     using Ensage.Common.Objects;
     using Ensage.Heroes;
@@ -113,6 +112,51 @@ namespace Ensage.Common.Extensions
         #endregion
     }
 
+    internal class DamageBlocks
+    {
+        #region Fields
+
+        public string AbilityName;
+
+        public bool Item;
+
+        public string MeleeBlock;
+
+        public string ModifierName;
+
+        public string RangedBlock;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DamageBlocks" /> class.
+        /// </summary>
+        /// <param name="modifierName">
+        ///     The modifier name.
+        /// </param>
+        /// <param name="meleeBlock">
+        ///     The melee block.
+        /// </param>
+        /// <param name="rangedBlock">
+        ///     The ranged block.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        public DamageBlocks(string modifierName, string meleeBlock, string rangedBlock, string abilityName, bool item)
+        {
+            this.ModifierName = modifierName;
+            this.MeleeBlock = meleeBlock;
+            this.RangedBlock = rangedBlock;
+            this.AbilityName = abilityName;
+            this.Item = item;
+        }
+
+        #endregion
+    }
+
     /// <summary>
     /// </summary>
     public static class EntityExtensions
@@ -130,6 +174,46 @@ namespace Ensage.Common.Extensions
         private static readonly List<ExternalDmgReductions> ExternalDmgReductions = new List<ExternalDmgReductions>();
 
         private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
+
+        private static List<DamageBlocks> damageBlocksList = new List<DamageBlocks>
+                                                                 {
+                                                                     new DamageBlocks(
+                                                                         "modifier_item_crimson_guard_extra", 
+                                                                         "block_damage_melee_active", 
+                                                                         "block_damage_ranged_active", 
+                                                                         "item_crimson_guard", 
+                                                                         true), 
+                                                                     new DamageBlocks(
+                                                                         "modifier_tidehunter_kraken_shell", 
+                                                                         "damage_reduction", 
+                                                                         "damage_reduction", 
+                                                                         "tidehunter_kraken_shell", 
+                                                                         false), 
+                                                                     new DamageBlocks(
+                                                                         "modifier_item_crimson_guard", 
+                                                                         "block_damage_melee", 
+                                                                         "block_damage_ranged", 
+                                                                         "item_crimson_guard", 
+                                                                         true), 
+                                                                     new DamageBlocks(
+                                                                         "modifier_item_vanguard", 
+                                                                         "block_damage_melee", 
+                                                                         "block_damage_ranged", 
+                                                                         "item_vanguard", 
+                                                                         true), 
+                                                                     new DamageBlocks(
+                                                                         "modifier_item_poor_mans_shield", 
+                                                                         "damage_block_melee", 
+                                                                         "damage_block_ranged", 
+                                                                         "item_poor_mans_shield", 
+                                                                         true), 
+                                                                     new DamageBlocks(
+                                                                         "modifier_item_stout_shield", 
+                                                                         "damage_block_melee", 
+                                                                         "damage_block_ranged", 
+                                                                         "item_stout_shield", 
+                                                                         true)
+                                                                 };
 
         private static Dictionary<float, float> RangeDictionary = new Dictionary<float, float>();
 
@@ -464,29 +548,107 @@ namespace Ensage.Common.Extensions
             // Console.WriteLine(minusMagicResistancePerc/100);
             var tempDmg = Math.Floor(dmg);
             var amp = 0d;
-            var ampFromME = 0d;
+            var ampFromMe = 0d;
             var reduceProc = 0d;
             var reduceOther = 0d;
             var reduceStatic = 0d;
             var reduceBlock = 0d;
-            var ManaShield = 0d;
-            var MagOnly = 0d;
-            var AA = 0d;
+            var manaShield = 0d;
+            var magOnly = 0d;
+            var aa = 0d;
             var modifiers = target.Modifiers.ToList();
+            var bristleback = false;
+            var centaurStampede = false;
+            var medusaManaShield = false;
+            var undyingFleshGolem = false;
+            var abaddonRedirect = false;
+            var kunkkaGhostShipAbsorb = false;
+            var iceBlast = false;
+            var chenPenitence = false;
 
-            if (modifiers.Any(x => x.Name == "modifier_winter_wyvern_cold_embrace") && dmgType == DamageType.Physical)
+            if (target.IsAttackImmune() && dmgType == DamageType.Physical)
             {
                 return 0;
             }
 
-            if (modifiers.Any(x => x.Name == "modifier_abaddon_borrowed_time"))
+            if (!throughBKB && target.IsMagicImmune())
             {
                 return 0;
+            }
+
+            foreach (var name in modifiers.Select(modifier => modifier.Name))
+            {
+                if (dmgType == DamageType.Physical)
+                {
+                    foreach (var damageBlock in damageBlocksList)
+                    {
+                        if (damageBlock.ModifierName != name)
+                        {
+                            continue;
+                        }
+
+                        var ability = damageBlock.Item
+                                          ? target.FindItem(damageBlock.AbilityName)
+                                          : target.FindSpell(damageBlock.AbilityName);
+                        if (ability == null)
+                        {
+                            continue;
+                        }
+
+                        reduceBlock =
+                            ability.GetAbilityData(target.IsRanged ? damageBlock.RangedBlock : damageBlock.MeleeBlock);
+                        break;
+                    }
+                }
+
+                switch (name)
+                {
+                    case "modifier_winter_wyvern_cold_embrace":
+                        if (dmgType == DamageType.Physical)
+                        {
+                            return 0;
+                        }
+
+                        break;
+                    case "modifier_omninight_guardian_angel":
+                        if (dmgType == DamageType.Physical)
+                        {
+                            return 0;
+                        }
+
+                        break;
+                    case "modifier_abaddon_borrowed_time":
+                        return 0;
+                    case "modifier_bristleback_bristleback":
+                        bristleback = true;
+                        break;
+                    case "modifier_centaur_stampede":
+                        centaurStampede = true;
+                        break;
+                    case "modifier_medusa_mana_shield":
+                        medusaManaShield = true;
+                        break;
+                    case "modifier_undying_flesh_golem_plague_aura":
+                        undyingFleshGolem = true;
+                        break;
+                    case "modifier_abaddon_borrowed_time_damage_redirect":
+                        abaddonRedirect = true;
+                        break;
+                    case "modifier_kunkka_ghost_ship_damage_absorb":
+                        kunkkaGhostShipAbsorb = true;
+                        break;
+                    case "modifier_ice_blast":
+                        iceBlast = true;
+                        break;
+                    case "chen_penitence":
+                        chenPenitence = true;
+                        break;
+                }
             }
 
             foreach (var v in ExternalDmgAmps.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName)
+                var ability = Abilities.FindAbility(v.SourceSpellName)
                               ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
 
                 // var burst = 0f;
@@ -519,7 +681,7 @@ namespace Ensage.Common.Extensions
 
             foreach (var v in ExternalDmgReductions.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName)
+                var ability = Abilities.FindAbility(v.SourceSpellName)
                               ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
 
                 // var burst = 0f;
@@ -585,7 +747,7 @@ namespace Ensage.Common.Extensions
                         }
                         else
                         {
-                            MagOnly += burst;
+                            magOnly += burst;
                         }
                     }
                     else if (v.SourceTeam == 0)
@@ -596,7 +758,7 @@ namespace Ensage.Common.Extensions
                         }
                         else
                         {
-                            MagOnly += burst;
+                            magOnly += burst;
                         }
                     }
                 }
@@ -606,7 +768,7 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (modifiers.Any(x => x.Name == "modifier_bristleback_bristleback"))
+            if (bristleback)
             {
                 var spell = target.FindSpell("bristleback_bristleback");
                 if (spell != null)
@@ -626,46 +788,40 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (modifiers.Any(x => x.Name == "modifier_centaur_stampede"))
+            if (centaurStampede)
             {
                 var heroes =
-                    ObjectMgr.GetEntities<Hero>()
-                        .Where(
-                            x =>
-                            !x.IsIllusion()
-                            && (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur
-                                || x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick) && x.AghanimState());
+                    Heroes.All.Where(
+                        x =>
+                        !x.IsIllusion()
+                        && (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur || x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                        && x.AghanimState());
                 reduceProc = heroes.Aggregate(reduceProc, (current, hero) => current + 0.7);
             }
 
-            if (modifiers.Any(x => x.Name == "modifier_medusa_mana_shield"))
+            if (medusaManaShield)
             {
                 var spell = target.FindSpell("medusa_mana_shield");
                 if (spell != null)
                 {
-                    var firstOrDefault = spell.AbilityData.FirstOrDefault(x => x.Name == "damage_per_mana");
-                    if (firstOrDefault != null)
+                    var treshold = spell.GetAbilityData("damage_per_mana");
+                    double burst;
+                    if (target.Mana >= tempDmg * .6 / treshold)
                     {
-                        var treshold = firstOrDefault.GetValue(spell.Level - 1);
-                        double burst;
-                        if (target.Mana >= tempDmg * .6 / treshold)
-                        {
-                            burst = 0.6;
-                        }
-                        else
-                        {
-                            burst = target.Mana * treshold / tempDmg;
-                        }
-
-                        ManaShield = burst;
+                        burst = 0.6;
                     }
+                    else
+                    {
+                        burst = target.Mana * treshold / tempDmg;
+                    }
+
+                    manaShield = burst;
                 }
             }
 
-            if (modifiers.Any(x => x.Name == "modifier_undying_flesh_golem_plague_aura"))
+            if (undyingFleshGolem)
             {
-                var spell = ObjectMgr.GetEntities<Ability>()
-                    .FirstOrDefault(x => x.StoredName() == "undying_flesh_golem");
+                var spell = Abilities.FindAbility("undying_flesh_golem");
                 if (spell != null)
                 {
                     var baseAmp = .05 * spell.Level;
@@ -691,50 +847,58 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (modifiers.Any(x => x.Name == "modifier_abaddon_borrowed_time_damage_redirect"))
+            if (abaddonRedirect)
             {
                 reduceOther += 0.35;
             }
-            else if (modifiers.Any(x => x.Name == "modifier_kunkka_ghost_ship_damage_absorb"))
+            else if (kunkkaGhostShipAbsorb)
             {
                 reduceOther += 0.5;
             }
 
-            if (source.Modifiers.Any(x => x.Name == "modifier_bloodseeker_bloodrage"))
-            {
-                var spell =
-                    ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == "bloodseeker_bloodrage");
-                if (spell != null)
-                {
-                    var firstOrDefault = spell.AbilityData.FirstOrDefault(x => x.Name == "damage_increase_pct");
-                    if (firstOrDefault != null)
-                    {
-                        var bloodrite = firstOrDefault.GetValue(spell.Level - 1) / 100;
-                        if (target.Distance2D(source) > 2200)
-                        {
-                            bloodrite /= 2;
-                        }
+            var sourceModifiers = source.Modifiers.ToList();
+            var bloodseekerBloodrage = false;
+            var silverEdge = false;
 
-                        ampFromME += bloodrite;
-                    }
+            foreach (var name in sourceModifiers.Select(modifier => modifier.Name))
+            {
+                if (name == "modifier_bloodseeker_bloodrage")
+                {
+                    bloodseekerBloodrage = true;
+                }
+                else if (name == "modifier_silver_edge_debuff")
+                {
+                    silverEdge = true;
                 }
             }
 
-            if (source.Modifiers.Any(x => x.Name == "modifier_silver_edge_debuff"))
+            if (bloodseekerBloodrage)
             {
-                ampFromME -= 0.4;
+                var spell = Abilities.FindAbility("bloodseeker_bloodrage");
+                if (spell != null)
+                {
+                    var bloodrite = spell.GetAbilityData("damage_increase_pct");
+                    if (target.Distance2D(source) > 2200)
+                    {
+                        bloodrite /= 2;
+                    }
+
+                    ampFromMe += bloodrite;
+                }
             }
 
-            if (modifiers.Any(x => x.Name == "modifier_ice_blast"))
+            if (silverEdge)
             {
-                var spell =
-                    ObjectMgr.GetEntities<Ability>()
-                        .FirstOrDefault(
-                            x => x.StoredName() == "ancient_apparition_ice_blast" && x.Owner.Team != target.Team);
+                ampFromMe -= 0.4;
+            }
+
+            if (iceBlast)
+            {
+                var spell = Abilities.FindAbility("ancient_apparition_ice_blast", target.GetEnemyTeam());
                 if (spell != null)
                 {
                     var treshold = spell.GetAbilityData("kill_pct") / 100;
-                    AA = Math.Floor(treshold / target.MaximumHealth);
+                    aa = Math.Floor(treshold / target.MaximumHealth);
                 }
             }
 
@@ -746,8 +910,8 @@ namespace Ensage.Common.Extensions
                     var resist = 1 - (1 - target.MagicDamageResist) * (1 + (float)minusMagicResistancePerc / 100);
                     tempDmg =
                         (float)
-                        ((tempDmg * (1 - ManaShield - reduceOther) - MagOnly) * (1 + amp - reduceProc) * (1 + ampFromME)
-                         * (1 - resist) - reduceStatic + AA);
+                        ((tempDmg * (1 - manaShield - reduceOther) - magOnly) * (1 + amp - reduceProc) * (1 + ampFromMe)
+                         * (1 - resist) - reduceStatic + aa);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -758,24 +922,37 @@ namespace Ensage.Common.Extensions
                     {
                         tempDmg =
                             (float)
-                            (tempDmg * (1 - ManaShield - reduceOther) * (1 + amp - reduceProc) * (1 + ampFromME)
-                             - reduceStatic + AA);
+                            (tempDmg * (1 - manaShield - reduceOther) * (1 + amp - reduceProc) * (1 + ampFromMe)
+                             - reduceStatic + aa);
                     }
 
                     break;
                 case DamageType.Physical:
+                    if (target.IsAttackImmune())
+                    {
+                        return 0;
+                    }
+
                     if (!throughBKB)
                     {
-                        // some calculations missing
+                        if (chenPenitence)
+                        {
+                            var ability = Abilities.FindAbility("chen_penitence", target.GetEnemyTeam());
+                            if (ability != null)
+                            {
+                                var bonus = ability.GetAbilityData("bonus_damage_taken");
+                                amp += bonus / 100;
+                            }
+                        }
                     }
 
                     // Console.WriteLine(target.DamageResist);
                     tempDmg =
                         (float)
-                        ((tempDmg * (1 - ManaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
-                         * (1 + ampFromME)
+                        ((tempDmg * (1 - manaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
+                         * (1 + ampFromMe)
                          * (1 - target.DamageResist * (1 - minusDamageResistancePerc / 100)
-                            + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + AA);
+                            + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + aa);
                     break;
                 case DamageType.HealthRemoval:
                     break;
@@ -967,11 +1144,7 @@ namespace Ensage.Common.Extensions
                         var psi = unit.Spellbook.SpellE;
                         if (psi != null && psi.Level > 0)
                         {
-                            var firstOrDefault = psi.AbilityData.FirstOrDefault(x => x.Name == "bonus_attack_range");
-                            if (firstOrDefault != null)
-                            {
-                                bonus = firstOrDefault.GetValue(psi.Level - 1);
-                            }
+                            bonus = psi.GetAbilityData("bonus_attack_range");
                         }
 
                         break;
@@ -979,11 +1152,7 @@ namespace Ensage.Common.Extensions
                         var aim = unit.Spellbook.SpellE;
                         if (aim != null && aim.Level > 0)
                         {
-                            var firstOrDefault = aim.AbilityData.FirstOrDefault(x => x.Name == "bonus_attack_range");
-                            if (firstOrDefault != null)
-                            {
-                                bonus = firstOrDefault.GetValue(aim.Level - 1);
-                            }
+                            bonus = aim.GetAbilityData("bonus_attack_range");
                         }
 
                         break;
@@ -1119,8 +1288,7 @@ namespace Ensage.Common.Extensions
                 }
 
                 Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
-                Console.WriteLine(
-                    @"[[Please do not use demo mode for testing assemblies]]");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
