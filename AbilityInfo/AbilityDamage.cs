@@ -542,7 +542,7 @@ namespace Ensage.Common.AbilityInfo
             }
 
             var aetherLens = source.FindItem("item_aether_lens");
-            if (aetherLens != null)
+            if (aetherLens != null && ability.Name != "axe_culling_blade")
             {
                 outgoingDamage *= 1 + aetherLens.GetAbilityData("spell_amp") / 100;
             }

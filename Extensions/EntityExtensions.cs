@@ -1125,7 +1125,7 @@ namespace Ensage.Common.Extensions
             }
         }
 
-        /// <summary
+        /// <summary>
         ///     Calculates how much time it will take for given unit to turn to another unit
         /// </summary>
         /// <param name="unit"></param>
