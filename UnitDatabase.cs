@@ -108,10 +108,16 @@ namespace Ensage.Common
                 var attackSpeed = GetAttackSpeed(unit);
                 return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
             }
-            catch (Exception)
+            catch (KeyValuesNotFoundException)
             {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return 0;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
                 Console.WriteLine(
-                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                    @"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
@@ -177,10 +183,16 @@ namespace Ensage.Common
 
                 return attackBaseTime / (1 + (attackSpeed - 100) / 100);
             }
-            catch (Exception)
+            catch (KeyValuesNotFoundException)
             {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return 0;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
                 Console.WriteLine(
-                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                    @"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
@@ -215,10 +227,16 @@ namespace Ensage.Common
 
                 return (float)attackSpeed;
             }
-            catch (Exception)
+            catch (KeyValuesNotFoundException)
             {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return 0;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
                 Console.WriteLine(
-                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                    @"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
@@ -274,10 +292,16 @@ namespace Ensage.Common
 
                 return projSpeed;
             }
-            catch (Exception)
+            catch (KeyValuesNotFoundException)
             {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return double.MaxValue;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
                 Console.WriteLine(
-                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                    @"[[Please do not use demo mode for testing assemblies]]");
                 return double.MaxValue;
             }
         }

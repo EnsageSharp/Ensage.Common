@@ -1111,15 +1111,21 @@ namespace Ensage.Common.Extensions
                         Math.Abs(FindAngleR(unit) - Utils.DegreeToRadian(unit.FindAngleForTurnTime(position))) - 0.69, 
                         0) / (turnRate * (1 / 0.03));
             }
-            catch (Exception)
+            catch (KeyValuesNotFoundException)
             {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return 0;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
                 Console.WriteLine(
-                    @"Please do not use assembly " + Assembly.GetCallingAssembly().FullName + @" in demo mode");
+                    @"[[Please do not use demo mode for testing assemblies]]");
                 return 0;
             }
         }
 
-        /// <summary>
+        /// <summary
         ///     Calculates how much time it will take for given unit to turn to another unit
         /// </summary>
         /// <param name="unit"></param>
