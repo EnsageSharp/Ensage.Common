@@ -184,7 +184,7 @@ namespace Ensage.Common
         /// <param name="delay"></param>
         public static void DrawPredictions(float delay = 1000)
         {
-            var heroes = ObjectMgr.GetEntities<Hero>().Where(x => !x.IsIllusion);
+            var heroes = Heroes.All.Where(x => !x.IsIllusion);
             foreach (var unit in heroes)
             {
                 ParticleEffect effect;

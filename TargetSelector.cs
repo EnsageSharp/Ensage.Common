@@ -37,7 +37,7 @@ namespace Ensage.Common
             var attackRange = source.GetAttackRange();
             var enemyHeroes =
                 Heroes.All.Where(
-                    x =>
+                    x => x.IsValid &&
                     x.Team != source.Team && x.IsAlive && x.IsVisible
                     && x.Distance2D(source) <= attackRange + x.HullRadius + bonusRange + source.HullRadius + 50);
             var aaDmg = source.MinimumDamage + source.BonusDamage;
@@ -70,7 +70,7 @@ namespace Ensage.Common
             var mousePosition = Game.MousePosition;
             var enemyHeroes =
                 Heroes.All.Where(
-                    x =>
+                    x => x.IsValid &&
                     x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
                     && x.Distance2D(mousePosition) <= range);
             Hero closestHero = null;
@@ -96,7 +96,7 @@ namespace Ensage.Common
             {
                 var attackRange = source.GetAttackRange();
                 var lowestHp =
-                    ObjectMgr.GetEntities<Unit>()
+                    Creeps.All
                         .Where(
                             x =>
                             (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
