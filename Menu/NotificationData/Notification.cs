@@ -319,8 +319,6 @@ namespace Ensage.Common.Menu.NotificationData
             this.line.Draw(vertices, this.BoxColor);
             this.line.End();
 
-            
-
             if (this.border)
             {
                 var x = this.position.X;
@@ -349,8 +347,6 @@ namespace Ensage.Common.Menu.NotificationData
             }
 
             
-
-            #region Text
 
             this.sprite.Begin();
 
@@ -387,7 +383,7 @@ namespace Ensage.Common.Menu.NotificationData
 
             this.sprite.End();
 
-            #endregion
+            
         }
 
         /// <summary>
@@ -436,8 +432,6 @@ namespace Ensage.Common.Menu.NotificationData
                             return;
                         }
 
-                        
-
                         if (!this.flashing && this.duration > 0x0 && Environment.TickCount - this.decreasementTick > 0x0)
                         {
                             if (this.TextColor.A > 0x0)
@@ -459,8 +453,6 @@ namespace Ensage.Common.Menu.NotificationData
                         }
 
                         
-
-                        #region Flashing
 
                         if (this.flashing)
                         {
@@ -536,7 +528,7 @@ namespace Ensage.Common.Menu.NotificationData
                             }
                         }
 
-                        #endregion
+                        
 
                         #region Mouse
 

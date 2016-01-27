@@ -1377,7 +1377,7 @@ namespace Ensage.Common.Menu
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.StoredName(),
+                                x.StoredName(), 
                                 sdict.ContainsKey(x.StoredName())
                                     ? sdict[x.StoredName()]
                                     : item.GetValue<HeroToggler>().DefaultValues);
@@ -1385,9 +1385,9 @@ namespace Ensage.Common.Menu
 
                     item.SetValue(
                         new HeroToggler(
-                            item.GetValue<HeroToggler>().Dictionary,
-                            true,
-                            false,
+                            item.GetValue<HeroToggler>().Dictionary, 
+                            true, 
+                            false, 
                             item.GetValue<HeroToggler>().DefaultValues));
                 }
                 else if (item.GetValue<HeroToggler>().UseAllyHeroes && item.GetValue<HeroToggler>().Dictionary.Count < 4)
@@ -1403,7 +1403,7 @@ namespace Ensage.Common.Menu
                     {
                         item.GetValue<HeroToggler>()
                             .Add(
-                                x.StoredName(),
+                                x.StoredName(), 
                                 sdict.ContainsKey(x.StoredName())
                                     ? sdict[x.StoredName()]
                                     : item.GetValue<HeroToggler>().DefaultValues);
@@ -1411,12 +1411,13 @@ namespace Ensage.Common.Menu
 
                     item.SetValue(
                         new HeroToggler(
-                            item.GetValue<HeroToggler>().Dictionary,
-                            false,
-                            true,
+                            item.GetValue<HeroToggler>().Dictionary, 
+                            false, 
+                            true, 
                             item.GetValue<HeroToggler>().DefaultValues));
                 }
             }
+
             return item;
         }
 

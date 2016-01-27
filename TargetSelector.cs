@@ -37,8 +37,8 @@ namespace Ensage.Common
             var attackRange = source.GetAttackRange();
             var enemyHeroes =
                 Heroes.All.Where(
-                    x => x.IsValid &&
-                    x.Team != source.Team && x.IsAlive && x.IsVisible
+                    x =>
+                    x.IsValid && x.Team != source.Team && x.IsAlive && x.IsVisible
                     && x.Distance2D(source) <= attackRange + x.HullRadius + bonusRange + source.HullRadius + 50);
             var aaDmg = source.MinimumDamage + source.BonusDamage;
             Hero bestTarget = null;
@@ -70,8 +70,8 @@ namespace Ensage.Common
             var mousePosition = Game.MousePosition;
             var enemyHeroes =
                 Heroes.All.Where(
-                    x => x.IsValid &&
-                    x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
+                    x =>
+                    x.IsValid && x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
                     && x.Distance2D(mousePosition) <= range);
             Hero closestHero = null;
             foreach (var enemyHero in enemyHeroes)
@@ -96,18 +96,14 @@ namespace Ensage.Common
             {
                 var attackRange = source.GetAttackRange();
                 var lowestHp =
-                    Creeps.All
-                        .Where(
-                            x =>
-                            (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
-                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
-                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
-                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
-                             || x.ClassID == ClassID.CDOTA_BaseNPC_Additive
-                             || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
-                             || x.ClassID == ClassID.CDOTA_BaseNPC_Building
-                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
-                            && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
+                    Creeps.All.Where(
+                        x =>
+                        (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
+                         || x.ClassID == ClassID.CDOTA_BaseNPC_Creep || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
+                         || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
+                         || x.ClassID == ClassID.CDOTA_BaseNPC_Additive || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
+                         || x.ClassID == ClassID.CDOTA_BaseNPC_Building || x.ClassID == ClassID.CDOTA_BaseNPC_Creature)
+                        && x.IsAlive && x.IsVisible && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
                         .OrderBy(creep => creep.Health)
                         .DefaultIfEmpty(null)
                         .FirstOrDefault();

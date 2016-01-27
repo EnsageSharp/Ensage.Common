@@ -215,6 +215,16 @@ namespace Ensage.Common.Extensions
                                                                          true)
                                                                  };
 
+        /// <summary>
+        ///     The modifier dictionary.
+        /// </summary>
+        private static Dictionary<string, bool> modifierBoolDictionary = new Dictionary<string, bool>();
+
+        /// <summary>
+        ///     The modifier dictionary.
+        /// </summary>
+        private static Dictionary<string, Modifier> modifierDictionary = new Dictionary<string, Modifier>();
+
         private static Dictionary<float, float> RangeDictionary = new Dictionary<float, float>();
 
         #endregion
@@ -343,7 +353,10 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool AghanimState(this Unit hero)
         {
-            return hero.Modifiers.Any(x => x.Name.StartsWith("modifier_item_ultimate_scepter"));
+            return
+                hero.HasModifiers(
+                    new[] { "modifier_item_ultimate_scepter_consumed", "modifier_item_ultimate_scepter" }, 
+                    false);
         }
 
         /// <summary>
@@ -387,11 +400,15 @@ namespace Ensage.Common.Extensions
         {
             var cullingBlade = sourceAbilityName != null && sourceAbilityName == "axe_culling_blade";
             return !ignoreReincarnation && !unit.CanReincarnate()
-                   && !unit.Modifiers.Any(
-                       x =>
-                       (!cullingBlade
-                        && (x.Name == "modifier_dazzle_shallow_grave" || x.Name == "modifier_oracle_false_promise"))
-                       || x.Name == "modifier_skeleton_king_reincarnation_scepter_active");
+                   && (cullingBlade
+                           ? !unit.HasModifier("modifier_skeleton_king_reincarnation_scepter_active")
+                           : !unit.HasModifiers(
+                               new[]
+                                   {
+                                       "modifier_dazzle_shallow_grave", "modifier_oracle_false_promise", 
+                                       "modifier_skeleton_king_reincarnation_scepter_active"
+                                   }, 
+                               false));
         }
 
         /// <summary>
@@ -462,8 +479,8 @@ namespace Ensage.Common.Extensions
                 return BoolDictionary[n];
             }
 
-            var canMove = !IsRooted(unit) && !IsStunned(unit)
-                          && unit.Modifiers.All(x => x.Name != "modifier_slark_pounce_leash") && unit.IsAlive;
+            var canMove = !IsRooted(unit) && !IsStunned(unit) && !unit.HasModifier("modifier_slark_pounce_leash")
+                          && unit.IsAlive;
             if (!BoolDictionary.ContainsKey(n))
             {
                 BoolDictionary.Add(n, canMove);
@@ -494,8 +511,9 @@ namespace Ensage.Common.Extensions
         public static bool CanUseItems(this Unit unit)
         {
             return !unit.IsUnitState(UnitState.Muted) && !IsStunned(unit) && unit.IsAlive
-                   && !unit.Modifiers.Any(
-                       x => x.Name == "modifier_axe_berserkers_call" || x.Name == "modifier_phoenix_supernova_hiding");
+                   && !unit.HasModifiers(
+                       new[] { "modifier_axe_berserkers_call", "modifier_phoenix_supernova_hiding" }, 
+                       false);
         }
 
         /// <summary>
@@ -1102,6 +1120,54 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The has modifier.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="modifierName">
+        ///     The modifier name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static Modifier FindModifier(this Unit unit, string modifierName)
+        {
+            if (Utils.SleepCheck("Ensage.Common.FindModifierReset"))
+            {
+                modifierDictionary = new Dictionary<string, Modifier>();
+                Utils.Sleep(1200000, "Ensage.Common.FindModifierReset");
+            }
+
+            var name = unit.StoredName() + modifierName;
+            Modifier modifier;
+            if (modifierDictionary.TryGetValue(name, out modifier)
+                && !Utils.SleepCheck("Ensage.Common.FindModifier" + name))
+            {
+                return modifier;
+            }
+
+            modifier = unit.Modifiers.FirstOrDefault(x => x.Name == modifierName);
+            if (modifier == null)
+            {
+                return null;
+            }
+
+            if (modifierDictionary.ContainsKey(name))
+            {
+                modifierDictionary[name] = modifier;
+            }
+            else
+            {
+                modifierDictionary.Add(name, modifier);
+            }
+
+            Utils.Sleep(50, "Ensage.Common.FindModifier" + name);
+
+            return modifier;
+        }
+
+        /// <summary>
         /// </summary>
         /// <param name="unit"></param>
         /// <param name="pos"></param>
@@ -1165,15 +1231,15 @@ namespace Ensage.Common.Extensions
 
                         break;
                     default:
-                        if (unit.Modifiers.Any(x => x.Name == "modifier_lone_druid_true_form"))
+                        if (unit.HasModifier("modifier_lone_druid_true_form"))
                         {
                             bonus = -423;
                         }
-                        else if (unit.Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
+                        else if (unit.HasModifier("modifier_dragon_knight_dragon_form"))
                         {
                             bonus = 372;
                         }
-                        else if (unit.Modifiers.Any(x => x.Name == "modifier_terrorblade_metamorphosis"))
+                        else if (unit.HasModifier("modifier_terrorblade_metamorphosis"))
                         {
                             bonus = 422;
                         }
@@ -1213,9 +1279,8 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static Ability GetChanneledAbility(this Unit unit)
         {
-            var channelingItem = unit.Inventory.Items.ToList().FirstOrDefault(v => v.IsChanneling);
-            var channelingAbility = unit.Spellbook.Spells.ToList().FirstOrDefault(v => v.IsChanneling);
-            return channelingItem ?? channelingAbility;
+            return unit.Inventory.Items.FirstOrDefault(v => v.IsChanneling)
+                   ?? unit.Spellbook.Spells.FirstOrDefault(v => v.IsChanneling);
         }
 
         /// <summary>
@@ -1316,6 +1381,132 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The has modifier.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="modifierName">
+        ///     The modifier name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool HasModifier(this Unit unit, string modifierName)
+        {
+            if (Utils.SleepCheck("Ensage.Common.HasModifierReset"))
+            {
+                modifierBoolDictionary = new Dictionary<string, bool>();
+                Utils.Sleep(1200000, "Ensage.Common.HasModifierReset");
+            }
+
+            var name = unit.StoredName() + modifierName;
+            bool value;
+            if (modifierBoolDictionary.TryGetValue(name, out value)
+                && !Utils.SleepCheck("Ensage.Common.HasModifier" + name))
+            {
+                return value;
+            }
+
+            value = unit.Modifiers.Any(x => x.Name == modifierName);
+            if (modifierBoolDictionary.ContainsKey(name))
+            {
+                modifierBoolDictionary[name] = value;
+            }
+            else
+            {
+                modifierBoolDictionary.Add(name, value);
+            }
+
+            Utils.Sleep(50, "Ensage.Common.HasModifier" + name);
+
+            return value;
+        }
+
+        /// <summary>
+        ///     The has modifiers.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="modifierNames">
+        ///     The modifier names.
+        /// </param>
+        /// <param name="hasAll">
+        ///     The has all.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool HasModifiers(this Unit unit, string[] modifierNames, bool hasAll = true)
+        {
+            if (Utils.SleepCheck("Ensage.Common.HasModifierReset"))
+            {
+                modifierBoolDictionary = new Dictionary<string, bool>();
+                Utils.Sleep(1200000, "Ensage.Common.HasModifierReset");
+            }
+
+            var aname = unit.StoredName() + hasAll;
+            aname = modifierNames.Aggregate(aname, (current, modifierName) => current + modifierName);
+
+            bool value;
+            if (modifierBoolDictionary.TryGetValue(aname, out value)
+                && !Utils.SleepCheck("Ensage.Common.HasModifiers" + aname))
+            {
+                return value;
+            }
+
+            var count = 0;
+            foreach (var name in
+                unit.Modifiers.Where(modifier => modifierNames.Contains(modifier.Name))
+                    .Select(modifier => unit.StoredName() + modifier.Name))
+            {
+                if (modifierBoolDictionary.ContainsKey(name))
+                {
+                    modifierBoolDictionary[name] = true;
+                }
+                else
+                {
+                    modifierBoolDictionary.Add(name, true);
+                }
+
+                Utils.Sleep(50, "Ensage.Common.HasModifier" + name);
+
+                if (!hasAll)
+                {
+                    if (modifierBoolDictionary.ContainsKey(aname))
+                    {
+                        modifierBoolDictionary[aname] = true;
+                    }
+                    else
+                    {
+                        modifierBoolDictionary.Add(aname, true);
+                    }
+
+                    Utils.Sleep(50, "Ensage.Common.HasModifiers" + aname);
+                    return true;
+                }
+
+                count += 1;
+            }
+
+            value = count == modifierNames.Length;
+
+            if (modifierBoolDictionary.ContainsKey(aname))
+            {
+                modifierBoolDictionary[aname] = value;
+            }
+            else
+            {
+                modifierBoolDictionary.Add(aname, value);
+            }
+
+            Utils.Sleep(50, "Ensage.Common.HasModifiers" + aname);
+
+            return value;
+        }
+
+        /// <summary>
         ///     Checks if unit is immune to auto attack
         /// </summary>
         /// <param name="unit"></param>
@@ -1344,8 +1535,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static bool IsChanneling(this Unit unit)
         {
-            return unit.Inventory.Items.ToList().Any(v => v.IsChanneling)
-                   || unit.Spellbook.Spells.ToList().Any(v => v.IsChanneling);
+            return unit.Inventory.Items.Any(v => v.IsChanneling) || unit.Spellbook.Spells.Any(v => v.IsChanneling);
         }
 
         /// <summary>
@@ -1428,7 +1618,7 @@ namespace Ensage.Common.Extensions
         {
             var linkensphere = hero.FindItem("item_sphere");
             return (linkensphere != null && linkensphere.Cooldown == 0)
-                   || hero.Modifiers.Any(x => x.Name == "modifier_item_sphere_target");
+                   || hero.HasModifier("modifier_item_sphere_target");
         }
 
         /// <summary>
@@ -1448,10 +1638,13 @@ namespace Ensage.Common.Extensions
         public static bool IsPurgable(this Unit hero)
         {
             return
-                hero.Modifiers.Any(
-                    x =>
-                    x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow"
-                    || x.Name == "modifier_omninight_guardian_angel");
+                hero.HasModifiers(
+                    new[]
+                        {
+                            "modifier_ghost_state", "modifier_item_ethereal_blade_slow", 
+                            "modifier_omninight_guardian_angel"
+                        }, 
+                    false);
         }
 
         /// <summary>

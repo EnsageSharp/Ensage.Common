@@ -67,7 +67,7 @@ namespace Ensage.Common.AbilityInfo
         {
             var name = ability.StoredName();
             var level = ability.Level;
-            if (source.AghanimState() && ability.AbilityType.HasFlag(AbilityType.Ultimate) && level > 0)
+            if (ability.AbilityType.HasFlag(AbilityType.Ultimate) && level > 0 && source.AghanimState())
             {
                 level += 1;
             }
@@ -286,7 +286,7 @@ namespace Ensage.Common.AbilityInfo
                     break;
                 case "visage_soul_assumption":
                     var dmg = ability.GetAbilityData(data.DamageString);
-                    var modif = source.Modifiers.FirstOrDefault(x => x.Name == "modifier_visage_soul_assumption");
+                    var modif = source.FindModifier("modifier_visage_soul_assumption");
                     if (modif != null)
                     {
                         dmg += modif.StackCount * ability.GetAbilityData("soul_charge_damage");
@@ -499,7 +499,7 @@ namespace Ensage.Common.AbilityInfo
                     }
                     else
                     {
-                        if (source.AghanimState() && ability.AbilityType.HasFlag(AbilityType.Ultimate) && level > 0)
+                        if (ability.AbilityType.HasFlag(AbilityType.Ultimate) && level > 0 && source.AghanimState())
                         {
                             level -= 1;
                         }
@@ -510,12 +510,12 @@ namespace Ensage.Common.AbilityInfo
                             level = spellLevel.Level;
                         }
 
-                        if (source.AghanimState() && source.ClassID == ClassID.CDOTA_Unit_Hero_Invoker && level > 0)
+                        if (source.ClassID == ClassID.CDOTA_Unit_Hero_Invoker && level > 0 && source.AghanimState())
                         {
                             level += 1;
                         }
 
-                        if (source.AghanimState() && data.DamageScepterString != null)
+                        if (data.DamageScepterString != null && source.AghanimState())
                         {
                             outgoingDamage = ability.GetAbilityData(data.DamageScepterString, level);
                         }
@@ -545,7 +545,7 @@ namespace Ensage.Common.AbilityInfo
             var aetherLens = source.FindItem("item_aether_lens");
             if (aetherLens != null && ability.StoredName() != "axe_culling_blade")
             {
-                outgoingDamage *= 1 + aetherLens.GetAbilityData("spell_amp") / 100;
+                outgoingDamage *= 1 + (aetherLens.GetAbilityData("spell_amp") / 100);
             }
 
             if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && !(ability is Item)
@@ -554,8 +554,7 @@ namespace Ensage.Common.AbilityInfo
                 var staticField = source.Spellbook.Spell3;
                 if (staticField.Level > 0)
                 {
-                    var bonusDmg = (float)staticField.GetAbilityData("damage_health_pct") / 100
-                                   * (target.Health - minusHealth);
+                    var bonusDmg = staticField.GetAbilityData("damage_health_pct") / 100 * (target.Health - minusHealth);
                     bonusDmg = target.DamageTaken(
                         bonusDmg, 
                         DamageType.Magical, 

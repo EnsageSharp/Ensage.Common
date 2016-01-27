@@ -140,16 +140,16 @@ namespace Ensage.Common
         public static bool AbilityMove(Unit unit)
         {
             return
-                unit.Modifiers.Any(
-                    x =>
-                    x.Name == "modifier_spirit_breaker_charge_of_darkness"
-                    || x.Name == "modifier_earth_spirit_boulder_smash"
-                    || x.Name == "modifier_earth_spirit_rolling_boulder_caster"
-                    || x.Name == "modifier_earth_spirit_geomagnetic_grip"
-                    || x.Name == "modifier_spirit_breaker_charge_of_darkness"
-                    || x.Name == "modifier_huskar_life_break_charge" || x.Name == "modifier_magnataur_skewer_movement"
-                    || x.Name == "modifier_storm_spirit_ball_lightning" || x.Name == "modifier_faceless_void_time_walk"
-                    || x.Name == "modifier_mirana_leap" || x.Name == "modifier_slark_pounce");
+                unit.HasModifiers(
+                    new[]
+                        {
+                            "modifier_spirit_breaker_charge_of_darkness", "modifier_earth_spirit_boulder_smash", 
+                            "modifier_earth_spirit_rolling_boulder_caster", "modifier_earth_spirit_geomagnetic_grip", 
+                            "modifier_spirit_breaker_charge_of_darkness", "modifier_huskar_life_break_charge", 
+                            "modifier_magnataur_skewer_movement", "modifier_storm_spirit_ball_lightning", 
+                            "modifier_faceless_void_time_walk", "modifier_mirana_leap", "modifier_slark_pounce"
+                        }, 
+                    false);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Ensage.Common
                     }
                     else
                     {
-                        if (unit.Modifiers.Any(x => x.Name == "modifier_storm_spirit_ball_lightning"))
+                        if (unit.HasModifier("modifier_storm_spirit_ball_lightning"))
                         {
                             var ballLightning = unit.FindSpell("storm_spirit_ball_lightning");
                             var firstOrDefault =

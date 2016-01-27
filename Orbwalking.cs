@@ -14,7 +14,6 @@
 namespace Ensage.Common
 {
     using System;
-    using System.Linq;
 
     using Ensage.Common.Extensions;
 
@@ -224,8 +223,9 @@ namespace Ensage.Common
             }
 
             var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible && !target.IsInvul()
-                          && !target.Modifiers.Any(
-                              x => x.Name == "modifier_ghost_state" || x.Name == "modifier_item_ethereal_blade_slow")
+                          && !target.HasModifiers(
+                              new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" }, 
+                              false)
                           && target.Distance2D(me)
                           <= me.GetAttackRange() + me.HullRadius + 50 + targetHull + bonusRange + Math.Max(distance, 0);
             if (isValid || (target != null && me.IsAttacking() && me.GetTurnTime(target.Position) < 0.1))

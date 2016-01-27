@@ -146,13 +146,15 @@ namespace Ensage.Common
 
                 Ability spell = null;
                 if (
-                    !unit.Modifiers.Any(
-                        x =>
-                        x.Name == "modifier_alchemist_chemical_rage" || x.Name == "modifier_terrorblade_metamorphosis"
-                        || x.Name == "modifier_lone_druid_true_form"
-                        || x.Name == "modifier_troll_warlord_berserkers_rage"))
+                    !unit.HasModifiers(
+                        new[]
+                            {
+                                "modifier_alchemist_chemical_rage", "modifier_terrorblade_metamorphosis", 
+                                "modifier_lone_druid_true_form", "modifier_troll_warlord_berserkers_rage"
+                            }, 
+                        false))
                 {
-                    return attackBaseTime / (1 + (attackSpeed - 100) / 100);
+                    return attackBaseTime / (1 + ((attackSpeed - 100) / 100));
                 }
 
                 switch (unit.ClassID)
@@ -217,7 +219,7 @@ namespace Ensage.Common
 
                 var attackSpeed = Math.Min(unit.AttacksPerSecond * attackBaseTime / 0.01, 600);
 
-                if (unit.Modifiers.Any(x => x.Name == "modifier_ursa_overpower"))
+                if (unit.HasModifier("modifier_ursa_overpower"))
                 {
                     attackSpeed = 600;
                 }

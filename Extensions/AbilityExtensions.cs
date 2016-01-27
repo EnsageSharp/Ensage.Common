@@ -217,7 +217,7 @@ namespace Ensage.Common.Extensions
                     return true;
                 }
 
-                if (name == "pudge_rot" && target.Modifiers.Any(x => x.Name == "modifier_pudge_meat_hook")
+                if (name == "pudge_rot" && target.HasModifier("modifier_pudge_meat_hook")
                     && position.Distance2D(target) < 600)
                 {
                     return true;
@@ -233,7 +233,7 @@ namespace Ensage.Common.Extensions
                     return true;
                 }
 
-                if (name == "pudge_dismember" && target.Modifiers.Any(x => x.Name == "modifier_pudge_meat_hook")
+                if (name == "pudge_dismember" && target.HasModifier("modifier_pudge_meat_hook")
                     && position.Distance2D(target) < 600)
                 {
                     return true;
@@ -767,8 +767,7 @@ namespace Ensage.Common.Extensions
                     castRange = 999999;
                 }
 
-                if (name == "dragon_knight_dragon_tail"
-                    && owner.Modifiers.Any(x => x.Name == "modifier_dragon_knight_dragon_form"))
+                if (name == "dragon_knight_dragon_tail" && owner.HasModifier("modifier_dragon_knight_dragon_form"))
                 {
                     bonusRange = 250;
                 }
