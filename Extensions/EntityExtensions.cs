@@ -589,7 +589,7 @@ namespace Ensage.Common.Extensions
                 return 0;
             }
 
-            if (!throughBKB && target.IsMagicImmune())
+            if ((dmgType == DamageType.Magical || dmgType == DamageType.Pure) && !throughBKB && target.IsMagicImmune())
             {
                 return 0;
             }
@@ -964,7 +964,6 @@ namespace Ensage.Common.Extensions
                         }
                     }
 
-                    // Console.WriteLine(target.DamageResist);
                     tempDmg =
                         (float)
                         ((tempDmg * (1 - manaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
