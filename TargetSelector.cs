@@ -75,8 +75,8 @@ namespace Ensage.Common
         {
             return
                 Heroes.GetByTeam(source.GetEnemyTeam())
-                    .FirstOrDefault(
-                        hero => hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range);
+                    .Where(hero => hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range)
+                    .MaxOrDefault(hero => hero.Health);
         }
 
         /// <summary>
