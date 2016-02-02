@@ -153,7 +153,8 @@ namespace Ensage.Common
             var turnTime = 0d;
             if (target != null)
             {
-                turnTime = me.GetTurnTime(target);
+                turnTime = me.GetTurnTime(target)
+                           + Math.Max(me.Distance2D(target) - me.GetAttackRange() - 100, 0) / me.MovementSpeed;
             }
 
             // Console.WriteLine(turnTime*1000);
@@ -333,7 +334,7 @@ namespace Ensage.Common
             // }
             // else
             // {
-            LastAttackStart = tick - Game.Ping;
+            LastAttackStart = tick;
 
             // }
         }
