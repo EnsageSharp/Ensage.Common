@@ -30,9 +30,9 @@
 
         static Players()
         {
-            All = new List<Player>();
-            Dire = new List<Player>();
-            Radiant = new List<Player>();
+            All = ObjectMgr.GetEntities<Player>().ToList();
+            Dire = All.Where(x => x.Team == Team.Radiant).ToList();
+            Radiant = All.Where(x => x.Team == Team.Dire).ToList();
             Events.OnLoad += (sender, args) =>
                 {
                     if (loaded)
@@ -49,9 +49,9 @@
 
             Events.OnClose += (sender, args) =>
                 {
-                    All = new List<Player>();
-                    Dire = new List<Player>();
-                    Radiant = new List<Player>();
+                    All = ObjectMgr.GetEntities<Player>().ToList();
+                    Dire = All.Where(x => x.Team == Team.Radiant).ToList();
+                    Radiant = All.Where(x => x.Team == Team.Dire).ToList();
                     Game.OnUpdate -= Update;
                     loaded = false;
                 };
@@ -83,12 +83,12 @@
 
             if (Radiant.Count < 5)
             {
-                Radiant = ObjectMgr.GetEntities<Player>().Where(x => x.Team == Team.Radiant).ToList();
+                Radiant = All.Where(x => x.Team == Team.Radiant).ToList();
             }
 
             if (Dire.Count < 5)
             {
-                Dire = ObjectMgr.GetEntities<Player>().Where(x => x.Team == Team.Dire).ToList();
+                Dire = All.Where(x => x.Team == Team.Dire).ToList();
             }
 
             Utils.Sleep(1000, "Common.Players.Update");
@@ -100,9 +100,9 @@
 
         private static void Load()
         {
-            All = new List<Player>();
-            Dire = new List<Player>();
-            Radiant = new List<Player>();
+            All = ObjectMgr.GetEntities<Player>().ToList();
+            Dire = All.Where(x => x.Team == Team.Radiant).ToList();
+            Radiant = All.Where(x => x.Team == Team.Dire).ToList();
             Game.OnUpdate += Update;
             loaded = true;
             Update(null);

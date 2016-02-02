@@ -554,7 +554,7 @@
             "IsSlow": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.5,
+            "AdditionalDelay": 0.3,
             "Width": "radius",
             "Speed": "speed",
             "DamageString": "pass_damage",
@@ -565,7 +565,7 @@
             "IsSlow": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.5,
+            "AdditionalDelay": 0.3,
             "Width": "radius",
             "Speed": "speed",
             "DamageString": "pass_damage",
@@ -834,7 +834,7 @@
             "IsSlow": true,
             "IsSkillShot": true,
             "Speed": "spirit_speed",
-            "StringRadius": "radius",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "nyx_assassin_impale",
@@ -1607,7 +1607,7 @@
             "AbilityName": "ember_spirit_activate_fire_remnant",
             "Speed": "speed",
             "StringRadius": "radius",
-            "DamageString": "damage",
+            "DamageString": "damage"
         },
         {
             "AbilityName": "storm_spirit_static_remnant",
@@ -2268,7 +2268,7 @@
             "AbilityName": "item_diffusal_blade_2",
             //"ManaBurn": true,
             "IsSlow": true,
-            "IsPurge": true,
+            "IsPurge": true
         },
         {
             "AbilityName": "item_shivas_guard",
@@ -2649,6 +2649,6 @@
         {
             "AbilityName": "big_thunder_lizard_frenzy", 
             "IsBuff": true
-        },
+        }
     ]
 }

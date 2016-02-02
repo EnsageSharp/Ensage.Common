@@ -68,7 +68,8 @@
             if (Utils.SleepCheck("Common.Creeps.SpecialUpdate"))
             {
                 tempList = ObjectMgr.GetEntities<Creep>().ToList();
-                Utils.Sleep(10000, "Common.Creeps.SpecialUpdate");
+                Utils.Sleep(1700, "Common.Creeps.SpecialUpdate");
+                return;
             }
 
             UpdateCreeps();
@@ -79,7 +80,7 @@
         /// </summary>
         public static void UpdateCreeps()
         {
-            All = tempList.Where(creep => creep.IsValid && creep.IsAlive && creep.IsSpawned && creep.IsVisible).ToList();
+            All = tempList.Where(creep => creep.IsValid).ToList();
         }
 
         #endregion
@@ -98,11 +99,11 @@
 
         static void ObjectMgr_OnAddEntity(EntityEventArgs args)
         {
-            var creep = args.Entity as Creep;
             DelayAction.Add(
                 50, 
                 () =>
                     {
+                        var creep = args.Entity as Creep;
                         if (creep != null)
                         {
                             tempList.Add(creep);
