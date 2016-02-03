@@ -563,7 +563,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Color.FromArgb(190, 48, 48, 48);
+                return Color.FromArgb(210, 48, 48, 48);
             }
         }
 
@@ -571,7 +571,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Color.FromArgb(180, Color.Black);
+                return Color.FromArgb(200, Color.Black);
             }
         }
 
@@ -974,6 +974,17 @@ namespace Ensage.Common.Menu
         {
             TextureDictionary = new Dictionary<string, DotaTexture>();
             ItemDictionary = new Dictionary<string, MenuItem>();
+            var positionMenu = new Menu("MenuPosition", "menuPosition");
+            positionMenu.AddItem(
+                new MenuItem("positionX", "Position X").SetValue(
+                    new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height)));
+            positionMenu.AddItem(
+                new MenuItem("positionY", "Position Y").SetValue(
+                    new Slider((int)MenuSettings.BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.06), Drawing.Width)));
+            MenuSettings.BasePosition = new Vector2(
+                positionMenu.Item("positionX").GetValue<Slider>().Value,
+                positionMenu.Item("positionY").GetValue<Slider>().Value);
+            Root.AddSubMenu(positionMenu);
             Root.AddItem(new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
             Root.AddItem(new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
             Root.AddItem(new MenuItem("showMessage", "Show OnLoad message: ").SetValue(true));
@@ -1152,6 +1163,12 @@ namespace Ensage.Common.Menu
         {
             get
             {
+                var n = this.Name + this.DisplayName + "Width";
+                if (!Utils.SleepCheck(n))
+                {
+                    return (int)menuPositionDictionary[n].X;
+                }
+
                 var bonus = 0;
                 if (this.TextureName == null || this.ShowTextWithTexture)
                 {
@@ -1189,6 +1206,17 @@ namespace Ensage.Common.Menu
                     arrow = 4;
                 }
 
+                if (!menuPositionDictionary.ContainsKey(n))
+                {
+                    menuPositionDictionary.Add(n, new Vector2(this.Height + bonus + arrow));
+                }
+                else
+                {
+                    menuPositionDictionary[n] = new Vector2(this.Height + bonus + arrow);
+                }
+
+                Utils.Sleep(500, n);
+
                 return this.Height + bonus + arrow;
             }
         }
@@ -1225,7 +1253,7 @@ namespace Ensage.Common.Menu
                     menuPositionDictionary[n] = pos;
                 }
 
-                Utils.Sleep(1000, n);
+                Utils.Sleep(50, n);
                 return pos;
             }
         }
@@ -2676,7 +2704,7 @@ namespace Ensage.Common.Menu
                 this.Width, 
                 this.Height, 
                 1, 
-                Color.FromArgb(140, 28, 28, 28).ToSharpDxColor(), 
+                Color.FromArgb(160, 28, 28, 28).ToSharpDxColor(), 
                 SharpDX.Color.Black);
             var s = MultiLanguage._(this.DisplayName);
             if (this.DrawingTooltip)
