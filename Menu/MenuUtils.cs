@@ -51,6 +51,19 @@ namespace Ensage.Common.Menu
             }
         }
 
+        public static void DrawBoxBordered(
+            float x,
+            float y,
+            float w,
+            float h,
+            float borderWidth,
+            DotaTexture texture,
+            Color colorBorder)
+        {
+            Drawing.DrawRect(new Vector2(x, y), new Vector2(w, h), texture);
+            DrawBox(x - borderWidth, y - borderWidth, w + 2 * borderWidth, h + borderWidth, borderWidth, colorBorder);
+        }
+
         /// <summary>
         ///     Draws a bordered Box
         /// </summary>
