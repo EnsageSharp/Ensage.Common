@@ -49,9 +49,9 @@
 
             Events.OnClose += (sender, args) =>
                 {
-                    All = ObjectMgr.GetEntities<Player>().ToList();
-                    Dire = All.Where(x => x.Team == Team.Radiant).ToList();
-                    Radiant = All.Where(x => x.Team == Team.Dire).ToList();
+                    All = new List<Player>();
+                    Dire = new List<Player>();
+                    Radiant = new List<Player>();
                     Game.OnUpdate -= Update;
                     loaded = false;
                 };

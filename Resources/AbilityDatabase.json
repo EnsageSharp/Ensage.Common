@@ -1583,7 +1583,8 @@
         },
         {
             "AbilityName": "furion_sprout",
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "IsDisable": true
         },
         {
             "AbilityName": "furion_force_of_nature",
