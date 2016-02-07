@@ -2889,21 +2889,57 @@ namespace Ensage.Common.Menu
                                            ? new SharpDX.Color(45 + alpha, 45 + alpha, 45 + alpha)
                                            : new SharpDX.Color(28 + alpha, 28 + alpha, 28 + alpha)
                                      : new SharpDX.Color(45 + alpha, 45 + alpha, 45 + alpha);
+
+                    var aborder = val.Type == KeyBindType.Toggle
+                                     ? val.Active
+                                           ? new SharpDX.Color(40, 120, 40, 255)
+                                           : new SharpDX.Color(0, 0, 0, 0)
+                                     : new SharpDX.Color(0, 0, 0, 0);
+
+                    var height = this.Height - (this.Height / 6) * 2;
+
+                    var apos = val.Type == KeyBindType.Toggle
+                        ? val.Active ? rpos : rpos - new Vector2(height / 10, height / 10) : rpos - new Vector2(height / 10, height / 10);
+
+                    var asize = val.Type == KeyBindType.Toggle
+                                    ? val.Active
+                                          ? rsize
+                                          : rsize
+                                            + new Vector2(
+                                                  (float)((height / 10) * 2),
+                                                  (float)((height / 10) * 2))
+                                    : rsize
+                                      + new Vector2(
+                                            (float)((height / 10) * 2),
+                                            (float)((height / 10) * 2));
+
+                    if (this.Interacting)
+                    {
+                        apos = rpos;
+                        asize = rsize;
+                    }
+
                     MenuUtils.DrawBoxBordered(
-                        rpos.X, 
-                        rpos.Y, 
-                        rsize.X, 
-                        rsize.Y, 
-                        this.Interacting ? 1f : 0f, 
+                        apos.X,
+                        apos.Y,
+                        rsize.X,
+                        rsize.Y,
+                        1f,
+                        this.Interacting ? new SharpDX.Color(150, 100, 80) : aborder,
+                        new SharpDX.Color(0, 0, 0, 0));
+
+                    Drawing.DrawRect(
+                        apos + new Vector2(height / 10, height / 10),
+                        new Vector2((float)(asize.X - (height / 10) * 2), (float)(asize.Y - (height / 10) * 2)),
                         this.Interacting
                             ? new SharpDX.Color(48 + alpha, 38 + alpha, 28 + alpha)
-                            : acolor,
-                        this.Interacting ? new SharpDX.Color(150, 100, 80) : new SharpDX.Color(0, 0, 0, 0));
+                            : acolor);
+
                     var textSize = Drawing.MeasureText(te, "Arial", sizet, FontFlags.AntiAlias);
                     var textPos = this.Position
                                   + new Vector2(
                                         (float)(this.Width - this.Height - textSize.X / 2), 
-                                        (float)(this.Height * 0.5 - textSize.Y * 0.5) - 1);
+                                        (float)(this.Height * 0.5 - textSize.Y * 0.5));
 
                     Drawing.DrawText(
                         te, 
