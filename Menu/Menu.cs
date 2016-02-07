@@ -2265,6 +2265,18 @@ namespace Ensage.Common.Menu
                             (float)(MenuSettings.MenuItemHeight * 0.51), 
                             (float)(MenuSettings.MenuItemWidth * 0.7)), 
                             FontFlags.None).X;
+                    if (val.Type == KeyBindType.Toggle)
+                    {
+                        extra +=
+                            (int)
+                            Drawing.MeasureText(
+                                val.Active ? " (on)" : " (off)",
+                                "Arial",
+                                new Vector2(
+                                (float)(MenuSettings.MenuItemHeight * 0.51),
+                                (float)(MenuSettings.MenuItemWidth * 0.7)),
+                                FontFlags.None).X;
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(this.Tooltip))
@@ -2872,6 +2884,11 @@ namespace Ensage.Common.Menu
                                     ? 40
                                     : 0;
 
+                    var acolor = val.Type == KeyBindType.Toggle
+                                     ? val.Active
+                                           ? new SharpDX.Color(45 + alpha, 45 + alpha, 45 + alpha)
+                                           : new SharpDX.Color(28 + alpha, 28 + alpha, 28 + alpha)
+                                     : new SharpDX.Color(45 + alpha, 45 + alpha, 45 + alpha);
                     MenuUtils.DrawBoxBordered(
                         rpos.X, 
                         rpos.Y, 
@@ -2880,7 +2897,7 @@ namespace Ensage.Common.Menu
                         this.Interacting ? 1f : 0f, 
                         this.Interacting
                             ? new SharpDX.Color(48 + alpha, 38 + alpha, 28 + alpha)
-                            : new SharpDX.Color(45 + alpha, 45 + alpha, 45 + alpha), 
+                            : acolor,
                         this.Interacting ? new SharpDX.Color(150, 100, 80) : new SharpDX.Color(0, 0, 0, 0));
                     var textSize = Drawing.MeasureText(te, "Arial", sizet, FontFlags.AntiAlias);
                     var textPos = this.Position
@@ -2895,6 +2912,11 @@ namespace Ensage.Common.Menu
                         new SharpDX.Color(195 + alpha, 139 + alpha, 12 + alpha, 225), 
                         FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
                         | FontFlags.StrikeOut);
+
+                    if (val.Type == KeyBindType.Toggle)
+                    {
+                        s += val.Active ? " (on)" : " (off)";
+                    }
 
                     textSize1 = Drawing.MeasureText(
                         s, 
