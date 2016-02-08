@@ -707,8 +707,7 @@ namespace Ensage.Common.Menu
                              ? 25
                              : 0;
 
-            var s = on ? "✔" : string.Empty;
-
+            var s = MenuConfig.SelectedLanguage == "Chinese" ? on ? "ON" : "OFF" : on ? "✔" : string.Empty;
             var pos = position + new Vector2(item.Height / 6, item.Height / 6);
             var height = item.Height - (item.Height / 6) * 2;
             MenuUtils.DrawBoxBordered(
@@ -723,20 +722,23 @@ namespace Ensage.Common.Menu
                 pos + new Vector2(height / 10, height / 10), 
                 new Vector2((float)(height - (height / 10) * 2), (float)(height - (height / 10) * 2) - 1), 
                 new SharpDX.Color(5 + alpha2, 5 + alpha2, 5 + alpha2));
-
+            var tsize = MenuConfig.SelectedLanguage == "Chinese" ? new Vector2((float)(height / 2.1), item.Width) : new Vector2((float)(height / 1.1), item.Width);
             var textSize = Drawing.MeasureText(
                 s, 
-                "Arial", 
-                new Vector2((float)(height / 1.1), item.Width), 
+                "Arial",
+                tsize, 
                 FontFlags.AntiAlias);
-            var textPos = item.Position
+            var textPos = MenuConfig.SelectedLanguage == "Chinese" ? item.Position
+                          + new Vector2(
+                                (float)(item.Width - item.Height / 2 - textSize.X / 2), 
+                                (float)(+item.Height * 0.5 - textSize.Y / 2)) : item.Position
                           + new Vector2(
                                 (float)(item.Width - item.Height / 2 - textSize.X / 2.9), 
                                 (float)(+item.Height * 0.5 - textSize.Y / 1.9));
             Drawing.DrawText(
                 s, 
-                textPos, 
-                new Vector2((float)(height / 1.1), item.Width), 
+                textPos,
+                tsize, 
                 Color.NavajoWhite.ToSharpDxColor(), 
                 FontFlags.Italic | FontFlags.DropShadow);
         }
