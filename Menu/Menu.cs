@@ -706,29 +706,33 @@ namespace Ensage.Common.Menu
                 item.Height)
                              ? 25
                              : 0;
-
-            var s = MenuConfig.SelectedLanguage == "Chinese" ? on ? "ON" : "OFF" : on ? "✔" : string.Empty;
+            var noUnicode = MenuConfig.SelectedLanguage == "Chinese";
+            var s = noUnicode ? on ? "ON" : "OFF" : on ? "✔" : string.Empty;
             var pos = position + new Vector2(item.Height / 6, item.Height / 6);
             var height = item.Height - (item.Height / 6) * 2;
-            MenuUtils.DrawBoxBordered(
-                pos.X, 
-                pos.Y, 
-                height, 
-                height, 
-                1f, 
-                Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(), 
-                new SharpDX.Color(0, 0, 0));
+            if (MenuConfig.SelectedLanguage != "Chinese")
+            {
+                MenuUtils.DrawBoxBordered(
+                    pos.X,
+                    pos.Y,
+                    height,
+                    height,
+                    1f,
+                    Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(),
+                    new SharpDX.Color(0, 0, 0));
+            }
+
             Drawing.DrawRect(
                 pos + new Vector2(height / 10, height / 10), 
                 new Vector2((float)(height - (height / 10) * 2), (float)(height - (height / 10) * 2) - 1), 
                 new SharpDX.Color(5 + alpha2, 5 + alpha2, 5 + alpha2));
-            var tsize = MenuConfig.SelectedLanguage == "Chinese" ? new Vector2((float)(height / 2.1), item.Width) : new Vector2((float)(height / 1.1), item.Width);
+            var tsize = noUnicode ? new Vector2((float)(height / 2.1), item.Width) : new Vector2((float)(height / 1.1), item.Width);
             var textSize = Drawing.MeasureText(
                 s, 
                 "Arial",
                 tsize, 
                 FontFlags.AntiAlias);
-            var textPos = MenuConfig.SelectedLanguage == "Chinese" ? item.Position
+            var textPos = noUnicode ? item.Position
                           + new Vector2(
                                 (float)(item.Width - item.Height / 2 - textSize.X / 2), 
                                 (float)(+item.Height * 0.5 - textSize.Y / 2)) : item.Position
@@ -739,8 +743,8 @@ namespace Ensage.Common.Menu
                 s,
                 textPos,
                 tsize,
-                MenuConfig.SelectedLanguage == "Chinese" && !on
-                    ? Color.Gray.ToSharpDxColor()
+                noUnicode
+                    ? on ? Color.DarkGreen.ToSharpDxColor() : Color.Red.ToSharpDxColor()
                     : Color.NavajoWhite.ToSharpDxColor(),
                 FontFlags.Italic | FontFlags.DropShadow);
         }
@@ -1080,7 +1084,13 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                if (Environment.TickCount - this.cachedMenuCountT < 500)
+                var n = this.DisplayName + this.Name + "Common.Menu.CacheCount";
+                if (this.Parent != null)
+                {
+                    n += this.Parent.Name;
+                }
+
+                if (!Utils.SleepCheck(n))
                 {
                     return this.cachedMenuCount;
                 }
@@ -1101,7 +1111,7 @@ namespace Ensage.Common.Menu
                 }
 
                 this.cachedMenuCount = result;
-                this.cachedMenuCountT = Environment.TickCount;
+                Utils.Sleep(2000, n);
                 return result;
             }
         }

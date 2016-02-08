@@ -282,7 +282,7 @@ namespace Ensage.Common
         public static void Sleep(double duration, string name)
         {
             double dur;
-            var tick = Environment.TickCount;
+            var tick = Environment.TickCount & int.MaxValue;
             if (!Sleeps.TryGetValue(name, out dur) || dur < tick + duration)
             {
                 Sleeps[name] = tick + duration;
@@ -297,7 +297,7 @@ namespace Ensage.Common
         public static bool SleepCheck(string id)
         {
             double asd;
-            return !Sleeps.TryGetValue(id, out asd) || Environment.TickCount > asd;
+            return !Sleeps.TryGetValue(id, out asd) || (Environment.TickCount & int.MaxValue) > asd;
         }
 
         #endregion
