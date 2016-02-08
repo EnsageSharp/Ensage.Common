@@ -736,10 +736,12 @@ namespace Ensage.Common.Menu
                                 (float)(item.Width - item.Height / 2 - textSize.X / 2.9), 
                                 (float)(+item.Height * 0.5 - textSize.Y / 1.9));
             Drawing.DrawText(
-                s, 
+                s,
                 textPos,
-                tsize, 
-                Color.NavajoWhite.ToSharpDxColor(), 
+                tsize,
+                MenuConfig.SelectedLanguage == "Chinese" && !on
+                    ? Color.Gray.ToSharpDxColor()
+                    : Color.NavajoWhite.ToSharpDxColor(),
                 FontFlags.Italic | FontFlags.DropShadow);
         }
 
