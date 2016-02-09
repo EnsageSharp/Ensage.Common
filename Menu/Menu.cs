@@ -27,6 +27,7 @@ namespace Ensage.Common.Menu
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Security.Cryptography;
 
     using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.SharpDX;
@@ -706,47 +707,52 @@ namespace Ensage.Common.Menu
                 item.Height)
                              ? 25
                              : 0;
-            var noUnicode = MenuConfig.SelectedLanguage == "Chinese";
-            var s = noUnicode ? on ? "ON" : "OFF" : on ? "✔" : string.Empty;
+            var noUnicode = MenuConfig.SelectedLanguage == "Chinese" || MenuConfig.SelectedLanguage == "Russian";
+            var s = on ? "✔" : string.Empty;
             var pos = position + new Vector2(item.Height / 6, item.Height / 6);
             var height = item.Height - (item.Height / 6) * 2;
-            if (MenuConfig.SelectedLanguage != "Chinese")
-            {
-                MenuUtils.DrawBoxBordered(
-                    pos.X,
-                    pos.Y,
-                    height,
-                    height,
-                    1f,
-                    Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(),
-                    new SharpDX.Color(0, 0, 0));
-            }
+
+            MenuUtils.DrawBoxBordered(
+                pos.X,
+                pos.Y,
+                height,
+                height,
+                1f,
+                Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(),
+                new SharpDX.Color(0, 0, 0));
 
             Drawing.DrawRect(
                 pos + new Vector2(height / 10, height / 10), 
                 new Vector2((float)(height - (height / 10) * 2), (float)(height - (height / 10) * 2) - 1), 
                 new SharpDX.Color(5 + alpha2, 5 + alpha2, 5 + alpha2));
-            var tsize = noUnicode ? new Vector2((float)(height / 2.1), item.Width) : new Vector2((float)(height / 1.1), item.Width);
-            var textSize = Drawing.MeasureText(
-                s, 
-                "Arial",
-                tsize, 
-                FontFlags.AntiAlias);
-            var textPos = noUnicode ? item.Position
-                          + new Vector2(
-                                (float)(item.Width - item.Height / 2 - textSize.X / 2), 
-                                (float)(+item.Height * 0.5 - textSize.Y / 2)) : item.Position
-                          + new Vector2(
-                                (float)(item.Width - item.Height / 2 - textSize.X / 2.9), 
-                                (float)(+item.Height * 0.5 - textSize.Y / 1.9));
-            Drawing.DrawText(
-                s,
-                textPos,
-                tsize,
-                noUnicode
-                    ? on ? Color.DarkGreen.ToSharpDxColor() : Color.Red.ToSharpDxColor()
-                    : Color.NavajoWhite.ToSharpDxColor(),
-                FontFlags.Italic | FontFlags.DropShadow);
+            if (noUnicode)
+            {
+                if (!on)
+                {
+                    return;
+                }
+
+                Drawing.DrawRect(
+                    pos + new Vector2(height / 4, height / 4),
+                    new Vector2((float)(height - (height / 4) * 2), (float)(height - (height / 4) * 2) - 1),
+                    new SharpDX.Color(230, 148, 2));
+            }
+            else
+            {
+                var tsize = new Vector2((float)(height / 1.1), item.Width);
+                var textSize = Drawing.MeasureText(s, "Arial", tsize, FontFlags.AntiAlias);
+                var textPos = item.Position
+                              + new Vector2(
+                                    (float)(item.Width - item.Height / 2 - textSize.X / 2.9),
+                                    (float)(+item.Height * 0.5 - textSize.Y / 1.9));
+
+                Drawing.DrawText(
+                    s,
+                    textPos,
+                    tsize,
+                    Color.NavajoWhite.ToSharpDxColor(),
+                    FontFlags.Italic | FontFlags.DropShadow);
+            }
         }
 
         internal static void DrawSlider(Vector2 position, MenuItem item, int width = -1, bool drawText = true)

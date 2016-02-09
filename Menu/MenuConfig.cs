@@ -49,12 +49,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                if (appDataDirectory == null)
-                {
-                    appDataDirectory = SandboxConfig.AppDataDirectory;
-                }
-
-                return appDataDirectory;
+                return appDataDirectory ?? (appDataDirectory = SandboxConfig.AppDataDirectory);
             }
         }
 
