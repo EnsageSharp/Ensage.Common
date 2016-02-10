@@ -92,7 +92,7 @@ namespace Ensage.Common
         /// <summary>
         ///     OnClose is getting called after game ends
         /// </summary>
-        public static event OnLoadDelegate OnClose;
+        public static event OnCloseDelegate OnClose;
 
         /// <summary>
         ///     OnLoad is getting called after you pick a hero (doesn't matter if started or restarted while game is already

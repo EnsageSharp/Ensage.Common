@@ -5,7 +5,7 @@
     /// <summary>
     ///     The names.
     /// </summary>
-    internal static class Names
+    public static class Names
     {
         #region Static Fields
 
@@ -28,6 +28,29 @@
         ///     The <see cref="string" />.
         /// </returns>
         public static string StoredName(this Entity entity)
+        {
+            var handle = entity.Handle;
+            string name;
+            if (NameDictionary.TryGetValue(handle, out name))
+            {
+                return name;
+            }
+
+            name = entity.Name;
+            NameDictionary.Add(handle, name);
+            return name;
+        }
+
+        /// <summary>
+        /// The stored name.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public static string StoredName(this Ability entity)
         {
             var handle = entity.Handle;
             string name;

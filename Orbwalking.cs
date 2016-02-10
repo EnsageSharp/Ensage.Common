@@ -307,7 +307,7 @@ namespace Ensage.Common
             }
 
             // Console.WriteLine("a");
-            tick = Environment.TickCount;
+            tick = (Environment.TickCount & int.MaxValue);
             if (me.NetworkActivity == lastActivity)
             {
                 return;

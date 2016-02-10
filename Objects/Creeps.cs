@@ -4,22 +4,35 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    ///     The creeps.
+    /// </summary>
     public class Creeps
     {
         #region Static Fields
 
         /// <summary>
+        /// The all.
         /// </summary>
         public static List<Creep> All;
 
+        /// <summary>
+        ///     The loaded.
+        /// </summary>
         private static bool loaded;
 
+        /// <summary>
+        ///     The temp list.
+        /// </summary>
         private static List<Creep> tempList;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="Creeps" /> class.
+        /// </summary>
         static Creeps()
         {
             All = new List<Creep>();
@@ -51,8 +64,11 @@
         #region Public Methods and Operators
 
         /// <summary>
+        ///     The update.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
         public static void Update(EventArgs args)
         {
             if (!Game.IsInGame || Game.IsPaused)
@@ -77,6 +93,7 @@
         }
 
         /// <summary>
+        ///     The update creeps.
         /// </summary>
         public static void UpdateCreeps()
         {
@@ -87,6 +104,9 @@
 
         #region Methods
 
+        /// <summary>
+        ///     The load.
+        /// </summary>
         private static void Load()
         {
             All = new List<Creep>();
@@ -97,7 +117,13 @@
             loaded = true;
         }
 
-        static void ObjectMgr_OnAddEntity(EntityEventArgs args)
+        /// <summary>
+        ///     The object manager on add entity.
+        /// </summary>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
+        private static void ObjectMgr_OnAddEntity(EntityEventArgs args)
         {
             DelayAction.Add(
                 50, 
@@ -111,7 +137,13 @@
                     });
         }
 
-        static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
+        /// <summary>
+        ///     The object manager on remove entity.
+        /// </summary>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
+        private static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
         {
             var creep = args.Entity as Creep;
             if (creep != null)
