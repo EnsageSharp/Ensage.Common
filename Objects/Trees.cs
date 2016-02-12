@@ -53,6 +53,21 @@
 
         #endregion
 
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///     The get trees.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="List" />.
+        /// </returns>
+        public static List<Tree> GetTrees()
+        {
+            return all;
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
