@@ -432,7 +432,7 @@ namespace Ensage.Common.Menu.NotificationData
                             return;
                         }
 
-                        if (!this.flashing && this.duration > 0x0 && Environment.TickCount - this.decreasementTick > 0x0)
+                        if (!this.flashing && this.duration > 0x0 && (Environment.TickCount & int.MaxValue) - this.decreasementTick > 0x0)
                         {
                             if (this.TextColor.A > 0x0)
                             {
@@ -452,11 +452,9 @@ namespace Ensage.Common.Menu.NotificationData
                             this.decreasementTick = this.GetNextDecreasementTick();
                         }
 
-                        
-
                         if (this.flashing)
                         {
-                            if (Environment.TickCount - this.flashTick > 0x0)
+                            if ((Environment.TickCount & int.MaxValue) - this.flashTick > 0x0)
                             {
                                 if (this.TextColor.A > 0x0 && this.BoxColor.A > 0x0 && this.BorderColor.A > 0x0)
                                 {
@@ -524,11 +522,10 @@ namespace Ensage.Common.Menu.NotificationData
                                     }
                                 }
 
-                                this.flashTick = Environment.TickCount + this.flashInterval;
+                                this.flashTick = (Environment.TickCount & int.MaxValue) + this.flashInterval;
                             }
                         }
 
-                        
 
                         #region Mouse
 
@@ -702,9 +699,9 @@ namespace Ensage.Common.Menu.NotificationData
                 var message = (Utils.WindowsMessages)args.Msg;
                 if (message == Utils.WindowsMessages.WM_LBUTTONDOWN)
                 {
-                    if (Environment.TickCount - this.clickTick < 0x5DC)
+                    if ((Environment.TickCount & int.MaxValue) - this.clickTick < 0x5DC)
                     {
-                        this.clickTick = Environment.TickCount;
+                        this.clickTick = Environment.TickCount & int.MaxValue;
 
                         Notifications.Free(this.handler);
 
@@ -717,7 +714,7 @@ namespace Ensage.Common.Menu.NotificationData
                         return;
                     }
 
-                    this.clickTick = Environment.TickCount;
+                    this.clickTick = Environment.TickCount & int.MaxValue;
                 }
             }
         }
@@ -861,7 +858,7 @@ namespace Ensage.Common.Menu.NotificationData
         /// <returns>Decreasement Tick</returns>
         private int GetNextDecreasementTick()
         {
-            return Environment.TickCount + this.duration / 0xFF;
+            return (Environment.TickCount & int.MaxValue) + (this.duration / 0xFF);
         }
 
         #endregion

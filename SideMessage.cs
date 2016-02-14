@@ -250,7 +250,7 @@ namespace Ensage.Common
         /// </summary>
         public void CreateMessage()
         {
-            this.CreateTick = Environment.TickCount;
+            this.CreateTick = Environment.TickCount & int.MaxValue;
             foreach (var message in sideMessages.Where(message => message.Value.Visible))
             {
                 message.Value.ShiftVec(new Vector2(0, -message.Value.Size.Y - 3));
@@ -290,7 +290,7 @@ namespace Ensage.Common
                         continue;
                     }
 
-                    var span = Environment.TickCount - message.CreateTick;
+                    var span = (Environment.TickCount & int.MaxValue) - message.CreateTick;
                     if (span < message.EnterTime)
                     {
                         message.SetX(Drawing.Width - (message.Size.X - 1) * span / message.EnterTime);
@@ -329,7 +329,7 @@ namespace Ensage.Common
                 }
             }
 
-            LastTick = Environment.TickCount;
+            LastTick = Environment.TickCount & int.MaxValue;
         }
 
         private void SetX(float x)

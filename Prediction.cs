@@ -352,7 +352,7 @@ namespace Ensage.Common
             }
 
             // DrawPredictions();
-            var tick = Environment.TickCount;
+            var tick = Environment.TickCount & int.MaxValue;
             var tempTable = new List<Prediction>(TrackTable);
             foreach (var unit in playerList.Where(x => x.IsValid))
             {
@@ -490,7 +490,7 @@ namespace Ensage.Common
                 return 5000;
             }
 
-            return Environment.TickCount - RotTimeDictionary[unit.Handle] + Game.Ping;
+            return (Environment.TickCount & int.MaxValue) - RotTimeDictionary[unit.Handle] + Game.Ping;
         }
 
         #endregion

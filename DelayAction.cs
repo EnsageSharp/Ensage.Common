@@ -91,8 +91,8 @@ namespace Ensage.Common
                 signal =>
                     {
                         var delayActionItem = (DelayActionItem)signal.Properties["DelayActionItem"];
-                        return Environment.TickCount >= delayActionItem.Time;
-                    }, 
+                        return (Environment.TickCount & int.MaxValue) >= delayActionItem.Time;
+                    },
                 default(DateTimeOffset), 
                 new Dictionary<string, object> { { "DelayActionItem", item } });
         }
@@ -115,7 +115,7 @@ namespace Ensage.Common
         /// <param name="token">The cancelation token.</param>
         public DelayActionItem(int time, Action func, CancellationToken token)
         {
-            this.Time = time + Environment.TickCount;
+            this.Time = time + (Environment.TickCount & int.MaxValue);
             this.Function = func;
             this.Token = token;
         }
