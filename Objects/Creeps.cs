@@ -45,7 +45,7 @@
 
                     Load();
                 };
-            if (!loaded && ObjectMgr.LocalHero != null && Game.IsInGame)
+            if (!loaded && ObjectManager.LocalHero != null && Game.IsInGame)
             {
                 Load();
             }
@@ -53,8 +53,8 @@
             Events.OnClose += (sender, args) =>
                 {
                     Game.OnUpdate -= Update;
-                    ObjectMgr.OnAddEntity -= ObjectMgr_OnAddEntity;
-                    ObjectMgr.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
+                    ObjectManager.OnAddEntity -= ObjectMgr_OnAddEntity;
+                    ObjectManager.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
                 };
         }
@@ -83,7 +83,7 @@
 
             if (Utils.SleepCheck("Common.Creeps.SpecialUpdate"))
             {
-                tempList = ObjectMgr.GetEntities<Creep>().ToList();
+                tempList = ObjectManager.GetEntities<Creep>().ToList();
                 Utils.Sleep(1700, "Common.Creeps.SpecialUpdate");
                 return;
             }
@@ -110,10 +110,10 @@
         private static void Load()
         {
             All = new List<Creep>();
-            tempList = ObjectMgr.GetEntities<Creep>().ToList();
+            tempList = ObjectManager.GetEntities<Creep>().ToList();
             Game.OnUpdate += Update;
-            ObjectMgr.OnAddEntity += ObjectMgr_OnAddEntity;
-            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
+            ObjectManager.OnAddEntity += ObjectMgr_OnAddEntity;
+            ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
             loaded = true;
         }
 

@@ -40,7 +40,7 @@
             }
 
             ability =
-                ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name && x.Owner.Team == team);
+                ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name && x.Owner.Team == team);
             AbilityDictionary.Add(name + team, ability);
 
             return ability;
@@ -63,7 +63,7 @@
                 return ability;
             }
 
-            ability = ObjectMgr.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name);
+            ability = ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name);
             AbilityDictionary.Add(name, ability);
 
             return ability;

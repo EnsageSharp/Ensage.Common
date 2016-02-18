@@ -30,7 +30,7 @@
 
         static Players()
         {
-            All = ObjectMgr.GetEntities<Player>().ToList();
+            All = ObjectManager.GetEntities<Player>().ToList();
             Dire = All.Where(x => x.Team == Team.Radiant).ToList();
             Radiant = All.Where(x => x.Team == Team.Dire).ToList();
             Events.OnLoad += (sender, args) =>
@@ -42,7 +42,7 @@
 
                     Load();
                 };
-            if (!loaded && Game.IsInGame && ObjectMgr.LocalHero != null)
+            if (!loaded && Game.IsInGame && ObjectManager.LocalHero != null)
             {
                 Load();
             }
@@ -78,7 +78,7 @@
 
             if (All.Count < 10)
             {
-                All = ObjectMgr.GetEntities<Player>().ToList();
+                All = ObjectManager.GetEntities<Player>().ToList();
             }
 
             if (Radiant.Count < 5)
@@ -100,7 +100,7 @@
 
         private static void Load()
         {
-            All = ObjectMgr.GetEntities<Player>().ToList();
+            All = ObjectManager.GetEntities<Player>().ToList();
             Dire = All.Where(x => x.Team == Team.Radiant).ToList();
             Radiant = All.Where(x => x.Team == Team.Dire).ToList();
             Game.OnUpdate += Update;

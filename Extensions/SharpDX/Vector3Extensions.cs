@@ -314,7 +314,7 @@ namespace Ensage.Common.Extensions.SharpDX
         public static bool IsUnderTurret(this Vector3 position, bool enemyTurretsOnly)
         {
             return
-                ObjectMgr.GetEntities<Building>()
+                ObjectManager.GetEntities<Building>()
                     .Any(
                         tower =>
                         tower.ClassID == ClassID.CDOTA_BaseNPC_Tower

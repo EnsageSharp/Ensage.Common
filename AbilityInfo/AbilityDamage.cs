@@ -461,7 +461,7 @@ namespace Ensage.Common.AbilityInfo
                 case "undying_soul_rip":
                     var radius = ability.GetAbilityData("radius");
                     var nearUnits =
-                        ObjectMgr.GetEntities<Unit>()
+                        ObjectManager.GetEntities<Unit>()
                             .Where(
                                 x =>
                                 !x.Equals(source) && !x.Equals(target)

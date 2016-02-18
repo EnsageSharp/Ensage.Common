@@ -53,7 +53,7 @@ namespace Ensage.Common.Extensions
 
         private static readonly Dictionary<string, float> ChannelDictionary = new Dictionary<string, float>();
 
-        private static readonly Dictionary<string, AbilityData> DataDictionary = new Dictionary<string, AbilityData>();
+        private static readonly Dictionary<string, AbilitySpecialData> DataDictionary = new Dictionary<string, AbilitySpecialData>();
 
         private static Dictionary<string, float> castRangeDictionary = new Dictionary<string, float>();
 
@@ -635,10 +635,10 @@ namespace Ensage.Common.Extensions
         {
             var lvl = ability.Level;
             var name = abilityName ?? ability.StoredName();
-            AbilityData data;
+            AbilitySpecialData data;
             if (!DataDictionary.TryGetValue(name + "_" + dataName, out data))
             {
-                data = ability.AbilityData.FirstOrDefault(x => x.Name == dataName);
+                data = ability.AbilitySpecialData.FirstOrDefault(x => x.Name == dataName);
                 DataDictionary.Add(name + "_" + dataName, data);
             }
 

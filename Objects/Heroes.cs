@@ -44,7 +44,7 @@
 
                     Load();
                 };
-            if (!loaded && ObjectMgr.LocalHero != null && Game.IsInGame)
+            if (!loaded && ObjectManager.LocalHero != null && Game.IsInGame)
             {
                 Load();
             }
@@ -56,8 +56,8 @@
                     Radiant = new List<Hero>();
                     tempList = new List<Hero>();
                     Game.OnUpdate -= Update;
-                    ObjectMgr.OnAddEntity -= ObjectMgr_OnAddEntity;
-                    ObjectMgr.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
+                    ObjectManager.OnAddEntity -= ObjectMgr_OnAddEntity;
+                    ObjectManager.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
                 };
         }
@@ -136,8 +136,8 @@
             tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
             UpdateHeroes();
             Game.OnUpdate += Update;
-            ObjectMgr.OnAddEntity += ObjectMgr_OnAddEntity;
-            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
+            ObjectManager.OnAddEntity += ObjectMgr_OnAddEntity;
+            ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
             loaded = true;
         }
 

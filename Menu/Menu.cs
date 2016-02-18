@@ -1378,7 +1378,7 @@ namespace Ensage.Common.Menu
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
-                        Heroes.GetByTeam(ObjectMgr.LocalHero.GetEnemyTeam())
+                        Heroes.GetByTeam(ObjectManager.LocalHero.GetEnemyTeam())
                             .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
                             .ToList();
 
@@ -1405,7 +1405,7 @@ namespace Ensage.Common.Menu
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
-                        Heroes.GetByTeam(ObjectMgr.LocalHero.Team)
+                        Heroes.GetByTeam(ObjectManager.LocalHero.Team)
                             .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
                             .ToList();
 
@@ -1450,7 +1450,7 @@ namespace Ensage.Common.Menu
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
             AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
             Drawing.OnDraw += this.Drawing_OnDraw;
-            ObjectMgr.OnAddEntity += this.ObjectMgr_OnAddEntity;
+            ObjectManager.OnAddEntity += this.ObjectMgr_OnAddEntity;
             Game.OnWndProc += this.Game_OnWndProc;
             DelayAction.Add(500, this.SetHeroTogglers);
         }
@@ -1464,7 +1464,7 @@ namespace Ensage.Common.Menu
         {
             if (makeChampionUniq)
             {
-                name = ObjectMgr.LocalHero.StoredName() + name;
+                name = ObjectManager.LocalHero.StoredName() + name;
             }
 
             MenuItem tempItem;
@@ -1874,7 +1874,7 @@ namespace Ensage.Common.Menu
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
-                        Heroes.GetByTeam(ObjectMgr.LocalHero.GetEnemyTeam())
+                        Heroes.GetByTeam(ObjectManager.LocalHero.GetEnemyTeam())
                             .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
                             .ToList();
 
@@ -1901,7 +1901,7 @@ namespace Ensage.Common.Menu
                     var dict = item.GetValue<HeroToggler>().Dictionary;
                     var sdict = item.GetValue<HeroToggler>().SValuesDictionary;
                     var heroes =
-                        Heroes.GetByTeam(ObjectMgr.LocalHero.Team)
+                        Heroes.GetByTeam(ObjectManager.LocalHero.Team)
                             .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
                             .ToList();
 
@@ -2169,7 +2169,7 @@ namespace Ensage.Common.Menu
         {
             if (makeChampionUniq)
             {
-                name = ObjectMgr.LocalHero.StoredName() + name;
+                name = ObjectManager.LocalHero.StoredName() + name;
             }
 
             this.Name = name;

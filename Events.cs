@@ -42,7 +42,7 @@ namespace Ensage.Common
         {
             Game.OnUpdate += args =>
                 {
-                    if (!Game.IsInGame || ObjectMgr.LocalHero == null || !ObjectMgr.LocalHero.IsValid)
+                    if (!Game.IsInGame || ObjectManager.LocalHero == null || !ObjectManager.LocalHero.IsValid)
                     {
                         if (!unloaded)
                         {

@@ -179,7 +179,7 @@ namespace Ensage.Common
                 return Vector2.Zero;
             }
 
-            if (unit.Equals(ObjectMgr.LocalHero))
+            if (unit.Equals(ObjectManager.LocalHero))
             {
                 return screenPos + new Vector2((float)(-HpBarX * Monitor), (-HpBarY - 10) * Monitor);
             }

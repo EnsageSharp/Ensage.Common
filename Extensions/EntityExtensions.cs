@@ -667,7 +667,7 @@ namespace Ensage.Common.Extensions
             foreach (var v in ExternalDmgAmps.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = Abilities.FindAbility(v.SourceSpellName)
-                              ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
+                              ?? ObjectManager.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
 
                 // var burst = 0f;
                 if (ability == null)
@@ -700,7 +700,7 @@ namespace Ensage.Common.Extensions
             foreach (var v in ExternalDmgReductions.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = Abilities.FindAbility(v.SourceSpellName)
-                              ?? ObjectMgr.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
+                              ?? ObjectManager.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
 
                 // var burst = 0f;
                 if (ability == null)
@@ -1007,7 +1007,7 @@ namespace Ensage.Common.Extensions
         /// <param name="projectile"></param>
         /// <param name="unit2"></param>
         /// <returns></returns>
-        public static float Distance2D(this Projectile projectile, Entity unit2)
+        public static float Distance2D(this TrackingProjectile projectile, Entity unit2)
         {
             return projectile.Position.Distance2D(unit2.Position);
         }
@@ -1017,7 +1017,7 @@ namespace Ensage.Common.Extensions
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public static float Distance2D(this Projectile p1, Projectile p2)
+        public static float Distance2D(this TrackingProjectile p1, TrackingProjectile p2)
         {
             return p1.Position.Distance2D(p2.Position);
         }
@@ -1702,7 +1702,7 @@ namespace Ensage.Common.Extensions
                 return false;
             }
 
-            if (checkTeam && unit.Team == ObjectMgr.LocalHero.Team)
+            if (checkTeam && unit.Team == ObjectManager.LocalHero.Team)
             {
                 return false;
             }
@@ -1712,7 +1712,7 @@ namespace Ensage.Common.Extensions
 
             return !(range < float.MaxValue)
                    || !(Vector2.DistanceSquared(
-                       (@from.ToVector2().IsValid() ? @from : ObjectMgr.LocalHero.NetworkPosition).ToVector2(), 
+                       (@from.ToVector2().IsValid() ? @from : ObjectManager.LocalHero.NetworkPosition).ToVector2(), 
                        unitPosition.ToVector2()) > range * range);
         }
 

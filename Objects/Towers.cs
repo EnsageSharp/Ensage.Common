@@ -40,7 +40,7 @@
         static Towers()
         {
             all =
-                ObjectMgr.GetEntities<Building>()
+                ObjectManager.GetEntities<Building>()
                     .Where(x => x.IsAlive && x.ClassID == ClassID.CDOTA_BaseNPC_Tower)
                     .ToList();
             dire = all.Where(x => x.Team == Team.Dire).ToList();
@@ -54,14 +54,14 @@
 
                     Load();
                 };
-            if (!loaded && ObjectMgr.LocalHero != null && Game.IsInGame)
+            if (!loaded && ObjectManager.LocalHero != null && Game.IsInGame)
             {
                 Load();
             }
 
             Events.OnClose += (sender, args) =>
                 {
-                    ObjectMgr.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
+                    ObjectManager.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
                 };
         }
@@ -76,12 +76,12 @@
         private static void Load()
         {
             all =
-                ObjectMgr.GetEntities<Building>()
+                ObjectManager.GetEntities<Building>()
                     .Where(x => x.IsAlive && x.ClassID == ClassID.CDOTA_BaseNPC_Tower)
                     .ToList();
             dire = all.Where(x => x.Team == Team.Dire).ToList();
             radiant = all.Where(x => x.Team == Team.Radiant).ToList();
-            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
+            ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
             loaded = true;
         }
 

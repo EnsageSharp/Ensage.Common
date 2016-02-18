@@ -29,7 +29,7 @@
         /// </summary>
         static Trees()
         {
-            all = ObjectMgr.GetEntities<Tree>().ToList();
+            all = ObjectManager.GetEntities<Tree>().ToList();
             Events.OnLoad += (sender, args) =>
                 {
                     if (loaded)
@@ -39,14 +39,14 @@
 
                     Load();
                 };
-            if (!loaded && ObjectMgr.LocalHero != null && Game.IsInGame)
+            if (!loaded && ObjectManager.LocalHero != null && Game.IsInGame)
             {
                 Load();
             }
 
             Events.OnClose += (sender, args) =>
                 {
-                    ObjectMgr.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
+                    ObjectManager.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
                 };
         }
@@ -75,8 +75,8 @@
         /// </summary>
         private static void Load()
         {
-            all = ObjectMgr.GetEntities<Tree>().ToList();
-            ObjectMgr.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
+            all = ObjectManager.GetEntities<Tree>().ToList();
+            ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
             loaded = true;
         }
 

@@ -334,7 +334,7 @@ namespace Ensage.Common
                 return;
             }
 
-            var me = ObjectMgr.LocalHero;
+            var me = ObjectManager.LocalHero;
             if (me == null)
             {
                 return;
@@ -417,7 +417,7 @@ namespace Ensage.Common
                         {
                             var ballLightning = unit.FindSpell("storm_spirit_ball_lightning");
                             var firstOrDefault =
-                                ballLightning.AbilityData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
+                                ballLightning.AbilitySpecialData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
                             if (firstOrDefault != null)
                             {
                                 var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);

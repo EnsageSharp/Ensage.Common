@@ -290,7 +290,7 @@ namespace Ensage.Common
         {
             if (me == null)
             {
-                me = ObjectMgr.LocalHero;
+                me = ObjectManager.LocalHero;
             }
 
             if (!Game.IsInGame || me == null || Game.IsPaused)
