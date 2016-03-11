@@ -667,7 +667,8 @@ namespace Ensage.Common.Extensions
             foreach (var v in ExternalDmgAmps.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = Abilities.FindAbility(v.SourceSpellName)
-                              ?? ObjectManager.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
+                              ?? ObjectManager.GetEntities<Item>()
+                                     .FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
 
                 // var burst = 0f;
                 if (ability == null)
@@ -700,7 +701,8 @@ namespace Ensage.Common.Extensions
             foreach (var v in ExternalDmgReductions.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
                 var ability = Abilities.FindAbility(v.SourceSpellName)
-                              ?? ObjectManager.GetEntities<Item>().FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
+                              ?? ObjectManager.GetEntities<Item>()
+                                     .FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
 
                 // var burst = 0f;
                 if (ability == null)

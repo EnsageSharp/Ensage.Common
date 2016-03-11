@@ -42,13 +42,13 @@
         }
 
         /// <summary>
-        /// The stored name.
+        ///     The stored name.
         /// </summary>
         /// <param name="entity">
-        /// The entity.
+        ///     The entity.
         /// </param>
         /// <returns>
-        /// The <see cref="string"/>.
+        ///     The <see cref="string" />.
         /// </returns>
         public static string StoredName(this Ability entity)
         {

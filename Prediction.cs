@@ -417,7 +417,8 @@ namespace Ensage.Common
                         {
                             var ballLightning = unit.FindSpell("storm_spirit_ball_lightning");
                             var firstOrDefault =
-                                ballLightning.AbilitySpecialData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
+                                ballLightning.AbilitySpecialData.FirstOrDefault(
+                                    x => x.Name == "ball_lightning_move_speed");
                             if (firstOrDefault != null)
                             {
                                 var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);

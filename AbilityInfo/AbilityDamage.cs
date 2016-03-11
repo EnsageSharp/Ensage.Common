@@ -576,66 +576,62 @@ namespace Ensage.Common.AbilityInfo
         {
             var type = ability.DamageType;
             var name = ability.StoredName();
-            if (name == "abaddon_aphotic_shield")
+            switch (name)
             {
-                type = DamageType.Magical;
-            }
-            else if (name == "meepo_poof")
-            {
-                type = DamageType.Magical;
-            }
-            else if (name == "axe_culling_blade")
-            {
-                type = DamageType.Pure;
-            }
-            else if (name == "invoker_sun_strinke")
-            {
-                type = DamageType.Pure;
-            }
-            else if (name == "alchemist_unstable_concoction_throw")
-            {
-                type = DamageType.Physical;
-            }
-            else if (name == "centaur_stampede")
-            {
-                type = DamageType.Physical;
-            }
-            else if (name == "lina_laguna_blade")
-            {
-                if ((ability.Owner as Hero).AghanimState())
-                {
+                case "abaddon_aphotic_shield":
+                    type = DamageType.Magical;
+                    break;
+                case "meepo_poof":
+                    type = DamageType.Magical;
+                    break;
+                case "axe_culling_blade":
                     type = DamageType.Pure;
-                }
+                    break;
+                case "invoker_sun_strinke":
+                    type = DamageType.Pure;
+                    break;
+                case "alchemist_unstable_concoction_throw":
+                    type = DamageType.Physical;
+                    break;
+                case "centaur_stampede":
+                    type = DamageType.Physical;
+                    break;
+                case "lina_laguna_blade":
+                    if ((ability.Owner as Hero).AghanimState())
+                    {
+                        type = DamageType.Pure;
+                    }
+
+                    break;
+                case "legion_commander_duel":
+                    type = DamageType.Physical;
+                    break;
+                case "item_ethereal_blade":
+                    type = DamageType.Magical;
+                    break;
+                case "tusk_walrus_kick":
+                    type = DamageType.Magical;
+                    break;
+                case "tusk_walrus_punch":
+                    type = DamageType.Physical;
+                    break;
+                case "item_shivas_guard":
+                    type = DamageType.Magical;
+                    break;
+                case "chaos_knight_reality_rift":
+                    type = DamageType.Physical;
+                    break;
+                case "item_veil_of_discord":
+                    type = DamageType.Magical;
+                    break;
             }
-            else if (name == "legion_commander_duel")
-            {
-                type = DamageType.Physical;
-            }
-            else if (name.StartsWith("item_dagon"))
+
+            if (type == DamageType.None)
             {
                 type = DamageType.Magical;
             }
-            else if (name == "item_ethereal_blade")
-            {
-                type = DamageType.Magical;
-            }
-            else if (name == "tusk_walrus_kick")
-            {
-                type = DamageType.Magical;
-            }
-            else if (name == "tusk_walrus_punch")
-            {
-                type = DamageType.Physical;
-            }
-            else if (name == "item_shivas_guard")
-            {
-                type = DamageType.Magical;
-            }
-            else if (name == "chaos_knight_reality_rift")
-            {
-                type = DamageType.Physical;
-            }
-            else if (name == "item_veil_of_discord")
+
+            if (name.StartsWith("item_dagon"))
             {
                 type = DamageType.Magical;
             }

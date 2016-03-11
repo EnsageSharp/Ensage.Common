@@ -92,7 +92,7 @@ namespace Ensage.Common
                     {
                         var delayActionItem = (DelayActionItem)signal.Properties["DelayActionItem"];
                         return (Environment.TickCount & int.MaxValue) >= delayActionItem.Time;
-                    },
+                    }, 
                 default(DateTimeOffset), 
                 new Dictionary<string, object> { { "DelayActionItem", item } });
         }

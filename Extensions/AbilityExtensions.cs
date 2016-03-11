@@ -53,7 +53,8 @@ namespace Ensage.Common.Extensions
 
         private static readonly Dictionary<string, float> ChannelDictionary = new Dictionary<string, float>();
 
-        private static readonly Dictionary<string, AbilitySpecialData> DataDictionary = new Dictionary<string, AbilitySpecialData>();
+        private static readonly Dictionary<string, AbilitySpecialData> DataDictionary =
+            new Dictionary<string, AbilitySpecialData>();
 
         private static Dictionary<string, float> castRangeDictionary = new Dictionary<string, float>();
 

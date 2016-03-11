@@ -346,8 +346,6 @@ namespace Ensage.Common.Menu.NotificationData
                 this.line.End();
             }
 
-            
-
             this.sprite.Begin();
 
             var textDimension = this.Font.MeasureText(this.sprite, this.Text, FontDrawFlags.Center);
@@ -382,8 +380,6 @@ namespace Ensage.Common.Menu.NotificationData
                 this.TextColor);
 
             this.sprite.End();
-
-            
         }
 
         /// <summary>
@@ -432,7 +428,8 @@ namespace Ensage.Common.Menu.NotificationData
                             return;
                         }
 
-                        if (!this.flashing && this.duration > 0x0 && (Environment.TickCount & int.MaxValue) - this.decreasementTick > 0x0)
+                        if (!this.flashing && this.duration > 0x0
+                            && (Environment.TickCount & int.MaxValue) - this.decreasementTick > 0x0)
                         {
                             if (this.TextColor.A > 0x0)
                             {
@@ -526,8 +523,7 @@ namespace Ensage.Common.Menu.NotificationData
                             }
                         }
 
-
-                        #region Mouse
+                        
 
                         var mouseLocation = Game.MouseScreenPosition;
                         if (Utils.IsUnderRectangle(
@@ -572,7 +568,7 @@ namespace Ensage.Common.Menu.NotificationData
                             }
                         }
 
-                        #endregion
+                        
 
                         #region Movement
 

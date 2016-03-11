@@ -60,26 +60,6 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        /// The highest health points target.
-        /// </summary>
-        /// <param name="source">
-        /// The source hero (LocalHero).
-        /// </param>
-        /// <param name="range">
-        /// The range.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Hero"/>.
-        /// </returns>
-        public static Hero HighestHealthPointsTarget(Hero source, float range)
-        {
-            return
-                Heroes.GetByTeam(source.GetEnemyTeam())
-                    .Where(hero => hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range)
-                    .MaxOrDefault(hero => hero.Health);
-        }
-
-        /// <summary>
         ///     Finds target closest to mouse in specified range
         /// </summary>
         /// <param name="source"></param>
@@ -117,13 +97,17 @@ namespace Ensage.Common
                 var attackRange = source.GetAttackRange() + bonusRange;
                 var lowestHp =
                     Creeps.All.Where(
-                        x => x.IsSpawned &&
-                        (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
-                         || x.ClassID == ClassID.CDOTA_BaseNPC_Creep || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
-                         || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
-                         || x.ClassID == ClassID.CDOTA_BaseNPC_Additive || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
-                         || x.ClassID == ClassID.CDOTA_BaseNPC_Building || x.ClassID == ClassID.CDOTA_BaseNPC_Creature)
-                        && x.IsAlive && x.IsVisible && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
+                        x =>
+                        x.IsSpawned
+                        && (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
+                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
+                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
+                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
+                            || x.ClassID == ClassID.CDOTA_BaseNPC_Additive
+                            || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
+                            || x.ClassID == ClassID.CDOTA_BaseNPC_Building
+                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
+                        && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
                         .OrderBy(creep => creep.Health)
                         .DefaultIfEmpty(null)
                         .FirstOrDefault();
@@ -135,6 +119,26 @@ namespace Ensage.Common
             }
 
             return null;
+        }
+
+        /// <summary>
+        ///     The highest health points target.
+        /// </summary>
+        /// <param name="source">
+        ///     The source hero (LocalHero).
+        /// </param>
+        /// <param name="range">
+        ///     The range.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Hero" />.
+        /// </returns>
+        public static Hero HighestHealthPointsTarget(Hero source, float range)
+        {
+            return
+                Heroes.GetByTeam(source.GetEnemyTeam())
+                    .Where(hero => hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range)
+                    .MaxOrDefault(hero => hero.Health);
         }
 
         #endregion

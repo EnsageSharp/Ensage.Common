@@ -27,7 +27,6 @@ namespace Ensage.Common.Menu
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Security.Cryptography;
 
     using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.SharpDX;
@@ -713,12 +712,12 @@ namespace Ensage.Common.Menu
             var height = item.Height - (item.Height / 6) * 2;
 
             MenuUtils.DrawBoxBordered(
-                pos.X,
-                pos.Y,
-                height,
-                height,
-                1f,
-                Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(),
+                pos.X, 
+                pos.Y, 
+                height, 
+                height, 
+                1f, 
+                Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(), 
                 new SharpDX.Color(0, 0, 0));
 
             Drawing.DrawRect(
@@ -733,8 +732,8 @@ namespace Ensage.Common.Menu
                 }
 
                 Drawing.DrawRect(
-                    pos + new Vector2(height / 4, height / 4),
-                    new Vector2((float)(height - (height / 4) * 2), (float)(height - (height / 4) * 2) - 1),
+                    pos + new Vector2(height / 4, height / 4), 
+                    new Vector2((float)(height - (height / 4) * 2), (float)(height - (height / 4) * 2) - 1), 
                     new SharpDX.Color(230, 148, 2));
             }
             else
@@ -743,14 +742,14 @@ namespace Ensage.Common.Menu
                 var textSize = Drawing.MeasureText(s, "Arial", tsize, FontFlags.AntiAlias);
                 var textPos = item.Position
                               + new Vector2(
-                                    (float)(item.Width - item.Height / 2 - textSize.X / 2.9),
+                                    (float)(item.Width - item.Height / 2 - textSize.X / 2.9), 
                                     (float)(+item.Height * 0.5 - textSize.Y / 1.9));
 
                 Drawing.DrawText(
-                    s,
-                    textPos,
-                    tsize,
-                    Color.NavajoWhite.ToSharpDxColor(),
+                    s, 
+                    textPos, 
+                    tsize, 
+                    Color.NavajoWhite.ToSharpDxColor(), 
                     FontFlags.Italic | FontFlags.DropShadow);
             }
         }
@@ -2290,11 +2289,11 @@ namespace Ensage.Common.Menu
                         extra +=
                             (int)
                             Drawing.MeasureText(
-                                val.Active ? " (on)" : " (off)",
-                                "Arial",
+                                val.Active ? " (on)" : " (off)", 
+                                "Arial", 
                                 new Vector2(
-                                (float)(MenuSettings.MenuItemHeight * 0.51),
-                                (float)(MenuSettings.MenuItemWidth * 0.7)),
+                                (float)(MenuSettings.MenuItemHeight * 0.51), 
+                                (float)(MenuSettings.MenuItemWidth * 0.7)), 
                                 FontFlags.None).X;
                     }
                 }
@@ -2911,27 +2910,20 @@ namespace Ensage.Common.Menu
                                      : new SharpDX.Color(45 + alpha, 45 + alpha, 45 + alpha);
 
                     var aborder = val.Type == KeyBindType.Toggle
-                                     ? val.Active
-                                           ? new SharpDX.Color(40, 120, 40, 255)
-                                           : new SharpDX.Color(0, 0, 0, 0)
-                                     : new SharpDX.Color(0, 0, 0, 0);
+                                      ? val.Active ? new SharpDX.Color(40, 120, 40, 255) : new SharpDX.Color(0, 0, 0, 0)
+                                      : new SharpDX.Color(0, 0, 0, 0);
 
                     var height = this.Height - (this.Height / 6) * 2;
 
                     var apos = val.Type == KeyBindType.Toggle
-                        ? val.Active ? rpos : rpos - new Vector2(height / 10, height / 10) : rpos - new Vector2(height / 10, height / 10);
+                                   ? val.Active ? rpos : rpos - new Vector2(height / 10, height / 10)
+                                   : rpos - new Vector2(height / 10, height / 10);
 
                     var asize = val.Type == KeyBindType.Toggle
                                     ? val.Active
                                           ? rsize
-                                          : rsize
-                                            + new Vector2(
-                                                  (float)((height / 10) * 2),
-                                                  (float)((height / 10) * 2))
-                                    : rsize
-                                      + new Vector2(
-                                            (float)((height / 10) * 2),
-                                            (float)((height / 10) * 2));
+                                          : rsize + new Vector2((float)((height / 10) * 2), (float)((height / 10) * 2))
+                                    : rsize + new Vector2((float)((height / 10) * 2), (float)((height / 10) * 2));
 
                     if (this.Interacting)
                     {
@@ -2940,20 +2932,18 @@ namespace Ensage.Common.Menu
                     }
 
                     MenuUtils.DrawBoxBordered(
-                        apos.X,
-                        apos.Y,
-                        rsize.X,
-                        rsize.Y,
-                        1f,
-                        this.Interacting ? new SharpDX.Color(150, 100, 80) : aborder,
+                        apos.X, 
+                        apos.Y, 
+                        rsize.X, 
+                        rsize.Y, 
+                        1f, 
+                        this.Interacting ? new SharpDX.Color(150, 100, 80) : aborder, 
                         new SharpDX.Color(0, 0, 0, 0));
 
                     Drawing.DrawRect(
-                        apos + new Vector2(height / 10, height / 10),
-                        new Vector2((float)(asize.X - (height / 10) * 2), (float)(asize.Y - (height / 10) * 2)),
-                        this.Interacting
-                            ? new SharpDX.Color(48 + alpha, 38 + alpha, 28 + alpha)
-                            : acolor);
+                        apos + new Vector2(height / 10, height / 10), 
+                        new Vector2((float)(asize.X - (height / 10) * 2), (float)(asize.Y - (height / 10) * 2)), 
+                        this.Interacting ? new SharpDX.Color(48 + alpha, 38 + alpha, 28 + alpha) : acolor);
 
                     var textSize = Drawing.MeasureText(te, "Arial", sizet, FontFlags.AntiAlias);
                     var textPos = this.Position

@@ -12,7 +12,7 @@
         #region Static Fields
 
         /// <summary>
-        /// The all.
+        ///     The all.
         /// </summary>
         public static List<Creep> All;
 
