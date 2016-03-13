@@ -975,8 +975,6 @@ namespace Ensage.Common.Extensions
                     break;
                 case DamageType.HealthRemoval:
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException("dmgType", dmgType, null);
             }
 
             return (float)Math.Max(tempDmg, 0);
