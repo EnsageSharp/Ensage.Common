@@ -861,6 +861,7 @@
             "IsNuke": true,
             "IsSkillShot": true,
             "Speed": "orb_speed",
+            "Width": "radius",
             "FakeCastRange": true,
             "RealCastRange": "max_distance"
         },
