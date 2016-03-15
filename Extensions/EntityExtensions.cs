@@ -813,7 +813,7 @@ namespace Ensage.Common.Extensions
                 var heroes =
                     Heroes.All.Where(
                         x =>
-                        !x.IsIllusion()
+                        x.IsValid && !x.IsIllusion()
                         && (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur || x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
                         && x.AghanimState());
                 reduceProc = heroes.Aggregate(reduceProc, (current, hero) => current + 0.7);
