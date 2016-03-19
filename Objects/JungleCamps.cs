@@ -20,6 +20,7 @@ namespace Ensage.Common.Objects
     using SharpDX;
 
     /// <summary>
+    ///     The jungle camp.
     /// </summary>
     public class JungleCamp
     {
@@ -63,20 +64,36 @@ namespace Ensage.Common.Objects
         #region Constructors and Destructors
 
         /// <summary>
+        ///     Initializes a new instance of the <see cref="JungleCamp" /> class.
         /// </summary>
         public JungleCamp()
         {
         }
 
         /// <summary>
+        ///     Initializes a new instance of the <see cref="JungleCamp" /> class.
         /// </summary>
-        /// <param name="campPosition"></param>
-        /// <param name="stackPosition"></param>
-        /// <param name="waitPosition"></param>
-        /// <param name="team"></param>
-        /// <param name="id"></param>
-        /// <param name="stackTime"></param>
-        /// <param name="ancients"></param>
+        /// <param name="campPosition">
+        ///     The camp position.
+        /// </param>
+        /// <param name="stackPosition">
+        ///     The stack position.
+        /// </param>
+        /// <param name="waitPosition">
+        ///     The wait position.
+        /// </param>
+        /// <param name="team">
+        ///     The team.
+        /// </param>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <param name="stackTime">
+        ///     The stack time.
+        /// </param>
+        /// <param name="ancients">
+        ///     The ancients.
+        /// </param>
         public JungleCamp(
             Vector3 campPosition, 
             Vector3 stackPosition, 
@@ -99,11 +116,15 @@ namespace Ensage.Common.Objects
     }
 
     /// <summary>
+    ///     The jungle camps.
     /// </summary>
     public class JungleCamps
     {
         #region Static Fields
 
+        /// <summary>
+        ///     The camps.
+        /// </summary>
         private static readonly List<JungleCamp> Camps = new List<JungleCamp>();
 
         #endregion
@@ -112,21 +133,24 @@ namespace Ensage.Common.Objects
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="JungleCamps" /> class.
+        /// </summary>
         static JungleCamps()
         {
             Camps.Add(
                 new JungleCamp
                     {
-                        CampPosition = new Vector3(-1131, -4044, 127), StackPosition = new Vector3(-2750, -3517, 128), 
-                        WaitPosition = new Vector3(-1401, -3791, 128), ID = 1, StackTime = 54.5, Team = Team.Radiant, 
+                        CampPosition = new Vector3(-1655, -4329, 256), StackPosition = new Vector3(-1833, -3062, 256), 
+                        WaitPosition = new Vector3(-1890, -3896, 256), ID = 1, StackTime = 54.5, Team = Team.Radiant, 
                         Ancients = false
                     });
 
             Camps.Add(
                 new JungleCamp
                     {
-                        CampPosition = new Vector3(-366, -2945, 127), StackPosition = new Vector3(-534, -1795, 128), 
-                        WaitPosition = new Vector3(-408, -2731, 127), ID = 2, StackTime = 55, Team = Team.Radiant, 
+                        CampPosition = new Vector3(-260, -3234, 256), StackPosition = new Vector3(-554, -1925, 256), 
+                        WaitPosition = new Vector3(-337, -2652, 256), ID = 2, StackTime = 55, Team = Team.Radiant, 
                         Ancients = false
                     });
 
@@ -141,24 +165,32 @@ namespace Ensage.Common.Objects
             Camps.Add(
                 new JungleCamp
                     {
-                        CampPosition = new Vector3(3126, -3439, 256), StackPosition = new Vector3(5284, -3922, 256), 
-                        WaitPosition = new Vector3(3231, -3807, 256), ID = 4, StackTime = 53.1, Team = Team.Radiant, 
+                        CampPosition = new Vector3(4495, -3488, 384), StackPosition = new Vector3(3002, -3936, 384), 
+                        WaitPosition = new Vector3(4356, -4089, 384), ID = 4, StackTime = 53.1, Team = Team.Radiant, 
                         Ancients = false
                     });
 
             Camps.Add(
                 new JungleCamp
                     {
-                        CampPosition = new Vector3(3031, -4480, 256), StackPosition = new Vector3(3774, -6700, 256), 
-                        WaitPosition = new Vector3(3030, -4975, 256), ID = 5, StackTime = 53, Team = Team.Radiant, 
+                        CampPosition = new Vector3(3031, -4480, 256), StackPosition = new Vector3(1555, -5337, 384), 
+                        WaitPosition = new Vector3(3099, -5325, 384), ID = 5, StackTime = 53, Team = Team.Radiant, 
                         Ancients = false
                     });
 
             Camps.Add(
                 new JungleCamp
                     {
-                        CampPosition = new Vector3(-2991, 191, 256), StackPosition = new Vector3(-3351, -1798, 205), 
-                        WaitPosition = new Vector3(-2684, -23, 256), ID = 6, StackTime = 54, Team = Team.Radiant, 
+                        CampPosition = new Vector3(-3097, 4, 384), StackPosition = new Vector3(-3472, -1566, 384), 
+                        WaitPosition = new Vector3(-2471, -227, 384), ID = 6, StackTime = 54, Team = Team.Radiant, 
+                        Ancients = true
+                    });
+
+            Camps.Add(
+                new JungleCamp
+                    {
+                        CampPosition = new Vector3(-3593, 825, 384), StackPosition = new Vector3(-3893, -737, 384),
+                        WaitPosition = new Vector3(-4129, 600, 384), ID = 7, StackTime = 53, Team = Team.Radiant,
                         Ancients = true
                     });
 
@@ -166,7 +198,7 @@ namespace Ensage.Common.Objects
                 new JungleCamp
                     {
                         CampPosition = new Vector3(1167, 3295, 256), StackPosition = new Vector3(570, 4515, 256), 
-                        WaitPosition = new Vector3(1011, 3656, 256), ID = 7, StackTime = 54, Team = Team.Dire, 
+                        WaitPosition = new Vector3(1011, 3656, 256), ID = 8, StackTime = 54, Team = Team.Dire, 
                         Ancients = false
                     });
 
@@ -174,7 +206,7 @@ namespace Ensage.Common.Objects
                 new JungleCamp
                     {
                         CampPosition = new Vector3(-244, 3629, 256), StackPosition = new Vector3(236, 5000, 256), 
-                        WaitPosition = new Vector3(-523, 4041, 256), ID = 8, StackTime = 54.5, Team = Team.Dire, 
+                        WaitPosition = new Vector3(-523, 4041, 256), ID = 9, StackTime = 54.5, Team = Team.Dire, 
                         Ancients = false
                     });
 
@@ -182,7 +214,7 @@ namespace Ensage.Common.Objects
                 new JungleCamp
                     {
                         CampPosition = new Vector3(-1588, 2697, 127), StackPosition = new Vector3(-1302, 3689, 136), 
-                        WaitPosition = new Vector3(-1491, 2986, 127), ID = 9, StackTime = 53, Team = Team.Dire, 
+                        WaitPosition = new Vector3(-1491, 2986, 127), ID = 10, StackTime = 53, Team = Team.Dire, 
                         Ancients = false
                     });
 
@@ -190,7 +222,7 @@ namespace Ensage.Common.Objects
                 new JungleCamp
                     {
                         CampPosition = new Vector3(-3157, 4475, 256), StackPosition = new Vector3(-3296, 5508, 256), 
-                        WaitPosition = new Vector3(-3086, 4924, 256), ID = 10, StackTime = 54, Team = Team.Dire, 
+                        WaitPosition = new Vector3(-3086, 4924, 256), ID = 11, StackTime = 54, Team = Team.Dire, 
                         Ancients = false
                     });
 
@@ -198,7 +230,7 @@ namespace Ensage.Common.Objects
                 new JungleCamp
                     {
                         CampPosition = new Vector3(-4382, 3612, 256), StackPosition = new Vector3(-3026, 3819, 132), 
-                        WaitPosition = new Vector3(-4200, 3850, 256), ID = 11, StackTime = 53, Team = Team.Dire, 
+                        WaitPosition = new Vector3(-4200, 3850, 256), ID = 12, StackTime = 53, Team = Team.Dire, 
                         Ancients = false
                     });
 
@@ -206,7 +238,7 @@ namespace Ensage.Common.Objects
                 new JungleCamp
                     {
                         CampPosition = new Vector3(4026, -709, 128), StackPosition = new Vector3(2636, -1017, 127), 
-                        WaitPosition = new Vector3(3583, -736, 127), ID = 12, StackTime = 54, Team = Team.Dire, 
+                        WaitPosition = new Vector3(3583, -736, 127), ID = 13, StackTime = 54, Team = Team.Dire, 
                         Ancients = true
                     });
 
@@ -215,19 +247,39 @@ namespace Ensage.Common.Objects
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        ///     Gets the get camps.
+        /// </summary>
+        public static List<JungleCamp> GetCamps
+        {
+            get
+            {
+                return Camps;
+            }
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
+        ///     The find closest camp.
         /// </summary>
-        /// <param name="pos"></param>
-        /// <returns></returns>
-        public static JungleCamp FindClosestCamp(Vector3 pos)
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="JungleCamp" />.
+        /// </returns>
+        public static JungleCamp FindClosestCamp(Vector3 position)
         {
             JungleCamp bestResult = null;
             foreach (var jungleCamp in Camps)
             {
                 if (bestResult == null
-                    || bestResult.CampPosition.Distance2D(pos) > jungleCamp.CampPosition.Distance2D(pos))
+                    || bestResult.CampPosition.Distance2D(position) > jungleCamp.CampPosition.Distance2D(position))
                 {
                     bestResult = jungleCamp;
                 }
