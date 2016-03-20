@@ -83,6 +83,7 @@
     <Compile Include="Objects\Abilities.cs" />
     <Compile Include="Objects\Creeps.cs" />
     <Compile Include="Objects\Heroes.cs" />
+    <Compile Include="Objects\JungleCamp.cs" />
     <Compile Include="Objects\JungleCamps.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Menu\Menu.cs" />
