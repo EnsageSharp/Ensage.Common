@@ -2264,7 +2264,7 @@ namespace Ensage.Common.Menu
                 // if (this.T)
                 if (this.ValueType == MenuValueType.AbilityToggler)
                 {
-                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 10);
+                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 5);
                 }
 
                 if (this.ValueType == MenuValueType.HeroToggler)

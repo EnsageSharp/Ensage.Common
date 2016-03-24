@@ -193,11 +193,13 @@ namespace Ensage.Common
         /// <param name="bonusWindupMs"></param>
         /// <param name="bonusRange"></param>
         /// <param name="attackmodifiers"></param>
+        /// <param name="followTarget"></param>
         public static void Orbwalk(
             Unit target, 
             float bonusWindupMs = 0, 
             float bonusRange = 0, 
-            bool attackmodifiers = false)
+            bool attackmodifiers = false,
+            bool followTarget = false)
         {
             if (me == null)
             {
@@ -250,7 +252,14 @@ namespace Ensage.Common
                 return;
             }
 
-            me.Move(Game.MousePosition);
+            if (followTarget)
+            {
+                me.Follow(target);
+            }
+            else
+            {
+                me.Move(Game.MousePosition);
+            }
             Utils.Sleep(100, "Orbwalk.Move");
         }
 
