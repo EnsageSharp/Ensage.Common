@@ -21,6 +21,7 @@ namespace Ensage.Common
     using Ensage.Common.Extensions;
     using Ensage.Common.Objects;
     using Ensage.Common.Properties;
+    using Ensage.Common.UnitData;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;

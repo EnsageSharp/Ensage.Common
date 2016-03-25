@@ -88,8 +88,13 @@ namespace Ensage.Common
         /// <summary>
         ///     Checks for lowest hp creep in attack range
         /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
+        /// <param name="source">
+        /// </param>
+        /// <param name="bonusRange">
+        ///     The bonus Range.
+        /// </param>
+        /// <returns>
+        /// </returns>
         public static Unit GetLowestHPCreep(Hero source, float bonusRange = 0)
         {
             try

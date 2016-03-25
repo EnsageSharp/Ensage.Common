@@ -319,8 +319,8 @@ namespace Ensage.Common.Extensions
             {
                 if (
                     Creeps.All.Where(
-                        x => x.IsValid &&
-                        x.IsAlive && x.Team == owner.Team && x.Distance2D(xyz) <= range
+                        x =>
+                        x.IsValid && x.IsAlive && x.Team == owner.Team && x.Distance2D(xyz) <= range
                         && x.Distance2D(owner) < owner.Distance2D(target))
                         .Any(
                             creep =>
@@ -349,8 +349,8 @@ namespace Ensage.Common.Extensions
             {
                 if (
                     Creeps.All.Where(
-                        x => x.IsValid &&
-                        x.IsAlive && x.Team != owner.Team && x.Distance2D(xyz) <= range
+                        x =>
+                        x.IsValid && x.IsAlive && x.Team != owner.Team && x.Distance2D(xyz) <= range
                         && x.Distance2D(owner) < owner.Distance2D(target))
                         .Any(
                             creep =>

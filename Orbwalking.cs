@@ -198,7 +198,7 @@ namespace Ensage.Common
             Unit target, 
             float bonusWindupMs = 0, 
             float bonusRange = 0, 
-            bool attackmodifiers = false,
+            bool attackmodifiers = false, 
             bool followTarget = false)
         {
             if (me == null)
@@ -260,6 +260,7 @@ namespace Ensage.Common
             {
                 me.Move(Game.MousePosition);
             }
+
             Utils.Sleep(100, "Orbwalk.Move");
         }
 

@@ -30,31 +30,31 @@ namespace Ensage.Common.Objects
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JungleCamp"/> class.
+        ///     Initializes a new instance of the <see cref="JungleCamp" /> class.
         /// </summary>
         /// <param name="campPosition">
-        /// The camp position.
+        ///     The camp position.
         /// </param>
         /// <param name="stackPosition">
-        /// The stack position.
+        ///     The stack position.
         /// </param>
         /// <param name="waitPosition">
-        /// The wait position.
+        ///     The wait position.
         /// </param>
         /// <param name="team">
-        /// The team.
+        ///     The team.
         /// </param>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <param name="stackTime">
-        /// The stack time.
+        ///     The stack time.
         /// </param>
         /// <param name="ancients">
-        /// The ancients.
+        ///     The ancients.
         /// </param>
         /// <param name="name">
-        /// The name.
+        ///     The name.
         /// </param>
         public JungleCamp(
             Vector3 campPosition, 
@@ -63,7 +63,7 @@ namespace Ensage.Common.Objects
             Team team, 
             uint id, 
             double stackTime, 
-            bool ancients,
+            bool ancients, 
             string name)
         {
             this.CampPosition = campPosition;
@@ -81,44 +81,45 @@ namespace Ensage.Common.Objects
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether it is ancient camp.
+        ///     Gets or sets a value indicating whether it is ancient camp.
         /// </summary>
         public bool Ancients { get; set; }
 
         /// <summary>
-        /// Gets or sets the camp position.
+        ///     Gets or sets the camp position.
         /// </summary>
         public Vector3 CampPosition { get; set; }
 
         /// <summary>
-        /// Gets or sets the camp id.
+        ///     Gets or sets the camp id.
         /// </summary>
         public uint Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the stack position.
+        ///     Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the stack position.
         /// </summary>
         public Vector3 StackPosition { get; set; }
 
         /// <summary>
-        /// Gets or sets the stack time (time when creeps should be pulled out of the camp.
+        ///     Gets or sets the stack time (time when creeps should be pulled out of the camp.
         /// </summary>
         public double StackTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the camp team.
+        ///     Gets or sets the camp team.
         /// </summary>
         public Team Team { get; set; }
 
         /// <summary>
-        /// Gets or sets the wait position (position where you have vision over creeps but does not block it from spawning if possible).
+        ///     Gets or sets the wait position (position where you have vision over creeps but does not block it from spawning if
+        ///     possible).
         /// </summary>
         public Vector3 WaitPosition { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
 
         #endregion
     }

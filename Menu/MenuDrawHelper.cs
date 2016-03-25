@@ -1,0 +1,305 @@
+﻿namespace Ensage.Common.Menu
+{
+    using Ensage.Common.Extensions.SharpDX;
+    using Ensage.Common.Objects;
+
+    using SharpDX;
+
+    using Color = System.Drawing.Color;
+
+    /// <summary>
+    ///     The menu draw helper.
+    /// </summary>
+    internal static class MenuDrawHelper
+    {
+        #region Methods
+
+        /// <summary>
+        ///     The draw arrow.
+        /// </summary>
+        /// <param name="left">
+        ///     The left.
+        /// </param>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
+        /// <param name="color">
+        ///     The color.
+        /// </param>
+        internal static void DrawArrow(bool left, Vector2 position, MenuItem item, Color color)
+        {
+            Drawing.DrawRect(
+                position + new Vector2(0, item.Height / 6), 
+                new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
+                Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
+                    ? Color.FromArgb(50, 50, 50).ToSharpDxColor()
+                    : Color.FromArgb(37, 37, 37).ToSharpDxColor());
+
+            var s = left ? "<" : ">";
+            var textSize = Drawing.MeasureText(
+                s, 
+                "Arial", 
+                new Vector2((float)(item.Height * 0.67), item.Height / 2), 
+                FontFlags.AntiAlias);
+            var a = left ? item.Height / 10 : item.Height / 14;
+            var textPos = position
+                          + new Vector2(
+                                (float)((item.Height * 0.5) - (textSize.X * 0.5) - a), 
+                                (float)((item.Height * 0.5) - (textSize.Y * 0.5)) + 1);
+
+            Drawing.DrawText(
+                s, 
+                textPos, 
+                new Vector2((float)(item.Height * 0.67), item.Height / 2), 
+                Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
+                    ? Color.Orange.ToSharpDxColor()
+                    : Color.LightGray.ToSharpDxColor(), 
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+        }
+
+        /// <summary>
+        ///     The draw on off.
+        /// </summary>
+        /// <param name="on">
+        ///     The on.
+        /// </param>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
+        internal static void DrawOnOff(bool on, Vector2 position, MenuItem item)
+        {
+            var alpha = Utils.IsUnderRectangle(
+                Game.MouseScreenPosition, 
+                position.X + item.Height - item.Width, 
+                position.Y, 
+                item.Width, 
+                item.Height)
+                            ? 30
+                            : 0;
+            var alpha2 = Utils.IsUnderRectangle(
+                Game.MouseScreenPosition, 
+                position.X, 
+                position.Y, 
+                item.Height, 
+                item.Height)
+                             ? 25
+                             : 0;
+            var noUnicode = MenuConfig.SelectedLanguage == "Chinese" || MenuConfig.SelectedLanguage == "Russian";
+            var s = on ? "✔" : string.Empty;
+            var pos = position + new Vector2(item.Height / 6, item.Height / 6);
+            var height = item.Height - ((item.Height / 6) * 2);
+
+            MenuUtils.DrawBoxBordered(
+                pos.X, 
+                pos.Y, 
+                height, 
+                height, 
+                1f, 
+                Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(), 
+                new SharpDX.Color(0, 0, 0));
+
+            Drawing.DrawRect(
+                pos + new Vector2(height / 10, height / 10), 
+                new Vector2((float)(height - ((height / 10) * 2)), (float)(height - ((height / 10) * 2)) - 1), 
+                new SharpDX.Color(5 + alpha2, 5 + alpha2, 5 + alpha2));
+            if (noUnicode)
+            {
+                if (!on)
+                {
+                    return;
+                }
+
+                Drawing.DrawRect(
+                    pos + new Vector2(height / 4, height / 4), 
+                    new Vector2((float)(height - ((height / 4) * 2)), (float)(height - ((height / 4) * 2)) - 1), 
+                    new SharpDX.Color(230, 148, 2));
+            }
+            else
+            {
+                var tsize = new Vector2((float)(height / 1.1), item.Width);
+                var textSize = Drawing.MeasureText(s, "Arial", tsize, FontFlags.AntiAlias);
+                var textPos = item.Position
+                              + new Vector2(
+                                    (float)(item.Width - (item.Height / 2) - (textSize.X / 2.9)), 
+                                    (float)(+(item.Height * 0.5) - (textSize.Y / 1.9)));
+
+                Drawing.DrawText(
+                    s, 
+                    textPos, 
+                    tsize, 
+                    Color.NavajoWhite.ToSharpDxColor(), 
+                    FontFlags.Italic | FontFlags.DropShadow);
+            }
+        }
+
+        /// <summary>
+        ///     The draw slider.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
+        /// <param name="width">
+        ///     The width.
+        /// </param>
+        /// <param name="drawText">
+        ///     The draw text.
+        /// </param>
+        internal static void DrawSlider(Vector2 position, MenuItem item, int width = -1, bool drawText = true)
+        {
+            var val = item.GetValue<Slider>();
+            DrawSlider(position, item, val.MinValue, val.MaxValue, val.Value, width, drawText);
+        }
+
+        /// <summary>
+        ///     The draw slider.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
+        /// <param name="min">
+        ///     The min.
+        /// </param>
+        /// <param name="max">
+        ///     The max.
+        /// </param>
+        /// <param name="value">
+        ///     The value.
+        /// </param>
+        /// <param name="width">
+        ///     The width.
+        /// </param>
+        /// <param name="drawText">
+        ///     The draw text.
+        /// </param>
+        internal static void DrawSlider(
+            Vector2 position, 
+            MenuItem item, 
+            int min, 
+            int max, 
+            int value, 
+            int width, 
+            bool drawText)
+        {
+            width = width > 0 ? width : item.Width;
+            var percentage = 100 * (value - min) / (max - min);
+            var x = position.X + 3 + ((percentage * (width - 3)) / 100);
+            var x2D = 3 + ((percentage * (width - 3)) / 100);
+
+            MenuUtils.DrawLine(
+                x, 
+                position.Y, 
+                x, 
+                position.Y + item.Height - 2, 
+                2, 
+                Color.FromArgb(200, 120, 60).ToSharpDxColor());
+            MenuUtils.DrawBoxFilled(
+                position.X, 
+                position.Y - 1, 
+                x2D - 1f, 
+                item.Height, 
+                Color.FromArgb(15, 150, 110, 0).ToSharpDxColor());
+
+            if (!drawText)
+            {
+                return;
+            }
+
+            var textSize = Drawing.MeasureText(
+                value.ToString(), 
+                "Arial", 
+                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
+                FontFlags.AntiAlias);
+            var textPos = position
+                          + new Vector2(
+                                (float)(item.Width - (item.Height * 0.5) - 2 - (textSize.X * 0.5)), 
+                                (float)(+(item.Height * 0.5) - (textSize.Y * 0.5)));
+            Drawing.DrawText(
+                value.ToString(), 
+                textPos, 
+                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
+                Color.DarkOrange.ToSharpDxColor(), 
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+        }
+
+        /// <summary>
+        ///     The draw tool tip_ button.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
+        internal static void DrawToolTipButton(Vector2 position, MenuItem item)
+        {
+            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler
+                || item.ValueType == MenuValueType.HeroToggler)
+            {
+                return;
+            }
+
+            var texture = Textures.GetTexture("materials/ensage_ui/other/statpop_question.vmat_c");
+
+            var textPos = item.Position + new Vector2(item.Width - (item.Height * 2), -(float)(item.Height * 0.05));
+            Drawing.DrawRect(textPos, new Vector2((float)(item.Height / 1.1), (float)(item.Height * 1.1)), texture);
+        }
+
+        /// <summary>
+        ///     The draw tool tip_ text.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
+        /// <param name="textColor">
+        ///     The text color.
+        /// </param>
+        internal static void DrawToolTipText(Vector2 position, MenuItem item, SharpDX.Color? textColor = null)
+        {
+            if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler
+                || item.ValueType == MenuValueType.HeroToggler)
+            {
+                return;
+            }
+
+            var s = item.Tooltip;
+            var textSize = Drawing.MeasureText(
+                s, 
+                "Arial", 
+                new Vector2((float)(item.Height * 0.51), 14), 
+                FontFlags.AntiAlias);
+            MenuUtils.DrawBoxBordered(
+                position.X + 3, 
+                position.Y, 
+                textSize.X + 8, 
+                item.Height, 
+                1, 
+                new SharpDX.Color(37, 37, 30, 220), 
+                new SharpDX.Color(10, 10, 10, 220));
+
+            var textPos = position + new Vector2(6, (float)((item.Height * 0.5) - (textSize.Y * 0.5)));
+            Drawing.DrawText(
+                s, 
+                textPos, 
+                new Vector2((float)(item.Height * 0.51), 14), 
+                Color.DarkGray.ToSharpDxColor(), 
+                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+        }
+
+        #endregion
+    }
+}

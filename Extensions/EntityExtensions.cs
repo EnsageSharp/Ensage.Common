@@ -145,6 +145,9 @@ namespace Ensage.Common.Extensions
         /// <param name="abilityName">
         ///     The ability name.
         /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
         public DamageBlocks(string modifierName, string meleeBlock, string rangedBlock, string abilityName, bool item)
         {
             this.ModifierName = modifierName;

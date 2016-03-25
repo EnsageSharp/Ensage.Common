@@ -5,31 +5,44 @@
     using System.Linq;
 
     /// <summary>
+    ///     The heroes.
     /// </summary>
     public class Heroes
     {
         #region Static Fields
 
         /// <summary>
+        ///     The all.
         /// </summary>
         public static List<Hero> All;
 
         /// <summary>
+        ///     The dire.
         /// </summary>
         public static List<Hero> Dire;
 
         /// <summary>
+        ///     The radiant.
         /// </summary>
         public static List<Hero> Radiant;
 
+        /// <summary>
+        ///     The loaded.
+        /// </summary>
         private static bool loaded;
 
+        /// <summary>
+        ///     The temp list.
+        /// </summary>
         private static List<Hero> tempList;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="Heroes" /> class.
+        /// </summary>
         static Heroes()
         {
             All = new List<Hero>();
@@ -67,17 +80,25 @@
         #region Public Methods and Operators
 
         /// <summary>
+        ///     The get by team.
         /// </summary>
-        /// <param name="team"></param>
-        /// <returns></returns>
+        /// <param name="team">
+        ///     The team.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="List" />.
+        /// </returns>
         public static List<Hero> GetByTeam(Team team)
         {
             return team == Team.Radiant ? Radiant : Dire;
         }
 
         /// <summary>
+        ///     The update.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
         public static void Update(EventArgs args)
         {
             if (!Game.IsInGame)
@@ -95,6 +116,7 @@
         }
 
         /// <summary>
+        ///     The update heroes.
         /// </summary>
         public static void UpdateHeroes()
         {
@@ -128,6 +150,9 @@
 
         #region Methods
 
+        /// <summary>
+        ///     The load.
+        /// </summary>
         private static void Load()
         {
             All = new List<Hero>();
@@ -141,7 +166,13 @@
             loaded = true;
         }
 
-        static void ObjectMgr_OnAddEntity(EntityEventArgs args)
+        /// <summary>
+        ///     The object mgr_ on add entity.
+        /// </summary>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
+        private static void ObjectMgr_OnAddEntity(EntityEventArgs args)
         {
             DelayAction.Add(
                 200, 
@@ -155,7 +186,13 @@
                     });
         }
 
-        static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
+        /// <summary>
+        ///     The object mgr_ on remove entity.
+        /// </summary>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
+        private static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
         {
             var hero = args.Entity as Hero;
             if (hero != null)

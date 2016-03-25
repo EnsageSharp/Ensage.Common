@@ -5,29 +5,39 @@
     using System.Linq;
 
     /// <summary>
+    ///     The players.
     /// </summary>
     public class Players
     {
         #region Static Fields
 
         /// <summary>
+        ///     The all.
         /// </summary>
         public static List<Player> All;
 
         /// <summary>
+        ///     The dire.
         /// </summary>
         public static List<Player> Dire;
 
         /// <summary>
+        ///     The radiant.
         /// </summary>
         public static List<Player> Radiant;
 
+        /// <summary>
+        ///     The loaded.
+        /// </summary>
         private static bool loaded;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="Players" /> class.
+        /// </summary>
         static Players()
         {
             All = ObjectManager.GetEntities<Player>().ToList();
@@ -62,8 +72,11 @@
         #region Public Methods and Operators
 
         /// <summary>
+        ///     The update.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
         public static void Update(EventArgs args)
         {
             if (!Game.IsInGame)
@@ -98,6 +111,9 @@
 
         #region Methods
 
+        /// <summary>
+        ///     The load.
+        /// </summary>
         private static void Load()
         {
             All = ObjectManager.GetEntities<Player>().ToList();

@@ -523,8 +523,6 @@ namespace Ensage.Common.Menu.NotificationData
                             }
                         }
 
-                        
-
                         var mouseLocation = Game.MouseScreenPosition;
                         if (Utils.IsUnderRectangle(
                             mouseLocation, 
@@ -568,10 +566,6 @@ namespace Ensage.Common.Menu.NotificationData
                             }
                         }
 
-                        
-
-                        #region Movement
-
                         var location = Notifications.GetLocation();
                         if (location != -0x1 && this.position.Y > location)
                         {
@@ -594,8 +588,6 @@ namespace Ensage.Common.Menu.NotificationData
                                 }
                             }
                         }
-
-                        #endregion
 
                         break;
                     }

@@ -27,7 +27,8 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Ensage.Common.xml</DocumentationFile>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <CodeAnalysisRuleSet>Ensage.Common.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -81,6 +82,20 @@
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
     <Compile Include="Geometry.cs" />
     <Compile Include="HUDInfo.cs" />
+    <Compile Include="Menu\MenuDrawHelper.cs" />
+    <Compile Include="Menu\MenuGlobals.cs" />
+    <Compile Include="Menu\MenuItem.cs" />
+    <Compile Include="Menu\MenuSettings.cs" />
+    <Compile Include="Menu\AbilityToggler.cs" />
+    <Compile Include="Menu\CommonMenu.cs" />
+    <Compile Include="Menu\HeroToggler.cs" />
+    <Compile Include="Menu\KeyBind.cs" />
+    <Compile Include="Menu\KeyBindType.cs" />
+    <Compile Include="Menu\MenuValueType.cs" />
+    <Compile Include="Menu\Slider.cs" />
+    <Compile Include="Menu\StringList.cs" />
+    <Compile Include="Menu\OnValueChangeEventArgs.cs" />
+    <Compile Include="Menu\SavedSettings.cs" />
     <Compile Include="Objects\Abilities.cs" />
     <Compile Include="Objects\Creeps.cs" />
     <Compile Include="Objects\Heroes.cs" />
@@ -94,6 +109,9 @@
     <Compile Include="Menu\NotificationData\INotification.cs" />
     <Compile Include="Menu\NotificationData\Notification.cs" />
     <Compile Include="Menu\Notifications.cs" />
+    <Compile Include="Objects\Lane.cs" />
+    <Compile Include="Objects\LanePosition.cs" />
+    <Compile Include="Objects\Lanes.cs" />
     <Compile Include="Objects\Names.cs" />
     <Compile Include="Objects\Players.cs" />
     <Compile Include="Objects\Textures.cs" />
@@ -114,8 +132,8 @@
     <Compile Include="UnitDatabase.cs" />
     <Compile Include="Prediction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unit\AttackAnimationData.cs" />
-    <Compile Include="Unit\UnitInfo.cs" />
+    <Compile Include="UnitData\AttackAnimationData.cs" />
+    <Compile Include="UnitData\UnitInfo.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Extensions\VectorExtensions.cs" />
     <Compile Include="WindowsMessages.cs" />
