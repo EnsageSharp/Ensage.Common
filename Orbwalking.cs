@@ -29,19 +29,43 @@ namespace Ensage.Common
         /// </summary>
         public static float LastAttackStart;
 
-        // public static Dictionary<float[], float> attackData = new Dictionary<float[], float>();
+        /// <summary>
+        ///     The last activity.
+        /// </summary>
         private static NetworkActivity lastActivity;
 
+        /// <summary>
+        ///     The loaded.
+        /// </summary>
         private static bool loaded;
 
+        /// <summary>
+        ///     The me.
+        /// </summary>
         private static Hero me;
 
+        /// <summary>
+        ///     The next attack end.
+        /// </summary>
+        private static float nextAttackEnd;
+
+        /// <summary>
+        ///     The next attack release.
+        /// </summary>
+        private static float nextAttackRelease;
+
+        /// <summary>
+        ///     The tick.
+        /// </summary>
         private static float tick;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="Orbwalking" /> class.
+        /// </summary>
         static Orbwalking()
         {
             Load();
@@ -54,8 +78,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Attacks target, uses spell UniqueAttackModifiers if enabled
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="useModifiers"></param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="useModifiers">
+        ///     The use Modifiers.
+        /// </param>
         public static void Attack(Unit target, bool useModifiers)
         {
             if (target is Hero && me.CanCast() && useModifiers)
@@ -140,9 +168,15 @@ namespace Ensage.Common
         /// <summary>
         ///     Checks if attack is currently on cooldown
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="bonusWindupMs"></param>
-        /// <returns></returns>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="bonusWindupMs">
+        ///     The bonus Windup Ms.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool AttackOnCooldown(Entity target = null, float bonusWindupMs = 0)
         {
             if (me == null)
@@ -154,23 +188,26 @@ namespace Ensage.Common
             if (target != null)
             {
                 turnTime = me.GetTurnTime(target)
-                           + Math.Max(me.Distance2D(target) - me.GetAttackRange() - 100, 0) / me.MovementSpeed;
+                           + (Math.Max(me.Distance2D(target) - me.GetAttackRange() - 100, 0) / me.MovementSpeed);
             }
 
-            // Console.WriteLine(turnTime*1000);
-            return LastAttackStart + UnitDatabase.GetAttackRate(me) * 1000 - Game.Ping - turnTime * 1000 - 75
-                   + bonusWindupMs >= tick;
+            return nextAttackEnd - Game.Ping - (turnTime * 1000) - 75 + bonusWindupMs >= tick;
         }
 
         /// <summary>
         ///     Checks if attack animation can be safely canceled
         /// </summary>
-        /// <returns></returns>
+        /// <param name="delay">
+        ///     The delay.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool CanCancelAnimation(float delay = 0f)
         {
-            var time = tick - LastAttackStart;
-            var cancelDur = UnitDatabase.GetAttackPoint(me) * 1000 - Game.Ping + 100 - delay;
-            return time >= cancelDur;
+            var time = tick;
+            var cancelTime = nextAttackRelease - Game.Ping - delay;
+            return time >= cancelTime;
         }
 
         /// <summary>
@@ -189,11 +226,21 @@ namespace Ensage.Common
         /// <summary>
         ///     Orbwalks on given target if they are in range, while moving to mouse position
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="bonusWindupMs"></param>
-        /// <param name="bonusRange"></param>
-        /// <param name="attackmodifiers"></param>
-        /// <param name="followTarget"></param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="bonusWindupMs">
+        ///     The bonus Windup Ms.
+        /// </param>
+        /// <param name="bonusRange">
+        ///     The bonus Range.
+        /// </param>
+        /// <param name="attackmodifiers">
+        ///     The attackmodifiers.
+        /// </param>
+        /// <param name="followTarget">
+        ///     The follow Target.
+        /// </param>
         public static void Orbwalk(
             Unit target, 
             float bonusWindupMs = 0, 
@@ -206,10 +253,6 @@ namespace Ensage.Common
                 return;
             }
 
-            // if (!Utils.SleepCheck("GlobalCasting"))
-            // {
-            // return;
-            // }
             var targetHull = 0f;
             if (target != null)
             {
@@ -221,7 +264,7 @@ namespace Ensage.Common
             {
                 var pos = Prediction.InFront(
                     me, 
-                    (float)((Game.Ping / 1000 + me.GetTurnTime(target.Position)) * me.MovementSpeed));
+                    (float)((Game.Ping / 1000) + (me.GetTurnTime(target.Position) * me.MovementSpeed)));
                 distance = pos.Distance2D(target) - me.Distance2D(target);
             }
 
@@ -239,7 +282,7 @@ namespace Ensage.Common
                 {
                     Attack(target, attackmodifiers);
                     Utils.Sleep(
-                        UnitDatabase.GetAttackPoint(me) * 1000 + me.GetTurnTime(target) * 1000, 
+                        (UnitDatabase.GetAttackPoint(me) * 1000) + (me.GetTurnTime(target) * 1000), 
                         "Orbwalk.Attack");
                     return;
                 }
@@ -268,6 +311,15 @@ namespace Ensage.Common
 
         #region Methods
 
+        /// <summary>
+        ///     The events_ on close.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
         private static void Events_OnClose(object sender, EventArgs e)
         {
             if (!loaded)
@@ -282,6 +334,15 @@ namespace Ensage.Common
             loaded = false;
         }
 
+        /// <summary>
+        ///     The events_ on load.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
         private static void Events_OnLoad(object sender, EventArgs e)
         {
             if (loaded)
@@ -296,6 +357,12 @@ namespace Ensage.Common
             loaded = true;
         }
 
+        /// <summary>
+        ///     The game_ on update.
+        /// </summary>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
         private static void Game_OnUpdate(EventArgs args)
         {
             if (me == null)
@@ -311,12 +378,13 @@ namespace Ensage.Common
                 }
 
                 LastAttackStart = 0;
+                nextAttackEnd = 0;
                 lastActivity = 0;
+                nextAttackRelease = 0;
                 me = null;
                 return;
             }
 
-            // Console.WriteLine("a");
             tick = Environment.TickCount & int.MaxValue;
             if (me.NetworkActivity == lastActivity)
             {
@@ -324,8 +392,6 @@ namespace Ensage.Common
             }
 
             lastActivity = me.NetworkActivity;
-
-            // Console.WriteLine(lastActivity);
             if (!me.IsAttacking())
             {
                 if (CanCancelAnimation())
@@ -335,18 +401,14 @@ namespace Ensage.Common
 
                 LastAttackStart = 0;
                 lastActivity = 0;
+                nextAttackEnd = 0;
+                nextAttackRelease = 0;
                 return;
             }
 
-            // if (orbwalkTarget != null)
-            // {
-            // LastAttackStart = (float)(tick + me.GetTurnTime(orbwalkTarget) * 1000);
-            // }
-            // else
-            // {
             LastAttackStart = tick;
-
-            // }
+            nextAttackEnd = (float)(tick + (UnitDatabase.GetAttackRate(me) * 1000));
+            nextAttackRelease = (float)(tick + (UnitDatabase.GetAttackPoint(me) * 1000));
         }
 
         #endregion
