@@ -23,31 +23,45 @@ namespace Ensage.Common
     using SharpDX;
 
     /// <summary>
+    ///     The prediction.
     /// </summary>
     public class Prediction
     {
         #region Static Fields
 
         /// <summary>
+        ///     The rot speed dictionary.
         /// </summary>
         public static Dictionary<float, double> RotSpeedDictionary = new Dictionary<float, double>();
 
         /// <summary>
+        ///     The rot time dictionary.
         /// </summary>
         public static Dictionary<float, float> RotTimeDictionary = new Dictionary<float, float>();
 
         /// <summary>
+        ///     The speed dictionary.
         /// </summary>
         public static Dictionary<float, Vector3> SpeedDictionary = new Dictionary<float, Vector3>();
 
         /// <summary>
+        ///     The track table.
         /// </summary>
         public static List<Prediction> TrackTable = new List<Prediction>();
 
+        /// <summary>
+        ///     The loaded.
+        /// </summary>
         private static bool loaded;
 
+        /// <summary>
+        ///     The player list.
+        /// </summary>
         private static List<Hero> playerList = new List<Hero>();
 
+        /// <summary>
+        ///     The prediction drawings.
+        /// </summary>
         private static Dictionary<float, ParticleEffect> predictionDrawings = new Dictionary<float, ParticleEffect>();
 
         #endregion
@@ -55,30 +69,37 @@ namespace Ensage.Common
         #region Fields
 
         /// <summary>
+        ///     The last position.
         /// </summary>
         public Vector3 LastPosition;
 
         /// <summary>
+        ///     The last rot r.
         /// </summary>
         public float LastRotR;
 
         /// <summary>
+        ///     The lasttick.
         /// </summary>
         public float Lasttick;
 
         /// <summary>
+        ///     The rot speed.
         /// </summary>
         public float RotSpeed;
 
         /// <summary>
+        ///     The speed.
         /// </summary>
         public Vector3 Speed;
 
         /// <summary>
+        ///     The unit class id.
         /// </summary>
         public ClassID UnitClassId;
 
         /// <summary>
+        ///     The unit name.
         /// </summary>
         public string UnitName;
 
@@ -86,6 +107,9 @@ namespace Ensage.Common
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="Prediction" /> class.
+        /// </summary>
         static Prediction()
         {
             Events.OnLoad += Events_OnLoad;
@@ -97,20 +121,36 @@ namespace Ensage.Common
         }
 
         /// <summary>
+        ///     Initializes a new instance of the <see cref="Prediction" /> class.
         /// </summary>
         public Prediction()
         {
         }
 
         /// <summary>
+        ///     Initializes a new instance of the <see cref="Prediction" /> class.
         /// </summary>
-        /// <param name="unitName"></param>
-        /// <param name="unitClassId"></param>
-        /// <param name="speed"></param>
-        /// <param name="rotSpeed"></param>
-        /// <param name="lastPosition"></param>
-        /// <param name="lastRotR"></param>
-        /// <param name="lasttick"></param>
+        /// <param name="unitName">
+        ///     The unit name.
+        /// </param>
+        /// <param name="unitClassId">
+        ///     The unit class id.
+        /// </param>
+        /// <param name="speed">
+        ///     The speed.
+        /// </param>
+        /// <param name="rotSpeed">
+        ///     The rot speed.
+        /// </param>
+        /// <param name="lastPosition">
+        ///     The last position.
+        /// </param>
+        /// <param name="lastRotR">
+        ///     The last rot r.
+        /// </param>
+        /// <param name="lasttick">
+        ///     The lasttick.
+        /// </param>
         public Prediction(
             string unitName, 
             ClassID unitClassId, 
@@ -134,9 +174,14 @@ namespace Ensage.Common
         #region Public Methods and Operators
 
         /// <summary>
+        ///     The ability move.
         /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool AbilityMove(Unit unit)
         {
             return
@@ -153,11 +198,20 @@ namespace Ensage.Common
         }
 
         /// <summary>
+        ///     The calculate reach time.
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="speed"></param>
-        /// <param name="dePos"></param>
-        /// <returns></returns>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="speed">
+        ///     The speed.
+        /// </param>
+        /// <param name="dePos">
+        ///     The de pos.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float CalculateReachTime(Unit target, float speed, Vector3 dePos)
         {
             Vector3 targetSpeed;
@@ -174,14 +228,17 @@ namespace Ensage.Common
             }
 
             var a = Math.Pow(targetSpeed.X, 2) + Math.Pow(targetSpeed.Y, 2) - Math.Pow(speed / 1000, 2);
-            var b = 2 * (dePos.X * targetSpeed.X + dePos.Y * targetSpeed.Y);
+            var b = 2 * ((dePos.X * targetSpeed.X) + (dePos.Y * targetSpeed.Y));
             var c = Math.Pow(dePos.X, 2) + Math.Pow(dePos.Y, 2);
-            return (float)((-b - Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a));
+            return (float)((-b - Math.Sqrt(Math.Pow(b, 2) - (4 * a * c))) / (2 * a));
         }
 
         /// <summary>
+        ///     The draw predictions.
         /// </summary>
-        /// <param name="delay"></param>
+        /// <param name="delay">
+        ///     The delay.
+        /// </param>
         public static void DrawPredictions(float delay = 1000)
         {
             var heroes = Heroes.All.Where(x => !x.IsIllusion);
@@ -204,9 +261,15 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns vector in facing direction of given unit with given distance
         /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="distance"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="distance">
+        ///     The distance.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
         public static Vector3 InFront(Unit unit, float distance)
         {
             var v = unit.Position + unit.Vector3FromPolarAngle() * distance;
@@ -216,23 +279,32 @@ namespace Ensage.Common
         /// <summary>
         ///     Checks if enemy is not moving
         /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool IsIdle(Unit unit)
         {
-            // var modifiers = unit.Modifiers;
-            return unit.IsInvul() || unit.IsStunned()
-                   || (unit.NetworkActivity == NetworkActivity.Idle
-                       && (!SpeedDictionary.ContainsKey(unit.Handle) || SpeedDictionary[unit.Handle] == Vector3.Zero))
-                   || unit.IsAttacking();
+            return unit.NetworkActivity != NetworkActivity.Move
+                   && ((unit.NetworkActivity == NetworkActivity.Idle
+                        && (!SpeedDictionary.ContainsKey(unit.Handle) || SpeedDictionary[unit.Handle] == Vector3.Zero))
+                       || unit.IsAttacking() || unit.IsInvul() || unit.IsStunned());
         }
 
         /// <summary>
         ///     Checks if a unit is currently changing their direction
         /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="tolerancy">tolerancy of rotation speed</param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="tolerancy">
+        ///     tolerancy of rotation speed
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool IsTurning(Unit unit, double tolerancy = 0)
         {
             double rotSpeed;
@@ -247,9 +319,15 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns predicted location of given unit after given delay in ms
         /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="delay"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="delay">
+        ///     The delay.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
         public static Vector3 PredictedXYZ(Unit unit, float delay)
         {
             Vector3 targetSpeed;
@@ -271,21 +349,33 @@ namespace Ensage.Common
                 return unit.Position;
             }
 
-            var v = unit.Position + targetSpeed * (float)delay;
+            var v = unit.Position + (targetSpeed * delay);
             return new Vector3(v.X, v.Y, 0);
         }
 
         /// <summary>
+        ///     The skill shot xyz.
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <param name="delay"></param>
-        /// <param name="speed"></param>
-        /// <param name="radius"></param>
-        /// <returns></returns>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="delay">
+        ///     The delay.
+        /// </param>
+        /// <param name="speed">
+        ///     The speed.
+        /// </param>
+        /// <param name="radius">
+        ///     The radius.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
         public static Vector3 SkillShotXYZ(Unit source, Unit target, float delay, float speed, float radius)
         {
-            // Console.WriteLine(IsIdle(target) + " and " + (data == null) + " and " + (data.Speed));
             if (IsIdle(target))
             {
                 return target.Position;
@@ -307,16 +397,16 @@ namespace Ensage.Common
 
             if (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed) < radius)
             {
-                sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius)
-                            / sourcePos.Distance2D(predict) + predict;
+                sourcePos = (((sourcePos - predict) * (sourcePos.Distance2D(predict) - radius))
+                             / sourcePos.Distance2D(predict)) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             }
             else
             {
-                sourcePos = (sourcePos - predict)
-                            * (sourcePos.Distance2D(predict)
-                               + target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed) - radius)
-                            / sourcePos.Distance2D(predict) + predict;
+                sourcePos = (((sourcePos - predict)
+                              * (sourcePos.Distance2D(predict)
+                                 + (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed)) - radius))
+                             / sourcePos.Distance2D(predict)) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             }
 
@@ -326,7 +416,9 @@ namespace Ensage.Common
         /// <summary>
         ///     Tracks heroes movements
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
         public static void SpeedTrack(EventArgs args)
         {
             if (!Game.IsInGame || Game.IsPaused)
@@ -401,7 +493,6 @@ namespace Ensage.Common
 
                     var speed = (unit.Position - data.LastPosition) / (tick - data.Lasttick);
 
-                    // Console.WriteLine(data.RotSpeed + " rot");
                     if (Math.Abs(data.RotSpeed) > 0.0999999 && data.Speed != new Vector3(0, 0, 0))
                     {
                         RotTimeDictionary[unit.Handle] = tick;
@@ -422,8 +513,6 @@ namespace Ensage.Common
                             if (firstOrDefault != null)
                             {
                                 var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
-
-                                // Console.WriteLine(ballSpeed);
                                 var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed) * (ballSpeed / 1000);
                                 data.Speed = newpredict;
                             }
@@ -436,18 +525,9 @@ namespace Ensage.Common
                         {
                             var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * unit.MovementSpeed / 1000;
                             data.Speed = newpredict;
-
-                            // Console.WriteLine("speed" + " " + newpredict + " " + (unit.MovementSpeed / 1000) + " " + unit.Vector3FromPolarAngle(unit.RotationRad + data.RotSpeed) + " " + data.RotSpeed);
                         }
                     }
 
-                    // var predict = unit.Position + data.Speed * 1000;
-                    // var realspeed = predict.Distance2D(unit.Position);
-                    // if ((realspeed + 100 > unit.MovementSpeed) && unit.NetworkActivity == NetworkActivity.Move)
-                    // {
-                    // var newpredict = unit.Vector3FromPolarAngle(data.RotSpeed) * (unit.MovementSpeed) / 1000;
-                    // data.Speed = newpredict;
-                    // }
                     data.LastPosition = unit.Position;
                     data.LastRotR = unit.RotationRad;
                     data.Lasttick = tick;
@@ -470,15 +550,17 @@ namespace Ensage.Common
                     }
                 }
             }
-
-            // TrackTable = tempTable;
         }
 
         /// <summary>
         ///     Returns in miliseconds how long is unit walking straight
         /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float StraightTime(Unit unit)
         {
             if (!RotTimeDictionary.ContainsKey(unit.Handle))
@@ -498,6 +580,15 @@ namespace Ensage.Common
 
         #region Methods
 
+        /// <summary>
+        ///     The events_ on close.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
         private static void Events_OnClose(object sender, EventArgs e)
         {
             loaded = false;
@@ -510,6 +601,15 @@ namespace Ensage.Common
             predictionDrawings = new Dictionary<float, ParticleEffect>();
         }
 
+        /// <summary>
+        ///     The events_ on load.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
         private static void Events_OnLoad(object sender, EventArgs e)
         {
             if (loaded)
