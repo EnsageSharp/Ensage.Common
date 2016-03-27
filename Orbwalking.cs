@@ -282,7 +282,7 @@ namespace Ensage.Common
                 {
                     Attack(target, attackmodifiers);
                     Utils.Sleep(
-                        (UnitDatabase.GetAttackPoint(me) * 1000) + (me.GetTurnTime(target) * 1000), 
+                        (UnitDatabase.GetAttackPoint(me) * 1000) + (me.GetTurnTime(target) * 1000) + Game.Ping, 
                         "Orbwalk.Attack");
                     return;
                 }
