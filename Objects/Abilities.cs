@@ -34,14 +34,25 @@
         public static Ability FindAbility(string name, Team team)
         {
             Ability ability;
-            if (AbilityDictionary.TryGetValue(name + team, out ability) && ability.IsValid)
+            var found = AbilityDictionary.TryGetValue(name + team, out ability);
+            if (found && ability.IsValid)
             {
                 return ability;
             }
 
             ability =
                 ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name && x.Owner.Team == team);
-            if (ability != null)
+            
+            if (ability == null)
+            {
+                return null;
+            }
+
+            if (found)
+            {
+                AbilityDictionary[name + team] = ability;
+            }
+            else
             {
                 AbilityDictionary.Add(name + team, ability);
             }
