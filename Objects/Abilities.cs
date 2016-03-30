@@ -72,13 +72,25 @@
         public static Ability FindAbility(string name)
         {
             Ability ability;
-            if (AbilityDictionary.TryGetValue(name, out ability) && ability.IsValid)
+            var found = AbilityDictionary.TryGetValue(name, out ability);
+            if (found && ability.IsValid)
             {
                 return ability;
             }
 
-            ability = ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name);
-            if (ability != null)
+            ability =
+                ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name);
+
+            if (ability == null)
+            {
+                return null;
+            }
+
+            if (found)
+            {
+                AbilityDictionary[name] = ability;
+            }
+            else
             {
                 AbilityDictionary.Add(name, ability);
             }
