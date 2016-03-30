@@ -83,7 +83,7 @@ namespace Ensage.Common.AbilityInfo
             }
 
             // var data = AbilityDatabase.Find(name);
-            if (data == null || !data.IsNuke)
+            if (data == null)
             {
                 return 0;
             }
@@ -95,6 +95,9 @@ namespace Ensage.Common.AbilityInfo
             float tempDmg;
             switch (name)
             {
+                case "item_urn_of_shadows":
+                    outgoingDamage = target.DamageTaken(150, DamageType.Pure, source);
+                    break;
                 case "ember_spirit_sleight_of_fist":
                     outgoingDamage = source.MinimumDamage + source.BonusDamage;
                     if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
@@ -578,6 +581,9 @@ namespace Ensage.Common.AbilityInfo
             var name = ability.StoredName();
             switch (name)
             {
+                case "item_urn_of_shadows":
+                    type = DamageType.Pure;
+                    break;
                 case "abaddon_aphotic_shield":
                     type = DamageType.Magical;
                     break;
