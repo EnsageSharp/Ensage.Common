@@ -1141,7 +1141,7 @@ namespace Ensage.Common.Extensions
                 Utils.Sleep(1200000, "Ensage.Common.FindModifierReset");
             }
 
-            var name = unit.StoredName() + modifierName;
+            var name = unit.Handle + modifierName;
             Modifier modifier;
             if (modifierDictionary.TryGetValue(name, out modifier)
                 && !Utils.SleepCheck("Ensage.Common.FindModifier" + name))
