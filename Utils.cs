@@ -37,6 +37,9 @@ namespace Ensage.Common
         /// </summary>
         public static readonly Dictionary<string, double> Sleeps = new Dictionary<string, double>();
 
+        /// <summary>
+        ///     The last stun ability.
+        /// </summary>
         private static string lastStunAbility;
 
         #endregion
@@ -111,17 +114,44 @@ namespace Ensage.Common
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        ///     Gets the tick count.
+        /// </summary>
+        public float TickCount
+        {
+            get
+            {
+                return Environment.TickCount & int.MaxValue;
+            }
+        }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
         ///     Checks if given unit wont be stunned after given delay in seconds.
         /// </summary>
-        /// <param name="unit"></param>
-        /// <param name="delay">Delay of possible stun in seconds</param>
-        /// <param name="except">Entering a modifier name will ignore that modifier</param>
-        /// <param name="onlychain">Entering true will make the function return true only in case enemy is already stunned</param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="delay">
+        ///     Delay of possible stun in seconds
+        /// </param>
+        /// <param name="except">
+        ///     Entering a modifier name will ignore that modifier
+        /// </param>
+        /// <param name="onlychain">
+        ///     Entering true will make the function return true only in case enemy is already stunned
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool ChainStun(Unit unit, double delay, string except, bool onlychain, string abilityName = "")
         {
             if (!SleepCheck("CHAINSTUN_SLEEP") && abilityName != lastStunAbility)
@@ -168,17 +198,26 @@ namespace Ensage.Common
         /// <summary>
         ///     Switches given degrees to radians
         /// </summary>
-        /// <param name="angle"></param>
-        /// <returns></returns>
+        /// <param name="angle">
+        ///     The angle.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double DegreeToRadian(double angle)
         {
             return Math.PI * angle / 180.0;
         }
 
         /// <summary>
+        ///     The fix virtual key.
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">
+        ///     The key.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="byte" />.
+        /// </returns>
         public static byte FixVirtualKey(byte key)
         {
             switch (key)
@@ -199,6 +238,24 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns true if the point is under the rectangle
         /// </summary>
+        /// <param name="point">
+        ///     The point.
+        /// </param>
+        /// <param name="x">
+        ///     The x.
+        /// </param>
+        /// <param name="y">
+        ///     The y.
+        /// </param>
+        /// <param name="width">
+        ///     The width.
+        /// </param>
+        /// <param name="height">
+        ///     The height.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool IsUnderRectangle(Vector2 point, float x, float y, float width, float height)
         {
             return point.X > x && point.X < x + width && point.Y > y && point.Y < y + height;
@@ -207,8 +264,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Converts given key code to text
         /// </summary>
-        /// <param name="vKey"></param>
-        /// <returns></returns>
+        /// <param name="vKey">
+        ///     The v Key.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="string" />.
+        /// </returns>
         public static string KeyToText(uint vKey)
         {
             /*A-Z */
@@ -249,6 +310,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns the md5 hash from a string.
         /// </summary>
+        /// <param name="s">
+        ///     The s.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="string" />.
+        /// </returns>
         public static string Md5Hash(string s)
         {
             var sb = new StringBuilder();
@@ -266,19 +333,28 @@ namespace Ensage.Common
         /// <summary>
         ///     Converts given radian to degrees
         /// </summary>
-        /// <param name="angle"></param>
-        /// <returns></returns>
+        /// <param name="angle">
+        ///     The angle.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double RadianToDegree(double angle)
         {
             return angle * 180 / Math.PI;
         }
 
         /// <summary>
-        ///     Sleeps the sleeping engine with the given id for given miliseconds. If engine is already sleeping for more than the
+        ///     Sleeps the sleeping engine with the given id for given milliseconds. If engine is already sleeping for more than
+        ///     the
         ///     given time it will be ignored.
         /// </summary>
-        /// <param name="duration"></param>
-        /// <param name="name"></param>
+        /// <param name="duration">
+        ///     The duration.
+        /// </param>
+        /// <param name="name">
+        ///     The name.
+        /// </param>
         public static void Sleep(double duration, string name)
         {
             double dur;
@@ -292,8 +368,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Checks sleeping status of the sleep engine with given id
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Returns true in case id was not found or is not sleeping</returns>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <returns>
+        ///     Returns true in case id was not found or is not sleeping
+        /// </returns>
         public static bool SleepCheck(string id)
         {
             double asd;
@@ -304,7 +384,17 @@ namespace Ensage.Common
 
         #region Methods
 
-        // Convert a byte array to an Object
+        /// <summary>
+        ///     The deserialize.
+        /// </summary>
+        /// <param name="arrBytes">
+        ///     The arr bytes.
+        /// </param>
+        /// <typeparam name="T">
+        /// </typeparam>
+        /// <returns>
+        ///     The <see cref="T" />.
+        /// </returns>
         internal static T Deserialize<T>(byte[] arrBytes)
         {
             var memStream = new MemoryStream();
@@ -314,7 +404,15 @@ namespace Ensage.Common
             return (T)binForm.Deserialize(memStream);
         }
 
-        // Convert an object to a byte array
+        /// <summary>
+        ///     The serialize.
+        /// </summary>
+        /// <param name="obj">
+        ///     The obj.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="byte[]" />.
+        /// </returns>
         internal static byte[] Serialize(object obj)
         {
             if (obj == null)

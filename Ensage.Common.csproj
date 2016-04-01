@@ -80,7 +80,6 @@
     <Compile Include="Extensions\SharpDX\Vector2Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector3Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
-    <Compile Include="Geometry.cs" />
     <Compile Include="HUDInfo.cs" />
     <Compile Include="Menu\MenuDrawHelper.cs" />
     <Compile Include="Menu\MenuGlobals.cs" />

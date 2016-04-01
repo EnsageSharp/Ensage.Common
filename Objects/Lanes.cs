@@ -30,7 +30,8 @@
                                                                          Name = "Radiant Bot Lane", Team = Team.Radiant, 
                                                                          Position = LanePosition.Bottom
                                                                      }
-                                                                     // add other lanes
+
+                                                                 // add other lanes
                                                              };
 
         #endregion

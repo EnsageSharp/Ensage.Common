@@ -30,15 +30,23 @@ namespace Ensage.Common.AbilityInfo
         #region Static Fields
 
         /// <summary>
+        ///     The data dictionary.
         /// </summary>
         public static Dictionary<Ability, AbilityInfo> DataDictionary = new Dictionary<Ability, AbilityInfo>();
 
         /// <summary>
+        ///     The level dictionary.
         /// </summary>
         public static Dictionary<Ability, uint> LevelDictionary = new Dictionary<Ability, uint>();
 
+        /// <summary>
+        ///     The damage dictionary.
+        /// </summary>
         private static readonly Dictionary<Ability, float> DamageDictionary = new Dictionary<Ability, float>();
 
+        /// <summary>
+        ///     The multiplier dictionary.
+        /// </summary>
         private static readonly Dictionary<Ability, double> MultiplierDictionary = new Dictionary<Ability, double>();
 
         #endregion
@@ -48,14 +56,30 @@ namespace Ensage.Common.AbilityInfo
         /// <summary>
         ///     Calculates damage from given ability on given target
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <param name="minusArmor"></param>
-        /// <param name="minusDamageResistancePerc"></param>
-        /// <param name="minusMagicResistancePerc"></param>
-        /// <param name="minusHealth"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="minusArmor">
+        ///     The minus Armor.
+        /// </param>
+        /// <param name="minusDamageResistancePerc">
+        ///     The minus Damage Resistance Percentage.
+        /// </param>
+        /// <param name="minusMagicResistancePerc">
+        ///     The minus Magic Resistance Percentage.
+        /// </param>
+        /// <param name="minusHealth">
+        ///     The minus Health.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float CalculateDamage(
             Ability ability, 
             Hero source, 
@@ -76,13 +100,12 @@ namespace Ensage.Common.AbilityInfo
             if (!DataDictionary.TryGetValue(ability, out data))
             {
                 data = AbilityDatabase.Find(name);
-                if (data != null && data.IsNuke)
+                if (data != null)
                 {
                     DataDictionary.Add(ability, data);
                 }
             }
 
-            // var data = AbilityDatabase.Find(name);
             if (data == null)
             {
                 return 0;
@@ -253,14 +276,9 @@ namespace Ensage.Common.AbilityInfo
                         DamageDictionary[ability] = bonusDamage;
                     }
 
-                    // var minusArmor = ability.GetAbilityData("bonus_armor");
                     var minusArmors = new[] { -2, -4, -6, -8 };
                     var meldminusArmor = target.Armor + minusArmors[level - 1];
-
-                    // Console.WriteLine(minusArmor);
-                    var damageIncrease = 1 - 0.06 * meldminusArmor / (1 + 0.06 * Math.Abs(meldminusArmor));
-
-                    // Console.WriteLine(damageIncrease);
+                    var damageIncrease = 1 - ((0.06 * meldminusArmor) / (1 + (0.06 * Math.Abs(meldminusArmor))));
                     outgoingDamage =
                         (float)
                         (target.DamageTaken(
@@ -268,7 +286,7 @@ namespace Ensage.Common.AbilityInfo
                             DamageType.Physical, 
                             source, 
                             data.MagicImmunityPierce, 
-                            minusMagicResistancePerc: minusMagicResistancePerc) + bonusDamage * damageIncrease);
+                            minusMagicResistancePerc: minusMagicResistancePerc) + (bonusDamage * damageIncrease));
                     break;
                 case "undying_decay":
                     var strengthSteal = ability.GetAbilityData("str_steal");
@@ -277,15 +295,13 @@ namespace Ensage.Common.AbilityInfo
                         strengthSteal = ability.GetAbilityData("str_Steal_scepter");
                     }
 
-                    outgoingDamage = strengthSteal * 19
+                    outgoingDamage = (strengthSteal * 19)
                                      + target.DamageTaken(
                                          ability.GetAbilityData(data.DamageString), 
                                          DamageType.Magical, 
                                          source, 
                                          false, 
                                          minusMagicResistancePerc: minusMagicResistancePerc);
-
-                    // Console.WriteLine(outgoingDamage);
                     break;
                 case "visage_soul_assumption":
                     var dmg = ability.GetAbilityData(data.DamageString);
@@ -301,8 +317,6 @@ namespace Ensage.Common.AbilityInfo
                         source, 
                         false, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
-
-                    // Console.WriteLine(outgoingDamage);
                     break;
                 case "morphling_adaptive_strike":
                     if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
@@ -324,7 +338,7 @@ namespace Ensage.Common.AbilityInfo
                     var difference = agi / str;
                     var multimin = ability.GetAbilityData("damage_min");
                     var multimax = ability.GetAbilityData("damage_max");
-                    multi = multimin + (difference - 0.5) * (multimax - multimin);
+                    multi = multimin + ((difference - 0.5) * (multimax - multimin));
                     if (difference > 1.5)
                     {
                         multi = multimax;
@@ -335,7 +349,7 @@ namespace Ensage.Common.AbilityInfo
                     }
 
                     outgoingDamage = target.DamageTaken(
-                        (float)(bonusDamage + agi * multi), 
+                        (float)(bonusDamage + (agi * multi)), 
                         DamageType.Magical, 
                         source, 
                         false, 
@@ -454,7 +468,7 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     outgoingDamage = blinkdamage
                                      + target.DamageTaken(
-                                         agiMultiplier * source.TotalAgility
+                                         (agiMultiplier * source.TotalAgility)
                                          + (source.MinimumDamage + source.BonusDamage), 
                                          DamageType.Physical, 
                                          source, 
@@ -495,10 +509,6 @@ namespace Ensage.Common.AbilityInfo
                     if (damageString == null)
                     {
                         outgoingDamage = ability.GetDamage(level - 1);
-
-                        // Convert.ToSingle(
-                        // Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
-                        // .StringValue.Split(' ')[level - 1]);
                     }
                     else
                     {
@@ -531,11 +541,8 @@ namespace Ensage.Common.AbilityInfo
                         {
                             outgoingDamage = outgoingDamage * data.DamageMultiplier;
                         }
-
-                        // Console.WriteLine(outgoingDamage + " " + ability.Name + " " + GetDamageType(ability));
                     }
 
-                    // Console.WriteLine(outgoingDamage);
                     outgoingDamage = target.DamageTaken(
                         outgoingDamage, 
                         GetDamageType(ability), 
@@ -573,8 +580,12 @@ namespace Ensage.Common.AbilityInfo
         /// <summary>
         ///     Returns DamageType of ability
         /// </summary>
-        /// <param name="ability"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="DamageType" />.
+        /// </returns>
         public static DamageType GetDamageType(Ability ability)
         {
             var type = ability.DamageType;
@@ -642,7 +653,6 @@ namespace Ensage.Common.AbilityInfo
                 type = DamageType.Magical;
             }
 
-            // Console.WriteLine(ability.Name.Substring(0, "item_dagon".Length));
             return type;
         }
 

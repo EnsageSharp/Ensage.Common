@@ -27,8 +27,14 @@ namespace Ensage.Common
     {
         #region Static Fields
 
+        /// <summary>
+        ///     The loaded.
+        /// </summary>
         private static bool loaded;
 
+        /// <summary>
+        ///     The unloaded.
+        /// </summary>
         private static bool unloaded;
 
         #endregion
@@ -123,6 +129,9 @@ namespace Ensage.Common
             }
         }
 
+        /// <summary>
+        ///     The load.
+        /// </summary>
         private static void Load()
         {
             EntityExtensions.ItemDictionary = new Dictionary<string, Item>();

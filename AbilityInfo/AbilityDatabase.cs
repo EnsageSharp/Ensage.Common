@@ -30,11 +30,12 @@ namespace Ensage.Common.AbilityInfo
         #region Static Fields
 
         /// <summary>
+        ///     The abilityinfo dictionary.
         /// </summary>
         public static Dictionary<string, AbilityInfo> AbilityinfoDictionary;
 
         /// <summary>
-        ///     The abilities.
+        ///     The spells.
         /// </summary>
         public static List<AbilityInfo> Spells;
 
@@ -42,6 +43,9 @@ namespace Ensage.Common.AbilityInfo
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="AbilityDatabase" /> class.
+        /// </summary>
         static AbilityDatabase()
         {
             JToken @object;
@@ -61,7 +65,9 @@ namespace Ensage.Common.AbilityInfo
         /// <summary>
         ///     Find a spell.
         /// </summary>
-        /// <param name="abilityName"></param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
         /// <returns>
         ///     The <see cref="AbilityInfo" />.
         /// </returns>
@@ -70,7 +76,6 @@ namespace Ensage.Common.AbilityInfo
             AbilityInfo info;
             if (AbilityinfoDictionary.TryGetValue(abilityName, out info))
             {
-                // Console.WriteLine(info == null);
                 return info;
             }
 

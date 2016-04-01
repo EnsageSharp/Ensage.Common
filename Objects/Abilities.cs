@@ -42,7 +42,7 @@
 
             ability =
                 ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name && x.Owner.Team == team);
-            
+
             if (ability == null)
             {
                 return null;
@@ -78,8 +78,7 @@
                 return ability;
             }
 
-            ability =
-                ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name);
+            ability = ObjectManager.GetEntities<Ability>().FirstOrDefault(x => x.StoredName() == name);
 
             if (ability == null)
             {

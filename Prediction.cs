@@ -272,7 +272,7 @@ namespace Ensage.Common
         /// </returns>
         public static Vector3 InFront(Unit unit, float distance)
         {
-            var v = unit.Position + unit.Vector3FromPolarAngle() * distance;
+            var v = unit.Position + (unit.Vector3FromPolarAngle() * distance);
             return new Vector3(v.X, v.Y, 0);
         }
 
@@ -343,7 +343,6 @@ namespace Ensage.Common
                 targetSpeed = unit.Vector3FromPolarAngle((float)rotSpeed) * unit.MovementSpeed / 1000;
             }
 
-            // Console.WriteLine(targetSpeed + " " + unit.Name);
             if (IsIdle(unit))
             {
                 return unit.Position;

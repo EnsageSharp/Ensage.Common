@@ -24,6 +24,7 @@ namespace Ensage.Common.Extensions
     using global::SharpDX;
 
     /// <summary>
+    ///     The ability extensions.
     /// </summary>
     public static class AbilityExtensions
     {
@@ -44,19 +45,37 @@ namespace Ensage.Common.Extensions
         /// </summary>
         public static Dictionary<string, float> SpeedDictionary = new Dictionary<string, float>();
 
+        /// <summary>
+        ///     The ability behavior dictionary.
+        /// </summary>
         private static readonly Dictionary<string, AbilityBehavior> AbilityBehaviorDictionary =
             new Dictionary<string, AbilityBehavior>();
 
+        /// <summary>
+        ///     The bool dictionary.
+        /// </summary>
         private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
 
+        /// <summary>
+        ///     The cast point dictionary.
+        /// </summary>
         private static readonly Dictionary<string, double> CastPointDictionary = new Dictionary<string, double>();
 
+        /// <summary>
+        ///     The cast range dictionary.
+        /// </summary>
+        private static readonly Dictionary<string, float> CastRangeDictionary = new Dictionary<string, float>();
+
+        /// <summary>
+        ///     The channel dictionary.
+        /// </summary>
         private static readonly Dictionary<string, float> ChannelDictionary = new Dictionary<string, float>();
 
+        /// <summary>
+        ///     The data dictionary.
+        /// </summary>
         private static readonly Dictionary<string, AbilitySpecialData> DataDictionary =
             new Dictionary<string, AbilitySpecialData>();
-
-        private static Dictionary<string, float> castRangeDictionary = new Dictionary<string, float>();
 
         #endregion
 
@@ -66,6 +85,7 @@ namespace Ensage.Common.Extensions
         ///     Checks if given ability can be used
         /// </summary>
         /// <param name="ability">
+        ///     The ability.
         /// </param>
         /// <param name="bonusMana">
         ///     The bonus Mana.
@@ -127,7 +147,6 @@ namespace Ensage.Common.Extensions
             }
             catch (Exception)
             {
-                // Console.WriteLine(e.GetBaseException());
                 return false;
             }
         }
@@ -135,9 +154,15 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Checks if given ability can be used
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <returns>returns true in case ability can be used</returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <returns>
+        ///     returns true in case ability can be used
+        /// </returns>
         public static bool CanBeCasted(this Ability ability, Unit target)
         {
             if (!target.IsValidTarget())
@@ -737,9 +762,9 @@ namespace Ensage.Common.Extensions
             var name = abilityName ?? ability.StoredName();
             var owner = ability.Owner as Unit;
             var n = abilityName + owner.Handle;
-            if (castRangeDictionary.ContainsKey(n) && !Utils.SleepCheck("Common.GetCastRange." + n))
+            if (CastRangeDictionary.ContainsKey(n) && !Utils.SleepCheck("Common.GetCastRange." + n))
             {
-                return castRangeDictionary[n];
+                return CastRangeDictionary[n];
             }
 
             if (name == "templar_assassin_meld")
@@ -783,14 +808,14 @@ namespace Ensage.Common.Extensions
                     bonusRange += aetherLens.GetAbilityData("cast_range_bonus");
                 }
 
-                if (!castRangeDictionary.ContainsKey(n))
+                if (!CastRangeDictionary.ContainsKey(n))
                 {
-                    castRangeDictionary.Add(n, castRange + bonusRange);
+                    CastRangeDictionary.Add(n, castRange + bonusRange);
                     Utils.Sleep(5000, "Common.GetCastRange." + n);
                 }
                 else
                 {
-                    castRangeDictionary[n] = castRange + bonusRange;
+                    CastRangeDictionary[n] = castRange + bonusRange;
                     Utils.Sleep(5000, "Common.GetCastRange." + n);
                 }
 
@@ -812,14 +837,14 @@ namespace Ensage.Common.Extensions
                 radius = ability.GetAbilityData(data.RealCastRange, abilityName: name);
             }
 
-            if (!castRangeDictionary.ContainsKey(n))
+            if (!CastRangeDictionary.ContainsKey(n))
             {
-                castRangeDictionary.Add(n, radius);
+                CastRangeDictionary.Add(n, radius);
                 Utils.Sleep(5000, "Common.GetCastRange." + n);
             }
             else
             {
-                castRangeDictionary[n] = radius;
+                CastRangeDictionary[n] = radius;
                 Utils.Sleep(5000, "Common.GetCastRange." + n);
             }
 

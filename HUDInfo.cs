@@ -24,32 +24,68 @@ namespace Ensage.Common
     {
         #region Static Fields
 
+        /// <summary>
+        ///     The dire compare.
+        /// </summary>
         private static readonly double DireCompare;
 
+        /// <summary>
+        ///     The hp bar height.
+        /// </summary>
         private static readonly double HpBarHeight;
 
+        /// <summary>
+        ///     The hp bar width.
+        /// </summary>
         private static readonly double HpBarWidth;
 
+        /// <summary>
+        ///     The hp bar x.
+        /// </summary>
         private static readonly double HpBarX;
 
+        /// <summary>
+        ///     The hp bar y.
+        /// </summary>
         private static readonly float HpBarY;
 
+        /// <summary>
+        ///     The monitor.
+        /// </summary>
         private static readonly float Monitor;
 
+        /// <summary>
+        ///     The radiant compare.
+        /// </summary>
         private static readonly double RadiantCompare;
 
+        /// <summary>
+        ///     The rate.
+        /// </summary>
         private static readonly float Rate;
 
+        /// <summary>
+        ///     The screen size.
+        /// </summary>
         private static readonly Vector2 ScreenSize;
 
+        /// <summary>
+        ///     The x.
+        /// </summary>
         private static readonly double X;
 
+        /// <summary>
+        ///     The y.
+        /// </summary>
         private static double y;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="HUDInfo" /> class.
+        /// </summary>
         static HUDInfo()
         {
             double tinfoHeroDown;
@@ -168,8 +204,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns HealthBar position for given unit
         /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector2" />.
+        /// </returns>
         public static Vector2 GetHPbarPosition(Unit unit)
         {
             var pos = unit.Position + new Vector3(0, 0, unit.HealthBarOffset);
@@ -190,8 +230,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns HealthBar X position for given unit
         /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float GetHPBarSizeX(Unit unit = null)
         {
             return (float)HpBarWidth * Monitor;
@@ -200,8 +244,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns HealthBar Y position for given unit
         /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float GetHpBarSizeY(Unit unit = null)
         {
             return (float)(HpBarHeight * Monitor);
@@ -210,19 +258,27 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns top panel position for given hero
         /// </summary>
-        /// <param name="hero"></param>
-        /// <returns></returns>
+        /// <param name="hero">
+        ///     The hero.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector2" />.
+        /// </returns>
         public static Vector2 GetTopPanelPosition(Hero hero)
         {
             var id = hero.Player.ID;
-            return new Vector2((float)(GetXX(hero) - 20 * Monitor + X * id), 0);
+            return new Vector2((float)(GetXX(hero) - (20 * Monitor) + (X * id)), 0);
         }
 
         /// <summary>
         ///     Returns top panel size
         /// </summary>
-        /// <param name="hero"></param>
-        /// <returns></returns>
+        /// <param name="hero">
+        ///     The hero.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double[]" />.
+        /// </returns>
         public static double[] GetTopPanelSize(Hero hero)
         {
             double[] size = { GetTopPanelSizeX(hero), GetTopPanelSizeY(hero) };
@@ -232,8 +288,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns top panel hero icon width
         /// </summary>
-        /// <param name="hero"></param>
-        /// <returns></returns>
+        /// <param name="hero">
+        ///     The hero.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double GetTopPanelSizeX(Hero hero)
         {
             return X;
@@ -242,16 +302,23 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns top panel hero icon height
         /// </summary>
-        /// <param name="hero"></param>
-        /// <returns></returns>
+        /// <param name="hero">
+        ///     The hero.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double GetTopPanelSizeY(Hero hero)
         {
             return 35 * Rate;
         }
 
         /// <summary>
+        ///     The ratio percentage.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float RatioPercentage()
         {
             return Monitor;
@@ -260,7 +327,9 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns screen width
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float ScreenSizeX()
         {
             return ScreenSize.X;
@@ -269,7 +338,9 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns screen height
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float ScreenSizeY()
         {
             return ScreenSize.Y;

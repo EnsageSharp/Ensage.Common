@@ -29,9 +29,15 @@ namespace Ensage.Common
         /// <summary>
         ///     Find enemy hero that takes least hits to kill
         /// </summary>
-        /// <param name="source">Source hero</param>
-        /// <param name="bonusRange"></param>
-        /// <returns></returns>
+        /// <param name="source">
+        ///     Source hero
+        /// </param>
+        /// <param name="bonusRange">
+        ///     The bonus Range.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Hero" />.
+        /// </returns>
         public static Hero BestAutoAttackTarget(Hero source, float bonusRange = 0)
         {
             var attackRange = source.GetAttackRange();
@@ -62,9 +68,15 @@ namespace Ensage.Common
         /// <summary>
         ///     Finds target closest to mouse in specified range
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="range"></param>
-        /// <returns></returns>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="range">
+        ///     The range.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Hero" />.
+        /// </returns>
         public static Hero ClosestToMouse(Hero source, float range = 1000)
         {
             var mousePosition = Game.MousePosition;
@@ -86,14 +98,16 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        ///     Checks for lowest hp creep in attack range
+        ///     Checks for lowest health creep in attack range
         /// </summary>
         /// <param name="source">
+        ///     The source.
         /// </param>
         /// <param name="bonusRange">
         ///     The bonus Range.
         /// </param>
         /// <returns>
+        ///     The <see cref="Unit" />.
         /// </returns>
         public static Unit GetLowestHPCreep(Hero source, float bonusRange = 0)
         {
@@ -103,7 +117,7 @@ namespace Ensage.Common
                 var lowestHp =
                     Creeps.All.Where(
                         x =>
-                        x.IsSpawned
+                        x.IsValid && x.IsSpawned
                         && (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral

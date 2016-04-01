@@ -14,6 +14,7 @@
 namespace Ensage.Common.AbilityInfo
 {
     /// <summary>
+    ///     The ability info.
     /// </summary>
     public class AbilityInfo
     {
@@ -182,45 +183,111 @@ namespace Ensage.Common.AbilityInfo
         #region Constructors and Destructors
 
         /// <summary>
+        ///     Initializes a new instance of the <see cref="AbilityInfo" /> class.
         /// </summary>
         public AbilityInfo()
         {
         }
 
         /// <summary>
+        ///     Initializes a new instance of the <see cref="AbilityInfo" /> class.
         /// </summary>
-        /// <param name="abilityName"></param>
-        /// <param name="isDisable"></param>
-        /// <param name="isSlow"></param>
-        /// <param name="isSilence"></param>
-        /// <param name="isNuke"></param>
-        /// <param name="isSkillShot"></param>
-        /// <param name="isHeal"></param>
-        /// <param name="isShield"></param>
-        /// <param name="additionalDelay"></param>
-        /// <param name="radius"></param>
-        /// <param name="stringRadius"></param>
-        /// <param name="speed"></param>
-        /// <param name="width"></param>
-        /// <param name="allyBlock"></param>
-        /// <param name="enemyBlock"></param>
-        /// <param name="magicImmunityPierce"></param>
-        /// <param name="fakeCastRange"></param>
-        /// <param name="realCastRange"></param>
-        /// <param name="onlyForKillSteal"></param>
-        /// <param name="damageString"></param>
-        /// <param name="damageMultiplier"></param>
-        /// <param name="bonusDamagestring"></param>
-        /// <param name="aaDamage"></param>
-        /// <param name="damageScepterString"></param>
-        /// <param name="spellLevel"></param>
-        /// <param name="manaBurn"></param>
-        /// <param name="isBuff"></param>
-        /// <param name="weakensEnemy"></param>
-        /// <param name="isPurge"></param>
-        /// <param name="isHarras"></param>
-        /// <param name="trueSight"></param>
-        /// <param name="isInvis"></param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <param name="isDisable">
+        ///     The is disable.
+        /// </param>
+        /// <param name="isSlow">
+        ///     The is slow.
+        /// </param>
+        /// <param name="isSilence">
+        ///     The is silence.
+        /// </param>
+        /// <param name="isNuke">
+        ///     The is nuke.
+        /// </param>
+        /// <param name="isSkillShot">
+        ///     The is skill shot.
+        /// </param>
+        /// <param name="isHeal">
+        ///     The is heal.
+        /// </param>
+        /// <param name="isShield">
+        ///     The is shield.
+        /// </param>
+        /// <param name="additionalDelay">
+        ///     The additional delay.
+        /// </param>
+        /// <param name="radius">
+        ///     The radius.
+        /// </param>
+        /// <param name="stringRadius">
+        ///     The string radius.
+        /// </param>
+        /// <param name="speed">
+        ///     The speed.
+        /// </param>
+        /// <param name="width">
+        ///     The width.
+        /// </param>
+        /// <param name="allyBlock">
+        ///     The ally block.
+        /// </param>
+        /// <param name="enemyBlock">
+        ///     The enemy block.
+        /// </param>
+        /// <param name="magicImmunityPierce">
+        ///     The magic immunity pierce.
+        /// </param>
+        /// <param name="fakeCastRange">
+        ///     The fake cast range.
+        /// </param>
+        /// <param name="realCastRange">
+        ///     The real cast range.
+        /// </param>
+        /// <param name="onlyForKillSteal">
+        ///     The only for kill steal.
+        /// </param>
+        /// <param name="damageString">
+        ///     The damage string.
+        /// </param>
+        /// <param name="damageMultiplier">
+        ///     The damage multiplier.
+        /// </param>
+        /// <param name="bonusDamagestring">
+        ///     The bonus damagestring.
+        /// </param>
+        /// <param name="aaDamage">
+        ///     The aa damage.
+        /// </param>
+        /// <param name="damageScepterString">
+        ///     The damage scepter string.
+        /// </param>
+        /// <param name="spellLevel">
+        ///     The spell level.
+        /// </param>
+        /// <param name="manaBurn">
+        ///     The mana burn.
+        /// </param>
+        /// <param name="isBuff">
+        ///     The is buff.
+        /// </param>
+        /// <param name="weakensEnemy">
+        ///     The weakens enemy.
+        /// </param>
+        /// <param name="isPurge">
+        ///     The is purge.
+        /// </param>
+        /// <param name="isHarras">
+        ///     The is harras.
+        /// </param>
+        /// <param name="trueSight">
+        ///     The true sight.
+        /// </param>
+        /// <param name="isInvis">
+        ///     The is invisibility.
+        /// </param>
         public AbilityInfo(
             string abilityName, 
             bool isDisable, 
