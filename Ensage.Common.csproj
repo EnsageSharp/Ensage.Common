@@ -74,12 +74,17 @@
     <Compile Include="Algorithm.cs" />
     <Compile Include="DelayAction.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
+    <Compile Include="Extensions\Damage\DamageBlocks.cs" />
+    <Compile Include="Extensions\Damage\Calculations.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\Damage\ExternalDmgAmps.cs" />
+    <Compile Include="Extensions\Damage\ExternalDmgReductions.cs" />
     <Compile Include="Extensions\SharpDX\Generic.cs" />
     <Compile Include="Extensions\SharpDX\Vector2Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector3Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
+    <Compile Include="Extensions\UnitExtensions.cs" />
     <Compile Include="HUDInfo.cs" />
     <Compile Include="Menu\MenuDrawHelper.cs" />
     <Compile Include="Menu\MenuGlobals.cs" />

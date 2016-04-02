@@ -1,4 +1,4 @@
-﻿// <copyright file="Utils.cs" company="LeagueSharp">
+﻿// <copyright file="MenuUtils.cs" company="LeagueSharp">
 //    Copyright (c) 2015 LeagueSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by

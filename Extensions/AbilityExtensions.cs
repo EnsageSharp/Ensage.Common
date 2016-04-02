@@ -95,7 +95,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static bool CanBeCasted(this Ability ability, float bonusMana = 0)
         {
-            if (ability == null)
+            if (ability == null || !ability.IsValid)
             {
                 return false;
             }
@@ -165,6 +165,11 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static bool CanBeCasted(this Ability ability, Unit target)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             if (!target.IsValidTarget())
             {
                 return false;
@@ -187,26 +192,55 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The can hit.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool CanHit(this Ability ability, Unit target, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             return CanHit(ability, target, ability.Owner.Position, abilityName);
         }
 
         /// <summary>
         ///     Checks if you could hit hero with given ability
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="sourcePosition"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="sourcePosition">
+        ///     The source Position.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool CanHit(this Ability ability, Unit target, Vector3 sourcePosition, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             var name = abilityName ?? ability.StoredName();
             if (ability.Owner.Equals(target))
             {
@@ -272,13 +306,26 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The cast skill shot.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="abilityName"></param>
-        /// <param name="soulRing"></param>
-        /// <param name="otherTargets"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <param name="soulRing">
+        ///     The soul ring.
+        /// </param>
+        /// <param name="otherTargets">
+        ///     The other targets.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool CastSkillShot(
             this Ability ability, 
             Unit target, 
@@ -286,19 +333,38 @@ namespace Ensage.Common.Extensions
             Ability soulRing = null, 
             List<Unit> otherTargets = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             return CastSkillShot(ability, target, ability.Owner.Position, abilityName, soulRing, otherTargets);
         }
 
         /// <summary>
-        ///     Uses prediction to cast given skillshot ability
+        ///     Uses prediction to cast given skill shot ability
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="sourcePosition"></param>
-        /// <param name="abilityName"></param>
-        /// <param name="soulRing"></param>
-        /// <param name="otherTargets">Targets which are supposed to be hit by AOE SkillShot</param>
-        /// <returns>returns true in case of successfull cast</returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="sourcePosition">
+        ///     The source Position.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <param name="soulRing">
+        ///     The soul Ring.
+        /// </param>
+        /// <param name="otherTargets">
+        ///     Targets which are supposed to be hit by AOE Skill Shot
+        /// </param>
+        /// <returns>
+        ///     returns true in case of successful cast
+        /// </returns>
         public static bool CastSkillShot(
             this Ability ability, 
             Unit target, 
@@ -307,6 +373,11 @@ namespace Ensage.Common.Extensions
             Ability soulRing = null, 
             List<Unit> otherTargets = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             if (!Utils.SleepCheck("CastSkillshot" + ability.Handle))
             {
                 return false;
@@ -479,15 +550,32 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The cast stun.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="straightTimeforSkillShot"></param>
-        /// <param name="chainStun"></param>
-        /// <param name="useSleep"></param>
-        /// <param name="abilityName"></param>
-        /// <param name="soulRing"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="straightTimeforSkillShot">
+        ///     The straight time for skill shot.
+        /// </param>
+        /// <param name="chainStun">
+        ///     The chain stun.
+        /// </param>
+        /// <param name="useSleep">
+        ///     The use sleep.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <param name="soulRing">
+        ///     The soul ring.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool CastStun(
             this Ability ability, 
             Unit target, 
@@ -497,6 +585,11 @@ namespace Ensage.Common.Extensions
             string abilityName = null, 
             Ability soulRing = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             return CastStun(
                 ability, 
                 target, 
@@ -511,16 +604,36 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Uses given ability in case enemy is not disabled or would be chain stunned.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="sourcePosition"></param>
-        /// <param name="straightTimeforSkillShot"></param>
-        /// <param name="chainStun"></param>
-        /// <param name="useSleep"></param>
-        /// <param name="abilityName"></param>
-        /// <param name="soulRing"></param>
-        /// <param name="otherTargets"></param>
-        /// <returns>returns true in case of successfull cast</returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="sourcePosition">
+        ///     The source Position.
+        /// </param>
+        /// <param name="straightTimeforSkillShot">
+        ///     The straight Time for Skill Shot.
+        /// </param>
+        /// <param name="chainStun">
+        ///     The chain Stun.
+        /// </param>
+        /// <param name="useSleep">
+        ///     The use Sleep.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <param name="soulRing">
+        ///     The soul Ring.
+        /// </param>
+        /// <param name="otherTargets">
+        ///     The other Targets.
+        /// </param>
+        /// <returns>
+        ///     returns true in case of successful cast
+        /// </returns>
         public static bool CastStun(
             this Ability ability, 
             Unit target, 
@@ -597,12 +710,24 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The channel time.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float ChannelTime(this Ability ability, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
             float channel;
             if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
@@ -616,13 +741,24 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        ///     Returns castpoint of given ability
+        ///     Returns cast point of given ability
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double FindCastPoint(this Ability ability, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             if (ability is Item)
             {
                 return 0;
@@ -648,17 +784,32 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Returns ability data with given name, checks if data are level dependent or not
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="dataName"></param>
-        /// <param name="level">Custom level</param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="dataName">
+        ///     The data Name.
+        /// </param>
+        /// <param name="level">
+        ///     Custom level
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float GetAbilityData(
             this Ability ability, 
             string dataName, 
             uint level = 0, 
             string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             var lvl = ability.Level;
             var name = abilityName ?? ability.StoredName();
             AbilitySpecialData data;
@@ -684,14 +835,30 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Returns delay before ability is casted
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="source"></param>
-        /// <param name="target"></param>
-        /// <param name="usePing"></param>
-        /// <param name="useCastPoint"></param>
-        /// <param name="abilityName"></param>
-        /// <param name="useChannel"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="usePing">
+        ///     The use Ping.
+        /// </param>
+        /// <param name="useCastPoint">
+        ///     The use Cast Point.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <param name="useChannel">
+        ///     The use Channel.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double GetCastDelay(
             this Ability ability, 
             Hero source, 
@@ -701,8 +868,13 @@ namespace Ensage.Common.Extensions
             string abilityName = null, 
             bool useChannel = false)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
-            var delay = 0d;
+            double delay;
             if (useCastPoint)
             {
                 if (!DelayDictionary.TryGetValue(name + " " + ability.Level, out delay))
@@ -754,11 +926,22 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Returns cast range of ability, if ability is NonTargeted it will return its radius!
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float GetCastRange(this Ability ability, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
             var owner = ability.Owner as Unit;
             var n = abilityName + owner.Handle;
@@ -822,7 +1005,7 @@ namespace Ensage.Common.Extensions
                 return castRange + bonusRange;
             }
 
-            var radius = 0f;
+            float radius;
             if (data == null)
             {
                 return ability.CastRange;
@@ -854,12 +1037,25 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Checks all aspects and returns full delay before target gets hit by given ability
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double GetHitDelay(this Ability ability, Unit target, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
@@ -895,17 +1091,32 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Returns prediction for given target after given ability hit delay
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="target"></param>
-        /// <param name="customDelay">enter your custom delay</param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="customDelay">
+        ///     enter your custom delay
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
         public static Vector3 GetPrediction(
             this Ability ability, 
             Unit target, 
             double customDelay = 0, 
             string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return Vector3.Zero;
+            }
+
             var name = abilityName ?? ability.StoredName();
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
@@ -953,11 +1164,22 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Returns projectile speed of the ability
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float GetProjectileSpeed(this Ability ability, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
             float speed;
             if (!SpeedDictionary.TryGetValue(name + " " + ability.Level, out speed))
@@ -989,11 +1211,22 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Returns impact radius of given ability
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
         public static float GetRadius(this Ability ability, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
             float radius;
             if (!RadiusDictionary.TryGetValue(name + " " + ability.Level, out radius))
@@ -1045,16 +1278,31 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        ///     Checks if this ability can be casted by Invoker, if the ability is not currently invoked, it is gonna check for
-        ///     both invoke and the ability manacost.
+        ///     Checks if this ability can be casted by Invoker, if the ability is not currently invoked, it is going to check for
+        ///     both invoke and the ability mana cost.
         /// </summary>
-        /// <param name="ability">given ability</param>
-        /// <param name="invoke">invoker ultimate</param>
-        /// <param name="spell4">current spell on slot 4</param>
-        /// <param name="spell5">current spell on slot 5</param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     given ability
+        /// </param>
+        /// <param name="invoke">
+        ///     invoker ultimate
+        /// </param>
+        /// <param name="spell4">
+        ///     current spell on slot 4
+        /// </param>
+        /// <param name="spell5">
+        ///     current spell on slot 5
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool InvoCanBeCasted(this Ability ability, Ability invoke, Ability spell4, Ability spell5)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             var owner = ability.Owner as Hero;
             if (owner == null)
             {
@@ -1073,14 +1321,27 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        ///     Checks if given ability has given ability behaviour flag
+        ///     Checks if given ability has given ability behavior flag
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="flag"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="flag">
+        ///     The flag.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability Name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool IsAbilityBehavior(this Ability ability, AbilityBehavior flag, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             var name = abilityName ?? ability.StoredName();
             AbilityBehavior data;
             if (AbilityBehaviorDictionary.TryGetValue(name, out data))
@@ -1094,13 +1355,27 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The is ability type.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="type"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="type">
+        ///     The type.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool IsAbilityType(this Ability ability, AbilityType type, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             var name = abilityName ?? ability.StoredName();
             var n = name + "abilityType" + type;
             if (BoolDictionary.ContainsKey(n))
@@ -1114,12 +1389,24 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The requires charges.
         /// </summary>
-        /// <param name="ability"></param>
-        /// <param name="abilityName"></param>
-        /// <returns></returns>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
         public static bool RequiresCharges(this Ability ability, string abilityName = null)
         {
+            if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
             var name = abilityName ?? ability.StoredName();
             try
             {

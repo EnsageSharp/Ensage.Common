@@ -134,7 +134,6 @@ namespace Ensage.Common
         /// </summary>
         private static void Load()
         {
-            EntityExtensions.ItemDictionary = new Dictionary<string, Item>();
             Names.NameDictionary = new Dictionary<float, string>();
             Abilities.AbilityDictionary = new Dictionary<string, Ability>();
         }
