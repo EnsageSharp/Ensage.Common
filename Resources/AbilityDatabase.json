@@ -270,6 +270,7 @@
         },
         {
             "AbilityName": "puck_dream_coil",
+            "IsSkillShot": true,
             "IsDisable": true,
             "StringRadius": "coil_radius"
             //"DamageString": "coil_break_damage",
@@ -1025,6 +1026,7 @@
         {
             "AbilityName": "visage_soul_assumption",
             "IsNuke": true,
+            "Speed": "bolt_speed",
             "DamageString": "soul_base_damage"
         },
         {
@@ -2075,6 +2077,7 @@
             "AbilityName": "skywrath_mage_arcane_bolt",
             "IsNuke": true,
             "DamageString": "bolt_damage",
+            "Speed": "bolt_speed",
             "IsHarras": true
         },
         {
