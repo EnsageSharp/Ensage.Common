@@ -413,7 +413,21 @@ namespace Ensage.Common.Extensions
 
             var name = unit.Handle + modifierName;
             Modifier modifier;
-            if (modifierDictionary.TryGetValue(name, out modifier)
+            var found = modifierDictionary.TryGetValue(name, out modifier);
+            var isValid = true;
+            if (found)
+            {
+                try
+                {
+                    var test = modifier.RemainingTime;
+                }
+                catch (ModifierNotFoundException)
+                {
+                    isValid = false;
+                }
+            }
+
+            if (found && isValid
                 && !Utils.SleepCheck("Ensage.Common.FindModifier" + name))
             {
                 return modifier;
@@ -434,8 +448,7 @@ namespace Ensage.Common.Extensions
                 modifierDictionary.Add(name, modifier);
             }
 
-            Utils.Sleep(50, "Ensage.Common.FindModifier" + name);
-
+            Utils.Sleep(100, "Ensage.Common.FindModifier" + name);
             return modifier;
         }
 
