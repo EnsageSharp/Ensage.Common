@@ -1393,6 +1393,171 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The is disable.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsDisable(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsDisable;
+        }
+
+        /// <summary>
+        ///     The is heal.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsHeal(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsHeal;
+        }
+
+        /// <summary>
+        ///     The is invisibility.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsInvis(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsInvis;
+        }
+
+        /// <summary>
+        ///     The is manaburn.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsManaburn(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.ManaBurn;
+        }
+
+        /// <summary>
+        ///     The is nuke.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsNuke(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsNuke;
+        }
+
+        /// <summary>
+        ///     The is purge.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsPurge(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsPurge;
+        }
+
+        /// <summary>
+        ///     The is shield.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsShield(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsShield;
+        }
+
+        /// <summary>
+        ///     The is silence.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsSilence(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsSilence;
+        }
+
+        /// <summary>
+        ///     The is skill shot.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsSkillShot(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsSkillShot;
+        }
+
+        /// <summary>
+        ///     The is slow.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsSlow(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.IsSlow;
+        }
+
+        /// <summary>
+        ///     The pierces magic immunity.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool PiercesMagicImmunity(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data != null && data.MagicImmunityPierce;
+        }
+
+        /// <summary>
         ///     The requires charges.
         /// </summary>
         /// <param name="ability">
