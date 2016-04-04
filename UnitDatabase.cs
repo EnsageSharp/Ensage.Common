@@ -34,15 +34,19 @@ namespace Ensage.Common
         #region Static Fields
 
         /// <summary>
-        ///     The units.
+        ///     The attack point dictionary.
         /// </summary>
-        public static List<AttackAnimationData> Units;
-
         private static readonly Dictionary<uint, double> AttackPointDictionary = new Dictionary<uint, double>();
 
+        /// <summary>
+        ///     The attack rate dictionary.
+        /// </summary>
         private static readonly Dictionary<uint, double> AttackRateDictionary = new Dictionary<uint, double>();
 
-        private static Dictionary<uint, double> projSpeedDictionary = new Dictionary<uint, double>();
+        /// <summary>
+        ///     The proj speed dictionary.
+        /// </summary>
+        private static readonly Dictionary<uint, double> ProjSpeedDictionary = new Dictionary<uint, double>();
 
         #endregion
 
@@ -62,6 +66,15 @@ namespace Ensage.Common
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>
+        ///     Gets or sets the units.
+        /// </summary>
+        public static List<AttackAnimationData> Units { get; set; }
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -74,6 +87,22 @@ namespace Ensage.Common
         ///     The <see cref="double" />.
         /// </returns>
         public static double GetAttackBackswing(Hero unit)
+        {
+            var attackRate = GetAttackRate(unit);
+            var attackPoint = GetAttackPoint(unit);
+            return attackRate - attackPoint;
+        }
+
+        /// <summary>
+        ///     Gets the attack backswing.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double GetAttackBackswing(Unit unit)
         {
             var attackRate = GetAttackRate(unit);
             var attackPoint = GetAttackPoint(unit);
@@ -108,7 +137,50 @@ namespace Ensage.Common
                 }
 
                 var attackSpeed = GetAttackSpeed(unit);
-                return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
+                return attackAnimationPoint / (1 + ((attackSpeed - 100) / 100));
+            }
+            catch (KeyValuesNotFoundException)
+            {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return 0;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
+                return 0;
+            }
+        }
+
+        /// <summary>
+        ///     Gets the attack point.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double GetAttackPoint(Unit unit)
+        {
+            if (unit == null)
+            {
+                return 0;
+            }
+
+            try
+            {
+                var name = unit.StoredName();
+                double attackAnimationPoint;
+                if (!AttackPointDictionary.TryGetValue(unit.Handle, out attackAnimationPoint))
+                {
+                    attackAnimationPoint =
+                        Game.FindKeyValues(name + "/AttackAnimationPoint", KeyValueSource.Unit).FloatValue;
+                    AttackPointDictionary.Add(unit.Handle, attackAnimationPoint);
+                }
+
+                var attackSpeed = GetAttackSpeed(unit);
+                return attackAnimationPoint / (1 + ((attackSpeed - 100) / 100));
             }
             catch (KeyValuesNotFoundException)
             {
@@ -197,6 +269,44 @@ namespace Ensage.Common
         }
 
         /// <summary>
+        ///     Gets the attack rate.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double GetAttackRate(Unit unit)
+        {
+            try
+            {
+                var attackSpeed = GetAttackSpeed(unit);
+                double attackBaseTime;
+                if (AttackRateDictionary.TryGetValue(unit.Handle, out attackBaseTime))
+                {
+                    return attackBaseTime / (1 + ((attackSpeed - 100) / 100));
+                }
+
+                attackBaseTime = Game.FindKeyValues(unit.StoredName() + "/AttackRate", KeyValueSource.Unit).FloatValue;
+                AttackRateDictionary.Add(unit.Handle, attackBaseTime);
+
+                return attackBaseTime / (1 + ((attackSpeed - 100) / 100));
+            }
+            catch (KeyValuesNotFoundException)
+            {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return 0;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
+                return 0;
+            }
+        }
+
+        /// <summary>
         ///     Gets the attack speed.
         /// </summary>
         /// <param name="unit">
@@ -207,7 +317,6 @@ namespace Ensage.Common
         /// </returns>
         public static float GetAttackSpeed(Hero unit)
         {
-            // Console.WriteLine(unit.AttacksPerSecond * Game.FindKeyValues(unit.Name + "/AttackRate", KeyValueSource.Hero).FloatValue / 0.01);
             try
             {
                 double attackBaseTime;
@@ -225,6 +334,43 @@ namespace Ensage.Common
                     attackSpeed = 600;
                 }
 
+                return (float)attackSpeed;
+            }
+            catch (KeyValuesNotFoundException)
+            {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return 0;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
+                return 0;
+            }
+        }
+
+        /// <summary>
+        ///     Gets the attack speed.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
+        public static float GetAttackSpeed(Unit unit)
+        {
+            try
+            {
+                double attackBaseTime;
+                if (!AttackRateDictionary.TryGetValue(unit.Handle, out attackBaseTime))
+                {
+                    attackBaseTime =
+                        Game.FindKeyValues(unit.StoredName() + "/AttackRate", KeyValueSource.Unit).FloatValue;
+                    AttackRateDictionary.Add(unit.Handle, attackBaseTime);
+                }
+
+                var attackSpeed = Math.Min(unit.AttacksPerSecond * attackBaseTime / 0.01, 600);
                 return (float)attackSpeed;
             }
             catch (KeyValuesNotFoundException)
@@ -271,8 +417,12 @@ namespace Ensage.Common
         /// <summary>
         ///     Returns units projectile speed
         /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
         public static double GetProjectileSpeed(Hero unit)
         {
             if (unit == null || !unit.IsRanged)
@@ -284,9 +434,49 @@ namespace Ensage.Common
             try
             {
                 double projSpeed;
-                if (!projSpeedDictionary.TryGetValue(unit.Handle, out projSpeed))
+                if (!ProjSpeedDictionary.TryGetValue(unit.Handle, out projSpeed))
                 {
                     projSpeed = Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Hero).FloatValue;
+                }
+
+                return projSpeed;
+            }
+            catch (KeyValuesNotFoundException)
+            {
+                if (!Utils.SleepCheck("Ensage.Common.DemoModeWarning"))
+                {
+                    return double.MaxValue;
+                }
+
+                Utils.Sleep(10000, "Ensage.Common.DemoModeWarning");
+                Console.WriteLine(@"[[Please do not use demo mode for testing assemblies]]");
+                return double.MaxValue;
+            }
+        }
+
+        /// <summary>
+        ///     Returns units projectile speed
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double GetProjectileSpeed(Unit unit)
+        {
+            if (unit == null || !unit.IsRanged)
+            {
+                return double.MaxValue;
+            }
+
+            var name = unit.StoredName();
+            try
+            {
+                double projSpeed;
+                if (!ProjSpeedDictionary.TryGetValue(unit.Handle, out projSpeed))
+                {
+                    projSpeed = Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Unit).FloatValue;
                 }
 
                 return projSpeed;

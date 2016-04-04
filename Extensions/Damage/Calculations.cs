@@ -11,7 +11,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Extensions.Damage
 {
     using System;
@@ -528,7 +527,7 @@ namespace Ensage.Common.Extensions.Damage
                 if (spell != null)
                 {
                     var baseAmp = .05 * spell.Level;
-                    var owner = spell.Owner as Unit;
+                    var owner = spell.Owner as Hero;
                     if (owner.AghanimState())
                     {
                         baseAmp = baseAmp + .1;

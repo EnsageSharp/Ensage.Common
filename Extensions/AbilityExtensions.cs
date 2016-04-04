@@ -107,27 +107,15 @@ namespace Ensage.Common.Extensions
                 if (owner == null)
                 {
                     canBeCasted = ability.Level > 0 && ability.Cooldown <= 0;
-                    var item = ability as Item;
-                    if (item != null && item.IsRequiringCharges)
-                    {
-                        canBeCasted = canBeCasted && item.CurrentCharges > 0;
-                    }
-
                     return canBeCasted;
                 }
 
-                if (ability is Item || owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
+                if (owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
                     canBeCasted = bonusMana > 0
                                       ? ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
                                         && ability.Cooldown <= 0
                                       : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
-                    var item = ability as Item;
-                    if (item != null && item.IsRequiringCharges)
-                    {
-                        canBeCasted = canBeCasted && item.CurrentCharges > 0;
-                    }
-
                     return canBeCasted;
                 }
 
@@ -741,6 +729,20 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The common properties.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="AbilityInfo" />.
+        /// </returns>
+        public static AbilityInfo CommonProperties(this Ability ability)
+        {
+            return AbilityDatabase.Find(ability.StoredName());
+        }
+
+        /// <summary>
         ///     Returns cast point of given ability
         /// </summary>
         /// <param name="ability">
@@ -943,7 +945,7 @@ namespace Ensage.Common.Extensions
             }
 
             var name = abilityName ?? ability.StoredName();
-            var owner = ability.Owner as Unit;
+            var owner = ability.Owner;
             var n = abilityName + owner.Handle;
             if (CastRangeDictionary.ContainsKey(n) && !Utils.SleepCheck("Common.GetCastRange." + n))
             {
@@ -976,16 +978,18 @@ namespace Ensage.Common.Extensions
                     castRange = 999999;
                 }
 
-                if (name == "dragon_knight_dragon_tail" && owner.HasModifier("modifier_dragon_knight_dragon_form"))
+                var hero = owner as Hero;
+                if (hero != null && name == "dragon_knight_dragon_tail"
+                    && hero.HasModifier("modifier_dragon_knight_dragon_form"))
                 {
                     bonusRange = 250;
                 }
-                else if (name == "beastmaster_primal_roar" && owner.AghanimState())
+                else if (hero != null && name == "beastmaster_primal_roar" && hero.AghanimState())
                 {
                     bonusRange = 350;
                 }
 
-                var aetherLens = owner.FindItem("item_aether_lens", true);
+                var aetherLens = hero != null ? hero.FindItem("item_aether_lens", true) : null;
                 if (aetherLens != null)
                 {
                     bonusRange += aetherLens.GetAbilityData("cast_range_bonus");

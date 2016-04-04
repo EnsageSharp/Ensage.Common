@@ -38,7 +38,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="Hero" />.
         /// </returns>
-        public static Hero BestAutoAttackTarget(Hero source, float bonusRange = 0)
+        public static Hero BestAutoAttackTarget(Unit source, float bonusRange = 0)
         {
             var attackRange = source.GetAttackRange();
             var enemyHeroes =
@@ -77,7 +77,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="Hero" />.
         /// </returns>
-        public static Hero ClosestToMouse(Hero source, float range = 1000)
+        public static Hero ClosestToMouse(Unit source, float range = 1000)
         {
             var mousePosition = Game.MousePosition;
             var enemyHeroes =
@@ -109,7 +109,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="Unit" />.
         /// </returns>
-        public static Unit GetLowestHPCreep(Hero source, float bonusRange = 0)
+        public static Unit GetLowestHPCreep(Unit source, float bonusRange = 0)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="Hero" />.
         /// </returns>
-        public static Hero HighestHealthPointsTarget(Hero source, float range)
+        public static Hero HighestHealthPointsTarget(Unit source, float range)
         {
             return
                 Heroes.GetByTeam(source.GetEnemyTeam())

@@ -80,6 +80,9 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Damage\ExternalDmgAmps.cs" />
     <Compile Include="Extensions\Damage\ExternalDmgReductions.cs" />
+    <Compile Include="Extensions\HeroExtensions.cs" />
+    <Compile Include="Extensions\ItemExtensions.cs" />
+    <Compile Include="Extensions\MeepoExtensions.cs" />
     <Compile Include="Extensions\SharpDX\Generic.cs" />
     <Compile Include="Extensions\SharpDX\Vector2Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector3Extensions.cs" />

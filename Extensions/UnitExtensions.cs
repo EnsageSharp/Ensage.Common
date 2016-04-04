@@ -11,7 +11,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Extensions
 {
     using System;
@@ -20,7 +19,6 @@ namespace Ensage.Common.Extensions
 
     using Ensage.Common.Extensions.Damage;
     using Ensage.Common.Objects;
-    using Ensage.Heroes;
 
     using global::SharpDX;
 
@@ -61,7 +59,7 @@ namespace Ensage.Common.Extensions
         #region Public Methods and Operators
 
         /// <summary>
-        ///     Checks if given unit has AghanimScepter
+        ///     Checks if given hero has AghanimScepter
         /// </summary>
         /// <param name="unit">
         ///     The unit.
@@ -78,6 +76,48 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The attack backswing.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double AttackBackswing(this Unit unit)
+        {
+            return UnitDatabase.GetAttackBackswing(unit);
+        }
+
+        /// <summary>
+        ///     The attack point.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double AttackPoint(this Unit unit)
+        {
+            return UnitDatabase.GetAttackPoint(unit);
+        }
+
+        /// <summary>
+        ///     The attack rate.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double AttackRate(this Unit unit)
+        {
+            return UnitDatabase.GetAttackRate(unit);
+        }
+
+        /// <summary>
         ///     The best aa target.
         /// </summary>
         /// <param name="unit">
@@ -91,7 +131,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static Hero BestAATarget(this Unit unit, float bonusRange = 0)
         {
-            return TargetSelector.BestAutoAttackTarget(unit as Hero, bonusRange);
+            return TargetSelector.BestAutoAttackTarget(unit, bonusRange);
         }
 
         /// <summary>
@@ -151,65 +191,6 @@ namespace Ensage.Common.Extensions
                                        "modifier_skeleton_king_reincarnation_scepter_active"
                                    }, 
                                false));
-        }
-
-        /// <summary>
-        ///     Checks if given unit can become invisible
-        /// </summary>
-        /// <param name="unit">
-        ///     The unit.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />.
-        /// </returns>
-        public static bool CanGoInvis(this Unit unit)
-        {
-            var n = unit.Handle + "CanGoInvis";
-            if (!Utils.SleepCheck(n))
-            {
-                return BoolDictionary[n];
-            }
-
-            Ability invis = null;
-            Ability riki = null;
-            foreach (var x in unit.Spellbook.Spells)
-            {
-                var name = x.StoredName();
-                if (name == "bounty_hunter_wind_walk" || name == "clinkz_skeleton_walk"
-                    || name == "templar_assassin_meld")
-                {
-                    invis = x;
-                    break;
-                }
-
-                if (name == "riki_permanent_invisibility")
-                {
-                    riki = x;
-                }
-            }
-
-            if (invis == null)
-            {
-                invis =
-                    unit.Inventory.Items.FirstOrDefault(
-                        x =>
-                        x.StoredName() == "item_invis_sword" || x.StoredName() == "item_silver_edge"
-                        || x.StoredName() == "item_glimmer_cape");
-            }
-
-            var canGoInvis = (invis != null && unit.CanCast() && invis.CanBeCasted())
-                             || (riki != null && riki.Level > 0 && !unit.IsSilenced());
-            if (!BoolDictionary.ContainsKey(n))
-            {
-                BoolDictionary.Add(n, canGoInvis);
-            }
-            else
-            {
-                BoolDictionary[n] = canGoInvis;
-            }
-
-            Utils.Sleep(150, n);
-            return canGoInvis;
         }
 
         /// <summary>
@@ -289,7 +270,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static Hero ClosestToMouseTarget(this Unit source, float range = 1000)
         {
-            return TargetSelector.ClosestToMouse(source as Hero, range);
+            return TargetSelector.ClosestToMouse(source, range);
         }
 
         /// <summary>
@@ -341,6 +322,28 @@ namespace Ensage.Common.Extensions
                 minusArmor, 
                 minusDamageResistancePerc, 
                 minusMagicResistancePerc);
+        }
+
+        /// <summary>
+        ///     Uses available disable ability which takes least time to hit the target, chains with other disables
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool DisableTarget(this Unit unit, Unit target)
+        {
+            var stunAbility =
+                unit.Spellbook.Spells.Where(
+                    x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsDisable)
+                    .MinOrDefault(x => x.GetHitDelay(target));
+
+            return stunAbility != null && stunAbility.CastStun(target);
         }
 
         /// <summary>
@@ -427,8 +430,7 @@ namespace Ensage.Common.Extensions
                 }
             }
 
-            if (found && isValid
-                && !Utils.SleepCheck("Ensage.Common.FindModifier" + name))
+            if (found && isValid && !Utils.SleepCheck("Ensage.Common.FindModifier" + name))
             {
                 return modifier;
             }
@@ -500,76 +502,24 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static float GetAttackRange(this Unit unit)
         {
-            var bonus = 0.0;
             float range;
-            if (!RangeDictionary.TryGetValue(unit.Handle, out range)
-                || Utils.SleepCheck("Common.GetAttackRange." + unit.Handle))
+            if (RangeDictionary.TryGetValue(unit.Handle, out range)
+                && !Utils.SleepCheck("Common.GetAttackRange." + unit.Handle))
             {
-                var classId = unit.ClassID;
-                switch (classId)
-                {
-                    case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
-                        var psi = unit.Spellbook.SpellE;
-                        if (psi != null && psi.Level > 0)
-                        {
-                            bonus = psi.GetAbilityData("bonus_attack_range");
-                        }
-
-                        break;
-                    case ClassID.CDOTA_Unit_Hero_Sniper:
-                        var aim = unit.Spellbook.SpellE;
-                        if (aim != null && aim.Level > 0)
-                        {
-                            bonus = aim.GetAbilityData("bonus_attack_range");
-                        }
-
-                        break;
-                    case ClassID.CDOTA_Unit_Hero_Enchantress:
-                        var impetus = unit.Spellbook.SpellR;
-                        if (impetus.Level > 0 && unit.AghanimState())
-                        {
-                            bonus = 190;
-                        }
-
-                        break;
-                    default:
-                        if (unit.HasModifier("modifier_lone_druid_true_form"))
-                        {
-                            bonus = -423;
-                        }
-                        else if (unit.HasModifier("modifier_dragon_knight_dragon_form"))
-                        {
-                            bonus = 372;
-                        }
-                        else if (unit.HasModifier("modifier_terrorblade_metamorphosis"))
-                        {
-                            bonus = 422;
-                        }
-
-                        break;
-                }
-
-                if (unit.IsRanged)
-                {
-                    var dragonLance = unit.FindItem("item_dragon_lance");
-                    if (dragonLance != null)
-                    {
-                        bonus += dragonLance.GetAbilityData("base_attack_range");
-                    }
-                }
-
-                range = (float)(unit.AttackRange + bonus + (unit.HullRadius / 2));
-                if (!RangeDictionary.ContainsKey(unit.Handle))
-                {
-                    RangeDictionary.Add(unit.Handle, range);
-                }
-                else
-                {
-                    RangeDictionary[unit.Handle] = range;
-                }
-
-                Utils.Sleep(500, "Common.GetAttackRange." + unit.Handle);
+                return range;
             }
+
+            range = unit.AttackRange + (unit.HullRadius / 2);
+            if (!RangeDictionary.ContainsKey(unit.Handle))
+            {
+                RangeDictionary.Add(unit.Handle, range);
+            }
+            else
+            {
+                RangeDictionary[unit.Handle] = range;
+            }
+
+            Utils.Sleep(1500, "Common.GetAttackRange." + unit.Handle);
 
             return range;
         }
@@ -806,10 +756,11 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static bool IsAttacking(this Unit unit)
         {
-            return unit.NetworkActivity == NetworkActivity.Attack || unit.NetworkActivity == NetworkActivity.Crit
-                   || unit.NetworkActivity == NetworkActivity.Attack2
-                   || unit.NetworkActivity == NetworkActivity.AttackEvent
-                   || unit.NetworkActivity == NetworkActivity.AttackEventBash;
+            var networkActivity = unit.NetworkActivity;
+            return networkActivity == NetworkActivity.Attack || networkActivity == NetworkActivity.Crit
+                   || networkActivity == NetworkActivity.Attack2 || networkActivity == NetworkActivity.AttackEvent
+                   || networkActivity == NetworkActivity.AttackEventBash
+                   || networkActivity == NetworkActivity.EarthshakerTotemAttack;
         }
 
         /// <summary>
@@ -855,34 +806,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        ///     The is illusion.
-        /// </summary>
-        /// <param name="unit">
-        ///     The unit.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />.
-        /// </returns>
-        public static bool IsIllusion(this Unit unit)
-        {
-            return unit.IsIllusion;
-        }
-
-        /// <summary>
-        ///     The is illusion.
-        /// </summary>
-        /// <param name="unit">
-        ///     The unit.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />.
-        /// </returns>
-        public static bool IsIllusion(this Meepo unit)
-        {
-            return unit.IsIllusion;
-        }
-
-        /// <summary>
         ///     The is invisible.
         /// </summary>
         /// <param name="unit">
@@ -913,17 +836,17 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     The is linken protected.
         /// </summary>
-        /// <param name="hero">
-        ///     The hero.
+        /// <param name="unit">
+        ///     The unit.
         /// </param>
         /// <returns>
         ///     The <see cref="bool" />.
         /// </returns>
-        public static bool IsLinkensProtected(this Unit hero)
+        public static bool IsLinkensProtected(this Unit unit)
         {
-            var linkensphere = hero.FindItem("item_sphere");
+            var linkensphere = unit.FindItem("item_sphere");
             return (linkensphere != null && linkensphere.Cooldown == 0)
-                   || hero.HasModifier("modifier_item_sphere_target");
+                   || unit.HasModifier("modifier_item_sphere_target");
         }
 
         /// <summary>
@@ -943,16 +866,16 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Checks if enemy have a modifier which can be purged
         /// </summary>
-        /// <param name="hero">
-        ///     The hero.
+        /// <param name="unit">
+        ///     The unit.
         /// </param>
         /// <returns>
         ///     The <see cref="bool" />.
         /// </returns>
-        public static bool IsPurgable(this Unit hero)
+        public static bool IsPurgable(this Unit unit)
         {
             return
-                hero.HasModifiers(
+                unit.HasModifiers(
                     new[]
                         {
                             "modifier_ghost_state", "modifier_item_ethereal_blade_slow", 
@@ -1140,6 +1063,64 @@ namespace Ensage.Common.Extensions
         public static Vector3 Predict(this Unit unit, float delay)
         {
             return Prediction.PredictedXYZ(unit, delay);
+        }
+
+        /// <summary>
+        ///     The projectile speed.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double ProjectileSpeed(this Unit unit)
+        {
+            return UnitDatabase.GetProjectileSpeed(unit);
+        }
+
+        /// <summary>
+        ///     Uses available silence ability which takes least time to hit the target, chains with disables
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool SilenceTarget(this Unit unit, Unit target)
+        {
+            var stunAbility =
+                unit.Spellbook.Spells.Where(
+                    x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsSilence)
+                    .MinOrDefault(x => x.GetHitDelay(target));
+
+            return stunAbility != null && stunAbility.CastStun(target);
+        }
+
+        /// <summary>
+        ///     Uses available slow ability which takes least time to hit the target, chains with other disables
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool SlowTarget(this Unit unit, Unit target)
+        {
+            var stunAbility =
+                unit.Spellbook.Spells.Where(
+                    x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsSlow)
+                    .MinOrDefault(x => x.GetHitDelay(target));
+
+            return stunAbility != null && stunAbility.CastStun(target);
         }
 
         #endregion

@@ -17,7 +17,6 @@ namespace Ensage.Common
     using System.Collections.Generic;
     using System.Reflection;
 
-    using Ensage.Common.Extensions;
     using Ensage.Common.Objects;
 
     /// <summary>
