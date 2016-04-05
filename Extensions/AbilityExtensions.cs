@@ -946,7 +946,7 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             var owner = ability.Owner;
-            var n = abilityName + owner.Handle;
+            var n = name + owner.Handle;
             if (CastRangeDictionary.ContainsKey(n) && !Utils.SleepCheck("Common.GetCastRange." + n))
             {
                 return CastRangeDictionary[n];
