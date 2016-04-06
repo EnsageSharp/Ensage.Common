@@ -1273,7 +1273,8 @@
         {
             "AbilityName": "storm_spirit_ball_lightning",
             "IsSkillShot": true,
-            "Speed": "ball_lightning_move_speed"
+            "Speed": "ball_lightning_move_speed",
+            "Width": "ball_lightning_aoe"
         },
         {
             "AbilityName": "tusk_snowball",
