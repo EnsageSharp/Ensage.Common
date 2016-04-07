@@ -50,6 +50,11 @@ namespace Ensage.Common
         public static List<Prediction> TrackTable = new List<Prediction>();
 
         /// <summary>
+        ///     The last rot r dictionary.
+        /// </summary>
+        private static Dictionary<float, float> LastRotRDictionary = new Dictionary<float, float>();
+
+        /// <summary>
         ///     The loaded.
         /// </summary>
         private static bool loaded;
@@ -287,10 +292,11 @@ namespace Ensage.Common
         /// </returns>
         public static bool IsIdle(Unit unit)
         {
-            return unit.NetworkActivity != NetworkActivity.Move
-                   && ((unit.NetworkActivity == NetworkActivity.Idle
-                        && (!SpeedDictionary.ContainsKey(unit.Handle) || SpeedDictionary[unit.Handle] == Vector3.Zero))
-                       || unit.IsAttacking() || unit.IsInvul() || unit.IsStunned());
+            return unit.NetworkActivity != NetworkActivity.Move;
+
+            // && ((unit.NetworkActivity == NetworkActivity.Idle
+            // && (!SpeedDictionary.ContainsKey(unit.Handle) || SpeedDictionary[unit.Handle] == Vector3.Zero))
+            // || unit.IsAttacking() || unit.IsInvul() || unit.IsStunned());
         }
 
         /// <summary>
@@ -330,22 +336,81 @@ namespace Ensage.Common
         /// </returns>
         public static Vector3 PredictedXYZ(Unit unit, float delay)
         {
-            Vector3 targetSpeed;
-            if ((!SpeedDictionary.TryGetValue(unit.Handle, out targetSpeed) || targetSpeed == new Vector3(0, 0, 0))
-                && unit.NetworkActivity == NetworkActivity.Move)
-            {
-                var rotSpeed = 0d;
-                if (RotSpeedDictionary.ContainsKey(unit.Handle))
-                {
-                    rotSpeed = RotSpeedDictionary[unit.Handle];
-                }
-
-                targetSpeed = unit.Vector3FromPolarAngle((float)rotSpeed) * unit.MovementSpeed / 1000;
-            }
-
             if (IsIdle(unit))
             {
                 return unit.Position;
+            }
+
+            var targetSpeed = new Vector3();
+            if (!LastRotRDictionary.ContainsKey(unit.Handle))
+            {
+                LastRotRDictionary.Add(unit.Handle, unit.RotationRad);
+            }
+
+            var straightTime = StraightTime(unit);
+            if (straightTime > 180)
+            {
+                LastRotRDictionary[unit.Handle] = unit.RotationRad;
+            }
+
+            if (straightTime < 10 || IsTurning(unit, 0.18))
+            {
+                var rotDiff = LastRotRDictionary[unit.Handle] - unit.RotationRad;
+                var a = 10 * straightTime * Math.Pow(rotDiff, 2);
+                if (a >= 0 && a <= 1300)
+                {
+                    a = 1300 + a;
+                }
+                else if (a <= 0 && a >= -1300)
+                {
+                    a = 1300 - a;
+                }
+
+                targetSpeed =
+                    (Vector3)
+                    VectorExtensions.FromPolarAngle((LastRotRDictionary[unit.Handle] + (unit.RotationRad * 2)) / 2)
+                    * unit.MovementSpeed / (float)Math.Abs(a);
+            }
+            else if (straightTime < 180)
+            {
+                var rotDiff = LastRotRDictionary[unit.Handle] - unit.RotationRad;
+                var a = straightTime * Math.Pow(rotDiff, 2);
+                if (a >= 0 && a <= 1000)
+                {
+                    a = 1000 + a;
+                }
+                else if (a <= 0 && a >= -1000)
+                {
+                    a = 1000 - a;
+                }
+
+                targetSpeed =
+                    (Vector3)
+                    (VectorExtensions.FromPolarAngle((LastRotRDictionary[unit.Handle] + unit.RotationRad) / 2)
+                     * unit.MovementSpeed / (float)Math.Abs(a));
+            }
+            else
+            {
+                LastRotRDictionary[unit.Handle] = unit.RotationRad;
+                if ((unit.ClassID == ClassID.CDOTA_Unit_Hero_StormSpirit
+                     || unit.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                    && unit.HasModifier("modifier_storm_spirit_ball_lightning"))
+                {
+                    var ballLightning = unit.FindSpell("storm_spirit_ball_lightning");
+                    var firstOrDefault =
+                        ballLightning.AbilitySpecialData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
+                    if (firstOrDefault != null)
+                    {
+                        var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
+                        var newpredict = unit.Vector3FromPolarAngle() * (ballSpeed / 1000);
+                        targetSpeed = newpredict;
+                    }
+                }
+                else
+                {
+                    targetSpeed =
+                        (Vector3)(VectorExtensions.FromPolarAngle(unit.RotationRad) * unit.MovementSpeed / 1000);
+                }
             }
 
             var v = unit.Position + (targetSpeed * delay);
@@ -431,6 +496,11 @@ namespace Ensage.Common
                 return;
             }
 
+            if (!Utils.SleepCheck("Prediction.SpeedTrack.Sleep"))
+            {
+                return;
+            }
+
             if (playerList == null || (playerList.Count < 10 && Utils.SleepCheck("Prediction.SpeedTrack")))
             {
                 playerList = Heroes.All;
@@ -442,7 +512,7 @@ namespace Ensage.Common
                 return;
             }
 
-            // DrawPredictions();
+            Utils.Sleep(70, "Prediction.SpeedTrack.Sleep");
             var tick = Environment.TickCount & int.MaxValue;
             var tempTable = new List<Prediction>(TrackTable);
             foreach (var unit in playerList.Where(x => x.IsValid))
@@ -490,41 +560,21 @@ namespace Ensage.Common
                         RotTimeDictionary.Add(unit.Handle, tick);
                     }
 
-                    var speed = (unit.Position - data.LastPosition) / (tick - data.Lasttick);
-
-                    if (Math.Abs(data.RotSpeed) > 0.0999999 && data.Speed != new Vector3(0, 0, 0))
+                    if (!LastRotRDictionary.ContainsKey(unit.Handle))
                     {
-                        RotTimeDictionary[unit.Handle] = tick;
-                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 6) * unit.MovementSpeed / 3000;
+                        LastRotRDictionary.Add(unit.Handle, unit.RotationRad);
                     }
-                    else if (StraightTime(unit) < 500)
+
+                    var speed = (unit.Position - data.LastPosition) / (tick - data.Lasttick);
+                    if (Math.Abs(data.RotSpeed) > 0.18 && data.Speed != new Vector3(0, 0, 0))
                     {
-                        data.Speed = unit.Vector3FromPolarAngle(-data.RotSpeed * 6) * unit.MovementSpeed / 3000;
+                        data.Speed = speed;
+                        RotTimeDictionary[unit.Handle] = tick;
                     }
                     else
                     {
-                        if (unit.HasModifier("modifier_storm_spirit_ball_lightning"))
-                        {
-                            var ballLightning = unit.FindSpell("storm_spirit_ball_lightning");
-                            var firstOrDefault =
-                                ballLightning.AbilitySpecialData.FirstOrDefault(
-                                    x => x.Name == "ball_lightning_move_speed");
-                            if (firstOrDefault != null)
-                            {
-                                var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
-                                var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed) * (ballSpeed / 1000);
-                                data.Speed = newpredict;
-                            }
-                        }
-                        else if (unit.NetworkActivity != NetworkActivity.Move)
-                        {
-                            data.Speed = speed;
-                        }
-                        else
-                        {
-                            var newpredict = unit.Vector3FromPolarAngle(-data.RotSpeed * 10) * unit.MovementSpeed / 1000;
-                            data.Speed = newpredict;
-                        }
+                        LastRotRDictionary[unit.Handle] = unit.RotationRad;
+                        data.Speed = speed;
                     }
 
                     data.LastPosition = unit.Position;
@@ -565,11 +615,6 @@ namespace Ensage.Common
             if (!RotTimeDictionary.ContainsKey(unit.Handle))
             {
                 return 0;
-            }
-
-            if (IsIdle(unit))
-            {
-                return 5000;
             }
 
             return (Environment.TickCount & int.MaxValue) - RotTimeDictionary[unit.Handle] + Game.Ping;
@@ -623,6 +668,7 @@ namespace Ensage.Common
             SpeedDictionary = new Dictionary<float, Vector3>();
             TrackTable = new List<Prediction>();
             predictionDrawings = new Dictionary<float, ParticleEffect>();
+            LastRotRDictionary = new Dictionary<float, float>();
             Game.OnUpdate += SpeedTrack;
         }
 
