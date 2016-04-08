@@ -1791,6 +1791,7 @@
             "IsNuke": true,
             "Speed": "speed",
             "Width": "start_radius",
+            "EndWidth": "end_radius",
             "IsSkillShot": true
         },
         {
@@ -2147,6 +2148,7 @@
             "IsNuke": true,
             "IsSkillShot": true,
             "Width": "starting_aoe",
+            "EndWidth": "final_aoe",
             "Speed": "speed",
             "DamageString": "damage",
             "DamageScepterString": "damage_scepter",
@@ -2182,7 +2184,8 @@
             "IsNuke": true,
             "IsSkillShot": true,
             "Speed": "dragon_slave_speed",
-            "Width": "dragon_slave_width_initial"
+            "Width": "dragon_slave_width_initial",
+            "Width": "dragon_slave_width_end"
         },
         {
             "AbilityName": "venomancer_venomous_gale",

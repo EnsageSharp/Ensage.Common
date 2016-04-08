@@ -1558,6 +1558,21 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        /// The end radius.
+        /// </summary>
+        /// <param name="ability">
+        /// The ability.
+        /// </param>
+        /// <returns>
+        /// The <see cref="float"/>.
+        /// </returns>
+        public static float EndRadius(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            return data == null ? 0 : ability.GetAbilityData(data.EndWidth);
+        }
+
+        /// <summary>
         ///     The requires charges.
         /// </summary>
         /// <param name="ability">
