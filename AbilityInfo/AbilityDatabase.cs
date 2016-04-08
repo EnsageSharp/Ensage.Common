@@ -27,20 +27,6 @@ namespace Ensage.Common.AbilityInfo
     /// </summary>
     public static class AbilityDatabase
     {
-        #region Static Fields
-
-        /// <summary>
-        ///     The abilityinfo dictionary.
-        /// </summary>
-        public static Dictionary<string, AbilityInfo> AbilityinfoDictionary;
-
-        /// <summary>
-        ///     The spells.
-        /// </summary>
-        public static List<AbilityInfo> Spells;
-
-        #endregion
-
         #region Constructors and Destructors
 
         /// <summary>
@@ -57,6 +43,20 @@ namespace Ensage.Common.AbilityInfo
 
             AbilityinfoDictionary = new Dictionary<string, AbilityInfo>();
         }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets the ability info dictionary.
+        /// </summary>
+        public static Dictionary<string, AbilityInfo> AbilityinfoDictionary { get; private set; }
+
+        /// <summary>
+        /// Gets the spells.
+        /// </summary>
+        public static List<AbilityInfo> Spells { get; private set; }
 
         #endregion
 

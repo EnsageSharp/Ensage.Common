@@ -158,6 +158,11 @@ namespace Ensage.Common.Extensions
                 return false;
             }
 
+            if (target == null || !target.IsValid)
+            {
+                return false;
+            }
+
             if (!target.IsValidTarget())
             {
                 return false;
@@ -201,6 +206,11 @@ namespace Ensage.Common.Extensions
                 return false;
             }
 
+            if (target == null || !target.IsValid)
+            {
+                return false;
+            }
+
             return CanHit(ability, target, ability.Owner.Position, abilityName);
         }
 
@@ -225,6 +235,11 @@ namespace Ensage.Common.Extensions
         public static bool CanHit(this Ability ability, Unit target, Vector3 sourcePosition, string abilityName = null)
         {
             if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
+            if (target == null || !target.IsValid)
             {
                 return false;
             }
@@ -326,6 +341,11 @@ namespace Ensage.Common.Extensions
                 return false;
             }
 
+            if (target == null || !target.IsValid)
+            {
+                return false;
+            }
+
             return CastSkillShot(ability, target, ability.Owner.Position, abilityName, soulRing, otherTargets);
         }
 
@@ -362,6 +382,11 @@ namespace Ensage.Common.Extensions
             List<Unit> otherTargets = null)
         {
             if (ability == null || !ability.IsValid)
+            {
+                return false;
+            }
+
+            if (target == null || !target.IsValid)
             {
                 return false;
             }
@@ -578,6 +603,11 @@ namespace Ensage.Common.Extensions
                 return false;
             }
 
+            if (target == null || !target.IsValid)
+            {
+                return false;
+            }
+
             return CastStun(
                 ability, 
                 target, 
@@ -634,6 +664,11 @@ namespace Ensage.Common.Extensions
             List<Unit> otherTargets = null)
         {
             if (!ability.CanBeCasted())
+            {
+                return false;
+            }
+
+            if (target == null || !target.IsValid)
             {
                 return false;
             }
@@ -875,6 +910,11 @@ namespace Ensage.Common.Extensions
                 return 0;
             }
 
+            if (target == null || !target.IsValid || source == null || !source.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
             double delay;
             if (useCastPoint)
@@ -1060,6 +1100,11 @@ namespace Ensage.Common.Extensions
                 return 0;
             }
 
+            if (target == null || !target.IsValid)
+            {
+                return 0;
+            }
+
             var name = abilityName ?? ability.StoredName();
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
@@ -1118,7 +1163,12 @@ namespace Ensage.Common.Extensions
         {
             if (ability == null || !ability.IsValid)
             {
-                return Vector3.Zero;
+                return new Vector3();
+            }
+
+            if (target == null || !target.IsValid)
+            {
+                return new Vector3();
             }
 
             var name = abilityName ?? ability.StoredName();

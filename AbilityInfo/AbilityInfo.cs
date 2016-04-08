@@ -18,6 +18,173 @@ namespace Ensage.Common.AbilityInfo
     /// </summary>
     public class AbilityInfo
     {
+        #region Fields
+
+        /// <summary>
+        ///     True if ability damage is dependent on auto attack damage
+        /// </summary>
+        public bool AADamage;
+
+        /// <summary>
+        ///     Name of a ability
+        /// </summary>
+        public string AbilityName;
+
+        /// <summary>
+        ///     Spell have additional delay after being casted
+        /// </summary>
+        public double AdditionalDelay;
+
+        /// <summary>
+        ///     Spell is blocked by ally units in a way
+        /// </summary>
+        public bool AllyBlock;
+
+        /// <summary>
+        ///     Bonus damage data
+        /// </summary>
+        public string BonusDamageString;
+
+        /// <summary>
+        ///     Damage Multiplier
+        /// </summary>
+        public float DamageMultiplier;
+
+        /// <summary>
+        ///     Damage data name when holding scepter
+        /// </summary>
+        public string DamageScepterString;
+
+        /// <summary>
+        ///     Damage data name
+        /// </summary>
+        public string DamageString;
+
+        /// <summary>
+        ///     Gets the end width.
+        /// </summary>
+        public string EndWidth;
+
+        /// <summary>
+        ///     Spell is blocked by enemy units in a way
+        /// </summary>
+        public bool EnemyBlock;
+
+        /// <summary>
+        /// </summary>
+        public bool FakeCastRange;
+
+        /// <summary>
+        ///     Ability buffs unit
+        /// </summary>
+        public bool IsBuff;
+
+        /// <summary>
+        ///     Spell disables the target
+        /// </summary>
+        public bool IsDisable;
+
+        /// <summary>
+        ///     Ability is good for harrasing
+        /// </summary>
+        public bool IsHarras;
+
+        /// <summary>
+        /// </summary>
+        public bool IsHeal;
+
+        /// <summary>
+        ///     Spell grants invisibility
+        /// </summary>
+        public bool IsInvis;
+
+        /// <summary>
+        ///     Spell has low castpoint and high damage input
+        /// </summary>
+        public bool IsNuke;
+
+        /// <summary>
+        ///     Ability purges unit
+        /// </summary>
+        public bool IsPurge;
+
+        /// <summary>
+        ///     Spell is applied on an ally in order to prevent them from taking damage or reduce taken damage(Increasing armor,
+        ///     magic resistance etc).
+        /// </summary>
+        public bool IsShield;
+
+        /// <summary>
+        ///     Spell silences the target
+        /// </summary>
+        public bool IsSilence;
+
+        /// <summary>
+        ///     Spell needs prediction
+        /// </summary>
+        public bool IsSkillShot;
+
+        /// <summary>
+        ///     Spell applies movement slow to the target
+        /// </summary>
+        public bool IsSlow;
+
+        /// <summary>
+        ///     Spell goes through magic immunity
+        /// </summary>
+        public bool MagicImmunityPierce;
+
+        /// <summary>
+        ///     True if ability deals damage depending on target's mana
+        /// </summary>
+        public bool ManaBurn;
+
+        /// <summary>
+        ///     Spell is used only to killsteal
+        /// </summary>
+        public bool OnlyForKillSteal;
+
+        /// <summary>
+        ///     Radius of non targeted/aoe spell
+        /// </summary>
+        public float Radius;
+
+        /// <summary>
+        /// </summary>
+        public string RealCastRange;
+
+        /// <summary>
+        ///     Speed of a projectile
+        /// </summary>
+        public string Speed;
+
+        /// <summary>
+        ///     Name of spell which affects the damage depending on its level
+        /// </summary>
+        public string SpellLevel;
+
+        /// <summary>
+        ///     Radius data name
+        /// </summary>
+        public string StringRadius;
+
+        /// <summary>
+        ///     Ability provides true sight
+        /// </summary>
+        public bool TrueSight;
+
+        /// <summary>
+        ///     Ability weakens enemy
+        /// </summary>
+        public bool WeakensEnemy;
+
+        /// <summary>
+        ///     Width of a projectile
+        /// </summary>
+        public string Width;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -158,7 +325,7 @@ namespace Ensage.Common.AbilityInfo
             bool isPurge, 
             bool isHarras, 
             bool trueSight, 
-            bool isInvis,
+            bool isInvis, 
             string endWidth)
         {
             this.ManaBurn = manaBurn;
@@ -195,173 +362,6 @@ namespace Ensage.Common.AbilityInfo
             this.IsInvis = isInvis;
             this.EndWidth = endWidth;
         }
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        ///     True if ability damage is dependent on auto attack damage
-        /// </summary>
-        public bool AADamage { get; private set; }
-
-        /// <summary>
-        ///     Name of a ability
-        /// </summary>
-        public string AbilityName { get; private set; }
-
-        /// <summary>
-        ///     Spell have additional delay after being casted
-        /// </summary>
-        public double AdditionalDelay { get; private set; }
-
-        /// <summary>
-        ///     Spell is blocked by ally units in a way
-        /// </summary>
-        public bool AllyBlock { get; private set; }
-
-        /// <summary>
-        ///     Bonus damage data
-        /// </summary>
-        public string BonusDamageString { get; private set; }
-
-        /// <summary>
-        ///     Damage Multiplier
-        /// </summary>
-        public float DamageMultiplier { get; private set; }
-
-        /// <summary>
-        ///     Damage data name when holding scepter
-        /// </summary>
-        public string DamageScepterString { get; private set; }
-
-        /// <summary>
-        ///     Damage data name
-        /// </summary>
-        public string DamageString { get; private set; }
-
-        /// <summary>
-        ///     Spell is blocked by enemy units in a way
-        /// </summary>
-        public bool EnemyBlock { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        public bool FakeCastRange { get; private set; }
-
-        /// <summary>
-        ///     Ability buffs unit
-        /// </summary>
-        public bool IsBuff { get; private set; }
-
-        /// <summary>
-        ///     Spell disables the target
-        /// </summary>
-        public bool IsDisable { get; private set; }
-
-        /// <summary>
-        ///     Ability is good for harrasing
-        /// </summary>
-        public bool IsHarras { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        public bool IsHeal { get; private set; }
-
-        /// <summary>
-        ///     Spell grants invisibility
-        /// </summary>
-        public bool IsInvis { get; private set; }
-
-        /// <summary>
-        ///     Spell has low castpoint and high damage input
-        /// </summary>
-        public bool IsNuke { get; private set; }
-
-        /// <summary>
-        ///     Ability purges unit
-        /// </summary>
-        public bool IsPurge { get; private set; }
-
-        /// <summary>
-        ///     Spell is applied on an ally in order to prevent them from taking damage or reduce taken damage(Increasing armor,
-        ///     magic resistance etc).
-        /// </summary>
-        public bool IsShield { get; private set; }
-
-        /// <summary>
-        ///     Spell silences the target
-        /// </summary>
-        public bool IsSilence { get; private set; }
-
-        /// <summary>
-        ///     Spell needs prediction
-        /// </summary>
-        public bool IsSkillShot { get; private set; }
-
-        /// <summary>
-        ///     Spell applies movement slow to the target
-        /// </summary>
-        public bool IsSlow { get; private set; }
-
-        /// <summary>
-        ///     Spell goes through magic immunity
-        /// </summary>
-        public bool MagicImmunityPierce { get; private set; }
-
-        /// <summary>
-        ///     True if ability deals damage depending on target's mana
-        /// </summary>
-        public bool ManaBurn { get; private set; }
-
-        /// <summary>
-        ///     Spell is used only to killsteal
-        /// </summary>
-        public bool OnlyForKillSteal { get; private set; }
-
-        /// <summary>
-        ///     Radius of non targeted/aoe spell
-        /// </summary>
-        public float Radius { get; private set; }
-
-        /// <summary>
-        /// </summary>
-        public string RealCastRange { get; private set; }
-
-        /// <summary>
-        ///     Speed of a projectile
-        /// </summary>
-        public string Speed { get; private set; }
-
-        /// <summary>
-        ///     Name of spell which affects the damage depending on its level
-        /// </summary>
-        public string SpellLevel { get; private set; }
-
-        /// <summary>
-        ///     Radius data name
-        /// </summary>
-        public string StringRadius { get; private set; }
-
-        /// <summary>
-        ///     Ability provides true sight
-        /// </summary>
-        public bool TrueSight { get; private set; }
-
-        /// <summary>
-        ///     Ability weakens enemy
-        /// </summary>
-        public bool WeakensEnemy { get; private set; }
-
-        /// <summary>
-        ///     Width of a projectile
-        /// </summary>
-        public string Width { get; private set; }
-
-        /// <summary>
-        /// Gets the end width.
-        /// </summary>
-        public string EndWidth { get; private set; }
 
         #endregion
     }
