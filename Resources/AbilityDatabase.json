@@ -2152,6 +2152,7 @@
             "Speed": "speed",
             "DamageString": "damage",
             "DamageScepterString": "damage_scepter",
+            "Distance": "distance",
             "MagicImmunityPierce": true
         },
         {
@@ -2185,7 +2186,7 @@
             "IsSkillShot": true,
             "Speed": "dragon_slave_speed",
             "Width": "dragon_slave_width_initial",
-            "Width": "dragon_slave_width_end"
+            "EndWidth": "dragon_slave_width_end"
         },
         {
             "AbilityName": "venomancer_venomous_gale",

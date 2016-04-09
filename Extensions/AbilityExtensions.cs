@@ -1619,7 +1619,34 @@ namespace Ensage.Common.Extensions
         public static float EndRadius(this Ability ability)
         {
             var data = ability.CommonProperties();
-            return data == null ? 0 : ability.GetAbilityData(data.EndWidth);
+            if (data == null)
+            {
+                return ability.GetRadius();
+            }
+
+            var radius = ability.GetAbilityData(data.EndWidth);
+            return radius > 0 ? radius : ability.GetRadius();
+        }
+
+        /// <summary>
+        /// The flying distance.
+        /// </summary>
+        /// <param name="ability">
+        /// The ability.
+        /// </param>
+        /// <returns>
+        /// The <see cref="float"/>.
+        /// </returns>
+        public static float FlyingDistance(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            if (data == null)
+            {
+                return ability.GetCastRange();
+            }
+
+            var distance = ability.GetAbilityData(data.Distance);
+            return distance > 0 ? distance : ability.GetCastRange();
         }
 
         /// <summary>
