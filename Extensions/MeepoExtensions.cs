@@ -90,7 +90,8 @@
         /// </param>
         public static void PoofAllToThisMeepo(this Meepo meepo)
         {
-            if (meeposList.Count(x => x.IsValid) <= 0)
+            var meepoCount = 1 + meepo.Spellbook.SpellR.Level + (meepo.AghanimState() ? 1 : 0);
+            if (meeposList.Count(x => x.IsValid) <= meepoCount)
             {
                 meeposList = ObjectManager.GetEntities<Meepo>().ToList();
             }

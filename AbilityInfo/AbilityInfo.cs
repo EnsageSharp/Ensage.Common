@@ -61,6 +61,11 @@ namespace Ensage.Common.AbilityInfo
         public string DamageString;
 
         /// <summary>
+        ///     The distance.
+        /// </summary>
+        public string Distance;
+
+        /// <summary>
         ///     Gets the end width.
         /// </summary>
         public string EndWidth;
@@ -183,11 +188,6 @@ namespace Ensage.Common.AbilityInfo
         /// </summary>
         public string Width;
 
-        /// <summary>
-        /// The distance.
-        /// </summary>
-        public string Distance;
-
         #endregion
 
         #region Constructors and Destructors
@@ -200,109 +200,109 @@ namespace Ensage.Common.AbilityInfo
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbilityInfo"/> class.
+        ///     Initializes a new instance of the <see cref="AbilityInfo" /> class.
         /// </summary>
         /// <param name="abilityName">
-        /// The ability name.
+        ///     The ability name.
         /// </param>
         /// <param name="isDisable">
-        /// The is disable.
+        ///     The is disable.
         /// </param>
         /// <param name="isSlow">
-        /// The is slow.
+        ///     The is slow.
         /// </param>
         /// <param name="isSilence">
-        /// The is silence.
+        ///     The is silence.
         /// </param>
         /// <param name="isNuke">
-        /// The is nuke.
+        ///     The is nuke.
         /// </param>
         /// <param name="isSkillShot">
-        /// The is skill shot.
+        ///     The is skill shot.
         /// </param>
         /// <param name="isHeal">
-        /// The is heal.
+        ///     The is heal.
         /// </param>
         /// <param name="isShield">
-        /// The is shield.
+        ///     The is shield.
         /// </param>
         /// <param name="additionalDelay">
-        /// The additional delay.
+        ///     The additional delay.
         /// </param>
         /// <param name="radius">
-        /// The radius.
+        ///     The radius.
         /// </param>
         /// <param name="stringRadius">
-        /// The string radius.
+        ///     The string radius.
         /// </param>
         /// <param name="speed">
-        /// The speed.
+        ///     The speed.
         /// </param>
         /// <param name="width">
-        /// The width.
+        ///     The width.
         /// </param>
         /// <param name="allyBlock">
-        /// The ally block.
+        ///     The ally block.
         /// </param>
         /// <param name="enemyBlock">
-        /// The enemy block.
+        ///     The enemy block.
         /// </param>
         /// <param name="magicImmunityPierce">
-        /// The magic immunity pierce.
+        ///     The magic immunity pierce.
         /// </param>
         /// <param name="fakeCastRange">
-        /// The fake cast range.
+        ///     The fake cast range.
         /// </param>
         /// <param name="realCastRange">
-        /// The real cast range.
+        ///     The real cast range.
         /// </param>
         /// <param name="onlyForKillSteal">
-        /// The only for kill steal.
+        ///     The only for kill steal.
         /// </param>
         /// <param name="damageString">
-        /// The damage string.
+        ///     The damage string.
         /// </param>
         /// <param name="damageMultiplier">
-        /// The damage multiplier.
+        ///     The damage multiplier.
         /// </param>
         /// <param name="bonusDamagestring">
-        /// The bonus damagestring.
+        ///     The bonus damagestring.
         /// </param>
         /// <param name="aaDamage">
-        /// The aa damage.
+        ///     The aa damage.
         /// </param>
         /// <param name="damageScepterString">
-        /// The damage scepter string.
+        ///     The damage scepter string.
         /// </param>
         /// <param name="spellLevel">
-        /// The spell level.
+        ///     The spell level.
         /// </param>
         /// <param name="manaBurn">
-        /// The mana burn.
+        ///     The mana burn.
         /// </param>
         /// <param name="isBuff">
-        /// The is buff.
+        ///     The is buff.
         /// </param>
         /// <param name="weakensEnemy">
-        /// The weakens enemy.
+        ///     The weakens enemy.
         /// </param>
         /// <param name="isPurge">
-        /// The is purge.
+        ///     The is purge.
         /// </param>
         /// <param name="isHarras">
-        /// The is harras.
+        ///     The is harras.
         /// </param>
         /// <param name="trueSight">
-        /// The true sight.
+        ///     The true sight.
         /// </param>
         /// <param name="isInvis">
-        /// The is invisibility.
+        ///     The is invisibility.
         /// </param>
         /// <param name="endWidth">
-        /// The end Width.
+        ///     The end Width.
         /// </param>
         /// <param name="distance">
-        /// The distance.
+        ///     The distance.
         /// </param>
         public AbilityInfo(
             string abilityName, 
@@ -337,7 +337,7 @@ namespace Ensage.Common.AbilityInfo
             bool isHarras, 
             bool trueSight, 
             bool isInvis, 
-            string endWidth,
+            string endWidth, 
             string distance)
         {
             this.ManaBurn = manaBurn;

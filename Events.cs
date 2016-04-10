@@ -109,6 +109,9 @@ namespace Ensage.Common
 
         #region Methods
 
+        /// <summary>
+        ///     The call on close.
+        /// </summary>
         private static void CallOnClose()
         {
             if (OnClose != null)

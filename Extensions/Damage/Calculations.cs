@@ -70,12 +70,12 @@ namespace Ensage.Common.Extensions.Damage
                                                                           };
 
         /// <summary>
-        ///     The external dmg amps.
+        ///     The external damage amps.
         /// </summary>
         private static readonly List<ExternalDmgAmps> ExternalDmgAmps = new List<ExternalDmgAmps>();
 
         /// <summary>
-        ///     The external dmg reductions.
+        ///     The external damage reductions.
         /// </summary>
         private static readonly List<ExternalDmgReductions> ExternalDmgReductions = new List<ExternalDmgReductions>();
 
@@ -476,7 +476,7 @@ namespace Ensage.Common.Extensions.Damage
                 if (spell != null)
                 {
                     var burst = 0d;
-                    var angle = target.FindRelativeAngle(source.Position) % (2 * Math.PI) * 180 / Math.PI;
+                    var angle = (target.FindRelativeAngle(source.Position) % ((2 * Math.PI) * 180)) / Math.PI;
                     if (angle >= 110 && angle <= 250)
                     {
                         burst = (1 + spell.Level) * 0.08;
@@ -544,7 +544,7 @@ namespace Ensage.Common.Extensions.Damage
                     }
                     else
                     {
-                        amp += baseAmp + (750 - distance) * 0.03 / 110;
+                        amp += baseAmp + (((750 - distance) * 0.03) / 110);
                     }
                 }
             }

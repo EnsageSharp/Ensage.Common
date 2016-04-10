@@ -73,6 +73,7 @@
     <Compile Include="AbilityInfo\AbilityDamage.cs" />
     <Compile Include="Algorithm.cs" />
     <Compile Include="DelayAction.cs" />
+    <Compile Include="DelayActionItem.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\Damage\DamageBlocks.cs" />
     <Compile Include="Extensions\Damage\Calculations.cs" />

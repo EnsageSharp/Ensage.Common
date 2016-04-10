@@ -387,11 +387,11 @@ namespace Ensage.Common
         /// <summary>
         ///     Convert a byte array to an Object
         /// </summary>
-        /// <param name="arrBytes">
-        ///     The arr bytes.
-        /// </param>
         /// <typeparam name="T">
         /// </typeparam>
+        /// <param name="arrBytes">
+        ///     The array bytes.
+        /// </param>
         /// <returns>
         ///     The <see cref="T" />.
         /// </returns>
@@ -408,7 +408,7 @@ namespace Ensage.Common
         ///     Convert an object to a byte array
         /// </summary>
         /// <param name="obj">
-        ///     The obj.
+        ///     The object.
         /// </param>
         /// <returns>
         ///     The <see cref="byte[]" />.

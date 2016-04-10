@@ -44,20 +44,6 @@
         }
 
         /// <summary>
-        /// The player.
-        /// </summary>
-        /// <param name="hero">
-        /// The hero.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Player"/>.
-        /// </returns>
-        public static Player Player(this Hero hero)
-        {
-            return Players.All.FirstOrDefault(x => x.Hero != null && x.Hero.IsValid && x.Hero.Equals(hero));
-        }
-
-        /// <summary>
         ///     The attack backswing.
         /// </summary>
         /// <param name="hero">
@@ -301,6 +287,20 @@
         public static bool IsIllusion(this Hero hero)
         {
             return hero.IsIllusion;
+        }
+
+        /// <summary>
+        ///     The player.
+        /// </summary>
+        /// <param name="hero">
+        ///     The hero.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Player" />.
+        /// </returns>
+        public static Player Player(this Hero hero)
+        {
+            return Players.All.FirstOrDefault(x => x.Hero != null && x.Hero.IsValid && x.Hero.Equals(hero));
         }
 
         /// <summary>

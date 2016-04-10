@@ -778,6 +778,27 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The end radius.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
+        public static float EndRadius(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            if (data == null)
+            {
+                return ability.GetRadius();
+            }
+
+            var radius = ability.GetAbilityData(data.EndWidth);
+            return radius > 0 ? radius : ability.GetRadius();
+        }
+
+        /// <summary>
         ///     Returns cast point of given ability
         /// </summary>
         /// <param name="ability">
@@ -1608,48 +1629,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The end radius.
-        /// </summary>
-        /// <param name="ability">
-        /// The ability.
-        /// </param>
-        /// <returns>
-        /// The <see cref="float"/>.
-        /// </returns>
-        public static float EndRadius(this Ability ability)
-        {
-            var data = ability.CommonProperties();
-            if (data == null)
-            {
-                return ability.GetRadius();
-            }
-
-            var radius = ability.GetAbilityData(data.EndWidth);
-            return radius > 0 ? radius : ability.GetRadius();
-        }
-
-        /// <summary>
-        /// The flying distance.
-        /// </summary>
-        /// <param name="ability">
-        /// The ability.
-        /// </param>
-        /// <returns>
-        /// The <see cref="float"/>.
-        /// </returns>
-        public static float FlyingDistance(this Ability ability)
-        {
-            var data = ability.CommonProperties();
-            if (data == null)
-            {
-                return ability.GetCastRange();
-            }
-
-            var distance = ability.GetAbilityData(data.Distance);
-            return distance > 0 ? distance : ability.GetCastRange();
-        }
-
-        /// <summary>
         ///     The requires charges.
         /// </summary>
         /// <param name="ability">
@@ -1677,6 +1656,27 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        ///     The travel distance.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
+        public static float TravelDistance(this Ability ability)
+        {
+            var data = ability.CommonProperties();
+            if (data == null)
+            {
+                return ability.GetCastRange();
+            }
+
+            var distance = ability.GetAbilityData(data.Distance);
+            return distance > 0 ? distance : ability.GetCastRange();
         }
 
         #endregion

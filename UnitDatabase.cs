@@ -44,7 +44,7 @@ namespace Ensage.Common
         private static readonly Dictionary<uint, double> AttackRateDictionary = new Dictionary<uint, double>();
 
         /// <summary>
-        ///     The proj speed dictionary.
+        ///     The projectile speed dictionary.
         /// </summary>
         private static readonly Dictionary<uint, double> ProjSpeedDictionary = new Dictionary<uint, double>();
 

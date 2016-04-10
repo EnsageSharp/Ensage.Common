@@ -30,22 +30,22 @@ namespace Ensage.Common
         private static readonly double DireCompare;
 
         /// <summary>
-        ///     The hp bar height.
+        ///     The health bar height.
         /// </summary>
         private static readonly double HpBarHeight;
 
         /// <summary>
-        ///     The hp bar width.
+        ///     The health bar width.
         /// </summary>
         private static readonly double HpBarWidth;
 
         /// <summary>
-        ///     The hp bar x.
+        ///     The health bar x.
         /// </summary>
         private static readonly double HpBarX;
 
         /// <summary>
-        ///     The hp bar y.
+        ///     The health bar y.
         /// </summary>
         private static readonly float HpBarY;
 
@@ -350,15 +350,24 @@ namespace Ensage.Common
 
         #region Methods
 
-        private static double GetXX(Hero hero)
+        /// <summary>
+        ///     The get xx.
+        /// </summary>
+        /// <param name="hero">
+        ///     The hero.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        private static double GetXX(Entity hero)
         {
             var screenSize = new Vector2(Drawing.Width, Drawing.Height);
             if (hero.Team == Team.Radiant)
             {
-                return screenSize.X / RadiantCompare + 1;
+                return (screenSize.X / RadiantCompare) + 1;
             }
 
-            return screenSize.X / DireCompare + 1;
+            return (screenSize.X / DireCompare) + 1;
         }
 
         #endregion

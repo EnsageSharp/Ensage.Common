@@ -49,12 +49,12 @@ namespace Ensage.Common.AbilityInfo
         #region Public Properties
 
         /// <summary>
-        /// Gets the ability info dictionary.
+        ///     Gets the ability info dictionary.
         /// </summary>
         public static Dictionary<string, AbilityInfo> AbilityinfoDictionary { get; private set; }
 
         /// <summary>
-        /// Gets the spells.
+        ///     Gets the spells.
         /// </summary>
         public static List<AbilityInfo> Spells { get; private set; }
 
