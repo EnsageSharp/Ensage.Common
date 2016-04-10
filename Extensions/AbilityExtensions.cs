@@ -100,6 +100,12 @@ namespace Ensage.Common.Extensions
                 return false;
             }
 
+            var item = ability as Item;
+            if (item != null)
+            {
+                return item.CanBeCasted(bonusMana);
+            }
+
             try
             {
                 var owner = ability.Owner as Hero;
