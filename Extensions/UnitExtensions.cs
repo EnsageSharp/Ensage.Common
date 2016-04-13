@@ -774,7 +774,29 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static bool IsChanneling(this Unit unit)
         {
-            return unit.Inventory.Items.Any(v => v.IsChanneling) || unit.Spellbook.Spells.Any(v => v.IsChanneling);
+            if (unit.NetworkActivity == NetworkActivity.Move || unit.IsAttacking() || unit.IsStunned()
+                || unit.IsRooted())
+            {
+                return false;
+            }
+
+            var n = unit.Handle + ".Ensage.Common.IsChanneling";
+            bool channeling;
+            var exist = BoolDictionary.TryGetValue(n, out channeling);
+            if (!exist)
+            {
+                BoolDictionary.Add(n, false);
+            }
+
+            if (!Utils.SleepCheck(n) && channeling)
+            {
+                return true;
+            }
+
+            channeling = unit.Inventory.Items.Any(v => v.IsChanneling) || unit.Spellbook.Spells.Any(v => v.IsChanneling);
+            BoolDictionary[n] = channeling;
+            Utils.Sleep(100, n);
+            return channeling;
         }
 
         /// <summary>

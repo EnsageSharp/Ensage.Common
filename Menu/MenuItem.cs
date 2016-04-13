@@ -255,7 +255,7 @@ namespace Ensage.Common.Menu
 
                 if (this.ValueType == MenuValueType.AbilityToggler)
                 {
-                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 5);
+                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 4);
                 }
 
                 if (this.ValueType == MenuValueType.HeroToggler)
