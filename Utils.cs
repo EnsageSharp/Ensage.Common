@@ -119,7 +119,7 @@ namespace Ensage.Common
         /// <summary>
         ///     Gets the tick count.
         /// </summary>
-        public float TickCount
+        public static float TickCount
         {
             get
             {

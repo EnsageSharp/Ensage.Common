@@ -552,26 +552,32 @@ namespace Ensage.Common.AbilityInfo
                     break;
             }
 
-            var aetherLens = source.FindItem("item_aether_lens");
-            if (aetherLens != null && ability.StoredName() != "axe_culling_blade")
+            var aetherLens = false;
+            if (ability.StoredName() != "axe_culling_blade")
             {
-                outgoingDamage *= 1 + (aetherLens.GetAbilityData("spell_amp") / 100);
+                foreach (var item in source.Inventory.Items.Where(item => item.StoredName() == "item_aether_lens"))
+                {
+                    aetherLens = true;
+                    outgoingDamage *= 1 + (item.GetAbilityData("spell_amp") / 100);
+                }
             }
 
             if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && !(ability is Item)
                 && (source.Distance2D(target) <= 1200 || ability.StoredName() != "zuus_thundergods_wrath"))
             {
                 var staticField = source.Spellbook.Spell3;
-                if (staticField.Level > 0)
+                if (staticField.Level <= 0)
                 {
-                    var bonusDmg = staticField.GetAbilityData("damage_health_pct") / 100 * (target.Health - minusHealth);
-                    bonusDmg = target.DamageTaken(
-                        bonusDmg, 
-                        DamageType.Magical, 
-                        source, 
-                        minusMagicResistancePerc: minusMagicResistancePerc) * (aetherLens == null ? 1 : 1.08f);
-                    outgoingDamage += bonusDmg;
+                    return outgoingDamage;
                 }
+
+                var bonusDmg = staticField.GetAbilityData("damage_health_pct") / 100 * (target.Health - minusHealth);
+                bonusDmg = target.DamageTaken(
+                    bonusDmg, 
+                    DamageType.Magical, 
+                    source, 
+                    minusMagicResistancePerc: minusMagicResistancePerc) * (aetherLens == false ? 1 : 1.08f);
+                outgoingDamage += bonusDmg;
             }
 
             return outgoingDamage;
