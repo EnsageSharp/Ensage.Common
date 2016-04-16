@@ -828,6 +828,24 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The is hexed.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="hexDuration">
+        ///     The hex duration.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsHexed(this Unit unit, out float hexDuration)
+        {
+            hexDuration = Utils.DisableDuration(unit);
+            return unit.IsHexed();
+        }
+
+        /// <summary>
         ///     The is invisible.
         /// </summary>
         /// <param name="unit">
@@ -853,6 +871,24 @@ namespace Ensage.Common.Extensions
         public static bool IsInvul(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Invulnerable);
+        }
+
+        /// <summary>
+        ///     The is invulnerable.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="invulnerabilityDuration">
+        ///     The invulnerability duration.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsInvul(this Unit unit, out float invulnerabilityDuration)
+        {
+            invulnerabilityDuration = Utils.DisableDuration(unit);
+            return unit.IsInvul();
         }
 
         /// <summary>
@@ -921,6 +957,24 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The is rooted.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="rootDuration">
+        ///     The root duration.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsRooted(this Unit unit, out float rootDuration)
+        {
+            rootDuration = Utils.DisableDuration(unit);
+            return unit.IsRooted();
+        }
+
+        /// <summary>
         ///     The is silenced.
         /// </summary>
         /// <param name="unit">
@@ -946,6 +1000,24 @@ namespace Ensage.Common.Extensions
         public static bool IsStunned(this Unit unit)
         {
             return IsUnitState(unit, UnitState.Stunned);
+        }
+
+        /// <summary>
+        ///     The is stunned.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="stunDuration">
+        ///     The stun duration.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool IsStunned(this Unit unit, out float stunDuration)
+        {
+            stunDuration = Utils.DisableDuration(unit);
+            return IsStunned(unit);
         }
 
         /// <summary>
