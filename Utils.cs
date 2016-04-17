@@ -411,8 +411,34 @@ namespace Ensage.Common
         /// </returns>
         public static bool SleepCheck(string id)
         {
-            double asd;
-            return !Sleeps.TryGetValue(id, out asd) || (Environment.TickCount & int.MaxValue) > asd;
+            double time;
+            return !Sleeps.TryGetValue(id, out time) || (Environment.TickCount & int.MaxValue) > time;
+        }
+
+        /// <summary>
+        ///     Checks sleeping status of the sleep engine with given id
+        /// </summary>
+        /// <param name="id">
+        ///     The id.
+        /// </param>
+        /// <param name="remainingTime">
+        ///     The remaining time in milliseconds. 0 in case not sleeping.
+        /// </param>
+        /// <returns>
+        ///     Returns true in case id was not found or is not sleeping
+        /// </returns>
+        public static bool SleepCheck(string id, out double remainingTime)
+        {
+            double time;
+            var found = Sleeps.TryGetValue(id, out time);
+            if (!found)
+            {
+                remainingTime = 0;
+                return true;
+            }
+
+            remainingTime = time - TickCount;
+            return remainingTime > 0;
         }
 
         #endregion
