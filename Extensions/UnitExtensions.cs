@@ -547,6 +547,12 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static float GetAttackRange(this Unit unit)
         {
+            var hero = unit as Hero;
+            if (hero != null)
+            {
+                return hero.GetAttackRange();
+            }
+
             float range;
             if (RangeDictionary.TryGetValue(unit.Handle, out range)
                 && !Utils.SleepCheck("Common.GetAttackRange." + unit.Handle))
