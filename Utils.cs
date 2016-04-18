@@ -188,10 +188,11 @@ namespace Ensage.Common
             lastStunAbility = abilityName;
             var stunned = false;
             var remainingTime = DisableDuration(unit, except);
-            var chain = remainingTime <= delay;
+            var chain = false;
             if (remainingTime > 0)
             {
                 stunned = true;
+                chain = remainingTime <= delay;
             }
 
             return ((!(stunned || unit.IsStunned()) || chain) && !onlychain) || (onlychain && chain);
