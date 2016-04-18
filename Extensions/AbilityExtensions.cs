@@ -77,6 +77,11 @@ namespace Ensage.Common.Extensions
         private static readonly Dictionary<string, AbilitySpecialData> DataDictionary =
             new Dictionary<string, AbilitySpecialData>();
 
+        /// <summary>
+        ///     The hit delay dictionary.
+        /// </summary>
+        private static readonly Dictionary<string, double> HitDelayDictionary = new Dictionary<string, double>();
+
         #endregion
 
         #region Public Methods and Operators
@@ -1133,6 +1138,20 @@ namespace Ensage.Common.Extensions
             }
 
             var name = abilityName ?? ability.StoredName();
+            var owner = ability.Owner as Unit;
+            var n = name + owner.StoredName() + target.StoredName();
+            double storedDelay;
+            var found = HitDelayDictionary.TryGetValue(n, out storedDelay);
+            if (!found)
+            {
+                HitDelayDictionary.Add(n, 0);
+            }
+
+            if (found && !Utils.SleepCheck(n))
+            {
+                return storedDelay;
+            }
+
             AbilityInfo data;
             if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
             {
@@ -1140,7 +1159,6 @@ namespace Ensage.Common.Extensions
                 AbilityDamage.DataDictionary.Add(ability, data);
             }
 
-            var owner = ability.Owner as Unit;
             var delay = ability.GetCastDelay(owner as Hero, target, true, abilityName: name);
             if (data != null)
             {
@@ -1152,7 +1170,7 @@ namespace Ensage.Common.Extensions
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name) && speed < 6000 && speed > 0)
             {
                 var xyz = ability.GetPrediction(target, abilityName: name);
-                delay += Math.Max((int)(owner.Distance2D(xyz) - radius / 2), 100) / speed;
+                delay += Math.Max((int)(owner.Distance2D(xyz) - (radius / 2)), 100) / speed;
             }
 
             if (name == "tinker_heat_seeking_missile")
@@ -1161,6 +1179,8 @@ namespace Ensage.Common.Extensions
                 delay += Math.Max(owner.Distance2D(xyz), 100) / speed;
             }
 
+            HitDelayDictionary[n] = delay;
+            Utils.Sleep(40, n);
             return delay;
         }
 

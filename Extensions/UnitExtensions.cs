@@ -395,6 +395,30 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The find item.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="name">
+        ///     The name.
+        /// </param>
+        /// <param name="item">
+        ///     The item.
+        /// </param>
+        /// <param name="cache">
+        ///     The cache.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Item" />.
+        /// </returns>
+        public static Item FindItem(this Unit unit, string name, out Item item, bool cache = false)
+        {
+            item = unit.FindItem(name, cache);
+            return item;
+        }
+
+        /// <summary>
         ///     The has modifier.
         /// </summary>
         /// <param name="unit">
@@ -489,6 +513,27 @@ namespace Ensage.Common.Extensions
         public static Ability FindSpell(this Unit unit, string name)
         {
             return unit.Spellbook.Spells.FirstOrDefault(x => x.StoredName() == name);
+        }
+
+        /// <summary>
+        /// The find spell.
+        /// </summary>
+        /// <param name="unit">
+        /// The unit.
+        /// </param>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="spell">
+        /// The spell.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Ability"/>.
+        /// </returns>
+        public static Ability FindSpell(this Unit unit, string name, out Ability spell)
+        {
+            spell = unit.FindSpell(name);
+            return spell;
         }
 
         /// <summary>
