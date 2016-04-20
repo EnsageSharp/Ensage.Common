@@ -1,0 +1,417 @@
+﻿// <copyright file="AbilityToggler.cs" company="EnsageSharp">
+//    Copyright (c) 2015 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Menu
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Ensage.Common.Menu.Draw;
+
+    using SharpDX;
+
+    /// <summary>
+    ///     The order changer.
+    /// </summary>
+    [Serializable]
+    public struct PriorityChanger
+    {
+        #region Static Fields
+
+        private static uint id;
+
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        ///     The dictionary.
+        /// </summary>
+        public Dictionary<string, uint> Dictionary;
+
+        /// <summary>
+        ///     The position dictionary.
+        /// </summary>
+        public Dictionary<string, float[]> PositionDictionary;
+
+        /// <summary>
+        ///     The s values dictionary.
+        /// </summary>
+        public Dictionary<string, uint> SValuesDictionary;
+
+        /// <summary>
+        ///     The default priority.
+        /// </summary>
+        private readonly uint defaultPriority;
+
+        /// <summary>
+        ///     The max priority.
+        /// </summary>
+        private readonly uint maxPriority;
+
+        /// <summary>
+        ///     The min priority.
+        /// </summary>
+        private readonly uint minPriority;
+
+        /// <summary>
+        ///     The item list.
+        /// </summary>
+        private List<string> itemList;
+
+        /// <summary>
+        ///     Gets or sets the name.
+        /// </summary>
+        private string name;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        static PriorityChanger()
+        {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PriorityChanger" /> struct.
+        /// </summary>
+        /// <param name="itemList">
+        ///     The item List.
+        /// </param>
+        public PriorityChanger(List<string> itemList, string changerName = "")
+        {
+            this.itemList = itemList;
+            this.defaultPriority = 4;
+            this.maxPriority = (uint)itemList.Count();
+            this.minPriority = 0;
+            this.Dictionary = new Dictionary<string, uint>();
+            var count = 0u;
+            foreach (var s in itemList)
+            {
+                this.Dictionary.Add(s, count);
+                count++;
+            }
+
+            // this.name = string.Empty;
+            // foreach (var u in itemList)
+            // {
+            // this.name += u;
+            // }
+            this.PositionDictionary = new Dictionary<string, float[]>();
+            this.SValuesDictionary = new Dictionary<string, uint>();
+            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
+            {
+                Menu.TextureDictionary.Add(
+                    v.Key, 
+                    v.Key.Substring(0, "item".Length) == "item"
+                        ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+            }
+
+            var posDict = this.PositionDictionary;
+            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            {
+                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            }
+
+            var saveDict = this.SValuesDictionary;
+            foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
+            {
+                this.SValuesDictionary.Add(v.Key, v.Value);
+            }
+
+            if (MenuVariables.DragAndDropDictionary == null)
+            {
+                MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
+            }
+
+            this.name = changerName != string.Empty ? changerName : id.ToString();
+            id++;
+            if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
+            {
+                MenuVariables.DragAndDropDictionary.Add(
+                    this.name, 
+                    new DragAndDrop(MenuSettings.MenuItemHeight, itemList));
+            }
+
+            this.UpdatePriorities();
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        ///     Gets or sets the item list.
+        /// </summary>
+        public List<string> ItemList
+        {
+            get
+            {
+                return this.itemList;
+            }
+
+            set
+            {
+                this.itemList = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        ///     The add.
+        /// </summary>
+        /// <param name="itemName">
+        ///     The item name.
+        /// </param>
+        /// <param name="defaultValue">
+        ///     The default value.
+        /// </param>
+        public void Add(string itemName, uint defaultValue = 0)
+        {
+            if (this.ItemList.Contains(itemName))
+            {
+                return;
+            }
+
+            if (this.SValuesDictionary.ContainsKey(itemName))
+            {
+                defaultValue = this.SValuesDictionary[itemName];
+            }
+
+            if (!this.Dictionary.ContainsKey(itemName))
+            {
+                this.Dictionary.Add(itemName, defaultValue);
+            }
+
+            this.ItemList.Add(itemName);
+            if (!Menu.TextureDictionary.ContainsKey(itemName))
+            {
+                Menu.TextureDictionary.Add(
+                    itemName, 
+                    itemName.Substring(0, "item".Length) == "item"
+                        ? Drawing.GetTexture(
+                            "materials/ensage_ui/items/" + itemName.Substring("item_".Length) + ".vmat")
+                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + itemName + ".vmat"));
+            }
+
+            if (!this.SValuesDictionary.ContainsKey(itemName))
+            {
+                this.SValuesDictionary.Add(itemName, defaultValue);
+            }
+
+            this.UpdatePriorities();
+            if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
+            {
+                MenuVariables.DragAndDropDictionary.Add(
+                    this.name, 
+                    new DragAndDrop(MenuSettings.MenuItemHeight, this.itemList));
+            }
+
+            MenuVariables.DragAndDropDictionary[this.name].Add(itemName, defaultValue);
+
+            if (this.PositionDictionary.ContainsKey(itemName))
+            {
+                return;
+            }
+
+            this.PositionDictionary.Add(itemName, new float[] { 0, 0 });
+        }
+
+        /// <summary>
+        ///     The decrease priority.
+        /// </summary>
+        /// <param name="itemName">
+        ///     The item name.
+        /// </param>
+        public void DecreasePriority(string itemName)
+        {
+            if (!this.Dictionary.ContainsKey(itemName))
+            {
+                return;
+            }
+
+            if (this.Dictionary[itemName] <= this.minPriority)
+            {
+                return;
+            }
+
+            this.Dictionary[itemName] = this.Dictionary[itemName] - 1;
+        }
+
+        /// <summary>
+        ///     The draw.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="width">
+        ///     The width.
+        /// </param>
+        /// <param name="height">
+        ///     The height.
+        /// </param>
+        /// <param name="mouseScreenPosition">
+        ///     The mouse screen position.
+        /// </param>
+        /// <param name="menuItem">
+        ///     The menu item.
+        /// </param>
+        public void Draw(Vector2 position, float width, float height, Vector2 mouseScreenPosition, MenuItem menuItem)
+        {
+            if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
+            {
+                MenuVariables.DragAndDropDictionary.Add(
+                    this.name, 
+                    new DragAndDrop(MenuSettings.MenuItemHeight, this.itemList));
+            }
+
+            MenuVariables.DragAndDropDictionary[this.name].BasePosition = position + new Vector2(width - height, 0);
+            MenuVariables.DragAndDropDictionary[this.name].Height = height;
+            MenuVariables.DragAndDropDictionary[this.name].Draw(mouseScreenPosition, menuItem);
+        }
+
+        /// <summary>
+        ///     The is enabled.
+        /// </summary>
+        /// <param name="itemName">
+        ///     The item name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public uint GetPriority(string itemName)
+        {
+            return this.Dictionary.ContainsKey(itemName) ? this.Dictionary[itemName] : this.defaultPriority;
+        }
+
+        /// <summary>
+        ///     The increase priority.
+        /// </summary>
+        /// <param name="itemName">
+        ///     The item name.
+        /// </param>
+        public void IncreasePriority(string itemName)
+        {
+            if (!this.Dictionary.ContainsKey(itemName))
+            {
+                return;
+            }
+
+            if (this.Dictionary[itemName] >= this.maxPriority - 1)
+            {
+                return;
+            }
+
+            this.Dictionary[itemName] = this.Dictionary[itemName] + 1;
+        }
+
+        /// <summary>
+        ///     The on receive message.
+        /// </summary>
+        /// <param name="message">
+        ///     The message.
+        /// </param>
+        /// <param name="cursorPos">
+        ///     The cursor position.
+        /// </param>
+        /// <param name="menuItem">
+        ///     The menu item.
+        /// </param>
+        public void OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, MenuItem menuItem)
+        {
+            if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
+            {
+                MenuVariables.DragAndDropDictionary.Add(
+                    this.name, 
+                    new DragAndDrop(MenuSettings.MenuItemHeight, this.itemList));
+            }
+
+            if (message == Utils.WindowsMessages.WM_LBUTTONDOWN)
+            {
+                MenuVariables.DragAndDropDictionary[this.name].LeftButtonDown(cursorPos);
+                return;
+            }
+
+            if (message == Utils.WindowsMessages.WM_LBUTTONUP)
+            {
+                MenuVariables.DragAndDropDictionary[this.name].LeftButtonUp(cursorPos, menuItem);
+            }
+        }
+
+        /// <summary>
+        ///     The remove.
+        /// </summary>
+        /// <param name="itemName">
+        ///     The item name.
+        /// </param>
+        public void Remove(string itemName)
+        {
+            if (!this.Dictionary.ContainsKey(itemName))
+            {
+                return;
+            }
+
+            this.Dictionary.Remove(itemName);
+            this.ItemList.Remove(itemName);
+            MenuVariables.DragAndDropDictionary[this.name].Remove(itemName);
+        }
+
+        /// <summary>
+        ///     The set priority.
+        /// </summary>
+        /// <param name="itemName">
+        ///     The item name.
+        /// </param>
+        /// <param name="priorityValue">
+        ///     The priority value.
+        /// </param>
+        public void SetPriority(string itemName, uint priorityValue)
+        {
+            if (!this.Dictionary.ContainsKey(itemName))
+            {
+                return;
+            }
+
+            this.Dictionary[itemName] = priorityValue;
+        }
+
+        /// <summary>
+        ///     The update priorities.
+        /// </summary>
+        public void UpdatePriorities()
+        {
+            var count = 0u;
+            foreach (var u in new Dictionary<string, uint>(this.Dictionary).OrderBy(x => x.Value))
+            {
+                this.Dictionary[u.Key] = count;
+                this.SValuesDictionary[u.Key] = count;
+                count++;
+            }
+        }
+
+        #endregion
+    }
+}

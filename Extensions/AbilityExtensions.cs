@@ -302,6 +302,11 @@ namespace Ensage.Common.Extensions
 
             if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name))
             {
+                if (target.IsInvul())
+                {
+                    return false;
+                }
+
                 if (position.Distance2D(target.Position) <= ability.GetCastRange(name) + 100)
                 {
                     return true;

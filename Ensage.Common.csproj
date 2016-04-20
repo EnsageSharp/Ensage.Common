@@ -90,6 +90,8 @@
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
     <Compile Include="Extensions\UnitExtensions.cs" />
     <Compile Include="HUDInfo.cs" />
+    <Compile Include="Menu\Draw\DragAndDrop.cs" />
+    <Compile Include="Menu\Draw\PriorityIcon.cs" />
     <Compile Include="Menu\MenuDrawHelper.cs" />
     <Compile Include="Menu\MenuGlobals.cs" />
     <Compile Include="Menu\MenuItem.cs" />
@@ -100,12 +102,16 @@
     <Compile Include="Menu\KeyBind.cs" />
     <Compile Include="Menu\KeyBindType.cs" />
     <Compile Include="Menu\MenuValueType.cs" />
+    <Compile Include="Menu\MenuVariables.cs" />
+    <Compile Include="Menu\PriorityChanger.cs" />
     <Compile Include="Menu\Slider.cs" />
     <Compile Include="Menu\StringList.cs" />
     <Compile Include="Menu\OnValueChangeEventArgs.cs" />
     <Compile Include="Menu\SavedSettings.cs" />
+    <Compile Include="Menu\Transitions\QuadEaseInOut.cs" />
     <Compile Include="Objects\Abilities.cs" />
     <Compile Include="Objects\Creeps.cs" />
+    <Compile Include="Objects\DrawObjects\DrawText.cs" />
     <Compile Include="Objects\Heroes.cs" />
     <Compile Include="Objects\JungleCamp.cs" />
     <Compile Include="Objects\JungleCamps.cs" />
@@ -125,6 +131,7 @@
     <Compile Include="Objects\Textures.cs" />
     <Compile Include="Objects\Towers.cs" />
     <Compile Include="Objects\Trees.cs" />
+    <Compile Include="Objects\UtilityObjects\Sleeper.cs" />
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />
     <Compile Include="AbilityInfo\AbilityDatabase.cs" />

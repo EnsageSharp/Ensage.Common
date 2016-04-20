@@ -66,6 +66,11 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The hero toggler.
         /// </summary>
-        HeroToggler
+        HeroToggler, 
+
+        /// <summary>
+        ///     The priority changer.
+        /// </summary>
+        PriorityChanger
     }
 }

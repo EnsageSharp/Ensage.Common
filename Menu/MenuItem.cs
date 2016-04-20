@@ -20,8 +20,10 @@ namespace Ensage.Common.Menu
     using System.Reflection;
 
     using Ensage.Common.Extensions.SharpDX;
+    using Ensage.Common.Menu.Draw;
     using Ensage.Common.Menu.NotificationData;
     using Ensage.Common.Objects;
+    using Ensage.Common.Objects.DrawObjects;
 
     using SharpDX;
 
@@ -113,6 +115,16 @@ namespace Ensage.Common.Menu
         ///     The _dont save.
         /// </summary>
         private bool dontSave;
+
+        /// <summary>
+        ///     The drag and drop.
+        /// </summary>
+        private DragAndDrop dragAndDrop;
+
+        /// <summary>
+        ///     The draw text dictionary.
+        /// </summary>
+        private Dictionary<string, DrawText> drawTextDictionary = new Dictionary<string, DrawText>();
 
         /// <summary>
         ///     The _is shared.
@@ -256,6 +268,11 @@ namespace Ensage.Common.Menu
                 if (this.ValueType == MenuValueType.AbilityToggler)
                 {
                     extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 4);
+                }
+
+                if (this.ValueType == MenuValueType.PriorityChanger)
+                {
+                    extra += this.GetValue<PriorityChanger>().ItemList.Count * (this.Height - 4);
                 }
 
                 if (this.ValueType == MenuValueType.HeroToggler)
@@ -600,6 +617,10 @@ namespace Ensage.Common.Menu
             {
                 this.ValueType = MenuValueType.Color;
             }
+            else if (newValue.GetType().ToString().Contains("PriorityChanger"))
+            {
+                this.ValueType = MenuValueType.PriorityChanger;
+            }
             else
             {
                 Console.WriteLine("CommonLibMenu: Data type not supported");
@@ -670,6 +691,46 @@ namespace Ensage.Common.Menu
                             }
 
                             newValue = (T)(object)tempValue;
+                            break;
+
+                        case MenuValueType.PriorityChanger:
+                            var savedPriorityDictionaryValue = (PriorityChanger)(object)Utils.Deserialize<T>(readBytes);
+                            var newPriorityDictionaryValue = (PriorityChanger)(object)newValue;
+                            var tempPriorityValue = newPriorityDictionaryValue;
+                            var count = 0u;
+
+                            // foreach (var item in
+                            // tempPriorityValue.ItemList.OrderBy(
+                            // x => savedPriorityDictionaryValue.GetPriority(x)))
+                            // {
+                            // var priority = savedPriorityDictionaryValue.SValuesDictionary.ContainsKey(item)
+                            // ? savedPriorityDictionaryValue.SValuesDictionary[item]
+                            // : count;
+                            // tempPriorityValue.Dictionary[item] = priority;
+                            // count++;
+                            // }
+                            foreach (var u in
+                                savedPriorityDictionaryValue.SValuesDictionary)
+                            {
+                                Console.WriteLine(u.Key + " " + u.Value);
+                                if (!tempPriorityValue.SValuesDictionary.ContainsKey(u.Key))
+                                {
+                                    tempPriorityValue.SValuesDictionary.Add(u.Key, u.Value);
+                                }
+                                else
+                                {
+                                    tempPriorityValue.SValuesDictionary[u.Key] = u.Value;
+                                }
+
+                                tempPriorityValue.Dictionary[u.Key] = u.Value;
+                            }
+
+                            tempPriorityValue.ItemList =
+                                tempPriorityValue.ItemList.OrderBy(x => tempPriorityValue.GetPriority(x)).ToList();
+
+                            tempPriorityValue.UpdatePriorities();
+
+                            newValue = (T)(object)tempPriorityValue;
                             break;
 
                         case MenuValueType.HeroToggler:
@@ -1229,6 +1290,44 @@ namespace Ensage.Common.Menu
                         | FontFlags.StrikeOut);
                     break;
 
+                case MenuValueType.PriorityChanger:
+                    MenuUtils.DrawBoxBordered(
+                        this.Position.X, 
+                        this.Position.Y, 
+                        this.Width, 
+                        this.Height, 
+                        1, 
+                        abg, 
+                        new Color(20, 20, 20, 200));
+                    Drawing.DrawRect(
+                        this.Position, 
+                        new Vector2(this.Width, this.Height), 
+                        Utils.IsUnderRectangle(
+                            Game.MouseScreenPosition, 
+                            this.Position.X, 
+                            this.Position.Y, 
+                            this.Width, 
+                            this.Height)
+                            ? new Color(30, 19, 5, 220)
+                            : new Color(10, 10, 5, 210));
+
+                    this.GetValue<PriorityChanger>()
+                        .Draw(this.Position, this.Width, this.Height, Game.MouseScreenPosition, this);
+                    textSize1 = Drawing.MeasureText(
+                        s, 
+                        "Arial", 
+                        new Vector2((float)(this.Height * 0.51), 20), 
+                        FontFlags.AntiAlias);
+                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
+                    Drawing.DrawText(
+                        s, 
+                        textPos1, 
+                        new Vector2((float)(this.Height * 0.51), 20), 
+                        this.FontColor, 
+                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
+                        | FontFlags.StrikeOut);
+                    break;
+
                 case MenuValueType.HeroToggler:
                     MenuUtils.DrawBoxBordered(
                         this.Position.X, 
@@ -1573,6 +1672,15 @@ namespace Ensage.Common.Menu
                     }
 
                     this.SetValue(new AbilityToggler(dictionary));
+                    break;
+
+                case MenuValueType.PriorityChanger:
+                    if (!this.Visible)
+                    {
+                        return;
+                    }
+
+                    this.GetValue<PriorityChanger>().OnReceiveMessage(message, cursorPos, this);
                     break;
 
                 case MenuValueType.HeroToggler:

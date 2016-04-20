@@ -28,6 +28,7 @@ namespace Ensage.Common.Menu
     using System.Reflection;
 
     using Ensage.Common.Extensions;
+    using Ensage.Common.Menu.Draw;
     using Ensage.Common.Objects;
 
     using SharpDX;
@@ -154,6 +155,11 @@ namespace Ensage.Common.Menu
         /// </summary>
         static Menu()
         {
+            if (MenuVariables.DragAndDropDictionary == null)
+            {
+                MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
+            }
+
             TextureDictionary = new Dictionary<string, DotaTexture>();
             ItemDictionary = new Dictionary<string, MenuItem>();
             var positionMenu = new Menu("MenuPosition", "menuPosition");
@@ -184,6 +190,43 @@ namespace Ensage.Common.Menu
                 new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true));
             Root.AddItem(
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(FontStyle.Bold, Color.Yellow));
+
+            Root.AddItem(
+                new MenuItem("ComboPriorityTest1", "ComboPriorityTest").SetValue(
+                    new PriorityChanger(
+                        new List<string>(
+                            new[]
+                                {
+                                    "ursa_enrage", "item_abyssal_blade", "ursa_earthshock", "item_dagon_5", 
+                                    "ursa_overpower", "item_blink", "item_blade_mail", "item_sheepstick", "item_mjollnir", 
+                                    "item_black_king_bar", "item_sphere"
+                                }), 
+                        "MyChanger")));
+            Root.AddItem(
+                new MenuItem("myComboPriority", "ComboPriority: ").SetValue(
+                    new PriorityChanger(
+                        new List<string>(
+                            new[]
+                                {
+                                    "ursa_enrage", "item_abyssal_blade", "ursa_earthshock", "item_dagon_5",
+                                    "ursa_overpower", "item_blink", "item_blade_mail", "item_sheepstick", "item_mjollnir",
+                                    "item_black_king_bar", "item_sphere"
+                                }),
+                        "MyComboPriority")));
+
+            var spells =
+                ObjectManager.LocalHero.Spellbook.Spells.OrderByDescending(
+                    spell => Root.Item("myComboPriority").GetValue<PriorityChanger>().GetPriority(spell.Name));
+
+            foreach (var spell in spells)
+            {
+                if (spell.Name == "ursa_enrage")
+                {
+                    // ...... Cast the spell
+                }
+                // .... Cast other spells
+            }
+
             loaded = false;
             newMessageType = Root.Item("messageType").GetValue<StringList>();
             CommonMenu.MenuConfig.AddSubMenu(Root);
@@ -385,10 +428,8 @@ namespace Ensage.Common.Menu
                         Drawing.MeasureText(
                             MultiLanguage._(this.DisplayName), 
                             "Arial", 
-                            new Vector2(
-                            (float)(MenuSettings.MenuItemHeight * 0.55), 
-                            (float)(MenuSettings.MenuItemWidth * 0.7)), 
-                            FontFlags.None).X;
+                            new Vector2((float)(this.Height * 0.55), 100), 
+                            FontFlags.None).X + 2;
                 }
 
                 if (this.TextureName != null)

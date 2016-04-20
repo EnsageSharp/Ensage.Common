@@ -516,19 +516,19 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The find spell.
+        ///     The find spell.
         /// </summary>
         /// <param name="unit">
-        /// The unit.
+        ///     The unit.
         /// </param>
         /// <param name="name">
-        /// The name.
+        ///     The name.
         /// </param>
         /// <param name="spell">
-        /// The spell.
+        ///     The spell.
         /// </param>
         /// <returns>
-        /// The <see cref="Ability"/>.
+        ///     The <see cref="Ability" />.
         /// </returns>
         public static Ability FindSpell(this Unit unit, string name, out Ability spell)
         {

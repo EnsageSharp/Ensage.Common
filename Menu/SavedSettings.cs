@@ -49,9 +49,7 @@ namespace Ensage.Common.Menu
         /// </returns>
         public static byte[] GetSavedData(string name, string key)
         {
-            Dictionary<string, byte[]> dic = null;
-
-            dic = LoadedFiles.ContainsKey(name) ? LoadedFiles[name] : Load(name);
+            var dic = LoadedFiles.ContainsKey(name) ? LoadedFiles[name] : Load(name);
 
             if (dic == null)
             {
