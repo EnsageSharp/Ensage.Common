@@ -697,22 +697,10 @@ namespace Ensage.Common.Menu
                             var savedPriorityDictionaryValue = (PriorityChanger)(object)Utils.Deserialize<T>(readBytes);
                             var newPriorityDictionaryValue = (PriorityChanger)(object)newValue;
                             var tempPriorityValue = newPriorityDictionaryValue;
-                            var count = 0u;
 
-                            // foreach (var item in
-                            // tempPriorityValue.ItemList.OrderBy(
-                            // x => savedPriorityDictionaryValue.GetPriority(x)))
-                            // {
-                            // var priority = savedPriorityDictionaryValue.SValuesDictionary.ContainsKey(item)
-                            // ? savedPriorityDictionaryValue.SValuesDictionary[item]
-                            // : count;
-                            // tempPriorityValue.Dictionary[item] = priority;
-                            // count++;
-                            // }
                             foreach (var u in
                                 savedPriorityDictionaryValue.SValuesDictionary)
                             {
-                                Console.WriteLine(u.Key + " " + u.Value);
                                 if (!tempPriorityValue.SValuesDictionary.ContainsKey(u.Key))
                                 {
                                     tempPriorityValue.SValuesDictionary.Add(u.Key, u.Value);

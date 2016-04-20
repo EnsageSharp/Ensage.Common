@@ -29,6 +29,9 @@ namespace Ensage.Common.Menu
     {
         #region Static Fields
 
+        /// <summary>
+        /// The id.
+        /// </summary>
         private static uint id;
 
         #endregion
@@ -66,19 +69,22 @@ namespace Ensage.Common.Menu
         private readonly uint minPriority;
 
         /// <summary>
+        ///     Gets or sets the name.
+        /// </summary>
+        private readonly string name;
+
+        /// <summary>
         ///     The item list.
         /// </summary>
         private List<string> itemList;
-
-        /// <summary>
-        ///     Gets or sets the name.
-        /// </summary>
-        private string name;
 
         #endregion
 
         #region Constructors and Destructors
 
+        /// <summary>
+        ///     Initializes static members of the <see cref="PriorityChanger" /> struct.
+        /// </summary>
         static PriorityChanger()
         {
         }
@@ -88,6 +94,9 @@ namespace Ensage.Common.Menu
         /// </summary>
         /// <param name="itemList">
         ///     The item List.
+        /// </param>
+        /// <param name="changerName">
+        ///     The changer Name.
         /// </param>
         public PriorityChanger(List<string> itemList, string changerName = "")
         {
@@ -103,11 +112,6 @@ namespace Ensage.Common.Menu
                 count++;
             }
 
-            // this.name = string.Empty;
-            // foreach (var u in itemList)
-            // {
-            // this.name += u;
-            // }
             this.PositionDictionary = new Dictionary<string, float[]>();
             this.SValuesDictionary = new Dictionary<string, uint>();
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
@@ -168,6 +172,9 @@ namespace Ensage.Common.Menu
             }
         }
 
+        /// <summary>
+        ///     Gets the name.
+        /// </summary>
         public string Name
         {
             get
