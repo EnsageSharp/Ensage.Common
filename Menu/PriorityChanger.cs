@@ -83,13 +83,6 @@ namespace Ensage.Common.Menu
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Initializes static members of the <see cref="PriorityChanger" /> struct.
-        /// </summary>
-        static PriorityChanger()
-        {
-        }
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="PriorityChanger" /> struct.
         /// </summary>
         /// <param name="itemList">

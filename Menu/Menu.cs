@@ -389,10 +389,10 @@ namespace Ensage.Common.Menu
                     bonus +=
                         (int)
                         Drawing.MeasureText(
-                            MultiLanguage._(this.DisplayName), 
-                            "Arial", 
-                            new Vector2((float)(this.Height * 0.55), 100), 
-                            FontFlags.None).X + 2;
+                            MultiLanguage._(this.DisplayName),
+                            "Arial",
+                            new Vector2((float)(this.Height * 0.55), 100),
+                            FontFlags.None).X + this.Height;
                 }
 
                 if (this.TextureName != null)

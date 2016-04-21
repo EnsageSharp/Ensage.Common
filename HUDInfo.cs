@@ -219,9 +219,15 @@ namespace Ensage.Common
                 return Vector2.Zero;
             }
 
-            if (unit.Equals(ObjectManager.LocalHero))
+            if (unit.Handle.Equals(ObjectManager.LocalHero.Handle))
             {
-                return screenPos + new Vector2((float)(-HpBarX * Monitor), (-HpBarY - 10) * Monitor);
+                if (unit.ClassID == ClassID.CDOTA_Unit_Hero_Meepo)
+                {
+                    return screenPos
+                           + new Vector2((float)(-HpBarX * 1.05 * Monitor), (float)((-HpBarY * 1.3) * Monitor));
+                }
+
+                return screenPos + new Vector2((float)(-HpBarX * 1.015 * Monitor), (float)((-HpBarY * 1.38) * Monitor));
             }
 
             return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
@@ -238,6 +244,11 @@ namespace Ensage.Common
         /// </returns>
         public static float GetHPBarSizeX(Unit unit = null)
         {
+            if (unit != null && unit.Handle.Equals(ObjectManager.LocalHero.Handle))
+            {
+                return (float)((float)HpBarWidth * Monitor * 1.05);
+            }
+
             return (float)HpBarWidth * Monitor;
         }
 
