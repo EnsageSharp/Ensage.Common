@@ -153,8 +153,20 @@ namespace Ensage.Common.Menu
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
                 MenuVariables.DragAndDropDictionary.Add(
-                    this.name, 
+                    this.name,
                     new DragAndDrop(MenuSettings.MenuItemHeight, itemList));
+            }
+            else
+            {
+                foreach (var u in
+                    new Dictionary<PriorityIcon, uint>(
+                        MenuVariables.DragAndDropDictionary[this.name].PriorityIconsDictionary).Where(
+                            u => !itemList.Contains(u.Key.Name)))
+                {
+                    MenuVariables.DragAndDropDictionary[this.name].Remove(u.Key.Name);
+                }
+
+                MenuVariables.DragAndDropDictionary[this.name].UpdateOrder();
             }
 
             this.AbilityToggler = new AbilityToggler(new Dictionary<string, bool>());
@@ -318,6 +330,7 @@ namespace Ensage.Common.Menu
             }
 
             MenuVariables.DragAndDropDictionary[this.name].Add(itemName, defaultValue);
+            MenuVariables.DragAndDropDictionary[this.name].UpdateOrder();
 
             if (this.PositionDictionary.ContainsKey(itemName))
             {
@@ -464,6 +477,7 @@ namespace Ensage.Common.Menu
             this.Dictionary.Remove(itemName);
             this.ItemList.Remove(itemName);
             MenuVariables.DragAndDropDictionary[this.name].Remove(itemName);
+            MenuVariables.DragAndDropDictionary[this.name].UpdateOrder();
         }
 
         /// <summary>

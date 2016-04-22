@@ -423,7 +423,6 @@
 
             foreach (var s in newList.Where(x => !this.itemList.Contains(x)))
             {
-                Console.WriteLine(s);
                 this.PriorityIconsDictionary.Add(new PriorityIcon(s, this.Height), count);
                 menuItem.GetValue<PriorityChanger>().Dictionary[s] = count;
                 this.itemList.Add(s);
