@@ -710,18 +710,19 @@ namespace Ensage.Common.Extensions
             else if (ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
                      || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale")
             {
-                if (Prediction.StraightTime(target) > straightTimeforSkillShot * 1000
-                    && ability.CastSkillShot(target, name, soulRing, otherTargets))
+                var stunned = target.IsStunned() || target.IsInvul() || target.IsRooted() || target.IsHexed();
+                if ((!(Prediction.StraightTime(target) > straightTimeforSkillShot * 1000) && !stunned)
+                    || !ability.CastSkillShot(target, name, soulRing, otherTargets))
                 {
-                    if (useSleep)
-                    {
-                        Utils.Sleep(Math.Max(delay, 0.2) * 1000 + 250, "CHAINSTUN_SLEEP");
-                    }
-
-                    return true;
+                    return false;
                 }
 
-                return false;
+                if (useSleep)
+                {
+                    Utils.Sleep(Math.Max(delay, 0.2) * 1000 + 250, "CHAINSTUN_SLEEP");
+                }
+
+                return true;
             }
             else if (ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
             {

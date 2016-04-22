@@ -227,10 +227,10 @@
                     var a = u.Key.Hovered ? 35 : 0;
                     u.Key.Color =
                         Color.FromArgb(
-                            220 + a, 
-                            (int)Math.Min(18 + a + (u.Key.Priority * 18), 255), 
-                            (int)Math.Min(12 + a + (u.Key.Priority * 12), 255), 
-                            (int)Math.Min(1 + a + u.Key.Priority, 255)).ToSharpDxColor();
+                            (int)Math.Max(Math.Min(210 + a, 255), 0),
+                            (int)Math.Max(Math.Min(18 + a + (u.Value * 18), 255), 0),
+                            (int)Math.Max(Math.Min(12 + a + (u.Value * 12), 255), 0),
+                            (int)Math.Max(Math.Min(1 + a + u.Value, 255), 0)).ToSharpDxColor();
                     var dict = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
                     foreach (var u2 in
                         dict.Where(
@@ -299,10 +299,10 @@
                 var alpha = u.Key.Hovered ? u.Key.Hover.GetValue() : 40 - u.Key.Hover.GetValue();
                 u.Key.Color =
                     Color.FromArgb(
-                        (int)(210 + alpha), 
-                        (int)Math.Min(18 + alpha + (u.Value * 18), 255), 
-                        (int)Math.Min(12 + alpha + (u.Value * 12), 255), 
-                        (int)Math.Min(1 + alpha + u.Value, 255)).ToSharpDxColor();
+                        (int)Math.Max(Math.Min(210 + alpha, 255), 0),
+                        (int)Math.Max(Math.Min(18 + alpha + (u.Value * 18), 255), 0),
+                        (int)Math.Max(Math.Min(12 + alpha + (u.Value * 12), 255), 0),
+                        (int)Math.Max(Math.Min(1 + alpha + u.Value, 255), 0)).ToSharpDxColor();
                 u.Key.Draw();
                 u.Key.DrawPriorityNumber();
                 move += u.Key.Size.X;
