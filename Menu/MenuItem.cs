@@ -980,16 +980,16 @@ namespace Ensage.Common.Menu
                         abg, 
                         new Color(20, 20, 20, 200));
                     Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
+                        this.Position,
+                        new Vector2(this.Width, this.Height),
                         Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
+                            Game.MouseScreenPosition,
+                            this.Position.X,
+                            this.Position.Y,
+                            this.Width,
                             this.Height)
                             ? new Color(30, 19, 5, 220)
-                            : (this.GetValue<bool>() ? new Color(10, 10, 5, 210) : new Color(5, 5, 0, 235)));
+                            : new Color(10, 10, 5, 210));
                     MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Position =
                         new Vector2(
                             (float)(this.Position.X + this.Width - this.Height - (this.Height / 2.5)), 
@@ -1024,18 +1024,16 @@ namespace Ensage.Common.Menu
                         abg, 
                         new Color(20, 20, 20, 200));
                     Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
+                        this.Position,
+                        new Vector2(this.Width, this.Height),
                         Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
+                            Game.MouseScreenPosition,
+                            this.Position.X,
+                            this.Position.Y,
+                            this.Width,
                             this.Height)
                             ? new Color(30, 19, 5, 220)
-                            : (val.Type == KeyBindType.Toggle
-                                   ? val.Active ? new Color(10, 10, 5, 210) : new Color(5, 5, 0, 235)
-                                   : new Color(10, 10, 5, 210)));
+                            : new Color(10, 10, 5, 210));
                     var te = Utils.KeyToText(val.Key);
                     var sizet = new Vector2((float)(this.Height / 1.9), this.Width / 2);
                     if (this.Interacting)
