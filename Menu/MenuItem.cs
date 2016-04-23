@@ -243,67 +243,73 @@ namespace Ensage.Common.Menu
                     return (int)Menu.menuPositionDictionary[n].X;
                 }
 
-                var extra = 0;
+                var extra = 0f;
 
-                if (this.ValueType == MenuValueType.StringList)
+                switch (this.ValueType)
                 {
-                    var slVal = this.GetValue<StringList>();
-                    var max =
-                        slVal.SList.Select(
-                            v =>
-                            (int)
-                            Drawing.MeasureText(
-                                v, 
-                                "Arial", 
-                                new Vector2(
-                                (float)(MenuSettings.MenuItemHeight * 0.51), 
-                                (float)(MenuSettings.MenuItemWidth * 0.7)), 
-                                FontFlags.None).X + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17))
-                            .Concat(new[] { 0 })
-                            .Max();
+                    case MenuValueType.StringList:
+                        var slVal = this.GetValue<StringList>();
+                        var max =
+                            slVal.SList.Select(
+                                v =>
+                                (int)
+                                Drawing.MeasureText(
+                                    v, 
+                                    "Arial", 
+                                    new Vector2(
+                                    (float)(MenuSettings.MenuItemHeight * 0.51), 
+                                    (float)(MenuSettings.MenuItemWidth * 0.7)), 
+                                    FontFlags.None).X + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17))
+                                .Concat(new[] { 0 })
+                                .Max();
 
-                    extra += max;
-                }
+                        extra += max;
+                        break;
+                    case MenuValueType.AbilityToggler:
+                        extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 4);
+                        break;
+                    case MenuValueType.PriorityChanger:
+                        if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.GetValue<PriorityChanger>().Name))
+                        {
+                            extra += this.GetValue<PriorityChanger>().ItemList.Count * (this.Height - 4);
+                        }
+                        else
+                        {
+                            extra += MenuVariables.DragAndDropDictionary[this.GetValue<PriorityChanger>().Name].Width;
+                        }
 
-                if (this.ValueType == MenuValueType.AbilityToggler)
-                {
-                    extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 4);
-                }
-
-                if (this.ValueType == MenuValueType.PriorityChanger)
-                {
-                    extra += this.GetValue<PriorityChanger>().ItemList.Count * (this.Height - 4);
-                }
-
-                if (this.ValueType == MenuValueType.HeroToggler)
-                {
-                    extra += this.GetValue<HeroToggler>().Dictionary.Count * (this.Height + 5);
-                }
-
-                if (this.ValueType == MenuValueType.KeyBind)
-                {
-                    var val = this.GetValue<KeyBind>();
-                    extra +=
-                        (int)
-                        Drawing.MeasureText(
-                            " [" + Utils.KeyToText(val.Key) + "]", 
-                            "Arial", 
-                            new Vector2(
-                            (float)(MenuSettings.MenuItemHeight * 0.51), 
-                            (float)(MenuSettings.MenuItemWidth * 0.7)), 
-                            FontFlags.None).X;
-                    if (val.Type == KeyBindType.Toggle)
-                    {
+                        break;
+                    case MenuValueType.HeroToggler:
+                        extra += this.GetValue<HeroToggler>().Dictionary.Count * (this.Height + 5);
+                        break;
+                    case MenuValueType.KeyBind:
+                        var val = this.GetValue<KeyBind>();
                         extra +=
                             (int)
                             Drawing.MeasureText(
-                                val.Active ? " (on)" : " (off)", 
+                                " [" + Utils.KeyToText(val.Key) + "]", 
                                 "Arial", 
                                 new Vector2(
                                 (float)(MenuSettings.MenuItemHeight * 0.51), 
                                 (float)(MenuSettings.MenuItemWidth * 0.7)), 
                                 FontFlags.None).X;
-                    }
+                        if (val.Type == KeyBindType.Toggle)
+                        {
+                            extra +=
+                                (int)
+                                Drawing.MeasureText(
+                                    val.Active ? " (on)" : " (off)", 
+                                    "Arial", 
+                                    new Vector2(
+                                    (float)(MenuSettings.MenuItemHeight * 0.51), 
+                                    (float)(MenuSettings.MenuItemWidth * 0.7)), 
+                                    FontFlags.None).X;
+                        }
+
+                        break;
+                    case MenuValueType.Boolean:
+                        extra += (float)(this.Height * 1.5);
+                        break;
                 }
 
                 if (!string.IsNullOrEmpty(this.Tooltip))
@@ -713,6 +719,25 @@ namespace Ensage.Common.Menu
                                 tempPriorityValue.Dictionary[u.Key] = u.Value;
                             }
 
+                            var savedValuesAbilityToggler =
+                                savedPriorityDictionaryValue.AbilityToggler.SValuesDictionary;
+                            foreach (var b in savedValuesAbilityToggler)
+                            {
+                                if (!tempPriorityValue.AbilityToggler.SValuesDictionary.ContainsKey(b.Key))
+                                {
+                                    tempPriorityValue.AbilityToggler.SValuesDictionary.Add(b.Key, b.Value);
+                                }
+                                else
+                                {
+                                    tempPriorityValue.AbilityToggler.SValuesDictionary[b.Key] = b.Value;
+                                }
+
+                                if (tempPriorityValue.AbilityToggler.Dictionary.ContainsKey(b.Key))
+                                {
+                                    tempPriorityValue.AbilityToggler.Dictionary[b.Key] = b.Value;
+                                }
+                            }
+
                             tempPriorityValue.ItemList =
                                 tempPriorityValue.ItemList.OrderBy(x => tempPriorityValue.GetPriority(x)).ToList();
 
@@ -786,6 +811,20 @@ namespace Ensage.Common.Menu
 
             this.ValueSet = true;
             this.serialized = Utils.Serialize(this.value);
+            if (this.ValueType == MenuValueType.Boolean)
+            {
+                if (MenuVariables.OnOffDictionary == null)
+                {
+                    MenuVariables.OnOffDictionary = new Dictionary<string, OnOffCircleSlider>();
+                }
+
+                if (!MenuVariables.OnOffDictionary.ContainsKey(this.Name + this.DisplayName))
+                {
+                    MenuVariables.OnOffDictionary.Add(
+                        this.Name + this.DisplayName, 
+                        new OnOffCircleSlider(new Color(180, 120, 10), new Color(50, 50, 50), 0, (bool)(object)newValue));
+                }
+            }
 
             return this;
         }
@@ -951,10 +990,12 @@ namespace Ensage.Common.Menu
                             this.Height)
                             ? new Color(30, 19, 5, 220)
                             : (this.GetValue<bool>() ? new Color(10, 10, 5, 210) : new Color(5, 5, 0, 235)));
-                    MenuDrawHelper.DrawOnOff(
-                        this.GetValue<bool>(), 
-                        new Vector2(this.Position.X + this.Width - this.Height, this.Position.Y), 
-                        this);
+                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Position =
+                        new Vector2(
+                            (float)(this.Position.X + this.Width - this.Height - (this.Height / 2.5)), 
+                            this.Position.Y + (this.Height / 4));
+                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Height = this.Height;
+                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Draw(Game.MouseScreenPosition);
                     textSize1 = Drawing.MeasureText(
                         s, 
                         "Arial", 
@@ -1464,7 +1505,9 @@ namespace Ensage.Common.Menu
                         break;
                     }
 
-                    this.SetValue(!this.GetValue<bool>());
+                    var boolValue = !this.GetValue<bool>();
+                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Enabled = boolValue;
+                    this.SetValue(boolValue);
 
                     break;
 

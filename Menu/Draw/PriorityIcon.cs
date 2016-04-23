@@ -46,7 +46,10 @@
         /// <param name="height">
         ///     The height.
         /// </param>
-        public PriorityIcon(string name, float height)
+        /// <param name="enabled">
+        ///     The enabled.
+        /// </param>
+        public PriorityIcon(string name, float height, bool enabled)
         {
             this.texture = name.Substring(0, "item".Length) == "item"
                                ? Textures.GetTexture(
@@ -63,6 +66,7 @@
             this.transition = new QuadEaseInOut(0.35);
             this.Hover = new QuadEaseInOut(0.35);
             this.Hover.Start(0, 40);
+            this.Enabled = enabled;
         }
 
         #endregion
@@ -73,6 +77,16 @@
         ///     Gets or sets the color.
         /// </summary>
         public Color Color { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the dictionary position.
+        /// </summary>
+        public uint DictionaryPosition { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether enabled.
+        /// </summary>
+        public bool Enabled { get; set; }
 
         /// <summary>
         ///     Gets the fixed position.
@@ -138,7 +152,7 @@
                 }
 
                 var movePosition = this.transition.GetPosition();
-                if (this.position == movePosition || !this.transition.Moving())
+                if (this.position == movePosition || !this.transition.Moving)
                 {
                     this.position = movePosition;
                     this.SmoothlyMoving = false;

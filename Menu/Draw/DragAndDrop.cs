@@ -10,14 +10,22 @@
 
     using SharpDX;
 
-    using Color = System.Drawing.Color;
-
     /// <summary>
     ///     The drag and drop.
     /// </summary>
     public class DragAndDrop
     {
         #region Fields
+
+        /// <summary>
+        ///     The double click sleeper.
+        /// </summary>
+        private readonly Sleeper doubleClickSleeper;
+
+        /// <summary>
+        ///     The icon count sleeper.
+        /// </summary>
+        private readonly Sleeper iconCountSleeper;
 
         /// <summary>
         ///     The icon size sleeper.
@@ -35,14 +43,39 @@
         private readonly QuadEaseInOut transition;
 
         /// <summary>
+        ///     The using ability toggler.
+        /// </summary>
+        private readonly bool usingAbilityToggler;
+
+        /// <summary>
+        ///     The ability toggler.
+        /// </summary>
+        private AbilityToggler abilityToggler;
+
+        /// <summary>
+        ///     The icon count.
+        /// </summary>
+        private int iconCount;
+
+        /// <summary>
         ///     The icon size.
         /// </summary>
         private Vector2 iconSize;
 
         /// <summary>
+        ///     The left button down.
+        /// </summary>
+        private bool leftButtonDown;
+
+        /// <summary>
         ///     The texture icon size.
         /// </summary>
         private Vector2 textureIconSize;
+
+        /// <summary>
+        ///     The updated icons.
+        /// </summary>
+        private bool updatedIcons;
 
         #endregion
 
@@ -65,13 +98,51 @@
             this.itemList = new List<string>(itemList);
             foreach (var s in itemList)
             {
-                this.PriorityIconsDictionary.Add(new PriorityIcon(s, height), count);
+                this.PriorityIconsDictionary.Add(new PriorityIcon(s, height, true), count);
                 count++;
             }
 
+            this.doubleClickSleeper = new Sleeper();
+            this.iconCountSleeper = new Sleeper();
             this.iconSizeSleeper = new Sleeper();
             this.transition = new QuadEaseInOut(0.35);
             this.transition.Start(0, 150);
+            this.abilityToggler = new AbilityToggler(new Dictionary<string, bool>());
+            this.Width = itemList.Count * this.Height;
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DragAndDrop" /> class.
+        /// </summary>
+        /// <param name="height">
+        ///     The height.
+        /// </param>
+        /// <param name="itemList">
+        ///     The item list.
+        /// </param>
+        /// <param name="abilityToggler">
+        ///     The ability toggler.
+        /// </param>
+        public DragAndDrop(float height, List<string> itemList, AbilityToggler abilityToggler)
+        {
+            this.Height = height;
+            var count = 0u;
+            this.PriorityIconsDictionary = new Dictionary<PriorityIcon, uint>();
+            this.itemList = new List<string>(itemList);
+            foreach (var s in itemList)
+            {
+                this.PriorityIconsDictionary.Add(new PriorityIcon(s, height, abilityToggler.IsEnabled(s)), count);
+                count++;
+            }
+
+            this.doubleClickSleeper = new Sleeper();
+            this.iconCountSleeper = new Sleeper();
+            this.iconSizeSleeper = new Sleeper();
+            this.transition = new QuadEaseInOut(0.35);
+            this.transition.Start(0, 150);
+            this.abilityToggler = abilityToggler;
+            this.usingAbilityToggler = true;
+            this.Width = itemList.Count * this.Height;
         }
 
         #endregion
@@ -82,6 +153,24 @@
         ///     Gets or sets the base position.
         /// </summary>
         public Vector2 BasePosition { get; set; }
+
+        /// <summary>
+        ///     Gets the count.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                if (this.iconCountSleeper.Sleeping)
+                {
+                    return this.iconCount;
+                }
+
+                this.iconCount = this.PriorityIconsDictionary.Count;
+                this.iconCountSleeper.Sleep(1000);
+                return this.iconCount;
+            }
+        }
 
         /// <summary>
         ///     Gets or sets the height.
@@ -131,6 +220,11 @@
         /// </summary>
         public Dictionary<PriorityIcon, uint> PriorityIconsDictionary { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the width.
+        /// </summary>
+        public float Width { get; set; }
+
         #endregion
 
         #region Public Methods and Operators
@@ -144,10 +238,13 @@
         /// <param name="customPriority">
         ///     The custom priority.
         /// </param>
-        public void Add(string name, uint customPriority = 0)
+        /// <param name="enabled">
+        ///     The enabled.
+        /// </param>
+        public void Add(string name, uint customPriority = 0, bool enabled = true)
         {
             this.PriorityIconsDictionary.Add(
-                new PriorityIcon(name, this.Height), 
+                new PriorityIcon(name, this.Height, true), 
                 customPriority != 0 ? customPriority : (uint)this.PriorityIconsDictionary.Count);
             this.UpdateOrder();
             this.itemList.Add(name);
@@ -166,168 +263,85 @@
         {
             this.IconSize = new Vector2(this.Height, this.Height);
             var move = 0f;
+            var priorityChanger = menuItem.GetValue<PriorityChanger>();
 
             var dictionary = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
-            foreach (var u in dictionary.OrderBy(x => menuItem.GetValue<PriorityChanger>().GetPriority(x.Key.Name)))
+            var count = 0u;
+            foreach (var u in dictionary.Where(x => !x.Key.Enabled))
             {
-                u.Key.Priority = menuItem.GetValue<PriorityChanger>().GetPriority(u.Key.Name);
+                u.Key.Priority = priorityChanger.GetPriority(u.Key.Name);
+                u.Key.DictionaryPosition = count;
+                this.HandlePriorityIcon(u.Key, mousePosition, count, move, menuItem);
+                count++;
                 this.PriorityIconsDictionary[u.Key] = u.Key.Priority;
-
-                var wasHovered = u.Key.Hovered;
-                u.Key.Hovered = Utils.IsUnderRectangle(
-                    mousePosition, 
-                    u.Key.Position.X, 
-                    u.Key.Position.Y, 
-                    u.Key.Size.X, 
-                    u.Key.Size.Y);
-                var onHover = !wasHovered && u.Key.Hovered;
-                var onUnHover = wasHovered && !u.Key.Hovered;
-
-                if (onHover)
-                {
-                    u.Key.Hover.Start(0, 40);
-                }
-
-                if (onUnHover)
-                {
-                    u.Key.ReturnFromDrag(
-                        u.Key.Position
-                        + new Vector2((u.Key.Size.X - this.IconSize.X) / 2, (u.Key.Size.Y - this.IconSize.Y) / 2));
-                    u.Key.Hover.Start(0, 40);
-                }
-
-                if (!u.Key.Moving)
-                {
-                    if (!u.Key.Hovered
-                        || (this.MovingIcon != null && (!this.MovingIcon.Moving || !this.MovingIcon.Equals(u.Key))))
-                    {
-                        u.Key.Position = this.BasePosition - new Vector2(move, 0);
-                    }
-
-                    u.Key.Height = this.Height;
-                    u.Key.IconSize = this.textureIconSize;
-                    u.Key.Size = this.iconSize;
-                }
-
                 if (u.Key.Moving)
                 {
-                    u.Key.Position = new Vector2(
-                        mousePosition.X - this.MousePositionDifference.X, 
-                        this.BasePosition.Y - (u.Key.Size.Y / 20));
-                    u.Key.IconPosition = u.Key.Position
-                                         + new Vector2(
-                                               (u.Key.Size.X / 2) - (u.Key.IconSize.X / 2), 
-                                               (u.Key.Size.Y / 2) - (u.Key.IconSize.Y / 2));
-                    u.Key.Hovered = Utils.IsUnderRectangle(
-                        mousePosition, 
-                        u.Key.Position.X, 
-                        u.Key.Position.Y, 
-                        u.Key.Size.X, 
-                        u.Key.Size.Y);
-                    var a = u.Key.Hovered ? 35 : 0;
-                    u.Key.Color =
-                        Color.FromArgb(
-                            (int)Math.Max(Math.Min(210 + a, 255), 0),
-                            (int)Math.Max(Math.Min(18 + a + (u.Value * 18), 255), 0),
-                            (int)Math.Max(Math.Min(12 + a + (u.Value * 12), 255), 0),
-                            (int)Math.Max(Math.Min(1 + a + u.Value, 255), 0)).ToSharpDxColor();
-                    var dict = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
-                    foreach (var u2 in
-                        dict.Where(
-                            x =>
-                            Utils.SleepCheck(x.Key.Name + "DragAndDropChangePriority") && x.Key.Name != u.Key.Name
-                            && (x.Key.Priority == u.Key.Priority - 1 || x.Key.Priority == u.Key.Priority + 1)))
-                    {
-                        if (u2.Key.Priority == u.Key.Priority - 1 && mousePosition.X > u2.Key.FixedPosition.X)
-                        {
-                            var menuItemDict = menuItem.GetValue<PriorityChanger>().Dictionary;
-                            menuItemDict[u2.Key.Name] = u.Key.Priority;
-                            menuItemDict[u.Key.Name] = u2.Key.Priority;
-                            var menuItemDict2 = menuItem.GetValue<PriorityChanger>().SValuesDictionary;
-                            menuItemDict2[u2.Key.Name] = u.Key.Priority;
-                            menuItemDict2[u.Key.Name] = u2.Key.Priority;
-                            this.PriorityIconsDictionary[u2.Key] = u.Key.Priority;
-                            this.PriorityIconsDictionary[u.Key] = u2.Key.Priority;
-                            Utils.Sleep(200, u2.Key.Name + "DragAndDropChangePriority");
-                            break;
-                        }
-
-                        if (u2.Key.Priority == u.Key.Priority + 1
-                            && mousePosition.X < u2.Key.FixedPosition.X + (u2.Key.Size.X / 1.2))
-                        {
-                            var menuItemDict = menuItem.GetValue<PriorityChanger>().Dictionary;
-                            menuItemDict[u2.Key.Name] = u.Key.Priority;
-                            menuItemDict[u.Key.Name] = u2.Key.Priority;
-                            var menuItemDict2 = menuItem.GetValue<PriorityChanger>().SValuesDictionary;
-                            menuItemDict2[u2.Key.Name] = u.Key.Priority;
-                            menuItemDict2[u.Key.Name] = u2.Key.Priority;
-                            this.PriorityIconsDictionary[u2.Key] = u.Key.Priority;
-                            this.PriorityIconsDictionary[u.Key] = u2.Key.Priority;
-                            Utils.Sleep(200, u2.Key.Name + "DragAndDropChangePriority");
-                            break;
-                        }
-                    }
-
                     move += this.IconSize.X;
                     move += -1;
                     continue;
                 }
 
-                u.Key.IconPosition = u.Key.Position
-                                     + new Vector2(
-                                           (u.Key.Size.X / 2) - (u.Key.IconSize.X / 2), 
-                                           (u.Key.Size.Y / 2) - (u.Key.IconSize.Y / 2));
-
-                // if (u.Key.Hovered && this.MovingIcon == null)
-                // {
-                // u.Key.Size = u.Key.Size * new Vector2((float)1.1);
-                // u.Key.IconSize = (u.Key.IconSize * new Vector2((float)1.1)) - new Vector2(3, 3);
-                // u.Key.Height = u.Key.Height * (float)1.1;
-                // if (onHover)
-                // {
-                // u.Key.ReturnFromDrag(
-                // new Vector2(
-                // u.Key.Position.X - ((u.Key.Size.X - this.IconSize.X)),
-                // this.BasePosition.Y - (u.Key.Size.Y / 30)));
-                // }
-
-                // u.Key.IconPosition = u.Key.Position
-                // + new Vector2(
-                // (u.Key.Size.X / 2) - (u.Key.IconSize.X / 2),
-                // (u.Key.Size.Y / 2) - (u.Key.IconSize.Y / 2));
-                // }
-                var alpha = u.Key.Hovered ? u.Key.Hover.GetValue() : 40 - u.Key.Hover.GetValue();
-                u.Key.Color =
-                    Color.FromArgb(
-                        (int)Math.Max(Math.Min(210 + alpha, 255), 0),
-                        (int)Math.Max(Math.Min(18 + alpha + (u.Value * 18), 255), 0),
-                        (int)Math.Max(Math.Min(12 + alpha + (u.Value * 12), 255), 0),
-                        (int)Math.Max(Math.Min(1 + alpha + u.Value, 255), 0)).ToSharpDxColor();
                 u.Key.Draw();
                 u.Key.DrawPriorityNumber();
                 move += u.Key.Size.X;
                 move += -1;
             }
 
-            Drawing.DrawRect(
-                this.BasePosition - new Vector2(move - this.IconSize.X, 0), 
-                new Vector2(move, this.IconSize.Y), 
-                new SharpDX.Color(
-                    0, 
-                    0, 
-                    0, 
-                    this.MovingIcon != null && this.MovingIcon.Moving
-                        ? (int)Math.Min(this.transition.GetValue(), 255)
-                        : 150 - (int)Math.Min(this.transition.GetValue(), 255)));
-            if (this.MovingIcon != null)
+            var enabledIcons =
+                dictionary.OrderBy(x => priorityChanger.GetPriority(x.Key.Name)).Where(u => u.Key.Enabled).ToList();
+
+            if (count > 0 && enabledIcons.Any())
             {
-                this.MovingIcon.Draw();
-                this.MovingIcon.DrawPriorityNumber();
-                if (!this.MovingIcon.Moving && this.MovingIcon.FixedPosition == this.MovingIcon.Position)
-                {
-                    this.MovingIcon = null;
-                }
+                Drawing.DrawRect(
+                    this.BasePosition - new Vector2(move - this.IconSize.X / 2 + this.Height / 10, 0), 
+                    new Vector2(this.Height / 5, this.Height), 
+                    new Color(180, 120, 10));
+                Drawing.DrawRect(
+                    this.BasePosition - new Vector2(move - this.IconSize.X / 2 + this.Height / 10, 0), 
+                    new Vector2(this.Height / 5, this.Height), 
+                    Color.Black, 
+                    true);
+                move += this.IconSize.X;
             }
+
+            foreach (var u in enabledIcons)
+            {
+                u.Key.Priority = priorityChanger.GetPriority(u.Key.Name);
+                u.Key.DictionaryPosition = count;
+                count++;
+                this.PriorityIconsDictionary[u.Key] = u.Key.Priority;
+                this.HandlePriorityIcon(u.Key, mousePosition, count, move, menuItem);
+                if (u.Key.Moving)
+                {
+                    move += this.IconSize.X;
+                    move += -1;
+                    continue;
+                }
+
+                u.Key.Draw();
+                u.Key.DrawPriorityNumber();
+                move += u.Key.Size.X;
+                move += -1;
+            }
+
+            this.Width = move;
+
+            this.DrawShadow(
+                this.BasePosition - new Vector2(move - this.IconSize.X, 0), 
+                new Vector2(move, this.IconSize.Y));
+            if (this.MovingIcon == null)
+            {
+                return;
+            }
+
+            this.MovingIcon.Draw();
+            this.MovingIcon.DrawPriorityNumber();
+
+            // if (!this.MovingIcon.Moving && this.MovingIcon.FixedPosition == this.MovingIcon.Position
+            // && !this.doubleClickSleeper.Sleeping)
+            // {
+            // this.MovingIcon = null;
+            // }
         }
 
         /// <summary>
@@ -340,22 +354,40 @@
         {
             foreach (var u in this.PriorityIconsDictionary.Where(u => u.Key.Hovered))
             {
-                this.transition.Start(0, 150);
-                u.Key.Moving = true;
-                this.MovingIcon = u.Key;
+                if (this.usingAbilityToggler)
+                {
+                    this.doubleClickSleeper.Sleep(200);
+                }
 
-                this.MovingIcon.Size = this.MovingIcon.Size * new Vector2((float)1.22);
-                this.MovingIcon.IconSize = (this.MovingIcon.IconSize * new Vector2((float)1.22)) - new Vector2(3, 3);
-                this.MovingIcon.Height = this.MovingIcon.Height * (float)1.22;
-                this.MovingIcon.Position =
-                    new Vector2(
-                        this.MovingIcon.Position.X - ((this.MovingIcon.Size.X - this.IconSize.X) / 2), 
-                        this.BasePosition.Y - (this.MovingIcon.Size.Y / 20));
-                this.MovingIcon.IconPosition = this.MovingIcon.Position
-                                               + new Vector2(
-                                                     (this.MovingIcon.Size.X / 2) - (this.MovingIcon.IconSize.X / 2), 
-                                                     (this.MovingIcon.Size.Y / 2) - (this.MovingIcon.IconSize.Y / 2));
-                this.MousePositionDifference = mousePosition - this.MovingIcon.Position;
+                this.leftButtonDown = true;
+                this.MovingIcon = u.Key;
+                DelayAction.Add(
+                    this.usingAbilityToggler ? 100 : 10, 
+                    () =>
+                        {
+                            if (this.leftButtonDown == false || this.MovingIcon == null)
+                            {
+                                return;
+                            }
+
+                            this.transition.Start(0, 150);
+                            this.MovingIcon.Moving = true;
+                            this.MovingIcon.Size = this.MovingIcon.Size * new Vector2((float)1.22);
+                            this.MovingIcon.IconSize = (this.MovingIcon.IconSize * new Vector2((float)1.22))
+                                                       - new Vector2(3, 3);
+                            this.MovingIcon.Height = this.MovingIcon.Height * (float)1.22;
+                            this.MovingIcon.Position =
+                                new Vector2(
+                                    this.MovingIcon.Position.X - ((this.MovingIcon.Size.X - this.IconSize.X) / 2), 
+                                    this.BasePosition.Y - (this.MovingIcon.Size.Y / 20));
+                            this.MovingIcon.IconPosition = this.MovingIcon.Position
+                                                           + new Vector2(
+                                                                 (this.MovingIcon.Size.X / 2)
+                                                                 - (this.MovingIcon.IconSize.X / 2), 
+                                                                 (this.MovingIcon.Size.Y / 2)
+                                                                 - (this.MovingIcon.IconSize.Y / 2));
+                            this.MousePositionDifference = mousePosition - this.MovingIcon.Position;
+                        });
                 break;
             }
         }
@@ -371,8 +403,31 @@
         /// </param>
         public void LeftButtonUp(Vector2 mousePosition, MenuItem menuItem)
         {
+            this.leftButtonDown = false;
             if (this.MovingIcon == null)
             {
+                return;
+            }
+
+            if (this.doubleClickSleeper.Sleeping && this.usingAbilityToggler)
+            {
+                this.MovingIcon.Enabled = !this.MovingIcon.Enabled;
+                this.MovingIcon.DictionaryPosition = (uint)(this.PriorityIconsDictionary.Count(x => !x.Key.Enabled) + 1);
+                this.abilityToggler.SValuesDictionary[this.MovingIcon.Name] = this.MovingIcon.Enabled;
+                this.abilityToggler.Dictionary[this.MovingIcon.Name] = this.MovingIcon.Enabled;
+                this.MovingIcon.ReturnFromDrag(
+                    this.MovingIcon.Position
+                    + new Vector2(
+                          (this.MovingIcon.Size.X - this.IconSize.X) / 2, 
+                          (this.MovingIcon.Size.Y - this.IconSize.Y) / 2));
+                this.MovingIcon.Moving = false;
+                this.MovingIcon = null;
+                this.UpdateOrder();
+                menuItem.SetValue(
+                    new PriorityChanger(
+                        this.itemList.OrderBy(x => menuItem.GetValue<PriorityChanger>().Dictionary[x]).ToList(), 
+                        new AbilityToggler(this.abilityToggler.Dictionary), 
+                        menuItem.GetValue<PriorityChanger>().Name));
                 return;
             }
 
@@ -383,9 +438,11 @@
                       (this.MovingIcon.Size.Y - this.IconSize.Y) / 2));
             this.transition.Start(0, 150);
             this.MovingIcon.Moving = false;
+            this.MovingIcon = null;
             menuItem.SetValue(
                 new PriorityChanger(
                     this.itemList.OrderBy(x => menuItem.GetValue<PriorityChanger>().Dictionary[x]).ToList(), 
+                    new AbilityToggler(this.abilityToggler.Dictionary), 
                     menuItem.GetValue<PriorityChanger>().Name));
         }
 
@@ -423,7 +480,7 @@
 
             foreach (var s in newList.Where(x => !this.itemList.Contains(x)))
             {
-                this.PriorityIconsDictionary.Add(new PriorityIcon(s, this.Height), count);
+                this.PriorityIconsDictionary.Add(new PriorityIcon(s, this.Height, true), count);
                 menuItem.GetValue<PriorityChanger>().Dictionary[s] = count;
                 this.itemList.Add(s);
                 count++;
@@ -436,11 +493,228 @@
         public void UpdateOrder()
         {
             var count = 0u;
-            foreach (var u in new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary).OrderBy(x => x.Value))
+            var dictionary = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
+            foreach (var u in dictionary.Where(x => !x.Key.Enabled))
             {
-                this.PriorityIconsDictionary[u.Key] = count;
+                u.Key.DictionaryPosition = count;
                 count++;
             }
+
+            var count2 = 0u;
+            foreach (var u in dictionary.OrderBy(x => x.Value).Where(x => x.Key.Enabled))
+            {
+                u.Key.DictionaryPosition = count;
+                this.PriorityIconsDictionary[u.Key] = count2;
+                count2++;
+                count++;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The check moving icon position.
+        /// </summary>
+        /// <param name="icon">
+        ///     The icon.
+        /// </param>
+        /// <param name="menuItem">
+        ///     The menu item.
+        /// </param>
+        /// <param name="mousePosition">
+        ///     The mouse position.
+        /// </param>
+        private void CheckMovingIconPosition(PriorityIcon icon, MenuItem menuItem, Vector2 mousePosition)
+        {
+            if (this.usingAbilityToggler && icon.Position.X > this.BasePosition.X)
+            {
+                icon.Enabled = false;
+                this.abilityToggler.SValuesDictionary[this.MovingIcon.Name] = false;
+                this.abilityToggler.Dictionary[this.MovingIcon.Name] = false;
+                return;
+            }
+
+            var dict = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
+            foreach (var u2 in
+                dict.Where(x => Utils.SleepCheck(x.Key.Name + "DragAndDropChangePriority") && x.Key.Name != icon.Name))
+            {
+                if ((u2.Key.DictionaryPosition == icon.DictionaryPosition - 1
+                     || (this.usingAbilityToggler && !u2.Key.Enabled
+                         && u2.Key.DictionaryPosition > icon.DictionaryPosition))
+                    && mousePosition.X > u2.Key.FixedPosition.X)
+                {
+                    if (!u2.Key.Enabled)
+                    {
+                        icon.Enabled = false;
+                        u2.Key.DictionaryPosition = icon.DictionaryPosition;
+                        icon.DictionaryPosition = u2.Key.DictionaryPosition;
+                        this.abilityToggler.SValuesDictionary[this.MovingIcon.Name] = false;
+                        this.abilityToggler.Dictionary[this.MovingIcon.Name] = false;
+                        Utils.Sleep(500, u2.Key.Name + "DragAndDropChangePriority");
+                        break;
+                    }
+
+                    var menuItemDict = menuItem.GetValue<PriorityChanger>().Dictionary;
+                    menuItemDict[u2.Key.Name] = icon.Priority;
+                    menuItemDict[icon.Name] = u2.Key.Priority;
+                    var menuItemDict2 = menuItem.GetValue<PriorityChanger>().SValuesDictionary;
+                    menuItemDict2[u2.Key.Name] = icon.Priority;
+                    menuItemDict2[icon.Name] = u2.Key.Priority;
+                    this.PriorityIconsDictionary[u2.Key] = icon.Priority;
+                    this.PriorityIconsDictionary[icon] = u2.Key.Priority;
+                    u2.Key.DictionaryPosition = icon.Priority;
+                    icon.DictionaryPosition = u2.Key.Priority;
+                    Utils.Sleep(500, u2.Key.Name + "DragAndDropChangePriority");
+                    break;
+                }
+
+                if ((u2.Key.DictionaryPosition == icon.DictionaryPosition + 1
+                     || (this.usingAbilityToggler && !icon.Enabled
+                         && u2.Key.DictionaryPosition > icon.DictionaryPosition))
+                    && mousePosition.X < u2.Key.FixedPosition.X + (u2.Key.Size.X / 1.2))
+                {
+                    {
+                        if (!icon.Enabled)
+                        {
+                            icon.Enabled = u2.Key.Enabled;
+                            u2.Key.DictionaryPosition = icon.DictionaryPosition;
+                            icon.DictionaryPosition = u2.Key.DictionaryPosition;
+                            this.abilityToggler.SValuesDictionary[this.MovingIcon.Name] = true;
+                            this.abilityToggler.Dictionary[this.MovingIcon.Name] = true;
+                            Utils.Sleep(500, u2.Key.Name + "DragAndDropChangePriority");
+                            break;
+                        }
+
+                        var menuItemDict = menuItem.GetValue<PriorityChanger>().Dictionary;
+                        menuItemDict[u2.Key.Name] = icon.Priority;
+                        menuItemDict[icon.Name] = u2.Key.Priority;
+                        var menuItemDict2 = menuItem.GetValue<PriorityChanger>().SValuesDictionary;
+                        menuItemDict2[u2.Key.Name] = icon.Priority;
+                        menuItemDict2[icon.Name] = u2.Key.Priority;
+                        this.PriorityIconsDictionary[u2.Key] = icon.Priority;
+                        this.PriorityIconsDictionary[icon] = u2.Key.Priority;
+                        u2.Key.DictionaryPosition = icon.Priority;
+                        icon.DictionaryPosition = u2.Key.Priority;
+                        Utils.Sleep(500, u2.Key.Name + "DragAndDropChangePriority");
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///     The draw shadow.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="size">
+        ///     The size.
+        /// </param>
+        private void DrawShadow(Vector2 position, Vector2 size)
+        {
+            Drawing.DrawRect(
+                position, 
+                size, 
+                new Color(
+                    0, 
+                    0, 
+                    0, 
+                    this.MovingIcon != null && this.MovingIcon.Moving
+                        ? (int)Math.Min(this.transition.GetValue(), 255)
+                        : 150 - (int)Math.Min(this.transition.GetValue(), 255)));
+        }
+
+        /// <summary>
+        ///     The handle priority icon.
+        /// </summary>
+        /// <param name="icon">
+        ///     The icon.
+        /// </param>
+        /// <param name="mousePosition">
+        ///     The mouse position.
+        /// </param>
+        /// <param name="priority">
+        ///     The priority.
+        /// </param>
+        /// <param name="move">
+        ///     The move.
+        /// </param>
+        /// <param name="menuItem">
+        ///     The menu Item.
+        /// </param>
+        private void HandlePriorityIcon(
+            PriorityIcon icon, 
+            Vector2 mousePosition, 
+            uint priority, 
+            float move, 
+            MenuItem menuItem)
+        {
+            var wasHovered = icon.Hovered;
+            icon.Hovered = Utils.IsUnderRectangle(
+                mousePosition, 
+                icon.Position.X, 
+                icon.Position.Y, 
+                icon.Size.X, 
+                icon.Size.Y);
+            var onHover = !wasHovered && icon.Hovered;
+            var onUnHover = wasHovered && !icon.Hovered;
+
+            if (onHover)
+            {
+                icon.Hover.Start(0, 40);
+            }
+
+            if (onUnHover)
+            {
+                icon.ReturnFromDrag(
+                    icon.Position
+                    + new Vector2((icon.Size.X - this.IconSize.X) / 2, (icon.Size.Y - this.IconSize.Y) / 2));
+                icon.Hover.Start(0, 40);
+            }
+
+            var alpha = icon.Hovered ? icon.Hover.GetValue() : 40 - icon.Hover.GetValue();
+            var brightness = ((float)priority / this.Count) * 10;
+            icon.Color = icon.Enabled
+                             ? System.Drawing.Color.FromArgb(
+                                 (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
+                                 (int)Math.Max(Math.Min((18 * 4) + alpha + (brightness * 18), 255), 0), 
+                                 (int)Math.Max(Math.Min((12 * 4) + alpha + (brightness * 12), 255), 0), 
+                                 (int)Math.Max(Math.Min(4 + alpha + brightness, 255), 0)).ToSharpDxColor()
+                             : System.Drawing.Color.FromArgb(
+                                 (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
+                                 (int)Math.Max(Math.Min(30 + alpha + (brightness * 5), 255), 0), 
+                                 (int)Math.Max(Math.Min(30 + alpha + (brightness * 5), 255), 0), 
+                                 (int)Math.Max(Math.Min(30 + alpha + brightness * 5, 255), 0)).ToSharpDxColor();
+
+            if (icon.Moving)
+            {
+                icon.Position = new Vector2(
+                    mousePosition.X - this.MousePositionDifference.X, 
+                    this.BasePosition.Y - (icon.Size.Y / 20));
+                icon.IconPosition = icon.Position
+                                    + new Vector2(
+                                          (icon.Size.X / 2) - (icon.IconSize.X / 2), 
+                                          (icon.Size.Y / 2) - (icon.IconSize.Y / 2));
+                this.CheckMovingIconPosition(icon, menuItem, mousePosition);
+                return;
+            }
+
+            if ((!icon.Hovered || icon.FixedPosition != this.BasePosition - new Vector2(move, 0))
+                || (this.MovingIcon != null && (!this.MovingIcon.Moving || !this.MovingIcon.Equals(icon))))
+            {
+                icon.Position = this.BasePosition - new Vector2(move, 0);
+            }
+
+            icon.Height = this.Height;
+            icon.IconSize = this.textureIconSize;
+            icon.Size = this.iconSize;
+            icon.IconPosition = icon.Position
+                                + new Vector2(
+                                      (icon.Size.X / 2) - (icon.IconSize.X / 2), 
+                                      (icon.Size.Y / 2) - (icon.IconSize.Y / 2));
         }
 
         #endregion

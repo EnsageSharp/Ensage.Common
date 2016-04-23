@@ -16,6 +16,11 @@
         /// </summary>
         public static Dictionary<string, DragAndDrop> DragAndDropDictionary { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the on off dictionary.
+        /// </summary>
+        public static Dictionary<string, OnOffCircleSlider> OnOffDictionary { get; set; }
+
         #endregion
     }
 }

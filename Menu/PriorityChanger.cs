@@ -39,6 +39,11 @@ namespace Ensage.Common.Menu
         #region Fields
 
         /// <summary>
+        ///     The ability toggler.
+        /// </summary>
+        public AbilityToggler AbilityToggler;
+
+        /// <summary>
         ///     The dictionary.
         /// </summary>
         public Dictionary<string, uint> Dictionary;
@@ -74,38 +79,129 @@ namespace Ensage.Common.Menu
         private readonly string name;
 
         /// <summary>
+        ///     The using ability toggler.
+        /// </summary>
+        private readonly bool usingAbilityToggler;
+
+        /// <summary>
         ///     The item list.
         /// </summary>
         private List<string> itemList;
-
-        /// <summary>
-        /// The using ability toggler.
-        /// </summary>
-        private bool usingAbilityToggler;
-
-        /// <summary>
-        /// The ability toggler.
-        /// </summary>
-        public AbilityToggler AbilityToggler;
-
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PriorityChanger"/> struct.
+        ///     Initializes a new instance of the <see cref="PriorityChanger" /> struct.
         /// </summary>
         /// <param name="itemList">
-        /// The item List.
+        ///     The item List.
         /// </param>
         /// <param name="changerName">
-        /// The changer Name.
+        ///     The changer Name.
         /// </param>
         /// <param name="useAbilityToggler">
-        /// The use Ability Toggler.
+        ///     The use Ability Toggler.
         /// </param>
         public PriorityChanger(List<string> itemList, string changerName = "", bool useAbilityToggler = false)
+        {
+            this.itemList = itemList;
+            this.defaultPriority = 4;
+            this.maxPriority = (uint)itemList.Count();
+            this.minPriority = 0;
+            this.Dictionary = new Dictionary<string, uint>();
+            var count = 0u;
+            this.usingAbilityToggler = useAbilityToggler;
+            foreach (var s in itemList)
+            {
+                this.Dictionary.Add(s, count);
+                count++;
+            }
+
+            this.PositionDictionary = new Dictionary<string, float[]>();
+            this.SValuesDictionary = new Dictionary<string, uint>();
+            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
+            {
+                Menu.TextureDictionary.Add(
+                    v.Key, 
+                    v.Key.Substring(0, "item".Length) == "item"
+                        ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+            }
+
+            var posDict = this.PositionDictionary;
+            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            {
+                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            }
+
+            var saveDict = this.SValuesDictionary;
+            foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
+            {
+                this.SValuesDictionary.Add(v.Key, v.Value);
+            }
+
+            if (MenuVariables.DragAndDropDictionary == null)
+            {
+                MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
+            }
+
+            this.AbilityToggler = new AbilityToggler(new Dictionary<string, bool>());
+            if (useAbilityToggler)
+            {
+                foreach (var item in itemList)
+                {
+                    this.AbilityToggler.Add(item);
+                }
+            }
+
+            this.name = changerName != string.Empty ? changerName : id.ToString();
+            id++;
+            if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
+            {
+                MenuVariables.DragAndDropDictionary.Add(
+                    this.name, 
+                    useAbilityToggler
+                        ? new DragAndDrop(MenuSettings.MenuItemHeight, itemList, this.AbilityToggler)
+                        : new DragAndDrop(MenuSettings.MenuItemHeight, itemList));
+            }
+            else
+            {
+                foreach (var u in
+                    new Dictionary<PriorityIcon, uint>(
+                        MenuVariables.DragAndDropDictionary[this.name].PriorityIconsDictionary).Where(
+                            u => !itemList.Contains(u.Key.Name)))
+                {
+                    MenuVariables.DragAndDropDictionary[this.name].Remove(u.Key.Name);
+                }
+
+                MenuVariables.DragAndDropDictionary[this.name].UpdateOrder();
+            }
+
+            this.UpdatePriorities();
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PriorityChanger" /> struct.
+        /// </summary>
+        /// <param name="itemList">
+        ///     The item list.
+        /// </param>
+        /// <param name="abilityToggler">
+        ///     The ability toggler.
+        /// </param>
+        /// <param name="changerName">
+        ///     The changer name.
+        /// </param>
+        /// <param name="useAbilityToggler">
+        ///     The use ability toggler.
+        /// </param>
+        public PriorityChanger(
+            List<string> itemList, 
+            AbilityToggler abilityToggler, 
+            string changerName = "", 
+            bool useAbilityToggler = true)
         {
             this.itemList = itemList;
             this.defaultPriority = 4;
@@ -153,91 +249,8 @@ namespace Ensage.Common.Menu
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
                 MenuVariables.DragAndDropDictionary.Add(
-                    this.name,
-                    new DragAndDrop(MenuSettings.MenuItemHeight, itemList));
-            }
-            else
-            {
-                foreach (var u in
-                    new Dictionary<PriorityIcon, uint>(
-                        MenuVariables.DragAndDropDictionary[this.name].PriorityIconsDictionary).Where(
-                            u => !itemList.Contains(u.Key.Name)))
-                {
-                    MenuVariables.DragAndDropDictionary[this.name].Remove(u.Key.Name);
-                }
-
-                MenuVariables.DragAndDropDictionary[this.name].UpdateOrder();
-            }
-
-            this.AbilityToggler = new AbilityToggler(new Dictionary<string, bool>());
-            this.UpdatePriorities();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PriorityChanger"/> struct.
-        /// </summary>
-        /// <param name="itemList">
-        /// The item list.
-        /// </param>
-        /// <param name="abilityToggler">
-        /// The ability toggler.
-        /// </param>
-        /// <param name="changerName">
-        /// The changer name.
-        /// </param>
-        /// <param name="useAbilityToggler">
-        /// The use ability toggler.
-        /// </param>
-        public PriorityChanger(List<string> itemList, AbilityToggler abilityToggler, string changerName = "", bool useAbilityToggler = true)
-        {
-            this.itemList = itemList;
-            this.defaultPriority = 4;
-            this.maxPriority = (uint)itemList.Count();
-            this.minPriority = 0;
-            this.Dictionary = new Dictionary<string, uint>();
-            var count = 0u;
-            this.usingAbilityToggler = useAbilityToggler;
-            foreach (var s in itemList)
-            {
-                this.Dictionary.Add(s, count);
-                count++;
-            }
-
-            this.PositionDictionary = new Dictionary<string, float[]>();
-            this.SValuesDictionary = new Dictionary<string, uint>();
-            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
-            {
-                Menu.TextureDictionary.Add(
-                    v.Key,
-                    v.Key.Substring(0, "item".Length) == "item"
-                        ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
-                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
-            }
-
-            var posDict = this.PositionDictionary;
-            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
-            {
-                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
-            }
-
-            var saveDict = this.SValuesDictionary;
-            foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
-            {
-                this.SValuesDictionary.Add(v.Key, v.Value);
-            }
-
-            if (MenuVariables.DragAndDropDictionary == null)
-            {
-                MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
-            }
-
-            this.name = changerName != string.Empty ? changerName : id.ToString();
-            id++;
-            if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
-            {
-                MenuVariables.DragAndDropDictionary.Add(
-                    this.name,
-                    new DragAndDrop(MenuSettings.MenuItemHeight, itemList));
+                    this.name, 
+                    new DragAndDrop(MenuSettings.MenuItemHeight, itemList, abilityToggler));
             }
 
             this.AbilityToggler = abilityToggler;
@@ -288,7 +301,10 @@ namespace Ensage.Common.Menu
         /// <param name="defaultValue">
         ///     The default value.
         /// </param>
-        public void Add(string itemName, uint defaultValue = 0)
+        /// <param name="enabled">
+        ///     The enabled.
+        /// </param>
+        public void Add(string itemName, uint defaultValue = 0, bool enabled = true)
         {
             if (this.ItemList.Contains(itemName))
             {
@@ -321,6 +337,11 @@ namespace Ensage.Common.Menu
                 this.SValuesDictionary.Add(itemName, defaultValue);
             }
 
+            if (this.usingAbilityToggler)
+            {
+                this.AbilityToggler.Add(this.name, enabled);
+            }
+
             this.UpdatePriorities();
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
@@ -329,7 +350,7 @@ namespace Ensage.Common.Menu
                     new DragAndDrop(MenuSettings.MenuItemHeight, this.itemList));
             }
 
-            MenuVariables.DragAndDropDictionary[this.name].Add(itemName, defaultValue);
+            MenuVariables.DragAndDropDictionary[this.name].Add(itemName, defaultValue, enabled);
             MenuVariables.DragAndDropDictionary[this.name].UpdateOrder();
 
             if (this.PositionDictionary.ContainsKey(itemName))

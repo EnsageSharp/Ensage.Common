@@ -16,6 +16,7 @@ namespace Ensage.Common.Menu
     using System;
 
     using SharpDX;
+    using SharpDX.Direct3D9;
 
     /// <summary>
     ///     The user interface utils class.
@@ -145,7 +146,7 @@ namespace Ensage.Common.Menu
         /// <param name="h">Height</param>
         /// <param name="iSmooth">Smooth</param>
         /// <param name="color">Color</param>
-        public static void RoundedRectangle(int x, int y, int w, int h, int iSmooth, Color color)
+        public static void RoundedRectangle(float x, int y, int w, int h, int iSmooth, Color color)
         {
             var pt = new Vector2[4];
 
@@ -169,9 +170,12 @@ namespace Ensage.Common.Menu
 
             float fDegree = 0;
 
+            Drawing.Direct3DDevice9.SetRenderState(RenderState.MultisampleAntialias, true);
+            Drawing.Direct3DDevice9.SetRenderState(RenderState.AntialiasedLineEnable, true);
+
             for (var i = 0; i < 4; i++)
             {
-                for (var k = fDegree; k < fDegree + Math.PI * 2 / 4f; k += (float)(1 * (Math.PI / 180.0f)))
+                for (var k = fDegree; k < fDegree + ((Math.PI * 2) / 4f); k += (float)(1 * (Math.PI / 180.0f)))
                 {
                     // Draw quarter circles on every corner 
                     // DrawLine(
@@ -183,7 +187,9 @@ namespace Ensage.Common.Menu
                     // color); // 3 is with line width 
                     Drawing.DrawLine(
                         new Vector2(pt[i].X, pt[i].Y), 
-                        new Vector2(pt[i].X + (float)(Math.Cos(k) * iSmooth), pt[i].Y + (float)(Math.Sin(k) * iSmooth)), 
+                        new Vector2(
+                            (float)(pt[i].X + (Math.Cos(k) * iSmooth)), 
+                            (float)(pt[i].Y + (Math.Sin(k) * iSmooth))), 
                         color);
                 }
 

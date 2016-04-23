@@ -1,19 +1,19 @@
 ﻿namespace Ensage.Common.Menu.Transitions
 {
     /// <summary>
-    ///     The quad ease in out.
+    ///     The cubic ease in out.
     /// </summary>
-    public class QuadEaseInOut : Transition
+    public class CubicEaseInOut : Transition
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="QuadEaseInOut" /> class.
+        ///     Initializes a new instance of the <see cref="CubicEaseInOut" /> class.
         /// </summary>
         /// <param name="duration">
         ///     The duration.
         /// </param>
-        public QuadEaseInOut(double duration)
+        public CubicEaseInOut(double duration)
             : base(duration)
         {
         }
@@ -44,10 +44,10 @@
         {
             if ((t /= d / 2) < 1)
             {
-                return c / 2 * t * t + b;
+                return c / 2 * t * t * t + b;
             }
 
-            return -c / 2 * ((--t) * (t - 2) - 1) + b;
+            return c / 2 * ((t -= 2) * t * t + 2) + b;
         }
 
         #endregion

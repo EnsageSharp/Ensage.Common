@@ -190,6 +190,19 @@ namespace Ensage.Common.Menu
                 new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true));
             Root.AddItem(
                 new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(FontStyle.Bold, Color.Yellow));
+
+            // Root.AddItem(
+            // new MenuItem("myComboPriority", "ComboPriority: ").SetValue(
+            // new PriorityChanger(
+            // new List<string>(
+            // new[]
+            // {
+            // "ursa_enrage", "item_abyssal_blade", "ursa_earthshock", "item_dagon_5",
+            // "ursa_overpower", "item_blink", "item_blade_mail", "item_sheepstick", "item_mjollnir",
+            // "item_black_king_bar", "item_sphere"
+            // }),
+            // new AbilityToggler(new Dictionary<string, bool>()),
+            // "MyComboPriority")));
             loaded = false;
             newMessageType = Root.Item("messageType").GetValue<StringList>();
             CommonMenu.MenuConfig.AddSubMenu(Root);
@@ -389,9 +402,9 @@ namespace Ensage.Common.Menu
                     bonus +=
                         (int)
                         Drawing.MeasureText(
-                            MultiLanguage._(this.DisplayName),
-                            "Arial",
-                            new Vector2((float)(this.Height * 0.55), 100),
+                            MultiLanguage._(this.DisplayName), 
+                            "Arial", 
+                            new Vector2((float)(this.Height * 0.55), 100), 
                             FontFlags.None).X + this.Height;
                 }
 

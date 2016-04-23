@@ -1,19 +1,21 @@
 ﻿namespace Ensage.Common.Menu.Transitions
 {
+    using System;
+
     /// <summary>
-    ///     The quad ease in out.
+    ///     The expo ease in out.
     /// </summary>
-    public class QuadEaseInOut : Transition
+    public class ExpoEaseInOut : Transition
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="QuadEaseInOut" /> class.
+        ///     Initializes a new instance of the <see cref="ExpoEaseInOut" /> class.
         /// </summary>
         /// <param name="duration">
         ///     The duration.
         /// </param>
-        public QuadEaseInOut(double duration)
+        public ExpoEaseInOut(double duration)
             : base(duration)
         {
         }
@@ -42,12 +44,22 @@
         /// </returns>
         public override double Equation(double t, double b, double c, double d)
         {
-            if ((t /= d / 2) < 1)
+            if (t == 0)
             {
-                return c / 2 * t * t + b;
+                return b;
             }
 
-            return -c / 2 * ((--t) * (t - 2) - 1) + b;
+            if (t == d)
+            {
+                return b + c;
+            }
+
+            if ((t /= d / 2) < 1)
+            {
+                return c / 2 * Math.Pow(2, 10 * (t - 1)) + b;
+            }
+
+            return c / 2 * (-Math.Pow(2, -10 * --t) + 2) + b;
         }
 
         #endregion
