@@ -2159,6 +2159,7 @@
             "AbilityName": "lion_impale",
             "IsDisable": true,
             "IsNuke": true,
+            "IsSkillShot": true,
             "Width": "width",
             "Speed": "speed"
         },

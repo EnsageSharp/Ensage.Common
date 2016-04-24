@@ -292,7 +292,7 @@ namespace Ensage.Common.Extensions
                 }
 
                 if (name == "pudge_rot" && target.HasModifier("modifier_pudge_meat_hook")
-                    && position.Distance2D(target) < 600)
+                    && position.Distance2D(target) < 1500)
                 {
                     return true;
                 }
@@ -690,9 +690,11 @@ namespace Ensage.Common.Extensions
             }
 
             var name = abilityName ?? ability.StoredName();
-            var delay = ability.GetHitDelay(target, name);
+            var delay = ability.GetHitDelay(target, name) + 0.1f;
             var canUse = Utils.ChainStun(target, delay, null, false, name);
-            if (!canUse && chainStun)
+            if (!canUse && chainStun
+                && (!target.HasModifier("modifier_pudge_meat_hook")
+                    || (ability.StoredName() != "pudge_dismember" && ability.StoredName() != "pudge_rot")))
             {
                 return false;
             }
@@ -708,7 +710,7 @@ namespace Ensage.Common.Extensions
                 ability.UseAbility(target);
             }
             else if (ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
-                     || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale")
+                     || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale" || ability.IsSkillShot())
             {
                 var stunned = target.IsStunned() || target.IsInvul() || target.IsRooted() || target.IsHexed();
                 if ((!(Prediction.StraightTime(target) > straightTimeforSkillShot * 1000) && !stunned)
