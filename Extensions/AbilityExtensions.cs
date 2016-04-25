@@ -267,7 +267,7 @@ namespace Ensage.Common.Extensions
                 var pred = ability.GetPrediction(target, abilityName: name);
                 var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
                 if (position.Distance2D(pred)
-                    <= ability.GetCastRange(name) + ability.GetRadius(name) + lion + target.HullRadius)
+                    <= ability.TravelDistance() + ability.GetRadius(name) + lion + target.HullRadius)
                 {
                     return true;
                 }
@@ -438,7 +438,7 @@ namespace Ensage.Common.Extensions
             }
 
             var radius = ability.GetRadius(name);
-            var range = ability.GetCastRange(name);
+            var range = ability.TravelDistance();
 
             if (data.AllyBlock)
             {
@@ -702,6 +702,11 @@ namespace Ensage.Common.Extensions
             if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name) && name != "lion_impale"
                 && !target.IsInvul())
             {
+                if (target.Distance2D(sourcePosition) > ability.GetCastRange() + 100)
+                {
+                    return false;
+                }
+
                 if (ability.ManaCost > 0 && soulRing.CanBeCasted())
                 {
                     soulRing.UseAbility();
