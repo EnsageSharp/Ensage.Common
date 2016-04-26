@@ -2270,6 +2270,10 @@
             "IsSilence": true
         },
         {
+            "AbilityName": "item_bloodthorn",
+            "IsSilence": true
+        },
+        {
             "AbilityName": "item_diffusal_blade",
             //"ManaBurn": true,
             "IsSlow": true,

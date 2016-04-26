@@ -206,7 +206,7 @@ namespace Ensage.Common
         public static bool CanCancelAnimation(float delay = 0f)
         {
             var time = tick;
-            var cancelTime = nextAttackRelease - Game.Ping - delay;
+            var cancelTime = nextAttackRelease - Game.Ping - delay + 50;
             return time >= cancelTime;
         }
 
@@ -282,8 +282,17 @@ namespace Ensage.Common
                 {
                     Attack(target, attackmodifiers);
                     Utils.Sleep(
-                        (UnitDatabase.GetAttackPoint(me) * 1000) + (me.GetTurnTime(target) * 1000) + Game.Ping, 
+                        (UnitDatabase.GetAttackPoint(me) * 1000) + (me.GetTurnTime(target) * 1000) + Game.Ping + 100,
                         "Orbwalk.Attack");
+                    Utils.Sleep(
+                        (UnitDatabase.GetAttackPoint(me) * 1000) + (me.GetTurnTime(target) * 1000) + 50,
+                        "Orbwalk.Move");
+                    return;
+                }
+
+                if (canAttack)
+                {
+                    Attack(target, attackmodifiers);
                     return;
                 }
             }

@@ -119,7 +119,7 @@ namespace Ensage.Common.AbilityInfo
             switch (name)
             {
                 case "item_urn_of_shadows":
-                    outgoingDamage = target.DamageTaken(150, DamageType.Pure, source);
+                    outgoingDamage = target.SpellDamageTaken(150, DamageType.Pure, source, name);
                     break;
                 case "ember_spirit_sleight_of_fist":
                     outgoingDamage = source.MinimumDamage + source.BonusDamage;
@@ -142,10 +142,10 @@ namespace Ensage.Common.AbilityInfo
                         outgoingDamage += bonusDamage;
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         outgoingDamage, 
-                        DamageType.Physical, 
-                        source, 
+                        DamageType.Physical,
+                        source, name, 
                         true, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -171,10 +171,10 @@ namespace Ensage.Common.AbilityInfo
                         tempDmg += target.MaximumHealth * (bonusDamage / 100);
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         tempDmg, 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         data.MagicImmunityPierce, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -199,10 +199,10 @@ namespace Ensage.Common.AbilityInfo
                         outgoingDamage = (source.MinimumDamage + source.BonusDamage) * (critMulti / 100);
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         outgoingDamage, 
-                        DamageType.Physical, 
-                        source, 
+                        DamageType.Physical,
+                        source, name, 
                         data.MagicImmunityPierce, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -214,10 +214,10 @@ namespace Ensage.Common.AbilityInfo
                     }
 
                     outgoingDamage =
-                        target.DamageTaken(
+                        target.SpellDamageTaken(
                             (float)((source.MinimumDamage + source.BonusDamage) * (multi / 100)), 
-                            DamageType.Physical, 
-                            source, 
+                            DamageType.Physical,
+                            source, name, 
                             data.MagicImmunityPierce, 
                             minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -236,10 +236,10 @@ namespace Ensage.Common.AbilityInfo
                     }
 
                     var missingHp = target.MaximumHealth - target.Health + minusHealth;
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         (float)(missingHp * multi), 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "chaos_knight_reality_rift":
@@ -256,10 +256,10 @@ namespace Ensage.Common.AbilityInfo
                         DamageDictionary[ability] = bonusDamage;
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         source.MaximumDamage + source.BonusDamage + bonusDamage, 
-                        DamageType.Physical, 
-                        source, 
+                        DamageType.Physical,
+                        source, name, 
                         data.MagicImmunityPierce);
                     break;
                 case "templar_assassin_meld":
@@ -281,10 +281,10 @@ namespace Ensage.Common.AbilityInfo
                     var damageIncrease = 1 - ((0.06 * meldminusArmor) / (1 + (0.06 * Math.Abs(meldminusArmor))));
                     outgoingDamage =
                         (float)
-                        (target.DamageTaken(
+                        (target.SpellDamageTaken(
                             source.MaximumDamage + source.BonusDamage, 
-                            DamageType.Physical, 
-                            source, 
+                            DamageType.Physical,
+                            source, name, 
                             data.MagicImmunityPierce, 
                             minusMagicResistancePerc: minusMagicResistancePerc) + (bonusDamage * damageIncrease));
                     break;
@@ -296,11 +296,11 @@ namespace Ensage.Common.AbilityInfo
                     }
 
                     outgoingDamage = (strengthSteal * 19)
-                                     + target.DamageTaken(
+                                     + target.SpellDamageTaken(
                                          ability.GetAbilityData(data.DamageString), 
-                                         DamageType.Magical, 
-                                         source, 
-                                         false, 
+                                         DamageType.Magical,
+                                         source, name,
+                                         false,
                                          minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "visage_soul_assumption":
@@ -311,10 +311,10 @@ namespace Ensage.Common.AbilityInfo
                         dmg += modif.StackCount * ability.GetAbilityData("soul_charge_damage");
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         dmg, 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         false, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -348,10 +348,10 @@ namespace Ensage.Common.AbilityInfo
                         multi = multimin;
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         (float)(bonusDamage + (agi * multi)), 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         false, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -376,10 +376,10 @@ namespace Ensage.Common.AbilityInfo
                         DamageDictionary[ability] = bonusDamage;
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         bonusDamage, 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         data.MagicImmunityPierce, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     if (source.Distance2D(target) < radiusMax)
@@ -417,21 +417,21 @@ namespace Ensage.Common.AbilityInfo
                         DamageDictionary[ability] = tempDmg;
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         tempDmg + bonusDamage, 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         false, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "nyx_assassin_mana_burn":
                     var intMultiplier = ability.GetAbilityData("float_multiplier");
                     hero = target as Hero;
-                    outgoingDamage = target.ManaBurnDamageTaken(
+                    outgoingDamage = target.ManaBurnSpellDamageTaken(
                         hero.TotalIntelligence * intMultiplier, 
                         1, 
                         DamageType.Magical, 
-                        source, 
+                        source, name, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "antimage_mana_void":
@@ -450,28 +450,28 @@ namespace Ensage.Common.AbilityInfo
 
                     hero = target as Hero;
                     var missingMana = hero.MaximumMana - hero.Mana;
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         missingMana * tempDmg, 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "riki_blink_strike":
                     var damage = ability.GetAbilityData(data.DamageString);
                     var backstab = source.Spellbook.SpellE;
                     var agiMultiplier = backstab.GetAbilityData("damage_multiplier");
-                    var blinkdamage = target.DamageTaken(
+                    var blinkdamage = target.SpellDamageTaken(
                         damage, 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         data.MagicImmunityPierce, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     outgoingDamage = blinkdamage
-                                     + target.DamageTaken(
+                                     + target.SpellDamageTaken(
                                          (agiMultiplier * source.TotalAgility)
                                          + (source.MinimumDamage + source.BonusDamage), 
-                                         DamageType.Physical, 
-                                         source, 
+                                         DamageType.Physical,
+                                         source, name, 
                                          data.MagicImmunityPierce, 
                                          minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -497,10 +497,10 @@ namespace Ensage.Common.AbilityInfo
                     var damagePerUnit = ability.GetAbilityData("damage_per_unit");
                     var maxUnits = ability.GetAbilityData("max_units");
                     outgoingDamage = Math.Min(nearUnits.Count(), maxUnits) * damagePerUnit;
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         outgoingDamage, 
-                        DamageType.Magical, 
-                        source, 
+                        DamageType.Magical,
+                        source, name, 
                         data.MagicImmunityPierce, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
@@ -543,23 +543,13 @@ namespace Ensage.Common.AbilityInfo
                         }
                     }
 
-                    outgoingDamage = target.DamageTaken(
+                    outgoingDamage = target.SpellDamageTaken(
                         outgoingDamage, 
-                        GetDamageType(ability), 
-                        source, 
+                        GetDamageType(ability),
+                        source, name, 
                         data.MagicImmunityPierce, 
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
-            }
-
-            var aetherLens = false;
-            if (ability.StoredName() != "axe_culling_blade")
-            {
-                foreach (var item in source.Inventory.Items.Where(item => item.StoredName() == "item_aether_lens"))
-                {
-                    aetherLens = true;
-                    outgoingDamage *= 1 + (item.GetAbilityData("spell_amp") / 100);
-                }
             }
 
             if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && !(ability is Item)
@@ -572,11 +562,11 @@ namespace Ensage.Common.AbilityInfo
                 }
 
                 var bonusDmg = staticField.GetAbilityData("damage_health_pct") / 100 * (target.Health - minusHealth);
-                bonusDmg = target.DamageTaken(
+                bonusDmg = target.SpellDamageTaken(
                     bonusDmg, 
-                    DamageType.Magical, 
-                    source, 
-                    minusMagicResistancePerc: minusMagicResistancePerc) * (aetherLens == false ? 1 : 1.08f);
+                    DamageType.Magical,
+                    source, name, 
+                    minusMagicResistancePerc: minusMagicResistancePerc);
                 outgoingDamage += bonusDmg;
             }
 
