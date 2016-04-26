@@ -199,74 +199,6 @@ namespace Ensage.Common.Extensions.Damage
 
         #endregion
 
-        /// <summary>
-        /// The spell damage taken.
-        /// </summary>
-        /// <param name="target">
-        /// The target.
-        /// </param>
-        /// <param name="dmg">
-        /// The dmg.
-        /// </param>
-        /// <param name="dmgType">
-        /// The dmg type.
-        /// </param>
-        /// <param name="source">
-        /// The source.
-        /// </param>
-        /// <param name="spellName">
-        /// The spell name.
-        /// </param>
-        /// <param name="throughBKB">
-        /// The through bkb.
-        /// </param>
-        /// <param name="minusArmor">
-        /// The minus armor.
-        /// </param>
-        /// <param name="minusDamageResistancePerc">
-        /// The minus damage resistance perc.
-        /// </param>
-        /// <param name="minusMagicResistancePerc">
-        /// The minus magic resistance perc.
-        /// </param>
-        /// <returns>
-        /// The <see cref="float"/>.
-        /// </returns>
-        public static float SpellDamageTaken(
-            this Unit target,
-            float dmg,
-            DamageType dmgType,
-            Unit source,
-            string spellName,
-            bool throughBKB = false,
-            double minusArmor = 0d,
-            double minusDamageResistancePerc = 0d,
-            double minusMagicResistancePerc = 0d)
-        {
-            var damage = dmg;
-            if (spellName != "axe_culling_blade")
-            {
-                damage = source.Inventory.Items.Where(item => item.StoredName() == "item_aether_lens")
-                    .Aggregate(damage, (current, item) => current * (1 + (item.GetAbilityData("spell_amp") / 100)));
-            }
-
-            var hero = source as Hero;
-
-            if (hero != null)
-            {
-                damage *= 1 + (hero.TotalIntelligence / 16);
-            }
-
-            return target.DamageTaken(
-                damage,
-                dmgType,
-                source,
-                throughBKB,
-                minusArmor,
-                minusDamageResistancePerc,
-                minusMagicResistancePerc);
-        }
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -727,6 +659,80 @@ namespace Ensage.Common.Extensions.Damage
             }
 
             return (float)Math.Max(tempDmg, 0);
+        }
+
+        /// <summary>
+        ///     The spell damage taken.
+        /// </summary>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="dmg">
+        ///     The dmg.
+        /// </param>
+        /// <param name="dmgType">
+        ///     The dmg type.
+        /// </param>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="spellName">
+        ///     The spell name.
+        /// </param>
+        /// <param name="throughBKB">
+        ///     The through bkb.
+        /// </param>
+        /// <param name="minusArmor">
+        ///     The minus armor.
+        /// </param>
+        /// <param name="minusDamageResistancePerc">
+        ///     The minus damage resistance perc.
+        /// </param>
+        /// <param name="minusMagicResistancePerc">
+        ///     The minus magic resistance perc.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
+        public static float SpellDamageTaken(
+            this Unit target, 
+            float dmg, 
+            DamageType dmgType, 
+            Unit source, 
+            string spellName, 
+            bool throughBKB = false, 
+            double minusArmor = 0d, 
+            double minusDamageResistancePerc = 0d, 
+            double minusMagicResistancePerc = 0d)
+        {
+            var damage = dmg;
+            if (spellName != "axe_culling_blade")
+            {
+                foreach (var item in source.Inventory.Items)
+                {
+                    if (item.StoredName() == "item_aether_lens")
+                    {
+                        damage *= 1f + (item.GetAbilityData("spell_amp") / 100f);
+                    }
+                }
+            }
+
+            var hero = source as Hero;
+
+            if (hero != null)
+            {
+                damage *= 1f + ((hero.TotalIntelligence / 16f) / 100f);
+            }
+
+            var taken = target.DamageTaken(
+                damage,
+                dmgType,
+                source,
+                throughBKB,
+                minusArmor,
+                minusDamageResistancePerc,
+                minusMagicResistancePerc);
+            return taken;
         }
 
         #endregion

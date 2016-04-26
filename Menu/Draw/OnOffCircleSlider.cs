@@ -109,7 +109,6 @@
             this.char1 = new DrawText { FontFlags = FontFlags.AntiAlias, Text = "°", Color = new Color(50, 50, 50) };
             this.char2 = new DrawText { FontFlags = FontFlags.AntiAlias, Text = "°", Color = new Color(180, 180, 180) };
             this.colorChange = new CircEaseOutIn(0.3);
-            this.colorChange.Start(0, 120);
         }
 
         #endregion
@@ -132,7 +131,7 @@
                     }
 
                     this.backgroundColor = new Color(60, 60, 0, 255)
-                                           + new Color((int)(a * 0.7), (int)(a * 0.25), this.Enabled ? 0 : 60);
+                                           + new Color((int)(a * 0.6), (int)(a * 0.25), this.Enabled ? 0 : 60);
 
                     return this.backgroundColor;
                 }
