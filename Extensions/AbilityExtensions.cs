@@ -702,7 +702,7 @@ namespace Ensage.Common.Extensions
             if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name) && name != "lion_impale"
                 && !target.IsInvul())
             {
-                if (target.Distance2D(sourcePosition) > ability.GetCastRange() + 100)
+                if (!ability.CanHit(target, sourcePosition))
                 {
                     return false;
                 }
