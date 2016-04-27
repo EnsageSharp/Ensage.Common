@@ -34,7 +34,7 @@
                 bool canBeCasted;
                 if (owner == null)
                 {
-                    canBeCasted = item.Level > 0 && item.Cooldown <= 0;
+                    canBeCasted = item.Level > 0 && item.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
                     if (item.IsRequiringCharges)
                     {
                         canBeCasted = canBeCasted && item.CurrentCharges > 0;
@@ -43,9 +43,8 @@
                     return canBeCasted;
                 }
 
-                canBeCasted = bonusMana > 0
-                                  ? item.Level > 0 && owner.Mana + bonusMana >= item.ManaCost && item.Cooldown <= 0
-                                  : item.AbilityState == AbilityState.Ready && item.Level > 0;
+                canBeCasted = item.Level > 0 && owner.Mana + bonusMana >= item.ManaCost
+                              && item.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
                 if (item.IsRequiringCharges)
                 {
                     canBeCasted = canBeCasted && item.CurrentCharges > 0;

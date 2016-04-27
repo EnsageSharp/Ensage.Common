@@ -117,16 +117,14 @@ namespace Ensage.Common.Extensions
                 bool canBeCasted;
                 if (owner == null)
                 {
-                    canBeCasted = ability.Level > 0 && ability.Cooldown <= 0;
+                    canBeCasted = ability.Level > 0 && ability.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
                     return canBeCasted;
                 }
 
                 if (owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
-                    canBeCasted = bonusMana > 0
-                                      ? ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
-                                        && ability.Cooldown <= 0
-                                      : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                    canBeCasted = ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
+                                  && ability.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
                     return canBeCasted;
                 }
 
@@ -138,10 +136,8 @@ namespace Ensage.Common.Extensions
                     return false;
                 }
 
-                canBeCasted = bonusMana > 0
-                                  ? ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
-                                    && ability.Cooldown <= 0
-                                  : ability.AbilityState == AbilityState.Ready && ability.Level > 0;
+                canBeCasted = ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
+                              && ability.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
                 return canBeCasted;
             }
             catch (Exception)
@@ -262,7 +258,8 @@ namespace Ensage.Common.Extensions
             }
 
             var position = sourcePosition;
-            if (ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale")
+            if (ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"
+                || (name == "earthshaker_enchant_totem" && (ability.Owner as Hero).AghanimState()))
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
                 var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
@@ -715,11 +712,13 @@ namespace Ensage.Common.Extensions
                 ability.UseAbility(target);
             }
             else if (ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
-                     || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale" || ability.IsSkillShot())
+                     || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"
+                     || (name == "earthshaker_enchant_totem" && (ability.Owner as Hero).AghanimState())
+                     || ability.IsSkillShot())
             {
                 var stunned = target.IsStunned() || target.IsInvul() || target.IsRooted() || target.IsHexed();
                 if ((!(Prediction.StraightTime(target) > straightTimeforSkillShot * 1000) && !stunned)
-                    || !ability.CastSkillShot(target, name, soulRing, otherTargets))
+                    || (!ability.CastSkillShot(target, name, soulRing, otherTargets)))
                 {
                     return false;
                 }
@@ -1100,7 +1099,12 @@ namespace Ensage.Common.Extensions
                 return ability.CastRange;
             }
 
-            if (!data.FakeCastRange)
+
+            if (ability.StoredName() == "earthshaker_enchant_totem" && (owner as Hero).AghanimState())
+            {
+                radius = ability.GetAbilityData("scepter_distance") + 100;
+            }
+            else if (!data.FakeCastRange)
             {
                 radius = ability.GetRadius(name);
             }
