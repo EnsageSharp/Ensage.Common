@@ -29,6 +29,11 @@
         /// </returns>
         public static string StoredName(this Entity entity)
         {
+            if (entity == null || !entity.IsValid)
+            {
+                return string.Empty;
+            }
+
             var handle = entity.Handle;
             string name;
             if (NameDictionary.TryGetValue(handle, out name))
@@ -52,6 +57,11 @@
         /// </returns>
         public static string StoredName(this Ability entity)
         {
+            if (entity == null || !entity.IsValid)
+            {
+                return string.Empty;
+            }
+
             var handle = entity.Handle;
             string name;
             if (NameDictionary.TryGetValue(handle, out name))
