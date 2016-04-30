@@ -31,56 +31,68 @@ namespace Ensage.Common.Extensions
         #region Static Fields
 
         /// <summary>
-        ///     Temporarily stores cast delay values
-        /// </summary>
-        public static Dictionary<string, double> DelayDictionary = new Dictionary<string, double>();
-
-        /// <summary>
-        ///     Temporarily stores radius values
-        /// </summary>
-        public static Dictionary<string, float> RadiusDictionary = new Dictionary<string, float>();
-
-        /// <summary>
-        ///     Temporarily stores speed values
-        /// </summary>
-        public static Dictionary<string, float> SpeedDictionary = new Dictionary<string, float>();
-
-        /// <summary>
         ///     The ability behavior dictionary.
         /// </summary>
-        private static readonly Dictionary<string, AbilityBehavior> AbilityBehaviorDictionary =
+        private static Dictionary<string, AbilityBehavior> abilityBehaviorDictionary =
             new Dictionary<string, AbilityBehavior>();
 
         /// <summary>
-        ///     The bool dictionary.
+        ///     The boolean dictionary.
         /// </summary>
-        private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
+        private static Dictionary<string, bool> boolDictionary = new Dictionary<string, bool>();
 
         /// <summary>
         ///     The cast point dictionary.
         /// </summary>
-        private static readonly Dictionary<string, double> CastPointDictionary = new Dictionary<string, double>();
+        private static Dictionary<string, double> castPointDictionary = new Dictionary<string, double>();
 
         /// <summary>
         ///     The cast range dictionary.
         /// </summary>
-        private static readonly Dictionary<string, float> CastRangeDictionary = new Dictionary<string, float>();
+        private static Dictionary<string, float> castRangeDictionary = new Dictionary<string, float>();
 
         /// <summary>
         ///     The channel dictionary.
         /// </summary>
-        private static readonly Dictionary<string, float> ChannelDictionary = new Dictionary<string, float>();
+        private static Dictionary<string, float> channelDictionary = new Dictionary<string, float>();
 
         /// <summary>
         ///     The data dictionary.
         /// </summary>
-        private static readonly Dictionary<string, AbilitySpecialData> DataDictionary =
+        private static Dictionary<string, AbilitySpecialData> dataDictionary =
             new Dictionary<string, AbilitySpecialData>();
+
+        /// <summary>
+        ///     Temporarily stores cast delay values
+        /// </summary>
+        private static Dictionary<string, double> delayDictionary = new Dictionary<string, double>();
 
         /// <summary>
         ///     The hit delay dictionary.
         /// </summary>
-        private static readonly Dictionary<string, double> HitDelayDictionary = new Dictionary<string, double>();
+        private static Dictionary<string, double> hitDelayDictionary = new Dictionary<string, double>();
+
+        /// <summary>
+        ///     Temporarily stores radius values
+        /// </summary>
+        private static Dictionary<string, float> radiusDictionary = new Dictionary<string, float>();
+
+        /// <summary>
+        ///     Temporarily stores speed values
+        /// </summary>
+        private static Dictionary<string, float> speedDictionary = new Dictionary<string, float>();
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        ///     Initializes static members of the <see cref="AbilityExtensions" /> class.
+        /// </summary>
+        static AbilityExtensions()
+        {
+            Events.OnLoad += Events_OnLoad;
+        }
 
         #endregion
 
@@ -776,10 +788,10 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             float channel;
-            if (!ChannelDictionary.TryGetValue(name + ability.Level, out channel))
+            if (!channelDictionary.TryGetValue(name + ability.Level, out channel))
             {
                 channel = ability.GetChannelTime(ability.Level - 1);
-                ChannelDictionary.Add(name + ability.Level, channel);
+                channelDictionary.Add(name + ability.Level, channel);
             }
 
             // Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
@@ -852,13 +864,13 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             double castPoint;
-            if (CastPointDictionary.TryGetValue(name + " " + ability.Level, out castPoint))
+            if (castPointDictionary.TryGetValue(name + " " + ability.Level, out castPoint))
             {
                 return castPoint;
             }
 
             castPoint = ability.GetCastPoint(ability.Level);
-            CastPointDictionary.Add(name + " " + ability.Level, castPoint);
+            castPointDictionary.Add(name + " " + ability.Level, castPoint);
             return castPoint;
         }
 
@@ -894,10 +906,10 @@ namespace Ensage.Common.Extensions
             var lvl = ability.Level;
             var name = abilityName ?? ability.StoredName();
             AbilitySpecialData data;
-            if (!DataDictionary.TryGetValue(name + "_" + dataName, out data))
+            if (!dataDictionary.TryGetValue(name + "_" + dataName, out data))
             {
                 data = ability.AbilitySpecialData.FirstOrDefault(x => x.Name == dataName);
-                DataDictionary.Add(name + "_" + dataName, data);
+                dataDictionary.Add(name + "_" + dataName, data);
             }
 
             if (level > 0)
@@ -963,10 +975,10 @@ namespace Ensage.Common.Extensions
             double delay;
             if (useCastPoint)
             {
-                if (!DelayDictionary.TryGetValue(name + " " + ability.Level, out delay))
+                if (!delayDictionary.TryGetValue(name + " " + ability.Level, out delay))
                 {
                     delay = Math.Max(ability.FindCastPoint(name), 0.07);
-                    DelayDictionary.Add(name + " " + ability.Level, delay);
+                    delayDictionary.Add(name + " " + ability.Level, delay);
                 }
 
                 if (name == "templar_assassin_meld")
@@ -1031,9 +1043,9 @@ namespace Ensage.Common.Extensions
             var name = abilityName ?? ability.StoredName();
             var owner = ability.Owner;
             var n = name + owner.Handle;
-            if (CastRangeDictionary.ContainsKey(n) && !Utils.SleepCheck("Common.GetCastRange." + n))
+            if (castRangeDictionary.ContainsKey(n) && !Utils.SleepCheck("Common.GetCastRange." + n))
             {
-                return CastRangeDictionary[n];
+                return castRangeDictionary[n];
             }
 
             if (name == "templar_assassin_meld")
@@ -1079,14 +1091,14 @@ namespace Ensage.Common.Extensions
                     bonusRange += aetherLens.GetAbilityData("cast_range_bonus");
                 }
 
-                if (!CastRangeDictionary.ContainsKey(n))
+                if (!castRangeDictionary.ContainsKey(n))
                 {
-                    CastRangeDictionary.Add(n, castRange + bonusRange);
+                    castRangeDictionary.Add(n, castRange + bonusRange);
                     Utils.Sleep(5000, "Common.GetCastRange." + n);
                 }
                 else
                 {
-                    CastRangeDictionary[n] = castRange + bonusRange;
+                    castRangeDictionary[n] = castRange + bonusRange;
                     Utils.Sleep(5000, "Common.GetCastRange." + n);
                 }
 
@@ -1098,7 +1110,6 @@ namespace Ensage.Common.Extensions
             {
                 return ability.CastRange;
             }
-
 
             if (ability.StoredName() == "earthshaker_enchant_totem" && (owner as Hero).AghanimState())
             {
@@ -1113,14 +1124,14 @@ namespace Ensage.Common.Extensions
                 radius = ability.GetAbilityData(data.RealCastRange, abilityName: name);
             }
 
-            if (!CastRangeDictionary.ContainsKey(n))
+            if (!castRangeDictionary.ContainsKey(n))
             {
-                CastRangeDictionary.Add(n, radius);
+                castRangeDictionary.Add(n, radius);
                 Utils.Sleep(5000, "Common.GetCastRange." + n);
             }
             else
             {
-                CastRangeDictionary[n] = radius;
+                castRangeDictionary[n] = radius;
                 Utils.Sleep(5000, "Common.GetCastRange." + n);
             }
 
@@ -1158,10 +1169,10 @@ namespace Ensage.Common.Extensions
             var owner = ability.Owner as Unit;
             var n = name + owner.StoredName() + target.StoredName();
             double storedDelay;
-            var found = HitDelayDictionary.TryGetValue(n, out storedDelay);
+            var found = hitDelayDictionary.TryGetValue(n, out storedDelay);
             if (!found)
             {
-                HitDelayDictionary.Add(n, 0);
+                hitDelayDictionary.Add(n, 0);
             }
 
             if (found && !Utils.SleepCheck(n))
@@ -1196,7 +1207,7 @@ namespace Ensage.Common.Extensions
                 delay += Math.Max(owner.Distance2D(xyz), 100) / speed;
             }
 
-            HitDelayDictionary[n] = delay;
+            hitDelayDictionary[n] = delay;
             Utils.Sleep(40, n);
             return delay;
         }
@@ -1300,7 +1311,7 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             float speed;
-            if (!SpeedDictionary.TryGetValue(name + " " + ability.Level, out speed))
+            if (!speedDictionary.TryGetValue(name + " " + ability.Level, out speed))
             {
                 AbilityInfo data;
                 if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
@@ -1312,14 +1323,14 @@ namespace Ensage.Common.Extensions
                 if (data == null)
                 {
                     speed = float.MaxValue;
-                    SpeedDictionary.Add(name + " " + ability.Level, speed);
+                    speedDictionary.Add(name + " " + ability.Level, speed);
                     return speed;
                 }
 
                 if (data.Speed != null)
                 {
                     speed = ability.GetAbilityData(data.Speed, abilityName: name);
-                    SpeedDictionary.Add(name + " " + ability.Level, speed);
+                    speedDictionary.Add(name + " " + ability.Level, speed);
                 }
             }
 
@@ -1347,7 +1358,7 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             float radius;
-            if (!RadiusDictionary.TryGetValue(name + " " + ability.Level, out radius))
+            if (!radiusDictionary.TryGetValue(name + " " + ability.Level, out radius))
             {
                 AbilityInfo data;
                 if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
@@ -1359,35 +1370,35 @@ namespace Ensage.Common.Extensions
                 if (data == null)
                 {
                     radius = 0;
-                    RadiusDictionary.Add(name + " " + ability.Level, radius);
+                    radiusDictionary.Add(name + " " + ability.Level, radius);
                     return radius;
                 }
 
                 if (data.Width != null)
                 {
                     radius = ability.GetAbilityData(data.Width, abilityName: name);
-                    RadiusDictionary.Add(name + " " + ability.Level, radius);
+                    radiusDictionary.Add(name + " " + ability.Level, radius);
                     return radius;
                 }
 
                 if (data.StringRadius != null)
                 {
                     radius = ability.GetAbilityData(data.StringRadius, abilityName: name);
-                    RadiusDictionary.Add(name + " " + ability.Level, radius);
+                    radiusDictionary.Add(name + " " + ability.Level, radius);
                     return radius;
                 }
 
                 if (data.Radius > 0)
                 {
                     radius = data.Radius;
-                    RadiusDictionary.Add(name + " " + ability.Level, radius);
+                    radiusDictionary.Add(name + " " + ability.Level, radius);
                     return radius;
                 }
 
                 if (data.IsBuff)
                 {
                     radius = (ability.Owner as Hero).GetAttackRange() + 150;
-                    RadiusDictionary.Add(name + " " + ability.Level, radius);
+                    radiusDictionary.Add(name + " " + ability.Level, radius);
                     return radius;
                 }
             }
@@ -1462,13 +1473,13 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             AbilityBehavior data;
-            if (AbilityBehaviorDictionary.TryGetValue(name, out data))
+            if (abilityBehaviorDictionary.TryGetValue(name, out data))
             {
                 return data.HasFlag(flag);
             }
 
             data = ability.AbilityBehavior;
-            AbilityBehaviorDictionary.Add(name, data);
+            abilityBehaviorDictionary.Add(name, data);
             return data.HasFlag(flag);
         }
 
@@ -1496,13 +1507,13 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             var n = name + "abilityType" + type;
-            if (BoolDictionary.ContainsKey(n))
+            if (boolDictionary.ContainsKey(n))
             {
-                return BoolDictionary[n];
+                return boolDictionary[n];
             }
 
             var value = ability.AbilityType == type;
-            BoolDictionary.Add(n, value);
+            boolDictionary.Add(n, value);
             return value;
         }
 
@@ -1720,6 +1731,33 @@ namespace Ensage.Common.Extensions
 
             var distance = ability.GetAbilityData(data.Distance);
             return distance > 0 ? distance : ability.GetCastRange();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The events_ on load.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
+        private static void Events_OnLoad(object sender, EventArgs e)
+        {
+            hitDelayDictionary = new Dictionary<string, double>();
+            dataDictionary = new Dictionary<string, AbilitySpecialData>();
+            channelDictionary = new Dictionary<string, float>();
+            castRangeDictionary = new Dictionary<string, float>();
+            castPointDictionary = new Dictionary<string, double>();
+            boolDictionary = new Dictionary<string, bool>();
+            abilityBehaviorDictionary = new Dictionary<string, AbilityBehavior>();
+            speedDictionary = new Dictionary<string, float>();
+            radiusDictionary = new Dictionary<string, float>();
+            delayDictionary = new Dictionary<string, double>();
         }
 
         #endregion

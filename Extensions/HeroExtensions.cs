@@ -245,7 +245,7 @@
                     }
                     else if (hero.HasModifier("modifier_terrorblade_metamorphosis"))
                     {
-                        bonus = 422;
+                        bonus = 400;
                     }
 
                     break;
