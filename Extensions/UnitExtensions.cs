@@ -325,62 +325,6 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The spell damage taken.
-        /// </summary>
-        /// <param name="target">
-        /// The target.
-        /// </param>
-        /// <param name="dmg">
-        /// The dmg.
-        /// </param>
-        /// <param name="dmgType">
-        /// The dmg type.
-        /// </param>
-        /// <param name="source">
-        /// The source.
-        /// </param>
-        /// <param name="spellName">
-        /// The spell name.
-        /// </param>
-        /// <param name="throughBKB">
-        /// The through bkb.
-        /// </param>
-        /// <param name="minusArmor">
-        /// The minus armor.
-        /// </param>
-        /// <param name="minusDamageResistancePerc">
-        /// The minus damage resistance perc.
-        /// </param>
-        /// <param name="minusMagicResistancePerc">
-        /// The minus magic resistance perc.
-        /// </param>
-        /// <returns>
-        /// The <see cref="float"/>.
-        /// </returns>
-        public static float SpellDamageTaken(
-            this Unit target,
-            float dmg,
-            DamageType dmgType,
-            Unit source,
-            string spellName,
-            bool throughBKB = false,
-            double minusArmor = 0d,
-            double minusDamageResistancePerc = 0d,
-            double minusMagicResistancePerc = 0d)
-        {
-            return Calculations.SpellDamageTaken(
-                target,
-                dmg,
-                dmgType,
-                source,
-                spellName,
-                throughBKB,
-                minusArmor,
-                minusDamageResistancePerc,
-                minusMagicResistancePerc);
-        }
-
-        /// <summary>
         ///     Uses available disable ability which takes least time to hit the target, chains with other disables
         /// </summary>
         /// <param name="unit">
@@ -1250,51 +1194,51 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The mana burn spell damage taken.
+        ///     The mana burn spell damage taken.
         /// </summary>
         /// <param name="unit">
-        /// The unit.
+        ///     The unit.
         /// </param>
         /// <param name="burnAmount">
-        /// The burn amount.
+        ///     The burn amount.
         /// </param>
         /// <param name="multiplier">
-        /// The multiplier.
+        ///     The multiplier.
         /// </param>
         /// <param name="dmgType">
-        /// The dmg type.
+        ///     The dmg type.
         /// </param>
         /// <param name="source">
-        /// The source.
+        ///     The source.
         /// </param>
         /// <param name="spellName">
-        /// The spell name.
+        ///     The spell name.
         /// </param>
         /// <param name="throughBkb">
-        /// The through bkb.
+        ///     The through bkb.
         /// </param>
         /// <param name="minusArmor">
-        /// The minus armor.
+        ///     The minus armor.
         /// </param>
         /// <param name="minusDamageResistancePerc">
-        /// The minus damage resistance perc.
+        ///     The minus damage resistance perc.
         /// </param>
         /// <param name="minusMagicResistancePerc">
-        /// The minus magic resistance perc.
+        ///     The minus magic resistance perc.
         /// </param>
         /// <returns>
-        /// The <see cref="float"/>.
+        ///     The <see cref="float" />.
         /// </returns>
         public static float ManaBurnSpellDamageTaken(
-            this Unit unit,
-            float burnAmount,
-            double multiplier,
-            DamageType dmgType,
-            Unit source,
-            string spellName,
-            bool throughBkb = false,
-            double minusArmor = 0d,
-            double minusDamageResistancePerc = 0d,
+            this Unit unit, 
+            float burnAmount, 
+            double multiplier, 
+            DamageType dmgType, 
+            Unit source, 
+            string spellName, 
+            bool throughBkb = false, 
+            double minusArmor = 0d, 
+            double minusDamageResistancePerc = 0d, 
             double minusMagicResistancePerc = 0d)
         {
             var tempBurn = burnAmount;
@@ -1304,14 +1248,14 @@ namespace Ensage.Common.Extensions
             }
 
             return Calculations.SpellDamageTaken(
-                unit,
-                (float)(tempBurn * multiplier),
-                dmgType,
-                source,
-                spellName,
-                throughBkb,
-                minusArmor,
-                minusDamageResistancePerc,
+                unit, 
+                (float)(tempBurn * multiplier), 
+                dmgType, 
+                source, 
+                spellName, 
+                throughBkb, 
+                minusArmor, 
+                minusDamageResistancePerc, 
                 minusMagicResistancePerc);
         }
 
@@ -1388,6 +1332,62 @@ namespace Ensage.Common.Extensions
                     .MinOrDefault(x => x.GetHitDelay(target));
 
             return stunAbility != null && stunAbility.CastStun(target);
+        }
+
+        /// <summary>
+        ///     The spell damage taken.
+        /// </summary>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="dmg">
+        ///     The dmg.
+        /// </param>
+        /// <param name="dmgType">
+        ///     The dmg type.
+        /// </param>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="spellName">
+        ///     The spell name.
+        /// </param>
+        /// <param name="throughBKB">
+        ///     The through bkb.
+        /// </param>
+        /// <param name="minusArmor">
+        ///     The minus armor.
+        /// </param>
+        /// <param name="minusDamageResistancePerc">
+        ///     The minus damage resistance perc.
+        /// </param>
+        /// <param name="minusMagicResistancePerc">
+        ///     The minus magic resistance perc.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
+        public static float SpellDamageTaken(
+            this Unit target, 
+            float dmg, 
+            DamageType dmgType, 
+            Unit source, 
+            string spellName, 
+            bool throughBKB = false, 
+            double minusArmor = 0d, 
+            double minusDamageResistancePerc = 0d, 
+            double minusMagicResistancePerc = 0d)
+        {
+            return Calculations.SpellDamageTaken(
+                target, 
+                dmg, 
+                dmgType, 
+                source, 
+                spellName, 
+                throughBKB, 
+                minusArmor, 
+                minusDamageResistancePerc, 
+                minusMagicResistancePerc);
         }
 
         #endregion

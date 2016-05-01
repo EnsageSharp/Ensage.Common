@@ -1,7 +1,7 @@
 ﻿namespace Ensage.Common.Menu.Draw
 {
     using Ensage.Common.Menu.Transitions;
-    using Ensage.Common.Objects.DrawObjects;
+    using Ensage.Common.Objects;
     using Ensage.Common.Objects.UtilityObjects;
 
     using SharpDX;
@@ -12,16 +12,6 @@
     public class OnOffCircleSlider
     {
         #region Fields
-
-        /// <summary>
-        ///     The char 1.
-        /// </summary>
-        private readonly DrawText char1;
-
-        /// <summary>
-        ///     The char 2.
-        /// </summary>
-        private readonly DrawText char2;
 
         /// <summary>
         ///     The color change.
@@ -54,7 +44,7 @@
         private readonly Transition transition;
 
         /// <summary>
-        /// The background color.
+        ///     The background color.
         /// </summary>
         private Color backgroundColor;
 
@@ -106,9 +96,7 @@
             this.hover = new QuadEaseInOut(0.20);
             this.leftButtonSleeper = new Sleeper();
             this.enabled = enabled;
-            this.char1 = new DrawText { FontFlags = FontFlags.AntiAlias, Text = "°", Color = new Color(50, 50, 50) };
-            this.char2 = new DrawText { FontFlags = FontFlags.AntiAlias, Text = "°", Color = new Color(180, 180, 180) };
-            this.colorChange = new CircEaseOutIn(0.3);
+            this.colorChange = new QuadEaseInOut(0.35);
         }
 
         #endregion
@@ -183,7 +171,7 @@
 
             set
             {
-                this.colorChange.Start(0, 180);
+                this.colorChange.Start(0, 255);
                 this.enabled = value;
             }
         }
@@ -299,40 +287,22 @@
                 this.hover.Start(0, 90);
             }
 
-            this.char1.TextSize = new Vector2((float)(this.Height * 2.6));
-            var textCircleY = (float)(this.Position.Y - this.Height * 0.008 - this.char1.Size.Y * 0.17);
-            this.char1.Position = new Vector2((float)(this.Position.X + this.Height * 0.08), textCircleY);
-            this.char1.Color = this.BackgroundColor;
-            var move = (float)(this.Height * 0.1);
-            this.char1.Draw();
-            this.char1.Position = new Vector2(this.char1.Position.X + move, this.char1.Position.Y);
-            this.char1.Draw();
-            this.char1.Position = new Vector2(this.char1.Position.X + move, this.char1.Position.Y);
-            this.char1.Draw();
-            this.char1.Position = new Vector2(this.char1.Position.X + move, this.char1.Position.Y);
-            this.char1.Draw();
-            this.char1.Position = new Vector2(this.char1.Position.X + move, this.char1.Position.Y);
-            this.char1.Draw();
-            this.char1.Position = new Vector2(this.char1.Position.X + move, this.char1.Position.Y);
-            this.char1.Draw();
+            var size = new Vector2((float)(this.Height * 1.4), (float)(this.Height / 1.35));
+            var bgpos = this.Position + new Vector2(0, this.Height / 2 - size.Y / 2);
+            Drawing.DrawRect(bgpos, size, Textures.GetTexture("materials/ensage_ui/menu/sliderbgon.vmat_c"));
+            var circleSize = new Vector2((float)(size.Y * 0.8));
             this.IndicatorPosition = this.Enabled
-                                         ? this.Position + new Vector2((float)(this.Height * 0.61), 0)
-                                         : this.Position + new Vector2((float)(this.Height * 0.15), 0);
-            this.char2.TextSize = new Vector2((float)(this.Height * 2.2));
-            textCircleY = (float)(this.IndicatorPosition.Y - this.Height * 0.008 - this.char2.Size.Y * 0.151);
-            this.char2.Position = new Vector2((float)this.IndicatorPosition.X, textCircleY);
-            var sliderColor = this.Color;
-            this.char2.Color = sliderColor;
-            MenuUtils.RoundedRectangle(
-                (float)(this.IndicatorPosition.X + this.Height * 0.15), 
-                (int)this.IndicatorPosition.Y, 
-                (int)(this.Width * 0.9), 
-                (int)(this.Width * 0.9), 
-                (int)this.Width / 2, 
-                sliderColor);
-            this.char2.Draw();
-            this.char2.Color = sliderColor;
-            this.char2.Draw();
+                                         ? bgpos
+                                           + new Vector2(
+                                                 (float)(size.X * 0.97 - size.Y), 
+                                                 size.Y / 2 - circleSize.Y / 2)
+                                         : bgpos + new Vector2((float)(size.X * 0.13), size.Y / 2 - circleSize.Y / 2);
+            Drawing.DrawRect(
+                this.IndicatorPosition, 
+                circleSize, 
+                this.Enabled && !this.transition.Moving
+                    ? Textures.GetTexture("materials/ensage_ui/menu/circleshadow.vmat_c")
+                    : Textures.GetTexture("materials/ensage_ui/menu/circleshadowgray.vmat_c"));
         }
 
         /// <summary>

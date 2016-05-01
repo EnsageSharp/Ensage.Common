@@ -15,6 +15,8 @@ namespace Ensage.Common.Menu
 {
     using System;
 
+    using Ensage.Common.Objects;
+
     using SharpDX;
     using SharpDX.Direct3D9;
 
@@ -135,6 +137,32 @@ namespace Ensage.Common.Menu
             // Line.Draw(new[] { vLine[0], vLine[1] }, color); // Draw with Line, number of lines, and color
             // Line.End(); // finish
             Drawing.DrawLine(new Vector2(xa, ya), new Vector2(xb, yb), color);
+        }
+
+        /// <summary>
+        ///     The rounded rectangle.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <param name="size">
+        ///     The size.
+        /// </param>
+        /// <param name="color">
+        ///     The color.
+        /// </param>
+        public static void RoundedRectangle(Vector2 position, Vector2 size, Color color)
+        {
+            Drawing.DrawRect(position, size, color);
+            var a = size.Y / 2;
+            Drawing.DrawRect(
+                position, 
+                new Vector2(a, size.Y), 
+                Textures.GetTexture("materials/ensage_ui/menu/roundleft.vmat_c"));
+            Drawing.DrawRect(
+                position + new Vector2(size.X - a, 0), 
+                new Vector2(a, size.Y), 
+                Textures.GetTexture("materials/ensage_ui/menu/roundright.vmat_c"));
         }
 
         /// <summary>

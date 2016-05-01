@@ -22,6 +22,7 @@ namespace Ensage.Common.Menu
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Menu.Draw;
     using Ensage.Common.Menu.NotificationData;
+    using Ensage.Common.Menu.Transitions;
     using Ensage.Common.Objects;
     using Ensage.Common.Objects.DrawObjects;
 
@@ -112,6 +113,11 @@ namespace Ensage.Common.Menu
         private readonly string menuConfigName;
 
         /// <summary>
+        ///     The transition.
+        /// </summary>
+        private readonly Transition transition;
+
+        /// <summary>
         ///     The _dont save.
         /// </summary>
         private bool dontSave;
@@ -125,6 +131,11 @@ namespace Ensage.Common.Menu
         ///     The draw text dictionary.
         /// </summary>
         private Dictionary<string, DrawText> drawTextDictionary = new Dictionary<string, DrawText>();
+
+        /// <summary>
+        ///     The hovered.
+        /// </summary>
+        private bool hovered;
 
         /// <summary>
         ///     The _is shared.
@@ -172,7 +183,8 @@ namespace Ensage.Common.Menu
             this.Name = name;
             this.DisplayName = displayName;
             this.FontStyle = FontStyle.Regular;
-            this.FontColor = new Color(195, 186, 173, 255);
+            this.FontColor = new Color(185, 176, 163, 255);
+            this.transition = new ExpoEaseInOut(0.25);
             this.ShowItem = true;
             this.Tag = 0;
             this.menuConfigName = Assembly.GetCallingAssembly().GetName().Name
@@ -257,7 +269,7 @@ namespace Ensage.Common.Menu
                                     v, 
                                     "Arial", 
                                     new Vector2(
-                                    (float)(MenuSettings.MenuItemHeight * 0.51), 
+                                    (float)(MenuSettings.MenuItemHeight * 0.45), 
                                     (float)(MenuSettings.MenuItemWidth * 0.7)), 
                                     FontFlags.None).X + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17))
                                 .Concat(new[] { 0 })
@@ -290,7 +302,7 @@ namespace Ensage.Common.Menu
                                 " [" + Utils.KeyToText(val.Key) + "]", 
                                 "Arial", 
                                 new Vector2(
-                                (float)(MenuSettings.MenuItemHeight * 0.51), 
+                                (float)(MenuSettings.MenuItemHeight * 0.45), 
                                 (float)(MenuSettings.MenuItemWidth * 0.7)), 
                                 FontFlags.None).X;
                         if (val.Type == KeyBindType.Toggle)
@@ -301,7 +313,7 @@ namespace Ensage.Common.Menu
                                     val.Active ? " (on)" : " (off)", 
                                     "Arial", 
                                     new Vector2(
-                                    (float)(MenuSettings.MenuItemHeight * 0.51), 
+                                    (float)(MenuSettings.MenuItemHeight * 0.45), 
                                     (float)(MenuSettings.MenuItemWidth * 0.7)), 
                                     FontFlags.None).X;
                         }
@@ -326,7 +338,7 @@ namespace Ensage.Common.Menu
                             (Drawing.MeasureText(
                                 MultiLanguage._(this.DisplayName), 
                                 "Arial", 
-                                new Vector2((float)(this.Height * 0.51), 20), 
+                                new Vector2((float)(this.Height * 0.45), 20), 
                                 FontFlags.AntiAlias).X + this.Height * 1.4
                              + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8) + extra)));
                 }
@@ -376,7 +388,7 @@ namespace Ensage.Common.Menu
                     xOffset = (int)(this.Parent.Position.X + this.Parent.Width);
                 }
 
-                var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset + 1, 0)
+                var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
                           + (this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight));
                 if (!Menu.menuPositionDictionary.ContainsKey(n))
                 {
@@ -822,7 +834,11 @@ namespace Ensage.Common.Menu
                 {
                     MenuVariables.OnOffDictionary.Add(
                         this.Name + this.DisplayName, 
-                        new OnOffCircleSlider(new Color(180, 120, 10), new Color(50, 50, 50), 0, (bool)(object)newValue));
+                        new OnOffCircleSlider(new Color(150, 110, 70), new Color(120, 80, 20), 0, this.GetValue<bool>()));
+                }
+                else
+                {
+                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Enabled = this.GetValue<bool>();
                 }
             }
 
@@ -881,161 +897,70 @@ namespace Ensage.Common.Menu
         /// </summary>
         internal void Drawing_OnDraw()
         {
+            var wasHovered = this.hovered;
+            this.hovered = Utils.IsUnderRectangle(
+                Game.MouseScreenPosition, 
+                this.Position.X, 
+                this.Position.Y, 
+                this.Width, 
+                this.Height);
+
+            if (!wasHovered && this.hovered)
+            {
+                this.transition.Start(0, this.Height);
+            }
+            else if (wasHovered && !this.hovered)
+            {
+                this.transition.Start(0, this.Height);
+            }
+
+            var add = this.hovered
+                          ? this.transition.GetValue() * 0.1
+                          : this.transition.GetValue() > 0 || this.transition.Moving
+                                ? (this.Height - this.transition.GetValue()) * 0.1
+                                : 0;
+
             DotaTexture abg;
-            const string ABgName = "menu_button.vmat_c";
+            const string ABgName = "itembg1.vmat_c";
 
             if (!Menu.TextureDictionary.TryGetValue(ABgName, out abg))
             {
-                abg = Drawing.GetTexture("materials/ensage_ui/ensagemenu/" + ABgName);
+                abg = Drawing.GetTexture("materials/ensage_ui/menu/" + ABgName);
                 Menu.TextureDictionary.Add(ABgName, abg);
             }
 
             var s = MultiLanguage._(this.DisplayName);
-            if (this.DrawingTooltip)
+            if (!string.IsNullOrEmpty(this.Tooltip))
             {
                 MenuDrawHelper.DrawToolTipText(
                     new Vector2(this.Position.X + this.Width, this.Position.Y), 
                     this, 
+                    add, 
                     this.TooltipColor);
             }
+
+            Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
 
             switch (this.ValueType)
             {
                 case MenuValueType.None:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
-                    var textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias);
-                    var textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
                 case MenuValueType.Slider:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
                     MenuDrawHelper.DrawSlider(this.Position, this);
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
                 case MenuValueType.Boolean:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position,
-                        new Vector2(this.Width, this.Height),
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition,
-                            this.Position.X,
-                            this.Position.Y,
-                            this.Width,
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
                     MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Position =
                         new Vector2(
                             (float)(this.Position.X + this.Width - this.Height - (this.Height / 2.5)), 
-                            this.Position.Y + (this.Height / 4));
+                            this.Position.Y);
                     MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Height = this.Height;
                     MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Draw(Game.MouseScreenPosition);
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.GetValue<bool>()
-                            ? (Color)this.FontColor
-                            : new Color(this.FontColor.R - 70, this.FontColor.G - 70, this.FontColor.B - 70), 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
 
                 case MenuValueType.KeyBind:
                     var val = this.GetValue<KeyBind>();
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position,
-                        new Vector2(this.Width, this.Height),
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition,
-                            this.Position.X,
-                            this.Position.Y,
-                            this.Width,
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
                     var te = Utils.KeyToText(val.Key);
-                    var sizet = new Vector2((float)(this.Height / 1.9), this.Width / 2);
+                    var sizet = new Vector2((float)(this.Height / 1.95), this.Width / 2);
                     if (this.Interacting)
                     {
                         te = MultiLanguage._("?");
@@ -1050,43 +975,28 @@ namespace Ensage.Common.Menu
 
                     var acolor = val.Type == KeyBindType.Toggle
                                      ? val.Active
-                                           ? new Color(45 + alpha, 45 + alpha, 45 + alpha)
-                                           : new Color(28 + alpha, 28 + alpha, 28 + alpha)
-                                     : new Color(45 + alpha, 45 + alpha, 45 + alpha);
+                                           ? new Color(45 + alpha, 45 + alpha, 45 + alpha, 30)
+                                           : new Color(28 + alpha, 28 + alpha, 28 + alpha, 30)
+                                     : new Color(45 + alpha, 45 + alpha, 45 + alpha, 30);
 
                     var aborder = val.Type == KeyBindType.Toggle
-                                      ? val.Active ? new Color(40, 120, 40, 255) : new Color(0, 0, 0, 0)
+                                      ? val.Active ? new Color(40, 120, 40, 30) : new Color(0, 0, 0, 0)
                                       : new Color(0, 0, 0, 0);
 
-                    var height = this.Height - ((this.Height / 6) * 2);
-
-                    var apos = val.Type == KeyBindType.Toggle
-                                   ? val.Active ? rpos : rpos - new Vector2(height / 10, height / 10)
-                                   : rpos - new Vector2(height / 10, height / 10);
-
-                    var asize = val.Type == KeyBindType.Toggle
-                                    ? val.Active ? rsize : rsize + new Vector2((height / 10) * 2, (height / 10) * 2)
-                                    : rsize + new Vector2((height / 10) * 2, (height / 10) * 2);
-
-                    if (this.Interacting)
-                    {
-                        apos = rpos;
-                        asize = rsize;
-                    }
+                    Drawing.DrawRect(rpos, rsize, Textures.GetTexture("materials/ensage_ui/menu/menubg1.vmat_c"));
 
                     MenuUtils.DrawBoxBordered(
-                        apos.X, 
-                        apos.Y, 
+                        rpos.X, 
+                        rpos.Y, 
                         rsize.X, 
                         rsize.Y, 
                         1f, 
-                        this.Interacting ? new Color(150, 100, 80) : aborder, 
+                        this.Interacting ? new Color(180, 120, 0, 30) : aborder, 
                         new Color(0, 0, 0, 0));
-
                     Drawing.DrawRect(
-                        apos + new Vector2(height / 10, height / 10), 
-                        new Vector2(asize.X - ((height / 10) * 2), asize.Y - ((height / 10) * 2)), 
-                        this.Interacting ? new Color(48 + alpha, 38 + alpha, 28 + alpha) : acolor);
+                        rpos, 
+                        rsize, 
+                        this.Interacting ? new Color(48 + alpha, 38 + alpha, 28 + alpha, 30) : acolor);
 
                     var textSize = Drawing.MeasureText(te, "Arial", sizet, FontFlags.AntiAlias);
                     var textPos = this.Position
@@ -1099,53 +1009,16 @@ namespace Ensage.Common.Menu
                         textPos, 
                         sizet, 
                         new Color(195 + alpha, 139 + alpha, 12 + alpha, 225), 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
+                        FontFlags.AntiAlias);
 
                     if (val.Type == KeyBindType.Toggle)
                     {
                         s += val.Active ? " (on)" : " (off)";
                     }
 
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        val.Type == KeyBindType.Toggle
-                            ? val.Active
-                                  ? (Color)this.FontColor
-                                  : new Color(this.FontColor.R - 70, this.FontColor.G - 70, this.FontColor.B - 70)
-                            : (Color)this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
 
                 case MenuValueType.Integer:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
                     var intVal = this.GetValue<int>();
 
                     textSize = Drawing.MeasureText(
@@ -1159,108 +1032,42 @@ namespace Ensage.Common.Menu
                         textPos, 
                         new Vector2(this.Height / 2, this.Width / 2), 
                         new Color(255, 255, 255, 225), 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
                         FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
 
                 case MenuValueType.StringList:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
                     var slVal = this.GetValue<StringList>();
                     var t = slVal.SList[slVal.SelectedIndex];
 
                     MenuDrawHelper.DrawArrow(
                         true, 
-                        this.Position + new Vector2(this.Width - (this.Height * 2), 0), 
+                        this.Position + new Vector2((float)(this.Width - (this.Height * 1.85)), 0), 
                         this, 
                         System.Drawing.Color.Black);
                     MenuDrawHelper.DrawArrow(
                         false, 
-                        this.Position + new Vector2(this.Width - this.Height, 0), 
+                        this.Position + new Vector2((float)(this.Width - this.Height * 0.95), 0), 
                         this, 
                         System.Drawing.Color.Black);
 
                     textSize = Drawing.MeasureText(
                         MultiLanguage._(t), 
                         "Arial", 
-                        new Vector2((float)(this.Height / 2.05), (this.Width / 2) + 10), 
+                        new Vector2((float)(this.Height * 0.45), (this.Width / 2) + 10), 
                         FontFlags.AntiAlias);
                     textPos = this.Position
                               + new Vector2(
-                                    -(this.Height * 2) + this.Width - textSize.X - 5, 
+                                    (float)(-(this.Height * 1.85) + this.Width - textSize.X - 5), 
                                     (float)((this.Height * 0.5) - (textSize.Y * 0.5)));
                     Drawing.DrawText(
                         MultiLanguage._(t), 
                         textPos, 
-                        new Vector2((float)(this.Height / 2.05), (this.Width / 2) + 10), 
+                        new Vector2((float)(this.Height * 0.45), (this.Width / 2) + 10), 
                         new Color(230, 210, 200, 225), 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
                         FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
 
                 case MenuValueType.AbilityToggler:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
                     var width = 0f;
                     var basePosition = this.Position + new Vector2(this.Width - this.Height, 0);
                     var size = new Vector2(this.Height - 6, this.Height - 6);
@@ -1302,79 +1109,14 @@ namespace Ensage.Common.Menu
                         width += -1;
                     }
 
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
 
                 case MenuValueType.PriorityChanger:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
-
                     this.GetValue<PriorityChanger>()
                         .Draw(this.Position, this.Width, this.Height, Game.MouseScreenPosition, this);
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
 
                 case MenuValueType.HeroToggler:
-                    MenuUtils.DrawBoxBordered(
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height, 
-                        1, 
-                        abg, 
-                        new Color(20, 20, 20, 200));
-                    Drawing.DrawRect(
-                        this.Position, 
-                        new Vector2(this.Width, this.Height), 
-                        Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                            ? new Color(30, 19, 5, 220)
-                            : new Color(10, 10, 5, 210));
                     width = 0f;
                     basePosition = this.Position + new Vector2(this.Width - this.Height - 16, 0);
                     size = new Vector2(this.Height + 10, this.Height - 6);
@@ -1405,26 +1147,37 @@ namespace Ensage.Common.Menu
                         width += -1;
                     }
 
-                    textSize1 = Drawing.MeasureText(
-                        s, 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias);
-                    textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
-                    Drawing.DrawText(
-                        s, 
-                        textPos1, 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        this.FontColor, 
-                        FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom
-                        | FontFlags.StrikeOut);
                     break;
             }
 
-            if (!string.IsNullOrEmpty(this.Tooltip))
-            {
-                MenuDrawHelper.DrawToolTipButton(new Vector2(this.Position.X + this.Width, this.Position.Y), this);
-            }
+            var textSize1 = Drawing.MeasureText(
+                s, 
+                "Arial", 
+                new Vector2((float)(this.Height * 0.45), 20), 
+                FontFlags.AntiAlias);
+            var textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
+
+            Drawing.DrawText(
+                s, 
+                textPos1, 
+                new Vector2((float)(this.Height * 0.45), 20), 
+                (this.ValueType == MenuValueType.KeyBind && this.GetValue<KeyBind>().Type == KeyBindType.Toggle)
+                || this.ValueType == MenuValueType.Boolean
+                    ? this.IsActive()
+                          ? (Color)this.FontColor
+                          : new Color(this.FontColor.R - 70, this.FontColor.G - 70, this.FontColor.B - 70)
+                    : (Color)this.FontColor, 
+                FontFlags.AntiAlias);
+
+            Drawing.DrawRect(
+                this.Position, 
+                new Vector2(this.Width, this.Height), 
+                new Color(35, 35, 35, (int)(add * 25)));
+
+            // if (!string.IsNullOrEmpty(this.Tooltip))
+            // {
+            // MenuDrawHelper.DrawToolTipButton(new Vector2(this.Position.X + this.Width, this.Position.Y), this);
+            // }
         }
 
         /// <summary>

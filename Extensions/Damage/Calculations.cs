@@ -725,12 +725,12 @@ namespace Ensage.Common.Extensions.Damage
             }
 
             var taken = target.DamageTaken(
-                damage,
-                dmgType,
-                source,
-                throughBKB,
-                minusArmor,
-                minusDamageResistancePerc,
+                damage, 
+                dmgType, 
+                source, 
+                throughBKB, 
+                minusArmor, 
+                minusDamageResistancePerc, 
                 minusMagicResistancePerc);
             return taken;
         }

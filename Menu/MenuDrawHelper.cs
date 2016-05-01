@@ -47,9 +47,13 @@ namespace Ensage.Common.Menu
             Drawing.DrawRect(
                 position + new Vector2(0, item.Height / 6), 
                 new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
+                Textures.GetTexture("materials/ensage_ui/menu/menubg1.vmat_c"));
+            Drawing.DrawRect(
+                position + new Vector2(0, item.Height / 6), 
+                new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
-                    ? Color.FromArgb(50, 50, 50).ToSharpDxColor()
-                    : Color.FromArgb(37, 37, 37).ToSharpDxColor());
+                    ? Color.FromArgb(30, 70, 70, 70).ToSharpDxColor()
+                    : Color.FromArgb(0, 37, 37, 37).ToSharpDxColor());
 
             var s = left ? "<" : ">";
             var textSize = Drawing.MeasureText(
@@ -68,9 +72,9 @@ namespace Ensage.Common.Menu
                 textPos, 
                 new Vector2((float)(item.Height * 0.67), item.Height / 2), 
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
-                    ? Color.Orange.ToSharpDxColor()
-                    : Color.LightGray.ToSharpDxColor(), 
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+                    ? Color.DarkOrange.ToSharpDxColor()
+                    : Color.Orange.ToSharpDxColor(), 
+                FontFlags.AntiAlias);
         }
 
         /// <summary>
@@ -142,12 +146,7 @@ namespace Ensage.Common.Menu
                                     (float)(item.Width - (item.Height / 2) - (textSize.X / 2.9)), 
                                     (float)(+(item.Height * 0.5) - (textSize.Y / 1.9)));
 
-                Drawing.DrawText(
-                    s, 
-                    textPos, 
-                    tsize, 
-                    Color.NavajoWhite.ToSharpDxColor(), 
-                    FontFlags.Italic | FontFlags.DropShadow);
+                Drawing.DrawText(s, textPos, tsize, Color.NavajoWhite.ToSharpDxColor(), FontFlags.Italic);
             }
         }
 
@@ -232,7 +231,7 @@ namespace Ensage.Common.Menu
             var textSize = Drawing.MeasureText(
                 value.ToString(), 
                 "Arial", 
-                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
+                new Vector2((float)(item.Height * 0.45), (float)item.Width / 2), 
                 FontFlags.AntiAlias);
             var textPos = position
                           + new Vector2(
@@ -241,9 +240,9 @@ namespace Ensage.Common.Menu
             Drawing.DrawText(
                 value.ToString(), 
                 textPos, 
-                new Vector2((float)(item.Height * 0.52), (float)item.Width / 2), 
+                new Vector2((float)(item.Height * 0.48), (float)item.Width / 2), 
                 Color.DarkOrange.ToSharpDxColor(), 
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+                FontFlags.AntiAlias);
         }
 
         /// <summary>
@@ -278,10 +277,17 @@ namespace Ensage.Common.Menu
         /// <param name="item">
         ///     The item.
         /// </param>
+        /// <param name="add">
+        ///     The add.
+        /// </param>
         /// <param name="textColor">
         ///     The text color.
         /// </param>
-        internal static void DrawToolTipText(Vector2 position, MenuItem item, SharpDX.Color? textColor = null)
+        internal static void DrawToolTipText(
+            Vector2 position, 
+            MenuItem item, 
+            double add, 
+            SharpDX.Color? textColor = null)
         {
             if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler
                 || item.ValueType == MenuValueType.HeroToggler)
@@ -293,24 +299,24 @@ namespace Ensage.Common.Menu
             var textSize = Drawing.MeasureText(
                 s, 
                 "Arial", 
-                new Vector2((float)(item.Height * 0.51), 14), 
+                new Vector2((float)(item.Height * 0.4), 14), 
                 FontFlags.AntiAlias);
             MenuUtils.DrawBoxBordered(
-                position.X + 3, 
+                position.X + 1, 
                 position.Y, 
                 textSize.X + 8, 
                 item.Height, 
                 1, 
-                new SharpDX.Color(37, 37, 30, 220), 
-                new SharpDX.Color(10, 10, 10, 220));
+                new SharpDX.Color(37, 37, 37, (int)(add * 68)), 
+                new SharpDX.Color(10, 10, 10, (int)(add * 68)));
 
-            var textPos = position + new Vector2(6, (float)((item.Height * 0.5) - (textSize.Y * 0.5)));
+            var textPos = position + new Vector2(4, (float)((item.Height * 0.5) - (textSize.Y * 0.5)));
             Drawing.DrawText(
                 s, 
                 textPos, 
-                new Vector2((float)(item.Height * 0.51), 14), 
-                Color.DarkGray.ToSharpDxColor(), 
-                FontFlags.AntiAlias | FontFlags.DropShadow | FontFlags.Additive | FontFlags.Custom | FontFlags.StrikeOut);
+                new Vector2((float)(item.Height * 0.4), 14), 
+                new SharpDX.Color(160, 160, 160, (int)(add * 68)), 
+                FontFlags.AntiAlias);
         }
 
         #endregion

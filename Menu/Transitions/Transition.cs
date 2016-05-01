@@ -1,5 +1,7 @@
 ﻿namespace Ensage.Common.Menu.Transitions
 {
+    using System;
+
     using Ensage.Common.Extensions.SharpDX;
 
     using SharpDX;
@@ -20,6 +22,11 @@
         ///     The final value.
         /// </summary>
         private float finalValue;
+
+        /// <summary>
+        ///     The last value.
+        /// </summary>
+        private float lastValue;
 
         /// <summary>
         ///     Gets or sets the last position.
@@ -44,6 +51,8 @@
         protected Transition(double duration)
         {
             this.Duration = duration;
+            Events.OnLoad += this.Events_OnLoad;
+            this.StartTime = -9999999;
         }
 
         #endregion
@@ -62,7 +71,7 @@
         {
             get
             {
-                return Game.GameTime < this.StartTime + this.Duration;
+                return this.Time < this.StartTime + this.Duration;
             }
         }
 
@@ -70,6 +79,21 @@
         ///     Gets or sets the start time.
         /// </summary>
         public double StartTime { get; set; }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Gets the time.
+        /// </summary>
+        private float Time
+        {
+            get
+            {
+                return (Utils.TickCount / 1000) + (Game.Ping / 1000);
+            }
+        }
 
         #endregion
 
@@ -112,7 +136,7 @@
                 this.endPosition, 
                 (float)
                 this.Equation(
-                    Game.GameTime - this.StartTime, 
+                    this.Time - this.StartTime, 
                     0, 
                     this.endPosition.Distance(this.startPosition), 
                     this.Duration));
@@ -126,12 +150,26 @@
         /// </returns>
         public float GetValue()
         {
-            if (!this.Moving)
+            if (this.startValue == 0 && this.finalValue == 0)
             {
-                return this.finalValue;
+                this.lastValue =
+                    (float)
+                    this.Equation(
+                        this.Time - this.StartTime, 
+                        0, 
+                        this.endPosition.Distance(this.startPosition), 
+                        this.Duration);
+                return this.lastValue;
             }
 
-            return (float)this.Equation(Game.GameTime - this.StartTime, this.startValue, this.finalValue, this.Duration);
+            if (!this.Moving && this.StartTime > 0)
+            {
+                return this.lastValue;
+            }
+
+            this.lastValue =
+                (float)this.Equation(this.Time - this.StartTime, this.startValue, this.finalValue, this.Duration);
+            return this.lastValue;
         }
 
         /// <summary>
@@ -147,7 +185,7 @@
         {
             this.startPosition = from;
             this.endPosition = to;
-            this.StartTime = Game.GameTime;
+            this.StartTime = this.Time;
         }
 
         /// <summary>
@@ -161,9 +199,28 @@
         /// </param>
         public void Start(float from, float to)
         {
+            this.lastValue = from;
             this.startValue = from;
             this.finalValue = to;
-            this.StartTime = Game.GameTime;
+            this.StartTime = this.Time;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The events_ on load.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
+        private void Events_OnLoad(object sender, EventArgs e)
+        {
+            this.StartTime = -9999999;
         }
 
         #endregion

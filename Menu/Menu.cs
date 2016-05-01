@@ -29,6 +29,7 @@ namespace Ensage.Common.Menu
 
     using Ensage.Common.Extensions;
     using Ensage.Common.Menu.Draw;
+    using Ensage.Common.Menu.Transitions;
     using Ensage.Common.Objects;
 
     using SharpDX;
@@ -132,9 +133,19 @@ namespace Ensage.Common.Menu
         public string TextureName;
 
         /// <summary>
+        ///     The transition.
+        /// </summary>
+        private readonly Transition transition;
+
+        /// <summary>
         ///     The cached menu count.
         /// </summary>
         private int cachedMenuCount = 2;
+
+        /// <summary>
+        ///     The hovered.
+        /// </summary>
+        private bool hovered;
 
         /// <summary>
         ///     The unique id.
@@ -242,9 +253,10 @@ namespace Ensage.Common.Menu
             this.Name = name;
             this.IsRootMenu = isRootMenu;
             this.Style = FontStyle.Regular;
-            this.Color = Color.White;
+            this.Color = new Color(195, 186, 173, 255);
             this.TextureName = textureName;
             this.ShowTextWithTexture = showTextWithTexture;
+            this.transition = new ExpoEaseInOut(0.25);
             if (textureName != null && !TextureDictionary.ContainsKey(textureName))
             {
                 if (textureName.Contains("npc_dota_hero_"))
@@ -426,7 +438,7 @@ namespace Ensage.Common.Menu
                 }
 
                 var arrow = Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17);
-                if (5 + arrow + bonus < (float)(MenuSettings.MenuItemWidth - (MenuSettings.MenuItemHeight * 0.3)))
+                if (5 + arrow + bonus < (float)(MenuSettings.MenuWidth - (MenuSettings.MenuWidth * 0.3)))
                 {
                     arrow = 4;
                 }
@@ -468,7 +480,7 @@ namespace Ensage.Common.Menu
 
                 if (this.Parent != null)
                 {
-                    xOffset = (int)(this.Parent.Position.X + this.Parent.Width + 1);
+                    xOffset = (int)(this.Parent.Position.X + this.Parent.Width);
                 }
                 else
                 {
@@ -535,7 +547,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return this.Parent != null ? this.Parent.ChildrenMenuWidth : MenuSettings.MenuItemWidth;
+                return this.Parent != null ? this.Parent.ChildrenMenuWidth : MenuSettings.MenuWidth;
             }
         }
 
@@ -752,6 +764,15 @@ namespace Ensage.Common.Menu
             ObjectManager.OnAddEntity += this.ObjectMgr_OnAddEntity;
             Game.OnWndProc += this.Game_OnWndProc;
             DelayAction.Add(500, this.SetHeroTogglers);
+            MenuSettings.RootMenuWidthIncrease =
+                (int)
+                Math.Max(
+                    MenuSettings.RootMenuWidthIncrease, 
+                    Drawing.MeasureText(
+                        MultiLanguage._(this.DisplayName), 
+                        "Arial", 
+                        new Vector2((float)(this.Height * 0.48), 100), 
+                        FontFlags.AntiAlias).X);
         }
 
         /// <summary>
@@ -882,42 +903,57 @@ namespace Ensage.Common.Menu
                 return;
             }
 
-            DotaTexture abg;
-            const string ABgName = "menu_button.vmat_c";
-
-            if (!TextureDictionary.TryGetValue(ABgName, out abg))
-            {
-                abg = Drawing.GetTexture("materials/ensage_ui/ensagemenu/" + ABgName);
-                TextureDictionary.Add(ABgName, abg);
-            }
-
-            MenuUtils.DrawBoxBordered(
+            var wasHovered = this.hovered;
+            this.hovered = Utils.IsUnderRectangle(
+                Game.MouseScreenPosition, 
                 this.Position.X, 
                 this.Position.Y, 
                 this.Width, 
-                this.Height, 
-                1, 
-                abg, 
-                new Color(15, 10, 0, 255));
-            Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), new Color(10, 10, 0, 200));
+                this.Height);
+
+            if (!wasHovered && this.hovered)
+            {
+                this.transition.Start(0, this.Height);
+            }
+            else if (wasHovered && !this.hovered)
+            {
+                this.transition.Start(0, this.Height);
+            }
+
+            var add = this.hovered
+                          ? this.transition.GetValue() * 0.1
+                          : this.transition.GetValue() > 0 || this.transition.Moving
+                                ? (this.Height - this.transition.GetValue()) * 0.1
+                                : 0;
+
+            DotaTexture abg;
+            const string ABgName = "menubg1.vmat_c";
+
+            if (!TextureDictionary.TryGetValue(ABgName, out abg))
+            {
+                abg = Drawing.GetTexture("materials/ensage_ui/menu/" + ABgName);
+                TextureDictionary.Add(ABgName, abg);
+            }
+
+            // MenuUtils.DrawBoxBordered(
+            // this.Position.X, 
+            // this.Position.Y, 
+            // this.Width, 
+            // this.Height, 
+            // 1, 
+            // abg,
+            // new Color(15, 10, 0, 255));
+            Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
 
             var textSize = Drawing.MeasureText(
                 MultiLanguage._(this.DisplayName), 
                 "Arial", 
-                new Vector2((float)(this.Height * 0.55), 100), 
+                new Vector2((float)(this.Height * 0.48), 100), 
                 FontFlags.AntiAlias);
             var textPos = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize.Y * 0.5)));
             var bonusWidth = 0;
-            if (this.TextureName == null)
-            {
-                Drawing.DrawText(
-                    MultiLanguage._(this.DisplayName), 
-                    textPos, 
-                    new Vector2((float)(this.Height * 0.55), 100), 
-                    this.Color, 
-                    FontFlags.AntiAlias | FontFlags.Additive | FontFlags.Custom);
-            }
-            else
+
+            if (this.TextureName != null)
             {
                 var tName = this.TextureName;
                 if (tName.Contains("npc_dota_hero"))
@@ -931,7 +967,7 @@ namespace Ensage.Common.Menu
                         new Vector2(this.Height + 15, this.Height - 4), 
                         Color.Black, 
                         true);
-                    bonusWidth = this.Height + 17;
+                    bonusWidth = (int)(this.Height * 1.35);
                 }
                 else if (tName.Contains("item_"))
                 {
@@ -944,7 +980,7 @@ namespace Ensage.Common.Menu
                         new Vector2(this.Height - 4, this.Height - 4), 
                         Color.Black, 
                         true);
-                    bonusWidth = this.Height - 2;
+                    bonusWidth = (int)(this.Height * 0.8);
                 }
                 else
                 {
@@ -957,88 +993,56 @@ namespace Ensage.Common.Menu
                         new Vector2(this.Height - 4, this.Height - 4), 
                         Color.Black, 
                         true);
-                    bonusWidth = this.Height - 2;
+                    bonusWidth = (int)(this.Height * 0.85);
+                }
+            }
+
+            if (5 + textSize.X + bonusWidth < (float)(this.Width - (this.Height * 0.3)))
+            {
+                DotaTexture arrow;
+                var arrowname = (this.Children.Count > 0 && this.Children[0].Visible)
+                                || (this.Items.Count > 0 && this.Items[0].Visible)
+                                    ? "arrowrighthover.vmat_c"
+                                    : "arrowright.vmat_c";
+
+                if (!TextureDictionary.TryGetValue(arrowname, out arrow))
+                {
+                    arrow = Drawing.GetTexture("materials/ensage_ui/menu/" + arrowname);
+                    TextureDictionary.Add(arrowname, arrow);
                 }
 
-                if (this.ShowTextWithTexture)
-                {
-                    Drawing.DrawText(
-                        MultiLanguage._(this.DisplayName), 
-                        textPos + new Vector2(bonusWidth, 0), 
-                        new Vector2((float)(this.Height * 0.55), 100), 
-                        this.Color, 
-                        FontFlags.AntiAlias | FontFlags.Additive | FontFlags.Custom);
-                }
+                var size = new Vector2((float)(this.Height * 0.55), (float)(this.Height * 0.55));
+                var add1 = (this.Children.Count > 0 && this.Children[0].Visible)
+                           || (this.Items.Count > 0 && this.Items[0].Visible)
+                               ? this.Height * 0.1
+                               : add;
+                Drawing.DrawRect(
+                    this.Position
+                    + new Vector2(
+                          (float)(this.Width - (this.Height * 0.5) + add1 - (size.X * 0.6)), 
+                          (float)((this.Height * 0.5) - (size.Y * 0.5))), 
+                    size, 
+                    arrow);
             }
 
             Drawing.DrawRect(
                 new Vector2(this.Position.X, this.Position.Y), 
                 new Vector2(this.Width, this.Height), 
                 (this.Children.Count > 0 && this.Children[0].Visible) || (this.Items.Count > 0 && this.Items[0].Visible)
-                    ? (Utils.IsUnderRectangle(
-                        Game.MouseScreenPosition, 
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height)
-                           ? new Color(100, 100, 100, 20)
-                           : new Color(50, 50, 50, 20))
-                    : (Utils.IsUnderRectangle(
-                        Game.MouseScreenPosition, 
-                        this.Position.X, 
-                        this.Position.Y, 
-                        this.Width, 
-                        this.Height)
-                           ? new Color(50, 50, 50, 20)
-                           : new Color(0, 0, 0, 180)));
+                    ? new Color(70, 70, 70, (int)(25 + add * 5))
+                    : new Color(60, 60, 60, (int)(5 + add * 7)));
 
-            if (5 + textSize.X + bonusWidth < (float)(this.Width - (this.Height * 0.3)))
+            if (this.TextureName == null || this.ShowTextWithTexture)
             {
-                DotaTexture arrow;
-                const string Arrowname = "ulti_nomana.vmat_c";
-
-                if (!TextureDictionary.TryGetValue(Arrowname, out arrow))
-                {
-                    arrow = Drawing.GetTexture("materials/ensage_ui/other/" + Arrowname);
-                    TextureDictionary.Add(Arrowname, arrow);
-                }
-
-                DotaTexture arrow2;
-                const string Arrowname2 = "ulti_cooldown.vmat_c";
-
-                if (!TextureDictionary.TryGetValue(Arrowname2, out arrow2))
-                {
-                    arrow2 = Drawing.GetTexture("materials/ensage_ui/other/" + Arrowname2);
-                    TextureDictionary.Add(Arrowname2, arrow2);
-                }
-
-                DotaTexture arrow3;
-                const string Arrowname3 = "ulti_ready.vmat_c";
-
-                if (!TextureDictionary.TryGetValue(Arrowname3, out arrow3))
-                {
-                    arrow3 = Drawing.GetTexture("materials/ensage_ui/other/" + Arrowname3);
-                    TextureDictionary.Add(Arrowname3, arrow3);
-                }
-
-                var size = new Vector2((float)(this.Height * 0.50), (float)(this.Height * 0.45));
-                Drawing.DrawRect(
-                    this.Position
-                    + new Vector2(
-                          (float)(this.Width - (this.Height * 0.35) - (size.X * 0.6)), 
-                          (float)((this.Height * 0.5) - (size.Y * 0.5))), 
-                    size, 
+                Drawing.DrawText(
+                    MultiLanguage._(this.DisplayName), 
+                    textPos + new Vector2(bonusWidth, 0), 
+                    new Vector2((float)(this.Height * 0.48), 100), 
                     (this.Children.Count > 0 && this.Children[0].Visible)
                     || (this.Items.Count > 0 && this.Items[0].Visible)
-                        ? arrow3
-                        : (Utils.IsUnderRectangle(
-                            Game.MouseScreenPosition, 
-                            this.Position.X, 
-                            this.Position.Y, 
-                            this.Width, 
-                            this.Height)
-                               ? arrow
-                               : arrow2));
+                        ? this.Color + new Color(50, 50, 50)
+                        : this.Color, 
+                    FontFlags.AntiAlias);
             }
 
             // Draw the menu submenus
@@ -1135,7 +1139,7 @@ namespace Ensage.Common.Menu
 
             if (this.IsRootMenu && this.Visible)
             {
-                if (cursorPos.X - MenuSettings.BasePosition.X < MenuSettings.MenuItemWidth)
+                if (cursorPos.X - MenuSettings.BasePosition.X < MenuSettings.MenuWidth)
                 {
                     var n = (int)(cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight;
                     if (this.MenuCount != n)

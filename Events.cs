@@ -34,7 +34,7 @@ namespace Ensage.Common
         /// <summary>
         ///     The unloaded.
         /// </summary>
-        private static bool unloaded;
+        private static bool unloaded = true;
 
         #endregion
 
