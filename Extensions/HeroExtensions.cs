@@ -241,7 +241,7 @@
                     }
                     else if (hero.HasModifier("modifier_dragon_knight_dragon_form"))
                     {
-                        bonus = 372;
+                        bonus = 350;
                     }
                     else if (hero.HasModifier("modifier_terrorblade_metamorphosis"))
                     {
@@ -253,14 +253,14 @@
 
             if (hero.IsRanged)
             {
-                var dragonLance = hero.FindItem("item_dragon_lance");
-                if (dragonLance != null)
+                var dragonLance = hero.FindItem("item_dragon_lance", true);
+                if (dragonLance != null && dragonLance.IsValid)
                 {
                     bonus += dragonLance.GetAbilityData("base_attack_range");
                 }
             }
 
-            range = (float)(hero.AttackRange + bonus + (hero.HullRadius / 2));
+            range = (float)(hero.AttackRange + bonus + hero.HullRadius);
             if (!RangeDictionary.ContainsKey(hero.Handle))
             {
                 RangeDictionary.Add(hero.Handle, range);

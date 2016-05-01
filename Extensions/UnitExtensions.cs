@@ -616,7 +616,7 @@ namespace Ensage.Common.Extensions
                 return range;
             }
 
-            range = unit.AttackRange + (unit.HullRadius / 2);
+            range = unit.AttackRange + unit.HullRadius;
             if (!RangeDictionary.ContainsKey(unit.Handle))
             {
                 RangeDictionary.Add(unit.Handle, range);
