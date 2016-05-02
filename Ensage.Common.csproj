@@ -91,9 +91,11 @@
     <Compile Include="Extensions\UnitExtensions.cs" />
     <Compile Include="HUDInfo.cs" />
     <Compile Include="Menu\Draw\DragAndDrop.cs" />
+    <Compile Include="Menu\Draw\DraggableItem.cs" />
     <Compile Include="Menu\Draw\OnOffCircleSlider.cs" />
     <Compile Include="Menu\Draw\OnOffSlider.cs" />
     <Compile Include="Menu\Draw\PriorityIcon.cs" />
+    <Compile Include="Menu\Draw\ResizableItem.cs" />
     <Compile Include="Menu\MenuDrawHelper.cs" />
     <Compile Include="Menu\MenuGlobals.cs" />
     <Compile Include="Menu\MenuItem.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Menu\Transitions\CircEaseOutIn.cs" />
     <Compile Include="Menu\Transitions\ElasticEaseInOut.cs" />
     <Compile Include="Menu\Transitions\ExpoEaseInOut.cs" />
+    <Compile Include="Menu\Transitions\QuadEaseOut.cs" />
     <Compile Include="Menu\Transitions\QuartEaseInOut.cs" />
     <Compile Include="Menu\Transitions\CubicEaseInOut.cs" />
     <Compile Include="Menu\Transitions\Transition.cs" />

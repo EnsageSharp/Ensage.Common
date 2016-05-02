@@ -39,7 +39,7 @@ namespace Ensage.Common.Menu
     /// <summary>
     ///     The menu.
     /// </summary>
-    public class Menu
+    public class Menu : DraggableItem
     {
         #region Static Fields
 
@@ -47,11 +47,6 @@ namespace Ensage.Common.Menu
         ///     The root.
         /// </summary>
         public static readonly Menu Root = new Menu("Menu Settings", "Menu Settings");
-
-        /// <summary>
-        ///     The item dictionary.
-        /// </summary>
-        public static Dictionary<string, MenuItem> ItemDictionary;
 
         /// <summary>
         ///     The menu position dictionary.
@@ -64,23 +59,33 @@ namespace Ensage.Common.Menu
         public static Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
         /// <summary>
-        ///     The texture dictionary.
-        /// </summary>
-        public static Dictionary<string, DotaTexture> TextureDictionary;
-
-        /// <summary>
         ///     The loaded.
         /// </summary>
         private static bool loaded;
+
+        /// <summary>
+        ///     The menu count.
+        /// </summary>
+        private static int menuCount;
 
         /// <summary>
         ///     The new message type.
         /// </summary>
         private static StringList newMessageType;
 
+        /// <summary>
+        ///     The root menus draggable.
+        /// </summary>
+        private static List<DraggableItem> rootMenusDraggable = new List<DraggableItem>();
+
         #endregion
 
         #region Fields
+
+        /// <summary>
+        ///     The cached menu count.
+        /// </summary>
+        public int CachedMenuCount = 2;
 
         /// <summary>
         ///     The children.
@@ -88,49 +93,9 @@ namespace Ensage.Common.Menu
         public List<Menu> Children = new List<Menu>();
 
         /// <summary>
-        ///     The color.
-        /// </summary>
-        public Color Color;
-
-        /// <summary>
-        ///     The display name.
-        /// </summary>
-        public string DisplayName;
-
-        /// <summary>
-        ///     The is root menu.
-        /// </summary>
-        public bool IsRootMenu;
-
-        /// <summary>
         ///     The items.
         /// </summary>
         public List<MenuItem> Items = new List<MenuItem>();
-
-        /// <summary>
-        ///     The name.
-        /// </summary>
-        public string Name;
-
-        /// <summary>
-        ///     The parent.
-        /// </summary>
-        public Menu Parent;
-
-        /// <summary>
-        ///     The show text with texture.
-        /// </summary>
-        public bool ShowTextWithTexture;
-
-        /// <summary>
-        ///     The style.
-        /// </summary>
-        public FontStyle Style;
-
-        /// <summary>
-        ///     The texture name.
-        /// </summary>
-        public string TextureName;
 
         /// <summary>
         ///     The transition.
@@ -138,19 +103,9 @@ namespace Ensage.Common.Menu
         private readonly Transition transition;
 
         /// <summary>
-        ///     The cached menu count.
-        /// </summary>
-        private int cachedMenuCount = 2;
-
-        /// <summary>
         ///     The hovered.
         /// </summary>
         private bool hovered;
-
-        /// <summary>
-        ///     The unique id.
-        /// </summary>
-        private string uniqueId;
 
         /// <summary>
         ///     The visible.
@@ -220,6 +175,7 @@ namespace Ensage.Common.Menu
             Events.OnLoad += Events_OnLoad;
             Events.OnClose += (sender, args) => { loaded = false; };
             message.ValueChanged += MessageValueChanged;
+            Drawing.OnDraw += OnDraw;
         }
 
         /// <summary>
@@ -240,14 +196,13 @@ namespace Ensage.Common.Menu
         /// <param name="showTextWithTexture">
         ///     The show text with texture.
         /// </param>
-        /// <exception cref="ArgumentException">
-        /// </exception>
         public Menu(
             string displayName, 
             string name, 
             bool isRootMenu = false, 
             string textureName = null, 
             bool showTextWithTexture = false)
+            : base(20)
         {
             this.DisplayName = displayName;
             this.Name = name;
@@ -296,6 +251,7 @@ namespace Ensage.Common.Menu
                 }
 
                 RootMenus.Add(rootName, this);
+                rootMenusDraggable.Add(this);
             }
         }
 
@@ -310,6 +266,117 @@ namespace Ensage.Common.Menu
                 RootMenus.Remove(rootName);
             }
         }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        ///     The item dictionary.
+        /// </summary>
+        public static Dictionary<string, MenuItem> ItemDictionary { get; set; }
+
+        /// <summary>
+        ///     The texture dictionary.
+        /// </summary>
+        public static Dictionary<string, DotaTexture> TextureDictionary { get; set; }
+
+        /// <summary>
+        ///     The color.
+        /// </summary>
+        public Color Color { get; set; }
+
+        /// <summary>
+        ///     The display name.
+        /// </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        ///     The is root menu.
+        /// </summary>
+        public bool IsRootMenu { get; set; }
+
+        /// <summary>
+        ///     The name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     The parent.
+        /// </summary>
+        public Menu Parent { get; set; }
+
+        /// <summary>
+        ///     Gets the real position.
+        /// </summary>
+        public override Vector2 RealPosition
+        {
+            get
+            {
+                var n = this.Name + this.DisplayName;
+                if (this.Parent != null)
+                {
+                    n += this.Parent.Name;
+                }
+
+                if (!Utils.SleepCheck(n))
+                {
+                    return menuPositionDictionary[n];
+                }
+
+                int xOffset;
+
+                if (this.Parent != null)
+                {
+                    xOffset = (int)(this.Parent.Position.X + this.Parent.Width);
+                }
+                else
+                {
+                    xOffset = (int)this.MyBasePosition.X;
+                }
+
+                var basePos = new Vector2(0, this.MyBasePosition.Y);
+
+                if (this.Parent != null)
+                {
+                    basePos = new Vector2(0, this.Parent.Position.Y);
+                }
+
+                var pos = basePos + new Vector2(xOffset, 0)
+                          + (this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight));
+                if (!menuPositionDictionary.ContainsKey(n))
+                {
+                    menuPositionDictionary.Add(n, pos);
+                }
+                else
+                {
+                    menuPositionDictionary[n] = pos;
+                }
+
+                Utils.Sleep(0, n);
+                return pos;
+            }
+        }
+
+        /// <summary>
+        ///     The show text with texture.
+        /// </summary>
+        public bool ShowTextWithTexture { get; set; }
+
+        /// <summary>
+        ///     The style.
+        /// </summary>
+        public FontStyle Style { get; set; }
+
+        /// <summary>
+        ///     The texture name.
+        /// </summary>
+        public string TextureName { get; set; }
+
+        /// <summary>
+        ///     The unique id.
+        /// </summary>
+        public string UniqueId { get; set; }
 
         #endregion
 
@@ -331,10 +398,15 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     Gets the height.
         /// </summary>
-        internal int Height
+        internal override int Height
         {
             get
             {
+                if (this.ResizeTransition.Moving || this.BeingDragged)
+                {
+                    return (int)this.Size.X;
+                }
+
                 return MenuSettings.MenuItemHeight;
             }
         }
@@ -346,35 +418,36 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                var n = this.DisplayName + this.Name + "Common.Menu.CacheCount";
-                if (this.Parent != null)
-                {
-                    n += this.Parent.Name;
-                }
+                // var n = this.DisplayName + this.Name + "Common.Menu.CacheCount";
+                // if (this.Parent != null)
+                // {
+                // n += this.Parent.Name;
+                // }
 
-                if (!Utils.SleepCheck(n))
-                {
-                    return this.cachedMenuCount;
-                }
+                // if (!Utils.SleepCheck(n))
+                // {
+                // return this.CachedMenuCount;
+                // }
 
-                var globalMenuList = MenuGlobals.MenuState;
-                var i = 0;
-                var result = 0;
+                // var globalMenuList = MenuGlobals.MenuState;
+                // var i = 0;
+                // var result = 0;
 
-                foreach (var item in globalMenuList)
-                {
-                    if (item == this.uniqueId)
-                    {
-                        result = i;
-                        break;
-                    }
+                // foreach (var item in globalMenuList)
+                // {
+                // if (item == this.UniqueId)
+                // {
+                // result = i;
+                // break;
+                // }
 
-                    i++;
-                }
+                // i++;
+                // }
 
-                this.cachedMenuCount = result;
-                Utils.Sleep(2000, n);
-                return result;
+                // this.CachedMenuCount = result;
+                // Utils.Sleep(2000, n);
+                // return result;
+                return this.OrderNumber;
             }
         }
 
@@ -387,7 +460,7 @@ namespace Ensage.Common.Menu
             {
                 if (this.IsRootMenu || this.Parent == null)
                 {
-                    return MenuSettings.BasePosition + (this.MenuCount * new Vector2(0, MenuSettings.MenuItemHeight))
+                    return MenuSettings.BasePosition + (this.OrderNumber * new Vector2(0, MenuSettings.MenuItemHeight))
                            + new Vector2(5, 0);
                 }
 
@@ -459,51 +532,6 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
-        ///     Gets the position.
-        /// </summary>
-        internal Vector2 Position
-        {
-            get
-            {
-                var n = this.Name + this.DisplayName;
-                if (this.Parent != null)
-                {
-                    n += this.Parent.Name;
-                }
-
-                if (!Utils.SleepCheck(n))
-                {
-                    return menuPositionDictionary[n];
-                }
-
-                int xOffset;
-
-                if (this.Parent != null)
-                {
-                    xOffset = (int)(this.Parent.Position.X + this.Parent.Width);
-                }
-                else
-                {
-                    xOffset = (int)this.MyBasePosition.X;
-                }
-
-                var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
-                          + (this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight));
-                if (!menuPositionDictionary.ContainsKey(n))
-                {
-                    menuPositionDictionary.Add(n, pos);
-                }
-                else
-                {
-                    menuPositionDictionary[n] = pos;
-                }
-
-                Utils.Sleep(20000, n);
-                return pos;
-            }
-        }
-
-        /// <summary>
         ///     Gets or sets a value indicating whether visible.
         /// </summary>
         internal bool Visible
@@ -543,10 +571,15 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     Gets the width.
         /// </summary>
-        internal int Width
+        internal override int Width
         {
             get
             {
+                if (this.ResizeTransition.Moving || this.BeingDragged)
+                {
+                    return (int)this.Size.Y;
+                }
+
                 return this.Parent != null ? this.Parent.ChildrenMenuWidth : MenuSettings.MenuWidth;
             }
         }
@@ -582,7 +615,28 @@ namespace Ensage.Common.Menu
                     return 0;
                 }
 
-                return this.Parent.YLevel + this.Parent.Children.TakeWhile(test => test.Name != this.Name).Count();
+                return this.Parent.Children.TakeWhile(test => test.Name != this.Name).Count();
+            }
+        }
+
+        /// <summary>
+        ///     Gets the position.
+        /// </summary>
+        protected internal override Vector2 Position
+        {
+            get
+            {
+                if (this.DragTransition.Moving)
+                {
+                    return this.DraggedPosition;
+                }
+
+                if (this.BeingDragged)
+                {
+                    return this.DraggedPosition;
+                }
+
+                return this.RealPosition;
             }
         }
 
@@ -673,8 +727,7 @@ namespace Ensage.Common.Menu
         public MenuItem AddItem(MenuItem item)
         {
             item.Parent = this;
-            item.Visible = (this.Children.Count > 0 && this.Children[0].Visible)
-                           || (this.Items.Count > 0 && this.Items[0].Visible);
+            item.Visible = this.Children.Any(x => x.Visible) || this.Items.Any(x => x.Visible);
             this.Items.Add(item);
             if (item.ValueType == MenuValueType.HeroToggler)
             {
@@ -760,7 +813,6 @@ namespace Ensage.Common.Menu
         {
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
             AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
-            Drawing.OnDraw += this.Drawing_OnDraw;
             ObjectManager.OnAddEntity += this.ObjectMgr_OnAddEntity;
             Game.OnWndProc += this.Game_OnWndProc;
             DelayAction.Add(500, this.SetHeroTogglers);
@@ -773,117 +825,9 @@ namespace Ensage.Common.Menu
                         "Arial", 
                         new Vector2((float)(this.Height * 0.48), 100), 
                         FontFlags.AntiAlias).X);
+            this.OrderNumber = menuCount;
+            menuCount++;
         }
-
-        /// <summary>
-        ///     The item.
-        /// </summary>
-        /// <param name="name">
-        ///     The name.
-        /// </param>
-        /// <param name="makeChampionUniq">
-        ///     The make champion uniq.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="MenuItem" />.
-        /// </returns>
-        public MenuItem Item(string name, bool makeChampionUniq = false)
-        {
-            if (makeChampionUniq)
-            {
-                name = ObjectManager.LocalHero.StoredName() + name;
-            }
-
-            MenuItem tempItem;
-            if (ItemDictionary.TryGetValue(this.Name + name, out tempItem))
-            {
-                return tempItem;
-            }
-
-            tempItem = this.Items.FirstOrDefault(x => x.Name == name)
-                       ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
-                              .FirstOrDefault();
-            return tempItem;
-        }
-
-        /// <summary>
-        ///     The remove from main menu.
-        /// </summary>
-        public void RemoveFromMainMenu()
-        {
-            try
-            {
-                var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
-                if (RootMenus.ContainsKey(rootName))
-                {
-                    RootMenus.Remove(rootName);
-                    Drawing.OnDraw -= this.Drawing_OnDraw;
-                    Game.OnWndProc -= this.Game_OnWndProc;
-                    this.UnloadMenuState();
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        /// <summary>
-        ///     The remove sub menu.
-        /// </summary>
-        /// <param name="name">
-        ///     The name.
-        /// </param>
-        public void RemoveSubMenu(string name)
-        {
-            var subMenu = this.Children.FirstOrDefault(x => x.Name == name);
-            if (subMenu == null)
-            {
-                return;
-            }
-
-            subMenu.Parent = null;
-            this.Children.Remove(subMenu);
-        }
-
-        /// <summary>
-        ///     The set font style.
-        /// </summary>
-        /// <param name="fontStyle">
-        ///     The font style.
-        /// </param>
-        /// <param name="fontColor">
-        ///     The font color.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="Menu" />.
-        /// </returns>
-        public Menu SetFontStyle(FontStyle fontStyle = FontStyle.Regular, Color? fontColor = null)
-        {
-            this.Style = fontStyle;
-            this.Color = fontColor ?? Color.White;
-
-            return this;
-        }
-
-        /// <summary>
-        ///     The sub menu.
-        /// </summary>
-        /// <param name="name">
-        ///     The name.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="Menu" />.
-        /// </returns>
-        public Menu SubMenu(string name)
-        {
-            // Search in submenus and if it doesn't exist add it.
-            var subMenu = this.Children.FirstOrDefault(sm => sm.Name == name);
-            return subMenu ?? this.AddSubMenu(new Menu(name, name));
-        }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         ///     The drawing_ on draw.
@@ -891,7 +835,7 @@ namespace Ensage.Common.Menu
         /// <param name="args">
         ///     The args.
         /// </param>
-        internal void Drawing_OnDraw(EventArgs args)
+        public void Drawing_OnDraw(EventArgs args)
         {
             if (!Game.IsInGame)
             {
@@ -1063,6 +1007,116 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
+        ///     The item.
+        /// </summary>
+        /// <param name="name">
+        ///     The name.
+        /// </param>
+        /// <param name="makeChampionUniq">
+        ///     The make champion unique.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="MenuItem" />.
+        /// </returns>
+        public MenuItem Item(string name, bool makeChampionUniq = false)
+        {
+            if (makeChampionUniq)
+            {
+                name = ObjectManager.LocalHero.StoredName() + name;
+            }
+
+            MenuItem tempItem;
+            if (ItemDictionary.TryGetValue(this.Name + name, out tempItem))
+            {
+                return tempItem;
+            }
+
+            tempItem = this.Items.FirstOrDefault(x => x.Name == name)
+                       ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
+                              .FirstOrDefault();
+            return tempItem;
+        }
+
+        /// <summary>
+        ///     The remove from main menu.
+        /// </summary>
+        public void RemoveFromMainMenu()
+        {
+            try
+            {
+                var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
+                if (RootMenus.ContainsKey(rootName))
+                {
+                    RootMenus.Remove(rootName);
+                    Drawing.OnDraw -= this.Drawing_OnDraw;
+                    Game.OnWndProc -= this.Game_OnWndProc;
+                    this.UnloadMenuState();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        /// <summary>
+        ///     The remove sub menu.
+        /// </summary>
+        /// <param name="name">
+        ///     The name.
+        /// </param>
+        public void RemoveSubMenu(string name)
+        {
+            var subMenu = this.Children.FirstOrDefault(x => x.Name == name);
+            if (subMenu == null)
+            {
+                return;
+            }
+
+            subMenu.Parent = null;
+            this.Children.Remove(subMenu);
+        }
+
+        /// <summary>
+        ///     The set font style.
+        /// </summary>
+        /// <param name="fontStyle">
+        ///     The font style.
+        /// </param>
+        /// <param name="fontColor">
+        ///     The font color.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Menu" />.
+        /// </returns>
+        public Menu SetFontStyle(FontStyle fontStyle = FontStyle.Regular, Color? fontColor = null)
+        {
+            this.Style = fontStyle;
+            this.Color = fontColor ?? Color.White;
+
+            return this;
+        }
+
+        /// <summary>
+        ///     The sub menu.
+        /// </summary>
+        /// <param name="name">
+        ///     The name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Menu" />.
+        /// </returns>
+        public Menu SubMenu(string name)
+        {
+            // Search in submenus and if it doesn't exist add it.
+            var subMenu = this.Children.FirstOrDefault(sm => sm.Name == name);
+            return subMenu ?? this.AddSubMenu(new Menu(name, name));
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
         ///     The game_ on wnd proc.
         /// </summary>
         /// <param name="args">
@@ -1075,121 +1129,23 @@ namespace Ensage.Common.Menu
                 return;
             }
 
-            this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam, args);
-        }
-
-        /// <summary>
-        ///     The is inside.
-        /// </summary>
-        /// <param name="position">
-        ///     The position.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />.
-        /// </returns>
-        internal bool IsInside(Vector2 position)
-        {
-            return Utils.IsUnderRectangle(position, this.Position.X, this.Position.Y, this.Width, this.Height);
-        }
-
-        /// <summary>
-        ///     The on receive message.
-        /// </summary>
-        /// <param name="message">
-        ///     The message.
-        /// </param>
-        /// <param name="cursorPos">
-        ///     The cursor pos.
-        /// </param>
-        /// <param name="key">
-        ///     The key.
-        /// </param>
-        /// <param name="args">
-        ///     The args.
-        /// </param>
-        internal void OnReceiveMessage(
-            Utils.WindowsMessages message, 
-            Vector2 cursorPos, 
-            uint key, 
-            WndEventArgs args = null)
-        {
-            // Spread the message to the menu's children recursively
-            foreach (var item in this.Items)
-            {
-                item.OnReceiveMessage(message, cursorPos, key, args);
-
-                // Console.WriteLine(args != null && item.IsInside(cursorPos));
-            }
-
-            foreach (var child in this.Children)
-            {
-                child.OnReceiveMessage(message, cursorPos, key, args);
-            }
-
             if (!this.Visible)
             {
                 return;
             }
 
-            // Handle the left clicks on the menus to hide or show the submenus.
-            if (message != Utils.WindowsMessages.WM_LBUTTONDOWN)
+            if (this.IsRootMenu)
             {
+                this.DraggableOnReceiveMessage(
+                    (Utils.WindowsMessages)args.Msg, 
+                    Game.MouseScreenPosition, 
+                    (uint)args.WParam, 
+                    rootMenusDraggable, 
+                    args);
                 return;
             }
 
-            if (this.IsRootMenu && this.Visible)
-            {
-                if (cursorPos.X - MenuSettings.BasePosition.X < MenuSettings.MenuWidth)
-                {
-                    var n = (int)(cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight;
-                    if (this.MenuCount != n)
-                    {
-                        foreach (var schild in this.Children)
-                        {
-                            schild.Visible = false;
-                        }
-
-                        foreach (var sitem in this.Items)
-                        {
-                            sitem.Visible = false;
-                        }
-                    }
-                }
-            }
-
-            if (!this.IsInside(cursorPos))
-            {
-                return;
-            }
-
-            if (!this.IsRootMenu && this.Parent != null)
-            {
-                // Close all the submenus in the level 
-                foreach (var child in this.Parent.Children.Where(child => child.Name != this.Name))
-                {
-                    foreach (var schild in child.Children)
-                    {
-                        schild.Visible = false;
-                    }
-
-                    foreach (var sitem in child.Items)
-                    {
-                        sitem.Visible = false;
-                    }
-                }
-            }
-
-            // Hide or Show the submenus.
-            foreach (var child in this.Children)
-            {
-                child.Visible = !child.Visible;
-            }
-
-            // Hide or Show the items.
-            foreach (var item in this.Items)
-            {
-                item.Visible = !item.Visible;
-            }
+            this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam, args);
         }
 
         /// <summary>
@@ -1301,6 +1257,119 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
+        ///     The is inside.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        protected override bool IsInside(Vector2 position)
+        {
+            return Utils.IsUnderRectangle(position, this.Position.X, this.Position.Y, this.Width, this.Height);
+        }
+
+        /// <summary>
+        ///     The on receive message.
+        /// </summary>
+        /// <param name="message">
+        ///     The message.
+        /// </param>
+        /// <param name="cursorPos">
+        ///     The cursor position.
+        /// </param>
+        /// <param name="key">
+        ///     The key.
+        /// </param>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
+        protected override void OnReceiveMessage(
+            Utils.WindowsMessages message, 
+            Vector2 cursorPos, 
+            uint key, 
+            WndEventArgs args = null)
+        {
+            // Spread the message to the menu's children recursively
+            foreach (var item in this.Items)
+            {
+                item.OnReceiveMessage(message, cursorPos, key, args);
+
+                // Console.WriteLine(args != null && item.IsInside(cursorPos));
+            }
+
+            foreach (var child in this.Children)
+            {
+                child.OnReceiveMessage(message, cursorPos, key, args);
+            }
+
+            if (!this.Visible)
+            {
+                return;
+            }
+
+            if (message != Utils.WindowsMessages.WM_LBUTTONUP)
+            {
+                return;
+            }
+
+            if (this.IsRootMenu && this.Visible)
+            {
+                if (cursorPos.X - MenuSettings.BasePosition.X <= MenuSettings.MenuWidth)
+                {
+                    var n = (int)(cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight;
+                    if (this.MenuCount != n)
+                    {
+                        foreach (var schild in this.Children)
+                        {
+                            schild.Visible = false;
+                        }
+
+                        foreach (var sitem in this.Items)
+                        {
+                            sitem.Visible = false;
+                        }
+                    }
+                }
+            }
+
+            if (!this.IsInside(cursorPos))
+            {
+                return;
+            }
+
+            if (!this.IsRootMenu && this.Parent != null)
+            {
+                // Close all the submenus in the level 
+                foreach (var child in this.Parent.Children.Where(child => child.Name != this.Name))
+                {
+                    foreach (var schild in child.Children)
+                    {
+                        schild.Visible = false;
+                    }
+
+                    foreach (var sitem in child.Items)
+                    {
+                        sitem.Visible = false;
+                    }
+                }
+            }
+
+            // Hide or Show the submenus.
+            foreach (var child in this.Children)
+            {
+                child.Visible = !child.Visible;
+            }
+
+            // Hide or Show the items.
+            foreach (var item in this.Items)
+            {
+                item.Visible = !item.Visible;
+            }
+        }
+
+        /// <summary>
         ///     The events_ on load.
         /// </summary>
         /// <param name="sender">
@@ -1358,6 +1427,31 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
+        ///     The on draw.
+        /// </summary>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
+        private static void OnDraw(EventArgs args)
+        {
+            Menu draggedMenu = null;
+            foreach (var rootMenu in RootMenus.OrderBy(x => x.Value.OrderNumber))
+            {
+                if (rootMenu.Value.BeingDragged)
+                {
+                    draggedMenu = rootMenu.Value;
+                }
+
+                rootMenu.Value.Drawing_OnDraw(args);
+            }
+
+            if (draggedMenu != null)
+            {
+                draggedMenu.Drawing_OnDraw(args);
+            }
+        }
+
+        /// <summary>
         ///     The init menu state.
         /// </summary>
         /// <param name="assemblyName">
@@ -1365,21 +1459,16 @@ namespace Ensage.Common.Menu
         /// </param>
         private void InitMenuState(string assemblyName)
         {
-            this.uniqueId = assemblyName + "." + this.Name;
+            this.UniqueId = assemblyName + "." + this.Name;
 
-            var globalMenuList = MenuGlobals.MenuState;
+            var globalMenuList = MenuGlobals.MenuState ?? new List<string>();
 
-            if (globalMenuList == null)
+            while (globalMenuList.Contains(this.UniqueId))
             {
-                globalMenuList = new List<string>();
+                this.UniqueId += ".";
             }
 
-            while (globalMenuList.Contains(this.uniqueId))
-            {
-                this.uniqueId += ".";
-            }
-
-            globalMenuList.Add(this.uniqueId);
+            globalMenuList.Add(this.UniqueId);
 
             MenuGlobals.MenuState = globalMenuList;
         }
@@ -1410,7 +1499,7 @@ namespace Ensage.Common.Menu
         private void UnloadMenuState()
         {
             var globalMenuList = MenuGlobals.MenuState;
-            globalMenuList.Remove(this.uniqueId);
+            globalMenuList.Remove(this.UniqueId);
             MenuGlobals.MenuState = globalMenuList;
         }
 

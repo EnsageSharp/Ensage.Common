@@ -237,7 +237,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return this.Parent == null ? MenuSettings.BasePosition : this.Parent.MyBasePosition;
+                return this.Parent == null ? MenuSettings.BasePosition : this.Parent.Position;
             }
         }
 
@@ -324,11 +324,6 @@ namespace Ensage.Common.Menu
                         break;
                 }
 
-                if (!string.IsNullOrEmpty(this.Tooltip))
-                {
-                    extra += this.Height;
-                }
-
                 if (!Menu.menuPositionDictionary.ContainsKey(n))
                 {
                     Menu.menuPositionDictionary.Add(
@@ -350,21 +345,14 @@ namespace Ensage.Common.Menu
                             (Drawing.MeasureText(
                                 MultiLanguage._(this.DisplayName), 
                                 "Arial", 
-                                new Vector2((float)(this.Height * 0.51), 20), 
+                                new Vector2((float)(this.Height * 0.45), 20), 
                                 FontFlags.AntiAlias).X + this.Height * 1.4
                              + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8) + extra));
                 }
 
                 Utils.Sleep(20000, n);
 
-                return
-                    (int)
-                    (Drawing.MeasureText(
-                        MultiLanguage._(this.DisplayName), 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.51), 20), 
-                        FontFlags.AntiAlias).X + this.Height * 1.4 + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8)
-                     + extra);
+                return (int)Menu.menuPositionDictionary[n].X;
             }
         }
 
@@ -399,7 +387,7 @@ namespace Ensage.Common.Menu
                     Menu.menuPositionDictionary[n] = pos;
                 }
 
-                Utils.Sleep(20000, n);
+                Utils.Sleep(0, n);
                 return pos;
             }
         }
@@ -465,7 +453,7 @@ namespace Ensage.Common.Menu
                     return 0;
                 }
 
-                return this.Parent.YLevel + this.Parent.Children.Count
+                return this.Parent.Children.Count
                        + this.Parent.Items.TakeWhile(test => test.Name != this.Name).Count(c => c.ShowItem);
             }
         }
