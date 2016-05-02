@@ -1051,6 +1051,7 @@ namespace Ensage.Common.Menu
                     Drawing.OnDraw -= this.Drawing_OnDraw;
                     Game.OnWndProc -= this.Game_OnWndProc;
                     this.UnloadMenuState();
+                    menuCount--;
                 }
             }
             catch (Exception)
@@ -1129,13 +1130,14 @@ namespace Ensage.Common.Menu
                 return;
             }
 
-            if (!this.Visible)
-            {
-                return;
-            }
-
             if (this.IsRootMenu)
             {
+                if (!this.Visible)
+                {
+                    this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam, args);
+                    return;
+                }
+
                 this.DraggableOnReceiveMessage(
                     (Utils.WindowsMessages)args.Msg, 
                     Game.MouseScreenPosition, 
