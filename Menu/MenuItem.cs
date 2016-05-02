@@ -35,6 +35,15 @@ namespace Ensage.Common.Menu
     /// </summary>
     public class MenuItem
     {
+        #region Static Fields
+
+        /// <summary>
+        ///     The item count.
+        /// </summary>
+        private static int itemCount;
+
+        #endregion
+
         #region Fields
 
         /// <summary>
@@ -189,6 +198,8 @@ namespace Ensage.Common.Menu
             this.Tag = 0;
             this.menuConfigName = Assembly.GetCallingAssembly().GetName().Name
                                   + Assembly.GetCallingAssembly().GetType().GUID;
+            itemCount++;
+            this.UniqueId = this.Name + this.DisplayName + itemCount;
         }
 
         #endregion
@@ -214,6 +225,11 @@ namespace Ensage.Common.Menu
                 return CommonMenu.MenuConfig.Item("EnsageSharp.Common.TooltipDuration").GetValue<Slider>().Value;
             }
         }
+
+        /// <summary>
+        ///     Gets or sets the unique id.
+        /// </summary>
+        public string UniqueId { get; set; }
 
         #endregion
 
@@ -818,15 +834,15 @@ namespace Ensage.Common.Menu
                     MenuVariables.OnOffDictionary = new Dictionary<string, OnOffCircleSlider>();
                 }
 
-                if (!MenuVariables.OnOffDictionary.ContainsKey(this.Name + this.DisplayName))
+                if (!MenuVariables.OnOffDictionary.ContainsKey(this.UniqueId))
                 {
                     MenuVariables.OnOffDictionary.Add(
-                        this.Name + this.DisplayName, 
+                        this.UniqueId, 
                         new OnOffCircleSlider(new Color(150, 110, 70), new Color(120, 80, 20), 0, this.GetValue<bool>()));
                 }
                 else
                 {
-                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Enabled = this.GetValue<bool>();
+                    MenuVariables.OnOffDictionary[this.UniqueId].Enabled = this.GetValue<bool>();
                 }
             }
 
@@ -937,12 +953,12 @@ namespace Ensage.Common.Menu
                     MenuDrawHelper.DrawSlider(this.Position, this);
                     break;
                 case MenuValueType.Boolean:
-                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Position =
+                    MenuVariables.OnOffDictionary[this.UniqueId].Position =
                         new Vector2(
                             (float)(this.Position.X + this.Width - this.Height - (this.Height / 2.5)), 
                             this.Position.Y);
-                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Height = this.Height;
-                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Draw(Game.MouseScreenPosition);
+                    MenuVariables.OnOffDictionary[this.UniqueId].Height = this.Height;
+                    MenuVariables.OnOffDictionary[this.UniqueId].Draw(Game.MouseScreenPosition);
                     break;
 
                 case MenuValueType.KeyBind:
@@ -1245,7 +1261,7 @@ namespace Ensage.Common.Menu
                     }
 
                     var boolValue = !this.GetValue<bool>();
-                    MenuVariables.OnOffDictionary[this.Name + this.DisplayName].Enabled = boolValue;
+                    MenuVariables.OnOffDictionary[this.UniqueId].Enabled = boolValue;
                     this.SetValue(boolValue);
 
                     break;

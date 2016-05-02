@@ -64,6 +64,16 @@
         private bool leftButtonDown;
 
         /// <summary>
+        ///     The off position.
+        /// </summary>
+        private Vector2 offPosition;
+
+        /// <summary>
+        ///     The on position.
+        /// </summary>
+        private Vector2 onPosition;
+
+        /// <summary>
         ///     The smoothly moving.
         /// </summary>
         private bool smoothlyMoving;
@@ -171,8 +181,13 @@
 
             set
             {
-                this.colorChange.Start(0, 255);
+                if (this.enabled == value)
+                {
+                    return;
+                }
+
                 this.enabled = value;
+                this.IndicatorPosition = this.enabled ? this.onPosition : this.offPosition;
             }
         }
 
@@ -195,13 +210,27 @@
             {
                 if (!this.smoothlyMoving)
                 {
+                    if (this.indicatorPosition.IsZero)
+                    {
+                        var size = new Vector2((float)(this.Height * 1.4), (float)(this.Height / 1.35));
+                        var bgpos = this.Position + new Vector2(0, this.Height / 2 - size.Y / 2);
+                        var circleSize = new Vector2((float)(size.Y * 0.8));
+                        this.onPosition = bgpos
+                                          + new Vector2(
+                                                (float)((size.X * 0.97) - size.Y), 
+                                                (size.Y / 2) - (circleSize.Y / 2));
+                        this.offPosition = bgpos
+                                           + new Vector2((float)(size.X * 0.13), (size.Y / 2) - (circleSize.Y / 2));
+                        this.indicatorPosition = this.enabled ? this.onPosition : this.offPosition;
+                    }
+
                     return this.indicatorPosition;
                 }
 
                 var movePosition = this.transition.GetPosition();
                 if (this.indicatorPosition != movePosition && this.transition.Moving)
                 {
-                    return movePosition;
+                    return new Vector2(movePosition.X, this.indicatorPosition.Y);
                 }
 
                 this.indicatorPosition = movePosition;
@@ -291,12 +320,9 @@
             var bgpos = this.Position + new Vector2(0, this.Height / 2 - size.Y / 2);
             Drawing.DrawRect(bgpos, size, Textures.GetTexture("materials/ensage_ui/menu/sliderbgon.vmat_c"));
             var circleSize = new Vector2((float)(size.Y * 0.8));
-            this.IndicatorPosition = this.Enabled
-                                         ? bgpos
-                                           + new Vector2(
-                                                 (float)(size.X * 0.97 - size.Y), 
-                                                 size.Y / 2 - circleSize.Y / 2)
-                                         : bgpos + new Vector2((float)(size.X * 0.13), size.Y / 2 - circleSize.Y / 2);
+            this.onPosition = bgpos + new Vector2((float)((size.X * 0.97) - size.Y), (size.Y / 2) - (circleSize.Y / 2));
+            this.offPosition = bgpos + new Vector2((float)(size.X * 0.13), (size.Y / 2) - (circleSize.Y / 2));
+            this.indicatorPosition = this.enabled ? this.onPosition : this.offPosition;
             Drawing.DrawRect(
                 this.IndicatorPosition, 
                 circleSize, 

@@ -201,6 +201,7 @@
                 this.DragTransition.Start(this.Position, this.RealPosition);
                 this.ResizeBack();
                 this.BeingDragged = false;
+                return;
             }
 
             if (!this.dragAndDropSleeper.Sleeping)
