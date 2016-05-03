@@ -300,7 +300,9 @@
         /// </returns>
         public static Player Player(this Hero hero)
         {
-            return Players.All.FirstOrDefault(x => x.Hero != null && x.Hero.IsValid && x.Hero.Equals(hero));
+            return
+                Players.All.FirstOrDefault(
+                    x => x != null && x.IsValid && x.Hero != null && x.Hero.IsValid && x.Hero.Equals(hero));
         }
 
         /// <summary>

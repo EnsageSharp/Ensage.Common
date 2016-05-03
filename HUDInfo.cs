@@ -14,6 +14,7 @@
 namespace Ensage.Common
 {
     using System;
+    using System.Collections.Generic;
 
     using SharpDX;
 
@@ -53,6 +54,11 @@ namespace Ensage.Common
         ///     The monitor.
         /// </summary>
         private static readonly float Monitor;
+
+        /// <summary>
+        ///     The player id dictionary.
+        /// </summary>
+        private static readonly Dictionary<float, int> PlayerIdDictionary = new Dictionary<float, int>();
 
         /// <summary>
         ///     The radiant compare.
@@ -277,7 +283,32 @@ namespace Ensage.Common
         /// </returns>
         public static Vector2 GetTopPanelPosition(Hero hero)
         {
-            var id = hero.Player.ID;
+            int id;
+            if (hero.Player == null)
+            {
+                if (PlayerIdDictionary.ContainsKey(hero.Handle))
+                {
+                    id = PlayerIdDictionary[hero.Handle];
+                }
+                else
+                {
+                    return Vector2.Zero;
+                }
+            }
+            else
+            {
+                id = hero.Player.ID;
+            }
+
+            if (!PlayerIdDictionary.ContainsKey(hero.Handle))
+            {
+                PlayerIdDictionary.Add(hero.Handle, id);
+            }
+            else
+            {
+                PlayerIdDictionary[hero.Handle] = id;
+            }
+
             return new Vector2((float)(GetXX(hero) - (20 * Monitor) + (X * id)), 0);
         }
 
