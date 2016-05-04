@@ -719,7 +719,7 @@ namespace Ensage.Common.Extensions.Damage
 
             var hero = source as Hero;
 
-            if (hero != null)
+            if (hero != null && spellName != "axe_culling_blade")
             {
                 damage *= 1f + ((hero.TotalIntelligence / 16f) / 100f);
             }
