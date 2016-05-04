@@ -140,7 +140,7 @@
 
             if (!this.BeingDragged && message == Utils.WindowsMessages.WM_MOUSEMOVE)
             {
-                if (this.leftButtonDown)
+                if (this.leftButtonDown && !this.ResizeTransition.Moving)
                 {
                     this.PrepareDraggedIcon();
                 }
@@ -174,7 +174,7 @@
                 }
             }
 
-            if (message == Utils.WindowsMessages.WM_LBUTTONDOWN)
+            if (!this.dragAndDropSleeper.Sleeping && message == Utils.WindowsMessages.WM_LBUTTONDOWN)
             {
                 this.leftButtonDown = true;
                 this.dragAndDropSleeper.Sleep(200);
@@ -253,7 +253,11 @@
                                   - new Vector2(
                                         this.Width * (this.DefaultResizePercentage / 200),
                                         this.Height * (this.DefaultResizePercentage / 200));
-            this.Size = new Vector2(this.Height, this.Width);
+            if (!this.ResizeTransition.Moving)
+            {
+                this.Size = new Vector2(this.Height, this.Width);
+            }
+
             this.mousePositionDifference = this.lastClickMousePosition - enlargePosition;
             this.DragTransition.Start(this.Position, enlargePosition);
             this.RealPosition = this.Position;
