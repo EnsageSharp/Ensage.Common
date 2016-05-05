@@ -367,6 +367,17 @@ namespace Ensage.Common
         }
 
         /// <summary>
+        ///     The move camera.
+        /// </summary>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        public static void MoveCamera(Vector3 position)
+        {
+            Game.ExecuteCommand("dota_camera_set_lookatpos " + position.X + " " + position.Y);
+        }
+
+        /// <summary>
         ///     Converts given radian to degrees
         /// </summary>
         /// <param name="angle">
