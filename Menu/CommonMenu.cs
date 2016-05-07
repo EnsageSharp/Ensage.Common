@@ -13,28 +13,54 @@
 // </copyright>
 namespace Ensage.Common.Menu
 {
+    using System.Drawing;
+
+    using SharpDX;
+
+    using Color = SharpDX.Color;
+
     /// <summary>
     ///     The common menu.
     /// </summary>
-    internal class CommonMenu
+    public class CommonMenu : Menu
     {
-        #region Static Fields
-
-        /// <summary>
-        ///     The menu config.
-        /// </summary>
-        public static readonly Menu MenuConfig = new Menu("Ensage.Common", "Ensage.Common", true);
-
-        #endregion
-
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Initializes static members of the <see cref="CommonMenu" /> class.
+        ///     Initializes a new instance of the <see cref="CommonMenu" /> class.
         /// </summary>
-        static CommonMenu()
+        public CommonMenu()
+            : base("Ensage.Common", "Ensage.Common", true, null, false)
         {
-            MenuConfig.AddToMainMenu();
+            var positionMenu = new Menu("MenuPosition", "menuPosition");
+            positionMenu.AddItem(
+                new MenuItem("positionX", "Position X").SetValue(
+                    new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height)));
+            positionMenu.AddItem(
+                new MenuItem("positionY", "Position Y").SetValue(
+                    new Slider((int)MenuSettings.BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.06), Drawing.Width)));
+            MenuSettings.BasePosition = new Vector2(
+                positionMenu.Item("positionX").GetValue<Slider>().Value, 
+                positionMenu.Item("positionY").GetValue<Slider>().Value);
+            this.AddSubMenu(positionMenu);
+            this.AddItem(new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
+            this.AddItem(new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
+            this.AddItem(new MenuItem("showMessage", "Show OnLoad message: ").SetValue(true));
+            var message =
+                this.AddItem(
+                    new MenuItem("messageType", "Show the message in: ").SetValue(
+                        new StringList(new[] { "SideLog", "Chat", "Console" })));
+            this.AddItem(
+                new MenuItem("EnsageSharp.Common.IncreaseSize", "Size increase: ").SetValue(new Slider(0, 0, 25)))
+                .SetTooltip("Increases size of text and boxes");
+            this.AddItem(
+                new MenuItem("EnsageSharp.Common.TooltipDuration", "Tooltip Notification Duration").SetValue(
+                    new Slider(1500, 0, 5000)));
+            this.AddItem(
+                new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true));
+            this.AddItem(
+                new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(FontStyle.Bold, Color.Yellow));
+            message.ValueChanged += MessageValueChanged;
         }
 
         #endregion

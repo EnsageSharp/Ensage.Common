@@ -155,9 +155,18 @@
         /// </summary>
         private static void Load()
         {
-            All = new List<Hero>();
+            All = new List<Hero> { ObjectManager.LocalHero };
             Dire = new List<Hero>();
             Radiant = new List<Hero>();
+            if (ObjectManager.LocalHero.Team == Team.Dire)
+            {
+                Dire.Add(ObjectManager.LocalHero);
+            }
+            else
+            {
+                Radiant.Add(ObjectManager.LocalHero);
+            }
+
             tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
             UpdateHeroes();
             Game.OnUpdate += Update;

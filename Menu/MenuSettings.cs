@@ -182,13 +182,13 @@ namespace Ensage.Common.Menu
             }
 
             if ((args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP || args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN)
-                && args.WParam == CommonMenu.MenuConfig.Item("pressKey").GetValue<KeyBind>().Key)
+                && args.WParam == Menu.Root.Item("pressKey").GetValue<KeyBind>().Key)
             {
                 DrawMenu = args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN;
             }
 
             if (args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP
-                && args.WParam == CommonMenu.MenuConfig.Item("toggleKey").GetValue<KeyBind>().Key)
+                && args.WParam == Menu.Root.Item("toggleKey").GetValue<KeyBind>().Key)
             {
                 DrawMenu = !DrawMenu;
             }
