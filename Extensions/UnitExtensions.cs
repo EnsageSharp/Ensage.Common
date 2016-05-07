@@ -30,19 +30,19 @@ namespace Ensage.Common.Extensions
         #region Static Fields
 
         /// <summary>
+        ///     The ability dictionary.
+        /// </summary>
+        private static Dictionary<string, Ability> abilityDictionary = new Dictionary<string, Ability>();
+
+        /// <summary>
         ///     The boolean dictionary.
         /// </summary>
-        private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
+        private static Dictionary<string, bool> boolDictionary = new Dictionary<string, bool>();
 
         /// <summary>
         ///     The item dictionary.
         /// </summary>
-        private static readonly Dictionary<string, Item> ItemDictionary = new Dictionary<string, Item>();
-
-        /// <summary>
-        ///     The range dictionary.
-        /// </summary>
-        private static readonly Dictionary<float, float> RangeDictionary = new Dictionary<float, float>();
+        private static Dictionary<string, Item> itemDictionary = new Dictionary<string, Item>();
 
         /// <summary>
         ///     The modifier dictionary.
@@ -53,6 +53,23 @@ namespace Ensage.Common.Extensions
         ///     The modifier dictionary.
         /// </summary>
         private static Dictionary<string, Modifier> modifierDictionary = new Dictionary<string, Modifier>();
+
+        /// <summary>
+        ///     The range dictionary.
+        /// </summary>
+        private static Dictionary<float, float> rangeDictionary = new Dictionary<float, float>();
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        ///     Initializes static members of the <see cref="UnitExtensions" /> class.
+        /// </summary>
+        static UnitExtensions()
+        {
+            Events.OnLoad += Events_OnLoad;
+        }
 
         #endregion
 
@@ -207,18 +224,18 @@ namespace Ensage.Common.Extensions
             var n = unit.Handle + "CanMove";
             if (!Utils.SleepCheck(n))
             {
-                return BoolDictionary[n];
+                return boolDictionary[n];
             }
 
             var canMove = !unit.IsRooted() && !unit.IsStunned() && !unit.HasModifier("modifier_slark_pounce_leash")
                           && unit.IsAlive;
-            if (!BoolDictionary.ContainsKey(n))
+            if (!boolDictionary.ContainsKey(n))
             {
-                BoolDictionary.Add(n, canMove);
+                boolDictionary.Add(n, canMove);
             }
             else
             {
-                BoolDictionary[n] = canMove;
+                boolDictionary[n] = canMove;
             }
 
             Utils.Sleep(150, n);
@@ -236,7 +253,8 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static bool CanReincarnate(this Unit unit)
         {
-            return unit.FindItem("item_aegis") != null || unit.FindSpell("skeleton_king_reincarnation").CanBeCasted();
+            return unit.FindItem("item_aegis", true) != null
+                   || unit.FindSpell("skeleton_king_reincarnation", true).CanBeCasted();
         }
 
         /// <summary>
@@ -356,7 +374,7 @@ namespace Ensage.Common.Extensions
         ///     The name.
         /// </param>
         /// <param name="cache">
-        ///     Store the item and use stored next time
+        ///     Store the item and use stored next time (Risk of EntityNotFoundException)
         /// </param>
         /// <returns>
         ///     The <see cref="Item" />.
@@ -368,22 +386,27 @@ namespace Ensage.Common.Extensions
                 return null;
             }
 
+            if (!cache)
+            {
+                return unit.Inventory.Items.FirstOrDefault(x => x != null && x.IsValid && x.StoredName() == name);
+            }
+
             Item item;
             var n = unit.Handle + name;
-            if (!ItemDictionary.TryGetValue(n, out item) || item == null || !item.IsValid
-                || (Utils.SleepCheck("Common.FindItem." + name) && !cache))
+            if (!itemDictionary.TryGetValue(n, out item) || item == null || !item.IsValid
+                || Utils.SleepCheck("Common.FindItem." + name))
             {
                 item = unit.Inventory.Items.FirstOrDefault(x => x != null && x.IsValid && x.StoredName() == name);
-                if (ItemDictionary.ContainsKey(n))
+                if (itemDictionary.ContainsKey(n))
                 {
-                    ItemDictionary[n] = item;
+                    itemDictionary[n] = item;
                 }
                 else
                 {
-                    ItemDictionary.Add(n, item);
+                    itemDictionary.Add(n, item);
                 }
 
-                Utils.Sleep(500, "Common.FindItem." + name);
+                Utils.Sleep(1000, "Common.FindItem." + name);
             }
 
             if (item == null || !item.IsValid)
@@ -507,12 +530,43 @@ namespace Ensage.Common.Extensions
         /// <param name="name">
         ///     The name.
         /// </param>
+        /// <param name="cache">
+        ///     Use cached spell (risk of EntityNotFoundException)
+        /// </param>
         /// <returns>
         ///     The <see cref="Ability" />.
         /// </returns>
-        public static Ability FindSpell(this Unit unit, string name)
+        public static Ability FindSpell(this Unit unit, string name, bool cache = false)
         {
-            return unit.Spellbook.Spells.FirstOrDefault(x => x.StoredName() == name);
+            if (!cache)
+            {
+                return unit.Spellbook.Spells.FirstOrDefault(x => x.StoredName() == name);
+            }
+
+            Ability ability;
+            var n = unit.Handle + name;
+            if (!abilityDictionary.TryGetValue(n, out ability) || ability == null || !ability.IsValid
+                || Utils.SleepCheck("Common.FindSpell." + name))
+            {
+                ability = unit.Spellbook.Spells.FirstOrDefault(x => x.StoredName() == name);
+                if (abilityDictionary.ContainsKey(n))
+                {
+                    abilityDictionary[n] = ability;
+                }
+                else
+                {
+                    abilityDictionary.Add(n, ability);
+                }
+
+                Utils.Sleep(1000, "Common.FindSpell." + name);
+            }
+
+            if (ability == null || !ability.IsValid)
+            {
+                return null;
+            }
+
+            return ability;
         }
 
         /// <summary>
@@ -554,20 +608,20 @@ namespace Ensage.Common.Extensions
             }
 
             float range;
-            if (RangeDictionary.TryGetValue(unit.Handle, out range)
+            if (rangeDictionary.TryGetValue(unit.Handle, out range)
                 && !Utils.SleepCheck("Common.GetAttackRange." + unit.Handle))
             {
                 return range;
             }
 
             range = unit.AttackRange + unit.HullRadius;
-            if (!RangeDictionary.ContainsKey(unit.Handle))
+            if (!rangeDictionary.ContainsKey(unit.Handle))
             {
-                RangeDictionary.Add(unit.Handle, range);
+                rangeDictionary.Add(unit.Handle, range);
             }
             else
             {
-                RangeDictionary[unit.Handle] = range;
+                rangeDictionary[unit.Handle] = range;
             }
 
             Utils.Sleep(1500, "Common.GetAttackRange." + unit.Handle);
@@ -833,10 +887,10 @@ namespace Ensage.Common.Extensions
 
             var n = unit.Handle + ".Ensage.Common.IsChanneling";
             bool channeling;
-            var exist = BoolDictionary.TryGetValue(n, out channeling);
+            var exist = boolDictionary.TryGetValue(n, out channeling);
             if (!exist)
             {
-                BoolDictionary.Add(n, false);
+                boolDictionary.Add(n, false);
             }
 
             if (!Utils.SleepCheck(n) && channeling)
@@ -845,7 +899,7 @@ namespace Ensage.Common.Extensions
             }
 
             channeling = unit.Inventory.Items.Any(v => v.IsChanneling) || unit.Spellbook.Spells.Any(v => v.IsChanneling);
-            BoolDictionary[n] = channeling;
+            boolDictionary[n] = channeling;
             Utils.Sleep(100, n);
             return channeling;
         }
@@ -953,7 +1007,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static bool IsLinkensProtected(this Unit unit)
         {
-            var linkensphere = unit.FindItem("item_sphere");
+            var linkensphere = unit.FindItem("item_sphere", true);
             return (linkensphere != null && linkensphere.Cooldown == 0)
                    || unit.HasModifier("modifier_item_sphere_target");
         }
@@ -1388,6 +1442,29 @@ namespace Ensage.Common.Extensions
                 minusArmor, 
                 minusDamageResistancePerc, 
                 minusMagicResistancePerc);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The events_ on load.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
+        private static void Events_OnLoad(object sender, EventArgs e)
+        {
+            boolDictionary = new Dictionary<string, bool>();
+            itemDictionary = new Dictionary<string, Item>();
+            abilityDictionary = new Dictionary<string, Ability>();
+            rangeDictionary = new Dictionary<float, float>();
+            modifierBoolDictionary = new Dictionary<string, bool>();
+            modifierDictionary = new Dictionary<string, Modifier>();
         }
 
         #endregion

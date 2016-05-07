@@ -251,7 +251,7 @@
         {
             var enlargePosition = this.Position
                                   - new Vector2(
-                                        this.Width * (this.DefaultResizePercentage / 200),
+                                        this.Width * (this.DefaultResizePercentage / 200), 
                                         this.Height * (this.DefaultResizePercentage / 200));
             if (!this.ResizeTransition.Moving)
             {

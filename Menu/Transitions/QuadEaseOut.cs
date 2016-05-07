@@ -8,10 +8,10 @@
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QuadEaseOut"/> class.
+        ///     Initializes a new instance of the <see cref="QuadEaseOut" /> class.
         /// </summary>
         /// <param name="duration">
-        /// The duration.
+        ///     The duration.
         /// </param>
         public QuadEaseOut(double duration)
             : base(duration)

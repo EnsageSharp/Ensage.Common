@@ -185,7 +185,8 @@
         /// </returns>
         public static bool CanReincarnate(this Hero hero)
         {
-            return hero.FindItem("item_aegis") != null || hero.FindSpell("skeleton_king_reincarnation").CanBeCasted();
+            return hero.FindItem("item_aegis", true) != null
+                   || hero.FindSpell("skeleton_king_reincarnation", true).CanBeCasted();
         }
 
         /// <summary>
@@ -253,7 +254,7 @@
 
             if (hero.IsRanged)
             {
-                var dragonLance = hero.FindItem("item_dragon_lance", true);
+                var dragonLance = hero.FindItem("item_dragon_lance", true) ?? hero.FindItem("item_hurricane_pike", true);
                 if (dragonLance != null && dragonLance.IsValid)
                 {
                     bonus += dragonLance.GetAbilityData("base_attack_range");

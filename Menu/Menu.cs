@@ -1134,7 +1134,11 @@ namespace Ensage.Common.Menu
             {
                 if (!this.Visible)
                 {
-                    this.OnReceiveMessage((Utils.WindowsMessages)args.Msg, Game.MouseScreenPosition, (uint)args.WParam, args);
+                    this.OnReceiveMessage(
+                        (Utils.WindowsMessages)args.Msg, 
+                        Game.MouseScreenPosition, 
+                        (uint)args.WParam, 
+                        args);
                     return;
                 }
 

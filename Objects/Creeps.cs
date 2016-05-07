@@ -133,6 +133,7 @@
                         if (creep != null)
                         {
                             tempList.Add(creep);
+                            All.Add(creep);
                         }
                     });
         }
@@ -149,6 +150,7 @@
             if (creep != null)
             {
                 tempList.Remove(creep);
+                All.Remove(creep);
             }
         }
 

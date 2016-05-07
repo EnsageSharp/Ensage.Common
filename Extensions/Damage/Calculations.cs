@@ -107,14 +107,15 @@ namespace Ensage.Common.Extensions.Damage
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
-                        ModifierName = "modifier_slardar_sprint", SourceSpellName = "slardar_sprint", Amp = "bonus_damage"
+                        ModifierName = "modifier_slardar_sprint", SourceSpellName = "slardar_sprint", Amp = "bonus_damage", 
+                        HeroId = ClassID.CDOTA_Unit_Hero_Slardar
                     });
 
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_oracle_fates_edict", SourceSpellName = "oracle_fates_edict", 
-                        Amp = "damage_amp"
+                        HeroId = ClassID.CDOTA_Unit_Hero_Oracle, Amp = "damage_amp"
                     });
 
             ExternalDmgAmps.Add(
@@ -128,42 +129,44 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_wisp_overcharge", SourceSpellName = "wisp_overcharge", 
-                        Reduce = "bonus_damage_pct", Type = 1, SourceTeam = 1
+                        HeroID = ClassID.CDOTA_Unit_Hero_Wisp, Reduce = "bonus_damage_pct", Type = 1, SourceTeam = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_spectre_dispersion", SourceTeam = 0, Reduce = "damage_reflection_pct", 
-                        SourceSpellName = "spectre_dispersion", Type = 1
+                        HeroID = ClassID.CDOTA_Unit_Hero_Spectre, SourceSpellName = "spectre_dispersion", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_nyx_assassin_burrow", SourceSpellName = "nyx_assassin_burrow", 
-                        Reduce = "damage_reduction", Type = 1
+                        HeroID = ClassID.CDOTA_Unit_Hero_Nyx_Assassin, Reduce = "damage_reduction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_winter_wyvern_winters_curse", 
-                        SourceSpellName = "winter_wyvern_winters_curse", Reduce = "damage_reduction", Type = 1
-                    });
-
-            ExternalDmgReductions.Add(
-                new ExternalDmgReductions
-                    {
-                        ModifierName = "modifier_ursa_enrage", SourceSpellName = "ursa_enrage", 
+                        HeroID = ClassID.CDOTA_Unit_Hero_Winter_Wyvern, SourceSpellName = "winter_wyvern_winters_curse", 
                         Reduce = "damage_reduction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
+                        ModifierName = "modifier_ursa_enrage", SourceSpellName = "ursa_enrage", 
+                        HeroID = ClassID.CDOTA_Unit_Hero_Ursa, Reduce = "damage_reduction", Type = 1
+                    });
+
+            ExternalDmgReductions.Add(
+                new ExternalDmgReductions
+                    {
                         ModifierName = "modifier_templar_assassin_refraction_absorb", 
-                        SourceSpellName = "templar_assassin_refraction", Type = 1
+                        HeroID = ClassID.CDOTA_Unit_Hero_TemplarAssassin, SourceSpellName = "templar_assassin_refraction", 
+                        Type = 1
                     });
 
             ExternalDmgReductions.Add(
@@ -186,7 +189,8 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_ember_spirit_flame_guard", Type = 0, SourceTeam = 0, 
-                        SourceSpellName = "ember_spirit_flame_guard", Reduce = "absorb_amount", MagicOnly = true
+                        HeroID = ClassID.CDOTA_Unit_Hero_EmberSpirit, SourceSpellName = "ember_spirit_flame_guard", 
+                        Reduce = "absorb_amount", MagicOnly = true
                     });
 
             ExternalDmgReductions.Add(
@@ -287,9 +291,25 @@ namespace Ensage.Common.Extensions.Damage
                             continue;
                         }
 
-                        var ability = damageBlock.Item
-                                          ? target.FindItem(damageBlock.AbilityName)
-                                          : target.FindSpell(damageBlock.AbilityName);
+                        Ability ability = null;
+                        foreach (var hero in Heroes.All)
+                        {
+                            if (!damageBlock.Item)
+                            {
+                                ability = hero.FindSpell(damageBlock.AbilityName, true);
+                                if (ability != null)
+                                {
+                                    break;
+                                }
+                            }
+
+                            ability = hero.FindItem(damageBlock.AbilityName, true);
+                            if (ability != null)
+                            {
+                                break;
+                            }
+                        }
+
                         if (ability == null)
                         {
                             continue;
@@ -348,9 +368,24 @@ namespace Ensage.Common.Extensions.Damage
 
             foreach (var v in ExternalDmgAmps.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = Abilities.FindAbility(v.SourceSpellName)
-                              ?? ObjectManager.GetEntities<Item>()
-                                     .FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
+                Ability ability = null;
+                foreach (var hero in Heroes.All)
+                {
+                    if (v.HeroId == hero.ClassID || hero.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                    {
+                        ability = hero.FindSpell(v.SourceSpellName, true);
+                        if (ability != null)
+                        {
+                            break;
+                        }
+                    }
+
+                    ability = hero.FindItem(v.SourceSpellName, true);
+                    if (ability != null)
+                    {
+                        break;
+                    }
+                }
 
                 // var burst = 0f;
                 if (ability == null)
@@ -382,9 +417,24 @@ namespace Ensage.Common.Extensions.Damage
 
             foreach (var v in ExternalDmgReductions.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
             {
-                var ability = Abilities.FindAbility(v.SourceSpellName)
-                              ?? ObjectManager.GetEntities<Item>()
-                                     .FirstOrDefault(x => x.StoredName() == v.SourceSpellName);
+                Ability ability = null;
+                foreach (var hero in Heroes.All)
+                {
+                    if (v.HeroID == hero.ClassID || hero.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                    {
+                        ability = hero.FindSpell(v.SourceSpellName, true);
+                        if (ability != null)
+                        {
+                            break;
+                        }
+                    }
+
+                    ability = hero.FindItem(v.SourceSpellName, true);
+                    if (ability != null)
+                    {
+                        break;
+                    }
+                }
 
                 // var burst = 0f;
                 if (ability == null)
@@ -472,7 +522,7 @@ namespace Ensage.Common.Extensions.Damage
 
             if (bristleback)
             {
-                var spell = target.FindSpell("bristleback_bristleback");
+                var spell = target.FindSpell("bristleback_bristleback", true);
                 if (spell != null)
                 {
                     var burst = 0d;
@@ -503,7 +553,7 @@ namespace Ensage.Common.Extensions.Damage
 
             if (medusaManaShield)
             {
-                var spell = target.FindSpell("medusa_mana_shield");
+                var spell = target.FindSpell("medusa_mana_shield", true);
                 if (spell != null)
                 {
                     var treshold = spell.GetAbilityData("damage_per_mana");

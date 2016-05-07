@@ -179,9 +179,26 @@
                 () =>
                     {
                         var hero = args.Entity as Hero;
-                        if (hero != null)
+                        if (hero == null)
                         {
-                            tempList.Add(hero);
+                            return;
+                        }
+
+                        tempList.Add(hero);
+                        if (!All.Contains(hero))
+                        {
+                            All.Add(hero);
+                        }
+
+                        if (!Radiant.Contains(hero) && hero.Team == Team.Radiant)
+                        {
+                            Radiant.Add(hero);
+                            return;
+                        }
+
+                        if (!Dire.Contains(hero) && hero.Team == Team.Dire)
+                        {
+                            Dire.Add(hero);
                         }
                     });
         }
@@ -195,9 +212,26 @@
         private static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
         {
             var hero = args.Entity as Hero;
-            if (hero != null)
+            if (hero == null)
             {
-                tempList.Remove(hero);
+                return;
+            }
+
+            tempList.Remove(hero);
+            if (All.Contains(hero))
+            {
+                All.Remove(hero);
+            }
+
+            if (Radiant.Contains(hero) && hero.Team == Team.Radiant)
+            {
+                Radiant.Remove(hero);
+                return;
+            }
+
+            if (Dire.Contains(hero) && hero.Team == Team.Dire)
+            {
+                Dire.Remove(hero);
             }
         }
 

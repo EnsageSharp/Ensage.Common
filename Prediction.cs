@@ -396,7 +396,7 @@ namespace Ensage.Common
                      || unit.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
                     && unit.HasModifier("modifier_storm_spirit_ball_lightning"))
                 {
-                    var ballLightning = unit.FindSpell("storm_spirit_ball_lightning");
+                    var ballLightning = unit.FindSpell("storm_spirit_ball_lightning", true);
                     var firstOrDefault =
                         ballLightning.AbilitySpecialData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
                     if (firstOrDefault != null)

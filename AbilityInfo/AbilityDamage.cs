@@ -536,7 +536,7 @@ namespace Ensage.Common.AbilityInfo
 
                         if (data.SpellLevel != null)
                         {
-                            var spellLevel = source.FindSpell(data.SpellLevel);
+                            var spellLevel = source.FindSpell(data.SpellLevel, true);
                             level = spellLevel.Level;
                         }
 
