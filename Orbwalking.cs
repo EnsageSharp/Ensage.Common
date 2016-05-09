@@ -86,6 +86,11 @@ namespace Ensage.Common
         /// </param>
         public static void Attack(Unit target, bool useModifiers)
         {
+            if (target == null || me == null || !target.IsValid || !me.IsValid)
+            {
+                return;
+            }
+
             if (target is Hero && me.CanCast() && useModifiers)
             {
                 if (me.ClassID == ClassID.CDOTA_Unit_Hero_Clinkz)

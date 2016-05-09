@@ -1139,6 +1139,11 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static bool IsUnitState(this Unit unit, UnitState state)
         {
+            if (unit == null || !unit.IsValid)
+            {
+                return false;
+            }
+
             return unit.UnitState.HasFlag(state);
         }
 
