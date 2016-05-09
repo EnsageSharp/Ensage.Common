@@ -117,6 +117,58 @@
         #region Public Methods and Operators
 
         /// <summary>
+        ///     Centers the DrawText on given rectangle
+        /// </summary>
+        /// <param name="rectanglePosition">
+        ///     The rectangle position.
+        /// </param>
+        /// <param name="rectangleSize">
+        ///     The rectangle size.
+        /// </param>
+        public void CenterOnRectangle(Vector2 rectanglePosition, Vector2 rectangleSize)
+        {
+            this.Position = rectanglePosition
+                            + new Vector2(
+                                  (rectangleSize.X / 2) - (this.Size.X / 2), 
+                                  (rectangleSize.Y / 2) - (this.Size.Y / 2));
+        }
+
+        /// <summary>
+        ///     Centers the DrawText on given rectangle
+        /// </summary>
+        /// <param name="rectangle">
+        ///     The rectangle.
+        /// </param>
+        public void CenterOnRectangle(Rectangle rectangle)
+        {
+            this.Position = new Vector2(
+                rectangle.X + (rectangle.Width / 2) - (this.Size.X / 2), 
+                rectangle.Y + (rectangle.Height / 2) - (this.Size.Y / 2));
+        }
+
+        /// <summary>
+        ///     Centers the DrawText on given rectangle
+        /// </summary>
+        /// <param name="rectangleX">
+        ///     The rectangle x.
+        /// </param>
+        /// <param name="rectangleY">
+        ///     The rectangle y.
+        /// </param>
+        /// <param name="rectangleWidth">
+        ///     The rectangle width.
+        /// </param>
+        /// <param name="rectangleHeight">
+        ///     The rectangle height.
+        /// </param>
+        public void CenterOnRectangle(float rectangleX, float rectangleY, float rectangleWidth, float rectangleHeight)
+        {
+            this.Position = new Vector2(
+                rectangleX + (rectangleWidth / 2) - (this.Size.X / 2), 
+                rectangleY + (rectangleHeight / 2) - (this.Size.Y / 2));
+        }
+
+        /// <summary>
         ///     The draw.
         /// </summary>
         public void Draw()
