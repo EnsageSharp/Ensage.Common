@@ -64,6 +64,45 @@ namespace Ensage.Common
             };
 
         /// <summary>
+        ///     The key text dictionary.
+        /// </summary>
+        private static readonly Dictionary<uint, string> KeyCodeDictionary = new Dictionary<uint, string>
+                                                                                 {
+                                                                                     { 8, "Backspace" }, { 9, "Tab" }, 
+                                                                                     { 13, "Enter" }, { 16, "Shift" }, 
+                                                                                     { 17, "Ctrl" }, { 18, "Alt" }, 
+                                                                                     { 19, "Pause" }, { 20, "CapsLock" }, 
+                                                                                     { 27, "Escape" }, { 32, "Space" }, 
+                                                                                     { 33, "PageUp" }, { 34, "PageDown" }, 
+                                                                                     { 34, "PageDown" }, { 35, "End" }, 
+                                                                                     { 36, "Home" }, { 37, "LeftArrow" }, 
+                                                                                     { 38, "UpArrow" }, 
+                                                                                     { 39, "RightArrow" }, 
+                                                                                     { 40, "DownArrow" }, { 45, "Insert" }, 
+                                                                                     { 46, "Delete" }, { 48, "0" }, 
+                                                                                     { 49, "1" }, { 50, "2" }, { 51, "3" }, 
+                                                                                     { 52, "4" }, { 53, "5" }, { 54, "6" }, 
+                                                                                     { 55, "7" }, { 56, "8" }, { 57, "9" }, 
+                                                                                     { 91, "LeftWindow" }, 
+                                                                                     { 92, "RightWindow" }, 
+                                                                                     { 93, "Select" }, { 96, "Num0" }, 
+                                                                                     { 97, "Num1" }, { 98, "Num2" }, 
+                                                                                     { 99, "Num3" }, { 100, "Num4" }, 
+                                                                                     { 101, "Num5" }, { 102, "Num6" }, 
+                                                                                     { 103, "Num7" }, { 104, "Num8" }, 
+                                                                                     { 105, "Num9" }, { 106, "*" }, 
+                                                                                     { 107, "+" }, { 109, "-" }, 
+                                                                                     { 110, "," }, { 111, "/" }, 
+                                                                                     { 144, "NumLock" }, 
+                                                                                     { 145, "ScrollLock" }, { 186, ";" }, 
+                                                                                     { 187, "=" }, { 188, "," }, 
+                                                                                     { 189, "-" }, { 190, "." }, 
+                                                                                     { 191, "/" }, { 192, "`" }, 
+                                                                                     { 219, "(" }, { 220, "'\'" }, 
+                                                                                     { 221, ")" }, { 222, "'" }
+                                                                                 };
+
+        /// <summary>
         ///     The last stun ability.
         /// </summary>
         private static string lastStunAbility;
@@ -300,47 +339,27 @@ namespace Ensage.Common
         /// <summary>
         ///     Converts given key code to text
         /// </summary>
-        /// <param name="vKey">
+        /// <param name="keyCode">
         ///     The v Key.
         /// </param>
         /// <returns>
         ///     The <see cref="string" />.
         /// </returns>
-        public static string KeyToText(uint vKey)
+        public static string KeyToText(uint keyCode)
         {
             /*A-Z */
-            if (vKey >= 65 && vKey <= 90)
+            if (keyCode >= 65 && keyCode <= 90)
             {
-                return ((char)vKey).ToString();
+                return ((char)keyCode).ToString();
             }
 
             /*F1-F12*/
-            if (vKey >= 112 && vKey <= 123)
+            if (keyCode >= 112 && keyCode <= 123)
             {
-                return "F" + (vKey - 111);
+                return "F" + (keyCode - 111);
             }
 
-            switch (vKey)
-            {
-                case 9:
-                    return "Tab";
-                case 16:
-                    return "Shift";
-                case 17:
-                    return "Ctrl";
-                case 20:
-                    return "CAPS";
-                case 27:
-                    return "ESC";
-                case 32:
-                    return "Space";
-                case 45:
-                    return "Insert";
-                case 220:
-                    return "º";
-                default:
-                    return vKey.ToString();
-            }
+            return KeyCodeDictionary.ContainsKey(keyCode) ? KeyCodeDictionary[keyCode] : keyCode.ToString();
         }
 
         /// <summary>
