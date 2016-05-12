@@ -28,7 +28,7 @@ namespace Ensage.Common.Extensions
         #region Static Fields
 
         /// <summary>
-        ///     The turnrate dictionary.
+        ///     The turn rate dictionary.
         /// </summary>
         private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
 
@@ -220,7 +220,10 @@ namespace Ensage.Common.Extensions
                             0) / (turnRate * (1 / 0.03));
                 }
 
-                turnRate = Game.FindKeyValues(entity.StoredName() + "/MovementTurnRate", KeyValueSource.Hero).FloatValue;
+                turnRate = entity is Hero
+                               ? Game.FindKeyValues(entity.StoredName() + "/MovementTurnRate", KeyValueSource.Hero)
+                                     .FloatValue
+                               : 0.5;
                 TurnrateDictionary.Add(entity.Handle, turnRate);
                 return
                     Math.Max(

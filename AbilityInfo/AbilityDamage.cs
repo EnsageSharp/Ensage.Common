@@ -30,24 +30,24 @@ namespace Ensage.Common.AbilityInfo
         #region Static Fields
 
         /// <summary>
+        ///     The damage dictionary.
+        /// </summary>
+        private static Dictionary<Ability, float> damageDictionary = new Dictionary<Ability, float>();
+
+        /// <summary>
         ///     The data dictionary.
         /// </summary>
-        public static Dictionary<Ability, AbilityInfo> DataDictionary = new Dictionary<Ability, AbilityInfo>();
+        private static Dictionary<Ability, AbilityInfo> dataDictionary = new Dictionary<Ability, AbilityInfo>();
 
         /// <summary>
         ///     The level dictionary.
         /// </summary>
-        public static Dictionary<Ability, uint> LevelDictionary = new Dictionary<Ability, uint>();
-
-        /// <summary>
-        ///     The damage dictionary.
-        /// </summary>
-        private static readonly Dictionary<Ability, float> DamageDictionary = new Dictionary<Ability, float>();
+        private static Dictionary<Ability, uint> levelDictionary = new Dictionary<Ability, uint>();
 
         /// <summary>
         ///     The multiplier dictionary.
         /// </summary>
-        private static readonly Dictionary<Ability, double> MultiplierDictionary = new Dictionary<Ability, double>();
+        private static Dictionary<Ability, double> multiplierDictionary = new Dictionary<Ability, double>();
 
         #endregion
 
@@ -97,12 +97,12 @@ namespace Ensage.Common.AbilityInfo
             }
 
             AbilityInfo data;
-            if (!DataDictionary.TryGetValue(ability, out data))
+            if (!dataDictionary.TryGetValue(ability, out data))
             {
                 data = AbilityDatabase.Find(name);
                 if (data != null)
                 {
-                    DataDictionary.Add(ability, data);
+                    dataDictionary.Add(ability, data);
                 }
             }
 
@@ -123,18 +123,18 @@ namespace Ensage.Common.AbilityInfo
                     break;
                 case "ember_spirit_sleight_of_fist":
                     outgoingDamage = source.MinimumDamage + source.BonusDamage;
-                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.BonusDamageString);
                         outgoingDamage += bonusDamage;
-                        DamageDictionary.Add(ability, bonusDamage);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         bonusDamage = ability.GetAbilityData(data.BonusDamageString);
-                        DamageDictionary[ability] = bonusDamage;
+                        damageDictionary[ability] = bonusDamage;
                         outgoingDamage += bonusDamage;
                     }
                     else
@@ -151,17 +151,17 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "doom_bringer_lvl_death":
-                    if (!DamageDictionary.TryGetValue(ability, out tempDmg))
+                    if (!damageDictionary.TryGetValue(ability, out tempDmg))
                     {
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary.Add(ability, tempDmg);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, tempDmg);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary[ability] = tempDmg;
+                        damageDictionary[ability] = tempDmg;
                     }
 
                     var multiplier = ability.GetAbilityData("lvl_bonus_multiple");
@@ -185,17 +185,17 @@ namespace Ensage.Common.AbilityInfo
                     if (crit.Level > 0)
                     {
                         float critMulti;
-                        if (!DamageDictionary.TryGetValue(crit, out critMulti))
+                        if (!damageDictionary.TryGetValue(crit, out critMulti))
                         {
                             critMulti = crit.GetAbilityData("crit_bonus");
-                            DamageDictionary.Add(crit, critMulti);
-                            LevelDictionary.Add(crit, crit.Level);
+                            damageDictionary.Add(crit, critMulti);
+                            levelDictionary.Add(crit, crit.Level);
                         }
-                        else if (LevelDictionary[crit] != crit.Level)
+                        else if (levelDictionary[crit] != crit.Level)
                         {
-                            LevelDictionary[crit] = crit.Level;
+                            levelDictionary[crit] = crit.Level;
                             critMulti = crit.GetAbilityData("crit_bonus");
-                            DamageDictionary[crit] = critMulti;
+                            damageDictionary[crit] = critMulti;
                         }
 
                         outgoingDamage = (source.MinimumDamage + source.BonusDamage) * (critMulti / 100);
@@ -210,10 +210,10 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "tusk_walrus_punch":
-                    if (!MultiplierDictionary.TryGetValue(ability, out multi))
+                    if (!multiplierDictionary.TryGetValue(ability, out multi))
                     {
                         multi = ability.GetAbilityData("crit_multiplier");
-                        MultiplierDictionary.Add(ability, multi);
+                        multiplierDictionary.Add(ability, multi);
                     }
 
                     outgoingDamage =
@@ -226,17 +226,17 @@ namespace Ensage.Common.AbilityInfo
                             minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "necrolyte_reapers_scythe":
-                    if (!MultiplierDictionary.TryGetValue(ability, out multi))
+                    if (!multiplierDictionary.TryGetValue(ability, out multi))
                     {
                         multi = ability.GetAbilityData(data.DamageString);
-                        MultiplierDictionary.Add(ability, multi);
-                        LevelDictionary.Add(ability, level);
+                        multiplierDictionary.Add(ability, multi);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         multi = ability.GetAbilityData(data.DamageString);
-                        MultiplierDictionary[ability] = multi;
+                        multiplierDictionary[ability] = multi;
                     }
 
                     var missingHp = target.MaximumHealth - target.Health + minusHealth;
@@ -248,17 +248,17 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "chaos_knight_reality_rift":
-                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary.Add(ability, bonusDamage);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary[ability] = bonusDamage;
+                        damageDictionary[ability] = bonusDamage;
                     }
 
                     outgoingDamage = target.SpellDamageTaken(
@@ -269,17 +269,17 @@ namespace Ensage.Common.AbilityInfo
                         data.MagicImmunityPierce);
                     break;
                 case "templar_assassin_meld":
-                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary.Add(ability, bonusDamage);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary[ability] = bonusDamage;
+                        damageDictionary[ability] = bonusDamage;
                     }
 
                     var minusArmors = new[] { -2, -4, -6, -8 };
@@ -328,17 +328,17 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "morphling_adaptive_strike":
-                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary.Add(ability, bonusDamage);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         bonusDamage = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary[ability] = bonusDamage;
+                        damageDictionary[ability] = bonusDamage;
                     }
 
                     hero = source;
@@ -367,23 +367,23 @@ namespace Ensage.Common.AbilityInfo
                     break;
                 case "mirana_starfall":
                     var radiusMax = ability.GetAbilityData("starfall_secondary_radius");
-                    if (!DamageDictionary.TryGetValue(ability, out bonusDamage))
+                    if (!damageDictionary.TryGetValue(ability, out bonusDamage))
                     {
                         bonusDamage =
                             Convert.ToSingle(
                                 Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
                                     .StringValue.Split(' ')[level - 1]);
-                        DamageDictionary.Add(ability, bonusDamage);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, bonusDamage);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         bonusDamage =
                             Convert.ToSingle(
                                 Game.FindKeyValues(name + "/AbilityDamage", KeyValueSource.Ability)
                                     .StringValue.Split(' ')[level - 1]);
-                        DamageDictionary[ability] = bonusDamage;
+                        damageDictionary[ability] = bonusDamage;
                     }
 
                     outgoingDamage = target.SpellDamageTaken(
@@ -415,17 +415,17 @@ namespace Ensage.Common.AbilityInfo
                         bonusDamage = 2f * hero.TotalStrength;
                     }
 
-                    if (!DamageDictionary.TryGetValue(ability, out tempDmg))
+                    if (!damageDictionary.TryGetValue(ability, out tempDmg))
                     {
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary.Add(ability, tempDmg);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, tempDmg);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary[ability] = tempDmg;
+                        damageDictionary[ability] = tempDmg;
                     }
 
                     outgoingDamage = target.SpellDamageTaken(
@@ -448,17 +448,17 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     break;
                 case "antimage_mana_void":
-                    if (!DamageDictionary.TryGetValue(ability, out tempDmg))
+                    if (!damageDictionary.TryGetValue(ability, out tempDmg))
                     {
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary.Add(ability, tempDmg);
-                        LevelDictionary.Add(ability, level);
+                        damageDictionary.Add(ability, tempDmg);
+                        levelDictionary.Add(ability, level);
                     }
-                    else if (LevelDictionary[ability] != level)
+                    else if (levelDictionary[ability] != level)
                     {
-                        LevelDictionary[ability] = level;
+                        levelDictionary[ability] = level;
                         tempDmg = ability.GetAbilityData(data.DamageString);
-                        DamageDictionary[ability] = tempDmg;
+                        damageDictionary[ability] = tempDmg;
                     }
 
                     hero = target as Hero;
@@ -669,6 +669,21 @@ namespace Ensage.Common.AbilityInfo
             }
 
             return type;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The initialize.
+        /// </summary>
+        internal static void Init()
+        {
+            dataDictionary = new Dictionary<Ability, AbilityInfo>();
+            levelDictionary = new Dictionary<Ability, uint>();
+            damageDictionary = new Dictionary<Ability, float>();
+            multiplierDictionary = new Dictionary<Ability, double>();
         }
 
         #endregion

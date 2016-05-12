@@ -52,7 +52,7 @@ namespace Ensage.Common
         /// <summary>
         ///     The last rot r dictionary.
         /// </summary>
-        private static Dictionary<float, float> LastRotRDictionary = new Dictionary<float, float>();
+        private static Dictionary<float, float> lastRotRDictionary = new Dictionary<float, float>();
 
         /// <summary>
         ///     The loaded.
@@ -342,20 +342,20 @@ namespace Ensage.Common
             }
 
             var targetSpeed = new Vector3();
-            if (!LastRotRDictionary.ContainsKey(unit.Handle))
+            if (!lastRotRDictionary.ContainsKey(unit.Handle))
             {
-                LastRotRDictionary.Add(unit.Handle, unit.RotationRad);
+                lastRotRDictionary.Add(unit.Handle, unit.RotationRad);
             }
 
             var straightTime = StraightTime(unit);
             if (straightTime > 180)
             {
-                LastRotRDictionary[unit.Handle] = unit.RotationRad;
+                lastRotRDictionary[unit.Handle] = unit.RotationRad;
             }
 
             if (straightTime < 10 || IsTurning(unit, 0.18))
             {
-                var rotDiff = LastRotRDictionary[unit.Handle] - unit.RotationRad;
+                var rotDiff = lastRotRDictionary[unit.Handle] - unit.RotationRad;
                 var a = 10 * straightTime * Math.Pow(rotDiff, 2);
                 if (a >= 0 && a <= 1300)
                 {
@@ -368,12 +368,12 @@ namespace Ensage.Common
 
                 targetSpeed =
                     (Vector3)
-                    VectorExtensions.FromPolarAngle((LastRotRDictionary[unit.Handle] + (unit.RotationRad * 2)) / 2)
+                    VectorExtensions.FromPolarAngle((lastRotRDictionary[unit.Handle] + (unit.RotationRad * 2)) / 2)
                     * unit.MovementSpeed / (float)Math.Abs(a);
             }
             else if (straightTime < 180)
             {
-                var rotDiff = LastRotRDictionary[unit.Handle] - unit.RotationRad;
+                var rotDiff = lastRotRDictionary[unit.Handle] - unit.RotationRad;
                 var a = straightTime * Math.Pow(rotDiff, 2);
                 if (a >= 0 && a <= 1000)
                 {
@@ -386,12 +386,12 @@ namespace Ensage.Common
 
                 targetSpeed =
                     (Vector3)
-                    (VectorExtensions.FromPolarAngle((LastRotRDictionary[unit.Handle] + unit.RotationRad) / 2)
+                    (VectorExtensions.FromPolarAngle((lastRotRDictionary[unit.Handle] + unit.RotationRad) / 2)
                      * unit.MovementSpeed / (float)Math.Abs(a));
             }
             else
             {
-                LastRotRDictionary[unit.Handle] = unit.RotationRad;
+                lastRotRDictionary[unit.Handle] = unit.RotationRad;
                 if ((unit.ClassID == ClassID.CDOTA_Unit_Hero_StormSpirit
                      || unit.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
                     && unit.HasModifier("modifier_storm_spirit_ball_lightning"))
@@ -560,9 +560,9 @@ namespace Ensage.Common
                         RotTimeDictionary.Add(unit.Handle, tick);
                     }
 
-                    if (!LastRotRDictionary.ContainsKey(unit.Handle))
+                    if (!lastRotRDictionary.ContainsKey(unit.Handle))
                     {
-                        LastRotRDictionary.Add(unit.Handle, unit.RotationRad);
+                        lastRotRDictionary.Add(unit.Handle, unit.RotationRad);
                     }
 
                     var speed = (unit.Position - data.LastPosition) / (tick - data.Lasttick);
@@ -573,7 +573,7 @@ namespace Ensage.Common
                     }
                     else
                     {
-                        LastRotRDictionary[unit.Handle] = unit.RotationRad;
+                        lastRotRDictionary[unit.Handle] = unit.RotationRad;
                         data.Speed = speed;
                     }
 
@@ -636,7 +636,7 @@ namespace Ensage.Common
         private static void Events_OnClose(object sender, EventArgs e)
         {
             loaded = false;
-            Game.OnUpdate -= SpeedTrack;
+            Events.OnUpdate -= SpeedTrack;
             playerList = new List<Hero>();
             RotSpeedDictionary = new Dictionary<float, double>();
             RotTimeDictionary = new Dictionary<float, float>();
@@ -668,8 +668,8 @@ namespace Ensage.Common
             SpeedDictionary = new Dictionary<float, Vector3>();
             TrackTable = new List<Prediction>();
             predictionDrawings = new Dictionary<float, ParticleEffect>();
-            LastRotRDictionary = new Dictionary<float, float>();
-            Game.OnUpdate += SpeedTrack;
+            lastRotRDictionary = new Dictionary<float, float>();
+            Events.OnUpdate += SpeedTrack;
         }
 
         #endregion

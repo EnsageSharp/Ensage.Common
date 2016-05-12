@@ -52,7 +52,7 @@
 
             Events.OnClose += (sender, args) =>
                 {
-                    Game.OnUpdate -= Update;
+                    Events.OnUpdate -= Update;
                     ObjectManager.OnAddEntity -= ObjectMgr_OnAddEntity;
                     ObjectManager.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
@@ -111,7 +111,7 @@
         {
             All = new List<Creep>();
             tempList = ObjectManager.GetEntities<Creep>().ToList();
-            Game.OnUpdate += Update;
+            Events.OnUpdate += Update;
             ObjectManager.OnAddEntity += ObjectMgr_OnAddEntity;
             ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
             loaded = true;

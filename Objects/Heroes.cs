@@ -68,7 +68,7 @@
                     Dire = new List<Hero>();
                     Radiant = new List<Hero>();
                     tempList = new List<Hero>();
-                    Game.OnUpdate -= Update;
+                    Events.OnUpdate -= Update;
                     ObjectManager.OnAddEntity -= ObjectMgr_OnAddEntity;
                     ObjectManager.OnRemoveEntity -= ObjectMgr_OnRemoveEntity;
                     loaded = false;
@@ -169,7 +169,7 @@
 
             tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
             UpdateHeroes();
-            Game.OnUpdate += Update;
+            Events.OnUpdate += Update;
             ObjectManager.OnAddEntity += ObjectMgr_OnAddEntity;
             ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
             loaded = true;

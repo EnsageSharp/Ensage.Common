@@ -12,7 +12,7 @@
         /// <summary>
         ///     The name dictionary.
         /// </summary>
-        public static Dictionary<float, string> NameDictionary = new Dictionary<float, string>();
+        private static Dictionary<float, string> nameDictionary = new Dictionary<float, string>();
 
         #endregion
 
@@ -36,13 +36,13 @@
 
             var handle = entity.Handle;
             string name;
-            if (NameDictionary.TryGetValue(handle, out name))
+            if (nameDictionary.TryGetValue(handle, out name))
             {
                 return name;
             }
 
             name = entity.Name;
-            NameDictionary.Add(handle, name);
+            nameDictionary.Add(handle, name);
             return name;
         }
 
@@ -64,14 +64,26 @@
 
             var handle = entity.Handle;
             string name;
-            if (NameDictionary.TryGetValue(handle, out name))
+            if (nameDictionary.TryGetValue(handle, out name))
             {
                 return name;
             }
 
             name = entity.Name;
-            NameDictionary.Add(handle, name);
+            nameDictionary.Add(handle, name);
             return name;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The initialize.
+        /// </summary>
+        internal static void Init()
+        {
+            nameDictionary = new Dictionary<float, string>();
         }
 
         #endregion

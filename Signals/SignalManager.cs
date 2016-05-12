@@ -39,7 +39,7 @@ namespace Ensage.Common.Signals
         /// </summary>
         static SignalManager()
         {
-            Game.OnUpdate += Game_OnUpdate;
+            Events.OnUpdate += Game_OnUpdate;
         }
 
         #endregion

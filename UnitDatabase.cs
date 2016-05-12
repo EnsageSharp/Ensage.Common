@@ -163,6 +163,12 @@ namespace Ensage.Common
         /// </returns>
         public static double GetAttackPoint(Unit unit)
         {
+            var hero = unit as Hero;
+            if (hero != null)
+            {
+                return GetAttackPoint(hero);
+            }
+
             if (unit == null)
             {
                 return 0;
@@ -279,6 +285,12 @@ namespace Ensage.Common
         /// </returns>
         public static double GetAttackRate(Unit unit)
         {
+            var hero = unit as Hero;
+            if (hero != null)
+            {
+                return GetAttackRate(hero);
+            }
+
             try
             {
                 var attackSpeed = GetAttackSpeed(unit);
@@ -360,6 +372,12 @@ namespace Ensage.Common
         /// </returns>
         public static float GetAttackSpeed(Unit unit)
         {
+            var hero = unit as Hero;
+            if (hero != null)
+            {
+                return GetAttackSpeed(hero);
+            }
+
             try
             {
                 double attackBaseTime;
@@ -465,6 +483,12 @@ namespace Ensage.Common
         /// </returns>
         public static double GetProjectileSpeed(Unit unit)
         {
+            var hero = unit as Hero;
+            if (hero != null)
+            {
+                return GetProjectileSpeed(hero);
+            }
+
             if (unit == null || !unit.IsRanged)
             {
                 return double.MaxValue;

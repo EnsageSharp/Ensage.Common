@@ -15,12 +15,12 @@
         /// <summary>
         ///     The boolean dictionary.
         /// </summary>
-        private static readonly Dictionary<string, bool> BoolDictionary = new Dictionary<string, bool>();
+        private static Dictionary<string, bool> boolDictionary = new Dictionary<string, bool>();
 
         /// <summary>
         ///     The range dictionary.
         /// </summary>
-        private static readonly Dictionary<float, float> RangeDictionary = new Dictionary<float, float>();
+        private static Dictionary<float, float> rangeDictionary = new Dictionary<float, float>();
 
         #endregion
 
@@ -129,7 +129,7 @@
             var n = hero.Handle + "CanGoInvis";
             if (!Utils.SleepCheck(n))
             {
-                return BoolDictionary[n];
+                return boolDictionary[n];
             }
 
             Ability invis = null;
@@ -161,13 +161,13 @@
 
             var canGoInvis = (invis != null && hero.CanCast() && invis.CanBeCasted())
                              || (riki != null && riki.Level > 0 && !hero.IsSilenced());
-            if (!BoolDictionary.ContainsKey(n))
+            if (!boolDictionary.ContainsKey(n))
             {
-                BoolDictionary.Add(n, canGoInvis);
+                boolDictionary.Add(n, canGoInvis);
             }
             else
             {
-                BoolDictionary[n] = canGoInvis;
+                boolDictionary[n] = canGoInvis;
             }
 
             Utils.Sleep(150, n);
@@ -202,7 +202,7 @@
         {
             var bonus = 0.0;
             float range;
-            if (RangeDictionary.TryGetValue(hero.Handle, out range)
+            if (rangeDictionary.TryGetValue(hero.Handle, out range)
                 && !Utils.SleepCheck("Common.GetAttackRange." + hero.Handle))
             {
                 return range;
@@ -262,13 +262,13 @@
             }
 
             range = (float)(hero.AttackRange + bonus + hero.HullRadius);
-            if (!RangeDictionary.ContainsKey(hero.Handle))
+            if (!rangeDictionary.ContainsKey(hero.Handle))
             {
-                RangeDictionary.Add(hero.Handle, range);
+                rangeDictionary.Add(hero.Handle, range);
             }
             else
             {
-                RangeDictionary[hero.Handle] = range;
+                rangeDictionary[hero.Handle] = range;
             }
 
             Utils.Sleep(500, "Common.GetAttackRange." + hero.Handle);
@@ -318,6 +318,19 @@
         public static double ProjectileSpeed(this Hero hero)
         {
             return UnitDatabase.GetProjectileSpeed(hero);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The initialize.
+        /// </summary>
+        internal static void Init()
+        {
+            rangeDictionary = new Dictionary<float, float>();
+            boolDictionary = new Dictionary<string, bool>();
         }
 
         #endregion

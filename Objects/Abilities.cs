@@ -13,7 +13,7 @@
         /// <summary>
         ///     The ability dictionary.
         /// </summary>
-        public static Dictionary<string, Ability> AbilityDictionary = new Dictionary<string, Ability>();
+        private static Dictionary<string, Ability> abilityDictionary = new Dictionary<string, Ability>();
 
         #endregion
 
@@ -34,7 +34,7 @@
         public static Ability FindAbility(string name, Team team)
         {
             Ability ability;
-            var found = AbilityDictionary.TryGetValue(name + team, out ability);
+            var found = abilityDictionary.TryGetValue(name + team, out ability);
             if (found && ability.IsValid)
             {
                 return ability;
@@ -50,11 +50,11 @@
 
             if (found)
             {
-                AbilityDictionary[name + team] = ability;
+                abilityDictionary[name + team] = ability;
             }
             else
             {
-                AbilityDictionary.Add(name + team, ability);
+                abilityDictionary.Add(name + team, ability);
             }
 
             return ability;
@@ -72,7 +72,7 @@
         public static Ability FindAbility(string name)
         {
             Ability ability;
-            var found = AbilityDictionary.TryGetValue(name, out ability);
+            var found = abilityDictionary.TryGetValue(name, out ability);
             if (found && ability.IsValid)
             {
                 return ability;
@@ -87,14 +87,26 @@
 
             if (found)
             {
-                AbilityDictionary[name] = ability;
+                abilityDictionary[name] = ability;
             }
             else
             {
-                AbilityDictionary.Add(name, ability);
+                abilityDictionary.Add(name, ability);
             }
 
             return ability;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The initialize.
+        /// </summary>
+        internal static void Init()
+        {
+            abilityDictionary = new Dictionary<string, Ability>();
         }
 
         #endregion

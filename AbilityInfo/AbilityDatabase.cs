@@ -27,6 +27,25 @@ namespace Ensage.Common.AbilityInfo
     /// </summary>
     public static class AbilityDatabase
     {
+        #region Static Fields
+
+        /// <summary>
+        ///     Gets the ability info dictionary.
+        /// </summary>
+        private static Dictionary<string, AbilityInfo> abilityinfoDictionary;
+
+        /// <summary>
+        ///     The loaded.
+        /// </summary>
+        private static bool loaded;
+
+        /// <summary>
+        ///     Gets the spells.
+        /// </summary>
+        private static List<AbilityInfo> spells;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -34,29 +53,8 @@ namespace Ensage.Common.AbilityInfo
         /// </summary>
         static AbilityDatabase()
         {
-            JToken @object;
-            if (JObject.Parse(Encoding.Default.GetString(Resources.AbilityDatabase))
-                .TryGetValue("Abilities", out @object))
-            {
-                Spells = JsonConvert.DeserializeObject<AbilityInfo[]>(@object.ToString()).ToList();
-            }
-
-            AbilityinfoDictionary = new Dictionary<string, AbilityInfo>();
+            Init();
         }
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        ///     Gets the ability info dictionary.
-        /// </summary>
-        public static Dictionary<string, AbilityInfo> AbilityinfoDictionary { get; private set; }
-
-        /// <summary>
-        ///     Gets the spells.
-        /// </summary>
-        public static List<AbilityInfo> Spells { get; private set; }
 
         #endregion
 
@@ -74,18 +72,43 @@ namespace Ensage.Common.AbilityInfo
         public static AbilityInfo Find(string abilityName)
         {
             AbilityInfo info;
-            if (AbilityinfoDictionary.TryGetValue(abilityName, out info))
+            if (abilityinfoDictionary.TryGetValue(abilityName, out info))
             {
                 return info;
             }
 
-            info = Spells.FirstOrDefault(data => data.AbilityName == abilityName);
+            info = spells.FirstOrDefault(data => data.AbilityName == abilityName);
             if (info != null)
             {
-                AbilityinfoDictionary.Add(abilityName, info);
+                abilityinfoDictionary.Add(abilityName, info);
             }
 
             return info;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The initialization.
+        /// </summary>
+        internal static void Init()
+        {
+            if (loaded)
+            {
+                return;
+            }
+
+            loaded = true;
+            JToken @object;
+            if (JObject.Parse(Encoding.Default.GetString(Resources.AbilityDatabase))
+                .TryGetValue("Abilities", out @object))
+            {
+                spells = JsonConvert.DeserializeObject<AbilityInfo[]>(@object.ToString()).ToList();
+            }
+
+            abilityinfoDictionary = new Dictionary<string, AbilityInfo>();
         }
 
         #endregion

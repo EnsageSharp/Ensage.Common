@@ -14,9 +14,10 @@
 namespace Ensage.Common
 {
     using System;
-    using System.Collections.Generic;
     using System.Reflection;
 
+    using Ensage.Common.AbilityInfo;
+    using Ensage.Common.Extensions;
     using Ensage.Common.Objects;
 
     /// <summary>
@@ -45,8 +46,10 @@ namespace Ensage.Common
         /// </summary>
         static Events()
         {
+            Load();
             Game.OnUpdate += args =>
                 {
+                    CallOnUpdate();
                     if (!Game.IsInGame || ObjectManager.LocalHero == null || !ObjectManager.LocalHero.IsValid)
                     {
                         if (!unloaded)
@@ -68,7 +71,7 @@ namespace Ensage.Common
                     unloaded = false;
                     loaded = true;
                     Load();
-                    DelayAction.Add(1000, CallOnLoad);
+                    DelayAction.Add(1000 + Game.Ping, CallOnLoad);
                 };
         }
 
@@ -90,6 +93,12 @@ namespace Ensage.Common
         /// <param name="e"><see cref="EventArgs" /> event data</param>
         public delegate void OnLoadDelegate(object sender, EventArgs e);
 
+        /// <summary>
+        ///     OnUpdate Delegate.
+        /// </summary>
+        /// <param name="e"><see cref="EventArgs" /> event data</param>
+        public delegate void OnUpdateDelegate(EventArgs e);
+
         #endregion
 
         #region Public Events
@@ -104,6 +113,11 @@ namespace Ensage.Common
         ///     running) and when reloading an assembly.
         /// </summary>
         public static event OnLoadDelegate OnLoad;
+
+        /// <summary>
+        ///     Temporary fix for InvalidOperationException
+        /// </summary>
+        public static event OnUpdateDelegate OnUpdate;
 
         #endregion
 
@@ -132,12 +146,29 @@ namespace Ensage.Common
         }
 
         /// <summary>
+        ///     The call on update.
+        /// </summary>
+        private static void CallOnUpdate()
+        {
+            if (OnUpdate != null)
+            {
+                OnUpdate(EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
         ///     The load.
         /// </summary>
         private static void Load()
         {
-            Names.NameDictionary = new Dictionary<float, string>();
-            Abilities.AbilityDictionary = new Dictionary<string, Ability>();
+            AbilityDatabase.Init();
+            AbilityDamage.Init();
+            AbilityExtensions.Init();
+            HeroExtensions.Init();
+            UnitExtensions.Init();
+            Menu.Menu.Init();
+            Names.Init();
+            Abilities.Init();
         }
 
         #endregion

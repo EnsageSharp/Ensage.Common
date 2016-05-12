@@ -84,18 +84,6 @@ namespace Ensage.Common.Extensions
 
         #endregion
 
-        #region Constructors and Destructors
-
-        /// <summary>
-        ///     Initializes static members of the <see cref="AbilityExtensions" /> class.
-        /// </summary>
-        static AbilityExtensions()
-        {
-            Events.OnLoad += Events_OnLoad;
-        }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -193,12 +181,7 @@ namespace Ensage.Common.Extensions
                 return canBeCasted;
             }
 
-            AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            {
-                data = AbilityDatabase.Find(ability.StoredName());
-                AbilityDamage.DataDictionary.Add(ability, data);
-            }
+            var data = ability.CommonProperties();
 
             return data == null ? canBeCasted : data.MagicImmunityPierce;
         }
@@ -425,12 +408,7 @@ namespace Ensage.Common.Extensions
             var owner = ability.Owner as Unit;
             var position = sourcePosition;
             var delay = ability.GetHitDelay(target, name);
-            AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            {
-                data = AbilityDatabase.Find(ability.StoredName());
-                AbilityDamage.DataDictionary.Add(ability, data);
-            }
+            var data = ability.CommonProperties();
 
             // delay += data.AdditionalDelay;
             if (target.IsInvul() && !Utils.ChainStun(target, delay, null, false))
@@ -1053,13 +1031,7 @@ namespace Ensage.Common.Extensions
                 return (ability.Owner as Unit).GetAttackRange() + 50;
             }
 
-            AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            {
-                data = AbilityDatabase.Find(name);
-                AbilityDamage.DataDictionary.Add(ability, data);
-            }
-
+            var data = ability.CommonProperties();
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
             {
                 var castRange = (float)ability.CastRange;
@@ -1180,13 +1152,7 @@ namespace Ensage.Common.Extensions
                 return storedDelay;
             }
 
-            AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            {
-                data = AbilityDatabase.Find(name);
-                AbilityDamage.DataDictionary.Add(ability, data);
-            }
-
+            var data = ability.CommonProperties();
             var delay = ability.GetCastDelay(owner as Hero, target, true, abilityName: name);
             if (data != null)
             {
@@ -1247,13 +1213,7 @@ namespace Ensage.Common.Extensions
             }
 
             var name = abilityName ?? ability.StoredName();
-            AbilityInfo data;
-            if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-            {
-                data = AbilityDatabase.Find(name);
-                AbilityDamage.DataDictionary.Add(ability, data);
-            }
-
+            var data = ability.CommonProperties();
             var owner = ability.Owner as Unit;
             var delay = ability.GetCastDelay(owner as Hero, target, true, abilityName: name, useChannel: true);
             if (data != null)
@@ -1311,28 +1271,26 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             float speed;
-            if (!speedDictionary.TryGetValue(name + " " + ability.Level, out speed))
+            if (speedDictionary.TryGetValue(name + " " + ability.Level, out speed))
             {
-                AbilityInfo data;
-                if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-                {
-                    data = AbilityDatabase.Find(name);
-                    AbilityDamage.DataDictionary.Add(ability, data);
-                }
-
-                if (data == null)
-                {
-                    speed = float.MaxValue;
-                    speedDictionary.Add(name + " " + ability.Level, speed);
-                    return speed;
-                }
-
-                if (data.Speed != null)
-                {
-                    speed = ability.GetAbilityData(data.Speed, abilityName: name);
-                    speedDictionary.Add(name + " " + ability.Level, speed);
-                }
+                return speed;
             }
+
+            var data = ability.CommonProperties();
+            if (data == null)
+            {
+                speed = float.MaxValue;
+                speedDictionary.Add(name + " " + ability.Level, speed);
+                return speed;
+            }
+
+            if (data.Speed == null)
+            {
+                return speed;
+            }
+
+            speed = ability.GetAbilityData(data.Speed, abilityName: name);
+            speedDictionary.Add(name + " " + ability.Level, speed);
 
             return speed;
         }
@@ -1358,51 +1316,47 @@ namespace Ensage.Common.Extensions
 
             var name = abilityName ?? ability.StoredName();
             float radius;
-            if (!radiusDictionary.TryGetValue(name + " " + ability.Level, out radius))
+            if (radiusDictionary.TryGetValue(name + " " + ability.Level, out radius))
             {
-                AbilityInfo data;
-                if (!AbilityDamage.DataDictionary.TryGetValue(ability, out data))
-                {
-                    data = AbilityDatabase.Find(name);
-                    AbilityDamage.DataDictionary.Add(ability, data);
-                }
-
-                if (data == null)
-                {
-                    radius = 0;
-                    radiusDictionary.Add(name + " " + ability.Level, radius);
-                    return radius;
-                }
-
-                if (data.Width != null)
-                {
-                    radius = ability.GetAbilityData(data.Width, abilityName: name);
-                    radiusDictionary.Add(name + " " + ability.Level, radius);
-                    return radius;
-                }
-
-                if (data.StringRadius != null)
-                {
-                    radius = ability.GetAbilityData(data.StringRadius, abilityName: name);
-                    radiusDictionary.Add(name + " " + ability.Level, radius);
-                    return radius;
-                }
-
-                if (data.Radius > 0)
-                {
-                    radius = data.Radius;
-                    radiusDictionary.Add(name + " " + ability.Level, radius);
-                    return radius;
-                }
-
-                if (data.IsBuff)
-                {
-                    radius = (ability.Owner as Hero).GetAttackRange() + 150;
-                    radiusDictionary.Add(name + " " + ability.Level, radius);
-                    return radius;
-                }
+                return radius;
             }
 
+            var data = ability.CommonProperties();
+            if (data == null)
+            {
+                radius = 0;
+                radiusDictionary.Add(name + " " + ability.Level, radius);
+                return radius;
+            }
+
+            if (data.Width != null)
+            {
+                radius = ability.GetAbilityData(data.Width, abilityName: name);
+                radiusDictionary.Add(name + " " + ability.Level, radius);
+                return radius;
+            }
+
+            if (data.StringRadius != null)
+            {
+                radius = ability.GetAbilityData(data.StringRadius, abilityName: name);
+                radiusDictionary.Add(name + " " + ability.Level, radius);
+                return radius;
+            }
+
+            if (data.Radius > 0)
+            {
+                radius = data.Radius;
+                radiusDictionary.Add(name + " " + ability.Level, radius);
+                return radius;
+            }
+
+            if (!data.IsBuff)
+            {
+                return radius;
+            }
+
+            radius = (ability.Owner as Hero).GetAttackRange() + 150;
+            radiusDictionary.Add(name + " " + ability.Level, radius);
             return radius;
         }
 
@@ -1738,15 +1692,9 @@ namespace Ensage.Common.Extensions
         #region Methods
 
         /// <summary>
-        ///     The events_ on load.
+        ///     The initialize.
         /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        private static void Events_OnLoad(object sender, EventArgs e)
+        internal static void Init()
         {
             hitDelayDictionary = new Dictionary<string, double>();
             dataDictionary = new Dictionary<string, AbilitySpecialData>();

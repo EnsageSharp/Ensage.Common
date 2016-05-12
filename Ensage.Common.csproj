@@ -122,7 +122,10 @@
     <Compile Include="Menu\Transitions\QuadEaseInOut.cs" />
     <Compile Include="Objects\Abilities.cs" />
     <Compile Include="Objects\Creeps.cs" />
+    <Compile Include="Objects\DrawObjects\Circle.cs" />
     <Compile Include="Objects\DrawObjects\DrawText.cs" />
+    <Compile Include="Objects\DrawObjects\DrawType.cs" />
+    <Compile Include="Objects\DrawObjects\Polygon.cs" />
     <Compile Include="Objects\Heroes.cs" />
     <Compile Include="Objects\JungleCamp.cs" />
     <Compile Include="Objects\JungleCamps.cs" />
@@ -142,6 +145,9 @@
     <Compile Include="Objects\Textures.cs" />
     <Compile Include="Objects\Towers.cs" />
     <Compile Include="Objects\Trees.cs" />
+    <Compile Include="Objects\UtilityObjects\AttackAnimationTracker.cs" />
+    <Compile Include="Objects\UtilityObjects\Attacker.cs" />
+    <Compile Include="Objects\UtilityObjects\Orbwalker.cs" />
     <Compile Include="Objects\UtilityObjects\Sleeper.cs" />
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />

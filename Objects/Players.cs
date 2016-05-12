@@ -62,7 +62,7 @@
                     All = new List<Player>();
                     Dire = new List<Player>();
                     Radiant = new List<Player>();
-                    Game.OnUpdate -= Update;
+                    Events.OnUpdate -= Update;
                     loaded = false;
                 };
         }
@@ -119,7 +119,7 @@
             All = ObjectManager.GetEntities<Player>().ToList();
             Dire = All.Where(x => x.Team == Team.Radiant).ToList();
             Radiant = All.Where(x => x.Team == Team.Dire).ToList();
-            Game.OnUpdate += Update;
+            Events.OnUpdate += Update;
             loaded = true;
             Update(null);
         }

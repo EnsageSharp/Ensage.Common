@@ -131,10 +131,10 @@ namespace Ensage.Common.Menu
             Root = new CommonMenu();
             Root.AddToMainMenu();
             loaded = false;
-            newMessageType = Root.Item("messageType").GetValue<StringList>();
             Events.OnLoad += Events_OnLoad;
             Events.OnClose += (sender, args) => { loaded = false; };
             Drawing.OnDraw += OnDraw;
+            Init();
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Ensage.Common.Menu
                     return (int)menuPositionDictionary[n].X;
                 }
 
-                var bonus = 0;
+                var bonus = this.Height;
                 if (this.TextureName == null || this.ShowTextWithTexture)
                 {
                     bonus +=
@@ -422,7 +422,7 @@ namespace Ensage.Common.Menu
                             MultiLanguage._(this.DisplayName), 
                             "Arial", 
                             new Vector2((float)(this.Height * 0.55), 100), 
-                            FontFlags.None).X + this.Height;
+                            FontFlags.None).X;
                 }
 
                 if (this.TextureName != null)
@@ -430,35 +430,29 @@ namespace Ensage.Common.Menu
                     var tName = this.TextureName;
                     if (tName.Contains("npc_dota_hero"))
                     {
-                        bonus += 15;
+                        bonus += (int)(this.Height * 0.7);
                     }
                     else if (tName.Contains("item_"))
                     {
-                        bonus += -4;
+                        bonus += (int)(this.Height * 0.15);
                     }
                     else
                     {
-                        bonus += -4;
+                        bonus += (int)(this.Height * 0.15);
                     }
-                }
-
-                var arrow = Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17);
-                if (5 + arrow + bonus < (float)(MenuSettings.MenuWidth - (MenuSettings.MenuWidth * 0.3)))
-                {
-                    arrow = 4;
                 }
 
                 if (!menuPositionDictionary.ContainsKey(n))
                 {
-                    menuPositionDictionary.Add(n, new Vector2(this.Height + bonus + arrow));
+                    menuPositionDictionary.Add(n, new Vector2(this.Height + bonus));
                 }
                 else
                 {
-                    menuPositionDictionary[n] = new Vector2(this.Height + bonus + arrow);
+                    menuPositionDictionary[n] = new Vector2(this.Height + bonus);
                 }
 
                 Utils.Sleep(20000, n);
-                return this.Height + bonus + arrow;
+                return this.Height + bonus;
             }
         }
 
@@ -780,14 +774,14 @@ namespace Ensage.Common.Menu
                 {
                     Drawing.DrawRect(
                         this.Position + new Vector2(3, 3), 
-                        new Vector2(this.Height + 13, this.Height - 6), 
+                        new Vector2((float)(this.Height * 1.4), this.Height - 6), 
                         TextureDictionary[tName]);
                     Drawing.DrawRect(
                         this.Position + new Vector2(2, 2), 
-                        new Vector2(this.Height + 15, this.Height - 4), 
+                        new Vector2((float)(this.Height * 1.4) + 2, this.Height - 4), 
                         Color.Black, 
                         true);
-                    bonusWidth = (int)(this.Height * 1.35);
+                    bonusWidth = (int)(this.Height * 1.4);
                 }
                 else if (tName.Contains("item_"))
                 {
@@ -817,7 +811,8 @@ namespace Ensage.Common.Menu
                 }
             }
 
-            if (5 + textSize.X + bonusWidth < (float)(this.Width - (this.Height * 0.3)))
+            if (((this.TextureName == null || this.ShowTextWithTexture) ? textSize.X : 0) + bonusWidth
+                < (float)(this.Width - (this.Height * 0.3)))
             {
                 var arrowname = this.IsOpen ? "arrowrighthover.vmat_c" : "arrowright.vmat_c";
                 var arrow = Textures.GetTexture("materials/ensage_ui/menu/" + arrowname);
@@ -974,6 +969,25 @@ namespace Ensage.Common.Menu
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     The initialize.
+        /// </summary>
+        internal static void Init()
+        {
+            if (Root == null)
+            {
+                return;
+            }
+
+            var item = Root.Item("messageType");
+            if (item == null)
+            {
+                return;
+            }
+
+            newMessageType = item.GetValue<StringList>();
+        }
 
         /// <summary>
         ///     The game_ on wnd proc.

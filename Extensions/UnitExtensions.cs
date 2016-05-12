@@ -61,18 +61,6 @@ namespace Ensage.Common.Extensions
 
         #endregion
 
-        #region Constructors and Destructors
-
-        /// <summary>
-        ///     Initializes static members of the <see cref="UnitExtensions" /> class.
-        /// </summary>
-        static UnitExtensions()
-        {
-            Events.OnLoad += Events_OnLoad;
-        }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -1454,15 +1442,9 @@ namespace Ensage.Common.Extensions
         #region Methods
 
         /// <summary>
-        ///     The events_ on load.
+        ///     The initialize.
         /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        private static void Events_OnLoad(object sender, EventArgs e)
+        internal static void Init()
         {
             boolDictionary = new Dictionary<string, bool>();
             itemDictionary = new Dictionary<string, Item>();
