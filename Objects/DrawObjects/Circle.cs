@@ -21,11 +21,6 @@
         private readonly int circleLineSegment;
 
         /// <summary>
-        ///     The world update sleeper.
-        /// </summary>
-        private readonly Sleeper worldUpdateSleeper;
-
-        /// <summary>
         ///     The center.
         /// </summary>
         private Vector2 center;
@@ -77,7 +72,6 @@
         /// </param>
         public Circle(Vector3 position, float radius)
         {
-            this.worldUpdateSleeper = new Sleeper();
             this.DrawType = DrawType.World;
             this.circleLineSegment = (int)(radius / 4);
             this.Ground = position.Z;
@@ -153,6 +147,7 @@
 
                 this.worldPosition = value;
                 this.center = value.ToVector2();
+                this.Ground = value.Z;
                 this.UpdatePolygon();
             }
         }
@@ -184,12 +179,6 @@
             }
             else
             {
-                if (!this.worldUpdateSleeper.Sleeping)
-                {
-                    this.Ground = Polygon.GetGround(this.center);
-                    this.worldUpdateSleeper.Sleep(500);
-                }
-
                 this.WorldPoints = new List<Vector3>();
                 var outRadius = this.Radius / (float)Math.Cos(2 * Math.PI / this.circleLineSegment);
 
