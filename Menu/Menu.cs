@@ -943,10 +943,26 @@ namespace Ensage.Common.Menu
         /// <returns>
         ///     The <see cref="Menu" />.
         /// </returns>
+        [Obsolete("SetFontStyle is deprecated, please use SetFontColor instead")]
         public Menu SetFontStyle(FontStyle fontStyle = FontStyle.Regular, Color? fontColor = null)
         {
             this.Style = fontStyle;
             this.Color = fontColor ?? Color.White;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets custom text color
+        /// </summary>
+        /// <param name="fontColor">
+        /// The font color.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Menu"/>.
+        /// </returns>
+        public Menu SetFontColor(Color fontColor)
+        {
+            this.Color = fontColor;
             return this;
         }
 

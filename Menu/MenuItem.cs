@@ -535,18 +535,33 @@ namespace Ensage.Common.Menu
         /// <returns>
         ///     The <see cref="MenuItem" />.
         /// </returns>
+        [Obsolete("SetFontStyle is deprecated, please use SetFontColor instead")]
         public MenuItem SetFontStyle(FontStyle fontStyle = FontStyle.Regular, Color? fontColor = null)
         {
             this.FontStyle = fontStyle;
             this.FontColor = fontColor ?? Color.White;
+            return this;
+        }
 
+        /// <summary>
+        /// Sets custom text color
+        /// </summary>
+        /// <param name="fontColor">
+        /// The font color.
+        /// </param>
+        /// <returns>
+        /// The <see cref="MenuItem"/>.
+        /// </returns>
+        public MenuItem SetFontColor(Color fontColor)
+        {
+            this.FontColor = fontColor;
             return this;
         }
 
         /// <summary>
         ///     The set hero toggler.
         /// </summary>
-        public void SetHeroToggler()
+        internal void SetHeroToggler()
         {
             if (this.ValueType != MenuValueType.HeroToggler)
             {
