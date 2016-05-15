@@ -834,7 +834,7 @@ namespace Ensage.Common.Menu
             {
                 var arrowname = this.IsOpen ? "arrowrighthover.vmat_c" : "arrowright.vmat_c";
                 var arrow = Textures.GetTexture("materials/ensage_ui/menu/" + arrowname);
-                var size = new Vector2((float)(this.Height * 0.55), (float)(this.Height * 0.55));
+                var size = new Vector2((float)(this.Height * 0.53), (float)(this.Height * 0.53));
                 var add1 = this.IsOpen ? this.Height * 0.1 : add;
                 Drawing.DrawRect(
                     this.Position

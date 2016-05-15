@@ -302,20 +302,20 @@ namespace Ensage.Common.Menu
                 new Vector2((float)(item.Height * 0.4), 14), 
                 FontFlags.AntiAlias);
             MenuUtils.DrawBoxBordered(
-                position.X + 1, 
+                position.X, 
                 position.Y, 
                 textSize.X + 8, 
                 item.Height, 
                 1, 
-                new SharpDX.Color(37, 37, 37, (int)(add * 68)), 
-                new SharpDX.Color(10, 10, 10, (int)(add * 68)));
+                new SharpDX.Color(37, 37, 37, (int)(add * 58)), 
+                new SharpDX.Color(10, 10, 10, (int)(add * 58)));
 
             var textPos = position + new Vector2(4, (float)((item.Height * 0.5) - (textSize.Y * 0.5)));
             Drawing.DrawText(
                 s, 
                 textPos, 
                 new Vector2((float)(item.Height * 0.4), 14), 
-                new SharpDX.Color(160, 160, 160, (int)(add * 68)), 
+                new SharpDX.Color(175, 175, 175, (int)(add * 68)), 
                 FontFlags.AntiAlias);
         }
 

@@ -1,5 +1,6 @@
 ﻿namespace Ensage.Common.Menu.Draw
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -140,11 +141,12 @@
             }
 
             if (!this.BeingDragged && message == Utils.WindowsMessages.WM_MOUSEMOVE
-                && cursorPos.Distance(this.lastClickMousePosition) > 10)
+                && cursorPos.Distance(this.lastClickMousePosition) > 5 && Math.Abs(cursorPos.Y - this.lastClickMousePosition.Y) > 5)
             {
                 if (this.leftButtonDown && !this.ResizeTransition.Moving)
                 {
                     this.PrepareDraggedIcon();
+                    return;
                 }
             }
 
