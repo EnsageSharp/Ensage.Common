@@ -288,14 +288,14 @@ namespace Ensage.Common.Menu
                                     new Vector2(
                                     (float)(MenuSettings.MenuItemHeight * 0.45), 
                                     (float)(MenuSettings.MenuItemWidth * 0.7)), 
-                                    FontFlags.None).X + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 17))
+                                    FontFlags.None).X + this.Height + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.7), 17))
                                 .Concat(new[] { 0 })
                                 .Max();
 
                         extra += max;
                         break;
                     case MenuValueType.AbilityToggler:
-                        extra += this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height - 4);
+                        extra += (int)(this.GetValue<AbilityToggler>().Dictionary.Count * (this.Height * 0.8));
                         break;
                     case MenuValueType.PriorityChanger:
                         if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.GetValue<PriorityChanger>().Name))
@@ -309,14 +309,14 @@ namespace Ensage.Common.Menu
 
                         break;
                     case MenuValueType.HeroToggler:
-                        extra += this.GetValue<HeroToggler>().Dictionary.Count * (this.Height + 5);
+                        extra += (int)(this.GetValue<HeroToggler>().Dictionary.Count * (this.Height * 1.3));
                         break;
                     case MenuValueType.KeyBind:
                         var val = this.GetValue<KeyBind>();
                         extra +=
                             (int)
                             Drawing.MeasureText(
-                                " [" + Utils.KeyToText(val.Key) + "]", 
+                                "[[[[[[" + Utils.KeyToText(val.Key) + "]]]]]]", 
                                 "Arial", 
                                 new Vector2(
                                 (float)(MenuSettings.MenuItemHeight * 0.45), 
@@ -337,34 +337,36 @@ namespace Ensage.Common.Menu
 
                         break;
                     case MenuValueType.Boolean:
-                        extra += (float)(this.Height * 1.5);
+                        extra += (float)(this.Height * 1.3);
                         break;
                 }
 
                 if (!Menu.menuPositionDictionary.ContainsKey(n))
                 {
                     Menu.menuPositionDictionary.Add(
-                        n, 
+                        n,
                         new Vector2(
                             (int)
-                            (Drawing.MeasureText(
-                                MultiLanguage._(this.DisplayName), 
-                                "Arial", 
-                                new Vector2((float)(this.Height * 0.45), 20), 
-                                FontFlags.AntiAlias).X + this.Height * 1.4
-                             + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8) + extra)));
+                            (Math.Max(
+                                Drawing.MeasureText(
+                                    MultiLanguage._(this.DisplayName),
+                                    "Arial",
+                                    new Vector2((float)(this.Height * 0.45), 20),
+                                    FontFlags.AntiAlias).X,
+                                this.Height * 2) + this.Height + Math.Max((int)(HUDInfo.GetHpBarSizeY()), 8) + extra)));
                 }
                 else
                 {
                     Menu.menuPositionDictionary[n] =
                         new Vector2(
                             (int)
-                            (Drawing.MeasureText(
-                                MultiLanguage._(this.DisplayName), 
-                                "Arial", 
-                                new Vector2((float)(this.Height * 0.45), 20), 
-                                FontFlags.AntiAlias).X + this.Height * 1.4
-                             + Math.Max((int)(HUDInfo.GetHpBarSizeY() * 1.8), 8) + extra));
+                            (Math.Max(
+                                Drawing.MeasureText(
+                                    MultiLanguage._(this.DisplayName),
+                                    "Arial",
+                                    new Vector2((float)(this.Height * 0.45), 20),
+                                    FontFlags.AntiAlias).X,
+                                this.Height * 2) + this.Height + Math.Max((int)(HUDInfo.GetHpBarSizeY()), 8) + extra));
                 }
 
                 Utils.Sleep(20000, n);

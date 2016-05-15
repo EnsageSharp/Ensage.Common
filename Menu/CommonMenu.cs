@@ -35,10 +35,10 @@ namespace Ensage.Common.Menu
             var positionMenu = new Menu("MenuPosition", "menuPosition");
             positionMenu.AddItem(
                 new MenuItem("positionX", "Position X").SetValue(
-                    new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height)));
+                    new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height / 3)));
             positionMenu.AddItem(
                 new MenuItem("positionY", "Position Y").SetValue(
-                    new Slider((int)MenuSettings.BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.06), Drawing.Width)));
+                    new Slider((int)MenuSettings.BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.06), Drawing.Width / 4)));
             MenuSettings.BasePosition = new Vector2(
                 positionMenu.Item("positionX").GetValue<Slider>().Value, 
                 positionMenu.Item("positionY").GetValue<Slider>().Value);

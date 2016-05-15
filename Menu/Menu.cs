@@ -421,7 +421,7 @@ namespace Ensage.Common.Menu
                         Drawing.MeasureText(
                             MultiLanguage._(this.DisplayName), 
                             "Arial", 
-                            new Vector2((float)(this.Height * 0.55), 100), 
+                            new Vector2((float)(this.Height * 0.48), 100), 
                             FontFlags.None).X;
                 }
 
@@ -430,15 +430,15 @@ namespace Ensage.Common.Menu
                     var tName = this.TextureName;
                     if (tName.Contains("npc_dota_hero"))
                     {
-                        bonus += (int)(this.Height * 0.7);
+                        bonus += (int)(this.Height * 1.5);
                     }
                     else if (tName.Contains("item_"))
                     {
-                        bonus += (int)(this.Height * 0.15);
+                        bonus += (int)(this.Height * 0.35);
                     }
                     else
                     {
-                        bonus += (int)(this.Height * 0.15);
+                        bonus += (int)(this.Height * 0.35);
                     }
                 }
 
@@ -505,7 +505,7 @@ namespace Ensage.Common.Menu
                     return (int)this.Size.Y;
                 }
 
-                return this.Parent != null ? this.Parent.ChildrenMenuWidth : MenuSettings.MenuWidth;
+                return this.Parent != null ? this.Parent.ChildrenMenuWidth : MenuSettings.MenuWidth + this.Height;
             }
         }
 
@@ -705,6 +705,24 @@ namespace Ensage.Common.Menu
             ObjectManager.OnAddEntity += this.ObjectMgr_OnAddEntity;
             Game.OnWndProc += this.Game_OnWndProc;
             DelayAction.Add(2000, this.SetHeroTogglers);
+            var bonus = 0f;
+            if (this.TextureName != null)
+            {
+                var tName = this.TextureName;
+                if (tName.Contains("npc_dota_hero"))
+                {
+                    bonus = (int)(this.Height * 1.5);
+                }
+                else if (tName.Contains("item_"))
+                {
+                    bonus = (int)(this.Height * 0.9);
+                }
+                else
+                {
+                    bonus = (int)(this.Height * 0.9);
+                }
+            }
+
             MenuSettings.RootMenuWidthIncrease =
                 (int)
                 Math.Max(
@@ -713,7 +731,7 @@ namespace Ensage.Common.Menu
                         MultiLanguage._(this.DisplayName), 
                         "Arial", 
                         new Vector2((float)(this.Height * 0.48), 100), 
-                        FontFlags.AntiAlias).X);
+                        FontFlags.AntiAlias).X + bonus);
             this.OrderNumber = menuCount;
             menuCount++;
         }
@@ -781,7 +799,7 @@ namespace Ensage.Common.Menu
                         new Vector2((float)(this.Height * 1.4) + 2, this.Height - 4), 
                         Color.Black, 
                         true);
-                    bonusWidth = (int)(this.Height * 1.4);
+                    bonusWidth = (int)(this.Height * 1.44);
                 }
                 else if (tName.Contains("item_"))
                 {
@@ -1158,7 +1176,7 @@ namespace Ensage.Common.Menu
 
             if (this.IsRootMenu && this.Visible)
             {
-                if (cursorPos.X - MenuSettings.BasePosition.X <= MenuSettings.MenuWidth)
+                if (cursorPos.X - MenuSettings.BasePosition.X <= MenuSettings.MenuWidth + this.Height + 4)
                 {
                     var n = (int)(cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight;
                     if (this.MenuCount != n)

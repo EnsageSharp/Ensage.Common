@@ -71,7 +71,7 @@ namespace Ensage.Common
                     unloaded = false;
                     loaded = true;
                     Load();
-                    DelayAction.Add(1000 + Game.Ping, CallOnLoad);
+                    DelayAction.Add(500 + Game.Ping, CallOnLoad);
                 };
         }
 

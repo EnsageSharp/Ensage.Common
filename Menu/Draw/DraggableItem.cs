@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ensage.Common.Extensions;
     using Ensage.Common.Menu.Transitions;
     using Ensage.Common.Objects.UtilityObjects;
 
@@ -138,7 +139,8 @@
                 return;
             }
 
-            if (!this.BeingDragged && message == Utils.WindowsMessages.WM_MOUSEMOVE)
+            if (!this.BeingDragged && message == Utils.WindowsMessages.WM_MOUSEMOVE
+                && cursorPos.Distance(this.lastClickMousePosition) > 10)
             {
                 if (this.leftButtonDown && !this.ResizeTransition.Moving)
                 {

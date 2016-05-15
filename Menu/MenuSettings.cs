@@ -127,7 +127,7 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return Math.Min((int)(HUDInfo.GetHPBarSizeX() * 2), 100)
+                return (int)(HUDInfo.GetHPBarSizeX() * 0.1)
                        + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value
                        + RootMenuWidthIncrease; // 160
             }
