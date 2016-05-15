@@ -123,6 +123,61 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     The base predict.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="delay">
+        ///     The delay in milliseconds.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
+        public static Vector3 BasePredict(this Unit unit, float delay)
+        {
+            delay /= 1000;
+            if (unit.NetworkActivity != NetworkActivity.Move)
+            {
+                return unit.NetworkPosition;
+            }
+
+            return unit.NetworkPosition + (unit.Vector3FromPolarAngle() * (delay * unit.MovementSpeed));
+        }
+
+        /// <summary>
+        ///     The base predict.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="delay">
+        ///     The delay in milliseconds.
+        /// </param>
+        /// <param name="speed">
+        ///     The speed.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
+        public static Vector3 BasePredict(this Unit unit, Unit source, float delay, float speed)
+        {
+            delay /= 1000;
+            if (unit.NetworkActivity != NetworkActivity.Move)
+            {
+                return unit.NetworkPosition;
+            }
+
+            var predict = unit.NetworkPosition + (unit.Vector3FromPolarAngle() * (delay * unit.MovementSpeed));
+            var reachTime = Prediction.CalculateReachTime(unit, speed, predict - source.NetworkPosition);
+            return unit.NetworkPosition
+                   + (unit.Vector3FromPolarAngle() * (((delay * 1000) + reachTime) * unit.MovementSpeed) / 1000);
+        }
+
+        /// <summary>
         ///     The best aa target.
         /// </summary>
         /// <param name="unit">
@@ -822,6 +877,24 @@ namespace Ensage.Common.Extensions
             Utils.Sleep(50, "Ensage.Common.HasModifiers" + aname);
 
             return value;
+        }
+
+        /// <summary>
+        ///     The in front.
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="distance">
+        ///     The distance.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
+        public static Vector3 InFront(this Unit unit, float distance)
+        {
+            var v = unit.Position + (unit.Vector3FromPolarAngle() * distance);
+            return new Vector3(v.X, v.Y, unit.Position.Z);
         }
 
         /// <summary>

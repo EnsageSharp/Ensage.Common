@@ -308,7 +308,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static Vector2 Vector2FromPolarAngle(this Entity entity, float delta = 0f, float radial = 1f)
         {
-            var alpha = entity.RotationRad;
+            var alpha = entity.NetworkRotationRad;
             return VectorExtensions.FromPolarCoordinates(radial, alpha + delta);
         }
 
