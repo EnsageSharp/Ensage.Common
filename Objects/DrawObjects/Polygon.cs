@@ -12,7 +12,7 @@
     /// <summary>
     ///     The polygon.
     /// </summary>
-    public class Polygon
+    public abstract class Polygon
     {
         #region Static Fields
 
@@ -41,7 +41,7 @@
         /// <summary>
         ///     Initializes a new instance of the <see cref="Polygon" /> class.
         /// </summary>
-        public Polygon()
+        protected Polygon()
         {
         }
 
@@ -97,7 +97,7 @@
         /// <param name="color">
         ///     The color.
         /// </param>
-        public void Draw(Color color)
+        protected virtual void Draw(Color color)
         {
             if (this.DrawType == DrawType.Screen)
             {

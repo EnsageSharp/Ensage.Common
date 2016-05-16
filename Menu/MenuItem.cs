@@ -344,16 +344,16 @@ namespace Ensage.Common.Menu
                 if (!Menu.menuPositionDictionary.ContainsKey(n))
                 {
                     Menu.menuPositionDictionary.Add(
-                        n,
+                        n, 
                         new Vector2(
                             (int)
                             (Math.Max(
                                 Drawing.MeasureText(
-                                    MultiLanguage._(this.DisplayName),
-                                    "Arial",
-                                    new Vector2((float)(this.Height * 0.45), 20),
-                                    FontFlags.AntiAlias).X,
-                                this.Height * 2) + this.Height + Math.Max((int)(HUDInfo.GetHpBarSizeY()), 8) + extra)));
+                                    MultiLanguage._(this.DisplayName), 
+                                    "Arial", 
+                                    new Vector2((float)(this.Height * 0.45), 20), 
+                                    FontFlags.AntiAlias).X, 
+                                this.Height * 2) + this.Height + Math.Max((int)HUDInfo.GetHpBarSizeY(), 8) + extra)));
                 }
                 else
                 {
@@ -362,11 +362,11 @@ namespace Ensage.Common.Menu
                             (int)
                             (Math.Max(
                                 Drawing.MeasureText(
-                                    MultiLanguage._(this.DisplayName),
-                                    "Arial",
-                                    new Vector2((float)(this.Height * 0.45), 20),
-                                    FontFlags.AntiAlias).X,
-                                this.Height * 2) + this.Height + Math.Max((int)(HUDInfo.GetHpBarSizeY()), 8) + extra));
+                                    MultiLanguage._(this.DisplayName), 
+                                    "Arial", 
+                                    new Vector2((float)(this.Height * 0.45), 20), 
+                                    FontFlags.AntiAlias).X, 
+                                this.Height * 2) + this.Height + Math.Max((int)HUDInfo.GetHpBarSizeY(), 8) + extra));
                 }
 
                 Utils.Sleep(20000, n);
@@ -526,6 +526,21 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
+        ///     Sets custom text color
+        /// </summary>
+        /// <param name="fontColor">
+        ///     The font color.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="MenuItem" />.
+        /// </returns>
+        public MenuItem SetFontColor(Color fontColor)
+        {
+            this.FontColor = fontColor;
+            return this;
+        }
+
+        /// <summary>
         ///     The set font style.
         /// </summary>
         /// <param name="fontStyle">
@@ -543,101 +558,6 @@ namespace Ensage.Common.Menu
             this.FontStyle = fontStyle;
             this.FontColor = fontColor ?? Color.White;
             return this;
-        }
-
-        /// <summary>
-        /// Sets custom text color
-        /// </summary>
-        /// <param name="fontColor">
-        /// The font color.
-        /// </param>
-        /// <returns>
-        /// The <see cref="MenuItem"/>.
-        /// </returns>
-        public MenuItem SetFontColor(Color fontColor)
-        {
-            this.FontColor = fontColor;
-            return this;
-        }
-
-        /// <summary>
-        ///     The set hero toggler.
-        /// </summary>
-        internal void SetHeroToggler()
-        {
-            if (this.ValueType != MenuValueType.HeroToggler)
-            {
-                return;
-            }
-
-            if (ObjectManager.LocalHero == null)
-            {
-                return;
-            }
-
-            if (this.GetValue<HeroToggler>().UseEnemyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 5)
-            {
-                var dict = this.GetValue<HeroToggler>().Dictionary;
-                var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
-                var heroes =
-                    Heroes.GetByTeam(ObjectManager.LocalHero.GetEnemyTeam())
-                        .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
-                        .ToList();
-
-                foreach (var x in
-                    heroes)
-                {
-                    this.GetValue<HeroToggler>()
-                        .Add(
-                            x.StoredName(), 
-                            sdict.ContainsKey(x.StoredName())
-                                ? sdict[x.StoredName()]
-                                : this.GetValue<HeroToggler>().DefaultValues);
-                }
-
-                this.SetValue(
-                    new HeroToggler(
-                        this.GetValue<HeroToggler>().Dictionary, 
-                        true, 
-                        false, 
-                        this.GetValue<HeroToggler>().DefaultValues));
-            }
-            else if (this.GetValue<HeroToggler>().UseAllyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 5)
-            {
-                var dict = this.GetValue<HeroToggler>().Dictionary;
-                var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
-                var heroes =
-                    Heroes.GetByTeam(ObjectManager.LocalHero.Team)
-                        .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
-                        .ToList();
-
-                foreach (var x in heroes)
-                {
-                    this.GetValue<HeroToggler>()
-                        .Add(
-                            x.StoredName(), 
-                            sdict.ContainsKey(x.StoredName())
-                                ? sdict[x.StoredName()]
-                                : this.GetValue<HeroToggler>().DefaultValues);
-                }
-
-                if (!dict.ContainsKey(ObjectManager.LocalHero.StoredName()))
-                {
-                    this.GetValue<HeroToggler>()
-                        .Add(
-                            ObjectManager.LocalHero.StoredName(), 
-                            sdict.ContainsKey(ObjectManager.LocalHero.StoredName())
-                                ? sdict[ObjectManager.LocalHero.StoredName()]
-                                : this.GetValue<HeroToggler>().DefaultValues);
-                }
-
-                this.SetValue(
-                    new HeroToggler(
-                        this.GetValue<HeroToggler>().Dictionary, 
-                        false, 
-                        true, 
-                        this.GetValue<HeroToggler>().DefaultValues));
-            }
         }
 
         /// <summary>
@@ -1034,6 +954,7 @@ namespace Ensage.Common.Menu
             }
 
             Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
+            Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), new Color(38, 38, 38, 190));
             switch (this.ValueType)
             {
                 case MenuValueType.None:
@@ -1044,7 +965,7 @@ namespace Ensage.Common.Menu
                 case MenuValueType.Boolean:
                     MenuVariables.OnOffDictionary[this.UniqueId].Position =
                         new Vector2(
-                            (float)(this.Position.X + this.Width - this.Height - (this.Height / 2.5)), 
+                            (float)(this.Position.X + this.Width - this.Height - (this.Height / 2.25)), 
                             this.Position.Y);
                     MenuVariables.OnOffDictionary[this.UniqueId].Height = this.Height;
                     MenuVariables.OnOffDictionary[this.UniqueId].Draw(Game.MouseScreenPosition);
@@ -1077,6 +998,7 @@ namespace Ensage.Common.Menu
                                       : new Color(0, 0, 0, 0);
 
                     Drawing.DrawRect(rpos, rsize, Textures.GetTexture("materials/ensage_ui/menu/menubg1.vmat_c"));
+                    Drawing.DrawRect(rpos, rsize, new Color(20, 20, 20, 190));
 
                     MenuUtils.DrawBoxBordered(
                         rpos.X, 
@@ -1606,6 +1528,86 @@ namespace Ensage.Common.Menu
                 }
 
                 dics[this.SaveFileName][this.SaveKey] = this.serialized;
+            }
+        }
+
+        /// <summary>
+        ///     The set hero toggler.
+        /// </summary>
+        internal void SetHeroToggler()
+        {
+            if (this.ValueType != MenuValueType.HeroToggler)
+            {
+                return;
+            }
+
+            if (ObjectManager.LocalHero == null)
+            {
+                return;
+            }
+
+            if (this.GetValue<HeroToggler>().UseEnemyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 5)
+            {
+                var dict = this.GetValue<HeroToggler>().Dictionary;
+                var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
+                var heroes =
+                    Heroes.GetByTeam(ObjectManager.LocalHero.GetEnemyTeam())
+                        .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
+                        .ToList();
+
+                foreach (var x in
+                    heroes)
+                {
+                    this.GetValue<HeroToggler>()
+                        .Add(
+                            x.StoredName(), 
+                            sdict.ContainsKey(x.StoredName())
+                                ? sdict[x.StoredName()]
+                                : this.GetValue<HeroToggler>().DefaultValues);
+                }
+
+                this.SetValue(
+                    new HeroToggler(
+                        this.GetValue<HeroToggler>().Dictionary, 
+                        true, 
+                        false, 
+                        this.GetValue<HeroToggler>().DefaultValues));
+            }
+            else if (this.GetValue<HeroToggler>().UseAllyHeroes && this.GetValue<HeroToggler>().Dictionary.Count < 5)
+            {
+                var dict = this.GetValue<HeroToggler>().Dictionary;
+                var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
+                var heroes =
+                    Heroes.GetByTeam(ObjectManager.LocalHero.Team)
+                        .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
+                        .ToList();
+
+                foreach (var x in heroes)
+                {
+                    this.GetValue<HeroToggler>()
+                        .Add(
+                            x.StoredName(), 
+                            sdict.ContainsKey(x.StoredName())
+                                ? sdict[x.StoredName()]
+                                : this.GetValue<HeroToggler>().DefaultValues);
+                }
+
+                if (!dict.ContainsKey(ObjectManager.LocalHero.StoredName()))
+                {
+                    this.GetValue<HeroToggler>()
+                        .Add(
+                            ObjectManager.LocalHero.StoredName(), 
+                            sdict.ContainsKey(ObjectManager.LocalHero.StoredName())
+                                ? sdict[ObjectManager.LocalHero.StoredName()]
+                                : this.GetValue<HeroToggler>().DefaultValues);
+                }
+
+                this.SetValue(
+                    new HeroToggler(
+                        this.GetValue<HeroToggler>().Dictionary, 
+                        false, 
+                        true, 
+                        this.GetValue<HeroToggler>().DefaultValues));
             }
         }
 

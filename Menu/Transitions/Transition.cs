@@ -91,7 +91,7 @@
         {
             get
             {
-                return (Utils.TickCount / 1000) + (Game.Ping / 1000);
+                return Utils.TickCount / 1000;
             }
         }
 

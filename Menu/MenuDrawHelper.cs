@@ -51,6 +51,10 @@ namespace Ensage.Common.Menu
             Drawing.DrawRect(
                 position + new Vector2(0, item.Height / 6), 
                 new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
+                new SharpDX.Color(20, 20, 20, 190));
+            Drawing.DrawRect(
+                position + new Vector2(0, item.Height / 6), 
+                new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
                     ? Color.FromArgb(30, 70, 70, 70).ToSharpDxColor()
                     : Color.FromArgb(0, 37, 37, 37).ToSharpDxColor());
@@ -301,14 +305,19 @@ namespace Ensage.Common.Menu
                 "Arial", 
                 new Vector2((float)(item.Height * 0.4), 14), 
                 FontFlags.AntiAlias);
-            MenuUtils.DrawBoxBordered(
-                position.X, 
-                position.Y, 
-                textSize.X + 8, 
-                item.Height, 
-                1, 
-                new SharpDX.Color(37, 37, 37, (int)(add * 58)), 
-                new SharpDX.Color(10, 10, 10, (int)(add * 58)));
+
+            // MenuUtils.DrawBoxBordered(
+            // position.X, 
+            // position.Y + 1, 
+            // textSize.X + 8, 
+            // item.Height, 
+            // 1,
+            // new SharpDX.Color(37, 37, 37, (int)(add * 58)), 
+            // new SharpDX.Color(20, 20, 20, (int)(add * 58)));
+            Drawing.DrawRect(
+                new Vector2(position.X, position.Y), 
+                new Vector2(textSize.X + 8, item.Height), 
+                new SharpDX.Color(28, 28, 28, (int)(add * 58)));
 
             var textPos = position + new Vector2(4, (float)((item.Height * 0.5) - (textSize.Y * 0.5)));
             Drawing.DrawText(

@@ -141,7 +141,8 @@
             }
 
             if (!this.BeingDragged && message == Utils.WindowsMessages.WM_MOUSEMOVE
-                && cursorPos.Distance(this.lastClickMousePosition) > 5 && Math.Abs(cursorPos.Y - this.lastClickMousePosition.Y) > 5)
+                && cursorPos.Distance(this.lastClickMousePosition) > 1
+                && Math.Abs(cursorPos.Y - this.lastClickMousePosition.Y) > 5)
             {
                 if (this.leftButtonDown && !this.ResizeTransition.Moving)
                 {

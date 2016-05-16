@@ -30,12 +30,16 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The base position.
         /// </summary>
-        public static Vector2 BasePosition = new Vector2(10, (float)(HUDInfo.ScreenSizeY() * 0.06));
+        public static Vector2 BasePosition = new Vector2(10, (float)(HUDInfo.ScreenSizeY() * 0.08));
+
+        private static bool dragging;
 
         /// <summary>
         ///     The _draw the menu.
         /// </summary>
         private static bool drawTheMenu;
+
+        private static Vector2 mouseDifference;
 
         #endregion
 
@@ -174,6 +178,35 @@ namespace Ensage.Common.Menu
             if (!Game.IsInGame)
             {
                 return;
+            }
+
+            var mousePos = Game.MouseScreenPosition;
+            if (args.Msg == (ulong)Utils.WindowsMessages.WM_LBUTTONDOWN
+                && Utils.IsUnderRectangle(
+                    mousePos, 
+                    Menu.MenuPanel.Position.X, 
+                    Menu.MenuPanel.Position.Y, 
+                    Menu.MenuPanel.Size.X, 
+                    Menu.MenuPanel.Size.Y))
+            {
+                mouseDifference = mousePos
+                                  - new Vector2(
+                                        Menu.Root.Item("positionX").GetValue<Slider>().Value, 
+                                        Menu.Root.Item("positionY").GetValue<Slider>().Value);
+                dragging = true;
+            }
+
+            if (args.Msg == (ulong)Utils.WindowsMessages.WM_LBUTTONUP)
+            {
+                dragging = false;
+                Menu.Root.Item("positionX").SetValue(new Slider((int)BasePosition.X, 10, Drawing.Height / 3));
+                Menu.Root.Item("positionY")
+                    .SetValue(new Slider((int)BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.08), Drawing.Width / 4));
+            }
+
+            if (args.Msg == (ulong)Utils.WindowsMessages.WM_MOUSEMOVE && dragging)
+            {
+                BasePosition = mousePos - mouseDifference;
             }
 
             if (Game.IsChatOpen)

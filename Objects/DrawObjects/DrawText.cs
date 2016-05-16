@@ -7,7 +7,7 @@
     /// <summary>
     ///     The draw text.
     /// </summary>
-    public class DrawText
+    public class DrawText : IDrawObject
     {
         #region Fields
 
@@ -146,6 +146,15 @@
                 rectangle.Y + (rectangle.Height / 2) - (this.Size.Y / 2));
         }
 
+        /// <summary>The center on rectangle.</summary>
+        /// <param name="rectangle">The rectangle.</param>
+        public void CenterOnRectangle(DrawRect rectangle)
+        {
+            this.Position = new Vector2(
+                rectangle.Position.X + (rectangle.Size.X / 2) - (this.Size.X / 2), 
+                rectangle.Position.Y + (rectangle.Size.Y / 2) - (this.Size.Y / 2));
+        }
+
         /// <summary>
         ///     Centers the DrawText on given rectangle
         /// </summary>
@@ -166,6 +175,16 @@
             this.Position = new Vector2(
                 rectangleX + (rectangleWidth / 2) - (this.Size.X / 2), 
                 rectangleY + (rectangleHeight / 2) - (this.Size.Y / 2));
+        }
+
+        /// <summary>The center on rectangle horizontally.</summary>
+        /// <param name="rectangle">The rectangle.</param>
+        /// <param name="indent">The indent.</param>
+        public void CenterOnRectangleHorizontally(DrawRect rectangle, float indent = 0)
+        {
+            this.Position = new Vector2(
+                rectangle.Position.X + indent, 
+                rectangle.Position.Y + (rectangle.Size.Y / 2) - (this.Size.Y / 2));
         }
 
         /// <summary>

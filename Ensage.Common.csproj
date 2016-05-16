@@ -123,8 +123,10 @@
     <Compile Include="Objects\Abilities.cs" />
     <Compile Include="Objects\Creeps.cs" />
     <Compile Include="Objects\DrawObjects\Circle.cs" />
+    <Compile Include="Objects\DrawObjects\DrawRect.cs" />
     <Compile Include="Objects\DrawObjects\DrawText.cs" />
     <Compile Include="Objects\DrawObjects\DrawType.cs" />
+    <Compile Include="Objects\DrawObjects\IDrawObject.cs" />
     <Compile Include="Objects\DrawObjects\Polygon.cs" />
     <Compile Include="Objects\Heroes.cs" />
     <Compile Include="Objects\JungleCamp.cs" />

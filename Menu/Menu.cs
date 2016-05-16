@@ -30,6 +30,7 @@ namespace Ensage.Common.Menu
     using Ensage.Common.Menu.Draw;
     using Ensage.Common.Menu.Transitions;
     using Ensage.Common.Objects;
+    using Ensage.Common.Objects.DrawObjects;
 
     using SharpDX;
 
@@ -76,6 +77,9 @@ namespace Ensage.Common.Menu
         ///     The new message type.
         /// </summary>
         private static StringList newMessageType;
+
+        /// <summary>The panel text.</summary>
+        private static DrawText panelText;
 
         #endregion
 
@@ -125,6 +129,7 @@ namespace Ensage.Common.Menu
                 MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
             }
 
+            panelText = new DrawText { Text = "EnsageSharp Menu", FontFlags = FontFlags.AntiAlias };
             TextureDictionary = new Dictionary<string, DotaTexture>();
             ItemDictionary = new Dictionary<string, MenuItem>();
 
@@ -135,6 +140,7 @@ namespace Ensage.Common.Menu
             Events.OnClose += (sender, args) => { loaded = false; };
             Drawing.OnDraw += OnDraw;
             Init();
+            MenuPanel = new DrawRect(Color.Black);
         }
 
         /// <summary>
@@ -225,6 +231,9 @@ namespace Ensage.Common.Menu
         ///     The item dictionary.
         /// </summary>
         public static Dictionary<string, MenuItem> ItemDictionary { get; set; }
+
+        /// <summary>Gets or sets the menu panel.</summary>
+        public static DrawRect MenuPanel { get; set; }
 
         /// <summary>
         ///     The texture dictionary.
@@ -392,11 +401,10 @@ namespace Ensage.Common.Menu
             {
                 if (this.IsRootMenu || this.Parent == null)
                 {
-                    return MenuSettings.BasePosition + (this.OrderNumber * new Vector2(0, MenuSettings.MenuItemHeight))
-                           + new Vector2(5, 0);
+                    return MenuSettings.BasePosition + (this.OrderNumber * new Vector2(0, MenuSettings.MenuItemHeight));
                 }
 
-                return this.Parent.MyBasePosition + new Vector2(5, 0);
+                return this.Parent.MyBasePosition;
             }
         }
 
@@ -775,9 +783,29 @@ namespace Ensage.Common.Menu
                           : this.transition.GetValue() > 0 || this.transition.Moving
                                 ? (this.Height - this.transition.GetValue()) * 0.1
                                 : 0;
-            const string ABgName = "menubg1.vmat_c";
-            var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
-            Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
+            if (!this.IsRootMenu)
+            {
+                const string ABgName = "menubg1.vmat_c";
+                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
+                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
+                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), new Color(20, 20, 20, 190));
+                Drawing.DrawRect(
+                    this.Position, 
+                    new Vector2(this.Height / 14, this.Height), 
+                    this.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
+            }
+            else
+            {
+                const string ABgName = "menubg1.vmat_c";
+                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
+                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
+                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), new Color(20, 20, 20, 230));
+                Drawing.DrawRect(
+                    this.Position - new Vector2(this.Height / 7, 0), 
+                    new Vector2(this.Height / 7, this.Height), 
+                    this.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
+            }
+
             var textSize = Drawing.MeasureText(
                 MultiLanguage._(this.DisplayName), 
                 "Arial", 
@@ -950,6 +978,21 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
+        ///     Sets custom text color
+        /// </summary>
+        /// <param name="fontColor">
+        ///     The font color.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Menu" />.
+        /// </returns>
+        public Menu SetFontColor(Color fontColor)
+        {
+            this.Color = fontColor;
+            return this;
+        }
+
+        /// <summary>
         ///     The set font style.
         /// </summary>
         /// <param name="fontStyle">
@@ -966,21 +1009,6 @@ namespace Ensage.Common.Menu
         {
             this.Style = fontStyle;
             this.Color = fontColor ?? Color.White;
-            return this;
-        }
-
-        /// <summary>
-        /// Sets custom text color
-        /// </summary>
-        /// <param name="fontColor">
-        /// The font color.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Menu"/>.
-        /// </returns>
-        public Menu SetFontColor(Color fontColor)
-        {
-            this.Color = fontColor;
             return this;
         }
 
@@ -1278,21 +1306,48 @@ namespace Ensage.Common.Menu
         /// </param>
         private static void OnDraw(EventArgs args)
         {
+            if (!MenuSettings.DrawMenu)
+            {
+                return;
+            }
+
             Menu draggedMenu = null;
+            var bgsize = new Vector2(4, (float)(MenuSettings.MenuItemHeight / 1.2));
+            Drawing.DrawRect(
+                MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y - bgsize.X), 
+                new Vector2(
+                    MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
+                    (MenuSettings.MenuItemHeight * menuCount) + bgsize.Y - bgsize.X), 
+                new Color(35, 35, 35));
+            MenuPanel.Position = MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y);
+            MenuPanel.Size =
+                new Vector2(
+                    MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
+                    bgsize.Y);
+            MenuPanel.Color = new Color(15, 15, 15);
+            MenuPanel.Draw();
+            panelText.Color = new Color(180, 180, 180);
+            panelText.TextSize = new Vector2((float)(MenuSettings.MenuItemHeight * 0.5));
+            panelText.CenterOnRectangleHorizontally(MenuPanel, (float)(MenuSettings.MenuItemHeight * 0.26));
+            panelText.Draw();
+
             foreach (var rootMenu in RootMenus.OrderBy(x => x.Value.OrderNumber))
             {
                 if (rootMenu.Value.BeingDragged)
                 {
                     draggedMenu = rootMenu.Value;
+                    continue;
                 }
 
                 rootMenu.Value.Drawing_OnDraw(args);
             }
 
-            if (draggedMenu != null)
+            if (draggedMenu == null)
             {
-                draggedMenu.Drawing_OnDraw(args);
+                return;
             }
+
+            draggedMenu.Drawing_OnDraw(args);
         }
 
         /// <summary>

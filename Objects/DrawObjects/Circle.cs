@@ -4,7 +4,6 @@
     using System.Collections.Generic;
 
     using Ensage.Common.Extensions;
-    using Ensage.Common.Objects.UtilityObjects;
 
     using SharpDX;
 
