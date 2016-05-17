@@ -123,6 +123,7 @@
     <Compile Include="Objects\Abilities.cs" />
     <Compile Include="Objects\Creeps.cs" />
     <Compile Include="Objects\DrawObjects\Circle.cs" />
+    <Compile Include="Objects\DrawObjects\DrawObject.cs" />
     <Compile Include="Objects\DrawObjects\DrawRect.cs" />
     <Compile Include="Objects\DrawObjects\DrawText.cs" />
     <Compile Include="Objects\DrawObjects\DrawType.cs" />

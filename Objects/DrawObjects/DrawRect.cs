@@ -5,7 +5,7 @@
     /// <summary>
     ///     The draw rect.
     /// </summary>
-    public class DrawRect : IDrawObject
+    public class DrawRect : DrawObject
     {
         #region Fields
 
@@ -51,16 +51,6 @@
         public Color Color { get; set; }
 
         /// <summary>
-        ///     Gets or sets the position.
-        /// </summary>
-        public Vector2 Position { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the size.
-        /// </summary>
-        public Vector2 Size { get; set; }
-
-        /// <summary>
         ///     Gets or sets the texture.
         /// </summary>
         public DotaTexture Texture { get; set; }
@@ -72,7 +62,7 @@
         /// <summary>
         ///     The draw.
         /// </summary>
-        public void Draw()
+        public override void Draw()
         {
             if (!this.texture)
             {
