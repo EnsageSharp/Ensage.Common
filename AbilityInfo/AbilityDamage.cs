@@ -82,7 +82,7 @@ namespace Ensage.Common.AbilityInfo
         /// </returns>
         public static float CalculateDamage(
             Ability ability, 
-            Hero source, 
+            Unit source, 
             Unit target, 
             double minusArmor = 0d, 
             double minusDamageResistancePerc = 0d, 
@@ -341,7 +341,7 @@ namespace Ensage.Common.AbilityInfo
                         damageDictionary[ability] = bonusDamage;
                     }
 
-                    hero = source;
+                    hero = source as Hero;
                     var agi = Math.Floor(hero.TotalAgility);
                     var str = Math.Floor(hero.TotalStrength);
                     var difference = agi / str;
@@ -400,7 +400,7 @@ namespace Ensage.Common.AbilityInfo
 
                     break;
                 case "item_ethereal_blade":
-                    hero = source;
+                    hero = source as Hero;
                     var primaryAtt = hero.PrimaryAttribute;
                     if (primaryAtt == Attribute.Agility)
                     {
@@ -474,6 +474,7 @@ namespace Ensage.Common.AbilityInfo
                     var damage = ability.GetAbilityData(data.DamageString);
                     var backstab = source.Spellbook.SpellE;
                     var agiMultiplier = backstab.GetAbilityData("damage_multiplier");
+                    hero = source as Hero;
                     var blinkdamage = target.SpellDamageTaken(
                         damage, 
                         DamageType.Magical, 
@@ -483,7 +484,7 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     outgoingDamage = blinkdamage
                                      + target.SpellDamageTaken(
-                                         (agiMultiplier * source.TotalAgility)
+                                         (agiMultiplier * hero.TotalAgility)
                                          + (source.MinimumDamage + source.BonusDamage), 
                                          DamageType.Physical, 
                                          source, 

@@ -99,6 +99,10 @@
     <Compile Include="Menu\MenuDrawHelper.cs" />
     <Compile Include="Menu\MenuGlobals.cs" />
     <Compile Include="Menu\MenuItem.cs" />
+    <Compile Include="Menu\MenuItems\AllyHeroesToggler.cs" />
+    <Compile Include="Menu\MenuItems\EnemyHeroesToggler.cs" />
+    <Compile Include="Menu\MenuItems\OnOffSlider.cs" />
+    <Compile Include="Menu\MenuItems\StringSwitcher.cs" />
     <Compile Include="Menu\MenuSettings.cs" />
     <Compile Include="Menu\AbilityToggler.cs" />
     <Compile Include="Menu\CommonMenu.cs" />
