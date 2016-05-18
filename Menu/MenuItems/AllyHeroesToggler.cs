@@ -21,7 +21,7 @@
             bool makeChampionUniq = false)
             : base(name, displayName, makeChampionUniq)
         {
-            this.SetValue(new HeroToggler(heroDictionary, true, defaultValues: defaultValues));
+            this.SetValue(new HeroToggler(heroDictionary, useAllyHeroes: true, defaultValues: defaultValues));
         }
 
         #endregion
