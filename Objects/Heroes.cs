@@ -56,10 +56,12 @@
                     }
 
                     Load();
+                    loaded = true;
                 };
             if (!loaded && ObjectManager.LocalHero != null && Game.IsInGame)
             {
                 Load();
+                loaded = true;
             }
 
             Events.OnClose += (sender, args) =>
@@ -168,11 +170,15 @@
             }
 
             tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
+            foreach (var hero in ObjectManager.GetEntities<Hero>().Where(hero => tempList.All(x => x.Handle != hero.Handle)))
+            {
+                tempList.Add(hero);
+            }
+
             UpdateHeroes();
             Events.OnUpdate += Update;
             ObjectManager.OnAddEntity += ObjectMgr_OnAddEntity;
             ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
-            loaded = true;
         }
 
         /// <summary>
