@@ -97,7 +97,7 @@
         /// <param name="color">
         ///     The color.
         /// </param>
-        protected virtual void Draw(Color color)
+        public virtual void Draw(Color color)
         {
             if (this.DrawType == DrawType.Screen)
             {
