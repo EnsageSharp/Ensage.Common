@@ -1,5 +1,5 @@
 // <copyright file="Prediction.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -233,9 +233,9 @@ namespace Ensage.Common
             }
 
             var a = Math.Pow(targetSpeed.X, 2) + Math.Pow(targetSpeed.Y, 2) - Math.Pow(speed / 1000, 2);
-            var b = 2 * ((dePos.X * targetSpeed.X) + (dePos.Y * targetSpeed.Y));
+            var b = 2 * (dePos.X * targetSpeed.X + dePos.Y * targetSpeed.Y);
             var c = Math.Pow(dePos.X, 2) + Math.Pow(dePos.Y, 2);
-            return (float)((-b - Math.Sqrt(Math.Pow(b, 2) - (4 * a * c))) / (2 * a));
+            return (float)((-b - Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a));
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Ensage.Common
         /// </returns>
         public static Vector3 InFront(Unit unit, float distance)
         {
-            var v = unit.Position + (unit.Vector3FromPolarAngle() * distance);
+            var v = unit.Position + unit.Vector3FromPolarAngle() * distance;
             return new Vector3(v.X, v.Y, 0);
         }
 
@@ -368,7 +368,7 @@ namespace Ensage.Common
 
                 targetSpeed =
                     (Vector3)
-                    VectorExtensions.FromPolarAngle((lastRotRDictionary[unit.Handle] + (unit.RotationRad * 2)) / 2)
+                    VectorExtensions.FromPolarAngle((lastRotRDictionary[unit.Handle] + unit.RotationRad * 2) / 2)
                     * unit.MovementSpeed / (float)Math.Abs(a);
             }
             else if (straightTime < 180)
@@ -413,7 +413,7 @@ namespace Ensage.Common
                 }
             }
 
-            var v = unit.Position + (targetSpeed * delay);
+            var v = unit.Position + targetSpeed * delay;
             return new Vector3(v.X, v.Y, 0);
         }
 
@@ -461,16 +461,16 @@ namespace Ensage.Common
 
             if (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed) < radius)
             {
-                sourcePos = (((sourcePos - predict) * (sourcePos.Distance2D(predict) - radius))
-                             / sourcePos.Distance2D(predict)) + predict;
+                sourcePos = (sourcePos - predict) * (sourcePos.Distance2D(predict) - radius)
+                            / sourcePos.Distance2D(predict) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             }
             else
             {
-                sourcePos = (((sourcePos - predict)
-                              * (sourcePos.Distance2D(predict)
-                                 + (target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed)) - radius))
-                             / sourcePos.Distance2D(predict)) + predict;
+                sourcePos = (sourcePos - predict)
+                            * (sourcePos.Distance2D(predict)
+                               + target.MovementSpeed * ((predict.Distance2D(sourcePos) - radius) / speed) - radius)
+                            / sourcePos.Distance2D(predict) + predict;
                 reachTime = CalculateReachTime(target, speed, predict - sourcePos);
             }
 

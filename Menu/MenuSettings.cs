@@ -1,5 +1,5 @@
 ﻿// <copyright file="MenuSettings.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -95,7 +95,7 @@ namespace Ensage.Common.Menu
                 return
                     (int)
                     (Math.Min(Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 30), 42)
-                     + (Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 1.7)); // 32
+                     + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 1.7); // 32
             }
         }
 

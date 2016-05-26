@@ -1,4 +1,17 @@
-﻿namespace Ensage.Common.Menu.Draw
+﻿// <copyright file="DragAndDrop.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Menu.Draw
 {
     using System;
     using System.Collections.Generic;
@@ -373,19 +386,19 @@
                             this.transition.Start(0, 150);
                             this.MovingIcon.Moving = true;
                             this.MovingIcon.Size = this.MovingIcon.Size * new Vector2((float)1.22);
-                            this.MovingIcon.IconSize = (this.MovingIcon.IconSize * new Vector2((float)1.22))
+                            this.MovingIcon.IconSize = this.MovingIcon.IconSize * new Vector2((float)1.22)
                                                        - new Vector2(3, 3);
                             this.MovingIcon.Height = this.MovingIcon.Height * (float)1.22;
                             this.MovingIcon.Position =
                                 new Vector2(
-                                    this.MovingIcon.Position.X - ((this.MovingIcon.Size.X - this.IconSize.X) / 2), 
-                                    this.BasePosition.Y - (this.MovingIcon.Size.Y / 20));
+                                    this.MovingIcon.Position.X - (this.MovingIcon.Size.X - this.IconSize.X) / 2, 
+                                    this.BasePosition.Y - this.MovingIcon.Size.Y / 20);
                             this.MovingIcon.IconPosition = this.MovingIcon.Position
                                                            + new Vector2(
-                                                                 (this.MovingIcon.Size.X / 2)
-                                                                 - (this.MovingIcon.IconSize.X / 2), 
-                                                                 (this.MovingIcon.Size.Y / 2)
-                                                                 - (this.MovingIcon.IconSize.Y / 2));
+                                                                 this.MovingIcon.Size.X / 2
+                                                                 - this.MovingIcon.IconSize.X / 2, 
+                                                                 this.MovingIcon.Size.Y / 2
+                                                                 - this.MovingIcon.IconSize.Y / 2);
                             this.MousePositionDifference = mousePosition - this.MovingIcon.Position;
                         });
                 break;
@@ -573,7 +586,7 @@
                 if ((u2.Key.DictionaryPosition == icon.DictionaryPosition + 1
                      || (this.usingAbilityToggler && !icon.Enabled
                          && u2.Key.DictionaryPosition > icon.DictionaryPosition))
-                    && mousePosition.X < u2.Key.FixedPosition.X + (u2.Key.Size.X / 1.2))
+                    && mousePosition.X < u2.Key.FixedPosition.X + u2.Key.Size.X / 1.2)
                 {
                     {
                         if (!icon.Enabled)
@@ -676,33 +689,33 @@
             }
 
             var alpha = icon.Hovered ? icon.Hover.GetValue() : 40 - icon.Hover.GetValue();
-            var brightness = ((float)priority / this.Count) * 10;
+            var brightness = (float)priority / this.Count * 10;
             icon.Color = icon.Enabled
                              ? System.Drawing.Color.FromArgb(
                                  (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
-                                 (int)Math.Max(Math.Min((18 * 4) + alpha + (brightness * 18), 255), 0), 
-                                 (int)Math.Max(Math.Min((12 * 4) + alpha + (brightness * 12), 255), 0), 
+                                 (int)Math.Max(Math.Min(18 * 4 + alpha + brightness * 18, 255), 0), 
+                                 (int)Math.Max(Math.Min(12 * 4 + alpha + brightness * 12, 255), 0), 
                                  (int)Math.Max(Math.Min(4 + alpha + brightness, 255), 0)).ToSharpDxColor()
                              : System.Drawing.Color.FromArgb(
                                  (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
-                                 (int)Math.Max(Math.Min(30 + alpha + (brightness * 5), 255), 0), 
-                                 (int)Math.Max(Math.Min(30 + alpha + (brightness * 5), 255), 0), 
+                                 (int)Math.Max(Math.Min(30 + alpha + brightness * 5, 255), 0), 
+                                 (int)Math.Max(Math.Min(30 + alpha + brightness * 5, 255), 0), 
                                  (int)Math.Max(Math.Min(30 + alpha + brightness * 5, 255), 0)).ToSharpDxColor();
 
             if (icon.Moving)
             {
                 icon.Position = new Vector2(
                     mousePosition.X - this.MousePositionDifference.X, 
-                    this.BasePosition.Y - (icon.Size.Y / 20));
+                    this.BasePosition.Y - icon.Size.Y / 20);
                 icon.IconPosition = icon.Position
                                     + new Vector2(
-                                          (icon.Size.X / 2) - (icon.IconSize.X / 2), 
-                                          (icon.Size.Y / 2) - (icon.IconSize.Y / 2));
+                                          icon.Size.X / 2 - icon.IconSize.X / 2, 
+                                          icon.Size.Y / 2 - icon.IconSize.Y / 2);
                 this.CheckMovingIconPosition(icon, menuItem, mousePosition);
                 return;
             }
 
-            if ((!icon.Hovered || icon.FixedPosition != this.BasePosition - new Vector2(move, 0))
+            if (!icon.Hovered || icon.FixedPosition != this.BasePosition - new Vector2(move, 0)
                 || (this.MovingIcon != null && (!this.MovingIcon.Moving || !this.MovingIcon.Equals(icon))))
             {
                 icon.Position = this.BasePosition - new Vector2(move, 0);
@@ -713,8 +726,8 @@
             icon.Size = this.iconSize;
             icon.IconPosition = icon.Position
                                 + new Vector2(
-                                      (icon.Size.X / 2) - (icon.IconSize.X / 2), 
-                                      (icon.Size.Y / 2) - (icon.IconSize.Y / 2));
+                                      icon.Size.X / 2 - icon.IconSize.X / 2, 
+                                      icon.Size.Y / 2 - icon.IconSize.Y / 2);
         }
 
         #endregion

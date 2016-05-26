@@ -1,4 +1,17 @@
-﻿namespace Ensage.Common.Menu.Draw
+﻿// <copyright file="OnOffSlider.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Menu.Draw
 {
     using System;
 
@@ -278,8 +291,8 @@
             this.IndicatorPosition = this.Enabled ? this.Position + new Vector2(this.Height / 2, 0) : this.Position;
             var baseCirclePosition =
                 new Vector2(
-                    (float)(this.IndicatorPosition.X + (this.Height / 2) - (this.SizeInside.X / 2)), 
-                    this.IndicatorPosition.Y + (this.Width / 2) - (this.SizeInside.Y / 2));
+                    (float)(this.IndicatorPosition.X + this.Height / 2 - this.SizeInside.X / 2), 
+                    this.IndicatorPosition.Y + this.Width / 2 - this.SizeInside.Y / 2);
 
             this.char2.TextSize = new Vector2((float)(this.Height * 1.655));
             textCircleY = (float)(this.IndicatorPosition.Y - this.Height * 0.008 - this.char2.Size.Y * 0.12);

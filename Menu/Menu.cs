@@ -1,24 +1,16 @@
-﻿#region LICENSE
-
-/*
- Copyright 2014 - 2014 LeagueSharp
- Menu.cs is part of LeagueSharp.Common.
- 
- LeagueSharp.Common is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
- 
- LeagueSharp.Common is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with LeagueSharp.Common. If not, see <http://www.gnu.org/licenses/>.
-*/
-#endregion
-
+﻿// <copyright file="Menu.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
 namespace Ensage.Common.Menu
 {
     using System;
@@ -312,8 +304,7 @@ namespace Ensage.Common.Menu
                     basePos = new Vector2(0, this.Parent.Position.Y);
                 }
 
-                var pos = basePos + new Vector2(xOffset, 0)
-                          + (this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight));
+                var pos = basePos + new Vector2(xOffset, 0) + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
                 if (!menuPositionDictionary.ContainsKey(n))
                 {
                     menuPositionDictionary.Add(n, pos);
@@ -401,7 +392,7 @@ namespace Ensage.Common.Menu
             {
                 if (this.IsRootMenu || this.Parent == null)
                 {
-                    return MenuSettings.BasePosition + (this.OrderNumber * new Vector2(0, MenuSettings.MenuItemHeight));
+                    return MenuSettings.BasePosition + this.OrderNumber * new Vector2(0, MenuSettings.MenuItemHeight);
                 }
 
                 return this.Parent.MyBasePosition;
@@ -811,7 +802,7 @@ namespace Ensage.Common.Menu
                 "Arial", 
                 new Vector2((float)(this.Height * 0.48), 100), 
                 FontFlags.AntiAlias);
-            var textPos = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize.Y * 0.5)));
+            var textPos = this.Position + new Vector2(5, (float)(this.Height * 0.5 - textSize.Y * 0.5));
             var bonusWidth = 0;
             if (this.TextureName != null)
             {
@@ -857,8 +848,8 @@ namespace Ensage.Common.Menu
                 }
             }
 
-            if (((this.TextureName == null || this.ShowTextWithTexture) ? textSize.X : 0) + bonusWidth
-                < (float)(this.Width - (this.Height * 0.3)))
+            if ((this.TextureName == null || this.ShowTextWithTexture ? textSize.X : 0) + bonusWidth
+                < (float)(this.Width - this.Height * 0.3))
             {
                 var arrowname = this.IsOpen ? "arrowrighthover.vmat_c" : "arrowright.vmat_c";
                 var arrow = Textures.GetTexture("materials/ensage_ui/menu/" + arrowname);
@@ -867,8 +858,8 @@ namespace Ensage.Common.Menu
                 Drawing.DrawRect(
                     this.Position
                     + new Vector2(
-                          (float)(this.Width - (this.Height * 0.5) + add1 - (size.X * 0.6)), 
-                          (float)((this.Height * 0.5) - (size.Y * 0.5))), 
+                          (float)(this.Width - this.Height * 0.5 + add1 - size.X * 0.6), 
+                          (float)(this.Height * 0.5 - size.Y * 0.5)), 
                     size, 
                     arrow);
             }
@@ -1317,7 +1308,7 @@ namespace Ensage.Common.Menu
                 MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y - bgsize.X), 
                 new Vector2(
                     MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
-                    (MenuSettings.MenuItemHeight * menuCount) + bgsize.Y - bgsize.X), 
+                    MenuSettings.MenuItemHeight * menuCount + bgsize.Y - bgsize.X), 
                 new Color(35, 35, 35));
             MenuPanel.Position = MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y);
             MenuPanel.Size =

@@ -1,5 +1,5 @@
 ﻿// <copyright file="AbilityExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -117,14 +117,14 @@ namespace Ensage.Common.Extensions
                 bool canBeCasted;
                 if (owner == null)
                 {
-                    canBeCasted = ability.Level > 0 && ability.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
+                    canBeCasted = ability.Level > 0 && ability.Cooldown <= Math.Max(Game.Ping / 1000 - 0.1, 0);
                     return canBeCasted;
                 }
 
                 if (owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
                 {
                     canBeCasted = ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
-                                  && ability.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
+                                  && ability.Cooldown <= Math.Max(Game.Ping / 1000 - 0.1, 0);
                     return canBeCasted;
                 }
 
@@ -137,7 +137,7 @@ namespace Ensage.Common.Extensions
                 }
 
                 canBeCasted = ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
-                              && ability.Cooldown <= Math.Max((Game.Ping / 1000) - 0.1, 0);
+                              && ability.Cooldown <= Math.Max(Game.Ping / 1000 - 0.1, 0);
                 return canBeCasted;
             }
             catch (Exception)
@@ -258,13 +258,8 @@ namespace Ensage.Common.Extensions
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
                 var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
-                if (position.Distance2D(pred)
-                    <= ability.TravelDistance() + ability.GetRadius(name) + lion + target.HullRadius)
-                {
-                    return true;
-                }
-
-                return false;
+                return position.Distance2D(pred)
+                       <= ability.TravelDistance() + ability.GetRadius(name) + lion + target.HullRadius;
             }
 
             if (ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
@@ -283,37 +278,27 @@ namespace Ensage.Common.Extensions
                     return true;
                 }
 
-                if (name == "pudge_rot" && target.HasModifier("modifier_pudge_meat_hook")
-                    && position.Distance2D(target) < 1500)
-                {
-                    return true;
-                }
-
-                return false;
+                return name == "pudge_rot" && target.HasModifier("modifier_pudge_meat_hook")
+                       && position.Distance2D(target) < 1500;
             }
 
-            if (ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name))
+            if (!ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name))
             {
-                if (target.IsInvul())
-                {
-                    return false;
-                }
-
-                if (position.Distance2D(target.Position) <= ability.GetCastRange(name) + 100)
-                {
-                    return true;
-                }
-
-                if (name == "pudge_dismember" && target.HasModifier("modifier_pudge_meat_hook")
-                    && position.Distance2D(target) < 600)
-                {
-                    return true;
-                }
-
                 return false;
             }
 
-            return false;
+            if (target.IsInvul())
+            {
+                return false;
+            }
+
+            if (position.Distance2D(target.Position) <= ability.GetCastRange(name) + 100)
+            {
+                return true;
+            }
+
+            return name == "pudge_dismember" && target.HasModifier("modifier_pudge_meat_hook")
+                   && position.Distance2D(target) < 600;
         }
 
         /// <summary>
@@ -708,7 +693,7 @@ namespace Ensage.Common.Extensions
             {
                 var stunned = target.IsStunned() || target.IsInvul() || target.IsRooted() || target.IsHexed();
                 if ((!(Prediction.StraightTime(target) > straightTimeforSkillShot * 1000) && !stunned)
-                    || (!ability.CastSkillShot(target, name, soulRing, otherTargets)))
+                    || !ability.CastSkillShot(target, name, soulRing, otherTargets))
                 {
                     return false;
                 }
@@ -1164,7 +1149,7 @@ namespace Ensage.Common.Extensions
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name) && speed < 6000 && speed > 0)
             {
                 var xyz = ability.GetPrediction(target, abilityName: name);
-                delay += Math.Max((int)(owner.Distance2D(xyz) - (radius / 2)), 100) / speed;
+                delay += Math.Max((int)(owner.Distance2D(xyz) - radius / 2), 100) / speed;
             }
 
             if (name == "tinker_heat_seeking_missile")

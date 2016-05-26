@@ -1,5 +1,5 @@
 ﻿// <copyright file="HUDInfo.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -229,11 +229,10 @@ namespace Ensage.Common
             {
                 if (unit.ClassID == ClassID.CDOTA_Unit_Hero_Meepo)
                 {
-                    return screenPos
-                           + new Vector2((float)(-HpBarX * 1.05 * Monitor), (float)((-HpBarY * 1.3) * Monitor));
+                    return screenPos + new Vector2((float)(-HpBarX * 1.05 * Monitor), (float)(-HpBarY * 1.3 * Monitor));
                 }
 
-                return screenPos + new Vector2((float)(-HpBarX * 1.015 * Monitor), (float)((-HpBarY * 1.38) * Monitor));
+                return screenPos + new Vector2((float)(-HpBarX * 1.015 * Monitor), (float)(-HpBarY * 1.38 * Monitor));
             }
 
             return screenPos + new Vector2((float)(-HpBarX * Monitor), -HpBarY * Monitor);
@@ -309,7 +308,7 @@ namespace Ensage.Common
                 PlayerIdDictionary[hero.Handle] = id;
             }
 
-            return new Vector2((float)(GetXX(hero) - (20 * Monitor) + (X * id)), 0);
+            return new Vector2((float)(GetXX(hero) - 20 * Monitor + X * id), 0);
         }
 
         /// <summary>
@@ -406,10 +405,10 @@ namespace Ensage.Common
             var screenSize = new Vector2(Drawing.Width, Drawing.Height);
             if (hero.Team == Team.Radiant)
             {
-                return (screenSize.X / RadiantCompare) + 1;
+                return screenSize.X / RadiantCompare + 1;
             }
 
-            return (screenSize.X / DireCompare) + 1;
+            return screenSize.X / DireCompare + 1;
         }
 
         #endregion

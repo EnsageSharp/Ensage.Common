@@ -1,5 +1,5 @@
 ﻿// <copyright file="AbilityDamage.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -284,7 +284,7 @@ namespace Ensage.Common.AbilityInfo
 
                     var minusArmors = new[] { -2, -4, -6, -8 };
                     var meldminusArmor = target.Armor + minusArmors[level - 1];
-                    var damageIncrease = 1 - ((0.06 * meldminusArmor) / (1 + (0.06 * Math.Abs(meldminusArmor))));
+                    var damageIncrease = 1 - 0.06 * meldminusArmor / (1 + 0.06 * Math.Abs(meldminusArmor));
                     outgoingDamage =
                         (float)
                         (target.SpellDamageTaken(
@@ -293,7 +293,7 @@ namespace Ensage.Common.AbilityInfo
                             source, 
                             name, 
                             data.MagicImmunityPierce, 
-                            minusMagicResistancePerc: minusMagicResistancePerc) + (bonusDamage * damageIncrease));
+                            minusMagicResistancePerc: minusMagicResistancePerc) + bonusDamage * damageIncrease);
                     break;
                 case "undying_decay":
                     var strengthSteal = ability.GetAbilityData("str_steal");
@@ -302,7 +302,7 @@ namespace Ensage.Common.AbilityInfo
                         strengthSteal = ability.GetAbilityData("str_Steal_scepter");
                     }
 
-                    outgoingDamage = (strengthSteal * 19)
+                    outgoingDamage = strengthSteal * 19
                                      + target.SpellDamageTaken(
                                          ability.GetAbilityData(data.DamageString), 
                                          DamageType.Magical, 
@@ -347,7 +347,7 @@ namespace Ensage.Common.AbilityInfo
                     var difference = agi / str;
                     var multimin = ability.GetAbilityData("damage_min");
                     var multimax = ability.GetAbilityData("damage_max");
-                    multi = multimin + ((difference - 0.5) * (multimax - multimin));
+                    multi = multimin + (difference - 0.5) * (multimax - multimin);
                     if (difference > 1.5)
                     {
                         multi = multimax;
@@ -358,7 +358,7 @@ namespace Ensage.Common.AbilityInfo
                     }
 
                     outgoingDamage = target.SpellDamageTaken(
-                        (float)(bonusDamage + (agi * multi)), 
+                        (float)(bonusDamage + agi * multi), 
                         DamageType.Magical, 
                         source, 
                         name, 
@@ -484,8 +484,7 @@ namespace Ensage.Common.AbilityInfo
                         minusMagicResistancePerc: minusMagicResistancePerc);
                     outgoingDamage = blinkdamage
                                      + target.SpellDamageTaken(
-                                         (agiMultiplier * hero.TotalAgility)
-                                         + (source.MinimumDamage + source.BonusDamage), 
+                                         agiMultiplier * hero.TotalAgility + (source.MinimumDamage + source.BonusDamage), 
                                          DamageType.Physical, 
                                          source, 
                                          name, 

@@ -1,5 +1,5 @@
 ﻿// <copyright file="UnitExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -142,7 +142,7 @@ namespace Ensage.Common.Extensions
                 return unit.NetworkPosition;
             }
 
-            return unit.NetworkPosition + (unit.Vector3FromPolarAngle() * (delay * unit.MovementSpeed));
+            return unit.NetworkPosition + unit.Vector3FromPolarAngle() * (delay * unit.MovementSpeed);
         }
 
         /// <summary>
@@ -171,10 +171,10 @@ namespace Ensage.Common.Extensions
                 return unit.NetworkPosition;
             }
 
-            var predict = unit.NetworkPosition + (unit.Vector3FromPolarAngle() * (delay * unit.MovementSpeed));
+            var predict = unit.NetworkPosition + unit.Vector3FromPolarAngle() * (delay * unit.MovementSpeed);
             var reachTime = Prediction.CalculateReachTime(unit, speed, predict - source.NetworkPosition);
             return unit.NetworkPosition
-                   + (unit.Vector3FromPolarAngle() * (((delay * 1000) + reachTime) * unit.MovementSpeed) / 1000);
+                   + unit.Vector3FromPolarAngle() * ((delay * 1000 + reachTime) * unit.MovementSpeed) / 1000;
         }
 
         /// <summary>
@@ -560,8 +560,8 @@ namespace Ensage.Common.Extensions
         {
             return
                 (float)
-                (((Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad + Math.PI)
-                  % (2 * Math.PI)) - Math.PI);
+                ((Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad + Math.PI)
+                 % (2 * Math.PI) - Math.PI);
         }
 
         /// <summary>
@@ -893,7 +893,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static Vector3 InFront(this Unit unit, float distance)
         {
-            var v = unit.Position + (unit.Vector3FromPolarAngle() * distance);
+            var v = unit.Position + unit.Vector3FromPolarAngle() * distance;
             return new Vector3(v.X, v.Y, unit.Position.Z);
         }
 

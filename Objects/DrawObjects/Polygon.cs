@@ -1,4 +1,17 @@
-﻿namespace Ensage.Common.Objects.DrawObjects
+﻿// <copyright file="Polygon.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Objects.DrawObjects
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -103,7 +116,7 @@
             {
                 for (var i = 0; i <= this.ScreenPoints.Count - 1; i++)
                 {
-                    var nextIndex = (this.ScreenPoints.Count - 1 == i) ? 0 : (i + 1);
+                    var nextIndex = this.ScreenPoints.Count - 1 == i ? 0 : i + 1;
                     Drawing.DrawLine(this.ScreenPoints[i], this.ScreenPoints[nextIndex], color);
                 }
             }
@@ -111,7 +124,7 @@
             {
                 for (var i = 0; i <= this.WorldPoints.Count - 1; i++)
                 {
-                    var nextIndex = (this.WorldPoints.Count - 1 == i) ? 0 : (i + 1);
+                    var nextIndex = this.WorldPoints.Count - 1 == i ? 0 : i + 1;
                     var point1 = Drawing.WorldToScreen(this.WorldPoints[i]);
                     var point2 = Drawing.WorldToScreen(this.WorldPoints[nextIndex]);
                     Drawing.DrawLine(point1, point2, color);

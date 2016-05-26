@@ -1,4 +1,17 @@
-﻿namespace Ensage.Common.Menu.Draw
+﻿// <copyright file="OnOffCircleSlider.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Menu.Draw
 {
     using Ensage.Common.Menu.Transitions;
     using Ensage.Common.Objects;
@@ -216,11 +229,8 @@
                         var bgpos = this.Position + new Vector2(0, this.Height / 2 - size.Y / 2);
                         var circleSize = new Vector2((float)(size.Y * 0.8));
                         this.onPosition = bgpos
-                                          + new Vector2(
-                                                (float)((size.X * 0.97) - size.Y), 
-                                                (size.Y / 2) - (circleSize.Y / 2));
-                        this.offPosition = bgpos
-                                           + new Vector2((float)(size.X * 0.13), (size.Y / 2) - (circleSize.Y / 2));
+                                          + new Vector2((float)(size.X * 0.97 - size.Y), size.Y / 2 - circleSize.Y / 2);
+                        this.offPosition = bgpos + new Vector2((float)(size.X * 0.13), size.Y / 2 - circleSize.Y / 2);
                         this.indicatorPosition = this.enabled ? this.onPosition : this.offPosition;
                     }
 
@@ -320,8 +330,8 @@
             var bgpos = this.Position + new Vector2(0, this.Height / 2 - size.Y / 2);
             Drawing.DrawRect(bgpos, size, Textures.GetTexture("materials/ensage_ui/menu/sliderbgon.vmat_c"));
             var circleSize = new Vector2((float)(size.Y * 0.8));
-            this.onPosition = bgpos + new Vector2((float)((size.X * 0.97) - size.Y), (size.Y / 2) - (circleSize.Y / 2));
-            this.offPosition = bgpos + new Vector2((float)(size.X * 0.13), (size.Y / 2) - (circleSize.Y / 2));
+            this.onPosition = bgpos + new Vector2((float)(size.X * 0.97 - size.Y), size.Y / 2 - circleSize.Y / 2);
+            this.offPosition = bgpos + new Vector2((float)(size.X * 0.13), size.Y / 2 - circleSize.Y / 2);
             this.indicatorPosition = this.enabled ? this.onPosition : this.offPosition;
             Drawing.DrawRect(
                 this.IndicatorPosition, 

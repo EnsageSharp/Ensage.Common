@@ -1,5 +1,5 @@
 ﻿// <copyright file="Calculations.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -526,7 +526,7 @@ namespace Ensage.Common.Extensions.Damage
                 if (spell != null)
                 {
                     var burst = 0d;
-                    var angle = (target.FindRelativeAngle(source.Position) % ((2 * Math.PI) * 180)) / Math.PI;
+                    var angle = target.FindRelativeAngle(source.Position) % (2 * Math.PI * 180) / Math.PI;
                     if (angle >= 110 && angle <= 250)
                     {
                         burst = (1 + spell.Level) * 0.08;
@@ -594,7 +594,7 @@ namespace Ensage.Common.Extensions.Damage
                     }
                     else
                     {
-                        amp += baseAmp + (((750 - distance) * 0.03) / 110);
+                        amp += baseAmp + (750 - distance) * 0.03 / 110;
                     }
                 }
             }
@@ -659,11 +659,11 @@ namespace Ensage.Common.Extensions.Damage
                 case DamageType.Magical:
 
                     // Console.WriteLine(minusMagicResistancePerc/100);
-                    var resist = 1 - ((1 - target.MagicDamageResist) * (1 + ((float)minusMagicResistancePerc / 100)));
+                    var resist = 1 - (1 - target.MagicDamageResist) * (1 + (float)minusMagicResistancePerc / 100);
                     tempDmg =
                         (float)
-                        ((((tempDmg * (1 - manaShield - reduceOther)) - magOnly) * (1 + amp - reduceProc)
-                          * (1 + ampFromMe) * (1 - resist)) - reduceStatic + aa);
+                        ((tempDmg * (1 - manaShield - reduceOther) - magOnly) * (1 + amp - reduceProc) * (1 + ampFromMe)
+                         * (1 - resist) - reduceStatic + aa);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -700,9 +700,9 @@ namespace Ensage.Common.Extensions.Damage
 
                     tempDmg =
                         (float)
-                        ((((tempDmg * (1 - manaShield - reduceOther)) - reduceBlock) * (1 + amp - reduceProc)
-                          * (1 + ampFromMe) * (1 - (target.DamageResist * (1 - (minusDamageResistancePerc / 100)))))
-                         + ((0.06 * minusArmor) / (1 + (0.06 * Math.Abs(minusArmor))))) - reduceStatic + aa;
+                        ((tempDmg * (1 - manaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
+                         * (1 + ampFromMe) * (1 - target.DamageResist * (1 - minusDamageResistancePerc / 100))
+                         + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + aa;
                     break;
                 case DamageType.HealthRemoval:
                     break;
@@ -762,7 +762,7 @@ namespace Ensage.Common.Extensions.Damage
                 {
                     if (item.StoredName() == "item_aether_lens")
                     {
-                        damage *= 1f + (item.GetAbilityData("spell_amp") / 100f);
+                        damage *= 1f + item.GetAbilityData("spell_amp") / 100f;
                     }
                 }
             }
@@ -771,7 +771,7 @@ namespace Ensage.Common.Extensions.Damage
 
             if (hero != null && spellName != "axe_culling_blade")
             {
-                damage *= 1f + ((hero.TotalIntelligence / 16f) / 100f);
+                damage *= 1f + hero.TotalIntelligence / 16f / 100f;
             }
 
             var taken = target.DamageTaken(

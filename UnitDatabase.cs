@@ -1,5 +1,5 @@
 // <copyright file="UnitDatabase.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -16,6 +16,7 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Permissions;
     using System.Text;
 
     using Ensage.Common.Extensions;
@@ -55,6 +56,7 @@ namespace Ensage.Common
         /// <summary>
         ///     Initializes static members of the <see cref="UnitDatabase" /> class.
         /// </summary>
+        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         static UnitDatabase()
         {
             JToken @object;
@@ -137,7 +139,7 @@ namespace Ensage.Common
                 }
 
                 var attackSpeed = GetAttackSpeed(unit);
-                return attackAnimationPoint / (1 + ((attackSpeed - 100) / 100));
+                return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
             }
             catch (KeyValuesNotFoundException)
             {
@@ -186,7 +188,7 @@ namespace Ensage.Common
                 }
 
                 var attackSpeed = GetAttackSpeed(unit);
-                return attackAnimationPoint / (1 + ((attackSpeed - 100) / 100));
+                return attackAnimationPoint / (1 + (attackSpeed - 100) / 100);
             }
             catch (KeyValuesNotFoundException)
             {
@@ -233,7 +235,7 @@ namespace Ensage.Common
                             }, 
                         false))
                 {
-                    return attackBaseTime / (1 + ((attackSpeed - 100) / 100));
+                    return attackBaseTime / (1 + (attackSpeed - 100) / 100);
                 }
 
                 switch (unit.ClassID)
@@ -297,13 +299,13 @@ namespace Ensage.Common
                 double attackBaseTime;
                 if (AttackRateDictionary.TryGetValue(unit.Handle, out attackBaseTime))
                 {
-                    return attackBaseTime / (1 + ((attackSpeed - 100) / 100));
+                    return attackBaseTime / (1 + (attackSpeed - 100) / 100);
                 }
 
                 attackBaseTime = Game.FindKeyValues(unit.StoredName() + "/AttackRate", KeyValueSource.Unit).FloatValue;
                 AttackRateDictionary.Add(unit.Handle, attackBaseTime);
 
-                return attackBaseTime / (1 + ((attackSpeed - 100) / 100));
+                return attackBaseTime / (1 + (attackSpeed - 100) / 100);
             }
             catch (KeyValuesNotFoundException)
             {

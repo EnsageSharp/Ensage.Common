@@ -1,5 +1,5 @@
 ﻿// <copyright file="EntityExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -191,7 +191,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static float FindAngleR(this Entity entity)
         {
-            return (float)(entity.RotationRad < 0 ? Math.Abs(entity.RotationRad) : (2 * Math.PI) - entity.RotationRad);
+            return (float)(entity.RotationRad < 0 ? Math.Abs(entity.RotationRad) : 2 * Math.PI - entity.RotationRad);
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
-﻿// <copyright file="MenuUtils.cs" company="LeagueSharp">
-//    Copyright (c) 2015 LeagueSharp.
+﻿// <copyright file="MenuUtils.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -203,7 +203,7 @@ namespace Ensage.Common.Menu
 
             for (var i = 0; i < 4; i++)
             {
-                for (var k = fDegree; k < fDegree + ((Math.PI * 2) / 4f); k += (float)(1 * (Math.PI / 180.0f)))
+                for (var k = fDegree; k < fDegree + Math.PI * 2 / 4f; k += (float)(1 * (Math.PI / 180.0f)))
                 {
                     // Draw quarter circles on every corner 
                     // DrawLine(
@@ -215,9 +215,7 @@ namespace Ensage.Common.Menu
                     // color); // 3 is with line width 
                     Drawing.DrawLine(
                         new Vector2(pt[i].X, pt[i].Y), 
-                        new Vector2(
-                            (float)(pt[i].X + (Math.Cos(k) * iSmooth)), 
-                            (float)(pt[i].Y + (Math.Sin(k) * iSmooth))), 
+                        new Vector2((float)(pt[i].X + Math.Cos(k) * iSmooth), (float)(pt[i].Y + Math.Sin(k) * iSmooth)), 
                         color);
                 }
 

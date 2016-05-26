@@ -1,5 +1,5 @@
 ﻿// <copyright file="MenuItem.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -396,7 +396,7 @@ namespace Ensage.Common.Menu
                 }
 
                 var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
-                          + (this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight));
+                          + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
                 if (!Menu.menuPositionDictionary.ContainsKey(n))
                 {
                     Menu.menuPositionDictionary.Add(n, pos);
@@ -965,7 +965,7 @@ namespace Ensage.Common.Menu
                 case MenuValueType.Boolean:
                     MenuVariables.OnOffDictionary[this.UniqueId].Position =
                         new Vector2(
-                            (float)(this.Position.X + this.Width - this.Height - (this.Height / 2.25)), 
+                            (float)(this.Position.X + this.Width - this.Height - this.Height / 2.25), 
                             this.Position.Y);
                     MenuVariables.OnOffDictionary[this.UniqueId].Height = this.Height;
                     MenuVariables.OnOffDictionary[this.UniqueId].Draw(Game.MouseScreenPosition);
@@ -981,8 +981,8 @@ namespace Ensage.Common.Menu
                         sizet = new Vector2(this.Height / 2, this.Width / 2);
                     }
 
-                    var rpos = this.Position + new Vector2(this.Width - (this.Height * 2), this.Height / 6);
-                    var rsize = new Vector2((float)(this.Height * 1.9), this.Height - ((this.Height / 6) * 2));
+                    var rpos = this.Position + new Vector2(this.Width - this.Height * 2, this.Height / 6);
+                    var rsize = new Vector2((float)(this.Height * 1.9), this.Height - this.Height / 6 * 2);
                     var alpha = Utils.IsUnderRectangle(Game.MouseScreenPosition, rpos.X, rpos.Y, rsize.X, rsize.Y)
                                     ? 40
                                     : 0;
@@ -1016,8 +1016,8 @@ namespace Ensage.Common.Menu
                     var textSize = Drawing.MeasureText(te, "Arial", sizet, FontFlags.AntiAlias);
                     var textPos = this.Position
                                   + new Vector2(
-                                        this.Width - this.Height - (textSize.X / 2), 
-                                        (float)((this.Height * 0.5) - (textSize.Y * 0.5)));
+                                        this.Width - this.Height - textSize.X / 2, 
+                                        (float)(this.Height * 0.5 - textSize.Y * 0.5));
 
                     Drawing.DrawText(
                         te, 
@@ -1056,7 +1056,7 @@ namespace Ensage.Common.Menu
 
                     MenuDrawHelper.DrawArrow(
                         true, 
-                        this.Position + new Vector2((float)(this.Width - (this.Height * 1.85)), 0), 
+                        this.Position + new Vector2((float)(this.Width - this.Height * 1.85), 0), 
                         this, 
                         System.Drawing.Color.Black);
                     MenuDrawHelper.DrawArrow(
@@ -1068,16 +1068,16 @@ namespace Ensage.Common.Menu
                     textSize = Drawing.MeasureText(
                         MultiLanguage._(t), 
                         "Arial", 
-                        new Vector2((float)(this.Height * 0.45), (this.Width / 2) + 10), 
+                        new Vector2((float)(this.Height * 0.45), this.Width / 2 + 10), 
                         FontFlags.AntiAlias);
                     textPos = this.Position
                               + new Vector2(
                                     (float)(-(this.Height * 1.85) + this.Width - textSize.X - 5), 
-                                    (float)((this.Height * 0.5) - (textSize.Y * 0.5)));
+                                    (float)(this.Height * 0.5 - textSize.Y * 0.5));
                     Drawing.DrawText(
                         MultiLanguage._(t), 
                         textPos, 
-                        new Vector2((float)(this.Height * 0.45), (this.Width / 2) + 10), 
+                        new Vector2((float)(this.Height * 0.45), this.Width / 2 + 10), 
                         new Color(230, 210, 200, 225), 
                         FontFlags.AntiAlias);
                     break;
@@ -1170,7 +1170,7 @@ namespace Ensage.Common.Menu
                 "Arial", 
                 new Vector2((float)(this.Height * 0.45), 20), 
                 FontFlags.AntiAlias);
-            var textPos1 = this.Position + new Vector2(5, (float)((this.Height * 0.5) - (textSize1.Y * 0.5)));
+            var textPos1 = this.Position + new Vector2(5, (float)(this.Height * 0.5 - textSize1.Y * 0.5));
 
             Drawing.DrawText(
                 s, 
@@ -1230,7 +1230,7 @@ namespace Ensage.Common.Menu
             {
                 if (this.Visible && this.IsInside(cursorPos))
                 {
-                    if (cursorPos.X > this.Position.X + this.Width - (this.Height * 2)
+                    if (cursorPos.X > this.Position.X + this.Width - this.Height * 2
                         && cursorPos.X < this.Position.X + this.Width - this.Height)
                     {
                         this.ShowTooltip();
@@ -1387,8 +1387,8 @@ namespace Ensage.Common.Menu
                         break;
                     }
 
-                    var rpos = this.Position + new Vector2(this.Width - (this.Height * 2), this.Height / 6);
-                    var rsize = new Vector2((float)(this.Height * 1.9), this.Height - ((this.Height / 6) * 2));
+                    var rpos = this.Position + new Vector2(this.Width - this.Height * 2, this.Height / 6);
+                    var rsize = new Vector2((float)(this.Height * 1.9), this.Height - this.Height / 6 * 2);
 
                     if (Utils.IsUnderRectangle(Game.MouseScreenPosition, rpos.X, rpos.Y, rsize.X, rsize.Y))
                     {

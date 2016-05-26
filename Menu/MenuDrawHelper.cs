@@ -1,5 +1,5 @@
 ﻿// <copyright file="MenuDrawHelper.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -46,15 +46,15 @@ namespace Ensage.Common.Menu
         {
             Drawing.DrawRect(
                 position + new Vector2(0, item.Height / 6), 
-                new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
+                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
                 Textures.GetTexture("materials/ensage_ui/menu/menubg1.vmat_c"));
             Drawing.DrawRect(
                 position + new Vector2(0, item.Height / 6), 
-                new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
+                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
                 new SharpDX.Color(20, 20, 20, 190));
             Drawing.DrawRect(
                 position + new Vector2(0, item.Height / 6), 
-                new Vector2(item.Height - ((item.Height / 12) * 2), item.Height - ((item.Height / 6) * 2)), 
+                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
                     ? Color.FromArgb(30, 70, 70, 70).ToSharpDxColor()
                     : Color.FromArgb(0, 37, 37, 37).ToSharpDxColor());
@@ -68,8 +68,8 @@ namespace Ensage.Common.Menu
             var a = left ? item.Height / 10 : item.Height / 14;
             var textPos = position
                           + new Vector2(
-                                (float)((item.Height * 0.5) - (textSize.X * 0.5) - a), 
-                                (float)((item.Height * 0.5) - (textSize.Y * 0.5)) + 1);
+                                (float)(item.Height * 0.5 - textSize.X * 0.5 - a), 
+                                (float)(item.Height * 0.5 - textSize.Y * 0.5) + 1);
 
             Drawing.DrawText(
                 s, 
@@ -114,7 +114,7 @@ namespace Ensage.Common.Menu
             var noUnicode = MenuConfig.SelectedLanguage == "Chinese" || MenuConfig.SelectedLanguage == "Russian";
             var s = on ? "✔" : string.Empty;
             var pos = position + new Vector2(item.Height / 6, item.Height / 6);
-            var height = item.Height - ((item.Height / 6) * 2);
+            var height = item.Height - item.Height / 6 * 2;
 
             MenuUtils.DrawBoxBordered(
                 pos.X, 
@@ -127,7 +127,7 @@ namespace Ensage.Common.Menu
 
             Drawing.DrawRect(
                 pos + new Vector2(height / 10, height / 10), 
-                new Vector2((float)(height - ((height / 10) * 2)), (float)(height - ((height / 10) * 2)) - 1), 
+                new Vector2((float)(height - height / 10 * 2), (float)(height - height / 10 * 2) - 1), 
                 new SharpDX.Color(5 + alpha2, 5 + alpha2, 5 + alpha2));
             if (noUnicode)
             {
@@ -138,7 +138,7 @@ namespace Ensage.Common.Menu
 
                 Drawing.DrawRect(
                     pos + new Vector2(height / 4, height / 4), 
-                    new Vector2((float)(height - ((height / 4) * 2)), (float)(height - ((height / 4) * 2)) - 1), 
+                    new Vector2((float)(height - height / 4 * 2), (float)(height - height / 4 * 2) - 1), 
                     new SharpDX.Color(230, 148, 2));
             }
             else
@@ -147,8 +147,8 @@ namespace Ensage.Common.Menu
                 var textSize = Drawing.MeasureText(s, "Arial", tsize, FontFlags.AntiAlias);
                 var textPos = item.Position
                               + new Vector2(
-                                    (float)(item.Width - (item.Height / 2) - (textSize.X / 2.9)), 
-                                    (float)(+(item.Height * 0.5) - (textSize.Y / 1.9)));
+                                    (float)(item.Width - item.Height / 2 - textSize.X / 2.9), 
+                                    (float)(+(item.Height * 0.5) - textSize.Y / 1.9));
 
                 Drawing.DrawText(s, textPos, tsize, Color.NavajoWhite.ToSharpDxColor(), FontFlags.Italic);
             }
@@ -210,8 +210,8 @@ namespace Ensage.Common.Menu
         {
             width = width > 0 ? width : item.Width;
             var percentage = 100 * (value - min) / (max - min);
-            var x = position.X + 3 + ((percentage * (width - 3)) / 100);
-            var x2D = 3 + ((percentage * (width - 3)) / 100);
+            var x = position.X + 3 + percentage * (width - 3) / 100;
+            var x2D = 3 + percentage * (width - 3) / 100;
 
             MenuUtils.DrawLine(
                 x, 
@@ -239,8 +239,8 @@ namespace Ensage.Common.Menu
                 FontFlags.AntiAlias);
             var textPos = position
                           + new Vector2(
-                                (float)(item.Width - (item.Height * 0.5) - 2 - (textSize.X * 0.5)), 
-                                (float)(+(item.Height * 0.5) - (textSize.Y * 0.5)));
+                                (float)(item.Width - item.Height * 0.5 - 2 - textSize.X * 0.5), 
+                                (float)(+(item.Height * 0.5) - textSize.Y * 0.5));
             Drawing.DrawText(
                 value.ToString(), 
                 textPos, 
@@ -268,7 +268,7 @@ namespace Ensage.Common.Menu
 
             var texture = Textures.GetTexture("materials/ensage_ui/other/statpop_question.vmat_c");
 
-            var textPos = item.Position + new Vector2(item.Width - (item.Height * 2), -(float)(item.Height * 0.05));
+            var textPos = item.Position + new Vector2(item.Width - item.Height * 2, -(float)(item.Height * 0.05));
             Drawing.DrawRect(textPos, new Vector2((float)(item.Height / 1.1), (float)(item.Height * 1.1)), texture);
         }
 
@@ -319,7 +319,7 @@ namespace Ensage.Common.Menu
                 new Vector2(textSize.X + 8, item.Height), 
                 new SharpDX.Color(28, 28, 28, (int)(add * 58)));
 
-            var textPos = position + new Vector2(4, (float)((item.Height * 0.5) - (textSize.Y * 0.5)));
+            var textPos = position + new Vector2(4, (float)(item.Height * 0.5 - textSize.Y * 0.5));
             Drawing.DrawText(
                 s, 
                 textPos, 
