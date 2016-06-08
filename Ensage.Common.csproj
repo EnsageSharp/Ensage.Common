@@ -141,9 +141,6 @@
     <Compile Include="Menu\MenuConfig.cs" />
     <Compile Include="Menu\MenuUtils.cs" />
     <Compile Include="Menu\MultiLanguage.cs" />
-    <Compile Include="Menu\NotificationData\INotification.cs" />
-    <Compile Include="Menu\NotificationData\Notification.cs" />
-    <Compile Include="Menu\Notifications.cs" />
     <Compile Include="Objects\Lane.cs" />
     <Compile Include="Objects\LanePosition.cs" />
     <Compile Include="Objects\Lanes.cs" />

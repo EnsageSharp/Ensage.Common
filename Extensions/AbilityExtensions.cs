@@ -889,6 +889,45 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        /// The get cast delay.
+        /// </summary>
+        /// <param name="ability">
+        /// The ability.
+        /// </param>
+        /// <param name="source">
+        /// The source.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="usePing">
+        /// The use ping.
+        /// </param>
+        /// <param name="useCastPoint">
+        /// The use cast point.
+        /// </param>
+        /// <param name="abilityName">
+        /// The ability name.
+        /// </param>
+        /// <param name="useChannel">
+        /// The use channel.
+        /// </param>
+        /// <returns>
+        /// The <see cref="double"/>.
+        /// </returns>
+        public static double GetCastDelay(
+            this Ability ability,
+            Hero source,
+            Unit target,
+            bool usePing = false,
+            bool useCastPoint = true,
+            string abilityName = null,
+            bool useChannel = false)
+        {
+            return ability.GetCastDelay(source as Unit, target, usePing, useCastPoint, abilityName, useChannel);
+        }
+
+        /// <summary>
         ///     Returns delay before ability is casted
         /// </summary>
         /// <param name="ability">
@@ -917,7 +956,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static double GetCastDelay(
             this Ability ability, 
-            Hero source, 
+            Unit source, 
             Unit target, 
             bool usePing = false, 
             bool useCastPoint = true, 

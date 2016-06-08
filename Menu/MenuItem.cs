@@ -22,7 +22,6 @@ namespace Ensage.Common.Menu
     using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Menu.Draw;
-    using Ensage.Common.Menu.NotificationData;
     using Ensage.Common.Menu.Transitions;
     using Ensage.Common.Objects;
     using Ensage.Common.Objects.DrawObjects;
@@ -215,17 +214,6 @@ namespace Ensage.Common.Menu
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        ///     Gets the tooltip duration.
-        /// </summary>
-        public int TooltipDuration
-        {
-            get
-            {
-                return Menu.Root.Item("EnsageSharp.Common.TooltipDuration").GetValue<Slider>().Value;
-            }
-        }
 
         /// <summary>
         ///     Gets or sets the unique id.
@@ -894,19 +882,6 @@ namespace Ensage.Common.Menu
             if (!string.IsNullOrEmpty(this.Tooltip))
             {
                 this.DrawingTooltip = !hide;
-            }
-        }
-
-        /// <summary>
-        ///     The show tooltip notification.
-        /// </summary>
-        public void ShowTooltipNotification()
-        {
-            if (!string.IsNullOrEmpty(this.Tooltip))
-            {
-                var notif = new Notification(this.Tooltip).SetTextColor(System.Drawing.Color.White);
-                Notifications.AddNotification(notif);
-                DelayAction.Add(this.TooltipDuration, () => notif.Dispose());
             }
         }
 

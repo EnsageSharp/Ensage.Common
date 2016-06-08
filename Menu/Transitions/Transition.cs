@@ -84,14 +84,14 @@ namespace Ensage.Common.Menu.Transitions
         {
             get
             {
-                return this.Time < this.StartTime + this.Duration;
+                return this.Time < this.StartTime + (this.Duration * 1000);
             }
         }
 
         /// <summary>
         ///     Gets or sets the start time.
         /// </summary>
-        public double StartTime { get; set; }
+        public float StartTime { get; set; }
 
         #endregion
 
@@ -104,7 +104,7 @@ namespace Ensage.Common.Menu.Transitions
         {
             get
             {
-                return Utils.TickCount / 1000;
+                return Utils.TickCount;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Ensage.Common.Menu.Transitions
                     this.Time - this.StartTime, 
                     0, 
                     this.endPosition.Distance(this.startPosition), 
-                    this.Duration));
+                    this.Duration * 1000));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Ensage.Common.Menu.Transitions
             }
 
             this.lastValue =
-                (float)this.Equation(this.Time - this.StartTime, this.startValue, this.finalValue, this.Duration);
+                (float)this.Equation(this.Time - this.StartTime, this.startValue, this.finalValue, this.Duration * 1000);
             return this.lastValue;
         }
 

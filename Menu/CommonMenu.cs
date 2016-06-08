@@ -58,8 +58,7 @@ namespace Ensage.Common.Menu
                     new Slider(1500, 0, 5000)));
             this.AddItem(
                 new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true));
-            this.AddItem(
-                new MenuItem("FontInfo", "Press F5 after your change").SetFontStyle(FontStyle.Bold, Color.Yellow));
+            this.AddItem(new MenuItem("FontInfo", "Press F5 after your change").SetFontColor(Color.Yellow));
             message.ValueChanged += MessageValueChanged;
         }
 

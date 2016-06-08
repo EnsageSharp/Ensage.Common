@@ -78,6 +78,23 @@ namespace Ensage.Common
         /// </returns>
         public static bool AttackOnCooldown(Entity target = null, float bonusWindupMs = 0)
         {
+            return !orbwalker.CanAttack(target as Unit, bonusWindupMs);
+        }
+
+        /// <summary>
+        ///     Checks if attack is currently on cool down
+        /// </summary>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="bonusWindupMs">
+        ///     The bonus Windup milliseconds.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public static bool AttackOnCooldown(Unit target = null, float bonusWindupMs = 0)
+        {
             return !orbwalker.CanAttack(target, bonusWindupMs);
         }
 

@@ -184,23 +184,6 @@ namespace Ensage.Common.Menu
                     TextureDictionary.Add(textureName, Textures.GetSpellTexture(textureName));
                 }
             }
-
-            if (isRootMenu)
-            {
-                AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
-                AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
-                Events.OnClose += delegate { this.SaveAll(); };
-
-                var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + name;
-
-                if (RootMenus.ContainsKey(rootName))
-                {
-                    throw new ArgumentException("Root Menu [" + rootName + "] with the same name exists", "name");
-                }
-
-                RootMenus.Add(rootName, this);
-                RootMenusDraggable.Add(this);
-            }
         }
 
         /// <summary>
@@ -211,7 +194,7 @@ namespace Ensage.Common.Menu
             var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
             if (RootMenus.ContainsKey(rootName))
             {
-                RootMenus.Remove(rootName);
+                this.RemoveFromMainMenu();
             }
         }
 
@@ -699,6 +682,20 @@ namespace Ensage.Common.Menu
         /// </summary>
         public void AddToMainMenu()
         {
+            AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
+            AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
+            Events.OnClose += delegate { this.SaveAll(); };
+
+            var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
+
+            if (RootMenus.ContainsKey(rootName))
+            {
+                throw new ArgumentException("Root Menu [" + rootName + "] with the same name exists", "name");
+            }
+
+            RootMenus.Add(rootName, this);
+            RootMenusDraggable.Add(this);
+
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
             AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
             ObjectManager.OnAddEntity += this.ObjectMgr_OnAddEntity;
@@ -914,17 +911,22 @@ namespace Ensage.Common.Menu
                 name = ObjectManager.LocalHero.StoredName() + name;
             }
 
+            var id = this.Name + name + (this.Parent != null ? this.Parent.Name : string.Empty);
             MenuItem tempItem;
-            if (ItemDictionary.TryGetValue(
-                this.Name + name + (this.Parent != null ? this.Parent.Name : string.Empty), 
-                out tempItem))
+            if (ItemDictionary.TryGetValue(id, out tempItem))
             {
                 return tempItem;
             }
 
+
             tempItem = this.Items.FirstOrDefault(x => x.Name == name)
                        ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
                               .FirstOrDefault();
+            if (tempItem != null)
+            {
+                ItemDictionary.Add(id, tempItem);
+            }
+
             return tempItem;
         }
 
@@ -939,6 +941,7 @@ namespace Ensage.Common.Menu
                 if (RootMenus.ContainsKey(rootName))
                 {
                     RootMenus.Remove(rootName);
+                    RootMenusDraggable.Remove(this);
                     Drawing.OnDraw -= this.Drawing_OnDraw;
                     Game.OnWndProc -= this.Game_OnWndProc;
                     this.UnloadMenuState();
@@ -1285,6 +1288,8 @@ namespace Ensage.Common.Menu
                           + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
                 Console.WriteLine(msg);
             }
+
+            ItemDictionary = new Dictionary<string, MenuItem>();
 
             loaded = true;
         }

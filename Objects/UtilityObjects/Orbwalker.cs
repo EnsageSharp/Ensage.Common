@@ -175,7 +175,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                           + Math.Max(distance, 0);
             if (isValid || (target != null && this.Unit.IsAttacking() && this.Unit.GetTurnTime(target.Position) < 0.1))
             {
-                var canAttack = this.CanAttack(target, bonusWindupMs) && !target.IsAttackImmune() && !target.IsInvul()
+                var canAttack = !this.IsAttackOnCoolDown(target, bonusWindupMs) && !target.IsAttackImmune() && !target.IsInvul()
                                 && this.Unit.CanAttack();
                 if (canAttack && !this.attackSleeper.Sleeping && (!this.hero || Utils.SleepCheck("Orbwalk.Attack")))
                 {
@@ -210,7 +210,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                 }
             }
 
-            var canCancel = (this.CanCancelAttack() && !this.CanAttack(target, bonusWindupMs))
+            var canCancel = (this.CanCancelAttack() && this.IsAttackOnCoolDown(target, bonusWindupMs))
                             || (!isValid && !this.Unit.IsAttacking() && this.CanCancelAttack());
             if (!canCancel || this.moveSleeper.Sleeping || this.attackSleeper.Sleeping
                 || (this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))))
