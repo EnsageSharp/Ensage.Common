@@ -184,6 +184,10 @@ namespace Ensage.Common.Menu
                     TextureDictionary.Add(textureName, Textures.GetSpellTexture(textureName));
                 }
             }
+
+            AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
+            AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
+            Events.OnClose += delegate { this.SaveAll(); };
         }
 
         /// <summary>
@@ -682,15 +686,10 @@ namespace Ensage.Common.Menu
         /// </summary>
         public void AddToMainMenu()
         {
-            AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
-            AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
-            Events.OnClose += delegate { this.SaveAll(); };
-
             var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
-
             if (RootMenus.ContainsKey(rootName))
             {
-                throw new ArgumentException("Root Menu [" + rootName + "] with the same name exists", "name");
+                return;
             }
 
             RootMenus.Add(rootName, this);
