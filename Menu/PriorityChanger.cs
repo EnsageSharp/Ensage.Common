@@ -98,16 +98,16 @@ namespace Ensage.Common.Menu
         /// <param name="itemList">
         /// The item List.
         /// </param>
-        /// <param name="changerName">
-        /// The changer Name.
-        /// </param>
         /// <param name="defaultPriority">
         /// The default Priority.
+        /// </param>
+        /// <param name="changerName">
+        /// The changer Name.
         /// </param>
         /// <param name="useAbilityToggler">
         /// The use Ability Toggler.
         /// </param>
-        public PriorityChanger(List<string> itemList, string changerName = "", uint defaultPriority = 4, bool useAbilityToggler = false)
+        public PriorityChanger(List<string> itemList, uint defaultPriority, string changerName = "", bool useAbilityToggler = false)
         {
             this.itemList = itemList;
             this.defaultPriority = defaultPriority;

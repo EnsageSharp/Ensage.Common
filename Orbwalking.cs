@@ -93,7 +93,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="bool" />.
         /// </returns>
-        public static bool AttackOnCooldown(Unit target = null, float bonusWindupMs = 0)
+        public static bool AttackOnCooldown(Unit target, float bonusWindupMs)
         {
             return !orbwalker.CanAttack(target, bonusWindupMs);
         }
