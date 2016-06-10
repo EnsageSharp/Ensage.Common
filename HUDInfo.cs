@@ -99,7 +99,6 @@ namespace Ensage.Common
             float compareWidth;
             ScreenSize = new Vector2(Drawing.Width, Drawing.Height);
             var ratio = Math.Floor((decimal)(ScreenSize.X / ScreenSize.Y * 100));
-            Console.WriteLine(ratio);
             if (ratio == 213)
             {
                 compareWidth = 1600;
@@ -186,6 +185,9 @@ namespace Ensage.Common
             }
             else
             {
+                Console.WriteLine(
+                    @"Your screen resolution is not supported and drawings might have wrong size/position, (" + ratio
+                    + ")");
                 compareWidth = 1600;
                 panelHeroSizeX = 65;
                 tinfoHeroDown = 25.714;

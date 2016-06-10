@@ -166,7 +166,6 @@ namespace Ensage.Common
             AbilityExtensions.Init();
             HeroExtensions.Init();
             UnitExtensions.Init();
-            Menu.Menu.Init();
             Names.Init();
             Abilities.Init();
         }

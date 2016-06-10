@@ -52,7 +52,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         protected AttackAnimationTracker(Unit unit)
         {
             this.Unit = unit;
-            Events.OnUpdate += this.Track;
+            Drawing.OnDraw += this.Track;
         }
 
         #endregion
@@ -178,7 +178,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         {
             if (this.Unit == null || !this.Unit.IsValid)
             {
-                Events.OnUpdate -= this.Track;
+                Drawing.OnDraw -= this.Track;
                 return;
             }
 

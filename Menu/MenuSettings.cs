@@ -95,7 +95,7 @@ namespace Ensage.Common.Menu
                 return
                     (int)
                     (Math.Min(Math.Max((int)(HUDInfo.GetHpBarSizeY() * 2.5), 30), 42)
-                     + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 1.7); // 32
+                     + CommonMenu.IncreaseMenuSize * 0.17f); // 32
             }
         }
 
@@ -109,7 +109,7 @@ namespace Ensage.Common.Menu
                 return
                     (int)
                     (Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180)
-                     + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value * 1.3); // 160
+                     + CommonMenu.IncreaseMenuSize * 0.13f); // 160
             }
         }
 
@@ -131,9 +131,9 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return (int)(HUDInfo.GetHPBarSizeX() * 0.1)
-                       + Menu.Root.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value
-                       + RootMenuWidthIncrease; // 160
+                return
+                    (int)((HUDInfo.GetHPBarSizeX() * 0.1) + CommonMenu.IncreaseMenuSize * 0.1 + RootMenuWidthIncrease);
+                    // 160
             }
         }
 

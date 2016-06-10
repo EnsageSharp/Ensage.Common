@@ -184,13 +184,7 @@ namespace Ensage.Common
         /// <summary>
         ///     Gets the tick count.
         /// </summary>
-        public static float TickCount
-        {
-            get
-            {
-                return Environment.TickCount & int.MaxValue;
-            }
-        }
+        public static float TickCount => Game.RawGameTime * 1000;
 
         #endregion
 

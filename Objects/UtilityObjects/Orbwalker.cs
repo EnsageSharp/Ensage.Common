@@ -64,6 +64,11 @@ namespace Ensage.Common.Objects.UtilityObjects
         public Orbwalker(Unit unit)
             : base(unit)
         {
+            if (unit == null)
+            {
+                return;
+            }
+
             this.hero = unit.Equals(ObjectManager.LocalHero);
             this.attackSleeper = new Sleeper();
             this.moveSleeper = new Sleeper();

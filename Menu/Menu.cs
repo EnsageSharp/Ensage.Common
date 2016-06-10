@@ -38,17 +38,15 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The menu position dictionary.
         /// </summary>
-        public static Dictionary<string, Vector2> menuPositionDictionary = new Dictionary<string, Vector2>();
+        private static readonly Dictionary<string, Vector2> MenuPositionDictionary = new Dictionary<string, Vector2>();
 
-        /// <summary>
-        ///     The root.
-        /// </summary>
-        public static CommonMenu Root;
+        /// <summary>The panel text.</summary>
+        private static readonly DrawText PanelText;
 
         /// <summary>
         ///     The root menus.
         /// </summary>
-        public static Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
+        private static readonly Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
         /// <summary>
         ///     The root menus draggable.
@@ -56,22 +54,9 @@ namespace Ensage.Common.Menu
         private static readonly List<DraggableItem> RootMenusDraggable = new List<DraggableItem>();
 
         /// <summary>
-        ///     The loaded.
-        /// </summary>
-        private static bool loaded;
-
-        /// <summary>
         ///     The menu count.
         /// </summary>
         private static int menuCount;
-
-        /// <summary>
-        ///     The new message type.
-        /// </summary>
-        private static StringList newMessageType;
-
-        /// <summary>The panel text.</summary>
-        private static DrawText panelText;
 
         #endregion
 
@@ -121,18 +106,13 @@ namespace Ensage.Common.Menu
                 MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
             }
 
-            panelText = new DrawText { Text = "EnsageSharp Menu", FontFlags = FontFlags.AntiAlias };
+            MenuPanel = new DrawRect(Color.Black);
+            PanelText = new DrawText { Text = "EnsageSharp Menu", FontFlags = FontFlags.AntiAlias };
             TextureDictionary = new Dictionary<string, DotaTexture>();
             ItemDictionary = new Dictionary<string, MenuItem>();
-
             Root = new CommonMenu();
             Root.AddToMainMenu();
-            loaded = false;
-            Events.OnLoad += Events_OnLoad;
-            Events.OnClose += (sender, args) => { loaded = false; };
             Drawing.OnDraw += OnDraw;
-            Init();
-            MenuPanel = new DrawRect(Color.Black);
         }
 
         /// <summary>
@@ -173,15 +153,20 @@ namespace Ensage.Common.Menu
             {
                 if (textureName.Contains("npc_dota_hero_"))
                 {
-                    TextureDictionary.Add(textureName, Textures.GetHeroTexture(textureName));
+                    this.Texture = Textures.GetHeroTexture(textureName);
                 }
                 else if (textureName.Contains("item_"))
                 {
-                    TextureDictionary.Add(textureName, Textures.GetItemTexture(textureName));
+                    this.Texture = Textures.GetItemTexture(textureName);
                 }
                 else
                 {
-                    TextureDictionary.Add(textureName, Textures.GetSpellTexture(textureName));
+                    this.Texture = Textures.GetSpellTexture(textureName);
+                }
+
+                if (this.Texture == null)
+                {
+                    this.TextureName = null;
                 }
             }
 
@@ -207,17 +192,9 @@ namespace Ensage.Common.Menu
         #region Public Properties
 
         /// <summary>
-        ///     The item dictionary.
+        /// Gets or sets the texture.
         /// </summary>
-        public static Dictionary<string, MenuItem> ItemDictionary { get; set; }
-
-        /// <summary>Gets or sets the menu panel.</summary>
-        public static DrawRect MenuPanel { get; set; }
-
-        /// <summary>
-        ///     The texture dictionary.
-        /// </summary>
-        public static Dictionary<string, DotaTexture> TextureDictionary { get; set; }
+        public DotaTexture Texture { get; set; }
 
         /// <summary>
         ///     The color.
@@ -270,7 +247,7 @@ namespace Ensage.Common.Menu
 
                 if (!Utils.SleepCheck(n))
                 {
-                    return menuPositionDictionary[n];
+                    return MenuPositionDictionary[n];
                 }
 
                 int xOffset;
@@ -292,13 +269,13 @@ namespace Ensage.Common.Menu
                 }
 
                 var pos = basePos + new Vector2(xOffset, 0) + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
-                if (!menuPositionDictionary.ContainsKey(n))
+                if (!MenuPositionDictionary.ContainsKey(n))
                 {
-                    menuPositionDictionary.Add(n, pos);
+                    MenuPositionDictionary.Add(n, pos);
                 }
                 else
                 {
-                    menuPositionDictionary[n] = pos;
+                    MenuPositionDictionary[n] = pos;
                 }
 
                 Utils.Sleep(0, n);
@@ -329,6 +306,24 @@ namespace Ensage.Common.Menu
         #endregion
 
         #region Properties
+
+        /// <summary>
+        ///     The item dictionary.
+        /// </summary>
+        internal static Dictionary<string, MenuItem> ItemDictionary { get; set; }
+
+        /// <summary>Gets or sets the menu panel.</summary>
+        internal static DrawRect MenuPanel { get; set; }
+
+        /// <summary>
+        ///     The root.
+        /// </summary>
+        internal static CommonMenu Root { get; set; }
+
+        /// <summary>
+        ///     The texture dictionary.
+        /// </summary>
+        internal static Dictionary<string, DotaTexture> TextureDictionary { get; set; }
 
         /// <summary>
         ///     Gets the children menu width.
@@ -396,7 +391,7 @@ namespace Ensage.Common.Menu
                 var n = this.Name + this.DisplayName + "Width";
                 if (!Utils.SleepCheck(n))
                 {
-                    return (int)menuPositionDictionary[n].X;
+                    return (int)MenuPositionDictionary[n].X;
                 }
 
                 var bonus = this.Height;
@@ -428,13 +423,13 @@ namespace Ensage.Common.Menu
                     }
                 }
 
-                if (!menuPositionDictionary.ContainsKey(n))
+                if (!MenuPositionDictionary.ContainsKey(n))
                 {
-                    menuPositionDictionary.Add(n, new Vector2(this.Height + bonus));
+                    MenuPositionDictionary.Add(n, new Vector2(this.Height + bonus));
                 }
                 else
                 {
-                    menuPositionDictionary[n] = new Vector2(this.Height + bonus);
+                    MenuPositionDictionary[n] = new Vector2(this.Height + bonus);
                 }
 
                 Utils.Sleep(20000, n);
@@ -610,22 +605,6 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
-        ///     The message value changed.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        public static void MessageValueChanged(object sender, OnValueChangeEventArgs e)
-        {
-            loaded = false;
-            newMessageType = e.GetNewValue<StringList>();
-            Events_OnLoad(null, null);
-        }
-
-        /// <summary>
         ///     The send message.
         /// </summary>
         /// <param name="key">
@@ -693,7 +672,10 @@ namespace Ensage.Common.Menu
             }
 
             RootMenus.Add(rootName, this);
-            RootMenusDraggable.Add(this);
+            if (!(this is CommonMenu))
+            {
+                RootMenusDraggable.Add(this);
+            }
 
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
             AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
@@ -770,125 +752,7 @@ namespace Ensage.Common.Menu
                           : this.transition.GetValue() > 0 || this.transition.Moving
                                 ? (this.Height - this.transition.GetValue()) * 0.1
                                 : 0;
-            if (!this.IsRootMenu)
-            {
-                const string ABgName = "menubg1.vmat_c";
-                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
-                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
-                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), new Color(20, 20, 20, 190));
-                Drawing.DrawRect(
-                    this.Position, 
-                    new Vector2(this.Height / 14, this.Height), 
-                    this.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
-            }
-            else
-            {
-                const string ABgName = "menubg1.vmat_c";
-                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
-                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
-                Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), new Color(20, 20, 20, 230));
-                Drawing.DrawRect(
-                    this.Position - new Vector2(this.Height / 7, 0), 
-                    new Vector2(this.Height / 7, this.Height), 
-                    this.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
-            }
-
-            var textSize = Drawing.MeasureText(
-                MultiLanguage._(this.DisplayName), 
-                "Arial", 
-                new Vector2((float)(this.Height * 0.48), 100), 
-                FontFlags.AntiAlias);
-            var textPos = this.Position + new Vector2(5, (float)(this.Height * 0.5 - textSize.Y * 0.5));
-            var bonusWidth = 0;
-            if (this.TextureName != null)
-            {
-                var tName = this.TextureName;
-                if (tName.Contains("npc_dota_hero"))
-                {
-                    Drawing.DrawRect(
-                        this.Position + new Vector2(3, 3), 
-                        new Vector2((float)(this.Height * 1.4), this.Height - 6), 
-                        TextureDictionary[tName]);
-                    Drawing.DrawRect(
-                        this.Position + new Vector2(2, 2), 
-                        new Vector2((float)(this.Height * 1.4) + 2, this.Height - 4), 
-                        Color.Black, 
-                        true);
-                    bonusWidth = (int)(this.Height * 1.44);
-                }
-                else if (tName.Contains("item_"))
-                {
-                    Drawing.DrawRect(
-                        this.Position + new Vector2(3, 3), 
-                        new Vector2(this.Height + (float)(this.Height * 0.16), this.Height - 6), 
-                        TextureDictionary[tName]);
-                    Drawing.DrawRect(
-                        this.Position + new Vector2(2, 2), 
-                        new Vector2(this.Height - 4, this.Height - 4), 
-                        Color.Black, 
-                        true);
-                    bonusWidth = (int)(this.Height * 0.8);
-                }
-                else
-                {
-                    Drawing.DrawRect(
-                        this.Position + new Vector2(3, 3), 
-                        new Vector2(this.Height - 6, this.Height - 6), 
-                        TextureDictionary[tName]);
-                    Drawing.DrawRect(
-                        this.Position + new Vector2(2, 2), 
-                        new Vector2(this.Height - 4, this.Height - 4), 
-                        Color.Black, 
-                        true);
-                    bonusWidth = (int)(this.Height * 0.85);
-                }
-            }
-
-            if ((this.TextureName == null || this.ShowTextWithTexture ? textSize.X : 0) + bonusWidth
-                < (float)(this.Width - this.Height * 0.3))
-            {
-                var arrowname = this.IsOpen ? "arrowrighthover.vmat_c" : "arrowright.vmat_c";
-                var arrow = Textures.GetTexture("materials/ensage_ui/menu/" + arrowname);
-                var size = new Vector2((float)(this.Height * 0.53), (float)(this.Height * 0.53));
-                var add1 = this.IsOpen ? this.Height * 0.1 : add;
-                Drawing.DrawRect(
-                    this.Position
-                    + new Vector2(
-                          (float)(this.Width - this.Height * 0.5 + add1 - size.X * 0.6), 
-                          (float)(this.Height * 0.5 - size.Y * 0.5)), 
-                    size, 
-                    arrow);
-            }
-
-            Drawing.DrawRect(
-                new Vector2(this.Position.X, this.Position.Y), 
-                new Vector2(this.Width, this.Height), 
-                this.IsOpen ? new Color(70, 70, 70, (int)(25 + add * 5)) : new Color(60, 60, 60, (int)(5 + add * 7)));
-            if (this.TextureName == null || this.ShowTextWithTexture)
-            {
-                Drawing.DrawText(
-                    MultiLanguage._(this.DisplayName), 
-                    textPos + new Vector2(bonusWidth, 0), 
-                    new Vector2((float)(this.Height * 0.48), 100), 
-                    this.IsOpen ? this.Color + new Color(50, 50, 50) : this.Color, 
-                    FontFlags.AntiAlias);
-            }
-
-            // Draw the menu submenus
-            foreach (var child in this.Children.Where(child => child.Visible))
-            {
-                child.Drawing_OnDraw(args);
-            }
-
-            // Draw the items
-            for (var i = this.Items.Count - 1; i >= 0; i--)
-            {
-                var item = this.Items[i];
-                if (item.Visible)
-                {
-                    item.Drawing_OnDraw();
-                }
-            }
+            MenuUtils.MainMenuDraw(this, add);
         }
 
         /// <summary>
@@ -917,7 +781,6 @@ namespace Ensage.Common.Menu
                 return tempItem;
             }
 
-
             tempItem = this.Items.FirstOrDefault(x => x.Name == name)
                        ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
                               .FirstOrDefault();
@@ -940,7 +803,11 @@ namespace Ensage.Common.Menu
                 if (RootMenus.ContainsKey(rootName))
                 {
                     RootMenus.Remove(rootName);
-                    RootMenusDraggable.Remove(this);
+                    if (!(this is CommonMenu))
+                    {
+                        RootMenusDraggable.Remove(this);
+                    }
+
                     Drawing.OnDraw -= this.Drawing_OnDraw;
                     Game.OnWndProc -= this.Game_OnWndProc;
                     this.UnloadMenuState();
@@ -1026,25 +893,6 @@ namespace Ensage.Common.Menu
         #region Methods
 
         /// <summary>
-        ///     The initialize.
-        /// </summary>
-        internal static void Init()
-        {
-            if (Root == null)
-            {
-                return;
-            }
-
-            var item = Root.Item("messageType");
-            if (item == null)
-            {
-                return;
-            }
-
-            newMessageType = item.GetValue<StringList>();
-        }
-
-        /// <summary>
         ///     The game_ on wnd proc.
         /// </summary>
         /// <param name="args">
@@ -1057,9 +905,9 @@ namespace Ensage.Common.Menu
                 return;
             }
 
-            if (this.IsRootMenu)
+            if (this.IsRootMenu && !(this is CommonMenu))
             {
-                if (!this.Visible)
+                if (!this.Visible || Config.DisableDrawings)
                 {
                     this.OnReceiveMessage(
                         (Utils.WindowsMessages)args.Msg, 
@@ -1185,7 +1033,7 @@ namespace Ensage.Common.Menu
                 child.OnReceiveMessage(message, cursorPos, key, args);
             }
 
-            if (!this.Visible)
+            if (!this.Visible || Config.DisableDrawings)
             {
                 return;
             }
@@ -1251,49 +1099,6 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
-        ///     The events_ on load.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        private static void Events_OnLoad(object sender, EventArgs e)
-        {
-            if (loaded)
-            {
-                return;
-            }
-
-            var console = newMessageType.SelectedIndex == 2;
-
-            if (Root.Item("showMessage").GetValue<bool>() && !console)
-            {
-                var msg =
-                    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
-                Game.PrintMessage(
-                    msg, 
-                    newMessageType.SelectedIndex == 2 || newMessageType.SelectedIndex == 0
-                        ? MessageType.LogMessage
-                        : MessageType.ChatMessage);
-            }
-            else if (console && Root.Item("showMessage").GetValue<bool>())
-            {
-                var msg = @"[Menu Hotkeys] Press: " + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                          + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
-                Console.WriteLine(msg);
-            }
-
-            ItemDictionary = new Dictionary<string, MenuItem>();
-
-            loaded = true;
-        }
-
-        /// <summary>
         ///     The on draw.
         /// </summary>
         /// <param name="args">
@@ -1301,7 +1106,7 @@ namespace Ensage.Common.Menu
         /// </param>
         private static void OnDraw(EventArgs args)
         {
-            if (!MenuSettings.DrawMenu)
+            if (!MenuSettings.DrawMenu || Config.DisableDrawings)
             {
                 return;
             }
@@ -1321,10 +1126,10 @@ namespace Ensage.Common.Menu
                     bgsize.Y);
             MenuPanel.Color = new Color(15, 15, 15);
             MenuPanel.Draw();
-            panelText.Color = new Color(180, 180, 180);
-            panelText.TextSize = new Vector2((float)(MenuSettings.MenuItemHeight * 0.5));
-            panelText.CenterOnRectangleHorizontally(MenuPanel, (float)(MenuSettings.MenuItemHeight * 0.26));
-            panelText.Draw();
+            PanelText.Color = new Color(180, 180, 180);
+            PanelText.TextSize = new Vector2((float)(MenuSettings.MenuItemHeight * 0.5));
+            PanelText.CenterOnRectangleHorizontally(MenuPanel, (float)(MenuSettings.MenuItemHeight * 0.26));
+            PanelText.Draw();
 
             foreach (var rootMenu in RootMenus.OrderBy(x => x.Value.OrderNumber))
             {

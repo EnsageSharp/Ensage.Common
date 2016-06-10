@@ -38,9 +38,15 @@ namespace Ensage.Common.Menu
         #region Static Fields
 
         /// <summary>
+        ///     The menu position dictionary.
+        /// </summary>
+        private static readonly Dictionary<string, Vector2> MenuPositionDictionary = new Dictionary<string, Vector2>();
+
+        /// <summary>
         ///     The item count.
         /// </summary>
         private static int itemCount;
+
 
         #endregion
 
@@ -257,7 +263,7 @@ namespace Ensage.Common.Menu
 
                 if (!Utils.SleepCheck(n))
                 {
-                    return (int)Menu.menuPositionDictionary[n].X;
+                    return (int)MenuPositionDictionary[n].X;
                 }
 
                 var extra = 0f;
@@ -329,9 +335,9 @@ namespace Ensage.Common.Menu
                         break;
                 }
 
-                if (!Menu.menuPositionDictionary.ContainsKey(n))
+                if (!MenuPositionDictionary.ContainsKey(n))
                 {
-                    Menu.menuPositionDictionary.Add(
+                    MenuPositionDictionary.Add(
                         n, 
                         new Vector2(
                             (int)
@@ -345,7 +351,7 @@ namespace Ensage.Common.Menu
                 }
                 else
                 {
-                    Menu.menuPositionDictionary[n] =
+                    MenuPositionDictionary[n] =
                         new Vector2(
                             (int)
                             (Math.Max(
@@ -359,7 +365,7 @@ namespace Ensage.Common.Menu
 
                 Utils.Sleep(20000, n);
 
-                return (int)Menu.menuPositionDictionary[n].X;
+                return (int)MenuPositionDictionary[n].X;
             }
         }
 
@@ -373,7 +379,7 @@ namespace Ensage.Common.Menu
                 var n = this.Parent.Name + this.DisplayName + this.Name + "position";
                 if (!Utils.SleepCheck(n))
                 {
-                    return Menu.menuPositionDictionary[n];
+                    return MenuPositionDictionary[n];
                 }
 
                 var xOffset = 0;
@@ -385,13 +391,13 @@ namespace Ensage.Common.Menu
 
                 var pos = new Vector2(0, this.MyBasePosition.Y) + new Vector2(xOffset, 0)
                           + this.YLevel * new Vector2(0, MenuSettings.MenuItemHeight);
-                if (!Menu.menuPositionDictionary.ContainsKey(n))
+                if (!MenuPositionDictionary.ContainsKey(n))
                 {
-                    Menu.menuPositionDictionary.Add(n, pos);
+                    MenuPositionDictionary.Add(n, pos);
                 }
                 else
                 {
-                    Menu.menuPositionDictionary[n] = pos;
+                    MenuPositionDictionary[n] = pos;
                 }
 
                 Utils.Sleep(0, n);
@@ -1226,7 +1232,7 @@ namespace Ensage.Common.Menu
                         return;
                     }
 
-                    if (!this.Visible)
+                    if (!this.Visible || Config.DisableDrawings)
                     {
                         return;
                     }
@@ -1249,7 +1255,7 @@ namespace Ensage.Common.Menu
 
                 case MenuValueType.Slider:
 
-                    if (!this.Visible)
+                    if (!this.Visible || Config.DisableDrawings)
                     {
                         this.Interacting = false;
                         return;
@@ -1372,7 +1378,7 @@ namespace Ensage.Common.Menu
 
                     break;
                 case MenuValueType.StringList:
-                    if (!this.Visible)
+                    if (!this.Visible || Config.DisableDrawings)
                     {
                         return;
                     }
@@ -1411,7 +1417,7 @@ namespace Ensage.Common.Menu
                     break;
 
                 case MenuValueType.AbilityToggler:
-                    if (!this.Visible)
+                    if (!this.Visible || Config.DisableDrawings)
                     {
                         return;
                     }
@@ -1442,7 +1448,7 @@ namespace Ensage.Common.Menu
                     break;
 
                 case MenuValueType.PriorityChanger:
-                    if (!this.Visible)
+                    if (!this.Visible || Config.DisableDrawings)
                     {
                         return;
                     }
@@ -1451,7 +1457,7 @@ namespace Ensage.Common.Menu
                     break;
 
                 case MenuValueType.HeroToggler:
-                    if (!this.Visible)
+                    if (!this.Visible || Config.DisableDrawings)
                     {
                         return;
                     }

@@ -303,7 +303,7 @@ namespace Ensage.Common.Menu
             var textSize = Drawing.MeasureText(
                 s, 
                 "Arial", 
-                new Vector2((float)(item.Height * 0.4), 14), 
+                new Vector2((float)(item.Height * 0.42), 14), 
                 FontFlags.AntiAlias);
 
             // MenuUtils.DrawBoxBordered(
@@ -317,14 +317,19 @@ namespace Ensage.Common.Menu
             Drawing.DrawRect(
                 new Vector2(position.X, position.Y), 
                 new Vector2(textSize.X + 8, item.Height), 
-                new SharpDX.Color(28, 28, 28, (int)(add * 58)));
+                new SharpDX.Color(45, 45, 45, (int)((add / 2) * (add / 2) * (add / 2) * (add / 2) * 40)));
+            Drawing.DrawRect(
+                new Vector2(position.X - 1, position.Y),
+                new Vector2(textSize.X + 10, item.Height),
+                new SharpDX.Color(0, 0, 0, (int)((add / 2) * (add / 2) * (add / 2) * (add / 2) * 40)),
+                true);
 
             var textPos = position + new Vector2(4, (float)(item.Height * 0.5 - textSize.Y * 0.5));
             Drawing.DrawText(
                 s, 
                 textPos, 
-                new Vector2((float)(item.Height * 0.4), 14), 
-                new SharpDX.Color(175, 175, 175, (int)(add * 68)), 
+                new Vector2((float)(item.Height * 0.42), 14), 
+                new SharpDX.Color(255, 255, 255, (int)(add * 68)), 
                 FontFlags.AntiAlias);
         }
 
