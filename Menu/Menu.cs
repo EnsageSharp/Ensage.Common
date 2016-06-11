@@ -666,21 +666,21 @@ namespace Ensage.Common.Menu
         public void AddToMainMenu()
         {
             var rootName = Assembly.GetCallingAssembly().GetName().Name + "." + this.Name;
-            if (RootMenus.ContainsKey(rootName))
+            if (!RootMenus.ContainsKey(rootName))
             {
-                return;
-            }
+                RootMenus.Add(rootName, this);
+                if (!(this is CommonMenu))
+                {
+                    RootMenusDraggable.Add(this);
+                }
 
-            RootMenus.Add(rootName, this);
-            if (!(this is CommonMenu))
-            {
-                RootMenusDraggable.Add(this);
+                AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
+                ObjectManager.OnAddEntity += this.ObjectMgr_OnAddEntity;
+                Game.OnWndProc += this.Game_OnWndProc;
             }
 
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
-            AppDomain.CurrentDomain.DomainUnload += (sender, args) => this.UnloadMenuState();
-            ObjectManager.OnAddEntity += this.ObjectMgr_OnAddEntity;
-            Game.OnWndProc += this.Game_OnWndProc;
+            
             DelayAction.Add(2000, this.SetHeroTogglers);
             var bonus = 0f;
             if (this.TextureName != null)

@@ -77,7 +77,7 @@ namespace Ensage.Common.Menu
                     Drawing.DrawRect(
                         menu.Position + new Vector2(3, 3),
                         new Vector2((float)(menu.Height * 1.4), menu.Height - 6),
-                        menu.Texture);
+                        Textures.GetHeroTexture(tName));
                     Drawing.DrawRect(
                         menu.Position + new Vector2(2, 2),
                         new Vector2((float)(menu.Height * 1.4) + 2, menu.Height - 4),
@@ -90,7 +90,7 @@ namespace Ensage.Common.Menu
                     Drawing.DrawRect(
                         menu.Position + new Vector2(3, 3),
                         new Vector2(menu.Height + (float)(menu.Height * 0.16), menu.Height - 6),
-                        menu.Texture);
+                        Textures.GetItemTexture(tName));
                     Drawing.DrawRect(
                         menu.Position + new Vector2(2, 2),
                         new Vector2(menu.Height - 4, menu.Height - 4),
@@ -103,7 +103,7 @@ namespace Ensage.Common.Menu
                     Drawing.DrawRect(
                         menu.Position + new Vector2(3, 3),
                         new Vector2(menu.Height - 6, menu.Height - 6),
-                        menu.Texture);
+                        Textures.GetSpellTexture(tName));
                     Drawing.DrawRect(
                         menu.Position + new Vector2(2, 2),
                         new Vector2(menu.Height - 4, menu.Height - 4),

@@ -81,12 +81,14 @@ namespace Ensage.Common.Menu
                         {
                             Config.ShowSpawnBoxes = args.GetNewValue<bool>();
                         };
+            Config.ShowSpawnBoxes = hacks.Item("showSpawnBoxes").GetValue<bool>();
             hacks.AddItem(
                 new MenuItem("showTowerRange", "Show TowerRange").SetValue(Config.ShowTowerRange)
                     .SetTooltip("Makes TowerRange always visible")).ValueChanged += (sender, args) =>
                         {
                             Config.ShowTowerRange = args.GetNewValue<bool>();
                         };
+            Config.ShowTowerRange = hacks.Item("showTowerRange").GetValue<bool>();
             hacks.AddItem(
                 new MenuItem("autoAccept", "AutoAccept").SetValue(Config.AutoAccept)
                     .SetTooltip("Automatically clicks on accept after game was found")).ValueChanged +=
@@ -94,6 +96,7 @@ namespace Ensage.Common.Menu
                     {
                         Config.AutoAccept = args.GetNewValue<bool>();
                     };
+            Config.AutoAccept = hacks.Item("autoAccept").GetValue<bool>();
             this.AddSubMenu(hacks);
             this.AddItem(
                 new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true))
@@ -104,6 +107,7 @@ namespace Ensage.Common.Menu
                         {
                             Config.DebugConsole = args.GetNewValue<bool>();
                         };
+            Config.DebugConsole = this.Item("showConsole").GetValue<bool>();
             Config.DisableDrawings = false;
             this.AddItem(
                 new MenuItem("disableDrawings", "Disable Drawings").SetValue(Config.DisableDrawings)
