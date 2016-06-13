@@ -81,6 +81,31 @@ namespace Ensage.Common.Objects
 
         #endregion
 
+        /// <summary>
+        /// Returns all towers in game.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
+        public static IEnumerable<Building> GetAll()
+        {
+            return all;
+        }
+
+        /// <summary>
+        /// Returns all towers of specified team
+        /// </summary>
+        /// <param name="team">
+        /// The team (Dire/Radiant).
+        /// </param>
+        /// <returns>
+        /// The <see cref="IEnumerable"/>.
+        /// </returns>
+        public static IEnumerable<Building> GetByTeam(Team team)
+        {
+            return team == Team.Dire ? dire : radiant;
+        }
+
         #region Methods
 
         /// <summary>
