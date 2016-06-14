@@ -194,14 +194,16 @@ namespace Ensage.Common.Menu
                                         Menu.Root.Item("positionX").GetValue<Slider>().Value, 
                                         Menu.Root.Item("positionY").GetValue<Slider>().Value);
                 dragging = true;
+                return;
             }
 
-            if (args.Msg == (ulong)Utils.WindowsMessages.WM_LBUTTONUP)
+            if (dragging && args.Msg == (ulong)Utils.WindowsMessages.WM_LBUTTONUP)
             {
                 dragging = false;
                 Menu.Root.Item("positionX").SetValue(new Slider((int)BasePosition.X, 10, Drawing.Height / 3));
                 Menu.Root.Item("positionY")
                     .SetValue(new Slider((int)BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.08), Drawing.Width / 4));
+                return;
             }
 
             if (args.Msg == (ulong)Utils.WindowsMessages.WM_MOUSEMOVE && dragging)

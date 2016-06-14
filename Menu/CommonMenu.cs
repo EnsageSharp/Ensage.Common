@@ -65,11 +65,11 @@ namespace Ensage.Common.Menu
             menuSettings.AddItem(
                 new MenuItem("positionX", "Position X").SetValue(
                     new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height / 3)))
-                .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel").SetFontColor(Color.Black);
+                .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel").SetFontColor(Color.GreenYellow);
             menuSettings.AddItem(
                 new MenuItem("positionY", "Position Y").SetValue(
                     new Slider((int)MenuSettings.BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.08), Drawing.Width / 4)))
-                .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel").SetFontColor(Color.Black);
+                .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel").SetFontColor(Color.GreenYellow);
             MenuSettings.BasePosition = new Vector2(
                 menuSettings.Item("positionX").GetValue<Slider>().Value,
                 menuSettings.Item("positionY").GetValue<Slider>().Value);

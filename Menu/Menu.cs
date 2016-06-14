@@ -1047,7 +1047,12 @@ namespace Ensage.Common.Menu
             {
                 if (cursorPos.X - MenuSettings.BasePosition.X <= MenuSettings.MenuWidth + this.Height + 4)
                 {
-                    var n = (int)(cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight;
+                    var n = ((cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight);
+                    if (n < 0)
+                    {
+                        return;
+                    }
+                    n = (int)n;
                     if (this.MenuCount != n)
                     {
                         foreach (var schild in this.Children)
