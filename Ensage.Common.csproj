@@ -175,9 +175,6 @@
     <Compile Include="WindowsMessages.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Resources\UnitDatabase.json" />
     <None Include="Resources\AbilityDatabase.json" />
     <None Include="stylecop.json" />
