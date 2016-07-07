@@ -1,4 +1,4 @@
-﻿// <copyright file="AssemblyInfo.cs" company="EnsageSharp">
+﻿// <copyright file="DamageTaken.cs" company="EnsageSharp">
 //    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -11,20 +11,19 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
+namespace Ensage.Common.Extensions.Damage
+{
+    /// <summary>
+    ///     The damage taken entry.
+    /// </summary>
+    public class DamageTaken
+    {
+        #region Constructors and Destructors
 
-[assembly: AssemblyTitle("Ensage.Common")]
-[assembly: AssemblyDescription("Ensage.Common")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ensage")]
-[assembly: AssemblyProduct("Ensage.Common")]
-[assembly: AssemblyCopyright("Copyright © Ensage 2016")]
-[assembly: AssemblyTrademark("Ensage")]
-[assembly: AssemblyCulture("")]
-[assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.2.5.0")]
-[assembly: AssemblyFileVersion("1.2.5.0")]
-[assembly: NeutralResourcesLanguage("en")]
-[assembly: Guid("f05e29ef-162f-436c-8068-2f45d2c5f9a6")]
+        public DamageTaken(Unit targetUnit)
+        {
+        }
+
+        #endregion
+    }
+}

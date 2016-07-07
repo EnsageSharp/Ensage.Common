@@ -513,10 +513,15 @@ namespace Ensage.Common
             }
 
             Utils.Sleep(70, "Prediction.SpeedTrack.Sleep");
-            var tick = Environment.TickCount & int.MaxValue;
+            var tick = Utils.TickCount;
             var tempTable = new List<Prediction>(TrackTable);
-            foreach (var unit in playerList.Where(x => x.IsValid))
+            foreach (var unit in playerList)
             {
+                if (!unit.IsValid)
+                {
+                    continue;
+                }
+
                 var data =
                     tempTable.FirstOrDefault(
                         unitData => unitData.UnitName == unit.StoredName() || unitData.UnitClassId == unit.ClassID);
@@ -617,7 +622,7 @@ namespace Ensage.Common
                 return 0;
             }
 
-            return (Environment.TickCount & int.MaxValue) - RotTimeDictionary[unit.Handle] + Game.Ping;
+            return Utils.TickCount - RotTimeDictionary[unit.Handle] + Game.Ping;
         }
 
         #endregion

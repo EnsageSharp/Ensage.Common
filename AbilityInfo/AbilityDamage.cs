@@ -493,11 +493,14 @@ namespace Ensage.Common.AbilityInfo
                     break;
                 case "undying_soul_rip":
                     var radius = ability.GetAbilityData("radius");
-                    var nearUnits =
-                        ObjectManager.GetEntities<Unit>()
-                            .Where(
+                    var nearUnits = ObjectManager.GetEntities<Unit>();
+                    var damagePerUnit = ability.GetAbilityData("damage_per_unit");
+                    var maxUnits = ability.GetAbilityData("max_units");
+                    outgoingDamage =
+                        Math.Min(
+                            nearUnits.Count(
                                 x =>
-                                !x.Equals(source) && !x.Equals(target)
+                                !x.Equals(source) && !x.Equals(target) && x.Distance2D(source) < radius + x.HullRadius
                                 && (x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
                                     || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
                                     || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
@@ -509,10 +512,8 @@ namespace Ensage.Common.AbilityInfo
                                     || (x is Hero
                                         && (x.Team == source.Team
                                             || (x.Team == source.GetEnemyTeam() && !x.IsMagicImmune())))) && x.IsAlive
-                                && x.IsVisible && x.Distance2D(source) < radius + x.HullRadius);
-                    var damagePerUnit = ability.GetAbilityData("damage_per_unit");
-                    var maxUnits = ability.GetAbilityData("max_units");
-                    outgoingDamage = Math.Min(nearUnits.Count(), maxUnits) * damagePerUnit;
+                                && x.IsVisible), 
+                            maxUnits) * damagePerUnit;
                     outgoingDamage = target.SpellDamageTaken(
                         outgoingDamage, 
                         DamageType.Magical, 

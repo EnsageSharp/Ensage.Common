@@ -97,50 +97,21 @@ namespace Ensage.Common.Objects.UtilityObjects
             if (target != null)
             {
                 var pos = Prediction.InFront(
-                    this.Unit,
+                    this.Unit, 
                     (float)(Game.Ping / 1000 + this.Unit.GetTurnTime(target.Position) * this.Unit.MovementSpeed));
                 distance = pos.Distance2D(target) - this.Unit.Distance2D(target);
             }
 
             var isValid = (target != null && target.IsValid && target.IsAlive && target.IsVisible && !target.IsInvul()
-                          && !target.HasModifiers(
-                              new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" },
-                              false)
-                          && target.Distance2D(this.Unit)
-                          <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 75 + targetHull
-                          + Math.Max(distance, 0)) || (target != null && this.Unit.IsAttacking() && this.Unit.GetTurnTime(target.Position) < 0.1);
+                           && !target.HasModifiers(
+                               new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" }, 
+                               false)
+                           && target.Distance2D(this.Unit)
+                           <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 75 + targetHull
+                           + Math.Max(distance, 0))
+                          || (target != null && this.Unit.IsAttacking() && this.Unit.GetTurnTime(target.Position) < 0.1);
 
             return !this.IsAttackOnCoolDown(target, bonusWindupMs) && (target == null || isValid);
-        }
-
-        /// <summary>
-        /// The is attack on cool down.
-        /// </summary>
-        /// <param name="target">
-        /// The target.
-        /// </param>
-        /// <param name="bonusWindupMs">
-        /// The bonus windup milliseconds.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
-        public bool IsAttackOnCoolDown(Unit target = null, float bonusWindupMs = 0)
-        {
-            if (this.Unit == null || !this.Unit.IsValid)
-            {
-                return false;
-            }
-
-            var turnTime = 0d;
-            if (target != null)
-            {
-                turnTime = this.Unit.GetTurnTime(target)
-                           + (Math.Max(this.Unit.Distance2D(target) - this.Unit.GetAttackRange() - 100, 0)
-                              / this.Unit.MovementSpeed);
-            }
-
-            return this.nextUnitAttackEnd - Game.Ping - (turnTime * 1000) - 75 + bonusWindupMs >= Utils.TickCount;
         }
 
         /// <summary>
@@ -162,6 +133,36 @@ namespace Ensage.Common.Objects.UtilityObjects
             var time = Utils.TickCount;
             var cancelTime = this.nextUnitAttackRelease - Game.Ping - delay + 50;
             return time >= cancelTime;
+        }
+
+        /// <summary>
+        ///     The is attack on cool down.
+        /// </summary>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="bonusWindupMs">
+        ///     The bonus windup milliseconds.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="bool" />.
+        /// </returns>
+        public bool IsAttackOnCoolDown(Unit target = null, float bonusWindupMs = 0)
+        {
+            if (this.Unit == null || !this.Unit.IsValid)
+            {
+                return false;
+            }
+
+            var turnTime = 0d;
+            if (target != null)
+            {
+                turnTime = this.Unit.GetTurnTime(target)
+                           + Math.Max(this.Unit.Distance2D(target) - this.Unit.GetAttackRange() - 100, 0)
+                           / this.Unit.MovementSpeed;
+            }
+
+            return this.nextUnitAttackEnd - Game.Ping - turnTime * 1000 - 75 + bonusWindupMs >= Utils.TickCount;
         }
 
         #endregion

@@ -501,7 +501,7 @@ namespace Ensage.Common.Extensions
             if (Utils.SleepCheck("Ensage.Common.FindModifierReset"))
             {
                 modifierDictionary = new Dictionary<string, Modifier>();
-                Utils.Sleep(1200000, "Ensage.Common.FindModifierReset");
+                Utils.Sleep(20000, "Ensage.Common.FindModifierReset");
             }
 
             var name = unit.Handle + modifierName;
@@ -830,10 +830,15 @@ namespace Ensage.Common.Extensions
             }
 
             var count = 0;
-            foreach (var name in
-                unit.Modifiers.Where(modifier => modifierNames.Contains(modifier.Name))
-                    .Select(modifier => unit.StoredName() + modifier.Name))
+            foreach (var modifier in
+                unit.Modifiers)
             {
+                var name = modifier.Name;
+                if (!modifierNames.Contains(name))
+                {
+                    continue;
+                }
+
                 if (modifierBoolDictionary.ContainsKey(name))
                 {
                     modifierBoolDictionary[name] = true;

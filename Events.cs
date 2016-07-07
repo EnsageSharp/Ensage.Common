@@ -18,6 +18,7 @@ namespace Ensage.Common
 
     using Ensage.Common.AbilityInfo;
     using Ensage.Common.Extensions;
+    using Ensage.Common.Extensions.Damage;
     using Ensage.Common.Objects;
 
     /// <summary>
@@ -168,6 +169,8 @@ namespace Ensage.Common
             UnitExtensions.Init();
             Names.Init();
             Abilities.Init();
+            Calculations.Init();
+            EntityExtensions.Init();
         }
 
         #endregion

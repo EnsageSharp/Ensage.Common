@@ -20,6 +20,7 @@ namespace Ensage.Common.Extensions
     using Ensage.Common.AbilityInfo;
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Objects;
+    using Ensage.Common.Objects.UtilityObjects;
 
     using global::SharpDX;
 
@@ -40,6 +41,11 @@ namespace Ensage.Common.Extensions
         ///     The boolean dictionary.
         /// </summary>
         private static Dictionary<string, bool> boolDictionary = new Dictionary<string, bool>();
+
+        /// <summary>
+        ///     The can hit dictionary.
+        /// </summary>
+        private static Dictionary<uint, bool> canHitDictionary = new Dictionary<uint, bool>();
 
         /// <summary>
         ///     The cast point dictionary.
@@ -76,6 +82,11 @@ namespace Ensage.Common.Extensions
         ///     Temporarily stores radius values
         /// </summary>
         private static Dictionary<string, float> radiusDictionary = new Dictionary<string, float>();
+
+        /// <summary>
+        ///     The sleeper.
+        /// </summary>
+        private static MultiSleeper sleeper = new MultiSleeper();
 
         /// <summary>
         ///     Temporarily stores speed values
@@ -252,6 +263,12 @@ namespace Ensage.Common.Extensions
                 return true;
             }
 
+            var id = ability.Handle + target.Handle;
+            if (sleeper.Sleeping(id))
+            {
+                return canHitDictionary[id];
+            }
+
             var position = sourcePosition;
             if (ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"
                 || (name == "earthshaker_enchant_totem" && (ability.Owner as Hero).AghanimState()))
@@ -275,30 +292,42 @@ namespace Ensage.Common.Extensions
 
                 if (distanceXyz <= range && position.Distance2D(target.Position) <= range)
                 {
+                    canHitDictionary[id] = true;
+                    sleeper.Sleep(50, id);
                     return true;
                 }
 
-                return name == "pudge_rot" && target.HasModifier("modifier_pudge_meat_hook")
-                       && position.Distance2D(target) < 1500;
+                canHitDictionary[id] = name == "pudge_rot" && target.HasModifier("modifier_pudge_meat_hook")
+                                       && position.Distance2D(target) < 1500;
+                sleeper.Sleep(50, id);
+                return canHitDictionary[id];
             }
 
             if (!ability.IsAbilityBehavior(AbilityBehavior.UnitTarget, name))
             {
+                canHitDictionary[id] = false;
+                sleeper.Sleep(50, id);
                 return false;
             }
 
             if (target.IsInvul())
             {
+                canHitDictionary[id] = false;
+                sleeper.Sleep(50, id);
                 return false;
             }
 
             if (position.Distance2D(target.Position) <= ability.GetCastRange(name) + 100)
             {
+                canHitDictionary[id] = true;
+                sleeper.Sleep(50, id);
                 return true;
             }
 
-            return name == "pudge_dismember" && target.HasModifier("modifier_pudge_meat_hook")
-                   && position.Distance2D(target) < 600;
+            canHitDictionary[id] = name == "pudge_dismember" && target.HasModifier("modifier_pudge_meat_hook")
+                                   && position.Distance2D(target) < 600;
+            sleeper.Sleep(50, id);
+            return canHitDictionary[id];
         }
 
         /// <summary>
@@ -415,15 +444,12 @@ namespace Ensage.Common.Extensions
             if (data.AllyBlock)
             {
                 if (
-                    Creeps.All.Where(
+                    Creeps.All.Any(
                         x =>
                         x.IsValid && x.IsAlive && x.Team == owner.Team && x.Distance2D(xyz) <= range
-                        && x.Distance2D(owner) < owner.Distance2D(target))
-                        .Any(
-                            creep =>
-                            creep.Position.ToVector2()
-                                .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
-                            <= radius + creep.HullRadius))
+                        && x.Distance2D(owner) < owner.Distance2D(target)
+                        && x.Position.ToVector2().DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                        <= radius + x.HullRadius))
                 {
                     return false;
                 }
@@ -445,15 +471,12 @@ namespace Ensage.Common.Extensions
             if (data.EnemyBlock)
             {
                 if (
-                    Creeps.All.Where(
+                    Creeps.All.Any(
                         x =>
                         x.IsValid && x.IsAlive && x.Team != owner.Team && x.Distance2D(xyz) <= range
-                        && x.Distance2D(owner) < owner.Distance2D(target))
-                        .Any(
-                            creep =>
-                            creep.Position.ToVector2()
-                                .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
-                            <= radius + creep.HullRadius))
+                        && x.Distance2D(owner) < owner.Distance2D(target)
+                        && x.Position.ToVector2().DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                        <= radius + x.HullRadius))
                 {
                     return false;
                 }
@@ -731,30 +754,51 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        ///     The channel time.
+        /// The channel time.
         /// </summary>
         /// <param name="ability">
-        ///     The ability.
+        /// The ability.
         /// </param>
         /// <param name="abilityName">
-        ///     The ability name.
+        /// The ability name.
         /// </param>
         /// <returns>
-        ///     The <see cref="float" />.
+        /// The <see cref="float"/>.
         /// </returns>
         public static float ChannelTime(this Ability ability, string abilityName = null)
+        {
+            return ChannelTime(ability, 0, abilityName);
+        }
+
+        /// <summary>
+        /// The channel time.
+        /// </summary>
+        /// <param name="ability">
+        /// The ability.
+        /// </param>
+        /// <param name="abilityLevel">
+        /// The ability Level.
+        /// </param>
+        /// <param name="abilityName">
+        /// The ability name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="float"/>.
+        /// </returns>
+        public static float ChannelTime(this Ability ability, uint abilityLevel, string abilityName = null)
         {
             if (ability == null || !ability.IsValid)
             {
                 return 0;
             }
 
+            var level = abilityLevel != 0 ? abilityLevel : ability.Level;
             var name = abilityName ?? ability.StoredName();
             float channel;
-            if (!channelDictionary.TryGetValue(name + ability.Level, out channel))
+            if (!channelDictionary.TryGetValue(name + level, out channel))
             {
-                channel = ability.GetChannelTime(ability.Level - 1);
-                channelDictionary.Add(name + ability.Level, channel);
+                channel = ability.GetChannelTime(level - 1);
+                channelDictionary.Add(name + level, channel);
             }
 
             // Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
@@ -889,42 +933,81 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The get cast delay.
+        ///     The get cast delay.
         /// </summary>
         /// <param name="ability">
-        /// The ability.
+        ///     The ability.
         /// </param>
         /// <param name="source">
-        /// The source.
+        ///     The source.
         /// </param>
         /// <param name="target">
-        /// The target.
+        ///     The target.
         /// </param>
         /// <param name="usePing">
-        /// The use ping.
+        ///     The use ping.
         /// </param>
         /// <param name="useCastPoint">
-        /// The use cast point.
+        ///     The use cast point.
         /// </param>
         /// <param name="abilityName">
-        /// The ability name.
+        ///     The ability name.
         /// </param>
         /// <param name="useChannel">
-        /// The use channel.
+        ///     The use channel.
         /// </param>
         /// <returns>
-        /// The <see cref="double"/>.
+        ///     The <see cref="double" />.
         /// </returns>
         public static double GetCastDelay(
-            this Ability ability,
-            Hero source,
-            Unit target,
-            bool usePing = false,
-            bool useCastPoint = true,
-            string abilityName = null,
+            this Ability ability, 
+            Hero source, 
+            Unit target, 
+            bool usePing = false, 
+            bool useCastPoint = true, 
+            string abilityName = null, 
             bool useChannel = false)
         {
             return ability.GetCastDelay(source as Unit, target, usePing, useCastPoint, abilityName, useChannel);
+        }
+
+        /// <summary>
+        ///     The get cast delay.
+        /// </summary>
+        /// <param name="ability">
+        ///     The ability.
+        /// </param>
+        /// <param name="source">
+        ///     The source.
+        /// </param>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="usePing">
+        ///     The use ping.
+        /// </param>
+        /// <param name="useCastPoint">
+        ///     The use cast point.
+        /// </param>
+        /// <param name="abilityName">
+        ///     The ability name.
+        /// </param>
+        /// <param name="useChannel">
+        ///     The use channel.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double GetCastDelay(
+            this Ability ability, 
+            Unit source, 
+            Unit target, 
+            bool usePing = false, 
+            bool useCastPoint = true, 
+            string abilityName = null, 
+            bool useChannel = false)
+        {
+            return ability.GetCastDelay(source, target, ability.Level, usePing, useCastPoint, abilityName, useChannel);
         }
 
         /// <summary>
@@ -938,6 +1021,9 @@ namespace Ensage.Common.Extensions
         /// </param>
         /// <param name="target">
         ///     The target.
+        /// </param>
+        /// <param name="abilityLevel">
+        ///     The ability Level.
         /// </param>
         /// <param name="usePing">
         ///     The use Ping.
@@ -958,6 +1044,7 @@ namespace Ensage.Common.Extensions
             this Ability ability, 
             Unit source, 
             Unit target, 
+            uint abilityLevel, 
             bool usePing = false, 
             bool useCastPoint = true, 
             string abilityName = null, 
@@ -973,14 +1060,15 @@ namespace Ensage.Common.Extensions
                 return 0;
             }
 
+            var level = abilityLevel != 0 ? abilityLevel : ability.Level;
             var name = abilityName ?? ability.StoredName();
             double delay;
             if (useCastPoint)
             {
-                if (!delayDictionary.TryGetValue(name + " " + ability.Level, out delay))
+                if (!delayDictionary.TryGetValue(name + " " + level, out delay))
                 {
                     delay = Math.Max(ability.FindCastPoint(name), 0.07);
-                    delayDictionary.Add(name + " " + ability.Level, delay);
+                    delayDictionary.Add(name + " " + level, delay);
                 }
 
                 if (name == "templar_assassin_meld")
@@ -1012,7 +1100,7 @@ namespace Ensage.Common.Extensions
 
             if (useChannel)
             {
-                delay += ability.ChannelTime(name);
+                delay += ability.ChannelTime(level, name);
             }
 
             if (!ability.IsAbilityBehavior(AbilityBehavior.NoTarget, name))
@@ -1275,27 +1363,48 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        ///     Returns projectile speed of the ability
+        /// The get projectile speed.
         /// </summary>
         /// <param name="ability">
-        ///     The ability.
+        /// The ability.
         /// </param>
         /// <param name="abilityName">
-        ///     The ability Name.
+        /// The ability name.
         /// </param>
         /// <returns>
-        ///     The <see cref="float" />.
+        /// The <see cref="float"/>.
         /// </returns>
         public static float GetProjectileSpeed(this Ability ability, string abilityName = null)
+        {
+            return GetProjectileSpeed(ability, 0, abilityName);
+        }
+
+        /// <summary>
+        /// Returns projectile speed of the ability
+        /// </summary>
+        /// <param name="ability">
+        /// The ability.
+        /// </param>
+        /// <param name="abilityLevel">
+        /// The ability Level.
+        /// </param>
+        /// <param name="abilityName">
+        /// The ability Name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="float"/>.
+        /// </returns>
+        public static float GetProjectileSpeed(this Ability ability, uint abilityLevel, string abilityName = null)
         {
             if (ability == null || !ability.IsValid)
             {
                 return 0;
             }
 
+            var level = abilityLevel != 0 ? abilityLevel : ability.Level;
             var name = abilityName ?? ability.StoredName();
             float speed;
-            if (speedDictionary.TryGetValue(name + " " + ability.Level, out speed))
+            if (speedDictionary.TryGetValue(name + " " + level, out speed))
             {
                 return speed;
             }
@@ -1304,7 +1413,7 @@ namespace Ensage.Common.Extensions
             if (data == null)
             {
                 speed = float.MaxValue;
-                speedDictionary.Add(name + " " + ability.Level, speed);
+                speedDictionary.Add(name + " " + level, speed);
                 return speed;
             }
 
@@ -1314,7 +1423,7 @@ namespace Ensage.Common.Extensions
             }
 
             speed = ability.GetAbilityData(data.Speed, abilityName: name);
-            speedDictionary.Add(name + " " + ability.Level, speed);
+            speedDictionary.Add(name + " " + level, speed);
 
             return speed;
         }
@@ -1730,6 +1839,8 @@ namespace Ensage.Common.Extensions
             speedDictionary = new Dictionary<string, float>();
             radiusDictionary = new Dictionary<string, float>();
             delayDictionary = new Dictionary<string, double>();
+            canHitDictionary = new Dictionary<uint, bool>();
+            sleeper = new MultiSleeper();
         }
 
         #endregion

@@ -82,8 +82,13 @@ namespace Ensage.Common.Signals
         /// </param>
         private static void Game_OnUpdate(EventArgs args)
         {
-            foreach (var signal in Signals.Where(x => x.Enabled).ToList())
+            foreach (var signal in Signals.ToList())
             {
+                if (!signal.Enabled)
+                {
+                    continue;
+                }
+
                 if (signal.SignalWaver(signal))
                 {
                     signal.TriggerSignal(MethodBase.GetCurrentMethod().Name, "Signal was waved.");

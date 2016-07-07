@@ -27,7 +27,7 @@ namespace Ensage.Common.Objects
         /// <summary>
         ///     The all.
         /// </summary>
-        public static List<Creep> All;
+        public static IEnumerable<Creep> All;
 
         /// <summary>
         ///     The loaded.
@@ -110,7 +110,7 @@ namespace Ensage.Common.Objects
         /// </summary>
         public static void UpdateCreeps()
         {
-            All = tempList.Where(creep => creep.IsValid).ToList();
+            All = tempList.Where(creep => creep.IsValid);
         }
 
         #endregion
@@ -142,12 +142,15 @@ namespace Ensage.Common.Objects
                 50, 
                 () =>
                     {
+                        var all = new List<Creep>(All);
                         var creep = args.Entity as Creep;
                         if (creep != null)
                         {
                             tempList.Add(creep);
-                            All.Add(creep);
+                            all.Add(creep);
                         }
+
+                        All = all;
                     });
         }
 
@@ -160,11 +163,14 @@ namespace Ensage.Common.Objects
         private static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
         {
             var creep = args.Entity as Creep;
+            var all = new List<Creep>(All);
             if (creep != null)
             {
                 tempList.Remove(creep);
-                All.Remove(creep);
+                all.Remove(creep);
             }
+
+            All = all;
         }
 
         #endregion

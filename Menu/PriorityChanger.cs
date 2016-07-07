@@ -93,21 +93,25 @@ namespace Ensage.Common.Menu
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PriorityChanger"/> struct.
+        ///     Initializes a new instance of the <see cref="PriorityChanger" /> struct.
         /// </summary>
         /// <param name="itemList">
-        /// The item List.
+        ///     The item List.
         /// </param>
         /// <param name="defaultPriority">
-        /// The default Priority.
+        ///     The default Priority.
         /// </param>
         /// <param name="changerName">
-        /// The changer Name.
+        ///     The changer Name.
         /// </param>
         /// <param name="useAbilityToggler">
-        /// The use Ability Toggler.
+        ///     The use Ability Toggler.
         /// </param>
-        public PriorityChanger(List<string> itemList, uint defaultPriority, string changerName = "", bool useAbilityToggler = false)
+        public PriorityChanger(
+            List<string> itemList, 
+            uint defaultPriority, 
+            string changerName = "", 
+            bool useAbilityToggler = false)
         {
             this.itemList = itemList;
             this.defaultPriority = defaultPriority;
@@ -127,7 +131,7 @@ namespace Ensage.Common.Menu
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
-                    v.Key,
+                    v.Key, 
                     v.Key.Substring(0, "item".Length) == "item"
                         ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
                         : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
@@ -164,7 +168,7 @@ namespace Ensage.Common.Menu
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
                 MenuVariables.DragAndDropDictionary.Add(
-                    this.name,
+                    this.name, 
                     useAbilityToggler
                         ? new DragAndDrop(MenuSettings.MenuItemHeight, itemList, this.AbilityToggler)
                         : new DragAndDrop(MenuSettings.MenuItemHeight, itemList));
@@ -205,7 +209,7 @@ namespace Ensage.Common.Menu
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
-                    v.Key,
+                    v.Key, 
                     v.Key.Substring(0, "item".Length) == "item"
                         ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
                         : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
@@ -242,7 +246,7 @@ namespace Ensage.Common.Menu
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
                 MenuVariables.DragAndDropDictionary.Add(
-                    this.name,
+                    this.name, 
                     useAbilityToggler
                         ? new DragAndDrop(MenuSettings.MenuItemHeight, itemList, this.AbilityToggler)
                         : new DragAndDrop(MenuSettings.MenuItemHeight, itemList));
@@ -264,28 +268,28 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PriorityChanger"/> struct.
+        ///     Initializes a new instance of the <see cref="PriorityChanger" /> struct.
         /// </summary>
         /// <param name="itemList">
-        /// The item list.
+        ///     The item list.
         /// </param>
         /// <param name="abilityToggler">
-        /// The ability toggler.
+        ///     The ability toggler.
         /// </param>
         /// <param name="changerName">
-        /// The changer name.
+        ///     The changer name.
         /// </param>
         /// <param name="defaultPriority">
-        /// The default Priority.
+        ///     The default Priority.
         /// </param>
         /// <param name="useAbilityToggler">
-        /// The use ability toggler.
+        ///     The use ability toggler.
         /// </param>
         public PriorityChanger(
             List<string> itemList, 
             AbilityToggler abilityToggler, 
             string changerName = "", 
-            uint defaultPriority = 4,
+            uint defaultPriority = 4, 
             bool useAbilityToggler = true)
         {
             this.itemList = itemList;

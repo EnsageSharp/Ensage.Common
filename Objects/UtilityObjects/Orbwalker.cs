@@ -180,8 +180,8 @@ namespace Ensage.Common.Objects.UtilityObjects
                           + Math.Max(distance, 0);
             if (isValid || (target != null && this.Unit.IsAttacking() && this.Unit.GetTurnTime(target.Position) < 0.1))
             {
-                var canAttack = !this.IsAttackOnCoolDown(target, bonusWindupMs) && !target.IsAttackImmune() && !target.IsInvul()
-                                && this.Unit.CanAttack();
+                var canAttack = !this.IsAttackOnCoolDown(target, bonusWindupMs) && !target.IsAttackImmune()
+                                && !target.IsInvul() && this.Unit.CanAttack();
                 if (canAttack && !this.attackSleeper.Sleeping && (!this.hero || Utils.SleepCheck("Orbwalk.Attack")))
                 {
                     this.attacker.Attack(target, attackmodifiers);

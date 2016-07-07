@@ -106,10 +106,9 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return
-                    (int)
-                    (Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180)
-                     + CommonMenu.IncreaseMenuSize * 0.13f); // 160
+                return (int)(Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180) + CommonMenu.IncreaseMenuSize * 0.13f);
+
+                    // 160
             }
         }
 
@@ -131,9 +130,9 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return
-                    (int)((HUDInfo.GetHPBarSizeX() * 0.1) + CommonMenu.IncreaseMenuSize * 0.1 + RootMenuWidthIncrease);
-                    // 160
+                return (int)(HUDInfo.GetHPBarSizeX() * 0.1 + CommonMenu.IncreaseMenuSize * 0.1 + RootMenuWidthIncrease);
+
+                // 160
             }
         }
 

@@ -79,10 +79,7 @@ namespace Ensage.Common.AbilityInfo
             }
 
             info = spells.FirstOrDefault(data => data.AbilityName == abilityName);
-            if (info != null)
-            {
-                abilityinfoDictionary.Add(abilityName, info);
-            }
+            abilityinfoDictionary.Add(abilityName, info);
 
             return info;
         }

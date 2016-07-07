@@ -15,7 +15,6 @@ namespace Ensage.Common.Menu.Draw
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using Ensage.Common.Extensions;
     using Ensage.Common.Menu.Transitions;
@@ -167,9 +166,13 @@ namespace Ensage.Common.Menu.Draw
             if (this.BeingDragged && message == Utils.WindowsMessages.WM_MOUSEMOVE)
             {
                 foreach (var draggableItem in
-                    draggableItems.Where(
-                        draggableItem => !draggableItem.BeingDragged && !draggableItem.DragTransition.Moving))
+                    draggableItems)
                 {
+                    if (draggableItem.BeingDragged || draggableItem.DragTransition.Moving)
+                    {
+                        continue;
+                    }
+
                     if (cursorPos.Y < draggableItem.RealPosition.Y + draggableItem.Height
                         && draggableItem.OrderNumber == this.OrderNumber - 1)
                     {

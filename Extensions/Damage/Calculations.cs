@@ -18,6 +18,7 @@ namespace Ensage.Common.Extensions.Damage
     using System.Linq;
 
     using Ensage.Common.Objects;
+    using Ensage.Common.Objects.UtilityObjects;
 
     /// <summary>
     ///     The calculations.
@@ -78,6 +79,21 @@ namespace Ensage.Common.Extensions.Damage
         ///     The external damage reductions.
         /// </summary>
         private static readonly List<ExternalDmgReductions> ExternalDmgReductions = new List<ExternalDmgReductions>();
+
+        /// <summary>
+        ///     The double dictionary.
+        /// </summary>
+        private static Dictionary<uint, double> doubleDictionary = new Dictionary<uint, double>();
+
+        /// <summary>
+        ///     The modifier dictionary.
+        /// </summary>
+        private static Dictionary<string, bool> modifierDictionary = new Dictionary<string, bool>();
+
+        /// <summary>
+        ///     The modifier sleeper.
+        /// </summary>
+        private static MultiSleeper modifierSleeper = new MultiSleeper();
 
         #endregion
 
@@ -270,7 +286,7 @@ namespace Ensage.Common.Extensions.Damage
             var iceBlast = false;
             var chenPenitence = false;
 
-            if (target.IsAttackImmune() && dmgType == DamageType.Physical)
+            if (dmgType == DamageType.Physical && target.IsAttackImmune())
             {
                 return 0;
             }
@@ -280,9 +296,18 @@ namespace Ensage.Common.Extensions.Damage
                 return 0;
             }
 
-            foreach (var name in modifiers.Select(modifier => modifier.Name))
+            var damageBlockid = target.Handle + 1;
+            var damageBlockSleeping = modifierSleeper.Sleeping(damageBlockid);
+            if (damageBlockSleeping)
             {
-                if (dmgType == DamageType.Physical)
+                reduceBlock = doubleDictionary[damageBlockid];
+            }
+
+            foreach (var modifier in modifiers)
+            {
+                var name = modifier.Name;
+
+                if (!damageBlockSleeping && dmgType == DamageType.Physical)
                 {
                     foreach (var damageBlock in DamageBlocksList)
                     {
@@ -317,6 +342,8 @@ namespace Ensage.Common.Extensions.Damage
 
                         reduceBlock =
                             ability.GetAbilityData(target.IsRanged ? damageBlock.RangedBlock : damageBlock.MeleeBlock);
+                        doubleDictionary[damageBlockid] = reduceBlock;
+                        modifierSleeper.Sleep(50, damageBlockid);
                         break;
                     }
                 }
@@ -366,57 +393,99 @@ namespace Ensage.Common.Extensions.Damage
                 }
             }
 
-            foreach (var v in ExternalDmgAmps.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
+            var ampId = target.Handle + 2;
+            var ampSleeping = modifierSleeper.Sleeping(ampId);
+            if (ampSleeping)
             {
-                Ability ability = null;
-                foreach (var hero in Heroes.All)
+                amp = doubleDictionary[ampId];
+            }
+            else
+            {
+                foreach (var v in ExternalDmgAmps)
                 {
-                    if (v.HeroId == hero.ClassID || hero.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                    if (modifiers.All(modifier => modifier.Name != v.ModifierName))
                     {
-                        ability = hero.FindSpell(v.SourceSpellName, true);
+                        continue;
+                    }
+
+                    Ability ability = null;
+                    foreach (var hero in Heroes.All)
+                    {
+                        if (v.HeroId == hero.ClassID || hero.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                        {
+                            ability = hero.FindSpell(v.SourceSpellName, true);
+                            if (ability != null)
+                            {
+                                break;
+                            }
+                        }
+
+                        ability = hero.FindItem(v.SourceSpellName, true);
                         if (ability != null)
                         {
                             break;
                         }
                     }
 
-                    ability = hero.FindItem(v.SourceSpellName, true);
-                    if (ability != null)
+                    // var burst = 0f;
+                    if (ability == null)
                     {
-                        break;
+                        continue;
                     }
-                }
 
-                // var burst = 0f;
-                if (ability == null)
-                {
-                    continue;
-                }
+                    var owner = ability.Owner;
+                    var level = ability.Level;
 
-                var burst = ability.GetAbilityData(v.Amp) / 100;
-                if (v.SourceTeam == -1 && ability.Owner.Team != target.Team)
-                {
-                    amp += burst;
-                }
-                else if (v.SourceTeam == -2)
-                {
-                    if (target.Distance2D(source) < 2200)
+                    var burst = ability.GetAbilityData(v.Amp) / 100;
+                    if (v.SourceTeam == -1 && owner.Team != target.Team)
                     {
                         amp += burst;
                     }
+                    else if (v.SourceTeam == -2)
+                    {
+                        if (target.Distance2D(source) < 2200)
+                        {
+                            amp += burst;
+                        }
+                        else
+                        {
+                            amp += burst / 2;
+                        }
+                    }
                     else
                     {
-                        amp += burst / 2;
+                        amp += burst;
                     }
-                }
-                else
-                {
-                    amp += burst;
                 }
             }
 
-            foreach (var v in ExternalDmgReductions.Where(v => modifiers.Any(x => x.Name == v.ModifierName)))
+            if (!ampSleeping)
             {
+                doubleDictionary[ampId] = amp;
+                modifierSleeper.Sleep(50, ampId);
+            }
+
+            foreach (var v in ExternalDmgReductions)
+            {
+                var id = target.Handle + v.ModifierName;
+                var sleeping = modifierSleeper.Sleeping(id);
+                if ((sleeping && !modifierDictionary[id]) || (!sleeping && modifiers.All(x => x.Name != v.ModifierName)))
+                {
+                    if (!sleeping)
+                    {
+                        modifierDictionary[id] = false;
+                        modifierSleeper.Sleep(50, id);
+                    }
+
+                    continue;
+                }
+
+                if (!sleeping)
+                {
+                    modifierDictionary[id] = true;
+                    modifierSleeper.Sleep(50, id);
+                }
+
                 Ability ability = null;
                 foreach (var hero in Heroes.All)
                 {
@@ -442,10 +511,13 @@ namespace Ensage.Common.Extensions.Damage
                     continue;
                 }
 
+                var owner = ability.Owner;
+                var level = ability.Level;
+
                 var burst = Math.Abs(ability.GetAbilityData(v.Reduce) / 100);
                 if (ability.StoredName() == "wisp_overcharge")
                 {
-                    burst = (float)new[] { 0.05, 0.10, 0.15, 0.20 }[ability.Level - 1];
+                    burst = (float)new[] { 0.05, 0.10, 0.15, 0.20 }[level - 1];
                 }
 
                 if (ability.StoredName() == "templar_assassin_refraction")
@@ -455,7 +527,7 @@ namespace Ensage.Common.Extensions.Damage
 
                 if (v.Type == 1)
                 {
-                    if (v.SourceTeam == 1 && ability.Owner.Team == target.Team)
+                    if (v.SourceTeam == 1 && owner.Team == target.Team)
                     {
                         if (burst > 1)
                         {
@@ -480,7 +552,7 @@ namespace Ensage.Common.Extensions.Damage
                 }
                 else if (v.Type == 2)
                 {
-                    if (v.SourceTeam == 1 && ability.Owner.Team == target.Team)
+                    if (v.SourceTeam == 1 && owner.Team == target.Team)
                     {
                         reduceBlock += burst * 100;
                     }
@@ -491,7 +563,7 @@ namespace Ensage.Common.Extensions.Damage
                 }
                 else if (!v.MagicOnly || dmgType == DamageType.Magical)
                 {
-                    if (v.SourceTeam == 1 && ability.Owner.Team == target.Team)
+                    if (v.SourceTeam == 1 && owner.Team == target.Team)
                     {
                         if (!v.MagicOnly)
                         {
@@ -542,32 +614,17 @@ namespace Ensage.Common.Extensions.Damage
 
             if (centaurStampede)
             {
-                var heroes =
-                    Heroes.All.Where(
-                        x =>
-                        x.IsValid && !x.IsIllusion()
-                        && (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur || x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
-                        && x.AghanimState());
-                reduceProc = heroes.Aggregate(reduceProc, (current, hero) => current + 0.7);
-            }
-
-            if (medusaManaShield)
-            {
-                var spell = target.FindSpell("medusa_mana_shield", true);
-                if (spell != null)
+                foreach (var x in Heroes.All)
                 {
-                    var treshold = spell.GetAbilityData("damage_per_mana");
-                    double burst;
-                    if (target.Mana >= tempDmg * .6 / treshold)
+                    if (
+                        !(x.IsValid && !x.IsIllusion()
+                          && (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur
+                              || x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick) && x.AghanimState()))
                     {
-                        burst = 0.6;
-                    }
-                    else
-                    {
-                        burst = target.Mana * treshold / tempDmg;
+                        continue;
                     }
 
-                    manaShield = burst;
+                    reduceProc = reduceProc + 0.7;
                 }
             }
 
@@ -583,7 +640,7 @@ namespace Ensage.Common.Extensions.Damage
                         baseAmp = baseAmp + .1;
                     }
 
-                    var distance = target.Distance2D(spell.Owner);
+                    var distance = target.Distance2D(owner);
                     if (distance <= 200)
                     {
                         amp += baseAmp + 0.15;
@@ -612,8 +669,9 @@ namespace Ensage.Common.Extensions.Damage
             var bloodseekerBloodrage = false;
             var silverEdge = false;
 
-            foreach (var name in sourceModifiers.Select(modifier => modifier.Name))
+            foreach (var modifier in sourceModifiers)
             {
+                var name = modifier.Name;
                 if (name == "modifier_bloodseeker_bloodrage")
                 {
                     bloodseekerBloodrage = true;
@@ -651,6 +709,26 @@ namespace Ensage.Common.Extensions.Damage
                 {
                     var treshold = spell.GetAbilityData("kill_pct") / 100;
                     aa = Math.Floor(treshold / target.MaximumHealth);
+                }
+            }
+
+            if (medusaManaShield)
+            {
+                var spell = target.FindSpell("medusa_mana_shield", true);
+                if (spell != null)
+                {
+                    var treshold = spell.GetAbilityData("damage_per_mana");
+                    double burst;
+                    if (target.Mana >= tempDmg * .6 / treshold)
+                    {
+                        burst = 0.6;
+                    }
+                    else
+                    {
+                        burst = target.Mana * treshold / tempDmg;
+                    }
+
+                    manaShield = burst;
                 }
             }
 
@@ -709,6 +787,16 @@ namespace Ensage.Common.Extensions.Damage
             }
 
             return (float)Math.Max(tempDmg, 0);
+        }
+
+        /// <summary>
+        ///     The init.
+        /// </summary>
+        public static void Init()
+        {
+            modifierSleeper = new MultiSleeper();
+            modifierDictionary = new Dictionary<string, bool>();
+            doubleDictionary = new Dictionary<uint, double>();
         }
 
         /// <summary>

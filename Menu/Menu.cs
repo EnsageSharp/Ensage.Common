@@ -192,11 +192,6 @@ namespace Ensage.Common.Menu
         #region Public Properties
 
         /// <summary>
-        /// Gets or sets the texture.
-        /// </summary>
-        public DotaTexture Texture { get; set; }
-
-        /// <summary>
         ///     The color.
         /// </summary>
         public Color Color { get; set; }
@@ -292,6 +287,11 @@ namespace Ensage.Common.Menu
         ///     The style.
         /// </summary>
         public FontStyle Style { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the texture.
+        /// </summary>
+        public DotaTexture Texture { get; set; }
 
         /// <summary>
         ///     The texture name.
@@ -680,7 +680,7 @@ namespace Ensage.Common.Menu
             }
 
             this.InitMenuState(Assembly.GetCallingAssembly().GetName().Name);
-            
+
             DelayAction.Add(2000, this.SetHeroTogglers);
             var bonus = 0f;
             if (this.TextureName != null)
@@ -1047,11 +1047,12 @@ namespace Ensage.Common.Menu
             {
                 if (cursorPos.X - MenuSettings.BasePosition.X <= MenuSettings.MenuWidth + this.Height + 4)
                 {
-                    var n = ((cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight);
+                    var n = (cursorPos.Y - MenuSettings.BasePosition.Y) / MenuSettings.MenuItemHeight;
                     if (n < 0)
                     {
                         return;
                     }
+
                     n = (int)n;
                     if (this.MenuCount != n)
                     {
@@ -1076,8 +1077,13 @@ namespace Ensage.Common.Menu
             if (!this.IsRootMenu && this.Parent != null)
             {
                 // Close all the submenus in the level 
-                foreach (var child in this.Parent.Children.Where(child => child.Name != this.Name))
+                foreach (var child in this.Parent.Children)
                 {
+                    if (child.Name == this.Name)
+                    {
+                        continue;
+                    }
+
                     foreach (var schild in child.Children)
                     {
                         schild.Visible = false;

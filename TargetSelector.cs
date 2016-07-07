@@ -41,16 +41,19 @@ namespace Ensage.Common
         public static Hero BestAutoAttackTarget(Unit source, float bonusRange = 0)
         {
             var attackRange = source.GetAttackRange();
-            var enemyHeroes =
-                Heroes.All.Where(
-                    x =>
-                    x.IsValid && x.Team != source.Team && x.IsAlive && x.IsVisible
-                    && x.Distance2D(source) <= attackRange + x.HullRadius + bonusRange + source.HullRadius + 50);
             var aaDmg = source.MinimumDamage + source.BonusDamage;
             Hero bestTarget = null;
             var lastHitsToKill = 0f;
-            foreach (var enemyHero in enemyHeroes)
+            foreach (var enemyHero in Heroes.All)
             {
+                if (
+                    !(enemyHero.IsValid && enemyHero.Team != source.Team && enemyHero.IsAlive && enemyHero.IsVisible
+                      && enemyHero.Distance2D(source)
+                      <= attackRange + enemyHero.HullRadius + bonusRange + source.HullRadius + 50))
+                {
+                    continue;
+                }
+
                 var takenDmg = enemyHero.DamageTaken(aaDmg, DamageType.Physical, source, false);
                 var hitsToKill = enemyHero.Health / takenDmg;
                 if (bestTarget != null && !(lastHitsToKill > hitsToKill))
@@ -80,17 +83,19 @@ namespace Ensage.Common
         public static Hero ClosestToMouse(Unit source, float range = 1000)
         {
             var mousePosition = Game.MousePosition;
-            var enemyHeroes =
-                Heroes.All.Where(
-                    x =>
-                    x.IsValid && x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
-                    && x.Distance2D(mousePosition) <= range);
             Hero closestHero = null;
-            foreach (var enemyHero in enemyHeroes)
+            foreach (var x in Heroes.All)
             {
-                if (closestHero == null || closestHero.Distance2D(mousePosition) > enemyHero.Distance2D(mousePosition))
+                if (
+                    !(x.IsValid && x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
+                      && x.Distance2D(mousePosition) <= range))
                 {
-                    closestHero = enemyHero;
+                    continue;
+                }
+
+                if (closestHero == null || closestHero.Distance2D(mousePosition) > x.Distance2D(mousePosition))
+                {
+                    closestHero = x;
                 }
             }
 
@@ -127,9 +132,7 @@ namespace Ensage.Common
                             || x.ClassID == ClassID.CDOTA_BaseNPC_Building
                             || x.ClassID == ClassID.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
                         && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
-                        .OrderBy(creep => creep.Health)
-                        .DefaultIfEmpty(null)
-                        .FirstOrDefault();
+                        .MinOrDefault(creep => creep.Health);
                 return lowestHp;
             }
             catch (Exception)

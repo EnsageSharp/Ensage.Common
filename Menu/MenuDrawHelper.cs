@@ -317,11 +317,11 @@ namespace Ensage.Common.Menu
             Drawing.DrawRect(
                 new Vector2(position.X, position.Y), 
                 new Vector2(textSize.X + 8, item.Height), 
-                new SharpDX.Color(45, 45, 45, (int)((add / 2) * (add / 2) * (add / 2) * (add / 2) * 40)));
+                new SharpDX.Color(45, 45, 45, (int)(add / 2 * (add / 2) * (add / 2) * (add / 2) * 40)));
             Drawing.DrawRect(
-                new Vector2(position.X - 1, position.Y),
-                new Vector2(textSize.X + 10, item.Height),
-                new SharpDX.Color(0, 0, 0, (int)((add / 2) * (add / 2) * (add / 2) * (add / 2) * 40)),
+                new Vector2(position.X - 1, position.Y), 
+                new Vector2(textSize.X + 10, item.Height), 
+                new SharpDX.Color(0, 0, 0, (int)(add / 2 * (add / 2) * (add / 2) * (add / 2) * 40)), 
                 true);
 
             var textPos = position + new Vector2(4, (float)(item.Height * 0.5 - textSize.Y * 0.5));

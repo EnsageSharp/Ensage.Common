@@ -17,6 +17,7 @@ namespace Ensage.Common.Extensions
     using System.Collections.Generic;
 
     using Ensage.Common.Objects;
+    using Ensage.Common.Objects.UtilityObjects;
 
     using global::SharpDX;
 
@@ -31,6 +32,16 @@ namespace Ensage.Common.Extensions
         ///     The turn rate dictionary.
         /// </summary>
         private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
+
+        /// <summary>
+        ///     The rotation dictionary.
+        /// </summary>
+        private static Dictionary<uint, float> rotationDictionary = new Dictionary<uint, float>();
+
+        /// <summary>
+        ///     The sleeper.
+        /// </summary>
+        private static MultiSleeper sleeper = new MultiSleeper();
 
         #endregion
 
@@ -154,9 +165,48 @@ namespace Ensage.Common.Extensions
         {
             var first = unit.Position;
             var second = position;
-            var xAngle =
-                Utils.RadianToDegree(
-                    Math.Atan(Math.Abs(position.X - unit.Position.X) / Math.Abs(position.Y - unit.Position.Y)));
+            var xAngle = Utils.RadianToDegree(
+                Math.Atan(Math.Abs(position.X - first.X) / Math.Abs(position.Y - first.Y)));
+            if (first.X <= second.X && first.Y >= second.Y)
+            {
+                return (float)(90 - xAngle);
+            }
+
+            if (first.X >= second.X && first.Y >= second.Y)
+            {
+                return (float)(xAngle + 90);
+            }
+
+            if (first.X >= second.X && first.Y <= second.Y)
+            {
+                return (float)(270 - xAngle);
+            }
+
+            if (first.X <= second.X && first.Y <= second.Y)
+            {
+                return (float)(xAngle + 270);
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        ///     The find angle for turn time.
+        /// </summary>
+        /// <param name="first">
+        ///     The first.
+        /// </param>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="float" />.
+        /// </returns>
+        public static float FindAngleForTurnTime(this Vector3 first, Vector3 position)
+        {
+            var second = position;
+            var xAngle = Utils.RadianToDegree(
+                Math.Atan(Math.Abs(position.X - first.X) / Math.Abs(position.Y - first.Y)));
             if (first.X <= second.X && first.Y >= second.Y)
             {
                 return (float)(90 - xAngle);
@@ -191,7 +241,16 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static float FindAngleR(this Entity entity)
         {
-            return (float)(entity.RotationRad < 0 ? Math.Abs(entity.RotationRad) : 2 * Math.PI - entity.RotationRad);
+            var handle = entity.Handle;
+            var sleeping = sleeper.Sleeping(handle);
+            var rotationRad = sleeping ? rotationDictionary[handle] : entity.RotationRad;
+            if (!sleeping)
+            {
+                rotationDictionary[handle] = rotationRad;
+                sleeper.Sleep(handle, 5);
+            }
+
+            return (float)(rotationRad < 0 ? Math.Abs(rotationRad) : 2 * Math.PI - rotationRad);
         }
 
         /// <summary>
@@ -211,11 +270,14 @@ namespace Ensage.Common.Extensions
             try
             {
                 double turnRate;
-                if (TurnrateDictionary.TryGetValue(entity.Handle, out turnRate))
+                var handle = entity.Handle;
+                var entityPosition = entity.NetworkPosition;
+                if (TurnrateDictionary.TryGetValue(handle, out turnRate))
                 {
                     return
                         Math.Max(
-                            Math.Abs(FindAngleR(entity) - Utils.DegreeToRadian(entity.FindAngleForTurnTime(position)))
+                            Math.Abs(
+                                FindAngleR(entity) - Utils.DegreeToRadian(entityPosition.FindAngleForTurnTime(position)))
                             - 0.69, 
                             0) / (turnRate * (1 / 0.03));
                 }
@@ -224,10 +286,11 @@ namespace Ensage.Common.Extensions
                                ? Game.FindKeyValues(entity.StoredName() + "/MovementTurnRate", KeyValueSource.Hero)
                                      .FloatValue
                                : 0.5;
-                TurnrateDictionary.Add(entity.Handle, turnRate);
+                TurnrateDictionary.Add(handle, turnRate);
                 return
                     Math.Max(
-                        Math.Abs(FindAngleR(entity) - Utils.DegreeToRadian(entity.FindAngleForTurnTime(position)))
+                        Math.Abs(
+                            FindAngleR(entity) - Utils.DegreeToRadian(entityPosition.FindAngleForTurnTime(position)))
                         - 0.69, 
                         0) / (turnRate * (1 / 0.03));
             }
@@ -258,7 +321,16 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static double GetTurnTime(this Entity entity, Entity entity2)
         {
-            return entity.GetTurnTime(entity2.Position);
+            return entity.GetTurnTime(entity2.NetworkPosition);
+        }
+
+        /// <summary>
+        ///     The init.
+        /// </summary>
+        public static void Init()
+        {
+            sleeper = new MultiSleeper();
+            rotationDictionary = new Dictionary<uint, float>();
         }
 
         /// <summary>

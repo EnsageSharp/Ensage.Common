@@ -103,9 +103,19 @@ namespace Ensage.Common
                                                                                  };
 
         /// <summary>
+        ///     The cached time.
+        /// </summary>
+        private static float cachedTime;
+
+        /// <summary>
         ///     The last stun ability.
         /// </summary>
         private static string lastStunAbility;
+
+        /// <summary>
+        ///     The last tick.
+        /// </summary>
+        private static float lastTick;
 
         #endregion
 
@@ -184,7 +194,21 @@ namespace Ensage.Common
         /// <summary>
         ///     Gets the tick count.
         /// </summary>
-        public static float TickCount => Game.RawGameTime * 1000;
+        public static float TickCount
+        {
+            get
+            {
+                var tickCount = Environment.TickCount;
+                if (tickCount < lastTick)
+                {
+                    return cachedTime;
+                }
+
+                cachedTime = Game.RawGameTime * 1000;
+                lastTick = tickCount + 1;
+                return cachedTime;
+            }
+        }
 
         #endregion
 
@@ -259,23 +283,38 @@ namespace Ensage.Common
         /// </returns>
         public static float DisableDuration(Unit unit, string except = null)
         {
-            var disableModifier =
-                unit.Modifiers.Where(
-                    modifier =>
-                    (modifier.IsStunDebuff || DisableModifiers.Contains(modifier.Name))
-                    && (except == null || modifier.Name != except)).MaxOrDefault(modifier => modifier.RemainingTime);
+            Modifier disableModifier = null;
+            var maxTime = 0f;
+            foreach (var modifier in unit.Modifiers)
+            {
+                if (
+                    !((modifier.IsStunDebuff || DisableModifiers.Contains(modifier.Name))
+                      && (except == null || modifier.Name != except)))
+                {
+                    continue;
+                }
+
+                var remainingTime = modifier.RemainingTime;
+                if (!(remainingTime > maxTime))
+                {
+                    continue;
+                }
+
+                disableModifier = modifier;
+                maxTime = remainingTime;
+            }
+
             if (disableModifier == null)
             {
                 return 0;
             }
 
-            var remainingTime = disableModifier.RemainingTime;
             if (disableModifier.Name == "modifier_eul_cyclone" || disableModifier.Name == "modifier_invoker_tornado")
             {
-                remainingTime += 0.07f;
+                maxTime += 0.07f;
             }
 
-            return remainingTime;
+            return maxTime;
         }
 
         /// <summary>
@@ -418,7 +457,7 @@ namespace Ensage.Common
         public static void Sleep(double duration, string name)
         {
             double dur;
-            var tick = Environment.TickCount & int.MaxValue;
+            var tick = TickCount;
             if (!Sleeps.TryGetValue(name, out dur) || dur < tick + duration)
             {
                 Sleeps[name] = tick + duration;
@@ -437,7 +476,7 @@ namespace Ensage.Common
         public static bool SleepCheck(string id)
         {
             double time;
-            return !Sleeps.TryGetValue(id, out time) || (Environment.TickCount & int.MaxValue) > time;
+            return !Sleeps.TryGetValue(id, out time) || TickCount > time;
         }
 
         /// <summary>

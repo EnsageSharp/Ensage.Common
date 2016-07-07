@@ -14,7 +14,6 @@
 namespace Ensage.Common.Menu
 {
     using System;
-    using System.Linq;
 
     using Ensage.Common.Objects;
 
@@ -27,138 +26,6 @@ namespace Ensage.Common.Menu
     internal class MenuUtils
     {
         #region Public Methods and Operators
-
-        /// <summary>
-        /// The main menu draw.
-        /// </summary>
-        /// <param name="menu">
-        /// The menu.
-        /// </param>
-        /// <param name="add">
-        /// The add.
-        /// </param>
-        internal static void MainMenuDraw(Menu menu, double add)
-        {
-            if (!menu.IsRootMenu)
-            {
-                const string ABgName = "menubg1.vmat_c";
-                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
-                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), abg);
-                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), new Color(20, 20, 20, 190));
-                Drawing.DrawRect(
-                    menu.Position,
-                    new Vector2(menu.Height / 14, menu.Height),
-                    menu.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
-            }
-            else
-            {
-                const string ABgName = "menubg1.vmat_c";
-                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
-                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), abg);
-                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), new Color(20, 20, 20, 230));
-                Drawing.DrawRect(
-                    menu.Position - new Vector2(menu.Height / 7, 0),
-                    new Vector2(menu.Height / 7, menu.Height),
-                    menu.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
-            }
-
-            var textSize = Drawing.MeasureText(
-                MultiLanguage._(menu.DisplayName),
-                "Arial",
-                new Vector2((float)(menu.Height * 0.48), 100),
-                FontFlags.AntiAlias);
-            var textPos = menu.Position + new Vector2(5, (float)(menu.Height * 0.5 - textSize.Y * 0.5));
-            var bonusWidth = 0;
-            if (menu.TextureName != null)
-            {
-                var tName = menu.TextureName;
-                if (tName.Contains("npc_dota_hero"))
-                {
-                    Drawing.DrawRect(
-                        menu.Position + new Vector2(3, 3),
-                        new Vector2((float)(menu.Height * 1.4), menu.Height - 6),
-                        Textures.GetHeroTexture(tName));
-                    Drawing.DrawRect(
-                        menu.Position + new Vector2(2, 2),
-                        new Vector2((float)(menu.Height * 1.4) + 2, menu.Height - 4),
-                        Color.Black,
-                        true);
-                    bonusWidth = (int)(menu.Height * 1.44);
-                }
-                else if (tName.Contains("item_"))
-                {
-                    Drawing.DrawRect(
-                        menu.Position + new Vector2(3, 3),
-                        new Vector2(menu.Height + (float)(menu.Height * 0.16), menu.Height - 6),
-                        Textures.GetItemTexture(tName));
-                    Drawing.DrawRect(
-                        menu.Position + new Vector2(2, 2),
-                        new Vector2(menu.Height - 4, menu.Height - 4),
-                        Color.Black,
-                        true);
-                    bonusWidth = (int)(menu.Height * 0.8);
-                }
-                else
-                {
-                    Drawing.DrawRect(
-                        menu.Position + new Vector2(3, 3),
-                        new Vector2(menu.Height - 6, menu.Height - 6),
-                        Textures.GetSpellTexture(tName));
-                    Drawing.DrawRect(
-                        menu.Position + new Vector2(2, 2),
-                        new Vector2(menu.Height - 4, menu.Height - 4),
-                        Color.Black,
-                        true);
-                    bonusWidth = (int)(menu.Height * 0.85);
-                }
-            }
-
-            if ((menu.TextureName == null || menu.ShowTextWithTexture ? textSize.X : 0) + bonusWidth
-                < (float)(menu.Width - menu.Height * 0.3))
-            {
-                var arrowname = menu.IsOpen ? "arrowrighthover.vmat_c" : "arrowright.vmat_c";
-                var arrow = Textures.GetTexture("materials/ensage_ui/menu/" + arrowname);
-                var size = new Vector2((float)(menu.Height * 0.53), (float)(menu.Height * 0.53));
-                var add1 = menu.IsOpen ? menu.Height * 0.1 : add;
-                Drawing.DrawRect(
-                    menu.Position
-                    + new Vector2(
-                          (float)(menu.Width - menu.Height * 0.5 + add1 - size.X * 0.6),
-                          (float)(menu.Height * 0.5 - size.Y * 0.5)),
-                    size,
-                    arrow);
-            }
-
-            Drawing.DrawRect(
-                new Vector2(menu.Position.X, menu.Position.Y),
-                new Vector2(menu.Width, menu.Height),
-                menu.IsOpen ? new Color(70, 70, 70, (int)(25 + add * 5)) : new Color(60, 60, 60, (int)(5 + add * 7)));
-            if (menu.TextureName == null || menu.ShowTextWithTexture)
-            {
-                Drawing.DrawText(
-                    MultiLanguage._(menu.DisplayName),
-                    textPos + new Vector2(bonusWidth, 0),
-                    new Vector2((float)(menu.Height * 0.48), 100),
-                    menu.IsOpen ? menu.Color + new Color(50, 50, 50) : menu.Color,
-                    FontFlags.AntiAlias);
-            }
-
-            // Draw the menu submenus
-            foreach (var child in menu.Children.Where(child => child.Visible))
-            {
-                child.Drawing_OnDraw(null);
-            }
-
-            // Draw the items
-            for (var i = menu.Items.Count - 1; i >= 0; i--)
-            {
-                var item = menu.Items[i];
-                if (item.Visible)
-                {
-                    item.Drawing_OnDraw();
-                }
-            }
-        }
 
         /// <summary>
         ///     Draws a Box
@@ -353,6 +220,147 @@ namespace Ensage.Common.Menu
                 }
 
                 fDegree += (float)(Math.PI * 2) / 4; // quarter circle offset 
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The main menu draw.
+        /// </summary>
+        /// <param name="menu">
+        ///     The menu.
+        /// </param>
+        /// <param name="add">
+        ///     The add.
+        /// </param>
+        internal static void MainMenuDraw(Menu menu, double add)
+        {
+            if (!menu.IsRootMenu)
+            {
+                const string ABgName = "menubg1.vmat_c";
+                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
+                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), abg);
+                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), new Color(20, 20, 20, 190));
+                Drawing.DrawRect(
+                    menu.Position, 
+                    new Vector2(menu.Height / 14, menu.Height), 
+                    menu.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
+            }
+            else
+            {
+                const string ABgName = "menubg1.vmat_c";
+                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
+                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), abg);
+                Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), new Color(20, 20, 20, 230));
+                Drawing.DrawRect(
+                    menu.Position - new Vector2(menu.Height / 7, 0), 
+                    new Vector2(menu.Height / 7, menu.Height), 
+                    menu.IsOpen ? new Color(220, 120, 20) : new Color(20, 20, 20));
+            }
+
+            var textSize = Drawing.MeasureText(
+                MultiLanguage._(menu.DisplayName), 
+                "Arial", 
+                new Vector2((float)(menu.Height * 0.48), 100), 
+                FontFlags.AntiAlias);
+            var textPos = menu.Position + new Vector2(5, (float)(menu.Height * 0.5 - textSize.Y * 0.5));
+            var bonusWidth = 0;
+            if (menu.TextureName != null)
+            {
+                var tName = menu.TextureName;
+                if (tName.Contains("npc_dota_hero"))
+                {
+                    Drawing.DrawRect(
+                        menu.Position + new Vector2(3, 3), 
+                        new Vector2((float)(menu.Height * 1.4), menu.Height - 6), 
+                        Textures.GetHeroTexture(tName));
+                    Drawing.DrawRect(
+                        menu.Position + new Vector2(2, 2), 
+                        new Vector2((float)(menu.Height * 1.4) + 2, menu.Height - 4), 
+                        Color.Black, 
+                        true);
+                    bonusWidth = (int)(menu.Height * 1.44);
+                }
+                else if (tName.Contains("item_"))
+                {
+                    Drawing.DrawRect(
+                        menu.Position + new Vector2(3, 3), 
+                        new Vector2(menu.Height + (float)(menu.Height * 0.16), menu.Height - 6), 
+                        Textures.GetItemTexture(tName));
+                    Drawing.DrawRect(
+                        menu.Position + new Vector2(2, 2), 
+                        new Vector2(menu.Height - 4, menu.Height - 4), 
+                        Color.Black, 
+                        true);
+                    bonusWidth = (int)(menu.Height * 0.8);
+                }
+                else
+                {
+                    Drawing.DrawRect(
+                        menu.Position + new Vector2(3, 3), 
+                        new Vector2(menu.Height - 6, menu.Height - 6), 
+                        Textures.GetSpellTexture(tName));
+                    Drawing.DrawRect(
+                        menu.Position + new Vector2(2, 2), 
+                        new Vector2(menu.Height - 4, menu.Height - 4), 
+                        Color.Black, 
+                        true);
+                    bonusWidth = (int)(menu.Height * 0.85);
+                }
+            }
+
+            if ((menu.TextureName == null || menu.ShowTextWithTexture ? textSize.X : 0) + bonusWidth
+                < (float)(menu.Width - menu.Height * 0.3))
+            {
+                var arrowname = menu.IsOpen ? "arrowrighthover.vmat_c" : "arrowright.vmat_c";
+                var arrow = Textures.GetTexture("materials/ensage_ui/menu/" + arrowname);
+                var size = new Vector2((float)(menu.Height * 0.53), (float)(menu.Height * 0.53));
+                var add1 = menu.IsOpen ? menu.Height * 0.1 : add;
+                Drawing.DrawRect(
+                    menu.Position
+                    + new Vector2(
+                          (float)(menu.Width - menu.Height * 0.5 + add1 - size.X * 0.6), 
+                          (float)(menu.Height * 0.5 - size.Y * 0.5)), 
+                    size, 
+                    arrow);
+            }
+
+            Drawing.DrawRect(
+                new Vector2(menu.Position.X, menu.Position.Y), 
+                new Vector2(menu.Width, menu.Height), 
+                menu.IsOpen ? new Color(70, 70, 70, (int)(25 + add * 5)) : new Color(60, 60, 60, (int)(5 + add * 7)));
+            if (menu.TextureName == null || menu.ShowTextWithTexture)
+            {
+                Drawing.DrawText(
+                    MultiLanguage._(menu.DisplayName), 
+                    textPos + new Vector2(bonusWidth, 0), 
+                    new Vector2((float)(menu.Height * 0.48), 100), 
+                    menu.IsOpen ? menu.Color + new Color(50, 50, 50) : menu.Color, 
+                    FontFlags.AntiAlias);
+            }
+
+            // Draw the menu submenus
+            foreach (var child in menu.Children)
+            {
+                if (!child.Visible)
+                {
+                    continue;
+                }
+
+                child.Drawing_OnDraw(null);
+            }
+
+            // Draw the items
+            for (var i = menu.Items.Count - 1; i >= 0; i--)
+            {
+                var item = menu.Items[i];
+                if (item.Visible)
+                {
+                    item.Drawing_OnDraw();
+                }
             }
         }
 

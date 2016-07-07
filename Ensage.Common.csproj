@@ -77,6 +77,7 @@
     <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\Damage\DamageBlocks.cs" />
     <Compile Include="Extensions\Damage\Calculations.cs" />
+    <Compile Include="Extensions\Damage\DamageTaken.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Damage\ExternalDmgAmps.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Objects\Trees.cs" />
     <Compile Include="Objects\UtilityObjects\AttackAnimationTracker.cs" />
     <Compile Include="Objects\UtilityObjects\Attacker.cs" />
+    <Compile Include="Objects\UtilityObjects\MultiSleeper.cs" />
     <Compile Include="Objects\UtilityObjects\Orbwalker.cs" />
     <Compile Include="Objects\UtilityObjects\Sleeper.cs" />
     <Compile Include="Orbwalking.cs" />

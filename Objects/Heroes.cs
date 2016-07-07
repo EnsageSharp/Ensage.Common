@@ -138,8 +138,13 @@ namespace Ensage.Common.Objects
             var herolist = new List<Hero>(All);
             var herolistRadiant = new List<Hero>(Radiant);
             var herolistDire = new List<Hero>(Dire);
-            foreach (var hero in tempList.Where(x => x != null && x.IsValid))
+            foreach (var hero in tempList)
             {
+                if (!(hero != null && hero.IsValid))
+                {
+                    continue;
+                }
+
                 if (!All.Contains(hero))
                 {
                     herolist.Add(hero);

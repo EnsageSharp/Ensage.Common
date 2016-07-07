@@ -47,7 +47,6 @@ namespace Ensage.Common.Menu
         /// </summary>
         private static int itemCount;
 
-
         #endregion
 
         #region Fields
@@ -1531,14 +1530,16 @@ namespace Ensage.Common.Menu
             {
                 var dict = this.GetValue<HeroToggler>().Dictionary;
                 var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
-                var heroes =
-                    Heroes.GetByTeam(ObjectManager.LocalHero.GetEnemyTeam())
-                        .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
-                        .ToList();
+                var heroes = Heroes.GetByTeam(ObjectManager.LocalHero.GetEnemyTeam());
 
                 foreach (var x in
                     heroes)
                 {
+                    if (!(x != null && x.IsValid && !dict.ContainsKey(x.StoredName())))
+                    {
+                        continue;
+                    }
+
                     this.GetValue<HeroToggler>()
                         .Add(
                             x.StoredName(), 
@@ -1558,13 +1559,15 @@ namespace Ensage.Common.Menu
             {
                 var dict = this.GetValue<HeroToggler>().Dictionary;
                 var sdict = this.GetValue<HeroToggler>().SValuesDictionary;
-                var heroes =
-                    Heroes.GetByTeam(ObjectManager.LocalHero.Team)
-                        .Where(x => x != null && x.IsValid && !dict.ContainsKey(x.StoredName()))
-                        .ToList();
+                var heroes = Heroes.GetByTeam(ObjectManager.LocalHero.Team);
 
                 foreach (var x in heroes)
                 {
+                    if (!(x != null && x.IsValid && !dict.ContainsKey(x.StoredName())))
+                    {
+                        continue;
+                    }
+
                     this.GetValue<HeroToggler>()
                         .Add(
                             x.StoredName(), 

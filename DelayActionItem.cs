@@ -31,7 +31,7 @@ namespace Ensage.Common
         /// <param name="token">The cancelation token.</param>
         public DelayActionItem(int time, Action func, CancellationToken token)
         {
-            this.Time = time + (Environment.TickCount & int.MaxValue);
+            this.Time = (int)(time + Utils.TickCount);
             this.Function = func;
             this.Token = token;
         }

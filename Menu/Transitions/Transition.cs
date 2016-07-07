@@ -84,7 +84,7 @@ namespace Ensage.Common.Menu.Transitions
         {
             get
             {
-                return this.Time < this.StartTime + (this.Duration * 1000);
+                return this.Time < this.StartTime + this.Duration * 1000;
             }
         }
 

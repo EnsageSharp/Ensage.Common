@@ -280,8 +280,13 @@ namespace Ensage.Common.Menu.Draw
 
             var dictionary = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
             var count = 0u;
-            foreach (var u in dictionary.Where(x => !x.Key.Enabled))
+            foreach (var u in dictionary)
             {
+                if (u.Key.Enabled)
+                {
+                    continue;
+                }
+
                 u.Key.Priority = priorityChanger.GetPriority(u.Key.Name);
                 u.Key.DictionaryPosition = count;
                 this.HandlePriorityIcon(u.Key, mousePosition, count, move, menuItem);
@@ -300,10 +305,9 @@ namespace Ensage.Common.Menu.Draw
                 move += -1;
             }
 
-            var enabledIcons =
-                dictionary.OrderBy(x => priorityChanger.GetPriority(x.Key.Name)).Where(u => u.Key.Enabled).ToList();
+            var enabledIcons = dictionary.OrderBy(x => priorityChanger.GetPriority(x.Key.Name));
 
-            if (count > 0 && enabledIcons.Any())
+            if (count > 0 && enabledIcons.Any(u => u.Key.Enabled))
             {
                 Drawing.DrawRect(
                     this.BasePosition - new Vector2(move - this.IconSize.X / 2 + this.Height / 10, 0), 
@@ -319,6 +323,11 @@ namespace Ensage.Common.Menu.Draw
 
             foreach (var u in enabledIcons)
             {
+                if (!u.Key.Enabled)
+                {
+                    continue;
+                }
+
                 u.Key.Priority = priorityChanger.GetPriority(u.Key.Name);
                 u.Key.DictionaryPosition = count;
                 count++;
@@ -365,8 +374,13 @@ namespace Ensage.Common.Menu.Draw
         /// </param>
         public void LeftButtonDown(Vector2 mousePosition)
         {
-            foreach (var u in this.PriorityIconsDictionary.Where(u => u.Key.Hovered))
+            foreach (var u in this.PriorityIconsDictionary)
             {
+                if (!u.Key.Hovered)
+                {
+                    continue;
+                }
+
                 if (this.usingAbilityToggler)
                 {
                     this.doubleClickSleeper.Sleep(200);
@@ -491,8 +505,13 @@ namespace Ensage.Common.Menu.Draw
         {
             var count = 0u;
 
-            foreach (var s in newList.Where(x => !this.itemList.Contains(x)))
+            foreach (var s in newList)
             {
+                if (this.itemList.Contains(s))
+                {
+                    continue;
+                }
+
                 this.PriorityIconsDictionary.Add(new PriorityIcon(s, this.Height, true), count);
                 menuItem.GetValue<PriorityChanger>().Dictionary[s] = count;
                 this.itemList.Add(s);
@@ -507,15 +526,25 @@ namespace Ensage.Common.Menu.Draw
         {
             var count = 0u;
             var dictionary = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
-            foreach (var u in dictionary.Where(x => !x.Key.Enabled))
+            foreach (var u in dictionary)
             {
+                if (u.Key.Enabled)
+                {
+                    continue;
+                }
+
                 u.Key.DictionaryPosition = count;
                 count++;
             }
 
             var count2 = 0u;
-            foreach (var u in dictionary.OrderBy(x => x.Value).Where(x => x.Key.Enabled))
+            foreach (var u in dictionary.OrderBy(x => x.Value))
             {
+                if (!u.Key.Enabled)
+                {
+                    continue;
+                }
+
                 u.Key.DictionaryPosition = count;
                 this.PriorityIconsDictionary[u.Key] = count2;
                 count2++;
@@ -550,9 +579,13 @@ namespace Ensage.Common.Menu.Draw
             }
 
             var dict = new Dictionary<PriorityIcon, uint>(this.PriorityIconsDictionary);
-            foreach (var u2 in
-                dict.Where(x => Utils.SleepCheck(x.Key.Name + "DragAndDropChangePriority") && x.Key.Name != icon.Name))
+            foreach (var u2 in dict)
             {
+                if (!(Utils.SleepCheck(u2.Key.Name + "DragAndDropChangePriority") && u2.Key.Name != icon.Name))
+                {
+                    continue;
+                }
+
                 if ((u2.Key.DictionaryPosition == icon.DictionaryPosition - 1
                      || (this.usingAbilityToggler && !u2.Key.Enabled
                          && u2.Key.DictionaryPosition > icon.DictionaryPosition))
