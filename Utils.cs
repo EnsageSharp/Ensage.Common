@@ -198,7 +198,12 @@ namespace Ensage.Common
         {
             get
             {
-                var tickCount = Environment.TickCount;
+                if (!Game.IsInGame)
+                {
+                    return Environment.TickCount & int.MaxValue;
+                }
+
+                var tickCount = Environment.TickCount & int.MaxValue;
                 if (tickCount < lastTick)
                 {
                     return cachedTime;
