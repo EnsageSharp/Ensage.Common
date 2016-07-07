@@ -43,23 +43,23 @@
     <CodeAnalysisRuleSet>Ensage.Common.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ensage, Version=0.0.0.1, Culture=neutral, PublicKeyToken=a41ba14f653257a6, processorArchitecture=AMD64">
+    <Reference Include="Ensage">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\PlaySharp\System\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="EnsageSharp.Sandbox">
       <HintPath>C:\PlaySharp\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json">
       <HintPath>C:\PlaySharp\System\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="SharpDX, Version=2.6.3.0, Culture=neutral, PublicKeyToken=345b829e6e492981, processorArchitecture=MSIL">
+    <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\PlaySharp\System\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct3D9, Version=2.6.3.0, Culture=neutral, PublicKeyToken=345b829e6e492981, processorArchitecture=MSIL">
+    <Reference Include="SharpDX.Direct3D9">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\PlaySharp\System\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
@@ -177,9 +177,6 @@
     <Compile Include="WindowsMessages.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Resources\UnitDatabase.json" />
     <None Include="Resources\AbilityDatabase.json" />
     <None Include="stylecop.json" />
