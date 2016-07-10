@@ -16,19 +16,18 @@ namespace Ensage.Common.Objects.UtilityObjects
     using System.Collections.Generic;
 
     /// <summary>
-    ///     The sleeper.
+    /// The sleeper.
     /// </summary>
     public class MultiSleeper
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MultiSleeper" /> class.
+        /// Initializes a new instance of the <see cref="MultiSleeper"/> class.
         /// </summary>
         public MultiSleeper()
         {
-            this.LastSleepTickDictionary = new Dictionary<string, float>();
-            this.LastSleepTickDictionaryUint = new Dictionary<uint, float>();
+            this.LastSleepTickDictionary = new Dictionary<object, float>();
         }
 
         #endregion
@@ -38,12 +37,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// <summary>
         ///     Gets or sets the last sleep tick dictionary.
         /// </summary>
-        public Dictionary<string, float> LastSleepTickDictionary { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the last sleep tick dictionary uint.
-        /// </summary>
-        public Dictionary<uint, float> LastSleepTickDictionaryUint { get; set; }
+        public Dictionary<object, float> LastSleepTickDictionary { get; set; }
 
         #endregion
 
@@ -55,7 +49,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// <param name="id">
         ///     The id.
         /// </param>
-        public void Reset(string id)
+        public void Reset(object id)
         {
             if (!this.LastSleepTickDictionary.ContainsKey(id))
             {
@@ -66,60 +60,35 @@ namespace Ensage.Common.Objects.UtilityObjects
         }
 
         /// <summary>
-        ///     The reset.
-        /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        public void Reset(uint id)
-        {
-            if (!this.LastSleepTickDictionaryUint.ContainsKey(id))
-            {
-                return;
-            }
-
-            this.LastSleepTickDictionaryUint[id] = 0;
-        }
-
-        /// <summary>
-        ///     The sleep.
+        /// The sleep.
         /// </summary>
         /// <param name="duration">
-        ///     The duration.
+        /// The duration.
         /// </param>
         /// <param name="id">
-        ///     The id.
+        /// The id.
         /// </param>
-        public void Sleep(float duration, string id)
+        /// <param name="extendCurrentSleep">
+        /// The extend current sleep.
+        /// </param>
+        public void Sleep(float duration, object id, bool extendCurrentSleep = false)
         {
             if (!this.LastSleepTickDictionary.ContainsKey(id))
             {
-                this.LastSleepTickDictionary.Add(id, 0);
+                this.LastSleepTickDictionary.Add(id, Utils.TickCount + duration);
+                return;
+            }
+
+            if (extendCurrentSleep && this.LastSleepTickDictionary[id] > Utils.TickCount)
+            {
+                this.LastSleepTickDictionary[id] += duration;
+                return;
             }
 
             this.LastSleepTickDictionary[id] = Utils.TickCount + duration;
         }
 
         /// <summary>
-        ///     The sleep.
-        /// </summary>
-        /// <param name="duration">
-        ///     The duration.
-        /// </param>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        public void Sleep(float duration, uint id)
-        {
-            if (!this.LastSleepTickDictionaryUint.ContainsKey(id))
-            {
-                this.LastSleepTickDictionaryUint.Add(id, 0);
-            }
-
-            this.LastSleepTickDictionaryUint[id] = Utils.TickCount + duration;
-        }
-
-        /// <summary>
         ///     The sleeping.
         /// </summary>
         /// <param name="id">
@@ -128,26 +97,10 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// <returns>
         ///     The <see cref="bool" />.
         /// </returns>
-        public bool Sleeping(string id)
+        public bool Sleeping(object id)
         {
             float lastSleepTick;
             return this.LastSleepTickDictionary.TryGetValue(id, out lastSleepTick) && Utils.TickCount < lastSleepTick;
-        }
-
-        /// <summary>
-        ///     The sleeping.
-        /// </summary>
-        /// <param name="id">
-        ///     The id.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />.
-        /// </returns>
-        public bool Sleeping(uint id)
-        {
-            float lastSleepTick;
-            return this.LastSleepTickDictionaryUint.TryGetValue(id, out lastSleepTick)
-                   && Utils.TickCount < lastSleepTick;
         }
 
         #endregion
