@@ -49,7 +49,9 @@ namespace Ensage.Common
                 if (
                     !(enemyHero.IsValid && enemyHero.Team != source.Team && enemyHero.IsAlive && enemyHero.IsVisible
                       && enemyHero.Distance2D(source)
-                      <= attackRange + enemyHero.HullRadius + bonusRange + source.HullRadius + 50))
+                      <= attackRange + enemyHero.HullRadius + bonusRange + source.HullRadius + 50
+                      && !enemyHero.IsInvul()
+                      && !enemyHero.HasModifier("modifier_skeleton_king_reincarnation_scepter_active")))
                 {
                     continue;
                 }
@@ -88,7 +90,8 @@ namespace Ensage.Common
             {
                 if (
                     !(x.IsValid && x.Team != source.Team && !x.IsIllusion && x.IsAlive && x.IsVisible
-                      && x.Distance2D(mousePosition) <= range))
+                      && x.Distance2D(mousePosition) <= range
+                      && !x.HasModifier("modifier_skeleton_king_reincarnation_scepter_active")))
                 {
                     continue;
                 }
@@ -159,7 +162,10 @@ namespace Ensage.Common
         {
             return
                 Heroes.GetByTeam(source.GetEnemyTeam())
-                    .Where(hero => hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range)
+                    .Where(
+                        hero =>
+                        hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range
+                        && !hero.IsInvul() && !hero.HasModifier("modifier_skeleton_king_reincarnation_scepter_active"))
                     .MaxOrDefault(hero => hero.Health);
         }
 
