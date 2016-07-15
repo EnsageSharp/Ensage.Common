@@ -14,6 +14,7 @@
 namespace Ensage.Common.Extensions
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     using Ensage.Common.Objects;
@@ -331,6 +332,47 @@ namespace Ensage.Common.Extensions
         public static double ProjectileSpeed(this Hero hero)
         {
             return UnitDatabase.GetProjectileSpeed(hero);
+        }
+
+        /// <summary>
+        /// Returns real name of the hero
+        /// </summary>
+        /// <param name="hero">
+        /// The hero.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public static string GetRealName(this Hero hero)
+        {
+            var classId = hero.ClassID;
+            switch (classId)
+            {
+                case ClassID.CDOTA_Unit_Hero_DoomBringer:
+                    return "Doom";
+                case ClassID.CDOTA_Unit_Hero_Furion:
+                    return "Nature's Prophet";
+                case ClassID.CDOTA_Unit_Hero_Magnataur:
+                    return "Magnus";
+                case ClassID.CDOTA_Unit_Hero_Necrolyte:
+                    return "Necrophos";
+                case ClassID.CDOTA_Unit_Hero_Nevermore:
+                    return "ShadowFiend";
+                case ClassID.CDOTA_Unit_Hero_Obsidian_Destroyer:
+                    return "OutworldDevourer";
+                case ClassID.CDOTA_Unit_Hero_Rattletrap:
+                    return "Clockwerk";
+                case ClassID.CDOTA_Unit_Hero_Shredder:
+                    return "Timbersaw";
+                case ClassID.CDOTA_Unit_Hero_SkeletonKing:
+                    return "WraithKing";
+                case ClassID.CDOTA_Unit_Hero_Wisp:
+                    return "Io";
+                case ClassID.CDOTA_Unit_Hero_Zuus:
+                    return "Zeus";
+            }
+
+            return classId.ToString().Substring("CDOTA_Unit_Hero_".Length).Replace("_", string.Empty);
         }
 
         #endregion
