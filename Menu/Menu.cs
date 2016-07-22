@@ -149,26 +149,6 @@ namespace Ensage.Common.Menu
             this.TextureName = textureName;
             this.ShowTextWithTexture = showTextWithTexture;
             this.transition = new ExpoEaseInOut(0.25);
-            if (textureName != null && !TextureDictionary.ContainsKey(textureName))
-            {
-                if (textureName.Contains("npc_dota_hero_"))
-                {
-                    this.Texture = Textures.GetHeroTexture(textureName);
-                }
-                else if (textureName.Contains("item_"))
-                {
-                    this.Texture = Textures.GetItemTexture(textureName);
-                }
-                else
-                {
-                    this.Texture = Textures.GetSpellTexture(textureName);
-                }
-
-                if (this.Texture == null)
-                {
-                    this.TextureName = null;
-                }
-            }
 
             AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
             AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
@@ -287,11 +267,6 @@ namespace Ensage.Common.Menu
         ///     The style.
         /// </summary>
         public FontStyle Style { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the texture.
-        /// </summary>
-        public DotaTexture Texture { get; set; }
 
         /// <summary>
         ///     The texture name.
