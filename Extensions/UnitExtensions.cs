@@ -1460,6 +1460,47 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        /// The vector 2 from polar angle.
+        /// </summary>
+        /// <param name="unit">
+        /// The unit.
+        /// </param>
+        /// <param name="delta">
+        /// The delta.
+        /// </param>
+        /// <param name="radial">
+        /// The radial.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Vector2"/>.
+        /// </returns>
+        public static Vector2 Vector2FromPolarAngle(this Unit unit, float delta = 0f, float radial = 1f)
+        {
+            var alpha = unit.NetworkRotationRad + Utils.DegreeToRadian(unit.RotationDifference);
+            return VectorExtensions.FromPolarCoordinates(radial, (float)(alpha + delta));
+        }
+
+        /// <summary>
+        /// The vector 3 from polar angle.
+        /// </summary>
+        /// <param name="unit">
+        /// The unit.
+        /// </param>
+        /// <param name="delta">
+        /// The delta.
+        /// </param>
+        /// <param name="radial">
+        /// The radial.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Vector3"/>.
+        /// </returns>
+        public static Vector3 Vector3FromPolarAngle(this Unit unit, float delta = 0f, float radial = 1f)
+        {
+            return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
+        }
+
+        /// <summary>
         ///     The spell damage taken.
         /// </summary>
         /// <param name="target">

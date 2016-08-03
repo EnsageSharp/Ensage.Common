@@ -277,7 +277,7 @@ namespace Ensage.Common
         /// </returns>
         public static Vector3 InFront(Unit unit, float distance)
         {
-            var v = unit.Position + unit.Vector3FromPolarAngle() * distance;
+            var v = unit.Position + (unit.Vector3FromPolarAngle() * distance);
             return new Vector3(v.X, v.Y, 0);
         }
 
@@ -353,67 +353,26 @@ namespace Ensage.Common
                 lastRotRDictionary[unit.Handle] = unit.RotationRad;
             }
 
-            if (straightTime < 10 || IsTurning(unit, 0.18))
+            lastRotRDictionary[unit.Handle] = unit.RotationRad;
+            if ((unit.ClassID == ClassID.CDOTA_Unit_Hero_StormSpirit || unit.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                && unit.HasModifier("modifier_storm_spirit_ball_lightning"))
             {
-                var rotDiff = lastRotRDictionary[unit.Handle] - unit.RotationRad;
-                var a = 10 * straightTime * Math.Pow(rotDiff, 2);
-                if (a >= 0 && a <= 1300)
+                var ballLightning = unit.FindSpell("storm_spirit_ball_lightning", true);
+                var firstOrDefault =
+                    ballLightning.AbilitySpecialData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
+                if (firstOrDefault != null)
                 {
-                    a = 1300 + a;
+                    var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
+                    var newpredict = unit.Vector3FromPolarAngle() * (ballSpeed / 1000f);
+                    targetSpeed = newpredict;
                 }
-                else if (a <= 0 && a >= -1300)
-                {
-                    a = 1300 - a;
-                }
-
-                targetSpeed =
-                    (Vector3)
-                    VectorExtensions.FromPolarAngle((lastRotRDictionary[unit.Handle] + unit.RotationRad * 2) / 2)
-                    * unit.MovementSpeed / (float)Math.Abs(a);
-            }
-            else if (straightTime < 180)
-            {
-                var rotDiff = lastRotRDictionary[unit.Handle] - unit.RotationRad;
-                var a = straightTime * Math.Pow(rotDiff, 2);
-                if (a >= 0 && a <= 1000)
-                {
-                    a = 1000 + a;
-                }
-                else if (a <= 0 && a >= -1000)
-                {
-                    a = 1000 - a;
-                }
-
-                targetSpeed =
-                    (Vector3)
-                    (VectorExtensions.FromPolarAngle((lastRotRDictionary[unit.Handle] + unit.RotationRad) / 2)
-                     * unit.MovementSpeed / (float)Math.Abs(a));
             }
             else
             {
-                lastRotRDictionary[unit.Handle] = unit.RotationRad;
-                if ((unit.ClassID == ClassID.CDOTA_Unit_Hero_StormSpirit
-                     || unit.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
-                    && unit.HasModifier("modifier_storm_spirit_ball_lightning"))
-                {
-                    var ballLightning = unit.FindSpell("storm_spirit_ball_lightning", true);
-                    var firstOrDefault =
-                        ballLightning.AbilitySpecialData.FirstOrDefault(x => x.Name == "ball_lightning_move_speed");
-                    if (firstOrDefault != null)
-                    {
-                        var ballSpeed = firstOrDefault.GetValue(ballLightning.Level - 1);
-                        var newpredict = unit.Vector3FromPolarAngle() * (ballSpeed / 1000);
-                        targetSpeed = newpredict;
-                    }
-                }
-                else
-                {
-                    targetSpeed =
-                        (Vector3)(VectorExtensions.FromPolarAngle(unit.RotationRad) * unit.MovementSpeed / 1000);
-                }
+                targetSpeed = unit.Vector3FromPolarAngle() * (unit.MovementSpeed / 1000f);
             }
 
-            var v = unit.Position + targetSpeed * delay;
+            var v = unit.Position + (targetSpeed * delay);
             return new Vector3(v.X, v.Y, 0);
         }
 
