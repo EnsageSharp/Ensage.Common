@@ -17,6 +17,8 @@ namespace Ensage.Common.Menu
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ensage.Common.Objects;
+
     /// <summary>
     ///     The hero toggler.
     /// </summary>
@@ -90,7 +92,7 @@ namespace Ensage.Common.Menu
             {
                 Menu.TextureDictionary.Add(
                     v.Key, 
-                    Drawing.GetTexture(
+                    Textures.GetTexture(
                         "materials/ensage_ui/heroes_horizontal/" + v.Key.Substring("npc_dota_hero_".Length) + ".vmat"));
             }
 
@@ -137,8 +139,8 @@ namespace Ensage.Common.Menu
             if (!Menu.TextureDictionary.ContainsKey(name))
             {
                 Menu.TextureDictionary.Add(
-                    name, 
-                    Drawing.GetTexture(
+                    name,
+                    Textures.GetTexture(
                         "materials/ensage_ui/heroes_horizontal/" + name.Substring("npc_dota_hero_".Length) + ".vmat"));
             }
 

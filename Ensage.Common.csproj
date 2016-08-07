@@ -45,23 +45,23 @@
   <ItemGroup>
     <Reference Include="Ensage">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\PlaySharp\References\Ensage.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="EnsageSharp.Sandbox">
-      <HintPath>C:\PlaySharp\System\EnsageSharp.Sandbox.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\PlaySharp\References\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\PlaySharp\References\SharpDX.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\PlaySharp\References\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

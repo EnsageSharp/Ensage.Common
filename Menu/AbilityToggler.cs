@@ -17,6 +17,8 @@ namespace Ensage.Common.Menu
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ensage.Common.Objects;
+
     /// <summary>
     ///     The ability toggler.
     /// </summary>
@@ -60,8 +62,8 @@ namespace Ensage.Common.Menu
                 Menu.TextureDictionary.Add(
                     v.Key, 
                     v.Key.Substring(0, "item".Length) == "item"
-                        ? Drawing.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
-                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+                        ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+                        : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
             }
 
             var posDict = this.PositionDictionary;
@@ -109,8 +111,8 @@ namespace Ensage.Common.Menu
                 Menu.TextureDictionary.Add(
                     name, 
                     name.Substring(0, "item".Length) == "item"
-                        ? Drawing.GetTexture("materials/ensage_ui/items/" + name.Substring("item_".Length) + ".vmat")
-                        : Drawing.GetTexture("materials/ensage_ui/spellicons/" + name + ".vmat"));
+                        ? Textures.GetTexture("materials/ensage_ui/items/" + name.Substring("item_".Length) + ".vmat")
+                        : Textures.GetTexture("materials/ensage_ui/spellicons/" + name + ".vmat"));
             }
 
             if (!this.SValuesDictionary.ContainsKey(name))

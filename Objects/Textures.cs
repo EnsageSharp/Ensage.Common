@@ -13,6 +13,7 @@
 // </copyright>
 namespace Ensage.Common.Objects
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -50,9 +51,8 @@ namespace Ensage.Common.Objects
                 return texture;
             }
 
-            texture = Drawing.GetTexture(name);
+            texture = FindTexture(name);
             TextureDictionary.Add(name, texture);
-
             return texture;
         }
 
@@ -74,9 +74,8 @@ namespace Ensage.Common.Objects
                 return texture;
             }
 
-            texture = Drawing.GetTexture(name);
+            texture = FindTexture(name);
             TextureDictionary.Add(name, texture);
-
             return texture;
         }
 
@@ -98,9 +97,8 @@ namespace Ensage.Common.Objects
                 return texture;
             }
 
-            texture = Drawing.GetTexture(name);
+            texture = FindTexture(name);
             TextureDictionary.Add(name, texture);
-
             return texture;
         }
 
@@ -121,8 +119,65 @@ namespace Ensage.Common.Objects
                 return texture;
             }
 
-            texture = Drawing.GetTexture(name);
+            texture = FindTexture(name);
             TextureDictionary.Add(name, texture);
+            return texture;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The find texture.
+        /// </summary>
+        /// <param name="name">
+        ///     The name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="DotaTexture" />.
+        /// </returns>
+        private static DotaTexture FindTexture(string name)
+        {
+            DotaTexture texture;
+
+            try
+            {
+                texture = Drawing.GetTexture(name);
+            }
+            catch (DotaTextureNotFoundException e)
+            {
+                // First exception occurs if caller is trying to load non-existing texture, in that case try to replace it with blank texture
+                try
+                {
+                    Game.PrintMessage(
+                        "<font color='#dddddd'>[Ensage]: Texture '" + e.TextureName + "' was not found</font>",
+                        MessageType.LogMessage);
+                    Console.WriteLine(@"Texture '" + e.TextureName + @"' was not found");
+                    texture = Drawing.GetTexture("materials/ensage_ui/spellicons/doom_bringer_empty1");
+                }
+                catch (DotaTextureNotFoundException)
+                {
+                    // Second exception occurs in case user doesnt have texture pack installed, notify the user and replace it with internal texture
+                    Game.PrintMessage(
+                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>", 
+                        MessageType.LogMessage);
+                    Game.PrintMessage(
+                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>", 
+                        MessageType.LogMessage);
+                    Game.PrintMessage(
+                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>", 
+                        MessageType.ChatMessage);
+                    Game.PrintMessage(
+                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>", 
+                        MessageType.ChatMessage);
+
+                    Console.WriteLine(@"!!!!!!! Texture Pack not found !!!!!!!!");
+                    Console.WriteLine(@"Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp");
+
+                    texture = Drawing.GetTexture("materials/console_background.vmat_c");
+                }
+            }
 
             return texture;
         }
