@@ -14,6 +14,9 @@
 namespace Ensage.Common.Menu
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.Composition;
+    using System.Linq;
 
     using SharpDX;
 
@@ -105,9 +108,39 @@ namespace Ensage.Common.Menu
             this.Item("disableDrawings").SetValue(false);
             message.ValueChanged += this.MessageValueChanged;
             Events.OnLoad += this.Events_OnLoad;
+
+            Composer.ComposeParts(this);
+
+            var themes = this.Themes.Select(theme => theme.Value.ThemeName);
+            var themeSelect = new MenuItem("Common.Menu.Themes", "Theme").SetValue(new StringList(themes.ToArray()));
+            themeSelect.ValueChanged += (sender, args) =>
+                {
+                    var theme = this.Themes.FirstOrDefault(x => x.Value.ThemeName == args.GetNewValue<StringList>().SelectedValue);
+                    if (theme != null)
+                    {
+                        this.SelectedTheme = theme.Value;
+                    }
+                };
+            var defaultTheme = this.Themes.FirstOrDefault(x => x.Value.ThemeName == themeSelect.GetValue<StringList>().SelectedValue);
+            if (defaultTheme != null)
+            {
+                this.SelectedTheme = defaultTheme.Value;
+            }
+            menuSettings.AddItem(themeSelect);
         }
 
         #endregion
+        
+        /// <summary>
+        /// Gets or sets the themes.
+        /// </summary>
+        [ImportMany(typeof(IMenuTheme))]
+        public IEnumerable<Lazy<IMenuTheme>> Themes { get; set; }
+
+        /// <summary>
+        /// Gets the selected theme.
+        /// </summary>
+        public IMenuTheme SelectedTheme { get; private set; }
 
         #region Properties
 

@@ -240,8 +240,7 @@ namespace Ensage.Common.Menu
         {
             if (!menu.IsRootMenu)
             {
-                const string ABgName = "menubg1.vmat_c";
-                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
+                var abg = Textures.GetTexture(Menu.Root.SelectedTheme.MenuBackground);
                 Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), abg);
                 Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), new Color(20, 20, 20, 190));
                 Drawing.DrawRect(
@@ -251,8 +250,7 @@ namespace Ensage.Common.Menu
             }
             else
             {
-                const string ABgName = "menubg1.vmat_c";
-                var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
+                var abg = Textures.GetTexture(Menu.Root.SelectedTheme.MenuBackground);
                 Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), abg);
                 Drawing.DrawRect(menu.Position, new Vector2(menu.Width, menu.Height), new Color(20, 20, 20, 230));
                 Drawing.DrawRect(
@@ -315,8 +313,9 @@ namespace Ensage.Common.Menu
             if ((menu.TextureName == null || menu.ShowTextWithTexture ? textSize.X : 0) + bonusWidth
                 < (float)(menu.Width - menu.Height * 0.3))
             {
-                var arrowname = menu.IsOpen ? "arrowrighthover.vmat_c" : "arrowright.vmat_c";
-                var arrow = Textures.GetTexture("materials/ensage_ui/menu/" + arrowname);
+                var arrow =
+                    Textures.GetTexture(
+                        menu.IsOpen ? Menu.Root.SelectedTheme.MenuArrowOpen : Menu.Root.SelectedTheme.MenuArrow);
                 var size = new Vector2((float)(menu.Height * 0.53), (float)(menu.Height * 0.53));
                 var add1 = menu.IsOpen ? menu.Height * 0.1 : add;
                 Drawing.DrawRect(

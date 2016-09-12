@@ -454,7 +454,7 @@ namespace Ensage.Common
             {
                 return;
             }
-
+            
             if (!Utils.SleepCheck("Prediction.SpeedTrack.Sleep"))
             {
                 return;

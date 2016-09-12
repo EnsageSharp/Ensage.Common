@@ -311,10 +311,10 @@ namespace Ensage.Common.Menu.Draw
         {
             var wasHovered = this.Hovered;
             this.Hovered = Utils.IsUnderRectangle(
-                mousePosition, 
-                this.Position.X, 
-                this.Position.Y, 
-                (float)(this.Height * 1.7), 
+                mousePosition,
+                this.Position.X,
+                this.Position.Y,
+                (float)(this.Height * 1.7),
                 this.Width);
 
             if (!wasHovered && this.Hovered)
@@ -328,17 +328,17 @@ namespace Ensage.Common.Menu.Draw
 
             var size = new Vector2((float)(this.Height * 1.4), (float)(this.Height / 1.35));
             var bgpos = this.Position + new Vector2(0, this.Height / 2 - size.Y / 2);
-            Drawing.DrawRect(bgpos, size, Textures.GetTexture("materials/ensage_ui/menu/sliderbgon.vmat_c"));
+            Drawing.DrawRect(bgpos, size, Textures.GetTexture(Menu.Root.SelectedTheme.OnOffSliderBackground));
             var circleSize = new Vector2((float)(size.Y * 0.8));
             this.onPosition = bgpos + new Vector2((float)(size.X * 0.97 - size.Y), size.Y / 2 - circleSize.Y / 2);
             this.offPosition = bgpos + new Vector2((float)(size.X * 0.13), size.Y / 2 - circleSize.Y / 2);
             this.indicatorPosition = this.enabled ? this.onPosition : this.offPosition;
             Drawing.DrawRect(
-                this.IndicatorPosition, 
-                circleSize, 
+                this.IndicatorPosition,
+                circleSize,
                 this.Enabled && !this.transition.Moving
-                    ? Textures.GetTexture("materials/ensage_ui/menu/circleshadow.vmat_c")
-                    : Textures.GetTexture("materials/ensage_ui/menu/circleshadowgray.vmat_c"));
+                    ? Textures.GetTexture(Menu.Root.SelectedTheme.OnOffSliderEnabled)
+                    : Textures.GetTexture(Menu.Root.SelectedTheme.OnOffSliderDisabled));
         }
 
         /// <summary>

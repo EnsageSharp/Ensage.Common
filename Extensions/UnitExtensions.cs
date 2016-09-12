@@ -1476,7 +1476,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static Vector2 Vector2FromPolarAngle(this Unit unit, float delta = 0f, float radial = 1f)
         {
-            var alpha = unit.NetworkRotationRad + Utils.DegreeToRadian(unit.RotationDifference);
+            var alpha = unit.NetworkRotationRad + Utils.DegreeToRadian(unit.RotationDifference * 0.9);
             return VectorExtensions.FromPolarCoordinates(radial, (float)(alpha + delta));
         }
 

@@ -92,6 +92,8 @@ namespace Ensage.Common.Menu
         /// </summary>
         private bool visible;
 
+
+
         #endregion
 
         #region Constructors and Destructors

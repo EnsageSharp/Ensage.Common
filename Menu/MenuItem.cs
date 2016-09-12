@@ -921,8 +921,7 @@ namespace Ensage.Common.Menu
                           : this.transition.GetValue() > 0 || this.transition.Moving
                                 ? (this.Height - this.transition.GetValue()) * 0.1
                                 : 0;
-            const string ABgName = "itembg1.vmat_c";
-            var abg = Textures.GetTexture("materials/ensage_ui/menu/" + ABgName);
+            var abg = Textures.GetTexture(Menu.Root.SelectedTheme.ItemBackground);
             var s = MultiLanguage._(this.DisplayName);
             if (!string.IsNullOrEmpty(this.Tooltip))
             {
@@ -977,7 +976,7 @@ namespace Ensage.Common.Menu
                                       ? val.Active ? new Color(40, 120, 40, 30) : new Color(0, 0, 0, 0)
                                       : new Color(0, 0, 0, 0);
 
-                    Drawing.DrawRect(rpos, rsize, Textures.GetTexture("materials/ensage_ui/menu/menubg1.vmat_c"));
+                    Drawing.DrawRect(rpos, rsize, Textures.GetTexture(Menu.Root.SelectedTheme.MenuBackground));
                     Drawing.DrawRect(rpos, rsize, new Color(20, 20, 20, 190));
 
                     MenuUtils.DrawBoxBordered(

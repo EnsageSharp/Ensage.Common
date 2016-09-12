@@ -64,6 +64,7 @@
       <HintPath>C:\NvdKTVgtv\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
@@ -72,6 +73,7 @@
   <ItemGroup>
     <Compile Include="AbilityInfo\AbilityDamage.cs" />
     <Compile Include="Algorithm.cs" />
+    <Compile Include="Composer.cs" />
     <Compile Include="DelayAction.cs" />
     <Compile Include="DelayActionItem.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Menu\Draw\OnOffSlider.cs" />
     <Compile Include="Menu\Draw\PriorityIcon.cs" />
     <Compile Include="Menu\Draw\ResizableItem.cs" />
+    <Compile Include="Menu\IMenuTheme.cs" />
     <Compile Include="Menu\MenuDrawHelper.cs" />
     <Compile Include="Menu\MenuGlobals.cs" />
     <Compile Include="Menu\MenuItem.cs" />
@@ -117,6 +120,7 @@
     <Compile Include="Menu\StringList.cs" />
     <Compile Include="Menu\OnValueChangeEventArgs.cs" />
     <Compile Include="Menu\SavedSettings.cs" />
+    <Compile Include="Menu\Themes\Default.cs" />
     <Compile Include="Menu\Transitions\CircEaseOutIn.cs" />
     <Compile Include="Menu\Transitions\ElasticEaseInOut.cs" />
     <Compile Include="Menu\Transitions\ExpoEaseInOut.cs" />
@@ -188,6 +192,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
