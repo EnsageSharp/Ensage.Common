@@ -197,7 +197,7 @@ namespace Ensage.Common.Menu
             this.Name = name;
             this.DisplayName = displayName;
             this.FontStyle = FontStyle.Regular;
-            this.FontColor = new Color(185, 176, 163, 255);
+            this.FontColor = Menu.Root?.SelectedTheme.ItemDefaultTextColor ?? new Color(185, 176, 163, 255);
             this.transition = new ExpoEaseInOut(0.25);
             this.ShowItem = true;
             this.Tag = 0;
@@ -933,7 +933,10 @@ namespace Ensage.Common.Menu
             }
 
             Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), abg);
-            Drawing.DrawRect(this.Position, new Vector2(this.Width, this.Height), new Color(38, 38, 38, 190));
+            Drawing.DrawRect(
+                this.Position,
+                new Vector2(this.Width, this.Height),
+                Menu.Root.SelectedTheme.ItemOverlayColor);
             switch (this.ValueType)
             {
                 case MenuValueType.None:
@@ -985,12 +988,14 @@ namespace Ensage.Common.Menu
                         rsize.X, 
                         rsize.Y, 
                         1f, 
-                        this.Interacting ? new Color(180, 120, 0, 30) : aborder, 
+                        this.Interacting ? Menu.Root.SelectedTheme.KeyBindActivatedBorderColor : aborder, 
                         new Color(0, 0, 0, 0));
                     Drawing.DrawRect(
-                        rpos, 
-                        rsize, 
-                        this.Interacting ? new Color(48 + alpha, 38 + alpha, 28 + alpha, 30) : acolor);
+                        rpos,
+                        rsize,
+                        this.Interacting
+                            ? Menu.Root.SelectedTheme.KeyBindActivatedOverlayColor + new Color(alpha, alpha, alpha)
+                            : acolor);
 
                     var textSize = Drawing.MeasureText(te, "Arial", sizet, FontFlags.AntiAlias);
                     var textPos = this.Position
@@ -999,10 +1004,10 @@ namespace Ensage.Common.Menu
                                         (float)(this.Height * 0.5 - textSize.Y * 0.5));
 
                     Drawing.DrawText(
-                        te, 
-                        textPos, 
-                        sizet, 
-                        new Color(195 + alpha, 139 + alpha, 12 + alpha, 225), 
+                        te,
+                        textPos,
+                        sizet,
+                        Menu.Root.SelectedTheme.KeyBindTextColor + new Color(alpha, alpha, alpha),
                         FontFlags.AntiAlias);
 
                     if (val.Type == KeyBindType.Toggle)
@@ -1057,7 +1062,7 @@ namespace Ensage.Common.Menu
                         MultiLanguage._(t), 
                         textPos, 
                         new Vector2((float)(this.Height * 0.45), this.Width / 2 + 10), 
-                        new Color(230, 210, 200, 225), 
+                        Menu.Root.SelectedTheme.StringListTextColor, 
                         FontFlags.AntiAlias);
                     break;
 
@@ -1079,11 +1084,11 @@ namespace Ensage.Common.Menu
                                     ? 35
                                     : 0;
                         Drawing.DrawRect(
-                            pos, 
-                            size + new Vector2(6, 6), 
+                            pos,
+                            size + new Vector2(6, 6),
                             v.Value
-                                ? System.Drawing.Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
-                                : System.Drawing.Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());
+                                ? Menu.Root.SelectedTheme.TogglerEnabledColor + new Color(alpha, alpha, alpha)
+                                : Menu.Root.SelectedTheme.TogglerDisabledColor + new Color(alpha, alpha, alpha));
                         if (v.Key.Contains("item"))
                         {
                             Drawing.DrawRect(
@@ -1131,8 +1136,8 @@ namespace Ensage.Common.Menu
                             pos, 
                             size + new Vector2(6, 6), 
                             v.Value
-                                ? System.Drawing.Color.FromArgb(180 + alpha, 120 + alpha, 1 + alpha).ToSharpDxColor()
-                                : System.Drawing.Color.FromArgb(37 + alpha, 37 + alpha, 37 + alpha).ToSharpDxColor());
+                                ? Menu.Root.SelectedTheme.TogglerEnabledColor + new Color(alpha, alpha, alpha)
+                                : Menu.Root.SelectedTheme.TogglerDisabledColor + new Color(alpha, alpha, alpha));
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, textureDictionary[v.Key]);
                         Drawing.DrawRect(pos - new Vector2(-3, -3), size, Color.Black, true);
                         Drawing.DrawRect(pos, size + new Vector2(6, 6), Color.Black, true);

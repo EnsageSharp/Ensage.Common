@@ -112,9 +112,22 @@ namespace Ensage.Common.Menu
             PanelText = new DrawText { Text = "EnsageSharp Menu", FontFlags = FontFlags.AntiAlias };
             TextureDictionary = new Dictionary<string, DotaTexture>();
             ItemDictionary = new Dictionary<string, MenuItem>();
+            Drawing.OnDraw += OnDraw;
+            ActivateCommonMenu();
+        }
+
+        /// <summary>
+        /// The activate common menu.
+        /// </summary>
+        private static void ActivateCommonMenu()
+        {
+            if (Root != null)
+            {
+                return;
+            }
+
             Root = new CommonMenu();
             Root.AddToMainMenu();
-            Drawing.OnDraw += OnDraw;
         }
 
         /// <summary>
@@ -147,7 +160,7 @@ namespace Ensage.Common.Menu
             this.Name = name;
             this.IsRootMenu = isRootMenu;
             this.Style = FontStyle.Regular;
-            this.Color = new Color(195, 186, 173, 255);
+            this.Color = Root?.SelectedTheme.MenuDefaultTextColor ?? new Color(195, 186, 173, 255);
             this.TextureName = textureName;
             this.ShowTextWithTexture = showTextWithTexture;
             this.transition = new ExpoEaseInOut(0.25);
@@ -1106,15 +1119,15 @@ namespace Ensage.Common.Menu
                 new Vector2(
                     MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
                     MenuSettings.MenuItemHeight * menuCount + bgsize.Y - bgsize.X), 
-                new Color(35, 35, 35));
+                Root.SelectedTheme.RootMenuBackgroundColor);
             MenuPanel.Position = MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y);
             MenuPanel.Size =
                 new Vector2(
                     MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
                     bgsize.Y);
-            MenuPanel.Color = new Color(15, 15, 15);
+            MenuPanel.Color = Root.SelectedTheme.TopPanelBackgroundColor;
             MenuPanel.Draw();
-            PanelText.Color = new Color(180, 180, 180);
+            PanelText.Color = Root.SelectedTheme.TopPanelTextColor;
             PanelText.TextSize = new Vector2((float)(MenuSettings.MenuItemHeight * 0.5));
             PanelText.CenterOnRectangleHorizontally(MenuPanel, (float)(MenuSettings.MenuItemHeight * 0.26));
             PanelText.Draw();

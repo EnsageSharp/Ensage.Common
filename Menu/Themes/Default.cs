@@ -8,6 +8,8 @@ namespace Ensage.Common.Menu.Themes
 {
     using System.ComponentModel.Composition;
 
+    using SharpDX;
+
     /// <summary>
     /// The default.
     /// </summary>
@@ -53,5 +55,140 @@ namespace Ensage.Common.Menu.Themes
         /// Gets the on off slider disabled.
         /// </summary>
         public string OnOffSliderDisabled { get; } = "materials/ensage_ui/menu/circleshadowgray.vmat_c";
+
+        /// <summary>
+        /// Gets the root menu background color (color under menu background texture).
+        /// </summary>
+        public Color RootMenuBackgroundColor { get; } = new Color(35, 35, 35, 150);
+
+        /// <summary>
+        /// Gets the menu side line activated color.
+        /// </summary>
+        public Color RootMenuOpenSideLineColor { get; } = new Color(220, 120, 20);
+
+        /// <summary>
+        /// Gets the root menu side line color.
+        /// </summary>
+        public Color RootMenuSideLineColor { get; } = new Color(20, 20, 20);
+
+        /// <summary>
+        /// Gets the sub menu open side line color.
+        /// </summary>
+        public Color SubMenuOpenSideLineColor { get; } = new Color(220, 120, 20);
+
+        /// <summary>
+        /// Gets the sub menu side line color.
+        /// </summary>
+        public Color SubMenuSideLineColor { get; } = new Color(20, 20, 20);
+
+        /// <summary>
+        /// Gets the top panel background color.
+        /// </summary>
+        public Color TopPanelBackgroundColor { get; } = new Color(15, 15, 15);
+
+        /// <summary>
+        /// Gets the top panel text color.
+        /// </summary>
+        public Color TopPanelTextColor { get; } = new Color(180, 180, 180);
+
+        /// <summary>
+        /// Gets the root menu overlay color.
+        /// </summary>
+        public Color RootMenuOverlayColor { get; } = new Color(20, 20, 20, 190);
+
+        /// <summary>
+        /// Gets the sub menu overlay color.
+        /// </summary>
+        public Color SubMenuOverlayColor { get; } = new Color(20, 20, 20, 230);
+
+        /// <summary>
+        /// Gets the menu default text color.
+        /// </summary>
+        public Color MenuDefaultTextColor { get; } = new Color(195, 186, 173, 255);
+
+        /// <summary>
+        /// Gets the item overlay color.
+        /// </summary>
+        public Color ItemOverlayColor { get; } = new Color(38, 38, 38, 190);
+
+        /// <summary>
+        /// Gets the slider color.
+        /// </summary>
+        public Color SliderColor { get; } = new Color(200, 120, 60);
+
+        /// <summary>
+        /// Gets the slider fill color.
+        /// </summary>
+        public Color SliderFillColor { get; } = new Color(150, 110, 15, 20);
+
+        /// <summary>
+        /// Gets the slider text color.
+        /// </summary>
+        public Color SliderTextColor { get; } = new Color(255, 140, 0);
+
+        /// <summary>
+        /// Gets the key bind activated overlay color.
+        /// </summary>
+        public Color KeyBindActivatedBorderColor { get; } = new Color(180, 120, 0, 30);
+
+        /// <summary>
+        /// Gets the key bind activated overlay color.
+        /// </summary>
+        public Color KeyBindActivatedOverlayColor { get; } = new Color(48, 38, 28, 30);
+
+        /// <summary>
+        /// Gets the key bind text color.
+        /// </summary>
+        public Color KeyBindTextColor { get; } = new Color(195, 139, 12, 225);
+
+        /// <summary>
+        /// Gets the string list arrow hovered overlay color.
+        /// </summary>
+        public Color StringListArrowHoveredOverlayColor { get; } = new Color(70, 70, 30, 70);
+
+        /// <summary>
+        /// Gets or sets the string list arrow overlay color.
+        /// </summary>
+        public Color StringListArrowOverlayColor { get; set; } = new Color(0, 37, 37, 37);
+
+        /// <summary>
+        /// Gets the string list arrow hovered color.
+        /// </summary>
+        public Color StringListArrowHoveredColor { get; } = new Color(255, 140, 0);
+
+        /// <summary>
+        /// Gets the string list arrow color.
+        /// </summary>
+        public Color StringListArrowColor { get; } = new Color(255, 165, 0);
+
+        /// <summary>
+        /// Gets the string list text color.
+        /// </summary>
+        public Color StringListTextColor { get; } = new Color(230, 210, 200, 225);
+
+        /// <summary>
+        /// Gets the ability/hero toggler enabled color.
+        /// </summary>
+        public Color TogglerEnabledColor { get; } = new Color(180, 120, 1);
+
+        /// <summary>
+        /// Gets the ability/hero toggler disabled color.
+        /// </summary>
+        public Color TogglerDisabledColor { get; } = new Color(37, 37, 37);
+
+        /// <summary>
+        /// Gets the item default text color.
+        /// </summary>
+        public Color ItemDefaultTextColor { get; } = new Color(185, 176, 163, 255);
+
+        /// <summary>
+        /// Gets the tool tip background color.
+        /// </summary>
+        public Color ToolTipBackgroundColor { get; } = new Color(45, 45, 45);
+
+        /// <summary>
+        /// Gets the tool tip text color.
+        /// </summary>
+        public Color ToolTipTextColor { get; } = new Color(255, 255, 255);
     }
 }
