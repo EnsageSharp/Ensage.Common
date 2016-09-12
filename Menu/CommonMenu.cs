@@ -17,6 +17,7 @@ namespace Ensage.Common.Menu
     using System.Collections.Generic;
     using System.ComponentModel.Composition;
     using System.Linq;
+    using System.Security.Permissions;
 
     using SharpDX;
 
@@ -39,6 +40,7 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     Initializes a new instance of the <see cref="CommonMenu" /> class.
         /// </summary>
+        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         public CommonMenu()
             : base("GeneralSettings", "Ensage.Common", true, null, false)
         {
@@ -126,7 +128,15 @@ namespace Ensage.Common.Menu
             {
                 this.SelectedTheme = defaultTheme.Value;
             }
+
             menuSettings.AddItem(themeSelect);
+
+            this.SetFontColor(this.SelectedTheme.MenuDefaultTextColor);
+
+            if (Game.IsInGame)
+            {
+                this.Events_OnLoad(null, null);
+            }
         }
 
         #endregion
@@ -181,23 +191,23 @@ namespace Ensage.Common.Menu
         {
             var console = this.newMessageType.SelectedIndex == 2;
 
-            if (Root.Item("showMessage").GetValue<bool>() && !console)
+            if (this.Item("showMessage").GetValue<bool>() && !console)
             {
                 var msg =
                     "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
+                    + Utils.KeyToText(this.Item("toggleKey").GetValue<KeyBind>().Key)
                     + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
+                    + Utils.KeyToText(this.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
                 Game.PrintMessage(
                     msg, 
                     this.newMessageType.SelectedIndex == 2 || this.newMessageType.SelectedIndex == 0
                         ? MessageType.LogMessage
                         : MessageType.ChatMessage);
             }
-            else if (console && Root.Item("showMessage").GetValue<bool>())
+            else if (console && this.Item("showMessage").GetValue<bool>())
             {
-                var msg = @"[Menu Hotkeys] Press: " + Utils.KeyToText(Root.Item("toggleKey").GetValue<KeyBind>().Key)
-                          + @" Hold: " + Utils.KeyToText(Root.Item("pressKey").GetValue<KeyBind>().Key);
+                var msg = @"[Menu Hotkeys] Press: " + Utils.KeyToText(this.Item("toggleKey").GetValue<KeyBind>().Key)
+                          + @" Hold: " + Utils.KeyToText(this.Item("pressKey").GetValue<KeyBind>().Key);
                 Console.WriteLine(msg);
             }
         }

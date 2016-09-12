@@ -726,14 +726,46 @@ namespace Ensage.Common.Menu.Draw
             icon.Color = icon.Enabled
                              ? System.Drawing.Color.FromArgb(
                                  (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
-                                 (int)Math.Max(Math.Min(18 * 4 + alpha + brightness * 18, 255), 0), 
-                                 (int)Math.Max(Math.Min(12 * 4 + alpha + brightness * 12, 255), 0), 
-                                 (int)Math.Max(Math.Min(4 + alpha + brightness, 255), 0)).ToSharpDxColor()
+                                 (int)
+                                 Math.Max(
+                                     Math.Min(
+                                         Menu.Root.SelectedTheme.TogglerEnabledColor.R / 10 * 4 + alpha
+                                         + brightness * 18, 
+                                         255), 
+                                     0), 
+                                 (int)
+                                 Math.Max(
+                                     Math.Min(
+                                         Menu.Root.SelectedTheme.TogglerEnabledColor.G / 10 * 4 + alpha
+                                         + brightness * 12, 
+                                         255), 
+                                     0), 
+                                 (int)
+                                 Math.Max(
+                                     Math.Min(
+                                         Menu.Root.SelectedTheme.TogglerEnabledColor.B / 10 + alpha + brightness, 
+                                         255), 
+                                     0)).ToSharpDxColor()
                              : System.Drawing.Color.FromArgb(
                                  (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
-                                 (int)Math.Max(Math.Min(30 + alpha + brightness * 5, 255), 0), 
-                                 (int)Math.Max(Math.Min(30 + alpha + brightness * 5, 255), 0), 
-                                 (int)Math.Max(Math.Min(30 + alpha + brightness * 5, 255), 0)).ToSharpDxColor();
+                                 (int)
+                                 Math.Max(
+                                     Math.Min(
+                                         Menu.Root.SelectedTheme.TogglerDisabledColor.R / 10 + alpha + brightness * 5, 
+                                         255), 
+                                     0), 
+                                 (int)
+                                 Math.Max(
+                                     Math.Min(
+                                         Menu.Root.SelectedTheme.TogglerDisabledColor.G / 10 + alpha + brightness * 5, 
+                                         255), 
+                                     0), 
+                                 (int)
+                                 Math.Max(
+                                     Math.Min(
+                                         Menu.Root.SelectedTheme.TogglerDisabledColor.B / 10 + alpha + brightness * 5, 
+                                         255), 
+                                     0)).ToSharpDxColor();
 
             if (icon.Moving)
             {

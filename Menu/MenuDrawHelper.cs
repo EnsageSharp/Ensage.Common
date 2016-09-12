@@ -13,6 +13,8 @@
 // </copyright>
 namespace Ensage.Common.Menu
 {
+    using System.ComponentModel.Design.Serialization;
+
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Objects;
 
@@ -47,7 +49,7 @@ namespace Ensage.Common.Menu
             Drawing.DrawRect(
                 position + new Vector2(0, item.Height / 6), 
                 new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
-                Textures.GetTexture("materials/ensage_ui/menu/menubg1.vmat_c"));
+                Textures.GetTexture(Menu.Root.SelectedTheme.MenuBackground));
             Drawing.DrawRect(
                 position + new Vector2(0, item.Height / 6), 
                 new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
@@ -56,8 +58,8 @@ namespace Ensage.Common.Menu
                 position + new Vector2(0, item.Height / 6), 
                 new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
-                    ? Color.FromArgb(30, 70, 70, 70).ToSharpDxColor()
-                    : Color.FromArgb(0, 37, 37, 37).ToSharpDxColor());
+                    ? Menu.Root.SelectedTheme.StringListArrowHoveredOverlayColor
+                    : Menu.Root.SelectedTheme.StringListArrowOverlayColor);
 
             var s = left ? "<" : ">";
             var textSize = Drawing.MeasureText(
@@ -72,12 +74,12 @@ namespace Ensage.Common.Menu
                                 (float)(item.Height * 0.5 - textSize.Y * 0.5) + 1);
 
             Drawing.DrawText(
-                s, 
-                textPos, 
-                new Vector2((float)(item.Height * 0.67), item.Height / 2), 
+                s,
+                textPos,
+                new Vector2((float)(item.Height * 0.67), item.Height / 2),
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
-                    ? Color.DarkOrange.ToSharpDxColor()
-                    : Color.Orange.ToSharpDxColor(), 
+                    ? Menu.Root.SelectedTheme.StringListArrowHoveredColor
+                    : Menu.Root.SelectedTheme.StringListArrowColor,
                 FontFlags.AntiAlias);
         }
 
@@ -219,13 +221,13 @@ namespace Ensage.Common.Menu
                 x, 
                 position.Y + item.Height - 2, 
                 2, 
-                Color.FromArgb(200, 120, 60).ToSharpDxColor());
+                Menu.Root.SelectedTheme.SliderColor);
             MenuUtils.DrawBoxFilled(
                 position.X, 
                 position.Y - 1, 
                 x2D - 1f, 
                 item.Height, 
-                Color.FromArgb(15, 150, 110, 0).ToSharpDxColor());
+                Menu.Root.SelectedTheme.SliderFillColor);
 
             if (!drawText)
             {
@@ -242,10 +244,10 @@ namespace Ensage.Common.Menu
                                 (float)(item.Width - item.Height * 0.5 - 2 - textSize.X * 0.5), 
                                 (float)(+(item.Height * 0.5) - textSize.Y * 0.5));
             Drawing.DrawText(
-                value.ToString(), 
-                textPos, 
-                new Vector2((float)(item.Height * 0.48), (float)item.Width / 2), 
-                Color.DarkOrange.ToSharpDxColor(), 
+                value.ToString(),
+                textPos,
+                new Vector2((float)(item.Height * 0.48), (float)item.Width / 2),
+                Menu.Root.SelectedTheme.SliderTextColor,
                 FontFlags.AntiAlias);
         }
 
@@ -288,9 +290,9 @@ namespace Ensage.Common.Menu
         ///     The text color.
         /// </param>
         internal static void DrawToolTipText(
-            Vector2 position, 
-            MenuItem item, 
-            double add, 
+            Vector2 position,
+            MenuItem item,
+            double add,
             SharpDX.Color? textColor = null)
         {
             if (item.ValueType == MenuValueType.StringList || item.ValueType == MenuValueType.AbilityToggler
@@ -301,9 +303,9 @@ namespace Ensage.Common.Menu
 
             var s = item.Tooltip;
             var textSize = Drawing.MeasureText(
-                s, 
-                "Arial", 
-                new Vector2((float)(item.Height * 0.42), 14), 
+                s,
+                "Arial",
+                new Vector2((float)(item.Height * 0.42), 14),
                 FontFlags.AntiAlias);
 
             // MenuUtils.DrawBoxBordered(
@@ -315,21 +317,23 @@ namespace Ensage.Common.Menu
             // new SharpDX.Color(37, 37, 37, (int)(add * 58)), 
             // new SharpDX.Color(20, 20, 20, (int)(add * 58)));
             Drawing.DrawRect(
-                new Vector2(position.X, position.Y), 
-                new Vector2(textSize.X + 8, item.Height), 
-                new SharpDX.Color(45, 45, 45, (int)(add / 2 * (add / 2) * (add / 2) * (add / 2) * 40)));
+                new Vector2(position.X, position.Y),
+                new Vector2(textSize.X + 8, item.Height),
+                Menu.Root.SelectedTheme.ToolTipBackgroundColor - new SharpDX.Color(0, 0, 0, 255)
+                + new SharpDX.Color(0, 0, 0, (int)(add / 2 * (add / 2) * (add / 2) * (add / 2) * 40)));
             Drawing.DrawRect(
-                new Vector2(position.X - 1, position.Y), 
-                new Vector2(textSize.X + 10, item.Height), 
-                new SharpDX.Color(0, 0, 0, (int)(add / 2 * (add / 2) * (add / 2) * (add / 2) * 40)), 
+                new Vector2(position.X - 1, position.Y),
+                new Vector2(textSize.X + 10, item.Height),
+                new SharpDX.Color(0, 0, 0, (int)(add / 2 * (add / 2) * (add / 2) * (add / 2) * 40)),
                 true);
 
             var textPos = position + new Vector2(4, (float)(item.Height * 0.5 - textSize.Y * 0.5));
             Drawing.DrawText(
-                s, 
-                textPos, 
-                new Vector2((float)(item.Height * 0.42), 14), 
-                new SharpDX.Color(255, 255, 255, (int)(add * 68)), 
+                s,
+                textPos,
+                new Vector2((float)(item.Height * 0.42), 14),
+                Menu.Root.SelectedTheme.ToolTipTextColor - new SharpDX.Color(0, 0, 0, 255)
+                + new SharpDX.Color(0, 0, 0, (int)(add * 68)),
                 FontFlags.AntiAlias);
         }
 
