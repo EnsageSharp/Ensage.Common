@@ -120,7 +120,11 @@
     <Compile Include="Menu\StringList.cs" />
     <Compile Include="Menu\OnValueChangeEventArgs.cs" />
     <Compile Include="Menu\SavedSettings.cs" />
+    <Compile Include="Menu\Themes\BlackTransparent.cs" />
     <Compile Include="Menu\Themes\Default.cs" />
+    <Compile Include="Menu\Themes\Gray.cs" />
+    <Compile Include="Menu\Themes\GrayTransparent.cs" />
+    <Compile Include="Menu\Themes\DefaultTransparent.cs" />
     <Compile Include="Menu\Transitions\CircEaseOutIn.cs" />
     <Compile Include="Menu\Transitions\ElasticEaseInOut.cs" />
     <Compile Include="Menu\Transitions\ExpoEaseInOut.cs" />

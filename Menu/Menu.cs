@@ -1120,7 +1120,7 @@ namespace Ensage.Common.Menu
                     MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
                     MenuSettings.MenuItemHeight * menuCount + bgsize.Y - bgsize.X), 
                 Root.SelectedTheme.RootMenuBackgroundColor);
-            MenuPanel.Position = MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y);
+            MenuPanel.Position = MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y - 1);
             MenuPanel.Size =
                 new Vector2(
                     MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 

@@ -18,10 +18,10 @@ namespace Ensage.Common.Menu.Themes
     using SharpDX;
 
     /// <summary>
-    ///     The default.
+    ///     The gray.
     /// </summary>
     [Export(typeof(IMenuTheme))]
-    internal class Default : IMenuTheme
+    internal class Gray : IMenuTheme
     {
         #region Public Properties
 
@@ -38,7 +38,7 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the item default text color.
         /// </summary>
-        public Color ItemDefaultTextColor { get; } = new Color(185, 176, 163, 255);
+        public Color ItemDefaultTextColor { get; } = new Color(200, 200, 200, 255);
 
         /// <summary>
         ///     Gets the item overlay color.
@@ -163,7 +163,7 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the sub menu overlay color.
         /// </summary>
-        public Color SubMenuOverlayColor { get; } = new Color(20, 20, 20, 230);
+        public Color SubMenuOverlayColor { get; } = new Color(20, 20, 20, 190);
 
         /// <summary>
         ///     Gets the sub menu side line color.
@@ -193,12 +193,12 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the top panel background color.
         /// </summary>
-        public Color TopPanelBackgroundColor { get; } = new Color(15, 15, 15);
+        public Color TopPanelBackgroundColor { get; } = new Color(35, 35, 35);
 
         /// <summary>
         ///     Gets the top panel text color.
         /// </summary>
-        public Color TopPanelTextColor { get; } = new Color(180, 180, 180);
+        public Color TopPanelTextColor { get; } = new Color(255, 255, 255);
 
         #endregion
     }

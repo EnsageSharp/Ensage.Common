@@ -18,22 +18,22 @@ namespace Ensage.Common.Menu.Themes
     using SharpDX;
 
     /// <summary>
-    ///     The default.
+    ///     The default transparent.
     /// </summary>
     [Export(typeof(IMenuTheme))]
-    internal class Default : IMenuTheme
+    internal class DefaultTransparent : IMenuTheme
     {
         #region Public Properties
 
         /// <summary>
         ///     Gets the theme name.
         /// </summary>
-        public string ThemeName { get; } = "Gray Transparent";
+        public string ThemeName { get; } = "Default Transparent";
 
         /// <summary>
         ///     Gets the item background.
         /// </summary>
-        public string ItemBackground { get; } = "materials/ensage_ui/menu/themes/gray_transparent/itembg1.vmat_c";
+        public string ItemBackground { get; } = "materials/ensage_ui/menu/themes/moones_transparent/itembg1.vmat_c";
 
         /// <summary>
         ///     Gets the item default text color.
@@ -63,17 +63,17 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the menu arrow.
         /// </summary>
-        public string MenuArrow { get; } = "materials/ensage_ui/menu/themes/gray_transparent/arrowright.vmat_c";
+        public string MenuArrow { get; } = "materials/ensage_ui/menu/themes/moones_transparent/arrowright.vmat_c";
 
         /// <summary>
         ///     Gets the menu arrow open.
         /// </summary>
-        public string MenuArrowOpen { get; } = "materials/ensage_ui/menu/themes/gray_transparent/arrowrighthover.vmat_c";
+        public string MenuArrowOpen { get; } = "materials/ensage_ui/menu/themes/moones_transparent/arrowrighthover.vmat_c";
 
         /// <summary>
         ///     Gets the menu background.
         /// </summary>
-        public string MenuBackground { get; } = "materials/ensage_ui/menu/themes/gray_transparent/menubg1.vmat_c";
+        public string MenuBackground { get; } = "materials/ensage_ui/menu/themes/moones_transparent/menubg1.vmat_c";
 
         /// <summary>
         ///     Gets the menu default text color.
@@ -83,22 +83,22 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the on off slider background.
         /// </summary>
-        public string OnOffSliderBackground { get; } = "materials/ensage_ui/menu/themes/gray_transparent/sliderbgon.vmat_c";
+        public string OnOffSliderBackground { get; } = "materials/ensage_ui/menu/themes/moones_transparent/sliderbgon.vmat_c";
 
         /// <summary>
         ///     Gets the on off slider disabled.
         /// </summary>
-        public string OnOffSliderDisabled { get; } = "materials/ensage_ui/menu/themes/gray_transparent/circleshadowgray.vmat_c";
+        public string OnOffSliderDisabled { get; } = "materials/ensage_ui/menu/themes/moones_transparent/circleshadowgray.vmat_c";
 
         /// <summary>
         ///     Gets the on off slider enabled.
         /// </summary>
-        public string OnOffSliderEnabled { get; } = "materials/ensage_ui/menu/themes/gray_transparent/circleshadow.vmat_c";
+        public string OnOffSliderEnabled { get; } = "materials/ensage_ui/menu/themes/moones_transparent/circleshadow.vmat_c";
 
         /// <summary>
         ///     Gets the root menu background color (color under menu background texture).
         /// </summary>
-        public Color RootMenuBackgroundColor { get; } = new Color(35, 35, 35, 150);
+        public Color RootMenuBackgroundColor { get; } = new Color(35, 35, 35, 80);
 
         /// <summary>
         ///     Gets the menu side line activated color.
@@ -163,7 +163,7 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the sub menu overlay color.
         /// </summary>
-        public Color SubMenuOverlayColor { get; } = new Color(20, 20, 20, 230);
+        public Color SubMenuOverlayColor { get; } = new Color(20, 20, 20, 190);
 
         /// <summary>
         ///     Gets the sub menu side line color.
@@ -193,7 +193,7 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the top panel background color.
         /// </summary>
-        public Color TopPanelBackgroundColor { get; } = new Color(15, 15, 15);
+        public Color TopPanelBackgroundColor { get; } = new Color(15, 15, 15, 220);
 
         /// <summary>
         ///     Gets the top panel text color.

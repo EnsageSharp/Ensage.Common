@@ -245,13 +245,13 @@ namespace Ensage.Common.Menu
                 Drawing.DrawRect(
                     menu.Position,
                     new Vector2(menu.Width, menu.Height),
-                    Menu.Root.SelectedTheme.RootMenuOverlayColor);
+                    Menu.Root.SelectedTheme.SubMenuOverlayColor);
                 Drawing.DrawRect(
                     menu.Position,
                     new Vector2(menu.Height / 14, menu.Height),
                     menu.IsOpen
-                        ? Menu.Root.SelectedTheme.RootMenuOpenSideLineColor
-                        : Menu.Root.SelectedTheme.RootMenuSideLineColor);
+                        ? Menu.Root.SelectedTheme.SubMenuOpenSideLineColor
+                        : Menu.Root.SelectedTheme.SubMenuSideLineColor);
             }
             else
             {
@@ -260,13 +260,13 @@ namespace Ensage.Common.Menu
                 Drawing.DrawRect(
                     menu.Position,
                     new Vector2(menu.Width, menu.Height),
-                    Menu.Root.SelectedTheme.SubMenuOverlayColor);
+                    Menu.Root.SelectedTheme.RootMenuOverlayColor);
                 Drawing.DrawRect(
                     menu.Position - new Vector2(menu.Height / 7, 0),
                     new Vector2(menu.Height / 7, menu.Height),
                     menu.IsOpen
-                        ? Menu.Root.SelectedTheme.SubMenuOpenSideLineColor
-                        : Menu.Root.SelectedTheme.SubMenuSideLineColor);
+                        ? Menu.Root.SelectedTheme.RootMenuOpenSideLineColor
+                        : Menu.Root.SelectedTheme.RootMenuSideLineColor);
             }
 
             var textSize = Drawing.MeasureText(

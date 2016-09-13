@@ -18,27 +18,27 @@ namespace Ensage.Common.Menu.Themes
     using SharpDX;
 
     /// <summary>
-    ///     The default.
+    ///     The gray transparent.
     /// </summary>
     [Export(typeof(IMenuTheme))]
-    internal class Default : IMenuTheme
+    internal class GrayTransparent : IMenuTheme
     {
         #region Public Properties
 
         /// <summary>
         ///     Gets the theme name.
         /// </summary>
-        public string ThemeName { get; } = "Black Transparent";
+        public string ThemeName { get; } = "Gray Transparent";
 
         /// <summary>
         ///     Gets the item background.
         /// </summary>
-        public string ItemBackground { get; } = "materials/ensage_ui/menu/themes/black_transparent/itembg1.vmat_c";
+        public string ItemBackground { get; } = "materials/ensage_ui/menu/themes/gray_transparent/itembg1.vmat_c";
 
         /// <summary>
         ///     Gets the item default text color.
         /// </summary>
-        public Color ItemDefaultTextColor { get; } = new Color(185, 176, 163, 255);
+        public Color ItemDefaultTextColor { get; } = new Color(210, 190, 173, 255);
 
         /// <summary>
         ///     Gets the item overlay color.
@@ -63,17 +63,17 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the menu arrow.
         /// </summary>
-        public string MenuArrow { get; } = "materials/ensage_ui/menu/themes/black_transparent/arrowright.vmat_c";
+        public string MenuArrow { get; } = "materials/ensage_ui/menu/themes/gray_transparent/arrowright.vmat_c";
 
         /// <summary>
         ///     Gets the menu arrow open.
         /// </summary>
-        public string MenuArrowOpen { get; } = "materials/ensage_ui/menu/themes/black_transparent/arrowrighthover.vmat_c";
+        public string MenuArrowOpen { get; } = "materials/ensage_ui/menu/themes/gray_transparent/arrowrighthover.vmat_c";
 
         /// <summary>
         ///     Gets the menu background.
         /// </summary>
-        public string MenuBackground { get; } = "materials/ensage_ui/menu/themes/black_transparent/menubg1.vmat_c";
+        public string MenuBackground { get; } = "materials/ensage_ui/menu/themes/gray_transparent/menubg1.vmat_c";
 
         /// <summary>
         ///     Gets the menu default text color.
@@ -83,22 +83,22 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the on off slider background.
         /// </summary>
-        public string OnOffSliderBackground { get; } = "materials/ensage_ui/menu/themes/black_transparent/sliderbgon.vmat_c";
+        public string OnOffSliderBackground { get; } = "materials/ensage_ui/menu/themes/gray_transparent/sliderbgon.vmat_c";
 
         /// <summary>
         ///     Gets the on off slider disabled.
         /// </summary>
-        public string OnOffSliderDisabled { get; } = "materials/ensage_ui/menu/themes/black_transparent/circleshadowgray.vmat_c";
+        public string OnOffSliderDisabled { get; } = "materials/ensage_ui/menu/themes/gray_transparent/circleshadowgray.vmat_c";
 
         /// <summary>
         ///     Gets the on off slider enabled.
         /// </summary>
-        public string OnOffSliderEnabled { get; } = "materials/ensage_ui/menu/themes/black_transparent/circleshadow.vmat_c";
+        public string OnOffSliderEnabled { get; } = "materials/ensage_ui/menu/themes/gray_transparent/circleshadow.vmat_c";
 
         /// <summary>
         ///     Gets the root menu background color (color under menu background texture).
         /// </summary>
-        public Color RootMenuBackgroundColor { get; } = new Color(35, 35, 35, 150);
+        public Color RootMenuBackgroundColor { get; } = new Color(35, 35, 35, 13);
 
         /// <summary>
         ///     Gets the menu side line activated color.
@@ -108,7 +108,7 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the root menu overlay color.
         /// </summary>
-        public Color RootMenuOverlayColor { get; } = new Color(20, 20, 20, 190);
+        public Color RootMenuOverlayColor { get; } = new Color(20, 20, 20, 225);
 
         /// <summary>
         ///     Gets the root menu side line color.
@@ -163,7 +163,7 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the sub menu overlay color.
         /// </summary>
-        public Color SubMenuOverlayColor { get; } = new Color(20, 20, 20, 230);
+        public Color SubMenuOverlayColor { get; } = new Color(20, 20, 20, 225);
 
         /// <summary>
         ///     Gets the sub menu side line color.
@@ -193,12 +193,12 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the top panel background color.
         /// </summary>
-        public Color TopPanelBackgroundColor { get; } = new Color(15, 15, 15);
+        public Color TopPanelBackgroundColor { get; } = new Color(33, 33, 33, 235);
 
         /// <summary>
         ///     Gets the top panel text color.
         /// </summary>
-        public Color TopPanelTextColor { get; } = new Color(180, 180, 180);
+        public Color TopPanelTextColor { get; } = new Color(200, 200, 200);
 
         #endregion
     }
