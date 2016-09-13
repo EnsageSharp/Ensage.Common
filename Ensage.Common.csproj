@@ -45,23 +45,23 @@
   <ItemGroup>
     <Reference Include="Ensage">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NvdKTVgtv\References\Ensage.dll</HintPath>
+      <HintPath>C:\Users\osman\Desktop\Dota 2\0TUoqySTY\References\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="EnsageSharp.Sandbox">
-      <HintPath>C:\NvdKTVgtv\System\EnsageSharp.Sandbox.dll</HintPath>
+      <HintPath>C:\Users\osman\Desktop\Dota 2\0TUoqySTY\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\NvdKTVgtv\References\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\Users\osman\Desktop\Dota 2\0TUoqySTY\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NvdKTVgtv\References\SharpDX.dll</HintPath>
+      <HintPath>C:\Users\osman\Desktop\Dota 2\0TUoqySTY\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NvdKTVgtv\References\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\Users\osman\Desktop\Dota 2\0TUoqySTY\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -121,6 +121,8 @@
     <Compile Include="Menu\OnValueChangeEventArgs.cs" />
     <Compile Include="Menu\SavedSettings.cs" />
     <Compile Include="Menu\Themes\BlackTransparent.cs" />
+    <Compile Include="Menu\Themes\Blue.cs" />
+    <Compile Include="Menu\Themes\DarkRed.cs" />
     <Compile Include="Menu\Themes\Default.cs" />
     <Compile Include="Menu\Themes\Gray.cs" />
     <Compile Include="Menu\Themes\GrayTransparent.cs" />
