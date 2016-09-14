@@ -1,4 +1,17 @@
-﻿namespace Ensage.Common.Extensions.SharpDX
+﻿// <copyright file="Vector2Extensions.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Extensions.SharpDX
 {
     using System;
     using System.Collections.Generic;
@@ -37,10 +50,12 @@
             {
                 theta = theta + 360;
             }
+
             if (theta > 180)
             {
                 theta = 360 - theta;
             }
+
             return theta;
         }
 
@@ -64,9 +79,9 @@
         /// <param name="radius2">Circle 2 Radius</param>
         /// <returns>Array of <see cref="Vector2" /> that contains the intersection points.</returns>
         public static Vector2[] CircleCircleIntersection(
-            this Vector2 center1,
-            Vector2 center2,
-            float radius1,
+            this Vector2 center1, 
+            Vector2 center2, 
+            float radius1, 
             float radius2)
         {
             var d = center1.Distance(center2);
@@ -208,27 +223,6 @@
         }
 
         /// <summary>
-        ///     Returns the distance to the line segment.
-        /// </summary>
-        /// <param name="point">Extended SharpDX Vector2</param>
-        /// <param name="segmentStart">Vector2 Segment Start</param>
-        /// <param name="segmentEnd">Vector2 Segment End</param>
-        /// <param name="onlyIfOnSegment">Only if Segment</param>
-        /// <returns>The distance between the point and the segment.</returns>
-        public static float Distance(
-            this Vector2 point,
-            Vector2 segmentStart,
-            Vector2 segmentEnd,
-            bool onlyIfOnSegment = false)
-        {
-            var objects = point.ProjectOn(segmentStart, segmentEnd);
-
-            return (objects.IsOnSegment || onlyIfOnSegment == false)
-                       ? Vector2.Distance(objects.SegmentPoint, point)
-                       : float.MaxValue;
-        }
-
-        /// <summary>
         ///     Calculates the squared distance between two vectors.
         /// </summary>
         /// <param name="vector2">Extended SharpDX Vector2</param>
@@ -270,15 +264,36 @@
         /// <param name="onlyIfOnSegment">Only if Segment</param>
         /// <returns>The squared distance between the point and the segment.</returns>
         public static float DistanceSquared(
-            this Vector2 point,
-            Vector2 segmentStart,
-            Vector2 segmentEnd,
+            this Vector2 point, 
+            Vector2 segmentStart, 
+            Vector2 segmentEnd, 
             bool onlyIfOnSegment = false)
         {
             var objects = point.ProjectOn(segmentStart, segmentEnd);
 
-            return (objects.IsOnSegment || onlyIfOnSegment == false)
+            return objects.IsOnSegment || onlyIfOnSegment == false
                        ? Vector2.DistanceSquared(objects.SegmentPoint, point)
+                       : float.MaxValue;
+        }
+
+        /// <summary>
+        ///     Returns the distance to the line segment.
+        /// </summary>
+        /// <param name="point">Extended SharpDX Vector2</param>
+        /// <param name="segmentStart">Vector2 Segment Start</param>
+        /// <param name="segmentEnd">Vector2 Segment End</param>
+        /// <param name="onlyIfOnSegment">Only if Segment</param>
+        /// <returns>The distance between the point and the segment.</returns>
+        public static float DistanceToLineSegment(
+            this Vector2 point, 
+            Vector2 segmentStart, 
+            Vector2 segmentEnd, 
+            bool onlyIfOnSegment = false)
+        {
+            var objects = point.ProjectOn(segmentStart, segmentEnd);
+
+            return objects.IsOnSegment || onlyIfOnSegment == false
+                       ? Vector2.Distance(objects.SegmentPoint, point)
                        : float.MaxValue;
         }
 
@@ -344,9 +359,9 @@
         /// <param name="lineSegment2End">Line Segment 2 (End)</param>
         /// <returns>The intersection result, <seealso cref="IntersectionResult" /></returns>
         public static IntersectionResult Intersection(
-            this Vector2 lineSegment1Start,
-            Vector2 lineSegment1End,
-            Vector2 lineSegment2Start,
+            this Vector2 lineSegment1Start, 
+            Vector2 lineSegment1End, 
+            Vector2 lineSegment2Start, 
             Vector2 lineSegment2End)
         {
             double deltaACy = lineSegment1Start.Y - lineSegment2Start.Y;
@@ -395,7 +410,7 @@
             }
 
             return new IntersectionResult(
-                true,
+                true, 
                 new Vector2((float)(lineSegment1Start.X + r * deltaBAx), (float)(lineSegment1Start.Y + r * deltaBAy)));
         }
 
@@ -428,7 +443,7 @@
         /// <returns>The <see cref="bool" />.</returns>
         public static bool IsOrthogonal(this Vector2 vector2, Vector3 toVector3)
         {
-            return Math.Abs((vector2.X * toVector3.X) + (vector2.Y * toVector3.Y)) < float.Epsilon;
+            return Math.Abs(vector2.X * toVector3.X + vector2.Y * toVector3.Y) < float.Epsilon;
         }
 
         /// <summary>
@@ -506,7 +521,7 @@
         /// <returns>Magnitude in float-units</returns>
         public static float Magnitude(this Vector2 vector2)
         {
-            return (float)Math.Sqrt((vector2.X * vector2.X) + (vector2.Y * vector2.Y));
+            return (float)Math.Sqrt(vector2.X * vector2.X + vector2.Y * vector2.Y);
         }
 
         /// <summary>
@@ -548,7 +563,7 @@
         /// <returns>Perpendicular Vector2</returns>
         public static Vector2 Perpendicular(this Vector2 vector2, int offset = 0)
         {
-            return (offset == 0) ? new Vector2(-vector2.Y, vector2.X) : new Vector2(vector2.Y, -vector2.X);
+            return offset == 0 ? new Vector2(-vector2.Y, vector2.X) : new Vector2(vector2.Y, -vector2.X);
         }
 
         /// <summary>
@@ -560,7 +575,7 @@
         {
             if (Math.Abs(vector2.X - 0) <= (float)1e-9)
             {
-                return (vector2.Y > 0) ? 90 : (vector2.Y < 0) ? 270 : 0;
+                return vector2.Y > 0 ? 90 : vector2.Y < 0 ? 270 : 0;
             }
 
             var theta = (float)(Math.Atan(vector2.Y / vector2.X) * (180 / Math.PI));
@@ -592,9 +607,9 @@
             var ay = segmentStart.Y;
             var bx = segmentEnd.X;
             var by = segmentEnd.Y;
-            var rL = ((cx - ax) * (bx - ax) + (cy - ay) * (by - ay))
+            var rL = ((cx - ax) * (bx - ax) + (cy - ay) * (@by - ay))
                      / ((float)Math.Pow(bx - ax, 2) + (float)Math.Pow(by - ay, 2));
-            var pointLine = new Vector2(ax + rL * (bx - ax), ay + rL * (by - ay));
+            var pointLine = new Vector2(ax + rL * (bx - ax), ay + rL * (@by - ay));
             float rS;
             if (rL < 0)
             {
@@ -704,17 +719,17 @@
         ///     The <see cref="MovementCollisionInfo" />.
         /// </returns>
         public static MovementCollisionInfo VectorMovementCollision(
-            this Vector2 pointStartA,
-            Vector2 pointEndA,
-            float pointVelocityA,
-            Vector2 pointB,
-            float pointVelocityB,
+            this Vector2 pointStartA, 
+            Vector2 pointEndA, 
+            float pointVelocityA, 
+            Vector2 pointB, 
+            float pointVelocityB, 
             float delay = 0f)
         {
             return new[] { pointStartA, pointEndA }.VectorMovementCollision(
-                pointVelocityA,
-                pointB,
-                pointVelocityB,
+                pointVelocityA, 
+                pointB, 
+                pointVelocityB, 
                 delay);
         }
 
@@ -740,10 +755,10 @@
         ///     The <see cref="MovementCollisionInfo" />.
         /// </returns>
         public static MovementCollisionInfo VectorMovementCollision(
-            this Vector2[] pointA,
-            float pointVelocityA,
-            Vector2 pointB,
-            float pointVelocityB,
+            this Vector2[] pointA, 
+            float pointVelocityA, 
+            Vector2 pointB, 
+            float pointVelocityB, 
             float delay = 0f)
         {
             if (pointA.Length < 1)
@@ -751,17 +766,17 @@
                 return new MovementCollisionInfo();
             }
 
-            float sP1X = pointA[0].X,
-                  sP1Y = pointA[0].Y,
-                  eP1X = pointA[1].X,
-                  eP1Y = pointA[1].Y,
-                  sP2X = pointB.X,
+            float sP1X = pointA[0].X, 
+                  sP1Y = pointA[0].Y, 
+                  eP1X = pointA[1].X, 
+                  eP1Y = pointA[1].Y, 
+                  sP2X = pointB.X, 
                   sP2Y = pointB.Y;
 
             float d = eP1X - sP1X, e = eP1Y - sP1Y;
             float dist = (float)Math.Sqrt(d * d + e * e), t1 = float.NaN;
-            float s = Math.Abs(dist) > float.Epsilon ? pointVelocityA * d / dist : 0,
-                  k = (Math.Abs(dist) > float.Epsilon) ? pointVelocityA * e / dist : 0f;
+            float s = Math.Abs(dist) > float.Epsilon ? pointVelocityA * d / dist : 0, 
+                  k = Math.Abs(dist) > float.Epsilon ? pointVelocityA * e / dist : 0f;
 
             float r = sP2X - sP1X, j = sP2Y - sP1Y;
             var c = r * r + j * j;
@@ -785,35 +800,39 @@
                     {
                         if (Math.Abs(b) < float.Epsilon)
                         {
-                            t1 = (Math.Abs(c) < float.Epsilon) ? 0f : float.NaN;
+                            t1 = Math.Abs(c) < float.Epsilon ? 0f : float.NaN;
                         }
                         else
                         {
                             var t = -c / (2 * b);
-                            t1 = (pointVelocityB * t >= 0f) ? t : float.NaN;
+                            t1 = pointVelocityB * t >= 0f ? t : float.NaN;
                         }
                     }
                     else
                     {
                         var sqr = b * b - a * c;
-                        if (sqr >= 0)
+                        if (!(sqr >= 0))
                         {
-                            var nom = (float)Math.Sqrt(sqr);
-                            var t = (-nom - b) / a;
-                            t1 = pointVelocityB * t >= 0f ? t : float.NaN;
-                            t = (nom - b) / a;
-                            var t2 = (pointVelocityB * t >= 0f) ? t : float.NaN;
+                            return new MovementCollisionInfo(
+                                t1, 
+                                !float.IsNaN(t1) ? new Vector2(sP1X + s * t1, sP1Y + k * t1) : new Vector2());
+                        }
 
-                            if (!float.IsNaN(t2) && !float.IsNaN(t1))
+                        var nom = (float)Math.Sqrt(sqr);
+                        var t = (-nom - b) / a;
+                        t1 = pointVelocityB * t >= 0f ? t : float.NaN;
+                        t = (nom - b) / a;
+                        var t2 = pointVelocityB * t >= 0f ? t : float.NaN;
+
+                        if (!float.IsNaN(t2) && !float.IsNaN(t1))
+                        {
+                            if (t1 >= delay && t2 >= delay)
                             {
-                                if (t1 >= delay && t2 >= delay)
-                                {
-                                    t1 = Math.Min(t1, t2);
-                                }
-                                else if (t2 >= delay)
-                                {
-                                    t1 = t2;
-                                }
+                                t1 = Math.Min(t1, t2);
+                            }
+                            else if (t2 >= delay)
+                            {
+                                t1 = t2;
                             }
                         }
                     }
@@ -825,8 +844,8 @@
             }
 
             return new MovementCollisionInfo(
-                t1,
-                (!float.IsNaN(t1)) ? new Vector2(sP1X + s * t1, sP1Y + k * t1) : new Vector2());
+                t1, 
+                !float.IsNaN(t1) ? new Vector2(sP1X + s * t1, sP1Y + k * t1) : new Vector2());
         }
 
         #endregion

@@ -1,8 +1,214 @@
+// <copyright file="AbilityDatabase.json" company="EnsageSharp">
+//    Copyright (c) 2015 EnsageSharp.
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+
 {
-    "Abilities":[
+    "Abilities": [
+        //{
+        //    "AbilityName": "abaddon_borrowed_time",
+        //    "IsShield": true
+        //},
+        {
+            "AbilityName": "alchemist_chemical_rage",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "tidehunter_ravage",
+            "StringRadius": "radius",
+            "Speed": "speed",
+            "IsDisable": true
+        },
+        //{
+        //    "AbilityName": "alchemist_unstable_concoction"
+        //},
+        {
+            "AbilityName": "alchemist_unstable_concoction_throw",
+            //"IsDisable": true, //temp fix
+            "Speed": "movement_speed",
+            "StringRadius": "midair_explosion_radius"
+        },
+        {
+            "AbilityName": "alchemist_acid_spray",
+            "StringRadius": "radius",
+            "WeakensEnemy": true,
+            "IsSkillShot": true,
+            "MagicImmunityPierce": true,
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "faceless_void_chronosphere",
+            "StringRadius": "radius",
+            "IsDisable": true,
+            "IsSkillShot": true,
+            "TrueSight": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "faceless_void_time_walk",
+            "Speed": "speed",
+            "IsSkillShot": true,
+            "FakeCastRange": true,
+            "RealCastRange": "range"
+        },
+        {
+            "AbilityName": "faceless_void_time_dilation",
+            "StringRadius": "radius",
+            "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "antimage_blink",
+            "IsSkillShot": true,
+            "FakeCastRange": true,
+            "RealCastRange": "blink_range"
+        },
+        {
+            "AbilityName": "queenofpain_blink",
+            "IsSkillShot": true,
+            "FakeCastRange": true,
+            "RealCastRange": "blink_range"
+        },
+        {
+            "AbilityName": "antimage_mana_break",
+            "DamageString": "mana_per_hit",
+            //"DamageMultiplier": 0.6,
+            "ManaBurn": true
+        },
+        {
+            "AbilityName": "arc_warden_flux",
+            "IsSlow": true
+        },
+        {
+            "AbilityName": "arc_warden_magnetic_field",
+            //"IsShield": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "arc_warden_spark_wraith",
+            "StringRadius": "radius",
+            "IsSkillShot": true,
+            "IsNuke": true,
+            "AdditionalDelay": 3,
+            "DamageString": "spark_damage"
+        },
+        //{
+        //    "AbilityName": "arc_warden_tempest_double",
+        //    "IsBuff": true
+        //},
+        {
+            "AbilityName": "broodmother_spin_web",
+            "IsInvis": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "broodmother_insatiable_hunger",
+            "IsBuff": true,
+            "BonusDamageString": "bonus_damage",
+            "AADamage": true
+        },
+        {
+            "AbilityName": "centaur_stampede",
+            "IsBuff": true,
+            "StringRadius": "radius"
+        },
+        //{
+        //    "AbilityName": "clinkz_death_pact",
+        //    "IsBuff": true // i guess its not regular buff
+        //},
+        {
+            "AbilityName": "clinkz_searing_arrows",
+            "IsHarras": true,
+            "BonusDamageString": "damage_bonus",
+            "MagicImmunityPierce": true,
+            "AADamage": true
+        },
+        {
+            "AbilityName": "clinkz_wind_walk",
+            "IsInivs": true
+        },
+        {
+            "AbilityName": "dazzle_weave",
+            "IsBuff": true,
+            "WeakensEnemy": true,
+            "IsSkillShot": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "death_prophet_exorcism",
+            "StringRadius": "radius",
+            "Speed": "spirit_speed",
+            "MagicImmunityPierce": true,
+            "DamageString": "min_damage"
+        },
+        {
+            "AbilityName": "disruptor_static_storm",
+            "IsSilence": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true,
+            "DamageString": "damage_max"
+        },
+        {
+            "AbilityName": "dragon_knight_elder_dragon_form",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "drow_ranger_frost_arrows",
+            "IsHarras": true,
+            "IsSlow": true
+        },
+        {
+            "AbilityName": "drow_ranger_marksmanship",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "earth_spirit_magnetize",
+            "StringRadius": "cast_radius",
+            "DamageString": "damage_per_second"
+        },
         {
             "AbilityName": "dark_seer_ion_shell",
+            "StringRadius": "radius",
+            "IsBuff": true,
+            "DamageString": "damage_per_second"
+        },
+        {
+            "AbilityName": "witch_doctor_paralyzing_cask",
+            "IsDisable": true,
+            "Speed": "speed",
+            "StringRadius": "bounce_range"
+        },
+        {
+            "AbilityName": "witch_doctor_voodoo_restoration",
+            //"IsHeal": true, //temp fix
             "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "witch_doctor_maledict",
+            "WeakensEnemy": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "witch_doctor_death_ward",
+            //"IsNuke": true,
+            "IsSkillShot": true,
+            "DamageString": "damage",
+            "StringRadius": "bounce_radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "magnataur_shockwave",
@@ -10,7 +216,7 @@
             "IsSkillShot": true,
             "Speed": "shock_speed",
             "Width": "shock_width",
-            "DamageString":  "shock_damage"
+            "DamageString": "shock_damage"
         },
         {
             "AbilityName": "ursa_earthshock",
@@ -19,34 +225,53 @@
         },
         {
             "AbilityName": "chaos_knight_reality_rift",
-            "IsNuke": true
+            "IsNuke": true,
+            "DamageString": "bonus_damage",
+            "AADamage": true
+        },
+        {
+            "AbilityName": "chaos_knight_phantasm",
+            "IsBuff": true
         },
         {
             "AbilityName": "skywrath_mage_mystic_flare",
+            //"IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.2,
-            "Width": "radius"
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "death_prophet_carrion_swarm",
             "IsNuke": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Distance": "range",
+            "Width": "start_radius",
+            "EndWidth": "end_radius",
+            "Speed": "speed"
         },
         {
             "AbilityName": "zuus_lightning_bolt",
             "IsDisable": true,
             "IsNuke": true,
-            "StringRadius": "spread_aoe"
+            "StringRadius": "spread_aoe",
+            "TrueSight": true
+        },
+        {
+            "AbilityName": "zuus_static_field",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "axe_berserkers_call",
             "IsDisable": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "beastmaster_wild_axes",
             "IsNuke": true,
-            "DamageMultiplier": 2
+            "DamageMultiplier": 2,
+            "IsSkillShot": true,
+            "MagicImmunityPierce": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "puck_waning_rift",
@@ -55,7 +280,29 @@
             "StringRadius": "radius"
         },
         {
-            "AbilityName": "lone_druid_rabid"
+            "AbilityName": "puck_dream_coil",
+            "IsSkillShot": true,
+            "IsDisable": true,
+            "StringRadius": "coil_radius"
+            //"DamageString": "coil_break_damage",
+            //"DamageScepterString": "coil_break_damage_scepter"
+        },
+        //{
+        //    "AbilityName": "puck_phase_shift"
+        //},
+        {
+            "AbilityName": "lone_druid_rabid",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "lone_druid_savage_roar",
+            //"IsDisable": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "lone_druid_savage_roar_bear",
+            //"IsDisable": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "rattletrap_battery_assault",
@@ -67,45 +314,83 @@
             "AbilityName": "sven_storm_bolt",
             "IsDisable": true,
             "IsNuke": true,
-            "Speed": "bolt_speed"
+            "Speed": "bolt_speed",
+            "StringRadius": "bolt_aoe"
+        },
+        {
+            "AbilityName": "sven_great_cleave",
+            "StringRadius": "great_cleave_radius"
+        },
+        {
+            "AbilityName": "sven_warcry",
+            "StringRadius": "warcry_radius",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "sven_gods_strength",
+            "IsBuff": true
         },
         {
             "AbilityName": "chen_test_of_faith",
-            "IsNuke": true
+            "IsNuke": true,
+            "DamageString": "damage_min"
         },
+        //{
+        //   "AbilityName": "chen_test_of_faith_teleport",
+        //    "IsShield": true
+        //},
         {
             "AbilityName": "phantom_assassin_stifling_dagger",
-            "IsSlow": true,
+            "IsHarras": true,
             "IsNuke": true,
             "Speed": "dagger_speed",
-            "DamageString":  "hero_damage"
+            "DamageString": "base_damage",
+            "AADamage": true
         },
         {
-            "AbilityName": "bounty_hunter_track"
+            "AbilityName": "bounty_hunter_track",
+            "WeakensEnemy": true,
+            "TrueSight": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "axe_battle_hunger",
-            "IsSlow": true
+            "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "axe_counter_helix",
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "storm_spirit_electric_vortex",
             "IsDisable": true
         },
         {
+            "AbilityName": "storm_spirit_overload",
+            "StringRadius": "overload_aoe"
+        },
+        {
             "AbilityName": "ember_spirit_sleight_of_fist",
             "IsNuke": true,
             "IsSkillShot": true,
             "StringRadius": "radius",
+            "MagicImmunityPierce": true,
             "BonusDamageString": "bonus_hero_damage",
             "AADamage": true
         },
         {
             "AbilityName": "batrider_flamebreak",
             "IsDisable": true,
-            "IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.3,
-            "DamageString": "damage"
+            "Speed": "speed",
+            "DamageString": "damage_total_tooltip",
+            "StringRadius": "explosion_radius"
+        },
+        {
+            "AbilityName": "batrider_firefly",
+            "DamageString": "damage_per_second",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "mirana_arrow",
@@ -113,8 +398,17 @@
             "IsSkillShot": true,
             "Speed": "arrow_speed",
             "Width": "arrow_width",
-            "AllyBlock": true,
             "EnemyBlock": true
+        },
+        {
+            "AbilityName": "mirana_invis",
+            "IsInvis": true,
+            "Radius": 999999
+        },
+        {
+            "AbilityName": "mirana_leap",
+            "FakeCastRange": true,
+            "RealCastRange": "leap_distance"
         },
         {
             "AbilityName": "abaddon_aphotic_shield",
@@ -128,7 +422,8 @@
         {
             "AbilityName": "ancient_apparition_cold_feet",
             "IsDisable": true,
-            "AdditionalDelay": 2.01
+            "AdditionalDelay": 2.01,
+            "DamageString": "damage"
         },
         {
             "AbilityName": "rattletrap_hookshot",
@@ -137,11 +432,15 @@
             "Width": "latch_radius",
             "AllyBlock": true,
             "EnemyBlock": true,
-            "MagicImmunityPierce": true
+            "MagicImmunityPierce": true,
+            "Speed": "speed",
+            "DamageString": "damage"
         },
         {
             "AbilityName": "shadow_shaman_mass_serpent_ward",
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "DamageString": "damage_min",
+            "DamageScepterString": "damage_min_scepter"
         },
         {
             "AbilityName": "ogre_magi_unrefined_fireblast",
@@ -150,8 +449,16 @@
         },
         {
             "AbilityName": "oracle_fortunes_end",
+            "IsPurge": true,
             "IsDisable": true,
-            "Speed": "bolt_speed"
+            "Speed": "bolt_speed",
+            "DamageString": "damage",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "oracle_fates_edict",
+            //"IsShield": true,
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "shredder_timber_chain",
@@ -162,93 +469,149 @@
             "DamageString": "damage"
         },
         {
-            "AbilityName": "doom_bringer_lvl_death",
-            "IsDisable": true,
-            "IsNuke": true,
-            "DamageString": "damage"
-        },
-        {
             "AbilityName": "crystal_maiden_freezing_field",
-            "AdditionalDelay": -0.1
+            "WeakensEnemy": true,
+            "StringRadius": "radius",
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter"
         },
         {
             "AbilityName": "crystal_maiden_crystal_nova",
             "IsSlow": true,
-            "IsNuke": true
+            "IsNuke": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
         },
         {
             "AbilityName": "lich_frost_armor",
             "IsShield": true
         },
         {
+            "AbilityName": "lich_chain_frost",
+            "IsDisable": true,
+            "IsNuke": true,
+            "Speed": "projectile_speed",
+            "StringRadius": "jump_range",
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter"
+        },
+        {
             "AbilityName": "enigma_malefice",
-            "IsDisable": true
+            "IsDisable": true,
+            "DamageString": "damage"
         },
         {
             "AbilityName": "elder_titan_earth_splitter",
-            "IsSkillShot": true
-        },
-        {
-            "AbilityName": "shredder_return_chakram_2"
+            "IsSkillShot": true,
+            "IsDisable": true,
+            "Width": "crack_width",
+            "AdditionalDelay": 3.14,
+            "MagicImmunityPierce": true,
+            "Speed": "speed",
+            "Distance": "crack_distance"
         },
         {
             "AbilityName": "zuus_thundergods_wrath",
             "IsNuke": true,
-            "AdditionalDelay": -0.1,
+            "OnlyForKillSteal": true,
             "DamageString": "damage",
             "DamageScepterString": "damage_scepter",
-            "Radius":  99999
-        },
-        {
-            "AbilityName": "shredder_chakram_2",
-            "IsSlow": true,
-            "IsNuke": true,
-            "IsSkillShot": true,
-            "AdditionalDelay": 0.5,
-            "StringRadius": "radius",
-            "Speed": "speed",
-            "DamageString": "pass_damage",
-            "DamageMultiplier": 2
+            "TrueSight": true,
+            "Radius": 999999
         },
         {
             "AbilityName": "phantom_assassin_phantom_strike",
-            "IsNuke": true
+            "IsNuke": true,
+            "AADamage": true
+        },
+        {
+            "AbilityName": "phantom_assassin_blur",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "pugna_decrepify",
-            "IsSlow": true
+            "IsShield": true,
+            "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "pugna_nether_ward",
+            "IsSkillShot": true,
+            "WeakensEnemy": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "pugna_life_drain",
+            "WeakensEnemy": true,
+            "DamageString": "health_drain",
+            "DamageScepterString": "health_drain_scepter"
         },
         {
             "AbilityName": "omniknight_purification",
             "IsNuke": true,
             "IsHeal": true,
             "StringRadius": "radius",
-            "DamageString":  "heal"
+            "DamageString": "heal"
         },
         {
-            "AbilityName": "keeper_of_the_light_blinding_light",
+            "AbilityName": "juggernaut_blade_fury",
+            "IsShield": true,
+            "StringRadius": "blade_fury_radius"
+        },
+        {
+            "AbilityName": "juggernaut_healing_ward",
+            "IsHeal": true,
+            "StringRadius": "healing_ward_aura_radius",
             "IsSkillShot": true
         },
         {
+            "AbilityName": "juggernaut_omni_slash",
+            //"IsNuke": true,
+            "StringRadius": "omni_slash_radius",
+            "DamageString": "omni_slash_damage",
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "keeper_of_the_light_blinding_light",
+            "IsSkillShot": true,
+            "IsDisable": true,
+            "StringRadius": "radius"
+        },
+        {
             "AbilityName": "queenofpain_shadow_strike",
-            "IsSlow": true,
-            "Speed": "projectile_speed"
+            "IsHarras": true,
+            "Speed": "projectile_speed",
+            "DamageString": "strike_damage"
         },
         {
             "AbilityName": "shredder_chakram",
-            "IsSlow": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.5,
-            "StringRadius": "radius",
+            "Width": "radius",
             "Speed": "speed",
             "DamageString": "pass_damage",
             "DamageMultiplier": 2
         },
         {
+            "AbilityName": "shredder_chakram_2",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Width": "radius",
+            "Speed": "speed",
+            "DamageString": "pass_damage",
+            "DamageMultiplier": 2
+        },
+        //{
+        //    "AbilityName": "shredder_return_chakram"
+        //},
+        //{
+        //    "AbilityName": "shredder_return_chakram_2"
+        //},
+        {
             "AbilityName": "undying_soul_rip",
             "IsNuke": true,
-            "IsSkillShot": true
+            "IsHeal": true,
+            "StringRadius": "radius",
+            "DamageString": "damage_per_unit"
         },
         {
             "AbilityName": "invoker_sun_strike",
@@ -256,15 +619,33 @@
             "IsSkillShot": true,
             "AdditionalDelay": 1.7,
             "DamageString": "damage",
-            "SpellLevel": "invoker_exort"
+            "SpellLevel": "invoker_exort",
+            "MagicImmunityPierce": true,
+            "StringRadius": "area_of_effect"
         },
         {
             "AbilityName": "winter_wyvern_splinter_blast",
-            "IsSlow": true
+            "IsNuke": true,
+            "Speed": "projectile_speed",
+            "StringRadius": "split_radius"
+        },
+        {
+            "AbilityName": "winter_wyvern_arctic_burn",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "winter_wyvern_cold_embrace",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "winter_wyvern_winters_curse",
+            "IsDisable": true,
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "dark_seer_surge",
-            "IsShield": true
+            "IsBuff": true
         },
         {
             "AbilityName": "mirana_starfall",
@@ -277,25 +658,65 @@
             "IsNuke": true
         },
         {
+            "AbilityName": "luna_lunar_blessing",
+            "StringRadius": "radius",
+            "BonusDamageString": "bonus_damage"
+        },
+        {
+            "AbilityName": "luna_eclipse",
+            //"IsNuke": true,
+            //"SpellLevel": "luna_lucent_beam",
+            "StringRadius": "radius"
+        },
+        {
             "AbilityName": "nyx_assassin_mana_burn",
             "IsNuke": true,
             "ManaBurn": true
         },
         {
+            "AbilityName": "necronomicon_warrior_sight",
+            "TrueSight": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "necronomicon_warrior_mana_burn",
+            "ManaBurn": true
+        },
+        {
+            "AbilityName": "nyx_assassin_spiked_carapace",
+            "IsShield": true
+        },
+        {
+            "AbilityName": "nyx_assassin_vendetta",
+            //"IsShield": true,
+            "IsInvis": true,
+            "BonusDamageString": "bonus_damage",
+            "AADamage": true
+        },
+        {
+            "AbilityName": "nyx_assassin_burrow",
+            "IsInvis": true
+        },
+        {
             "AbilityName": "dark_seer_vacuum",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString": "damage"
+            "IsSkillShot": true,
+            "DamageString": "damage",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "rattletrap_power_cogs",
             "IsDisable": true,
-            "AdditionalDelay": 0.1,
-            "Radius": 0.1
+            "StringRadius": "cogs_radius"
         },
         {
             "AbilityName": "dark_seer_wall_of_replica",
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Width": "width",
+            "DamageString": "damage",
+            "DamageScepterString": "tooltip_outgoing_scepter",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "ogre_magi_fireblast",
@@ -305,21 +726,46 @@
         {
             "AbilityName": "riki_blink_strike",
             "IsNuke": true,
-            "DamageString": "bonus_damage"
+            "DamageString": "bonus_damage",
+            "AADamage": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "riki_permanent_invisibility",
+            "IsInvis": true
+        },
+        {
+            "AbilityName": "riki_tricks_of_the_trade",
+            "IsNuke": true,
+            "StringRadius": "range",
+            "AADamage": true
         },
         {
             "AbilityName": "invoker_cold_snap",
             "IsDisable": true
         },
         {
-            "AbilityName": "wisp_spirits"
+            "AbilityName": "invoker_ghost_walk",
+            "IsInvis": true
         },
+        //{
+        //    "AbilityName": "wisp_spirits"
+        //},
         {
-            "AbilityName": "warlock_fatal_bonds"
+            "AbilityName": "warlock_fatal_bonds",
+            "WeakensEnemy": true,
+            "StringRadius": "search_aoe",
+            "IsSkillShot": true
         },
         {
             "AbilityName": "oracle_purifying_flames",
-            "OnlyForKillSteal": true
+            "IsNuke": true,
+            "OnlyForKillSteal": true,
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "oracle_false_promise",
+            "IsShield": true
         },
         {
             "AbilityName": "sandking_burrowstrike",
@@ -327,6 +773,17 @@
             "IsNuke": true,
             "Speed": "burrow_speed",
             "Width": "burrow_width"
+        },
+        {
+            "AbilityName": "sandking_sand_storm",
+            "IsInvis": true,
+            "StringRadius": "sand_storm_radius"
+        },
+        {
+            "AbilityName": "sandking_epicenter",
+            //"IsNuke": true,
+            "Radius": 475, // dynamic radius
+            "DamageString": "epicenter_damage"
         },
         {
             "AbilityName": "pudge_meat_hook",
@@ -341,48 +798,81 @@
         },
         {
             "AbilityName": "keeper_of_the_light_mana_leak",
-            "IsDisable": true
+            "WeakensEnemy": true
         },
         {
-            "AbilityName": "keeper_of_the_light_spirit_form_illuminate"
+            "AbilityName": "keeper_of_the_light_spirit_form_illuminate",
+            "Width": "radius",
+            "IsSkillShot": true,
+            "Speed": "speed",
+            "DamageString": "damage_per_second",
+            "Distance": "range"
         },
         {
             "AbilityName": "templar_assassin_meld",
+            "IsInvis": true,
             "IsNuke": true,
-            "DamageString": "bonus_damage"
+            "DamageString": "bonus_damage",
+            "AADamage": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "templar_assassin_psi_blades",
+            "StringRadius": "attack_spill_range",
+            "Width": "attack_spill_width",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "disruptor_glimpse",
             "IsDisable": true
         },
         {
-            "AbilityName": "disruptor_thunder_strike"
+            "AbilityName": "keeper_of_the_light_chakra_magic",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "disruptor_thunder_strike",
+            "IsHarras": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "disruptor_kinetic_field",
             "IsSkillShot": true,
-            "AdditionalDelay": 1.2
+            "AdditionalDelay": 1.2,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "ember_spirit_searing_chains",
             "IsDisable": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "DamageString": "total_damage_tooltip"
         },
         {
-            "AbilityName": "silencer_curse_of_the_silent"
+            "AbilityName": "silencer_curse_of_the_silent",
+            "WeakensEnemy": true,
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "DamageString": "damage"
         },
         {
-            "AbilityName": "venomancer_plague_ward"
+            "AbilityName": "silencer_glaives_of_wisdom",
+            "IsHarras": true,
+            "AADamage": true,
+            "BonusDamageString": "intellect_damage_pct"
         },
         {
-            "AbilityName": "phoenix_icarus_dive_stop"
+            "AbilityName": "venomancer_plague_ward",
+            "IsHarras": true,
+            "IsSkillShot": true
         },
+        //{
+        //    "AbilityName": "phoenix_icarus_dive_stop"
+        //},
         {
             "AbilityName": "phoenix_icarus_dive",
-            "IsSlow": true
-        },
-        {
-            "AbilityName": "puck_ethereal_jaunt"
+            "StringRadius": "hit_radius",
+            "FakeCastRange": true,
+            "RealCastRange": "dash_length"
         },
         {
             "AbilityName": "enchantress_enchant",
@@ -390,19 +880,40 @@
         },
         {
             "AbilityName": "treant_leech_seed",
-            "IsSlow": true
+            "IsSlow": true,
+            "DamageString": "leech_damage"
+        },
+        {
+            "AbilityName": "venomancer_poison_nova",
+            "WeakensEnemy": true,
+            "StringRadius": "radius",
+            "Speed": "speed",
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter" 
+        },
+        {
+            "AbilityName": "phoenix_fire_spirits",
+            "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "phoenix_supernova",
+            "IsShield": true
         },
         {
             "AbilityName": "phoenix_launch_fire_spirit",
-            "IsSlow": true,
+            "WeakensEnemy": true,
             "IsSkillShot": true,
-            "Speed": "spirit_speed"
+            "Speed": "spirit_speed",
+            "StringRadius": "radius",
+            "DamageString": "dps"
         },
         {
             "AbilityName": "nyx_assassin_impale",
             "IsDisable": true,
             "IsNuke": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Width": "width",
+            "Speed": "speed"
         },
         {
             "AbilityName": "tidehunter_gush",
@@ -412,32 +923,44 @@
         },
         {
             "AbilityName": "shadow_demon_demonic_purge",
-            "IsSlow": true
+            "IsSlow": true,
+            "IsPurge": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "puck_illusory_orb",
             "IsNuke": true,
             "IsSkillShot": true,
-            "Speed": "orb_speed"
+            "Speed": "orb_speed",
+            "Width": "radius",
+            "FakeCastRange": true,
+            "RealCastRange": "max_distance"
         },
         {
             "AbilityName": "legion_commander_duel",
-            "IsDisable": true
+            "IsDisable": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "jakiro_dual_breath",
-            "IsSlow": true,
-            "IsSkillShot": true
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "Speed": "speed",
+            "Width": "start_radius",
+            "EndWidth": "end_radius",
+            "Distance": "range",
+            "DamageString": "burn_damage"
         },
         {
             "AbilityName": "lina_light_strike_array",
             "IsDisable": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.5
+            "AdditionalDelay": 0.5,
+            "StringRadius": "light_strike_array_aoe"
         },
         {
             "AbilityName": "clinkz_strafe",
-            "Radius": 0
+            "IsBuff": true
         },
         {
             "AbilityName": "shadow_demon_disruption",
@@ -449,55 +972,136 @@
             "IsDisable": true,
             "StringRadius": "crush_radius"
         },
-        {
-            "AbilityName": "terrorblade_conjure_image"
-        },
+        //{
+        //    "AbilityName": "terrorblade_conjure_image"
+        //},
         {
             "AbilityName": "terrorblade_metamorphosis",
-            "Radius": 0
+            "IsBuff": true,
+            "BonusDamageString": "bonus_damage"
         },
         {
             "AbilityName": "slark_dark_pact",
-            "StringRadius": "radius"
+            "IsNuke": true,
+            "IsShield": true,
+            "StringRadius": "radius",
+            "AdditionalDelay": 1.5,
+            "DamageString": "total_damage"
         },
         {
             "AbilityName": "terrorblade_reflection",
-            "IsSlow": true
+            "IsSlow": true,
+            "StringRadius": "range"
         },
         {
-            "AbilityName": "shadow_demon_soul_catcher"
+            "AbilityName": "shadow_demon_soul_catcher",
+            "WeakensEnemy": true,
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "undying_tombstone_zombie_aura",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "terrorblade_sunder",
-            "IsShield": true
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "bloodseeker_rupture",
-            "MagicImmunityPierce": true
+            "WeakensEnemy": true,
+            "MagicImmunityPierce": true,
+            "DamageString": "movement_damage_pct"
         },
         {
             "AbilityName": "undying_tombstone",
             "IsSkillShot": true,
+            "StringRadius": "radius",
+            "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "undying_flesh_golem",
+            "IsBuff": true,
             "StringRadius": "radius"
         },
         {
             "AbilityName": "undying_decay",
             "IsNuke": true,
+            //"IsHarras": true,
             "IsSkillShot": true,
-            "DamageString":  "decay_damage"
+            "StringRadius": "radius",
+            "DamageString": "decay_damage"
         },
         {
             "AbilityName": "gyrocopter_flak_cannon",
-            "StringRadius": "radius"
+            "IsBuff": true,
+            "StringRadius": "radius",
+            "Speed": "projectile_speed"
+        },
+        {
+            "AbilityName": "gyrocopter_call_down",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "DamageString": "damage_first",
+            "AdditionalDelay": 2
         },
         {
             "AbilityName": "spectre_spectral_dagger",
-            "IsSlow": true,
             "IsNuke": true,
-            "IsSkillShot": true,
-            "StringRadius": "dagger_radius",
-            "DamageString": "damage"
+            "Width": "dagger_radius",
+            "DamageString": "damage",
+            "Speed": "speed",
+            "MagicImmunityPierce": true
         },
+        {
+            "AbilityName": "techies_suicide",
+            "StringRadius": "small_radius",
+            "DamageString": "damage",
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "techies_stasis_trap",
+            "IsDisable": true,
+            "StringRadius": "activation_radius",
+            "AdditionalDelay": 1.5,
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "techies_land_mines",
+            "IsNuke": true,
+            "StringRadius": "small_radius",
+            "DamageString": "damage",
+            "AdditionalDelay": 0.8,
+            "MagicImmunityPierce": true,
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "techies_remote_mines",
+            "IsNuke": true,
+            "StringRadius": "radius",
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "techies_focused_detonate",
+            "StringRadius": "radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "techies_minefield_sign",
+            "StringRadius": "aura_radius",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "spectre_desolate",
+            "StringRadius": "radius",
+            "BonusDamageString": "bonus_damage"
+        },
+        //{
+        //    "AbilityName": "spectre_haunt"
+        //},
         {
             "AbilityName": "naga_siren_rip_tide",
             "IsNuke": true,
@@ -506,104 +1110,223 @@
         {
             "AbilityName": "visage_soul_assumption",
             "IsNuke": true,
+            "Speed": "bolt_speed",
             "DamageString": "soul_base_damage"
+        },
+        {
+            "AbilityName": "visage_summon_familiars_stone_form",
+            "IsDisable": true,
+            "StringRadius": "stun_radius",
+            "AdditionalDelay": 0.85,
+            "DamageString": "stun_damage"
+        },
+        {
+            "AbilityName": "naga_siren_song_of_the_siren",
+            "IsShield": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "spirit_breaker_empowering_haste",
+            "StringRadius": "aura_radius"
+        },
+        //{
+        //    "AbilityName": "wisp_tether",
+        //    "IsBuff": true
+        //},
+        //{
+        //    "AbilityName": "wisp_overcharge",
+        //    "IsBuff": true
+        //},
+        {
+            "AbilityName": "viper_viper_strike",
+            "IsSlow": true,
+            "Speed": "projectile_speed",
+            "DamageString": "damage",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "earthshaker_echo_slam",
             "IsDisable": true,
-            "Radius": 0
+            "IsNuke": true,
+            "StringRadius": "echo_slam_damage_range"
         },
         {
             "AbilityName": "invoker_ice_wall",
             "IsSlow": true,
-            "IsSkillShot": true,
-            "AdditionalDelay": 1,
-            "Radius": 1
+            "SpellLevel": "invoker_quas"
         },
         {
             "AbilityName": "tinker_laser",
-            "IsNuke": true
+            "IsNuke": true,
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "rattletrap_rocket_flare",
             "IsNuke": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "Speed": "speed"
         },
         {
             "AbilityName": "invoker_forge_spirit",
-            "Radius": 0
+            "IsBuff": true
         },
         {
             "AbilityName": "weaver_the_swarm",
+            "WeakensEnemy": true,
             "IsSkillShot": true,
-            "StringRadius": "radius"
+            "Width": "spawn_radius",
+            "Speed": "speed",
+            "MagicImmunityPierce": true
         },
         {
-            "AbilityName": "ember_spirit_fire_remnant"
+            "AbilityName": "ember_spirit_fire_remnant",
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "DamageString": "damage"
         },
         {
             "AbilityName": "earthshaker_fissure",
             "IsDisable": true,
             "IsNuke": true,
-            "AdditionalDelay": -0.1
+            "IsSkillShot": true,
+            "Width": "fissure_radius"
+        },
+        {
+            "AbilityName": "earthshaker_aftershock",
+            "StringRadius": "aftershock_range"
         },
         {
             "AbilityName": "magnataur_skewer",
             "IsDisable": true,
             "IsSkillShot": true,
             "Speed": "skewer_speed",
-            "Width": "skewer_radius"
+            "Width": "skewer_radius",
+            "FakeCastRange": true,
+            "RealCastRange": "range",
+            "DamageString": "skewer_damage"
+        },
+        {
+            "AbilityName": "magnataur_reverse_polarity",
+            "IsDisable": true,
+            "DamageString": "polarity_damage",
+            "StringRadius": "pull_radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "beastmaster_primal_roar",
-            "IsDisable": true
+            "IsDisable": true,
+            "DamageString": "damage",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "tusk_walrus_kick",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString":  "damage"
+            "DamageString": "damage",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "brewmaster_thunder_clap",
-            "IsSlow": true,
             "IsNuke": true,
             "StringRadius": "radius",
             "DamageString": "damage"
         },
         {
             "AbilityName": "bane_nightmare",
-            "IsDisable": true,
-            "AdditionalDelay": 1
+            "IsDisable": true
         },
         {
-            "AbilityName": "keeper_of_the_light_illuminate"
+            "AbilityName": "keeper_of_the_light_illuminate",
+            "Width": "radius",
+            "IsSkillShot": true,
+            "Speed": "speed",
+            "DamageString": "damage_per_second",
+            "Distance": "range"
+        },
+        {
+            "AbilityName": "nevermore_shadowraze1",
+            "IsNuke": true,
+            "Width": "shadowraze_radius",
+            "FakeCastRange": true,
+            "RealCastRange": "shadowraze_range"
+        },
+        {
+            "AbilityName": "nevermore_shadowraze2",
+            "IsNuke": true,
+            "Width": "shadowraze_radius",
+            "FakeCastRange": true,
+            "RealCastRange": "shadowraze_range"
         },
         {
             "AbilityName": "nevermore_shadowraze3",
             "IsNuke": true,
-            "StringRadius": "shadowraze_range"
+            "Width": "shadowraze_radius",
+            "FakeCastRange": true,
+            "RealCastRange": "shadowraze_range"
         },
         {
             "AbilityName": "windrunner_powershot",
             "IsNuke": true,
             "IsSkillShot": true,
-            "Speed": "arrow_speed"
+            "Speed": "arrow_speed",
+            "Width": "arrow_width"
+        },
+        {
+            "AbilityName": "windrunner_windrun",
+            "IsShield": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "windrunner_focusfire",
+            //"IsNuke": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "tusk_ice_shards",
             "IsNuke": true,
             "IsSkillShot": true,
             "Speed": "shard_speed",
-            "DamageString": "shard_damage"
+            "DamageString": "shard_damage",
+            "Width": "shard_width"
         },
         {
             "AbilityName": "brewmaster_drunken_haze",
-            "IsSlow": true
+            "IsSlow": true,
+            "StringRadius": "radius",
+            "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "brewmaster_primal_split",
+            "IsShield": true
+        },
+        {
+            "AbilityName": "brewmaster_earth_hurl_boulder",
+            "IsDisable": true,
+            "Speed": "speed",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "brewmaster_storm_dispel_magic",
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "brewmaster_storm_cyclone",
+            "IsDisable": true
+        },
+        {
+            "AbilityName": "brewmaster_storm_wind_walk",
+            "IsBuff": true,
+            "BonusDamageString": "bonus_damage"
+        },
+        {
+            "AbilityName": "necrolyte_heartstopper_aura",
+            "StringRadius": "aura_radius"
         },
         {
             "AbilityName": "leshrac_lightning_storm",
-            "IsSlow": true,
             "IsNuke": true,
             "StringRadius": "radius"
         },
@@ -611,10 +1334,14 @@
             "AbilityName": "necrolyte_death_pulse",
             "IsNuke": true,
             "IsHeal": true,
-            "StringRadius": "area_of_effect"
+            "StringRadius": "area_of_effect",
+            "Speed": "projectile_speed"
         },
         {
-            "AbilityName": "invoker_alacrity"
+            "AbilityName": "invoker_alacrity",
+            "IsBuff": true,
+            "BonusDamageString": "bonus_damage",
+            "SpellLevel": "invoker_exort"
         },
         {
             "AbilityName": "shadow_shaman_voodoo",
@@ -623,118 +1350,193 @@
         {
             "AbilityName": "pugna_nether_blast",
             "IsNuke": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "AdditionalDelay": 0.9
         },
         {
             "AbilityName": "morphling_adaptive_strike",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString": "damage_base"
+            "DamageString": "damage_base",
+            "Speed": "projectile_speed"
         },
+        //{
+        //    "AbilityName": "morphling_morph_agi"
+        //},
+        //{
+        //    "AbilityName": "morphling_morph_str",
+        //    "IsHeal": true // "IsShield": true ?
+        //},
         {
             "AbilityName": "lone_druid_true_form",
             "IsShield": true,
-            "Radius": 0
-        },
-        {
-            "AbilityName": "nevermore_shadowraze2",
-            "IsNuke": true,
-            "StringRadius": "shadowraze_range"
+            "AdditionalDelay": 1.933
         },
         {
             "AbilityName": "storm_spirit_ball_lightning",
             "IsSkillShot": true,
-            "Speed": "ball_lightning_move_speed"
+            "Speed": "ball_lightning_move_speed",
+            "Width": "ball_lightning_aoe"
         },
         {
             "AbilityName": "tusk_snowball",
             "IsDisable": true,
             "Speed": "snowball_speed",
             "DamageString": "snowball_damage",
-            "IsNuke": true
+            "IsNuke": true,
+            "StringRadius": "snowball_radius"
         },
-        {
-            "AbilityName": "phoenix_sun_ray_toggle_move"
-        },
+        //{
+        //    "AbilityName": "phoenix_sun_ray_toggle_move"
+        //},
         {
             "AbilityName": "doom_bringer_scorched_earth",
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "IsBuff": true,
+            "IsHeal": true,
+            "DamageString": "damage_per_second"
         },
         {
             "AbilityName": "meepo_earthbind",
-            "Width": "radius",
+            "StringRadius": "radius",
             "Speed": "speed",
             "IsSkillShot": true,
             "IsDisable": true
         },
         {
-            "AbilityName": "phoenix_sun_ray",
-            "OnlyForKillSteal": true
+            "AbilityName": "meepo_poof",
+            "IsNuke": true,
+            "StringRadius": "radius"
         },
         {
-            "AbilityName": "phoenix_fire_spirits",
-            "IsSlow": true,
-            "IsSkillShot": true,
-            "Speed": "spirit_speed"
+            "AbilityName": "phoenix_sun_ray",
+            "OnlyForKillSteal": true,
+            "Width": "radius",
+            "DamageString": "base_dmg"
+        },
+        {
+            "AbilityName": "treant_natures_guise",
+            "IsInvis": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "silencer_last_word",
-            "AdditionalDelay": 4,
+            //"AdditionalDelay": 4,
             "IsNuke": true,
             "DamageString": "damage"
         },
         {
+            "AbilityName": "silencer_global_silence",
+            "IsSilence": true,
+            "MagicImmunityPierce": true,
+            "Radius": 999999
+        },
+        {
             "AbilityName": "phantom_lancer_spirit_lance",
-            "IsSlow": true,
             "IsNuke": true,
             "Speed": "lance_speed"
         },
         {
+            "AbilityName": "phantom_lancer_doppelwalk",
+            "IsShield": true,
+            "StringRadius": "target_aoe"
+        },
+        {
+            "AbilityName": "phantom_lancer_phantom_edge",
+            "StringRadius": "max_distance",
+            "Speed": "bonus_speed"
+        },
+        {
             "AbilityName": "ursa_enrage",
-            "Radius": 0,
-            "MagicImmunityPierce": true
+            "IsBuff": true,
+            "IsShield": true
         },
         {
             "AbilityName": "chen_penitence",
-            "IsSlow": true
+            "WeakensEnemy": true,
+            "Speed": "speed"
         },
         {
             "AbilityName": "invoker_deafening_blast",
-            "IsDisable": true,
+            "WeakensEnemy": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "StringRadius": "travel_distance",
+            "Width": "radius_start",
+            "EndWidth": "radius_end",
             "Speed": "travel_speed",
             "DamageString": "damage",
-            "SpellLevel": "invoker_exort"
+            "SpellLevel": "invoker_exort",
+            "Distance": "travel_distance"
         },
         {
-            "AbilityName": "warlock_shadow_word"
+            "AbilityName": "warlock_shadow_word",
+            "IsHeal": true
         },
         {
             "AbilityName": "centaur_double_edge",
             "IsNuke": true,
-            "DamageString": "edge_damage"
+            "DamageString": "edge_damage",
+            "StringRadius": "radius"
         },
         {
-            "AbilityName": "earth_spirit_stone_caller"
+            "AbilityName": "warlock_upheaval",
+            "IsSlow": true,
+            "StringRadius": "aoe",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "warlock_rain_of_chaos",
+            "IsDisable": true,
+            "IsNuke": true,
+            "StringRadius": "aoe",
+            "IsSkillShot": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "earth_spirit_stone_caller",
+            "IsSkillShot": true
         },
         {
             "AbilityName": "bane_fiends_grip",
-            "IsDisable": true
+            "ManaBurn": true,
+            "MagicImmunityPierce": true,
+            "IsDisable": true,
+            "DamageString": "fiend_grip_damage",
+            "DamageScepterString": "fiend_grip_damage_scepter"
         },
         {
             "AbilityName": "ogre_magi_bloodlust",
-            "IsShield": true
+            "IsBuff": true
         },
         {
             "AbilityName": "earthshaker_enchant_totem",
-            "IsDisable": true
+            "IsDisable": true,
+            "StringRadius": "aftershock_range"
+        },
+        {
+            "AbilityName": "enchantress_natures_attendants",
+            "IsHeal": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "enchantress_impetus",
+            "IsHarras": true,
+            "MagicImmunityPierce": true,
+            "AADamage": true
         },
         {
             "AbilityName": "earth_spirit_rolling_boulder",
             "IsSlow": true,
-            "AdditionalDelay": 0.6
+            "AdditionalDelay": 0.6,
+            "IsSkillShot": true,
+            "Speed": "rock_speed",
+            //"Speed": "speed",
+            "Width": "radius",
+            "EnemyBlock": true,
+            "FakeCastRange": true,
+            "RealCastRange": "rock_distance"
+            //"RealCastRange": "distance"
         },
         {
             "AbilityName": "visage_grave_chill",
@@ -742,7 +1544,8 @@
         },
         {
             "AbilityName": "tusk_frozen_sigil",
-            "IsSlow": true
+            "IsSlow": true,
+            "StringRadius": "sigil_radius"
         },
         {
             "AbilityName": "night_stalker_void",
@@ -751,10 +1554,9 @@
         },
         {
             "AbilityName": "riki_smoke_screen",
-            "IsSlow": true,
             "IsSilence": true,
             "IsSkillShot": true,
-            "AdditionalDelay": -0.1
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "vengefulspirit_magic_missile",
@@ -763,32 +1565,43 @@
             "Speed": "magic_missile_speed"
         },
         {
-            "AbilityName": "leshrac_diabolic_edict"
+            "AbilityName": "leshrac_diabolic_edict",
+            "WeakensEnemy": true,
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "earth_spirit_boulder_smash",
             "IsDisable": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Speed": "speed",
+            "Width": "radius"
         },
         {
-            "AbilityName": "slardar_sprint"
+            "AbilityName": "slardar_sprint",
+            "IsBuff": true,
+            "BonusDamageString": "bonus_damage"
         },
         {
             "AbilityName": "razor_plasma_field",
             "IsNuke": true,
             "StringRadius": "radius",
-            "DamageString": "damage_min"
+            "DamageString": "damage_min",
+            "DamageMultiplier": 2,
+            "Speed": "speed"
         },
         {
             "AbilityName": "ember_spirit_flame_guard",
             "IsShield": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "DamageString": "damage_per_second"
         },
         {
             "AbilityName": "morphling_waveform",
             "IsNuke": true,
             "IsSkillShot": true,
-            "Speed": "projectile_speed"
+            "Speed": "speed",
+            "Width": "width"
         },
         {
             "AbilityName": "axe_culling_blade",
@@ -800,87 +1613,129 @@
         },
         {
             "AbilityName": "weaver_shukuchi",
+            //"IsNuke": true,
+            "IsShield": true,
+            "IsInivs": true,
+            "DamageString": "damage",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "weaver_time_lapse",
             "IsShield": true
         },
         {
             "AbilityName": "death_prophet_silence",
             "IsSilence": true,
-            "AdditionalDelay": -0.1
+            "StringRadius": "radius",
+            "IsSkillShot": true
         },
         {
             "AbilityName": "earth_spirit_geomagnetic_grip",
             "IsSilence": true,
-            "IsSkillShot": true
+            "Width": "radius",
+            "Speed": "speed"
         },
         {
             "AbilityName": "enigma_midnight_pulse",
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true,
+            "DamageString": "damage_percent"
+        },
+        {
+            "AbilityName": "enigma_black_hole",
+            "IsSkillShot": true,
+            "IsDisable": true,
+            "StringRadius": "far_radius",
+            "MagicImmunityPierce": true,
+            "DamageString": "far_damage"
         },
         {
             "AbilityName": "sniper_assassinate",
-            "IsNuke": true
+            "IsNuke": true,
+            "OnlyForKillSteal": true,
+            "Speed": "projectile_speed"
         },
         {
             "AbilityName": "elder_titan_echo_stomp",
             "IsDisable": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "DamageString": "stomp_damage",
+            "AdditionalDelay": 1.6
         },
         {
-            "AbilityName": "nevermore_shadowraze1",
-            "IsNuke": true,
-            "StringRadius": "shadowraze_range"
-        },
-        {
-            "AbilityName": "nevermore_requiem"
+            "AbilityName": "nevermore_requiem",
+            "StringRadius": "requiem_radius"
         },
         {
             "AbilityName": "tiny_toss",
             "IsDisable": true,
             "IsNuke": true,
-            "DamageString": "toss_damage"
+            "DamageString": "toss_damage",
+            "StringRadius": "grab_radius"
+            //"FakeCastRange": true,    // if its disable then cast range  
+            //"RealCastRange": "grab_radius" // should be 275 ?
         },
         {
+            "AbilityName": "tiny_craggy_exterior",
+            "StringRadius": "radius"
+        },
+        //{
+        //    "AbilityName": "tiny_grow"
+        //},
+        {
             "AbilityName": "slark_pounce",
-            "IsDisable": true,
+            //"IsDisable": true,
             "IsNuke": true,
-            "IsSkillShot": true,
-            "StringRadius": "pounce_radius",
+            //"IsSkillShot": true,
+            "Width": "pounce_radius",
             "Speed": "pounce_speed",
+            "Distance": "pounce_distance",
             "DamageString": "pounce_damage"
         },
         {
             "AbilityName": "ogre_magi_ignite",
             "IsSlow": true,
-            "Speed": "projectile_speed"
+            "IsHarras": true,
+            "Speed": "projectile_speed",
+            "DamageString": "burn_damage"
         },
         {
             "AbilityName": "furion_sprout",
             "IsSkillShot": true,
-            "AdditionalDelay": -0.1
+            "IsDisable": true
+        },
+        {
+            "AbilityName": "furion_force_of_nature",
+            "IsSkillShot": true,
+            "StringRadius": "area_of_effect"
         },
         {
             "AbilityName": "furion_wrath_of_nature",
-            "IsSkillShot": true,
             "IsNuke": true,
-            "DamageString": "damage"
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter"
         },
         {
             "AbilityName": "kunkka_ghostship",
+            //"IsNuke": true,
             "IsDisable": true,
-            "Speed": "ghostship_speed"
+            "IsSkillShot": true,
+            "AdditionalDelay": 2.7,
+            "Speed": "ghostship_speed",
+            "StringRadius": "ghostship_width"
         },
         {
-            "AbilityName": "troll_warlord_whirling_axes_ranged",
-            "IsSlow": true,
-            "Speed": "axe_speed"
-        },
-        {
-            "AbilityName": "ember_spirit_activate_fire_remnant"
+            "AbilityName": "ember_spirit_activate_fire_remnant",
+            "StringRadius": "radius",
+            "DamageString": "damage"
         },
         {
             "AbilityName": "storm_spirit_static_remnant",
             "IsNuke": true,
-            "DamageString": "static_remnant_damage"
+            "StringRadius": "static_remnant_radius",
+            "DamageString": "static_remnant_damage",
+            "AdditionalDelay": 1
         },
         {
             "AbilityName": "skeleton_king_hellfire_blast",
@@ -888,6 +1743,13 @@
             "IsNuke": true,
             "Speed": "blast_speed"
         },
+        {
+            "AbilityName": "skeleton_king_vampiric_aura",
+            "StringRadius": "vampiric_aura_radius"
+        },
+        //{
+        //    "AbilityName": "skeleton_king_reincarnation"
+        //},
         {
             "AbilityName": "centaur_hoof_stomp",
             "IsDisable": true,
@@ -898,13 +1760,17 @@
         {
             "AbilityName": "tusk_walrus_punch",
             "IsDisable": true,
-            "IsNuke": true
+            "IsNuke": true,
+            "MagicImmunityPierce": true,
+            "AADamage": true
         },
         {
             "AbilityName": "leshrac_split_earth",
+            "IsNuke": true,
             "IsDisable": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.35
+            "AdditionalDelay": 0.35,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "spirit_breaker_charge_of_darkness",
@@ -913,56 +1779,92 @@
         },
         {
             "AbilityName": "vengefulspirit_wave_of_terror",
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "WeakensEnemy": true,
+            "MagicImmunityPierce": true,
+            "Width": "wave_width",
+            "Speed": "wave_speed"
+        },
+        {
+            "AbilityName": "vengefulspirit_nether_swap",
+            "IsDisable": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "queenofpain_scream_of_pain",
             "IsNuke": true,
-            "StringRadius": "area_of_effect"
+            "StringRadius": "area_of_effect",
+            "Speed": "projectile_speed"
         },
         {
             "AbilityName": "earth_spirit_petrify",
+            "IsShield": true,
+            "DamageString": "damage",
             "IsDisable": true
         },
         {
             "AbilityName": "gyrocopter_rocket_barrage",
+            //"IsNuke": true,
             "StringRadius": "radius"
         },
         {
             "AbilityName": "invoker_emp",
             "IsSkillShot": true,
-            "AdditionalDelay": 2.9
+            //"IsNuke": true,
+            "AdditionalDelay": 2.9,
+            "ManaBurn": true,
+            "DamageString": "damage_per_mana_pct",
+            "StringRadius": "area_of_effect",
+            "SpellLevel": "invoker_wex"
         },
         {
-            "AbilityName": "bane_enfeeble"
+            "AbilityName": "bane_enfeeble",
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "bristleback_viscous_nasal_goo",
             "IsSlow": true,
-            "StringRadius": "radius",
-            "MagicImmunityPierce": true
+            "Speed": "goo_speed"
         },
         {
             "AbilityName": "shadow_demon_shadow_poison",
-            "IsSkillShot": true
-        },
-        {
-            "AbilityName": "shredder_return_chakram"
+            "IsHarrras": true,
+            "IsSkillShot": true,
+            "Speed": "speed",
+            "Width": "radius"
         },
         {
             "AbilityName": "shadow_shaman_ether_shock",
             "IsNuke": true,
-            "DamageString": "damage"
+            "DamageString": "damage",
+            "StringRadius": "start_radius"
         },
         {
             "AbilityName": "ancient_apparition_ice_vortex",
             "IsSlow": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "ancient_apparition_chilling_touch",
+            "IsBuff": true,
+            "IsSkillShot": true,
+            "StringRadius": "radius",
+            "BonusDamageString": "bonus_damage"
         },
         {
             "AbilityName": "bloodseeker_blood_bath",
             "IsSkillShot": true,
-            "AdditionalDelay": 2.6
+            "IsSilence": true,
+            //"IsNuke": true,
+            "AdditionalDelay": 2.6,
+            "StringRadius": "radius",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "bloodseeker_bloodrage",
+            "IsBuff": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "gyrocopter_homing_missile",
@@ -974,24 +1876,51 @@
             "AbilityName": "jakiro_ice_path",
             "IsDisable": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.5
+            "AdditionalDelay": 0.5,
+            "Width": "path_radius",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "jakiro_liquid_fire",
+            "IsHarras": true,
+            "DamageString": "damage",
+            "StringRadius": "radius",
+            "AADamage": true
+        },
+        {
+            "AbilityName": "jakiro_macropyre",
+            //"IsNuke": true,
+            "IsSkillShot": true,
+            "Width": "path_radius",
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter"
         },
         {
             "AbilityName": "drow_ranger_wave_of_silence",
             "IsSilence": true,
             "IsSkillShot": true,
-            "Speed": "wave_speed"
+            "Speed": "wave_speed",
+            "Width": "wave_width"
         },
         {
             "AbilityName": "invoker_tornado",
             "IsDisable": true,
             "IsSkillShot": true,
-            "StringRadius": "travel_distance",
-            "Speed": "travel_speed"
+            "IsNuke": true,
+            "Width": "area_of_effect",
+            "Distance": "travel_distance",
+            "Speed": "travel_speed",
+            "DamageString": "base_damage",
+            "SpellLevel": "invoker_wex"
         },
         {
             "AbilityName": "dragon_knight_breathe_fire",
-            "IsNuke": true
+            "IsNuke": true,
+            "Speed": "speed",
+            "Width": "start_radius",
+            "EndWidth": "end_radius",
+            "IsSkillShot": true,
+            "Distance": "range"
         },
         {
             "AbilityName": "naga_siren_ensnare",
@@ -1001,17 +1930,29 @@
         },
         {
             "AbilityName": "kunkka_x_marks_the_spot",
-            "IsDisable": true,
-            "AdditionalDelay": 0.1
+            "IsDisable": true
         },
+        //{
+        //    "AbilityName": "kunkka_return"
+        //},
         {
             "AbilityName": "spirit_breaker_nether_strike",
             "IsDisable": true,
+            "MagicImmunityPierce": true,
             "IsNuke": true,
             "DamageString": "damage"
         },
         {
-            "AbilityName": "razor_static_link"
+            "AbilityName": "razor_static_link",
+            "WeakensEnemy": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "razor_eye_of_the_storm",
+            "WeakensEnemy": true,
+            "StringRadius": "radius",
+            "DamageString": "damage",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "necrolyte_reapers_scythe",
@@ -1024,26 +1965,47 @@
         {
             "AbilityName": "broodmother_spawn_spiderlings",
             "IsNuke": true,
-            "DamageString": "damage"
+            "DamageString": "damage",
+            "OnlyForKillSteal": true,
+            "Speed": "projectile_speed"
         },
         {
             "AbilityName": "bristleback_quill_spray",
             "IsNuke": true,
-            "DamageString": "quill_base_damage"
+            "IsHarras": true,
+            "DamageString": "quill_base_damage",
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "legion_commander_overwhelming_odds",
             "IsNuke": true,
             "IsSkillShot": true,
-            "DamageString": "damage"
+            "DamageString": "damage",
+            "StringRadius": "radius"
         },
         {
-            "AbilityName": "ancient_apparition_ice_blast_release"
-        },
+            "AbilityName": "ancient_apparition_ice_blast",
+            "Width": "path_radius",
+            "IsSkillShot": true,
+            //"StringRadius": "radius_min", 
+            //"StringRadius": "radius_max",
+            "Speed": "speed",
+            "MagicImmunityPierce": true
+        }, 
+        //{
+        //    "AbilityName": "ancient_apparition_ice_blast_release"
+        //},
         {
             "AbilityName": "tinker_heat_seeking_missile",
             "IsNuke": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "Speed": "speed"
+        },
+        {
+            "AbilityName": "tinker_march_of_the_machines",
+            "StringRadius": "radius",
+            "Speed": "speed"
         },
         {
             "AbilityName": "shredder_whirling_death",
@@ -1053,102 +2015,167 @@
         },
         {
             "AbilityName": "elder_titan_ancestral_spirit",
-            "IsDisable": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "DamageString": "pass_damage"
+            "DamageString": "pass_damage",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "elder_titan_natural_order",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "chaos_knight_chaos_bolt",
             "IsDisable": true,
-            "IsNuke": true,
-            "DamageString": "damage_min"
+            "DamageString": "damage_min",
+            "Speed": "chaos_bolt_speed"
         },
         {
             "AbilityName": "legion_commander_press_the_attack",
             "IsHeal": true,
-            "IsShield": true
+            "IsShield": true,
+            "IsBuff": true
         },
         {
             "AbilityName": "kunkka_torrent",
+            //"IsNuke": true,
             "IsDisable": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 1.7
+            "AdditionalDelay": 1.6,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "kunkka_tidebringer",
+            //"IsNuke": true,
+            //"IsHarras": true,
+            "BonusDamageString": "damage_bonus",
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "bounty_hunter_shuriken_toss",
             "IsDisable": true,
             "IsNuke": true,
             "OnlyForKillSteal": true,
-            "DamageString": "bonus_damage"
+            "DamageString": "bonus_damage",
+            "Speed": "speed"
         },
         {
             "AbilityName": "omniknight_repel",
             "IsShield": true
         },
         {
+            "AbilityName": "bounty_hunter_wind_walk",
+            "IsInvis": true,
+            "DamageString": "bonus_damage"
+        },
+        {
+            "AbilityName": "omniknight_degen_aura",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "omniknight_guardian_angel",
+            "IsShield": true,
+            "StringRadius": "radius"
+        },
+        {
             "AbilityName": "batrider_sticky_napalm",
+            "IsHarras": true,
             "IsSlow": true,
-            "AdditionalDelay": 0.2
+            "IsSkillShot": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "pudge_dismember",
             "IsDisable": true,
-            "MagicImmunityPierce": true
+            "MagicImmunityPierce": true,
+            "DamageString": "dismember_damage"
         },
         {
             "AbilityName": "batrider_flaming_lasso",
             "IsDisable": true,
-            "MagicImmunityPierce": true
+            "MagicImmunityPierce": true,
+            "DamageScepterString": "damage_scepter"
         },
         {
-            "AbilityName": "slardar_amplify_damage"
+            "AbilityName": "slardar_amplify_damage",
+            "TrueSight": true,
+            "WeakensEnemy": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "lion_voodoo",
             "IsDisable": true
         },
         {
+            "AbilityName": "lion_mana_drain",
+            "ManaBurn": true,
+            "WeakensEnemy": true
+        },
+        {
             "AbilityName": "lich_frost_nova",
-            "IsSlow": true,
-            "IsNuke": true
+            "IsHarras": true,
+            "IsNuke": true,
+            "StringRadius": "aoe_damage"
         },
         {
             "AbilityName": "beastmaster_call_of_the_wild_boar",
-            "IsSlow": true
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "beastmaster_inner_beast",
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "tiny_avalanche",
             "IsDisable": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "AdditionalDelay": 0.5
+            "AdditionalDelay": 0.5,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "doom_bringer_doom",
             "IsDisable": true,
-            "IsSilence": true
+            "IsSilence": true,
+            "MagicImmunityPierce": true,
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter"
         },
-        {
-            "AbilityName": "tinker_rearm"
-        },
+        //{
+        //    "AbilityName": "tinker_rearm"
+        //},
         {
             "AbilityName": "abaddon_death_coil",
             "IsNuke": true,
             "IsHeal": true,
-            "DamageString": "target_damage"
+            "DamageString": "target_damage",
+            "Speed": "projectile_speed"
         },
         {
             "AbilityName": "templar_assassin_refraction",
-            "IsShield": true
+            "IsShield": true,
+            "IsBuff": true,
+            "BonusDamageString": "bonus_damage"
         },
         {
-            "AbilityName": "troll_warlord_whirling_axes_melee",
-            "Radius": 0
+            "AbilityName": "templar_assassin_psionic_trap",
+            "IsSlow": true,
+            "Radius": 400,
+            "AdditionalDelay": 0.4
+        },
+        {
+            "AbilityName": "viper_poison_attack",
+            "IsHarras": true,
+            "BonusDamageString": "damage",
+            "AADamage": true
         },
         {
             "AbilityName": "leshrac_pulse_nova",
-            "StringRadius": "radius"
+            "IsNuke": true,
+            "StringRadius": "radius",
+            "DamageString": "damage",
+            "DamageScepterString": "damage_scepter"
         },
         {
             "AbilityName": "lion_finger_of_death",
@@ -1161,41 +2188,115 @@
             "IsSlow": true
         },
         {
+            "AbilityName": "life_stealer_assimilate",
+            "StringRadius": "radius",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "life_stealer_assimilate_eject",
+            "StringRadius": "radius_tooltip",
+            "DamageString": "damage_tooltip"
+        },
+        {
+            "AbilityName": "life_stealer_infest",
+            "StringRadius": "radius",
+            "DamageString": "damage"
+        },
+        {
             "AbilityName": "bane_brain_sap",
             "IsNuke": true
         },
         {
             "AbilityName": "zuus_arc_lightning",
-            "IsNuke": true
+            "IsNuke": true,
+            "StringRadius": "radius"
         },
         {
             "AbilityName": "tidehunter_anchor_smash",
+            "IsHarras": true,
             "IsNuke": true,
-            "StringRadius": "radius"
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "night_stalker_crippling_fear",
             "IsSilence": true
         },
         {
+            "AbilityName": "night_stalker_darkness",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "vengefulspirit_command_aura",
+            "StringRadius": "aura_radius",
+            "BonusDamageString": "bonus_damage_pct"
+        },
+        {
             "AbilityName": "skywrath_mage_arcane_bolt",
             "IsNuke": true,
-            "DamageString": "bolt_damage"
+            "DamageString": "bolt_damage",
+            "Speed": "bolt_speed",
+            "IsHarras": true
         },
         {
             "AbilityName": "invoker_chaos_meteor",
             "IsSkillShot": true,
-            "AdditionalDelay": 1.3
+            //"IsNuke": true,
+            "AdditionalDelay": 1.3,
+            "DamageString": "main_damage",
+            "Width": "area_of_effect",
+            "SpellLevel": "invoker_exort",
+            "Speed": "travel_speed",
+            "Distance": "travel_speed",
+            "SpellLevel": "invoker_exort"
         },
         {
             "AbilityName": "medusa_mystic_snake",
             "IsNuke": true,
-            "DamageString": "snake_damage"
+            "DamageString": "snake_damage",
+            "StringRadius": "radius",
+            "Speed": "initial_speed",
+            "ManaBurn": true
         },
+        {
+            "AbilityName": "medusa_stone_gaze",
+            "IsDisable": true,
+            "AdditionalDelay": 2,
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "troll_warlord_whirling_axes_ranged",
+            "IsSlow": true,
+            "IsSkillShot": true,
+            "Speed": "axe_speed",
+            "Width": "axe_width",
+            "Distance": "axe_range",
+            "DamageString": "axe_damage"
+        },
+        {
+            "AbilityName": "troll_warlord_whirling_axes_melee",
+            "IsNuke": true,
+            "DamageString": "damage",
+            "StringRadius": "hit_radius"
+        },
+        {
+            "AbilityName": "troll_warlord_battle_trance",
+            "IsBuff": true
+        },
+        //{
+        //    "AbilityName": "medusa_split_shot",
+        //    "IsBuff": true
+        //},
+        //{
+        //    "AbilityName": "medusa_mana_shield",
+        //    "IsShield": true //temp fix
+        //},
         {
             "AbilityName": "sniper_shrapnel",
             "IsSkillShot": true,
-            "AdditionalDelay": 1.4,
+            "IsSlow": true,
+            "AdditionalDelay": 1.2,
             "StringRadius": "radius"
         },
         {
@@ -1205,53 +2306,121 @@
         },
         {
             "AbilityName": "ursa_overpower",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "ursa_fury_swipes",
+            "BonusDamageString": "damage_per_stack",
             "MagicImmunityPierce": true
         },
         {
             "AbilityName": "queenofpain_sonic_wave",
             "IsNuke": true,
             "IsSkillShot": true,
+            "Width": "starting_aoe",
+            "EndWidth": "final_aoe",
             "Speed": "speed",
             "DamageString": "damage",
-            "DamageScepterString": "damage_scepter"
+            "DamageScepterString": "damage_scepter",
+            "Distance": "distance",
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "lion_impale",
             "IsDisable": true,
             "IsNuke": true,
-            "Radius": 0,
-            "Width": "width"
+            "IsSkillShot": true,
+            "Width": "width",
+            "Speed": "speed"
+        },
+        {
+            "AbilityName": "lycan_howl",
+            "IsBuff": true,
+            "Radius": 999999,
+            "BonusDamageString": "hero_bonus_damage"
+        },
+        {
+            "AbilityName": "lycan_feral_impulse",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "lycan_shapeshift",
+            "IsBuff": true,
+            "AdditionalDelay": 1.5
+        },
+        {
+            "AbilityName": "lycan_summon_wolves",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "magnataur_empower",
+            "IsBuff": true,
+            "MagicImmunityPierce": true,
+            "BonusDamageString": "bonus_damage_pct"
         },
         {
             "AbilityName": "lina_dragon_slave",
             "IsNuke": true,
             "IsSkillShot": true,
-            "Speed": "dragon_slave_speed"
+            "Speed": "dragon_slave_speed",
+            "Distance": "dragon_slave_distance",
+            "Width": "dragon_slave_width_initial",
+            "EndWidth": "dragon_slave_width_end"
         },
         {
             "AbilityName": "venomancer_venomous_gale",
             "IsSlow": true,
-            "IsSkillShot": true
+            "IsSkillShot": true,
+            "Width": "radius",
+            "Speed": "speed",
+            "DamageString": "strike_damage"
         },
         {
             "AbilityName": "skywrath_mage_ancient_seal",
             "IsSilence": true
         },
         {
+            "AbilityName": "item_arcane_boots",
+            "IsHeal": true,
+            "StringRadius": "replenish_radius"
+        },
+        {
+            "AbilityName": "item_soul_ring",
+            "IsHeal": true
+        },
+        {
             "AbilityName": "antimage_mana_void",
             "IsDisable": true,
             "IsNuke": true,
             "OnlyForKillSteal": true,
-            "DamageString": "mana_void_damage_per_mana"
+            "DamageString": "mana_void_damage_per_mana",
+            "StringRadius": "mana_void_aoe_radius"
         },
         {
             "AbilityName": "shadow_shaman_shackles",
-            "IsDisable": true
+            "IsDisable": true,
+            "DamageString": "total_damage"
         },
         {
             "AbilityName": "huskar_life_break",
-            "IsSlow": true,
-            "Speed": "charge_speed"
+            "WeakensEnemy": true,
+            "Speed": "charge_speed",
+            "MagicImmunityPierce": true,
+            "DamageString": "health_damage"
+        },
+        {
+            "AbilityName": "life_stealer_rage",
+            "IsBuff": true,
+            "IsShield": true
+        },
+        {
+            "AbilityName": "huskar_inner_vitality",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "huskar_burning_spear",
+            "IsHarras": true,
+            "AADamage": true
         },
         {
             "AbilityName": "dragon_knight_dragon_tail",
@@ -1260,12 +2429,14 @@
         {
             "AbilityName": "crystal_maiden_frostbite",
             "IsDisable": true,
-            "IsSkillShot": true
+            "DamageString": "damage"
         },
         {
             "AbilityName": "skywrath_mage_concussive_shot",
             "IsSlow": true,
-            "StringRadius": "launch_radius"
+            "StringRadius": "launch_radius",
+            "Speed": "speed",
+            "DamageString": "damage"
         },
         {
             "AbilityName": "item_cyclone",
@@ -1284,26 +2455,39 @@
             "IsSilence": true
         },
         {
+            "AbilityName": "item_bloodthorn",
+            "IsSilence": true
+        },
+        {
             "AbilityName": "item_diffusal_blade",
-            "IsSlow": true
+            //"ManaBurn": true,
+            "IsSlow": true,
+            "IsPurge": true
         },
         {
             "AbilityName": "item_diffusal_blade_2",
-            "IsSlow": true
+            //"ManaBurn": true,
+            "IsSlow": true,
+            "IsPurge": true
         },
         {
             "AbilityName": "item_shivas_guard",
-            "IsSlow": true
+            "IsSlow": true,
+            "IsNuke": true,
+            "StringRadius": "blast_radius",
+            "Speed": "blast_speed",
+            "DamageString": "blast_damage"
         },
         {
             "AbilityName": "item_abyssal_blade",
-            "IsDisable": true             
+            "IsDisable": true,
+            "MagicImmunityPierce": true
         },
         {
             "AbilityName": "item_ethereal_blade",
-            "IsSlow": true,
             "IsNuke": true,
-            "DamageString": "blast_damage_base"  
+            "DamageString": "blast_damage_base",
+            "WeakensEnemy": true
         },
         {
             "AbilityName": "item_dagon",
@@ -1329,6 +2513,393 @@
             "AbilityName": "item_dagon_5",
             "IsNuke": true,
             "DamageString": "damage"
+        },
+        {
+            "AbilityName": "item_dust",
+            "TrueSight": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "item_mask_of_madness",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_veil_of_discord",
+            "WeakensEnemy": true,
+            "IsNuke": true,
+            "DamageString": "bonus_damage",
+            "StringRadius": "debuff_radius"
+        },
+        {
+            "AbilityName": "item_armlet",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_satanic",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_mekansm",
+            "IsHeal": true,
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_guardian_greaves",
+            "IsHeal": true,
+            "StringRadius": "replenish_radius"
+        },
+        {
+            "AbilityName": "item_urn_of_shadows",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "item_tango"
+            //"IsHeal": true
+        },
+        {
+            "AbilityName": "item_blade_mail",
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_buckler",
+            "IsShield": true,
+            "StringRadius": "bonus_aoe_radius"
+        },
+        {
+            "AbilityName": "item_crimson_guard",
+            "IsShield": true,
+            "StringRadius": "bonus_aoe_radius"
+        },
+        {
+            "AbilityName": "item_pipe",
+            "IsShield": true,
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_black_king_bar",
+            "IsShield": true
+        },
+        {
+            "AbilityName": "chen_hand_of_god",
+            "IsHeal": true,
+            "Radius": 999999
+        },
+        {
+            "AbilityName": "treant_living_armor",
+            "IsHeal": true,
+            "IsShield": true
+        },
+        {
+            "AbilityName": "treant_overgrowth",
+            "IsDisable": true,
+            "StringRadius": "radius",
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "dazzle_shadow_wave",
+            "IsNuke": true,
+            "IsHeal": true,
+            "MagicImmunityPierce": true,
+            "DamageString": "damage",
+            "StringRadius": "damage_radius"
+        },
+        {
+            "AbilityName": "dazzle_shallow_grave",
+            "IsShield": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "dazzle_poison_touch",
+            "IsSlow": true,
+            "Speed": "projectile_speed"
+        },
+        {
+            "AbilityName": "doom_bringer_infernal_blade",
+            "IsDisable": true,
+            "DamageString": "burn_damage",
+            "AADamage": true
+        },
+        {
+            "AbilityName": "death_prophet_spirit_siphon",
+            "WeakensEnemy": true,
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "item_magic_stick",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "item_magic_wand",
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "item_solar_crest",
+            "WeakensEnemy": true,
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_medallion_of_courage",
+            "WeakensEnemy": true,
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_tango_single"
+            //"IsHeal": true
+        },
+        {
+            "AbilityName": "rubick_fade_bolt",
+            "IsNuke": true,
+            "DamageString": "damage",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "rubick_telekinesis",
+            "IsDisable": true
+        },
+        //{
+        //    "AbilityName": "rubick_telekinesis_land",
+        //    "IsDisable": true,
+        //    "StringRadius": "radius"
+        //},
+        {
+            "AbilityName": "rubick_null_field",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "rubick_spell_steal",
+            "MagicImmunityPierce": true,
+            "Speed": "projectile_speed"
+        },
+        {
+            "AbilityName": "obsidian_destroyer_arcane_orb",
+            "IsHarras": true,
+            "DamageString": "mana_pool_damage_pct"
+        },
+        {
+            "AbilityName": "obsidian_destroyer_astral_imprisonment",
+            "IsNuke": true,
+            "IsDisable": true,
+            "DamageString": "damage",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "obsidian_destroyer_essence_aura",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "obsidian_destroyer_sanity_eclipse",
+            "StringRadius": "radius",
+            "IsNuke": true,
+            "DamageString": "damage_multiplier",
+            "DamageScepterString": "damage_multiplier_scepter"
+        },
+        {
+            "AbilityName": "pudge_rot",
+            "IsSlow": true,
+            "StringRadius": "rot_radius"
+        },
+        {
+            "AbilityName": "item_blink",
+            "FakeCastRange": true,
+            "RealCastRange": "blink_range",
+            "IsSkillShot": true
+        },
+        {
+            "AbilityName": "item_vladmir",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_assault",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_ancient_janggo",
+            "StringRadius": "radius",
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_ring_of_aquila",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_headdress",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_shadow_amulet",
+            "IsInvis": true,
+            "AdditionalDelay": 1.5
+        },
+        {
+            "AbilityName": "item_ring_of_basilius",
+            "StringRadius": "aura_radius"
+        },
+        {
+            "AbilityName": "item_glimmer_cape", 
+            "IsShield": true,
+            "IsInivs": true
+        },
+        {
+            "AbilityName": "item_radiance", 
+            "StringRadius": "aura_radius",
+            "DamageString": "aura_damage"
+        },
+        {
+            "AbilityName": "item_hood_of_defiance", 
+            "IsShield": true
+        },
+        //{
+        //    "AbilityName": "item_butterfly", 
+        //    "IsBuff": true
+        //},
+        //{
+        //    "AbilityName": "item_manta", 
+        //    "IsBuff": true
+        //},
+        {
+            "AbilityName": "item_lotus_orb", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_sphere", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "item_heavens_halberd", 
+            "WeakensEnemy": true
+        },
+        {
+            "AbilityName": "item_ward_observer",
+            "StringRadius": "vision_range"
+        },
+        {
+            "AbilityName": "item_ward_sentry", 
+            "StringRadius": "true_sight_range",
+            "TrueSight": true
+        },
+        //{
+        //    "AbilityName": "item_ward_dispenser", 
+        //    "StringRadius": "true_sight_range",
+        //    "TrueSight": true
+        //},
+        {
+            "AbilityName": "item_necronomicon", 
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_necronomicon_2", 
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_necronomicon_3", 
+            "IsBuff": true,
+            "StringRadius": "warrior_truesight",
+            "TrueSight": true
+        },
+        {
+            "AbilityName": "item_phase_boots", 
+            "IsBuff": true
+        },
+        {
+            "AbilityName": "item_faerie_fire", 
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "item_cheese", 
+            "IsHeal": true
+        },
+        //{
+        //    "AbilityName": "item_ghost", 
+        //    "IsShield": true
+        //},
+        {
+            "AbilityName": "item_gem", 
+            "StringRadius": "radius",
+            "TrueSight": true
+        },
+        {
+            "AbilityName": "item_invis_sword", 
+            "IsInvis": true,
+            "BonusDamageString": "bonus_damage"
+        },
+        {
+            "AbilityName": "item_silver_edge", 
+            "IsInvis": true,
+            "BonusDamageString": "bonus_damage"
+        },
+        {
+            "AbilityName": "item_mjollnir", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "necronomicon_archer_mana_burn", 
+            "ManaBurn": true
+        },
+        {
+            "AbilityName": "centaur_khan_war_stomp", 
+            "IsDisable": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "polar_furbolg_ursa_warrior_thunder_clap", 
+            "IsNuke": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "ogre_magi_frost_armor", 
+            "IsShield": true
+        },
+        {
+            "AbilityName": "dark_troll_warlord_ensnare", 
+            "IsDisable": true,
+            "MagicImmunityPierce": true
+        },
+        {
+            "AbilityName": "mud_golem_hurl_boulder", 
+            "IsDisable": true,
+            "Speed": "speed",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "satyr_trickster_purge", 
+            "IsPurge": true,
+            "IsSlow": true
+        },
+        {
+            "AbilityName": "satyr_soulstealer_mana_burn", 
+            "ManaBurn": true
+        },
+        {
+            "AbilityName": "satyr_hellcaller_shockwave", 
+            "IsNuke": true,
+            "Speed": "speed",
+            "DamageString": "damage",
+            "Width": "radius_start",
+            "EndWidth": "radius_end"
+        },
+        {
+            "AbilityName": "forest_troll_high_priest_heal", 
+            "IsHeal": true
+        },
+        {
+            "AbilityName": "harpy_storm_chain_lightning", 
+            "IsHarras": true,
+            "DamageString": "initial_damage"
+        },
+        {
+            "AbilityName": "black_dragon_fireball", 
+            "IsNuke": true,
+            "StringRadius": "radius",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "big_thunder_lizard_slam", 
+            "IsSlow": true,
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "big_thunder_lizard_frenzy", 
+            "IsBuff": true
         }
     ]
 }

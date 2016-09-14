@@ -1,4 +1,17 @@
-﻿namespace Ensage.Common.Extensions.SharpDX
+﻿// <copyright file="Vector4Extensions.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Extensions.SharpDX
 {
     using System;
     using System.Collections.Generic;
@@ -48,10 +61,12 @@
             {
                 theta = theta + 360;
             }
+
             if (theta > 180)
             {
                 theta = 360 - theta;
             }
+
             return theta;
         }
 
@@ -275,7 +290,7 @@
         /// </returns>
         public static bool IsOrthogonal(this Vector4 vector4, Vector3 toVector3)
         {
-            return Math.Abs((vector4.X * toVector3.X) + (vector4.Y * toVector3.Y)) < float.Epsilon;
+            return Math.Abs(vector4.X * toVector3.X + vector4.Y * toVector3.Y) < float.Epsilon;
         }
 
         /// <summary>
@@ -320,7 +335,7 @@
         /// <returns>Magnitude in float-units</returns>
         public static float Magnitude(this Vector4 vector4)
         {
-            return (float)Math.Sqrt((vector4.X * vector4.X) + (vector4.Y * vector4.Y) + (vector4.Z * vector4.Z));
+            return (float)Math.Sqrt(vector4.X * vector4.X + vector4.Y * vector4.Y + vector4.Z * vector4.Z);
         }
 
         /// <summary>
@@ -362,7 +377,7 @@
         /// <returns>Perpendicular Vector4</returns>
         public static Vector4 Perpendicular(this Vector4 vector4, int offset = 0)
         {
-            return (offset == 0)
+            return offset == 0
                        ? new Vector4(-vector4.Y, vector4.X, vector4.Z, vector4.W)
                        : new Vector4(vector4.Y, -vector4.X, vector4.Z, vector4.W);
         }
@@ -376,7 +391,7 @@
         {
             if (Math.Abs(vector4.X - 0) <= (float)1e-9)
             {
-                return (vector4.Y > 0) ? 90 : (vector4.Y < 0) ? 270 : 0;
+                return vector4.Y > 0 ? 90 : vector4.Y < 0 ? 270 : 0;
             }
 
             var theta = (float)(Math.Atan(vector4.Y / vector4.X) * (180 / Math.PI));
@@ -405,9 +420,9 @@
             var sin = Math.Sin(angle);
 
             return new Vector4(
-                (float)(vector4.X * cos - vector4.Y * sin),
-                (float)(vector4.Y * cos + vector4.X * sin),
-                vector4.Z,
+                (float)(vector4.X * cos - vector4.Y * sin), 
+                (float)(vector4.Y * cos + vector4.X * sin), 
+                vector4.Z, 
                 vector4.W);
         }
 

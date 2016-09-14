@@ -1,21 +1,17 @@
 ﻿// <copyright file="AttackAnimationData.cs" company="EnsageSharp">
-//    Copyright (c) 2015 EnsageSharp.
-//
+//    Copyright (c) 2016 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
-namespace Ensage.Common
+namespace Ensage.Common.UnitData
 {
     /// <summary>
     ///     The attack animation data struct.
@@ -49,12 +45,12 @@ namespace Ensage.Common
         ///     The attack animation turn rate.
         /// </param>
         public AttackAnimationData(
-            string unitName,
-            ClassID unitClassId,
-            double attackRate,
-            double attackPoint,
-            double attackBackswing,
-            int projectileSpeed,
+            string unitName, 
+            ClassID unitClassId, 
+            double attackRate, 
+            double attackPoint, 
+            double attackBackswing, 
+            int projectileSpeed, 
             double turnRate)
         {
             this.UnitName = unitName;

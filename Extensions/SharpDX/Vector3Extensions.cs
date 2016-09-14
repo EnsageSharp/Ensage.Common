@@ -1,4 +1,17 @@
-﻿namespace Ensage.Common.Extensions.SharpDX
+﻿// <copyright file="Vector3Extensions.cs" company="EnsageSharp">
+//    Copyright (c) 2016 EnsageSharp.
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/
+// </copyright>
+namespace Ensage.Common.Extensions.SharpDX
 {
     using System;
     using System.Collections.Generic;
@@ -26,10 +39,12 @@
             {
                 theta = theta + 360;
             }
+
             if (theta > 180)
             {
                 theta = 360 - theta;
             }
+
             return theta;
         }
 
@@ -265,7 +280,7 @@
         /// <returns>Returns if the angle is orthogonal</returns>
         public static bool IsOrthogonal(Vector3 vector3, Vector3 toVector3)
         {
-            return Math.Abs((vector3.X * toVector3.X) + (vector3.Y * toVector3.Y)) < float.Epsilon;
+            return Math.Abs(vector3.X * toVector3.X + vector3.Y * toVector3.Y) < float.Epsilon;
         }
 
         /// <summary>
@@ -299,12 +314,13 @@
         public static bool IsUnderTurret(this Vector3 position, bool enemyTurretsOnly)
         {
             return
-                ObjectMgr.GetEntities<Building>()
+                ObjectManager.GetEntities<Building>()
                     .Any(
                         tower =>
                         tower.ClassID == ClassID.CDOTA_BaseNPC_Tower
                         && tower.IsValidTarget(950, enemyTurretsOnly, position));
-            //return GameObjects.Turrets.Any(turret => turret.IsValidTarget(950, enemyTurretsOnly, position));
+
+            // return GameObjects.Turrets.Any(turret => turret.IsValidTarget(950, enemyTurretsOnly, position));
         }
 
         /// <summary>
@@ -328,7 +344,7 @@
         /// <returns>Is Vector3 position a wall position</returns>
         public static bool IsWall(this Vector3 vector3)
         {
-            return false; //NavMesh.GetCollisionFlags(vector3).HasFlag(CollisionFlags.Wall);
+            return false; // NavMesh.GetCollisionFlags(vector3).HasFlag(CollisionFlags.Wall);
         }
 
         /// <summary>
@@ -338,7 +354,7 @@
         /// <returns>Magnitude in float-units</returns>
         public static float Magnitude(this Vector3 vector3)
         {
-            return (float)Math.Sqrt((vector3.X * vector3.X) + (vector3.Y * vector3.Y) + (vector3.Z * vector3.Z));
+            return (float)Math.Sqrt(vector3.X * vector3.X + vector3.Y * vector3.Y + vector3.Z * vector3.Z);
         }
 
         /// <summary>
@@ -380,7 +396,7 @@
         /// <returns>Perpendicular Vector3</returns>
         public static Vector3 Perpendicular(this Vector3 vector3, int offset = 0)
         {
-            return (offset == 0)
+            return offset == 0
                        ? new Vector3(-vector3.Y, vector3.X, vector3.Z)
                        : new Vector3(vector3.Y, -vector3.X, vector3.Z);
         }
@@ -394,7 +410,7 @@
         {
             if (Math.Abs(vector3.X - 0) <= (float)1e-9)
             {
-                return (vector3.Y > 0) ? 90 : (vector3.Y < 0) ? 270 : 0;
+                return vector3.Y > 0 ? 90 : vector3.Y < 0 ? 270 : 0;
             }
 
             var theta = (float)(Math.Atan(vector3.Y / vector3.X) * (180 / Math.PI));
@@ -435,8 +451,8 @@
             var sin = Math.Sin(angle);
 
             return new Vector3(
-                (float)(vector3.X * cos - vector3.Y * sin),
-                (float)(vector3.Y * cos + vector3.X * sin),
+                (float)(vector3.X * cos - vector3.Y * sin), 
+                (float)(vector3.Y * cos + vector3.X * sin), 
                 vector3.Z);
         }
 
