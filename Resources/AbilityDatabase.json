@@ -17,6 +17,24 @@
 
 {
     "Abilities": [
+        {
+            "AbilityName": "abyssal_underlord_firestorm",
+            "StringRadius": "radius",
+            "IsSkillShot": true,
+            "DamageString": "wave_damage"
+        },
+        {
+            "AbilityName": "abyssal_underlord_pit_of_malice",
+            "StringRadius": "radius",
+            "IsSkillShot": true,
+            "IsDisable": true,
+            "MagicImmunityPierce": true,
+            "DamageString": "pit_damage"
+        },
+        {
+            "AbilityName": "abyssal_underlord_dark_rift",
+            "StringRadius": "radius"
+        },
         //{
         //    "AbilityName": "abaddon_borrowed_time",
         //    "IsShield": true
