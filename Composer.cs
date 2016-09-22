@@ -48,7 +48,7 @@ namespace Ensage.Common
             // An aggregate catalog that combines multiple catalogs
             catalog = new AggregateCatalog();
 
-            // Adds all the parts found in the Ability# assembly
+            // Adds all the parts found in the assembly
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Composer).Assembly));
 
             Container = new CompositionContainer(catalog);

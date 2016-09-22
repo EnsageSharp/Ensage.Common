@@ -254,6 +254,50 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        /// The get turn rate.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        /// <returns>
+        /// The <see cref="double"/>.
+        /// </returns>
+        public static double GetTurnRate(this Entity entity)
+        {
+            double turnRate;
+            var handle = entity.Handle;
+            if (TurnrateDictionary.TryGetValue(handle, out turnRate))
+            {
+                return turnRate;
+            }
+
+            turnRate = entity is Hero
+                           ? Game.FindKeyValues(entity.StoredName() + "/MovementTurnRate", KeyValueSource.Hero)
+                                 .FloatValue
+                           : 0.5;
+            TurnrateDictionary.Add(handle, turnRate);
+            return turnRate;
+        }
+
+        /// <summary>
+        /// Returns in radians how much can entity turn during given time
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        /// <param name="time">
+        /// The time.
+        /// </param>
+        /// <returns>
+        /// The <see cref="float"/>.
+        /// </returns>
+        public static double GetTurnAmount(this Entity entity, float time)
+        {
+            var turnRate = entity.GetTurnRate();
+            return (time / 1000) * (turnRate * (1 / 0.03));
+        }
+
+        /// <summary>
         ///     Calculates how much time it will take for given entity to turn to given vector
         /// </summary>
         /// <param name="entity">
