@@ -46,7 +46,7 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The root menus.
         /// </summary>
-        private static readonly Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
+        internal static readonly Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
         /// <summary>
         ///     The root menus draggable.

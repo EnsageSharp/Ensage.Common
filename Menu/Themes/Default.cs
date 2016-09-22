@@ -28,7 +28,7 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the theme name.
         /// </summary>
-        public string ThemeName { get; } = "DefaultTheme";
+        public string ThemeName { get; } = "Default";
 
         /// <summary>
         ///     Gets the item background.

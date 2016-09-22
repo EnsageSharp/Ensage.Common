@@ -71,7 +71,7 @@ namespace Ensage.Common.Menu
                 .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel")
                 .SetFontColor(Color.GreenYellow);
             MenuSettings.BasePosition = new Vector2(
-                menuSettings.Item("positionX").GetValue<Slider>().Value, 
+                menuSettings.Item("positionX").GetValue<Slider>().Value,
                 menuSettings.Item("positionY").GetValue<Slider>().Value);
             this.AddSubMenu(menuSettings);
             var hacks = new Menu("Hacks", "Common.Hacks");
@@ -104,7 +104,7 @@ namespace Ensage.Common.Menu
                 new MenuItem("disableDrawings", "Disable Drawings").SetValue(Config.DisableDrawings)
                     .DontSave()
                     .SetTooltip(
-                        "This option will HIDE menu and all other drawings and particles. This option will get disabled after you press F5", 
+                        "This option will HIDE menu and all other drawings and particles. This option will get disabled after you press F5",
                         Color.Red)).ValueChanged +=
                 (sender, args) => { Config.DisableDrawings = args.GetNewValue<bool>(); };
             this.Item("disableDrawings").SetValue(false);
@@ -114,16 +114,53 @@ namespace Ensage.Common.Menu
             Composer.ComposeParts(this);
 
             var themes = this.Themes.Select(theme => theme.Value.ThemeName);
-            var themeSelect = new MenuItem("Common.Menu.Themes", "Theme").SetValue(new StringList(themes.ToArray()));
+            var themeSelect =
+                new MenuItem("Common.Menu.Themes", "Theme").SetValue(new StringList(themes.OrderBy(x => x).ToArray()));
             themeSelect.ValueChanged += (sender, args) =>
                 {
-                    var theme = this.Themes.FirstOrDefault(x => x.Value.ThemeName == args.GetNewValue<StringList>().SelectedValue);
-                    if (theme != null)
+                    var theme =
+                        this.Themes.FirstOrDefault(
+                            x => x.Value.ThemeName == args.GetNewValue<StringList>().SelectedValue);
+                    if (theme == null)
                     {
-                        this.SelectedTheme = theme.Value;
+                        return;
                     }
+
+                    foreach (var rootMenu in RootMenus)
+                    {
+                        foreach (var menuItem in rootMenu.Value.Items)
+                        {
+                            if (menuItem.FontColor != this.SelectedTheme.ItemDefaultTextColor)
+                            {
+                                continue;
+                            }
+
+                            menuItem.SetFontColor(theme.Value.ItemDefaultTextColor);
+                        }
+
+                        foreach (var child in rootMenu.Value.Children)
+                        {
+                            if (child.Color == this.SelectedTheme.ItemDefaultTextColor)
+                            {
+                                child.SetFontColor(theme.Value.MenuDefaultTextColor);
+                            }
+
+                            foreach (var menuItem in child.Items)
+                            {
+                                if (menuItem.FontColor != this.SelectedTheme.ItemDefaultTextColor)
+                                {
+                                    continue;
+                                }
+
+                                menuItem.SetFontColor(theme.Value.ItemDefaultTextColor);
+                            }
+                        }
+                    }
+                    
+                    this.SelectedTheme = theme.Value;
                 };
-            var defaultTheme = this.Themes.FirstOrDefault(x => x.Value.ThemeName == themeSelect.GetValue<StringList>().SelectedValue);
+            var defaultTheme =
+                this.Themes.FirstOrDefault(x => x.Value.ThemeName == themeSelect.GetValue<StringList>().SelectedValue);
             if (defaultTheme != null)
             {
                 this.SelectedTheme = defaultTheme.Value;
@@ -136,6 +173,20 @@ namespace Ensage.Common.Menu
             if (Game.IsInGame)
             {
                 this.Events_OnLoad(null, null);
+            }
+
+            foreach (var menuItem in this.Items)
+            {
+                menuItem.SetFontColor(this.SelectedTheme.ItemDefaultTextColor);
+            }
+
+            foreach (var child in this.Children)
+            {
+                child.SetFontColor(this.SelectedTheme.MenuDefaultTextColor);
+                foreach (var menuItem in child.Items)
+                {
+                    menuItem.SetFontColor(this.SelectedTheme.ItemDefaultTextColor);
+                }
             }
         }
 

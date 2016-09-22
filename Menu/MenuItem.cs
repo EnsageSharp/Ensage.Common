@@ -59,7 +59,7 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The font color.
         /// </summary>
-        public ColorBGRA FontColor;
+        public Color FontColor;
 
         /// <summary>
         ///     The font style.
