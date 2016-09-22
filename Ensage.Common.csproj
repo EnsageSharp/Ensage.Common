@@ -121,7 +121,9 @@
     <Compile Include="Menu\OnValueChangeEventArgs.cs" />
     <Compile Include="Menu\SavedSettings.cs" />
     <Compile Include="Menu\Themes\BlackTransparent.cs" />
+    <Compile Include="Menu\Themes\BlueTransparent.cs" />
     <Compile Include="Menu\Themes\Blue.cs" />
+    <Compile Include="Menu\Themes\DarkRedTransparent.cs" />
     <Compile Include="Menu\Themes\DarkRed.cs" />
     <Compile Include="Menu\Themes\Default.cs" />
     <Compile Include="Menu\Themes\Gray.cs" />
