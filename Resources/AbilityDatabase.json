@@ -289,7 +289,7 @@
             "DamageMultiplier": 2,
             "IsSkillShot": true,
             "MagicImmunityPierce": true,
-            "StringRadius": "radius"
+            "StringRadius": "spread"
         },
         {
             "AbilityName": "puck_waning_rift",
@@ -482,7 +482,7 @@
             "AbilityName": "shredder_timber_chain",
             "IsNuke": true,
             "IsSkillShot": true,
-            "StringRadius": "chain_radius",
+            "StringRadius": "radius",
             "Speed": "speed",
             "DamageString": "damage"
         },
@@ -1135,7 +1135,7 @@
             "AbilityName": "visage_summon_familiars_stone_form",
             "IsDisable": true,
             "StringRadius": "stun_radius",
-            "AdditionalDelay": 0.85,
+            "AdditionalDelay": 0.55,
             "DamageString": "stun_damage"
         },
         {
@@ -1708,7 +1708,8 @@
             //"IsSkillShot": true,
             "Width": "pounce_radius",
             "Speed": "pounce_speed",
-            "Distance": "pounce_distance",
+            "FakeCastRange": true,
+            "RealCastRange": "pounce_distance",
             "DamageString": "pounce_damage"
         },
         {
@@ -2504,6 +2505,7 @@
         {
             "AbilityName": "item_ethereal_blade",
             "IsNuke": true,
+            "Speed": "projectile_speed",
             "DamageString": "blast_damage_base",
             "WeakensEnemy": true
         },
