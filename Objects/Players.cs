@@ -105,15 +105,7 @@ namespace Ensage.Common.Objects
             if (All.Count(x => x.IsValid) < 10)
             {
                 All = ObjectManager.GetEntities<Player>().ToList();
-            }
-
-            if (Radiant.Count < 5)
-            {
                 Radiant = All.Where(x => x.Team == Team.Radiant).ToList();
-            }
-
-            if (Dire.Count < 5)
-            {
                 Dire = All.Where(x => x.Team == Team.Dire).ToList();
             }
 
