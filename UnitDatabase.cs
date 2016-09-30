@@ -456,7 +456,7 @@ namespace Ensage.Common
                 double projSpeed;
                 if (!ProjSpeedDictionary.TryGetValue(unit.Handle, out projSpeed))
                 {
-                    projSpeed = Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Hero).FloatValue;
+                    projSpeed = Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Hero).IntValue;
                 }
 
                 return projSpeed;
@@ -502,7 +502,7 @@ namespace Ensage.Common
                 double projSpeed;
                 if (!ProjSpeedDictionary.TryGetValue(unit.Handle, out projSpeed))
                 {
-                    projSpeed = Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Unit).FloatValue;
+                    projSpeed = Game.FindKeyValues(name + "/ProjectileSpeed", KeyValueSource.Unit).IntValue;
                 }
 
                 return projSpeed;
