@@ -102,7 +102,7 @@ namespace Ensage.Common.Objects
                 return;
             }
 
-            if (All.Count < 10)
+            if (All.Count(x => x.IsValid) < 10)
             {
                 All = ObjectManager.GetEntities<Player>().ToList();
             }
