@@ -14,6 +14,7 @@
 namespace Ensage.Common
 {
     using System;
+    using System.Collections.Generic;
     using System.Reflection;
 
     using Ensage.Common.AbilityInfo;
@@ -129,10 +130,7 @@ namespace Ensage.Common
         /// </summary>
         private static void CallOnClose()
         {
-            if (OnClose != null)
-            {
-                OnClose(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
-            }
+            OnClose?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
         }
 
         /// <summary>
@@ -140,10 +138,7 @@ namespace Ensage.Common
         /// </summary>
         private static void CallOnLoad()
         {
-            if (OnLoad != null)
-            {
-                OnLoad(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
-            }
+            OnLoad?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
         }
 
         /// <summary>
@@ -151,10 +146,7 @@ namespace Ensage.Common
         /// </summary>
         private static void CallOnUpdate()
         {
-            if (OnUpdate != null)
-            {
-                OnUpdate(EventArgs.Empty);
-            }
+            OnUpdate?.Invoke(EventArgs.Empty);
         }
 
         /// <summary>
@@ -171,6 +163,7 @@ namespace Ensage.Common
             Abilities.Init();
             Calculations.Init();
             EntityExtensions.Init();
+            Utils.Sleeps = new Dictionary<string, double>();
         }
 
         #endregion

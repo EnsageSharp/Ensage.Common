@@ -35,7 +35,7 @@ namespace Ensage.Common
         /// <summary>
         ///     Stores sleep values
         /// </summary>
-        public static readonly Dictionary<string, double> Sleeps = new Dictionary<string, double>();
+        public static Dictionary<string, double> Sleeps = new Dictionary<string, double>();
 
         /// <summary>
         ///     The disable modifiers.
@@ -103,19 +103,9 @@ namespace Ensage.Common
                                                                                  };
 
         /// <summary>
-        ///     The cached time.
-        /// </summary>
-        private static float cachedTime;
-
-        /// <summary>
         ///     The last stun ability.
         /// </summary>
         private static string lastStunAbility;
-
-        /// <summary>
-        ///     The last tick.
-        /// </summary>
-        private static float lastTick;
 
         #endregion
 
@@ -203,15 +193,7 @@ namespace Ensage.Common
                     return Environment.TickCount & int.MaxValue;
                 }
 
-                var tickCount = Environment.TickCount & int.MaxValue;
-                if (tickCount < lastTick)
-                {
-                    return cachedTime;
-                }
-
-                cachedTime = Game.RawGameTime * 1000;
-                lastTick = tickCount + 1;
-                return cachedTime;
+                return Game.RawGameTime * 1000;
             }
         }
 
