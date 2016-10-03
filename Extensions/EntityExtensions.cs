@@ -262,6 +262,7 @@ namespace Ensage.Common.Extensions
         /// <returns>
         /// The <see cref="double"/>.
         /// </returns>
+        [Obsolete("GetTurnRate is deprecated for using with entity. Please use Unit for arguement.")]
         public static double GetTurnRate(this Entity entity)
         {
             double turnRate;
@@ -309,8 +310,15 @@ namespace Ensage.Common.Extensions
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
+        [Obsolete("GetTurnTime is deprecated for using with entity. Please use Unit for arguement.")]
         public static double GetTurnTime(this Entity entity, Vector3 position)
         {
+            var unit = entity as Unit;
+            if (unit != null)
+            {
+                return unit.GetTurnTime(position);
+            }
+
             try
             {
                 double turnRate;
@@ -363,6 +371,7 @@ namespace Ensage.Common.Extensions
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
+        [Obsolete("GetTurnTime is deprecated for using with entity. Please use Unit for arguement.")]
         public static double GetTurnTime(this Entity entity, Entity entity2)
         {
             return entity.GetTurnTime(entity2.NetworkPosition);
