@@ -30,6 +30,11 @@ namespace Ensage.Common.Extensions
         #region Static Fields
 
         /// <summary>
+        ///     The turn rate dictionary.
+        /// </summary>
+        private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
+
+        /// <summary>
         ///     The ability dictionary.
         /// </summary>
         private static Dictionary<string, Ability> abilityDictionary = new Dictionary<string, Ability>();
@@ -558,10 +563,14 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static float FindRelativeAngle(this Unit unit, Vector3 pos)
         {
-            return
-                (float)
-                ((Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad + Math.PI)
-                 % (2 * Math.PI) - Math.PI);
+            var angle = Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad;
+
+            if (Math.Abs(angle) > Math.PI)
+            {
+                angle = Math.PI * 2 - Math.Abs(angle);
+            }
+
+            return (float)Math.Abs(angle);
         }
 
         /// <summary>
@@ -734,6 +743,96 @@ namespace Ensage.Common.Extensions
                 unit.Inventory.Items.ToList()
                     .OrderByDescending(x => x.Level)
                     .FirstOrDefault(x => x.StoredName().StartsWith(name));
+        }
+
+        /// <summary>
+        /// The get turn rate.
+        /// </summary>
+        /// <param name="unit">
+        /// The entity.
+        /// </param>
+        /// <returns>
+        /// The <see cref="double"/>.
+        /// </returns>
+        public static double GetTurnRate(this Unit unit)
+        {
+            var handle = unit.Handle;
+            double turnRate;
+
+            if (TurnrateDictionary.TryGetValue(handle, out turnRate))
+            {
+                return turnRate;
+            }
+
+            try
+            {
+                turnRate =
+                    Game.FindKeyValues(
+                        unit.StoredName() + "/MovementTurnRate",
+                        unit is Hero ? KeyValueSource.Hero : KeyValueSource.Unit).FloatValue;
+            }
+            catch (KeyValuesNotFoundException)
+            {
+                turnRate = 0.5;
+            }
+
+            TurnrateDictionary.Add(handle, turnRate);
+            return turnRate;
+        }
+
+        /// <summary>
+        ///     Calculates how much time it will take for given unit to turn to given vector
+        /// </summary>
+        /// <param name="unit">
+        ///     The entity.
+        /// </param>
+        /// <param name="position">
+        ///     The position.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double GetTurnTime(this Unit unit, Vector3 position)
+        {
+            if (unit.ClassID == ClassID.CDOTA_Unit_Hero_Wisp)
+            {
+                return 0;
+            }
+
+            var angle = unit.FindRelativeAngle(position);
+            if (angle <= 0.2)
+            {
+                return 0;
+            }
+
+            var turnRate = unit.GetTurnRate();
+            if (unit.HasModifier("modifier_medusa_stone_gaze_slow"))
+            {
+                turnRate *= 0.65;
+            }
+            if (unit.HasModifier("modifier_batrider_sticky_napalm"))
+            {
+                turnRate *= 0.3;
+            }
+
+            return 0.03 / turnRate * angle;
+        }
+
+        /// <summary>
+        ///     Calculates how much time it will take for given unit to turn to another entity
+        /// </summary>
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="entity">
+        ///     The unit 2.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
+        /// </returns>
+        public static double GetTurnTime(this Unit unit, Entity entity)
+        {
+            return unit.GetTurnTime(entity.NetworkPosition);
         }
 
         /// <summary>
