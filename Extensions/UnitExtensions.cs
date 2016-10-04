@@ -563,14 +563,14 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static float FindRelativeAngle(this Unit unit, Vector3 pos)
         {
-            var angle = Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad;
+            var angle = Math.Abs(Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad);
 
-            if (Math.Abs(angle) > Math.PI)
+            if (angle > Math.PI)
             {
-                angle = Math.PI * 2 - Math.Abs(angle);
+                angle = Math.PI * 2 - angle;
             }
 
-            return (float)Math.Abs(angle);
+            return (float)angle;
         }
 
         /// <summary>
@@ -746,37 +746,50 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The get turn rate.
+        ///     The get turn rate.
         /// </summary>
         /// <param name="unit">
-        /// The entity.
+        ///     The unit.
+        /// </param>
+        /// <param name="currentTurnRate">
+        ///     The current turn rate.
         /// </param>
         /// <returns>
-        /// The <see cref="double"/>.
+        ///     The <see cref="double" />.
         /// </returns>
-        public static double GetTurnRate(this Unit unit)
+        public static double GetTurnRate(this Unit unit, bool currentTurnRate = true)
         {
             var handle = unit.Handle;
             double turnRate;
 
-            if (TurnrateDictionary.TryGetValue(handle, out turnRate))
+            if (!TurnrateDictionary.TryGetValue(handle, out turnRate))
             {
-                return turnRate;
+                try
+                {
+                    turnRate =
+                        Game.FindKeyValues(
+                            unit.StoredName() + "/MovementTurnRate",
+                            unit is Hero ? KeyValueSource.Hero : KeyValueSource.Unit).FloatValue;
+                }
+                catch (KeyValuesNotFoundException)
+                {
+                    turnRate = 0.5;
+                }
+                TurnrateDictionary.Add(handle, turnRate);
             }
 
-            try
+            if (currentTurnRate)
             {
-                turnRate =
-                    Game.FindKeyValues(
-                        unit.StoredName() + "/MovementTurnRate",
-                        unit is Hero ? KeyValueSource.Hero : KeyValueSource.Unit).FloatValue;
-            }
-            catch (KeyValuesNotFoundException)
-            {
-                turnRate = 0.5;
+                if (unit.HasModifier("modifier_medusa_stone_gaze_slow"))
+                {
+                    turnRate *= 0.65;
+                }
+                if (unit.HasModifier("modifier_batrider_sticky_napalm"))
+                {
+                    turnRate *= 0.3;
+                }
             }
 
-            TurnrateDictionary.Add(handle, turnRate);
             return turnRate;
         }
 
@@ -800,22 +813,12 @@ namespace Ensage.Common.Extensions
             }
 
             var angle = unit.FindRelativeAngle(position);
-            if (angle <= 0.2)
+            if (angle <= 0.5)
             {
                 return 0;
             }
 
-            var turnRate = unit.GetTurnRate();
-            if (unit.HasModifier("modifier_medusa_stone_gaze_slow"))
-            {
-                turnRate *= 0.65;
-            }
-            if (unit.HasModifier("modifier_batrider_sticky_napalm"))
-            {
-                turnRate *= 0.3;
-            }
-
-            return 0.03 / turnRate * angle;
+            return 0.03 / unit.GetTurnRate() * angle;
         }
 
         /// <summary>
