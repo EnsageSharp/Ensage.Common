@@ -226,8 +226,8 @@ namespace Ensage.Common
             {
                 return Vector2.Zero;
             }
-
-            if (unit.Handle.Equals(ObjectManager.LocalHero.Handle))
+            var localHero = ObjectManager.LocalHero;
+            if (localHero != null && Equals(unit,localHero) )
             {
                 if (unit.ClassID == ClassID.CDOTA_Unit_Hero_Meepo)
                 {
@@ -251,7 +251,8 @@ namespace Ensage.Common
         /// </returns>
         public static float GetHPBarSizeX(Unit unit = null)
         {
-            if (unit != null && unit.Handle.Equals(ObjectManager.LocalHero.Handle))
+            var hero = ObjectManager.LocalHero;
+            if (unit != null && hero != null && Equals(unit,hero))
             {
                 return (float)((float)HpBarWidth * Monitor * 1.05);
             }
