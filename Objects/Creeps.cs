@@ -123,7 +123,7 @@ namespace Ensage.Common.Objects
         private static void Load()
         {
             All = new List<Creep>();
-            tempList = ObjectManager.GetEntitiesParallel<Creep>().ToList();
+            tempList = ObjectManager.GetEntities<Creep>().ToList();
             Events.OnUpdate += Update;
             ObjectManager.OnAddEntity += ObjectMgr_OnAddEntity;
             ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
