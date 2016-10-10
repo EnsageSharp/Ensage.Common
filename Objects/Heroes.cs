@@ -189,7 +189,7 @@ namespace Ensage.Common.Objects
 
             tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
             foreach (
-                var hero in ObjectManager.GetEntities<Hero>().Where(hero => tempList.All(x => x.Handle != hero.Handle)))
+                var hero in ObjectManager.GetEntitiesParallel<Hero>().Where(hero => tempList.All(x => x.Handle != hero.Handle)))
             {
                 tempList.Add(hero);
             }

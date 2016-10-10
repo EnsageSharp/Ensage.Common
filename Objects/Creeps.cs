@@ -96,7 +96,7 @@ namespace Ensage.Common.Objects
 
             if (Utils.SleepCheck("Common.Creeps.SpecialUpdate"))
             {
-                tempList = ObjectManager.GetEntities<Creep>().ToList();
+                tempList = ObjectManager.GetEntitiesParallel<Creep>().ToList();
                 Utils.Sleep(1700, "Common.Creeps.SpecialUpdate");
                 return;
             }
@@ -123,7 +123,7 @@ namespace Ensage.Common.Objects
         private static void Load()
         {
             All = new List<Creep>();
-            tempList = ObjectManager.GetEntities<Creep>().ToList();
+            tempList = ObjectManager.GetEntitiesParallel<Creep>().ToList();
             Events.OnUpdate += Update;
             ObjectManager.OnAddEntity += ObjectMgr_OnAddEntity;
             ObjectManager.OnRemoveEntity += ObjectMgr_OnRemoveEntity;
