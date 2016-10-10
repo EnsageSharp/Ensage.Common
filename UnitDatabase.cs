@@ -341,7 +341,7 @@ namespace Ensage.Common
                     AttackRateDictionary.Add(unit.Handle, attackBaseTime);
                 }
 
-                var attackSpeed = Math.Min(unit.AttacksPerSecond * attackBaseTime / 0.01, 600);
+                var attackSpeed = Math.Min(unit.AttackSpeedValue, 600);
 
                 if (unit.HasModifier("modifier_ursa_overpower"))
                 {
@@ -390,7 +390,7 @@ namespace Ensage.Common
                     AttackRateDictionary.Add(unit.Handle, attackBaseTime);
                 }
 
-                var attackSpeed = Math.Min(unit.AttacksPerSecond * attackBaseTime / 0.01, 600);
+                var attackSpeed = Math.Min(unit.AttackSpeedValue, 600);
                 return (float)attackSpeed;
             }
             catch (KeyValuesNotFoundException)

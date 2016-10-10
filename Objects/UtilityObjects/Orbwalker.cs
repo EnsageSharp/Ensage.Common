@@ -222,7 +222,6 @@ namespace Ensage.Common.Objects.UtilityObjects
             {
                 return;
             }
-
             if (followTarget)
             {
                 this.Unit.Follow(target);

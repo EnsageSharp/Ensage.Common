@@ -131,8 +131,8 @@ namespace Ensage.Common.Objects.UtilityObjects
             }
 
             var time = Utils.TickCount;
-            var cancelTime = this.nextUnitAttackRelease - Game.Ping - delay + 50;
-            return time >= cancelTime;
+            var cancelTime = this.nextUnitAttackRelease - delay - Game.Ping;
+            return time > cancelTime;
         }
 
         /// <summary>
@@ -200,13 +200,13 @@ namespace Ensage.Common.Objects.UtilityObjects
                 {
                     return;
                 }
-
+                
                 this.lastUnitActivity = 0;
                 this.nextUnitAttackEnd = 0;
                 this.nextUnitAttackRelease = 0;
                 return;
             }
-
+            
             this.nextUnitAttackEnd = (float)(Utils.TickCount + UnitDatabase.GetAttackRate(this.Unit) * 1000);
             this.nextUnitAttackRelease = (float)(Utils.TickCount + UnitDatabase.GetAttackPoint(this.Unit) * 1000);
         }
