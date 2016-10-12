@@ -429,7 +429,7 @@ namespace Ensage.Common.Menu
 
             if (this.usingAbilityToggler)
             {
-                this.AbilityToggler.Add(this.name, enabled);
+                this.AbilityToggler.Add(itemName, enabled);
             }
 
             this.UpdatePriorities();
