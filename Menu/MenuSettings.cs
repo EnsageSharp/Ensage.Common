@@ -188,10 +188,7 @@ namespace Ensage.Common.Menu
                     Menu.MenuPanel.Size.X, 
                     Menu.MenuPanel.Size.Y))
             {
-                mouseDifference = mousePos
-                                  - new Vector2(
-                                        Menu.Root.Item("positionX").GetValue<Slider>().Value, 
-                                        Menu.Root.Item("positionY").GetValue<Slider>().Value);
+                mouseDifference = mousePos - BasePosition;
                 dragging = true;
                 return;
             }
@@ -207,7 +204,14 @@ namespace Ensage.Common.Menu
 
             if (args.Msg == (ulong)Utils.WindowsMessages.WM_MOUSEMOVE && dragging)
             {
-                BasePosition = mousePos - mouseDifference;
+                BasePosition = new Vector2(
+                    Math.Max(Math.Min(mousePos.X - mouseDifference.X, Drawing.Height / 3), 10),
+                    Math.Max(
+                        Math.Min(mousePos.Y - mouseDifference.Y, Drawing.Width / 4),
+                        (int)(HUDInfo.ScreenSizeY() * 0.08)));
+                Menu.Root.Item("positionX").SetValue(new Slider((int)BasePosition.X, 10, Drawing.Height / 3));
+                Menu.Root.Item("positionY")
+                    .SetValue(new Slider((int)BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.08), Drawing.Width / 4));
             }
 
             if (Game.IsChatOpen)

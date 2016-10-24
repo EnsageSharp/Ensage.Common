@@ -60,20 +60,26 @@ namespace Ensage.Common.Menu
                 .ValueChanged +=
                 (sender, args) => { DelayAction.Add(250, () => IncreaseMenuSize = args.GetNewValue<Slider>().Value); };
             IncreaseMenuSize = menuSettings.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value;
-            menuSettings.AddItem(
+            var xPos = menuSettings.AddItem(
                 new MenuItem("positionX", "Position X").SetValue(
                     new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height / 3)))
                 .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel")
                 .SetFontColor(Color.GreenYellow);
-            menuSettings.AddItem(
+            var yPos = menuSettings.AddItem(
                 new MenuItem("positionY", "Position Y").SetValue(
                     new Slider((int)MenuSettings.BasePosition.Y, (int)(HUDInfo.ScreenSizeY() * 0.08), Drawing.Width / 4)))
                 .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel")
                 .SetFontColor(Color.GreenYellow);
-            MenuSettings.BasePosition = new Vector2(
-                menuSettings.Item("positionX").GetValue<Slider>().Value,
-                menuSettings.Item("positionY").GetValue<Slider>().Value);
             this.AddSubMenu(menuSettings);
+            var currentX = xPos.GetValue<Slider>().Value;
+            var currentY = yPos.GetValue<Slider>().Value;
+            xPos.SetValue(new Slider(Math.Max(Math.Min(currentX, Drawing.Height / 3), 10), 10, Drawing.Height / 3));
+            yPos.SetValue(
+                new Slider(
+                    Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)),
+                    (int)(HUDInfo.ScreenSizeY() * 0.08),
+                    Drawing.Width / 4));
+            MenuSettings.BasePosition = new Vector2(xPos.GetValue<Slider>().Value, yPos.GetValue<Slider>().Value);
             var hacks = new Menu("Hacks", "Common.Hacks");
             hacks.AddItem(
                 new MenuItem("showSpawnBoxes", "Show SpawnBoxes").SetValue(Config.ShowSpawnBoxes)
@@ -240,6 +246,15 @@ namespace Ensage.Common.Menu
         /// </param>
         private void Events_OnLoad(object sender, EventArgs e)
         {
+            var currentX = this.Item("positionX").GetValue<Slider>().Value;
+            var currentY = this.Item("positionY").GetValue<Slider>().Value;
+            this.Item("positionX").SetValue(new Slider(Math.Max(Math.Min(currentX, Drawing.Height / 3), 10), 10, Drawing.Height / 3));
+            this.Item("positionY")
+                .SetValue(
+                    new Slider(
+                        Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)),
+                        (int)(HUDInfo.ScreenSizeY() * 0.08),
+                        Drawing.Width / 4));
             var console = this.newMessageType.SelectedIndex == 2;
 
             if (this.Item("showMessage").GetValue<bool>() && !console)
