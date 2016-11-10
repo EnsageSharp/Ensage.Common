@@ -51,7 +51,7 @@ namespace Ensage.Common.Threading
 
         #region Methods
 
-        internal static void DispatchAction(Action action)
+        public static void InvokeEvent(Action action)
         {
             var gameContext = GameSynchronizationContext.Instance;
             var context = SynchronizationContext.Current;
@@ -70,12 +70,12 @@ namespace Ensage.Common.Threading
 
         private static void IngameUpdateDispatcher(EventArgs args)
         {
-            DispatchAction(() => OnIngameUpdate?.Invoke(EventArgs.Empty));
+            InvokeEvent(() => OnIngameUpdate?.Invoke(EventArgs.Empty));
         }
 
         private static void UpdateDispatcher(EventArgs args)
         {
-            DispatchAction(() => OnUpdate?.Invoke(EventArgs.Empty));
+            InvokeEvent(() => OnUpdate?.Invoke(EventArgs.Empty));
         }
 
         #endregion
