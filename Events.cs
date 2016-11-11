@@ -50,7 +50,7 @@ namespace Ensage.Common
         {
             if (Game.IsInGame)
             {
-                Load();
+                DelayAction.Add(700 + Game.Ping, Load);
             }
 
             Game.OnUpdate += args =>
