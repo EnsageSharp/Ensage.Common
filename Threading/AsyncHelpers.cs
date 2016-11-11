@@ -20,7 +20,7 @@
         /// <param name="name">Name of the modifier.</param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        public static async Task<bool> WaitModifierAsync(Unit target, string name,
+        public static async Task<bool> WaitModifierAsync(this Unit target, string name,
             CancellationToken ct = default(CancellationToken))
         {
             try
@@ -43,7 +43,7 @@
         /// <param name="range"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        public static async Task<bool> MoveToTargetAsync(Unit me, Unit target, float range,
+        public static async Task<bool> MoveToTargetAsync(this Unit me, Unit target, float range,
               CancellationToken ct = default(CancellationToken))
         {
             try
