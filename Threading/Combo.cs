@@ -47,6 +47,14 @@ namespace Ensage.Common.Threading
         }
 
         /// <summary>
+        /// Cancels the execution of the current combo.
+        /// </summary>
+        public void Cancel()
+        {
+            this.token?.Cancel();
+        }
+
+        /// <summary>
         /// Executes your combo until it's either finished or canceled.
         /// </summary>
         /// <returns></returns>
