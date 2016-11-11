@@ -205,17 +205,19 @@ namespace Ensage.Common.Objects.UtilityObjects
                 distance = pos.Distance2D(target) - this.Unit.Distance2D(target);
             }
 
-            var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible && !target.IsInvul()
-                          && !target.HasModifiers(
-                              new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" }, 
-                              false)
-                          && target.Distance2D(this.Unit)
-                          <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 50 + targetHull + bonusRange
-                          + Math.Max(distance, 0);
-            if (isValid || (target != null && this.Unit.IsAttacking() && this.Unit.GetTurnTime(target.Position) < 0.1))
+            var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible;
+            var isAttackable = target != null && target.IsValid && !target.IsInvul() && !target.IsAttackImmune()
+                               && !target.HasModifiers(
+                                   new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" },
+                                   false)
+                               && target.Distance2D(this.Unit)
+                               <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 50 + targetHull + bonusRange
+                               + Math.Max(distance, 0);
+            if ((isValid && isAttackable)
+                || (!isAttackable && target != null && target.IsValid && this.Unit.IsAttacking()
+                    && this.Unit.GetTurnTime(target.Position) < 0.1))
             {
-                var canAttack = !this.IsAttackOnCoolDown(target, bonusWindupMs) && !target.IsAttackImmune()
-                                && !target.IsInvul() && this.Unit.CanAttack();
+                var canAttack = !this.IsAttackOnCoolDown(target, bonusWindupMs) && this.Unit.CanAttack();
                 if (canAttack && !this.attackSleeper.Sleeping && (!this.hero || Utils.SleepCheck("Orbwalk.Attack")))
                 {
                     this.attacker.Attack(target, attackmodifiers);
@@ -234,10 +236,10 @@ namespace Ensage.Common.Objects.UtilityObjects
 
                     Utils.Sleep(
                         UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + Game.Ping
-                        + 100, 
+                        + 100,
                         "Orbwalk.Attack");
                     Utils.Sleep(
-                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50, 
+                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50,
                         "Orbwalk.Move");
                     return;
                 }
@@ -250,14 +252,16 @@ namespace Ensage.Common.Objects.UtilityObjects
                     return;
                 }
             }
+
             var userdelay = this.setUserDelayManually ? this.UserDelay : Orbwalking.UserDelay;
             var canCancel = (this.CanCancelAttack(userdelay) && this.IsAttackOnCoolDown(target, bonusWindupMs))
-                            || (!isValid && !this.Unit.IsAttacking() && this.CanCancelAttack(userdelay));
+                            || ((!isValid || !isAttackable) && (!this.Unit.IsAttacking() || this.CanCancelAttack(userdelay)));
             if (!canCancel || this.moveSleeper.Sleeping || this.attackSleeper.Sleeping
                 || (this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))))
             {
                 return;
             }
+
             if (followTarget)
             {
                 this.Unit.Follow(target);

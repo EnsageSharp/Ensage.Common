@@ -93,7 +93,7 @@ namespace Ensage.Common
         /// </returns>
         public static bool AttackOnCooldown(Entity target = null, float bonusWindupMs = 0)
         {
-            return !orbwalker.CanAttack(target as Unit, bonusWindupMs);
+            return orbwalker.IsAttackOnCoolDown(target as Unit, bonusWindupMs);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Ensage.Common
         /// </returns>
         public static bool AttackOnCooldown(Unit target, float bonusWindupMs)
         {
-            return !orbwalker.CanAttack(target, bonusWindupMs);
+            return orbwalker.IsAttackOnCoolDown(target, bonusWindupMs);
         }
 
         /// <summary>

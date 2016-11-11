@@ -79,6 +79,15 @@ namespace Ensage.Common.Objects.UtilityObjects
             if (!this.IsAttackOnCoolDown() && !this.isAttacking)
             {
                 this.AttackOrderSent = true;
+                DelayAction.Add(
+                    Game.Ping + 10,
+                    () =>
+                        {
+                            if (!this.isAttacking)
+                            {
+                                this.AttackOrderSent = false;
+                            }
+                        });
             }
         }
 
@@ -141,7 +150,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// </returns>
         public bool CanCancelAttack(float delay = 0f)
         {
-            if (this.AttackOrderSent)
+            if (this.AttackOrderSent && !this.isAttacking)
             {
                 return false;
             }
@@ -183,7 +192,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                            / this.Unit.MovementSpeed;
             }
 
-            return this.nextUnitAttackEnd - Game.Ping - turnTime * 1000 - 75 + bonusWindupMs >= Utils.TickCount;
+            return this.nextUnitAttackEnd - Game.Ping - turnTime * 1000 - 120 + bonusWindupMs > Utils.TickCount;
         }
 
         #endregion
@@ -210,11 +219,6 @@ namespace Ensage.Common.Objects.UtilityObjects
             {
                 return;
             }
-            
-            if (this.isAttacking)
-            {
-                this.AttackOrderSent = false;
-            }
 
             if (this.Unit.NetworkActivity == this.lastUnitActivity)
             {
@@ -231,21 +235,15 @@ namespace Ensage.Common.Objects.UtilityObjects
 
             if (!this.isAttacking || !canCancel)
             {
-                if (canCancel)
-                {
-                    return;
-                }
-                
-                this.lastUnitActivity = 0;
-                this.nextUnitAttackEnd = 0;
-                this.nextUnitAttackRelease = 0;
+                //this.lastUnitActivity = 0;
+                //this.nextUnitAttackEnd = 0;
+                //this.nextUnitAttackRelease = 0;
                 return;
             }
 
             this.AttackOrderSent = false;
             this.nextUnitAttackEnd = (float)(Utils.TickCount + UnitDatabase.GetAttackRate(this.Unit) * 1000);
             this.nextUnitAttackRelease = (float)(Utils.TickCount + UnitDatabase.GetAttackPoint(this.Unit) * 1000);
-            //Game.PrintMessage("attack start: " + (UnitDatabase.GetAttackPoint(this.Unit) * 1000), MessageType.ChatMessage);
         }
 
         #endregion
