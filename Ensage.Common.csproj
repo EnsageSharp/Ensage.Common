@@ -180,6 +180,8 @@
     <Compile Include="Signals\Signal.cs" />
     <Compile Include="Signals\SignalManager.cs" />
     <Compile Include="TargetSelector.cs" />
+    <Compile Include="Threading\AsyncHelpers.cs" />
+    <Compile Include="Threading\Combo.cs" />
     <Compile Include="Threading\GameDispatcher.cs" />
     <Compile Include="Threading\GameSynchronizationContext.cs" />
     <Compile Include="UnitDatabase.cs" />
