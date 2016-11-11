@@ -140,7 +140,7 @@ namespace Ensage.Common.Threading
 
         #region Methods
 
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (this.disposed)
             {
