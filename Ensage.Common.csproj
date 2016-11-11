@@ -164,6 +164,7 @@
     <Compile Include="Objects\Trees.cs" />
     <Compile Include="Objects\UtilityObjects\AttackAnimationTracker.cs" />
     <Compile Include="Objects\UtilityObjects\Attacker.cs" />
+    <Compile Include="Objects\UtilityObjects\Minimap.cs" />
     <Compile Include="Objects\UtilityObjects\MultiSleeper.cs" />
     <Compile Include="Objects\UtilityObjects\Orbwalker.cs" />
     <Compile Include="Objects\UtilityObjects\Sleeper.cs" />

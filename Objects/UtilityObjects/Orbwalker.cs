@@ -16,6 +16,7 @@ namespace Ensage.Common.Objects.UtilityObjects
     using System;
 
     using Ensage.Common.Extensions;
+    using Ensage.Common.Menu;
 
     using SharpDX;
 
@@ -49,7 +50,12 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// <summary>
         ///     The hero.
         /// </summary>
-        private bool hero;
+        private readonly bool hero;
+
+        /// <summary>
+        /// The set user delay manually.
+        /// </summary>
+        private readonly bool setUserDelayManually;
 
         #endregion
 
@@ -76,7 +82,29 @@ namespace Ensage.Common.Objects.UtilityObjects
             this.attacker = new Attacker(unit);
         }
 
+        public Orbwalker(Unit unit, bool setUserDelayManually)
+            : base(unit)
+        {
+
+            if (unit == null)
+            {
+                return;
+            }
+
+            this.setUserDelayManually = setUserDelayManually;
+            this.hero = unit.Equals(ObjectManager.LocalHero);
+            this.attackSleeper = new Sleeper();
+            this.moveSleeper = new Sleeper();
+            this.attackSleeper2 = new Sleeper();
+            this.attacker = new Attacker(unit);
+        }
+
         #endregion
+
+        /// <summary>
+        /// Gets or sets the user delay.
+        /// </summary>
+        public float UserDelay { get; set; }
 
         #region Public Methods and Operators
 
@@ -119,7 +147,13 @@ namespace Ensage.Common.Objects.UtilityObjects
             bool attackmodifiers = true, 
             bool followTarget = false)
         {
-            this.OrbwalkOn(target, Game.MousePosition, bonusWindupMs, bonusRange, attackmodifiers, followTarget);
+            this.OrbwalkOn(
+                target,
+                Game.MousePosition,
+                bonusWindupMs,
+                bonusRange,
+                attackmodifiers,
+                followTarget);
         }
 
         /// <summary>
@@ -155,7 +189,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             {
                 return;
             }
-
+            
             var targetHull = 0f;
             if (target != null)
             {
@@ -185,6 +219,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                 if (canAttack && !this.attackSleeper.Sleeping && (!this.hero || Utils.SleepCheck("Orbwalk.Attack")))
                 {
                     this.attacker.Attack(target, attackmodifiers);
+                    this.AttackOrder();
                     this.attackSleeper.Sleep(
                         (float)
                         (UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000
@@ -210,13 +245,14 @@ namespace Ensage.Common.Objects.UtilityObjects
                 if (canAttack && !this.attackSleeper2.Sleeping)
                 {
                     this.attacker.Attack(target, attackmodifiers);
+                    this.AttackOrder();
                     this.attackSleeper2.Sleep(100);
                     return;
                 }
             }
-
-            var canCancel = (this.CanCancelAttack() && this.IsAttackOnCoolDown(target, bonusWindupMs))
-                            || (!isValid && !this.Unit.IsAttacking() && this.CanCancelAttack());
+            var userdelay = this.setUserDelayManually ? this.UserDelay : Orbwalking.UserDelay;
+            var canCancel = (this.CanCancelAttack(userdelay) && this.IsAttackOnCoolDown(target, bonusWindupMs))
+                            || (!isValid && !this.Unit.IsAttacking() && this.CanCancelAttack(userdelay));
             if (!canCancel || this.moveSleeper.Sleeping || this.attackSleeper.Sleeping
                 || (this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))))
             {

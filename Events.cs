@@ -48,7 +48,11 @@ namespace Ensage.Common
         /// </summary>
         static Events()
         {
-            Load();
+            if (Game.IsInGame)
+            {
+                Load();
+            }
+
             Game.OnUpdate += args =>
                 {
                     CallOnUpdate();
@@ -163,6 +167,7 @@ namespace Ensage.Common
             Abilities.Init();
             Calculations.Init();
             EntityExtensions.Init();
+            Orbwalking.Events_OnLoad(null, null);
             Utils.Sleeps = new Dictionary<string, double>();
         }
 

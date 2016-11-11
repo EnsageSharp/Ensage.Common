@@ -15,6 +15,7 @@ namespace Ensage.Common
 {
     using System;
 
+    using Ensage.Common.Menu;
     using Ensage.Common.Objects.UtilityObjects;
 
     /// <summary>
@@ -28,6 +29,11 @@ namespace Ensage.Common
         ///     The loaded.
         /// </summary>
         private static bool loaded;
+
+        /// <summary>
+        ///     The menu.
+        /// </summary>
+        private static Menu.Menu menu;
 
         /// <summary>
         ///     The orbwalker.
@@ -45,6 +51,15 @@ namespace Ensage.Common
         {
             Load();
         }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        ///     The user delay.
+        /// </summary>
+        public static float UserDelay { get; private set; }
 
         #endregion
 
@@ -113,11 +128,38 @@ namespace Ensage.Common
         }
 
         /// <summary>
+        ///     The events_ on load.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
+        public static void Events_OnLoad(object sender, EventArgs e)
+        {
+            if (loaded)
+            {
+                return;
+            }
+
+            menu = Menu.Menu.Root.AddSubMenu(new Menu.Menu("Orbwalking", "Common.Orbwalking"));
+            var userDelayMenuItem =
+                menu.AddItem(
+                    new MenuItem("Common.Orbwalking.UserDelay", "Attack cancel delay", true).SetValue(
+                        new Slider(0, -200, 200)));
+            UserDelay = userDelayMenuItem.GetValue<Slider>().Value;
+            userDelayMenuItem.ValueChanged += (o, args) => { UserDelay = args.GetNewValue<Slider>().Value; };
+            loaded = true;
+            orbwalker = new Orbwalker(ObjectManager.LocalHero);
+        }
+
+        /// <summary>
         ///     Loads orbwalking if its not loaded yet
         /// </summary>
         public static void Load()
         {
-            Events.OnLoad += Events_OnLoad;
+            // Events.OnLoad += Events_OnLoad;
             Events.OnClose += Events_OnClose;
             if (Game.IsInGame)
             {
@@ -174,26 +216,8 @@ namespace Ensage.Common
             }
 
             loaded = false;
-        }
-
-        /// <summary>
-        ///     The events_ on load.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        private static void Events_OnLoad(object sender, EventArgs e)
-        {
-            if (loaded)
-            {
-                return;
-            }
-
-            loaded = true;
-            orbwalker = new Orbwalker(ObjectManager.LocalHero);
+            Menu.Menu.Root.RemoveSubMenu(menu.Name);
+            menu = null;
         }
 
         #endregion

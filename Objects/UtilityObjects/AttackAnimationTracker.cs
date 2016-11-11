@@ -64,7 +64,23 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// </summary>
         public Unit Unit { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether attack order sent.
+        /// </summary>
+        private bool AttackOrderSent { get; set; }
+
         #endregion
+
+        /// <summary>
+        /// Informs attack animation tracker that the attack order was sent
+        /// </summary>
+        public void AttackOrder()
+        {
+            if (!this.IsAttackOnCoolDown() && !this.isAttacking)
+            {
+                this.AttackOrderSent = true;
+            }
+        }
 
         #region Public Methods and Operators
 
@@ -125,13 +141,18 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// </returns>
         public bool CanCancelAttack(float delay = 0f)
         {
+            if (this.AttackOrderSent)
+            {
+                return false;
+            }
+
             if (this.Unit == null || !this.Unit.IsValid)
             {
                 return true;
             }
 
             var time = Utils.TickCount;
-            var cancelTime = this.nextUnitAttackRelease - delay - Game.Ping;
+            var cancelTime = this.nextUnitAttackRelease + delay - Game.Ping;
             return time > cancelTime;
         }
 
@@ -169,6 +190,8 @@ namespace Ensage.Common.Objects.UtilityObjects
 
         #region Methods
 
+        private bool isAttacking;
+
         /// <summary>
         ///     The track.
         /// </summary>
@@ -187,16 +210,28 @@ namespace Ensage.Common.Objects.UtilityObjects
             {
                 return;
             }
+            
+            if (this.isAttacking)
+            {
+                this.AttackOrderSent = false;
+            }
 
             if (this.Unit.NetworkActivity == this.lastUnitActivity)
             {
                 return;
             }
 
-            this.lastUnitActivity = this.Unit.NetworkActivity;
-            if (!this.Unit.IsAttacking())
+            var canCancel = this.CanCancelAttack(Orbwalking.UserDelay);
+
+            if (!this.IsAttackOnCoolDown() || canCancel)
             {
-                if (this.CanCancelAttack())
+                this.lastUnitActivity = this.Unit.NetworkActivity;
+                this.isAttacking = this.Unit.IsAttacking();
+            }
+
+            if (!this.isAttacking || !canCancel)
+            {
+                if (canCancel)
                 {
                     return;
                 }
@@ -206,9 +241,11 @@ namespace Ensage.Common.Objects.UtilityObjects
                 this.nextUnitAttackRelease = 0;
                 return;
             }
-            
+
+            this.AttackOrderSent = false;
             this.nextUnitAttackEnd = (float)(Utils.TickCount + UnitDatabase.GetAttackRate(this.Unit) * 1000);
             this.nextUnitAttackRelease = (float)(Utils.TickCount + UnitDatabase.GetAttackPoint(this.Unit) * 1000);
+            //Game.PrintMessage("attack start: " + (UnitDatabase.GetAttackPoint(this.Unit) * 1000), MessageType.ChatMessage);
         }
 
         #endregion
