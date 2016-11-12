@@ -16,11 +16,13 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
     using System.Reflection;
+    using System.Threading.Tasks;
 
     using Ensage.Common.AbilityInfo;
     using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.Damage;
     using Ensage.Common.Objects;
+    using Ensage.Common.Threading;
 
     /// <summary>
     ///     Provides custom events
@@ -28,6 +30,8 @@ namespace Ensage.Common
     public class Events
     {
         #region Static Fields
+
+        private static bool callOnLoad;
 
         /// <summary>
         ///     The loaded.
@@ -48,11 +52,6 @@ namespace Ensage.Common
         /// </summary>
         static Events()
         {
-            if (Game.IsInGame)
-            {
-                DelayAction.Add(700 + Game.Ping, Load);
-            }
-
             Game.OnUpdate += args =>
                 {
                     CallOnUpdate();
@@ -75,9 +74,19 @@ namespace Ensage.Common
                     }
 
                     unloaded = false;
+                    callOnLoad = true;
                     loaded = true;
-                    Load();
-                    DelayAction.Add(500 + Game.Ping, CallOnLoad);
+                };
+
+            GameDispatcher.OnUpdate += args =>
+                {
+                    if (!callOnLoad)
+                    {
+                        return;
+                    }
+
+                    callOnLoad = false;
+                    CallOnLoadAsync();
                 };
         }
 
@@ -145,6 +154,13 @@ namespace Ensage.Common
             OnLoad?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
         }
 
+        private static async void CallOnLoadAsync()
+        {
+            Load();
+            await Task.Delay(50);
+            await OnLoadAsync();
+        }
+
         /// <summary>
         ///     The call on update.
         /// </summary>
@@ -169,6 +185,37 @@ namespace Ensage.Common
             EntityExtensions.Init();
             Orbwalking.Events_OnLoad(null, null);
             Utils.Sleeps = new Dictionary<string, double>();
+        }
+
+        private static async Task OnLoadAsync()
+        {
+            if (OnLoad == null)
+            {
+                return;
+            }
+
+            foreach (var @delegate in OnLoad.GetInvocationList())
+            {
+                if (@delegate == null)
+                {
+                    return;
+                }
+
+                @delegate.DynamicInvoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
+                if (@delegate.Target == null)
+                {
+                    //Console.WriteLine(@delegate.ToString());
+                    continue;
+                }
+
+                if (@delegate.Target.ToString().Contains("Transitions."))
+                {
+                    continue;
+                }
+
+                //Console.WriteLine(@delegate.Target.ToString());
+                await Task.Delay(50);
+            }
         }
 
         #endregion

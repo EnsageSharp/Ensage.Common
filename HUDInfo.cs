@@ -423,7 +423,7 @@ namespace Ensage.Common
                 tinfoHeroDown = 25.714;
                 DireCompare = 2.5401;
                 RadiantCompare = 3.499;
-                HpBarHeight = 8.7;
+                HpBarHeight = 10;
                 HpBarWidth = 84;
                 HpBarX = 43;
                 HpBarY = 27;
@@ -614,6 +614,12 @@ namespace Ensage.Common
         /// </returns>
         public static float GetHpBarSizeY(Unit unit = null)
         {
+            var hero = ObjectManager.LocalHero;
+            if (unit != null && hero != null && Equals(unit, hero))
+            {
+                return (float)(HpBarHeight * Monitor * 1.05);
+            }
+
             return (float)(HpBarHeight * Monitor);
         }
 
