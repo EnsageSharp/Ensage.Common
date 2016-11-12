@@ -47,10 +47,6 @@ namespace Ensage.Common.Threading
             GameSynchronizationContext.Instance.Post(state => action(), null);
         }
 
-        #endregion
-
-        #region Methods
-
         public static void InvokeEvent(Action action)
         {
             var gameContext = GameSynchronizationContext.Instance;
@@ -67,6 +63,10 @@ namespace Ensage.Common.Threading
                 SynchronizationContext.SetSynchronizationContext(context);
             }
         }
+
+        #endregion
+
+        #region Methods
 
         private static void IngameUpdateDispatcher(EventArgs args)
         {
