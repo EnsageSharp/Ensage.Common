@@ -74,20 +74,20 @@ namespace Ensage.Common
                     }
 
                     unloaded = false;
-                    callOnLoad = true;
                     loaded = true;
+                    CallOnLoad();
                 };
 
-            GameDispatcher.OnUpdate += args =>
-                {
-                    if (!callOnLoad)
-                    {
-                        return;
-                    }
+            //GameDispatcher.OnUpdate += args =>
+            //    {
+            //        if (!callOnLoad)
+            //        {
+            //            return;
+            //        }
 
-                    callOnLoad = false;
-                    CallOnLoadAsync();
-                };
+            //        callOnLoad = false;
+            //        CallOnLoadAsync();
+            //    };
         }
 
         #endregion
@@ -151,6 +151,7 @@ namespace Ensage.Common
         /// </summary>
         private static void CallOnLoad()
         {
+            Load();
             OnLoad?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
         }
 
