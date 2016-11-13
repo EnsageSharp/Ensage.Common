@@ -37,6 +37,12 @@ namespace Ensage.Common.Combo
 
         #endregion
 
+        #region Fields
+
+        private Key key;
+
+        #endregion
+
         #region Constructors and Destructors
 
         /// <summary>
@@ -52,7 +58,6 @@ namespace Ensage.Common.Combo
             }
 
             this.Key = key;
-            this.VirtualKey = (ulong)KeyInterop.VirtualKeyFromKey(key);
         }
 
         #endregion
@@ -80,7 +85,19 @@ namespace Ensage.Common.Combo
         /// <summary>
         ///     Gets execution key.
         /// </summary>
-        protected Key Key { get; }
+        protected Key Key
+        {
+            get
+            {
+                return this.key;
+            }
+
+            set
+            {
+                this.key = value;
+                this.VirtualKey = (ulong)KeyInterop.VirtualKeyFromKey(value);
+            }
+        }
 
         /// <summary>
         ///     Gets or sets <seealso cref="Task" /> control <seealso cref="CancellationTokenSource" />
@@ -90,7 +107,7 @@ namespace Ensage.Common.Combo
         /// <summary>
         ///     Gets virtual execution key.
         /// </summary>
-        protected ulong VirtualKey { get; }
+        protected ulong VirtualKey { get; set; }
 
         #endregion
 
