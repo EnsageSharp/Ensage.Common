@@ -75,7 +75,7 @@ namespace Ensage.Common.Combo
         {
             get
             {
-                return this.currentExecution != null && this.currentExecution.IsCompleted;
+                return this.currentExecution == null || this.currentExecution.IsCompleted;
             }
         }
 
