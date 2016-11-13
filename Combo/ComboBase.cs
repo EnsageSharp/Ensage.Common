@@ -69,7 +69,7 @@ namespace Ensage.Common.Combo
         {
             get
             {
-                return this.ExecutorTask != null && this.ExecutorTask.IsCompleted;
+                return this.ExecutorTask == null || this.ExecutorTask.IsCompleted;
             }
         }
 
