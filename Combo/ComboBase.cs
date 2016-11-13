@@ -196,6 +196,21 @@ namespace Ensage.Common.Combo
 
         #region Methods
 
+        protected virtual bool CanExecute()
+        {
+            if (Game.IsChatOpen)
+            {
+                return false;
+            }
+
+            if (!Game.IsKeyDown(this.Key))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         protected abstract Task Execute(CancellationToken token);
 
         private void BeginExecution()
@@ -215,7 +230,7 @@ namespace Ensage.Common.Combo
 
         private async void OnUpdate(EventArgs args)
         {
-            if (!Game.IsKeyDown(this.Key))
+            if (!this.CanExecute())
             {
                 return;
             }
