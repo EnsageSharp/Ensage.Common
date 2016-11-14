@@ -25,6 +25,11 @@ namespace Ensage.Common.Combo
         /// </summary>
         bool IsCompleted { get; }
 
+        /// <summary>
+        ///     Gets a value indicating whether the current execution is running. 
+        /// </summary>
+        bool IsRunning { get; }
+
         #endregion
 
         #region Public Methods and Operators

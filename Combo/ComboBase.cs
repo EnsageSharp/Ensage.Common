@@ -73,6 +73,15 @@ namespace Ensage.Common.Combo
             }
         }
 
+        /// <inheritdoc />
+        public bool IsRunning
+        {
+            get
+            {
+                return this.ExecutorTask != null && !this.ExecutorTask.IsCompleted;
+            }
+        }
+
         #endregion
 
         #region Properties

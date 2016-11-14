@@ -79,6 +79,17 @@ namespace Ensage.Common.Combo
             }
         }
 
+        /// <summary>
+        ///     Gets a value indicating whether the current execution is running. 
+        /// </summary>
+        public bool IsRunning
+        {
+            get
+            {
+                return this.currentExecution != null && !this.currentExecution.IsCompleted;
+            }
+        }
+
         #endregion
 
         #region Public Methods and Operators
