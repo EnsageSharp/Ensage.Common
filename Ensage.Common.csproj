@@ -73,6 +73,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityInfo\AbilityDamage.cs" />
+    <Compile Include="Abilities\AbilityBase.cs" />
+    <Compile Include="Abilities\IAbility.cs" />
+    <Compile Include="Abilities\SefcastAbility.cs" />
+    <Compile Include="Abilities\SkillshotAbility.cs" />
+    <Compile Include="Abilities\TargetAbility.cs" />
     <Compile Include="Algorithm.cs" />
     <Compile Include="Composer.cs" />
     <Compile Include="DelayAction.cs" />
@@ -172,6 +177,9 @@
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />
     <Compile Include="AbilityInfo\AbilityDatabase.cs" />
+    <Compile Include="Predictions\IPrediction.cs" />
+    <Compile Include="Predictions\IPredictionInput.cs" />
+    <Compile Include="Predictions\IPredictionOutput.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
