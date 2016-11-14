@@ -19,7 +19,6 @@ namespace Ensage.Common
     using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Security.Cryptography;
-    using System.Security.Permissions;
     using System.Text;
 
     using Ensage.Common.Extensions;
@@ -508,7 +507,6 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="T" />.
         /// </returns>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         internal static T Deserialize<T>(byte[] arrBytes)
         {
             var memStream = new MemoryStream();
@@ -527,7 +525,6 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="byte[]" />.
         /// </returns>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         internal static byte[] Serialize(object obj)
         {
             if (obj == null)

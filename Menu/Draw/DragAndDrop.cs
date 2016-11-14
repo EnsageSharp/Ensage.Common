@@ -450,7 +450,11 @@ namespace Ensage.Common.Menu.Draw
                 this.MovingIcon.Moving = false;
                 this.MovingIcon = null;
                 this.UpdateOrder();
-                menuItem.SetValue(menuItem.GetValue<PriorityChanger>());
+                menuItem.SetValue(
+                    new PriorityChanger(
+                        this.itemList.OrderBy(x => menuItem.GetValue<PriorityChanger>().Dictionary[x]).ToList(), 
+                        new AbilityToggler(this.abilityToggler.Dictionary), 
+                        menuItem.GetValue<PriorityChanger>().Name));
                 return;
             }
 
@@ -462,7 +466,11 @@ namespace Ensage.Common.Menu.Draw
             this.transition.Start(0, 150);
             this.MovingIcon.Moving = false;
             this.MovingIcon = null;
-            menuItem.SetValue(menuItem.GetValue<PriorityChanger>());
+            menuItem.SetValue(
+                new PriorityChanger(
+                    this.itemList.OrderBy(x => menuItem.GetValue<PriorityChanger>().Dictionary[x]).ToList(), 
+                    new AbilityToggler(this.abilityToggler.Dictionary), 
+                    menuItem.GetValue<PriorityChanger>().Name));
         }
 
         /// <summary>
