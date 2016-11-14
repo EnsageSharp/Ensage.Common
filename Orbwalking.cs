@@ -14,6 +14,7 @@
 namespace Ensage.Common
 {
     using System;
+    using System.Linq;
 
     using Ensage.Common.Menu;
     using Ensage.Common.Objects.UtilityObjects;
@@ -50,6 +51,7 @@ namespace Ensage.Common
         static Orbwalking()
         {
             Load();
+            Events.OnClose += Events_OnClose;
         }
 
         #endregion
@@ -138,12 +140,16 @@ namespace Ensage.Common
         /// </param>
         public static void Events_OnLoad(object sender, EventArgs e)
         {
-            if (loaded)
+            if (loaded || !Game.IsInGame || ObjectManager.LocalHero == null || !ObjectManager.LocalHero.IsValid)
             {
                 return;
             }
 
-            menu = Menu.Menu.Root.AddSubMenu(new Menu.Menu("Orbwalking", "Common.Orbwalking"));
+            if (menu == null)
+            {
+                menu = Menu.Menu.Root.AddSubMenu(new Menu.Menu("Orbwalking", "Common.Orbwalking"));
+            }
+
             var userDelayMenuItem =
                 menu.AddItem(
                     new MenuItem("Common.Orbwalking.UserDelay", "Attack cancel delay", true).SetValue(
@@ -159,12 +165,10 @@ namespace Ensage.Common
         /// </summary>
         public static void Load()
         {
-            // Events.OnLoad += Events_OnLoad;
-            Events.OnClose += Events_OnClose;
-            //if (Game.IsInGame)
-            //{
-            //    Events_OnLoad(null, null);
-            //}
+            if (Game.IsInGame)
+            {
+                Events_OnLoad(null, null);
+            }
         }
 
         /// <summary>
@@ -215,9 +219,9 @@ namespace Ensage.Common
                 return;
             }
 
+            menu.Items.Remove(menu.Items.FirstOrDefault(x => x.Name == ObjectManager.LocalHero?.Name + "Common.Orbwalking.UserDelay"));
+            orbwalker = null;
             loaded = false;
-            Menu.Menu.Root.RemoveSubMenu(menu.Name);
-            menu = null;
         }
 
         #endregion

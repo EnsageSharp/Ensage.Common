@@ -16,7 +16,6 @@ namespace Ensage.Common.Objects.UtilityObjects
     using System;
 
     using Ensage.Common.Extensions;
-    using Ensage.Common.Menu;
 
     using SharpDX;
 
@@ -43,19 +42,34 @@ namespace Ensage.Common.Objects.UtilityObjects
         private readonly Sleeper attackSleeper2;
 
         /// <summary>
-        ///     The move sleeper.
-        /// </summary>
-        private readonly Sleeper moveSleeper;
-
-        /// <summary>
         ///     The hero.
         /// </summary>
         private readonly bool hero;
 
         /// <summary>
-        /// The set user delay manually.
+        ///     The move sleeper.
+        /// </summary>
+        private readonly Sleeper moveSleeper;
+
+        /// <summary>
+        ///     The set user delay manually.
         /// </summary>
         private readonly bool setUserDelayManually;
+
+        /// <summary>
+        ///     The custom move position.
+        /// </summary>
+        private bool customMovePosition;
+
+        /// <summary>
+        ///     The last move position.
+        /// </summary>
+        private Vector3 lastMovePosition;
+
+        /// <summary>
+        ///     The moving when ready.
+        /// </summary>
+        private bool movingWhenReady;
 
         #endregion
 
@@ -85,7 +99,6 @@ namespace Ensage.Common.Objects.UtilityObjects
         public Orbwalker(Unit unit, bool setUserDelayManually)
             : base(unit)
         {
-
             if (unit == null)
             {
                 return;
@@ -101,10 +114,14 @@ namespace Ensage.Common.Objects.UtilityObjects
 
         #endregion
 
+        #region Public Properties
+
         /// <summary>
-        /// Gets or sets the user delay.
+        ///     Gets or sets the user delay.
         /// </summary>
         public float UserDelay { get; set; }
+
+        #endregion
 
         #region Public Methods and Operators
 
@@ -120,6 +137,24 @@ namespace Ensage.Common.Objects.UtilityObjects
         public void Attack(Unit target, bool useModifier)
         {
             this.attacker.Attack(target, useModifier);
+        }
+
+        /// <summary>
+        ///     The attack start.
+        /// </summary>
+        public override void AttackStart()
+        {
+            if (this.movingWhenReady)
+            {
+                return;
+            }
+
+            if (this.moveSleeper.Sleeping || this.attackSleeper.Sleeping
+                || (this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))))
+            {
+                this.movingWhenReady = true;
+                Drawing.OnDraw += this.MoveWhenReady;
+            }
         }
 
         /// <summary>
@@ -147,13 +182,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             bool attackmodifiers = true, 
             bool followTarget = false)
         {
-            this.OrbwalkOn(
-                target,
-                Game.MousePosition,
-                bonusWindupMs,
-                bonusRange,
-                attackmodifiers,
-                followTarget);
+            this.OrbwalkOn(target, Game.MousePosition, bonusWindupMs, bonusRange, attackmodifiers, followTarget);
         }
 
         /// <summary>
@@ -189,7 +218,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             {
                 return;
             }
-            
+
             var targetHull = 0f;
             if (target != null)
             {
@@ -208,7 +237,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible;
             var isAttackable = target != null && target.IsValid && !target.IsInvul() && !target.IsAttackImmune()
                                && !target.HasModifiers(
-                                   new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" },
+                                   new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" }, 
                                    false)
                                && target.Distance2D(this.Unit)
                                <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 50 + targetHull + bonusRange
@@ -236,10 +265,10 @@ namespace Ensage.Common.Objects.UtilityObjects
 
                     Utils.Sleep(
                         UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + Game.Ping
-                        + 100,
+                        + 100, 
                         "Orbwalk.Attack");
                     Utils.Sleep(
-                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50,
+                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50, 
                         "Orbwalk.Move");
                     return;
                 }
@@ -255,7 +284,8 @@ namespace Ensage.Common.Objects.UtilityObjects
 
             var userdelay = this.setUserDelayManually ? this.UserDelay : Orbwalking.UserDelay;
             var canCancel = (this.CanCancelAttack(userdelay) && this.IsAttackOnCoolDown(target, bonusWindupMs))
-                            || ((!isValid || !isAttackable) && (!this.Unit.IsAttacking() || this.CanCancelAttack(userdelay)));
+                            || ((!isValid || !isAttackable)
+                                && (!this.Unit.IsAttacking() || this.CanCancelAttack(userdelay)));
             if (!canCancel || this.moveSleeper.Sleeping || this.attackSleeper.Sleeping
                 || (this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))))
             {
@@ -269,9 +299,39 @@ namespace Ensage.Common.Objects.UtilityObjects
             else
             {
                 this.Unit.Move(movePosition);
+                if (movePosition != Game.MousePosition)
+                {
+                    this.customMovePosition = true;
+                    this.lastMovePosition = movePosition;
+                }
+                else
+                {
+                    this.customMovePosition = false;
+                }
             }
 
             this.moveSleeper.Sleep(100);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     The move when ready.
+        /// </summary>
+        /// <param name="args">
+        ///     The args.
+        /// </param>
+        private void MoveWhenReady(EventArgs args)
+        {
+            var userdelay = this.setUserDelayManually ? this.UserDelay : Orbwalking.UserDelay;
+            if (this.CanCancelAttack(userdelay))
+            {
+                this.Unit.Move(this.customMovePosition ? this.lastMovePosition : Game.MousePosition);
+                this.movingWhenReady = false;
+                Drawing.OnDraw -= this.MoveWhenReady;
+            }
         }
 
         #endregion

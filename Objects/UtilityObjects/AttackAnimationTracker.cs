@@ -24,6 +24,8 @@ namespace Ensage.Common.Objects.UtilityObjects
     {
         #region Fields
 
+        private bool isAttacking;
+
         /// <summary>
         ///     The last unit activity.
         /// </summary>
@@ -52,7 +54,9 @@ namespace Ensage.Common.Objects.UtilityObjects
         protected AttackAnimationTracker(Unit unit)
         {
             this.Unit = unit;
-            Drawing.OnDraw += this.Track;
+
+            // Drawing.OnDraw += this.Track;
+            Entity.OnInt32PropertyChange += this.Entity_OnInt32PropertyChange;
         }
 
         #endregion
@@ -64,23 +68,29 @@ namespace Ensage.Common.Objects.UtilityObjects
         /// </summary>
         public Unit Unit { get; set; }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
-        /// Gets or sets a value indicating whether attack order sent.
+        ///     Gets or sets a value indicating whether attack order sent.
         /// </summary>
         private bool AttackOrderSent { get; set; }
 
         #endregion
 
+        #region Public Methods and Operators
+
         /// <summary>
-        /// Informs attack animation tracker that the attack order was sent
+        ///     Informs attack animation tracker that the attack order was sent
         /// </summary>
         public void AttackOrder()
         {
-            if (!this.IsAttackOnCoolDown() && !this.isAttacking)
+            if (!this.isAttacking)
             {
                 this.AttackOrderSent = true;
                 DelayAction.Add(
-                    Game.Ping + 10,
+                    Game.Ping + 50, 
                     () =>
                         {
                             if (!this.isAttacking)
@@ -90,8 +100,6 @@ namespace Ensage.Common.Objects.UtilityObjects
                         });
             }
         }
-
-        #region Public Methods and Operators
 
         /// <summary>
         ///     The can attack.
@@ -195,23 +203,36 @@ namespace Ensage.Common.Objects.UtilityObjects
             return this.nextUnitAttackEnd - Game.Ping - turnTime * 1000 - 120 + bonusWindupMs > Utils.TickCount;
         }
 
+        /// <summary>
+        /// The attack start.
+        /// </summary>
+        public virtual void AttackStart()
+        {
+        }
+
         #endregion
 
         #region Methods
 
-        private bool isAttacking;
-
         /// <summary>
-        ///     The track.
+        /// The entity_ on int 32 property change.
         /// </summary>
-        /// <param name="args">
-        ///     The args.
+        /// <param name="sender">
+        /// The sender.
         /// </param>
-        private void Track(EventArgs args)
+        /// <param name="args">
+        /// The args.
+        /// </param>
+        private void Entity_OnInt32PropertyChange(Entity sender, Int32PropertyChangeEventArgs args)
         {
+            if (!sender.Equals(this.Unit) || args.PropertyName != "m_NetworkActivity")
+            {
+                return;
+            }
+
             if (this.Unit == null || !this.Unit.IsValid)
             {
-                Drawing.OnDraw -= this.Track;
+                Entity.OnInt32PropertyChange -= this.Entity_OnInt32PropertyChange;
                 return;
             }
 
@@ -220,30 +241,32 @@ namespace Ensage.Common.Objects.UtilityObjects
                 return;
             }
 
-            if (this.Unit.NetworkActivity == this.lastUnitActivity)
+            var newValue = (NetworkActivity)args.NewValue;
+            if (newValue == this.lastUnitActivity || newValue == (NetworkActivity)args.OldValue)
             {
                 return;
             }
 
-            var canCancel = this.CanCancelAttack(Orbwalking.UserDelay);
+            var canCancel = this.CanCancelAttack();
 
             if (!this.IsAttackOnCoolDown() || canCancel)
             {
-                this.lastUnitActivity = this.Unit.NetworkActivity;
-                this.isAttacking = this.Unit.IsAttacking();
+                this.lastUnitActivity = newValue;
+                this.isAttacking = newValue == NetworkActivity.Attack || newValue == NetworkActivity.Crit
+                                   || newValue == NetworkActivity.Attack2 || newValue == NetworkActivity.AttackEvent
+                                   || newValue == NetworkActivity.AttackEventBash
+                                   || newValue == NetworkActivity.EarthshakerTotemAttack;
             }
 
-            if (!this.isAttacking || !canCancel)
+            if (!this.isAttacking || (!this.isAttacking && !canCancel))
             {
-                //this.lastUnitActivity = 0;
-                //this.nextUnitAttackEnd = 0;
-                //this.nextUnitAttackRelease = 0;
                 return;
             }
 
-            this.AttackOrderSent = false;
             this.nextUnitAttackEnd = (float)(Utils.TickCount + UnitDatabase.GetAttackRate(this.Unit) * 1000);
             this.nextUnitAttackRelease = (float)(Utils.TickCount + UnitDatabase.GetAttackPoint(this.Unit) * 1000);
+            this.AttackOrderSent = false;
+            this.AttackStart();
         }
 
         #endregion
