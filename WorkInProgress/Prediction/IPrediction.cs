@@ -1,6 +1,6 @@
-﻿namespace Ensage.Common.Predictions
+namespace Ensage.Common.WorkInProgress.Prediction
 {
-    using Ensage.Common.Abilities;
+    using Ensage.Common.WorkInProgress.Abilities;
 
     public interface IPrediction
     {

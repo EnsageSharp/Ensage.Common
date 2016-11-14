@@ -1,9 +1,6 @@
-﻿namespace Ensage.Common.Abilities
+﻿namespace Ensage.Common.WorkInProgress.Abilities
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-
-    using Ensage.Common.Predictions;
+    using Ensage.Common.WorkInProgress.Prediction;
 
     using SharpDX;
 
@@ -25,13 +22,13 @@
 
         #region Public Methods and Operators
 
-        Task Execute(Unit target, CancellationToken token = default(CancellationToken));
-
-        Task Execute(Vector3 position, CancellationToken token = default(CancellationToken));
-
         float GetDamage(Unit target, int index = 0);
 
         void SetPrediction(IPredictionInput input);
+
+        bool Use(Unit target);
+
+        bool Use(Vector3 position);
 
         #endregion
     }

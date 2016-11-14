@@ -1,12 +1,14 @@
-﻿namespace Ensage.Common.Abilities
+namespace Ensage.Common.WorkInProgress.Abilities
 {
     using System;
     using System.Reflection;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     using Ensage.Common.Extensions;
-    using Ensage.Common.Predictions;
+    using Ensage.Common.WorkInProgress.Prediction;
+
+    using log4net;
+
+    using PlaySharp.Toolkit.Logging;
 
     using SharpDX;
 
@@ -35,7 +37,7 @@
 
         #region Public Methods and Operators
 
-        public override async Task Execute(Unit target, CancellationToken token = default(CancellationToken))
+        public override bool Use(Unit target)
         {
             if (target == null)
             {
@@ -47,11 +49,14 @@
 
             if (output.Cast)
             {
-                await this.Execute(output.Position, token);
+                this.Use(output.Position);
+                return true;
             }
+
+            return false;
         }
 
-        public override async Task Execute(Vector3 position, CancellationToken token = default(CancellationToken))
+        public override bool Use(Vector3 position)
         {
             if (position.IsValid())
             {
@@ -60,6 +65,7 @@
 
             Log.Debug($"UseAbility {this.Instance.Name} @ {position}");
             this.Instance.UseAbility(position);
+            return true;
         }
 
         #endregion

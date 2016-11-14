@@ -1,11 +1,13 @@
-﻿namespace Ensage.Common.Abilities
+﻿namespace Ensage.Common.WorkInProgress.Abilities
 {
     using System;
     using System.Reflection;
-    using System.Threading;
-    using System.Threading.Tasks;
 
-    using Ensage.Common.Predictions;
+    using Ensage.Common.WorkInProgress.Prediction;
+
+    using log4net;
+
+    using PlaySharp.Toolkit.Logging;
 
     using SharpDX;
 
@@ -61,10 +63,6 @@
 
         #region Public Methods and Operators
 
-        public abstract Task Execute(Unit target, CancellationToken token = default(CancellationToken));
-
-        public abstract Task Execute(Vector3 position, CancellationToken token = default(CancellationToken));
-
         public virtual float GetDamage(Unit target, int index = 0)
         {
             if (target == null)
@@ -84,6 +82,10 @@
 
             this.Prediction = input;
         }
+
+        public abstract bool Use(Unit target);
+
+        public abstract bool Use(Vector3 position);
 
         #endregion
     }

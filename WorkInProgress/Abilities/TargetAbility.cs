@@ -1,15 +1,17 @@
-﻿namespace Ensage.Common.Abilities
+namespace Ensage.Common.WorkInProgress.Abilities
 {
     using System;
     using System.Reflection;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     using Ensage.Common.Extensions;
 
+    using log4net;
+
+    using PlaySharp.Toolkit.Logging;
+
     using SharpDX;
 
-    public class SefcastAbility : AbilityBase
+    public class TargetAbility : AbilityBase
     {
         #region Static Fields
 
@@ -19,12 +21,12 @@
 
         #region Constructors and Destructors
 
-        public SefcastAbility(Hero owner, Ability ability)
+        public TargetAbility(Hero owner, Ability ability)
             : base(owner, ability)
         {
         }
 
-        public SefcastAbility(Hero owner, string ability)
+        public TargetAbility(Hero owner, string ability)
             : base(owner, owner.FindSpell(ability))
         {
         }
@@ -33,18 +35,19 @@
 
         #region Public Methods and Operators
 
-        public override async Task Execute(Unit target, CancellationToken token = default(CancellationToken))
+        public override bool Use(Unit target)
         {
             if (target == null)
             {
                 throw new ArgumentNullException(nameof(target));
             }
 
-            Log.Debug($"UseAbility {this.Instance.Name} @ {this.Owner}");
-            this.Instance.UseAbility(this.Owner);
+            Log.Debug($"Use {this.Instance.Name} @ {target.Name}");
+            this.Instance.UseAbility(target);
+            return true;
         }
 
-        public override async Task Execute(Vector3 position, CancellationToken token = default(CancellationToken))
+        public override bool Use(Vector3 position)
         {
             throw new NotSupportedException();
         }

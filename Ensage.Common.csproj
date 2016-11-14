@@ -22,7 +22,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Release</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\Ensage.Common.xml</DocumentationFile>
@@ -50,10 +50,16 @@
     <Reference Include="EnsageSharp.Sandbox">
       <HintPath>C:\NvdKTVgtv\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\Games\ps\Core\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\NvdKTVgtv\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="PlaySharp.Toolkit">
+      <HintPath>..\..\Games\ps\Core\PlaySharp.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
@@ -73,11 +79,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityInfo\AbilityDamage.cs" />
-    <Compile Include="Abilities\AbilityBase.cs" />
-    <Compile Include="Abilities\IAbility.cs" />
-    <Compile Include="Abilities\SefcastAbility.cs" />
-    <Compile Include="Abilities\SkillshotAbility.cs" />
-    <Compile Include="Abilities\TargetAbility.cs" />
+    <Compile Include="WorkInProgress\Abilities\AbilityBase.cs" />
+    <Compile Include="WorkInProgress\Abilities\IAbility.cs" />
+    <Compile Include="WorkInProgress\Abilities\SefcastAbility.cs" />
+    <Compile Include="WorkInProgress\Abilities\SkillshotAbility.cs" />
+    <Compile Include="WorkInProgress\Abilities\TargetAbility.cs" />
     <Compile Include="Algorithm.cs" />
     <Compile Include="Composer.cs" />
     <Compile Include="DelayAction.cs" />
@@ -177,9 +183,9 @@
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />
     <Compile Include="AbilityInfo\AbilityDatabase.cs" />
-    <Compile Include="Predictions\IPrediction.cs" />
-    <Compile Include="Predictions\IPredictionInput.cs" />
-    <Compile Include="Predictions\IPredictionOutput.cs" />
+    <Compile Include="WorkInProgress\Prediction\IPrediction.cs" />
+    <Compile Include="WorkInProgress\Prediction\IPredictionInput.cs" />
+    <Compile Include="WorkInProgress\Prediction\IPredictionOutput.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

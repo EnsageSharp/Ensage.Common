@@ -20,6 +20,7 @@ namespace Ensage.Common.AbilityInfo
     using Ensage.Common.Extensions;
     using Ensage.Common.Objects;
 
+    using Ability = Ensage.Ability;
     using Attribute = Ensage.Attribute;
 
     /// <summary>

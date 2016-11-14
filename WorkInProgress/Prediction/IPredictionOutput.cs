@@ -1,4 +1,4 @@
-﻿namespace Ensage.Common.Predictions
+﻿namespace Ensage.Common.WorkInProgress.Prediction
 {
     using SharpDX;
 
