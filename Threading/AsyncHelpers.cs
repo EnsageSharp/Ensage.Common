@@ -19,6 +19,8 @@ namespace Ensage.Common.Threading
 
     using Ensage.Common.Extensions;
 
+    using SharpDX;
+
     /// <summary>
     ///     Game Async helper functions.
     /// </summary>
@@ -36,7 +38,7 @@ namespace Ensage.Common.Threading
         /// <returns></returns>
         public static async Task<bool> MoveToTargetAsync(
             this Unit me,
-            Unit target,
+            Vector3 target,
             float range,
             CancellationToken ct = default(CancellationToken))
         {
@@ -44,7 +46,7 @@ namespace Ensage.Common.Threading
             {
                 while (me.Distance2D(target) > range)
                 {
-                    me.Move(target.Position);
+                    me.Move(target);
 
                     await Task.Delay(100, ct);
                 }
@@ -59,6 +61,23 @@ namespace Ensage.Common.Threading
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///     Move to a target until you're in a certain range and stops then.
+        /// </summary>
+        /// <param name="me"></param>
+        /// <param name="target"></param>
+        /// <param name="range"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public static async Task<bool> MoveToTargetAsync(
+            this Unit me,
+            Unit target,
+            float range,
+            CancellationToken ct = default(CancellationToken))
+        {
+            return await MoveToTargetAsync(me, target.NetworkPosition, range, ct);
         }
 
         /// <summary>
