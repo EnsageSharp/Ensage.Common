@@ -18,7 +18,7 @@
 
         #region Public Methods and Operators
 
-        public static async Task Block(string key, Func<Task> taskFactory)
+        public static async void Block(string key, Func<Task> taskFactory)
         {
             if (Running.Contains(key))
             {
