@@ -48,7 +48,7 @@ namespace Ensage.Common.Threading
                 {
                     me.Move(target);
 
-                    await Await.Delay(100, ct);
+                    await Task.Delay(100, ct);
                 }
             }
             catch (OperationCanceledException)
@@ -96,7 +96,7 @@ namespace Ensage.Common.Threading
             {
                 while (!target.HasModifier(name))
                 {
-                    await Await.Delay(100, ct);
+                    await Task.Delay(100, ct);
                 }
             }
             catch (OperationCanceledException)
