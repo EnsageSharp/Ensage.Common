@@ -1,6 +1,7 @@
 ﻿namespace Ensage.Common.Threading
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -9,7 +10,33 @@
     /// </summary>
     public class Await
     {
+        #region Static Fields
+
+        private static readonly SynchronizedCollection<string> Running = new SynchronizedCollection<string>();
+
+        #endregion
+
         #region Public Methods and Operators
+
+        public static async Task Block(string key, Func<Task> taskFactory)
+        {
+            if (Running.Contains(key))
+            {
+                // block if running
+                return;
+            }
+
+            Running.Add(key);
+
+            try
+            {
+                await taskFactory();
+            }
+            finally
+            {
+                Running.Remove(key);
+            }
+        }
 
         /// <summary>
         ///     Awaits the larger of two <see ref="time" /> or <see cref="Game.Ping" />
