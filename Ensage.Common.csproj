@@ -183,6 +183,7 @@
     <Compile Include="Threading\AsyncHelpers.cs" />
     <Compile Include="Combo\Combo.cs" />
     <Compile Include="Combo\ComboBase.cs" />
+    <Compile Include="Threading\Await.cs" />
     <Compile Include="Threading\GameDispatcher.cs" />
     <Compile Include="Threading\GameSynchronizationContext.cs" />
     <Compile Include="Combo\ICombo.cs" />
