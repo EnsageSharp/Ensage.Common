@@ -408,7 +408,7 @@ namespace Ensage.Common.Menu
             var textureName = itemName;
             if (this.ItemList.Contains(itemName))
             {
-                itemName += this.random.Next(1, 9);
+                return;
             }
 
             if (this.SValuesDictionary.ContainsKey(itemName))
@@ -446,11 +446,14 @@ namespace Ensage.Common.Menu
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
                 MenuVariables.DragAndDropDictionary.Add(
-                    this.name, 
+                    this.name,
                     new DragAndDrop(MenuSettings.MenuItemHeight, this.itemList));
             }
+            else
+            {
+                MenuVariables.DragAndDropDictionary[this.name].Add(itemName, defaultValue, enabled);
+            }
 
-            MenuVariables.DragAndDropDictionary[this.name].Add(itemName, defaultValue, enabled);
             MenuVariables.DragAndDropDictionary[this.name].UpdateOrder();
 
             if (this.PositionDictionary.ContainsKey(itemName))
@@ -561,7 +564,7 @@ namespace Ensage.Common.Menu
         /// <param name="menuItem">
         ///     The menu item.
         /// </param>
-        public void OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, MenuItem menuItem)
+        public bool OnReceiveMessage(Utils.WindowsMessages message, Vector2 cursorPos, MenuItem menuItem)
         {
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
@@ -573,13 +576,15 @@ namespace Ensage.Common.Menu
             if (message == Utils.WindowsMessages.WM_LBUTTONDOWN)
             {
                 MenuVariables.DragAndDropDictionary[this.name].LeftButtonDown(cursorPos);
-                return;
+                return false;
             }
 
             if (message == Utils.WindowsMessages.WM_LBUTTONUP)
             {
-                MenuVariables.DragAndDropDictionary[this.name].LeftButtonUp(cursorPos, menuItem);
+                return MenuVariables.DragAndDropDictionary[this.name].LeftButtonUp(cursorPos, menuItem);
             }
+
+            return false;
         }
 
         /// <summary>

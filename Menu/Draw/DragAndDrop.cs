@@ -428,12 +428,12 @@ namespace Ensage.Common.Menu.Draw
         /// <param name="menuItem">
         ///     The menu Item.
         /// </param>
-        public void LeftButtonUp(Vector2 mousePosition, MenuItem menuItem)
+        public bool LeftButtonUp(Vector2 mousePosition, MenuItem menuItem)
         {
             this.leftButtonDown = false;
             if (this.MovingIcon == null)
             {
-                return;
+                return false;
             }
 
             if (this.doubleClickSleeper.Sleeping && this.usingAbilityToggler)
@@ -450,8 +450,7 @@ namespace Ensage.Common.Menu.Draw
                 this.MovingIcon.Moving = false;
                 this.MovingIcon = null;
                 this.UpdateOrder();
-                menuItem.SetValue(menuItem.GetValue<PriorityChanger>());
-                return;
+                return true;
             }
 
             this.MovingIcon.ReturnFromDrag(
@@ -462,7 +461,7 @@ namespace Ensage.Common.Menu.Draw
             this.transition.Start(0, 150);
             this.MovingIcon.Moving = false;
             this.MovingIcon = null;
-            menuItem.SetValue(menuItem.GetValue<PriorityChanger>());
+            return true;
         }
 
         /// <summary>

@@ -1435,6 +1435,7 @@ namespace Ensage.Common.Menu
                     var saved = this.GetValue<AbilityToggler>();
                     var positionDictionary = saved.PositionDictionary;
                     var dictionary = saved.Dictionary;
+                    var valuechanged = false;
                     foreach (var v in from v in dictionary
                                       let pos = new Vector2(positionDictionary[v.Key][0], positionDictionary[v.Key][1])
                                       where
@@ -1448,10 +1449,14 @@ namespace Ensage.Common.Menu
                     {
                         saved.Dictionary[v.Key] = !dictionary[v.Key];
                         saved.SValuesDictionary[v.Key] = saved.Dictionary[v.Key];
+                        valuechanged = true;
                         break;
                     }
 
-                    this.SetValue(saved);
+                    if (valuechanged)
+                    {
+                        this.SetValue(saved);
+                    }
                     break;
 
                 case MenuValueType.PriorityChanger:
@@ -1461,8 +1466,11 @@ namespace Ensage.Common.Menu
                     }
 
                     var saved1 = this.GetValue<PriorityChanger>();
-                    saved1.OnReceiveMessage(message, cursorPos, this);
-                    this.SetValue(saved1);
+                    if (saved1.OnReceiveMessage(message, cursorPos, this))
+                    {
+                        this.SetValue(saved1);
+                    }
+
                     break;
 
                 case MenuValueType.HeroToggler:
@@ -1475,7 +1483,7 @@ namespace Ensage.Common.Menu
                     {
                         return;
                     }
-
+                    
                     positionDictionary = this.GetValue<HeroToggler>().PositionDictionary;
                     dictionary = this.GetValue<HeroToggler>().Dictionary;
                     foreach (var v in from v in dictionary
