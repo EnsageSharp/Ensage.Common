@@ -89,6 +89,11 @@ namespace Ensage.Common.Menu
         /// </summary>
         private List<string> itemList;
 
+        /// <summary>
+        /// The random.
+        /// </summary>
+        private Random random;
+
         #endregion
 
         #region Constructors and Destructors
@@ -114,57 +119,58 @@ namespace Ensage.Common.Menu
             string changerName = "", 
             bool useAbilityToggler = false)
         {
-            this.itemList = itemList;
+            this.random = new Random();
+            this.itemList = new List<string>();
             this.defaultPriority = defaultPriority;
             this.maxPriority = (uint)itemList.Count();
             this.minPriority = 0;
             this.Dictionary = new Dictionary<string, uint>();
+            this.PositionDictionary = new Dictionary<string, float[]>();
+            this.SValuesDictionary = new Dictionary<string, uint>();
+            this.AbilityToggler = new AbilityToggler(new Dictionary<string, bool>());
+            this.name = changerName != string.Empty ? changerName : id.ToString();
             var count = 0u;
             this.usingAbilityToggler = useAbilityToggler;
             foreach (var s in itemList)
             {
-                this.Dictionary.Add(s, count);
+                this.Add(s, count);
                 count++;
             }
 
-            this.PositionDictionary = new Dictionary<string, float[]>();
-            this.SValuesDictionary = new Dictionary<string, uint>();
-            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
-            {
-                Menu.TextureDictionary.Add(
-                    v.Key, 
-                    v.Key.Substring(0, "item".Length) == "item"
-                        ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
-                        : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
-            }
+            //foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
+            //{
+            //    Menu.TextureDictionary.Add(
+            //        v.Key, 
+            //        v.Key.Substring(0, "item".Length) == "item"
+            //            ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+            //            : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+            //}
 
-            var posDict = this.PositionDictionary;
-            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
-            {
-                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
-            }
+            //var posDict = this.PositionDictionary;
+            //foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            //{
+            //    this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            //}
 
-            var saveDict = this.SValuesDictionary;
-            foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
-            {
-                this.SValuesDictionary.Add(v.Key, v.Value);
-            }
+            //var saveDict = this.SValuesDictionary;
+            //foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
+            //{
+            //    this.SValuesDictionary.Add(v.Key, v.Value);
+            //}
 
             if (MenuVariables.DragAndDropDictionary == null)
             {
                 MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
             }
 
-            this.AbilityToggler = new AbilityToggler(new Dictionary<string, bool>());
-            if (useAbilityToggler)
-            {
-                foreach (var item in itemList)
-                {
-                    this.AbilityToggler.Add(item);
-                }
-            }
+            //if (useAbilityToggler)
+            //{
+            //    foreach (var item in itemList)
+            //    {
+            //        this.AbilityToggler.Add(item);
+            //    }
+            //}
 
-            this.name = changerName != string.Empty ? changerName : id.ToString();
             id++;
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
@@ -192,57 +198,59 @@ namespace Ensage.Common.Menu
 
         public PriorityChanger(List<string> itemList, string changerName = "", bool useAbilityToggler = false)
         {
-            this.itemList = itemList;
+            this.random = new Random();
+            this.itemList = new List<string>();
             this.defaultPriority = 4;
             this.maxPriority = (uint)itemList.Count();
             this.minPriority = 0;
             this.Dictionary = new Dictionary<string, uint>();
             var count = 0u;
             this.usingAbilityToggler = useAbilityToggler;
+            this.PositionDictionary = new Dictionary<string, float[]>();
+            this.SValuesDictionary = new Dictionary<string, uint>();
+            this.name = changerName != string.Empty ? changerName : id.ToString();
+
+            this.AbilityToggler = new AbilityToggler(new Dictionary<string, bool>());
             foreach (var s in itemList)
             {
-                this.Dictionary.Add(s, count);
+                this.Add(s, count);
                 count++;
             }
 
-            this.PositionDictionary = new Dictionary<string, float[]>();
-            this.SValuesDictionary = new Dictionary<string, uint>();
-            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
-            {
-                Menu.TextureDictionary.Add(
-                    v.Key, 
-                    v.Key.Substring(0, "item".Length) == "item"
-                        ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
-                        : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
-            }
+            //foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
+            //{
+            //    Menu.TextureDictionary.Add(
+            //        v.Key, 
+            //        v.Key.Substring(0, "item".Length) == "item"
+            //            ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+            //            : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+            //}
 
-            var posDict = this.PositionDictionary;
-            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
-            {
-                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
-            }
+            //var posDict = this.PositionDictionary;
+            //foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            //{
+            //    this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            //}
 
-            var saveDict = this.SValuesDictionary;
-            foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
-            {
-                this.SValuesDictionary.Add(v.Key, v.Value);
-            }
+            //var saveDict = this.SValuesDictionary;
+            //foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
+            //{
+            //    this.SValuesDictionary.Add(v.Key, v.Value);
+            //}
 
             if (MenuVariables.DragAndDropDictionary == null)
             {
                 MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
             }
 
-            this.AbilityToggler = new AbilityToggler(new Dictionary<string, bool>());
-            if (useAbilityToggler)
-            {
-                foreach (var item in itemList)
-                {
-                    this.AbilityToggler.Add(item);
-                }
-            }
+            //if (useAbilityToggler)
+            //{
+            //    foreach (var item in itemList)
+            //    {
+            //        this.AbilityToggler.Add(item);
+            //    }
+            //}
 
-            this.name = changerName != string.Empty ? changerName : id.ToString();
             id++;
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
@@ -293,48 +301,50 @@ namespace Ensage.Common.Menu
             uint defaultPriority = 4, 
             bool useAbilityToggler = true)
         {
-            this.itemList = itemList;
+            this.random = new Random();
+            this.itemList = new List<string>();
             this.defaultPriority = defaultPriority;
             this.maxPriority = (uint)itemList.Count();
             this.minPriority = 0;
             this.Dictionary = new Dictionary<string, uint>();
             var count = 0u;
             this.usingAbilityToggler = useAbilityToggler;
+            this.PositionDictionary = new Dictionary<string, float[]>();
+            this.SValuesDictionary = new Dictionary<string, uint>();
+            this.name = changerName != string.Empty ? changerName : id.ToString();
+            this.AbilityToggler = abilityToggler;
             foreach (var s in itemList)
             {
-                this.Dictionary.Add(s, count);
+                this.Add(s, count);
                 count++;
             }
 
-            this.PositionDictionary = new Dictionary<string, float[]>();
-            this.SValuesDictionary = new Dictionary<string, uint>();
-            foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
-            {
-                Menu.TextureDictionary.Add(
-                    v.Key, 
-                    v.Key.Substring(0, "item".Length) == "item"
-                        ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
-                        : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
-            }
+            //foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
+            //{
+            //    Menu.TextureDictionary.Add(
+            //        v.Key, 
+            //        v.Key.Substring(0, "item".Length) == "item"
+            //            ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+            //            : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+            //}
 
-            var posDict = this.PositionDictionary;
-            foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
-            {
-                this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
-            }
+            //var posDict = this.PositionDictionary;
+            //foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            //{
+            //    this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            //}
 
-            var saveDict = this.SValuesDictionary;
-            foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
-            {
-                this.SValuesDictionary.Add(v.Key, v.Value);
-            }
+            //var saveDict = this.SValuesDictionary;
+            //foreach (var v in this.Dictionary.Where(v => !saveDict.ContainsKey(v.Key)))
+            //{
+            //    this.SValuesDictionary.Add(v.Key, v.Value);
+            //}
 
             if (MenuVariables.DragAndDropDictionary == null)
             {
                 MenuVariables.DragAndDropDictionary = new Dictionary<string, DragAndDrop>();
             }
 
-            this.name = changerName != string.Empty ? changerName : id.ToString();
             id++;
             if (!MenuVariables.DragAndDropDictionary.ContainsKey(this.name))
             {
@@ -343,7 +353,6 @@ namespace Ensage.Common.Menu
                     new DragAndDrop(MenuSettings.MenuItemHeight, itemList, abilityToggler));
             }
 
-            this.AbilityToggler = abilityToggler;
             this.UpdatePriorities();
         }
 
@@ -396,9 +405,10 @@ namespace Ensage.Common.Menu
         /// </param>
         public void Add(string itemName, uint defaultValue = 0, bool enabled = true)
         {
+            var textureName = itemName;
             if (this.ItemList.Contains(itemName))
             {
-                return;
+                itemName += this.random.Next(1, 9);
             }
 
             if (this.SValuesDictionary.ContainsKey(itemName))
@@ -415,11 +425,11 @@ namespace Ensage.Common.Menu
             if (!Menu.TextureDictionary.ContainsKey(itemName))
             {
                 Menu.TextureDictionary.Add(
-                    itemName, 
-                    itemName.Substring(0, "item".Length) == "item"
+                    itemName,
+                    textureName.Substring(0, "item".Length) == "item"
                         ? Textures.GetTexture(
-                            "materials/ensage_ui/items/" + itemName.Substring("item_".Length) + ".vmat")
-                        : Textures.GetTexture("materials/ensage_ui/spellicons/" + itemName + ".vmat"));
+                            "materials/ensage_ui/items/" + textureName.Substring("item_".Length) + ".vmat")
+                        : Textures.GetTexture("materials/ensage_ui/spellicons/" + textureName + ".vmat"));
             }
 
             if (!this.SValuesDictionary.ContainsKey(itemName))
@@ -429,7 +439,7 @@ namespace Ensage.Common.Menu
 
             if (this.usingAbilityToggler)
             {
-                this.AbilityToggler.Add(itemName, enabled);
+                this.AbilityToggler.Add(itemName, textureName, enabled);
             }
 
             this.UpdatePriorities();

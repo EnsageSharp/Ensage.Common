@@ -18,6 +18,7 @@ namespace Ensage.Common.Menu
     using System.Drawing;
     using System.Linq;
     using System.Reflection;
+    using System.Security.Permissions;
 
     using Ensage.Common.Extensions;
     using Ensage.Common.Extensions.SharpDX;
@@ -611,6 +612,7 @@ namespace Ensage.Common.Menu
         /// <returns>
         ///     The <see cref="MenuItem" />.
         /// </returns>
+        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         public MenuItem SetValue<T>(T newValue)
         {
             this.ValueType = MenuValueType.None;
@@ -1430,8 +1432,9 @@ namespace Ensage.Common.Menu
                         return;
                     }
 
-                    var positionDictionary = this.GetValue<AbilityToggler>().PositionDictionary;
-                    var dictionary = this.GetValue<AbilityToggler>().Dictionary;
+                    var saved = this.GetValue<AbilityToggler>();
+                    var positionDictionary = saved.PositionDictionary;
+                    var dictionary = saved.Dictionary;
                     foreach (var v in from v in dictionary
                                       let pos = new Vector2(positionDictionary[v.Key][0], positionDictionary[v.Key][1])
                                       where
@@ -1443,11 +1446,12 @@ namespace Ensage.Common.Menu
                                               this.Height - 2)
                                       select v)
                     {
-                        this.GetValue<AbilityToggler>().Dictionary[v.Key] = !dictionary[v.Key];
+                        saved.Dictionary[v.Key] = !dictionary[v.Key];
+                        saved.SValuesDictionary[v.Key] = saved.Dictionary[v.Key];
                         break;
                     }
 
-                    this.SetValue(new AbilityToggler(dictionary));
+                    this.SetValue(saved);
                     break;
 
                 case MenuValueType.PriorityChanger:
@@ -1456,7 +1460,9 @@ namespace Ensage.Common.Menu
                         return;
                     }
 
-                    this.GetValue<PriorityChanger>().OnReceiveMessage(message, cursorPos, this);
+                    var saved1 = this.GetValue<PriorityChanger>();
+                    saved1.OnReceiveMessage(message, cursorPos, this);
+                    this.SetValue(saved1);
                     break;
 
                 case MenuValueType.HeroToggler:

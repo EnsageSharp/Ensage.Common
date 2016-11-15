@@ -51,7 +51,7 @@
       <HintPath>C:\NvdKTVgtv\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\Games\ps\Core\log4net.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\Core\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\NvdKTVgtv\References\Newtonsoft.Json.dll</HintPath>
@@ -59,7 +59,7 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="PlaySharp.Toolkit">
-      <HintPath>..\..\Games\ps\Core\PlaySharp.Toolkit.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\Core\PlaySharp.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
