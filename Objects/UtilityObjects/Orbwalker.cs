@@ -16,6 +16,7 @@ namespace Ensage.Common.Objects.UtilityObjects
     using System;
 
     using Ensage.Common.Extensions;
+    using Ensage.Common.Objects.DrawObjects;
 
     using SharpDX;
 
@@ -42,6 +43,31 @@ namespace Ensage.Common.Objects.UtilityObjects
         private readonly Sleeper attackSleeper2;
 
         /// <summary>
+        ///     The counter 10 sleeper.
+        /// </summary>
+        private readonly Sleeper counter10Sleeper = new Sleeper();
+
+        /// <summary>
+        ///     The counter 10 sleeper 2.
+        /// </summary>
+        private readonly Sleeper counter10Sleeper2 = new Sleeper();
+
+        /// <summary>
+        ///     The counter 10 text.
+        /// </summary>
+        private readonly DrawText counter10Text = new DrawText { Color = Color.White, TextSize = new Vector2(19) };
+
+        /// <summary>
+        ///     The counter sleeper.
+        /// </summary>
+        private readonly Sleeper counterSleeper = new Sleeper();
+
+        /// <summary>
+        ///     The counter text.
+        /// </summary>
+        private readonly DrawText counterText = new DrawText { Color = Color.White, TextSize = new Vector2(19) };
+
+        /// <summary>
         ///     The hero.
         /// </summary>
         private readonly bool hero;
@@ -52,14 +78,67 @@ namespace Ensage.Common.Objects.UtilityObjects
         private readonly Sleeper moveSleeper;
 
         /// <summary>
+        ///     The counter text 2.
+        /// </summary>
+        private readonly DrawText secondsperattackText = new DrawText
+                                                             {
+                                                                Color = Color.White, TextSize = new Vector2(19) 
+                                                             };
+
+        /// <summary>
         ///     The set user delay manually.
         /// </summary>
         private readonly bool setUserDelayManually;
 
         /// <summary>
+        ///     The attacks per second.
+        /// </summary>
+        private float attacksPerSecond;
+
+        /// <summary>
+        ///     The counter 10 result.
+        /// </summary>
+        private float counter10Result;
+
+        /// <summary>
+        ///     The counter 10 running.
+        /// </summary>
+        private bool counter10Running;
+
+        /// <summary>
+        ///     The counter 10 start.
+        /// </summary>
+        private float counter10Start;
+
+        /// <summary>
+        ///     The counter 10 started.
+        /// </summary>
+        private bool counter10Started;
+
+        /// <summary>
+        ///     The counter start.
+        /// </summary>
+        private float counterStart;
+
+        /// <summary>
+        ///     The current 10 count.
+        /// </summary>
+        private float current10Count;
+
+        /// <summary>
+        ///     The current count.
+        /// </summary>
+        private float currentCount;
+
+        /// <summary>
         ///     The custom move position.
         /// </summary>
         private bool customMovePosition;
+
+        /// <summary>
+        ///     The enable debug.
+        /// </summary>
+        private bool enableDebug = true;
 
         /// <summary>
         ///     The last move position.
@@ -117,6 +196,30 @@ namespace Ensage.Common.Objects.UtilityObjects
         #region Public Properties
 
         /// <summary>
+        ///     Gets the enable debug.
+        /// </summary>
+        public bool EnableDebug
+        {
+            get
+            {
+                return this.enableDebug;
+            }
+
+            set
+            {
+                this.enableDebug = value;
+                if (this.enableDebug)
+                {
+                    Drawing.OnDraw += this.Drawing_OnDraw;
+                }
+                else
+                {
+                    Drawing.OnDraw -= this.Drawing_OnDraw;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Gets or sets the user delay.
         /// </summary>
         public float UserDelay { get; set; }
@@ -140,10 +243,33 @@ namespace Ensage.Common.Objects.UtilityObjects
         }
 
         /// <summary>
+        ///     The attack end.
+        /// </summary>
+        public override void AttackEnd()
+        {
+            if (this.counter10Running)
+            {
+                this.current10Count += 1;
+            }
+        }
+
+        /// <summary>
         ///     The attack start.
         /// </summary>
         public override void AttackStart()
         {
+            DelayAction.Add(
+                (int)(UnitDatabase.GetAttackRate(this.Unit) * 1000), 
+                () =>
+                    {
+                        this.currentCount +=
+                            (float)((Game.RawGameTime - this.counterStart) / UnitDatabase.GetAttackRate(this.Unit));
+                    });
+            if (!this.counter10Sleeper2.Sleeping)
+            {
+                this.counter10Started = true;
+            }
+
             if (this.movingWhenReady)
             {
                 return;
@@ -292,9 +418,14 @@ namespace Ensage.Common.Objects.UtilityObjects
                 return;
             }
 
-            if (followTarget)
+            if (followTarget && target != null)
             {
-                this.Unit.Follow(target);
+                var pos = target.NetworkActivity == NetworkActivity.Move
+                              ? target.Predict(Game.Ping + 100)
+                              : target.Position;
+                this.Unit.Move(pos);
+                this.customMovePosition = true;
+                this.lastMovePosition = pos;
             }
             else
             {
@@ -316,6 +447,73 @@ namespace Ensage.Common.Objects.UtilityObjects
         #endregion
 
         #region Methods
+
+        private void Drawing_OnDraw(EventArgs args)
+        {
+            if (!this.Unit.IsValid)
+            {
+                Drawing.OnDraw -= this.Drawing_OnDraw;
+                return;
+            }
+
+            if (!this.counterSleeper.Sleeping)
+            {
+                this.counterSleeper.Sleep(1000);
+                this.counterStart = Game.RawGameTime;
+                var current = (Game.RawGameTime - this.LastUnitAttackStart) / UnitDatabase.GetAttackRate(this.Unit);
+                var newValue = current <= 1 ? this.currentCount + current : this.currentCount;
+                this.attacksPerSecond = (float)newValue;
+                this.currentCount = 0;
+            }
+
+            if (this.counter10Started && !this.counter10Sleeper.Sleeping)
+            {
+                if (!this.counter10Sleeper2.Sleeping)
+                {
+                    if (this.counter10Running)
+                    {
+                        this.counter10Started = false;
+                        var current = (Game.RawGameTime - this.LastUnitAttackStart)
+                                      / UnitDatabase.GetAttackRate(this.Unit);
+                        var newValue = current <= 1 ? this.current10Count + current : this.current10Count;
+                        this.counter10Result = (float)newValue;
+                        this.counter10Running = false;
+                        this.counter10Sleeper2.Sleep(3000);
+                        this.current10Count = 0;
+                    }
+                    else
+                    {
+                        this.counter10Sleeper.Sleep(10000);
+                        this.counter10Start = Game.RawGameTime;
+                    }
+                }
+            }
+
+            if (this.counter10Sleeper.Sleeping)
+            {
+                this.counter10Running = true;
+            }
+
+            this.counterText.Text = this.attacksPerSecond + " - Current Atk/s";
+            this.secondsperattackText.Text = this.Unit.SecondsPerAttack + " - unit.SecondsPerAttack";
+            this.counter10Text.Text = this.counter10Running
+                                          ? Math.Floor(Game.RawGameTime - this.counter10Start) + " sec: "
+                                            + this.current10Count + " attacks"
+                                          : this.counter10Result <= 0
+                                                ? "counter not started"
+                                                : "result: " + this.counter10Result + " attacks ";
+            this.counterText.Position = HUDInfo.GetHPbarPosition(this.Unit)
+                                        - new Vector2(50, 50 + this.counterText.Size.Y);
+            this.counter10Text.Position = HUDInfo.GetHPbarPosition(this.Unit) - new Vector2(50);
+            this.secondsperattackText.Position = HUDInfo.GetHPbarPosition(this.Unit)
+                                                 - new Vector2(
+                                                       50, 
+                                                       50 + this.counterText.Size.Y + this.counter10Text.Size.Y);
+            this.counterText.Draw();
+
+            // this.secondsperattackText.Draw();
+            this.counter10Text.Draw();
+        }
 
         /// <summary>
         ///     The move when ready.

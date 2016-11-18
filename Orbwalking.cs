@@ -145,9 +145,17 @@ namespace Ensage.Common
                 return;
             }
 
+            if (orbwalker != null)
+            {
+                orbwalker.Unit = ObjectManager.LocalHero;
+            }
+
             if (menu == null)
             {
                 menu = Menu.Menu.Root.AddSubMenu(new Menu.Menu("Orbwalking", "Common.Orbwalking"));
+                var enableDebugMenuItem = menu.AddItem(new MenuItem("common.orbwalking.debug", "Debug").SetValue(false));
+                orbwalker = new Orbwalker(ObjectManager.LocalHero);
+                enableDebugMenuItem.ValueChanged += EnableDebugMenuItem_ValueChanged;
             }
 
             var userDelayMenuItem =
@@ -157,7 +165,11 @@ namespace Ensage.Common
             UserDelay = userDelayMenuItem.GetValue<Slider>().Value;
             userDelayMenuItem.ValueChanged += (o, args) => { UserDelay = args.GetNewValue<Slider>().Value; };
             loaded = true;
-            orbwalker = new Orbwalker(ObjectManager.LocalHero);
+        }
+
+        private static void EnableDebugMenuItem_ValueChanged(object sender, OnValueChangeEventArgs e)
+        {
+            orbwalker.EnableDebug = e.GetNewValue<bool>();
         }
 
         /// <summary>

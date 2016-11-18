@@ -58,6 +58,9 @@
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="PlaySharp.Service">
+      <HintPath>C:\NvdKTVgtv\Core\PlaySharp.Service.dll</HintPath>
+    </Reference>
     <Reference Include="PlaySharp.Toolkit">
       <HintPath>C:\NvdKTVgtv\Core\PlaySharp.Toolkit.dll</HintPath>
     </Reference>

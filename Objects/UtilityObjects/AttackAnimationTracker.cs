@@ -24,6 +24,9 @@ namespace Ensage.Common.Objects.UtilityObjects
     {
         #region Fields
 
+        /// <summary>
+        /// The is attacking.
+        /// </summary>
         private bool isAttacking;
 
         /// <summary>
@@ -32,14 +35,9 @@ namespace Ensage.Common.Objects.UtilityObjects
         private NetworkActivity lastUnitActivity;
 
         /// <summary>
-        ///     The next unit attack end.
+        /// The unit.
         /// </summary>
-        private float nextUnitAttackEnd;
-
-        /// <summary>
-        ///     The next unit attack release.
-        /// </summary>
-        private float nextUnitAttackRelease;
+        private Unit unit;
 
         #endregion
 
@@ -64,9 +62,39 @@ namespace Ensage.Common.Objects.UtilityObjects
         #region Public Properties
 
         /// <summary>
+        ///     Gets the last unit attack start.
+        /// </summary>
+        public float LastUnitAttackStart { get; private set; }
+
+        /// <summary>
+        ///     The next unit attack end.
+        /// </summary>
+        public float NextUnitAttackEnd { get; private set; }
+
+        /// <summary>
+        ///     The next unit attack release.
+        /// </summary>
+        public float NextUnitAttackRelease { get; private set; }
+
+        /// <summary>
         ///     Gets or sets the unit.
         /// </summary>
-        public Unit Unit { get; set; }
+        public Unit Unit
+        {
+            get
+            {
+                return this.unit;
+            }
+
+            set
+            {
+                this.unit = value;
+                if (this.unit != null && this.unit.IsValid)
+                {
+                    Entity.OnInt32PropertyChange += this.Entity_OnInt32PropertyChange;
+                }
+            }
+        }
 
         #endregion
 
@@ -80,6 +108,13 @@ namespace Ensage.Common.Objects.UtilityObjects
         #endregion
 
         #region Public Methods and Operators
+
+        /// <summary>
+        ///     The attack end.
+        /// </summary>
+        public virtual void AttackEnd()
+        {
+        }
 
         /// <summary>
         ///     Informs attack animation tracker that the attack order was sent
@@ -99,6 +134,13 @@ namespace Ensage.Common.Objects.UtilityObjects
                             }
                         });
             }
+        }
+
+        /// <summary>
+        ///     The attack start.
+        /// </summary>
+        public virtual void AttackStart()
+        {
         }
 
         /// <summary>
@@ -169,7 +211,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             }
 
             var time = Utils.TickCount;
-            var cancelTime = this.nextUnitAttackRelease + delay - Game.Ping;
+            var cancelTime = this.NextUnitAttackRelease + delay - Game.Ping;
             return time > cancelTime;
         }
 
@@ -200,14 +242,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                            / this.Unit.MovementSpeed;
             }
 
-            return this.nextUnitAttackEnd - Game.Ping - turnTime * 1000 - 120 + bonusWindupMs > Utils.TickCount;
-        }
-
-        /// <summary>
-        /// The attack start.
-        /// </summary>
-        public virtual void AttackStart()
-        {
+            return this.NextUnitAttackEnd - Game.Ping - turnTime * 1000 - 120 + bonusWindupMs > Utils.TickCount;
         }
 
         #endregion
@@ -215,13 +250,13 @@ namespace Ensage.Common.Objects.UtilityObjects
         #region Methods
 
         /// <summary>
-        /// The entity_ on int 32 property change.
+        ///     The entity_ on int 32 property change.
         /// </summary>
         /// <param name="sender">
-        /// The sender.
+        ///     The sender.
         /// </param>
         /// <param name="args">
-        /// The args.
+        ///     The args.
         /// </param>
         private void Entity_OnInt32PropertyChange(Entity sender, Int32PropertyChangeEventArgs args)
         {
@@ -242,15 +277,17 @@ namespace Ensage.Common.Objects.UtilityObjects
             }
 
             var newValue = (NetworkActivity)args.NewValue;
-            if (newValue == this.lastUnitActivity || newValue == (NetworkActivity)args.OldValue)
+            var oldValue = (NetworkActivity)args.OldValue;
+            if (newValue == this.lastUnitActivity || newValue == oldValue)
             {
                 return;
             }
 
             var canCancel = this.CanCancelAttack();
-
+            var wasAttacking = false;
             if (!this.IsAttackOnCoolDown() || canCancel)
             {
+                wasAttacking = this.isAttacking;
                 this.lastUnitActivity = newValue;
                 this.isAttacking = newValue == NetworkActivity.Attack || newValue == NetworkActivity.Crit
                                    || newValue == NetworkActivity.Attack2 || newValue == NetworkActivity.AttackEvent
@@ -258,13 +295,24 @@ namespace Ensage.Common.Objects.UtilityObjects
                                    || newValue == NetworkActivity.EarthshakerTotemAttack;
             }
 
+            if (wasAttacking && canCancel && !this.isAttacking
+                && (oldValue == NetworkActivity.Attack || oldValue == NetworkActivity.Crit
+                    || oldValue == NetworkActivity.Attack2 || oldValue == NetworkActivity.AttackEvent
+                    || oldValue == NetworkActivity.AttackEventBash || oldValue == NetworkActivity.EarthshakerTotemAttack))
+            {
+                this.AttackEnd();
+            }
+
             if (!this.isAttacking || (!this.isAttacking && !canCancel))
             {
                 return;
             }
 
-            this.nextUnitAttackEnd = (float)(Utils.TickCount + UnitDatabase.GetAttackRate(this.Unit) * 1000);
-            this.nextUnitAttackRelease = (float)(Utils.TickCount + UnitDatabase.GetAttackPoint(this.Unit) * 1000);
+            this.LastUnitAttackStart = Game.RawGameTime;
+            this.NextUnitAttackEnd =
+                (float)(this.LastUnitAttackStart * 1000 + UnitDatabase.GetAttackRate(this.Unit) * 1000);
+            this.NextUnitAttackRelease =
+                (float)(this.LastUnitAttackStart * 1000 + UnitDatabase.GetAttackPoint(this.Unit) * 1000);
             this.AttackOrderSent = false;
             this.AttackStart();
         }
