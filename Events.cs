@@ -75,7 +75,7 @@ namespace Ensage.Common
 
                     unloaded = false;
                     loaded = true;
-                    CallOnLoad();
+                    DelayAction.Add(200, CallOnLoad);
                 };
 
             //GameDispatcher.OnUpdate += args =>
