@@ -27,12 +27,14 @@
             "AbilityName": "abyssal_underlord_pit_of_malice",
             "StringRadius": "radius",
             "IsSkillShot": true,
-            "IsDisable": true,
-            "MagicImmunityPierce": true,
-            "DamageString": "pit_damage"
+            "IsDisable": true
         },
         {
             "AbilityName": "abyssal_underlord_dark_rift",
+            "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "abyssal_underlord_atrophy_aura",
             "StringRadius": "radius"
         },
         //{
@@ -119,7 +121,8 @@
             "StringRadius": "radius",
             "IsSkillShot": true,
             "IsNuke": true,
-            "AdditionalDelay": 3,
+            "AdditionalDelay": 2,
+            "Speed": "wraith_speed",
             "DamageString": "spark_damage"
         },
         //{
@@ -157,6 +160,27 @@
         {
             "AbilityName": "clinkz_wind_walk",
             "IsInivs": true
+        },
+        {
+            "AbilityName": "monkey_king_boundless_strike",
+            "IsDisable": true,
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "StringRadius": "strike_radius"
+        },
+        {
+            "AbilityName": "monkey_king_primal_spring",
+            "IsSkillShot": true,
+            "StringRadius": "impact_radius",
+            "FakeCastRange": true,
+            "RealCastRange": "max_distance"
+        },
+        {
+            "AbilityName": "monkey_king_wukongs_command",
+            "IsNuke": true,
+            "IsSkillShot": true,
+            "MagicImmunityPierce": true,
+            "StringRadius": "leadership_radius"
         },
         {
             "AbilityName": "dazzle_weave",
@@ -243,9 +267,7 @@
         },
         {
             "AbilityName": "chaos_knight_reality_rift",
-            "IsNuke": true,
-            "DamageString": "bonus_damage",
-            "AADamage": true
+            "IsNuke": true
         },
         {
             "AbilityName": "chaos_knight_phantasm",
@@ -732,8 +754,6 @@
             "AbilityName": "dark_seer_wall_of_replica",
             "IsSkillShot": true,
             "Width": "width",
-            "DamageString": "damage",
-            "DamageScepterString": "tooltip_outgoing_scepter",
             "MagicImmunityPierce": true
         },
         {
@@ -1074,24 +1094,22 @@
         },
         {
             "AbilityName": "techies_suicide",
-            "StringRadius": "small_radius",
-            "DamageString": "damage",
-            "MagicImmunityPierce": true
+            "IsDisable": true,
+            "StringRadius": "radius",
+            "DamageString": "damage"
         },
         {
             "AbilityName": "techies_stasis_trap",
             "IsDisable": true,
-            "StringRadius": "activation_radius",
-            "AdditionalDelay": 1.5,
+            "StringRadius": "stun_radius",
+            "AdditionalDelay": 2,
             "IsSkillShot": true
         },
         {
             "AbilityName": "techies_land_mines",
-            "IsNuke": true,
-            "StringRadius": "small_radius",
+            "StringRadius": "radius",
             "DamageString": "damage",
-            "AdditionalDelay": 0.8,
-            "MagicImmunityPierce": true,
+            "AdditionalDelay": 3.35,
             "IsSkillShot": true
         },
         {
@@ -1100,6 +1118,7 @@
             "StringRadius": "radius",
             "DamageString": "damage",
             "DamageScepterString": "damage_scepter",
+            "AdditionalDelay": 0.25,
             "IsSkillShot": true
         },
         {
@@ -1311,7 +1330,6 @@
         {
             "AbilityName": "brewmaster_drunken_haze",
             "IsSlow": true,
-            "StringRadius": "radius",
             "WeakensEnemy": true
         },
         {
@@ -1982,6 +2000,11 @@
             "DamageScepterString": "damage_per_health_scepter"
         },
         {
+            "AbilityName": "necrolyte_sadist",
+            "IsSlow": true,
+            "StringRadius": "slow_aoe"
+        },
+        {
             "AbilityName": "broodmother_spawn_spiderlings",
             "IsNuke": true,
             "DamageString": "damage",
@@ -2169,7 +2192,7 @@
             "IsNuke": true,
             "IsHeal": true,
             "DamageString": "target_damage",
-            "Speed": "projectile_speed"
+            "Speed": "missile_speed"
         },
         {
             "AbilityName": "templar_assassin_refraction",
@@ -2229,6 +2252,11 @@
             "AbilityName": "zuus_arc_lightning",
             "IsNuke": true,
             "StringRadius": "radius"
+        },
+        {
+            "AbilityName": "zuus_cloud",
+            "IsNuke": true,
+            "StringRadius": "cloud_radius"
         },
         {
             "AbilityName": "tidehunter_anchor_smash",
@@ -2404,6 +2432,10 @@
             "StringRadius": "replenish_radius"
         },
         {
+            "AbilityName": "item_bfury",
+            "StringRadius": "cleave_radius"
+        },
+        {
             "AbilityName": "item_soul_ring",
             "IsHeal": true
         },
@@ -2443,7 +2475,8 @@
         },
         {
             "AbilityName": "dragon_knight_dragon_tail",
-            "IsDisable": true
+            "IsDisable": true,
+            "Speed": "projectile_speed"
         },
         {
             "AbilityName": "crystal_maiden_frostbite",
@@ -2463,7 +2496,7 @@
         },
         {
             "AbilityName": "item_rod_of_atos",
-            "IsSlow": true
+            "IsDisable": true
         },
         {
             "AbilityName": "item_sheepstick",
@@ -2748,7 +2781,7 @@
         {
             "AbilityName": "item_shadow_amulet",
             "IsInvis": true,
-            "AdditionalDelay": 1.5
+            "AdditionalDelay": 1.25
         },
         {
             "AbilityName": "item_ring_of_basilius",
@@ -2920,6 +2953,21 @@
         {
             "AbilityName": "big_thunder_lizard_frenzy", 
             "IsBuff": true
+        },
+        {
+            "AbilityName": "spawnlord_master_stomp", 
+            "WeakensEnemy": true,
+            "StringRadius": "radius",
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "spawnlord_master_freeze", 
+            "IsDisable": true,
+            "DamageString": "damage"
+        },
+        {
+            "AbilityName": "spawnlord_aura", 
+            "StringRadius": "radius"
         }
     ]
 }
