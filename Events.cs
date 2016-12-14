@@ -75,6 +75,7 @@ namespace Ensage.Common
 
                     unloaded = false;
                     loaded = true;
+                    Load();
                     DelayAction.Add(200, CallOnLoad);
                 };
 
@@ -151,7 +152,6 @@ namespace Ensage.Common
         /// </summary>
         private static void CallOnLoad()
         {
-            Load();
             OnLoad?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
         }
 

@@ -166,7 +166,7 @@
             "IsDisable": true,
             "IsNuke": true,
             "IsSkillShot": true,
-            "StringRadius": "strike_radius"
+            "Width": "strike_radius"
         },
         {
             "AbilityName": "monkey_king_primal_spring",

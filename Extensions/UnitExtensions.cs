@@ -574,6 +574,33 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        /// The find relative angle.
+        /// </summary>
+        /// <param name="unit">
+        /// The unit.
+        /// </param>
+        /// <param name="pos">
+        /// The pos.
+        /// </param>
+        /// <param name="delta">
+        /// The alpha.
+        /// </param>
+        /// <returns>
+        /// The <see cref="float"/>.
+        /// </returns>
+        public static float FindRelativeAngle(this Unit unit, Vector3 pos, float delta)
+        {
+            var angle = Math.Abs(Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad - delta);
+
+            if (angle > Math.PI)
+            {
+                angle = Math.PI * 2 - angle;
+            }
+
+            return (float)angle;
+        }
+
+        /// <summary>
         ///     Returns spell of the unit with given name if it exists
         /// </summary>
         /// <param name="unit">
