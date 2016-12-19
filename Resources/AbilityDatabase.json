@@ -1195,6 +1195,7 @@
         {
             "AbilityName": "tinker_laser",
             "IsNuke": true,
+            "DamageString": "laser_damage",
             "WeakensEnemy": true
         },
         {
