@@ -50,9 +50,6 @@
     <Reference Include="EnsageSharp.Sandbox">
       <HintPath>C:\NvdKTVgtv\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>C:\NvdKTVgtv\Core\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\NvdKTVgtv\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -82,11 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbilityInfo\AbilityDamage.cs" />
-    <Compile Include="WorkInProgress\Abilities\AbilityBase.cs" />
-    <Compile Include="WorkInProgress\Abilities\IAbility.cs" />
-    <Compile Include="WorkInProgress\Abilities\SefcastAbility.cs" />
-    <Compile Include="WorkInProgress\Abilities\SkillshotAbility.cs" />
-    <Compile Include="WorkInProgress\Abilities\TargetAbility.cs" />
     <Compile Include="Algorithm.cs" />
     <Compile Include="Composer.cs" />
     <Compile Include="DelayAction.cs" />
@@ -186,9 +178,6 @@
     <Compile Include="Orbwalking.cs" />
     <Compile Include="AbilityInfo\AbilityInfo.cs" />
     <Compile Include="AbilityInfo\AbilityDatabase.cs" />
-    <Compile Include="WorkInProgress\Prediction\IPrediction.cs" />
-    <Compile Include="WorkInProgress\Prediction\IPredictionInput.cs" />
-    <Compile Include="WorkInProgress\Prediction\IPredictionOutput.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
