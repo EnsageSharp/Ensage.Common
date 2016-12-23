@@ -131,7 +131,6 @@ namespace Ensage.Common
             Abilities.Init();
             Calculations.Init();
             EntityExtensions.Init();
-            Orbwalking.Events_OnLoad(null, null);
             Utils.Sleeps = new Dictionary<string, double>();
             NotifiedSubscribers.Clear();
         }

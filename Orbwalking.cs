@@ -50,8 +50,8 @@ namespace Ensage.Common
         /// </summary>
         static Orbwalking()
         {
-            Load();
-            Events.OnClose += Events_OnClose;
+            Events.OnLoad += OnLoad;
+            Events.OnClose += OnClose;
         }
 
         #endregion
@@ -129,58 +129,42 @@ namespace Ensage.Common
             return orbwalker.CanCancelAttack(delay);
         }
 
-        /// <summary>
-        ///     The events_ on load.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        public static void Events_OnLoad(object sender, EventArgs e)
+        private static void OnLoad(object sender, EventArgs eventArgs)
         {
-            if (loaded || !Game.IsInGame || ObjectManager.LocalHero == null || !ObjectManager.LocalHero.IsValid)
-            {
-                return;
-            }
-
-            if (orbwalker != null)
-            {
-                orbwalker.Unit = ObjectManager.LocalHero;
-            }
-
             if (menu == null)
             {
                 menu = Menu.Menu.Root.AddSubMenu(new Menu.Menu("Orbwalking", "Common.Orbwalking"));
+
                 var enableDebugMenuItem = menu.AddItem(new MenuItem("common.orbwalking.debug", "Debug").SetValue(false));
-                orbwalker = new Orbwalker(ObjectManager.LocalHero);
                 enableDebugMenuItem.ValueChanged += EnableDebugMenuItem_ValueChanged;
+
+                var userDelayMenuItem =
+                    menu.AddItem(
+                        new MenuItem("Common.Orbwalking.UserDelay", "Attack cancel delay", true).SetValue(
+                            new Slider(0, -200, 200)));
+
+                UserDelay = userDelayMenuItem.GetValue<Slider>().Value;
+                userDelayMenuItem.ValueChanged += (o, args) => { UserDelay = args.GetNewValue<Slider>().Value; };
             }
 
-            var userDelayMenuItem =
-                menu.AddItem(
-                    new MenuItem("Common.Orbwalking.UserDelay", "Attack cancel delay", true).SetValue(
-                        new Slider(0, -200, 200)));
-            UserDelay = userDelayMenuItem.GetValue<Slider>().Value;
-            userDelayMenuItem.ValueChanged += (o, args) => { UserDelay = args.GetNewValue<Slider>().Value; };
-            loaded = true;
+            if (orbwalker == null)
+            {
+                orbwalker = new Orbwalker(ObjectManager.LocalHero);
+            }
+            else
+            {
+                orbwalker.Unit = ObjectManager.LocalHero;
+            }
+        }
+
+        public static void Load()
+        {
+            
         }
 
         private static void EnableDebugMenuItem_ValueChanged(object sender, OnValueChangeEventArgs e)
         {
             orbwalker.EnableDebug = e.GetNewValue<bool>();
-        }
-
-        /// <summary>
-        ///     Loads orbwalking if its not loaded yet
-        /// </summary>
-        public static void Load()
-        {
-            if (Game.IsInGame)
-            {
-                Events_OnLoad(null, null);
-            }
         }
 
         /// <summary>
@@ -224,16 +208,10 @@ namespace Ensage.Common
         /// <param name="e">
         ///     The e.
         /// </param>
-        private static void Events_OnClose(object sender, EventArgs e)
+        private static void OnClose(object sender, EventArgs e)
         {
-            if (!loaded)
-            {
-                return;
-            }
-
-            menu.Items.Remove(menu.Items.FirstOrDefault(x => x.Name == ObjectManager.LocalHero?.Name + "Common.Orbwalking.UserDelay"));
-            orbwalker = null;
-            loaded = false;
+            //menu.Items.Remove(menu.Items.FirstOrDefault(x => x.Name == ObjectManager.LocalHero?.Name + "Common.Orbwalking.UserDelay"));
+            orbwalker.Unit = null;
         }
 
         #endregion
