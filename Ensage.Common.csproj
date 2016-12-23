@@ -55,12 +55,6 @@
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="PlaySharp.Service">
-      <HintPath>C:\NvdKTVgtv\Core\PlaySharp.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="PlaySharp.Toolkit">
-      <HintPath>C:\NvdKTVgtv\Core\PlaySharp.Toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\NvdKTVgtv\References\SharpDX.dll</HintPath>
@@ -191,6 +185,7 @@
     <Compile Include="Combo\Combo.cs" />
     <Compile Include="Combo\ComboBase.cs" />
     <Compile Include="Threading\Await.cs" />
+    <Compile Include="Threading\EdgeTrigger.cs" />
     <Compile Include="Threading\GameDispatcher.cs" />
     <Compile Include="Threading\GameSynchronizationContext.cs" />
     <Compile Include="Combo\ICombo.cs" />

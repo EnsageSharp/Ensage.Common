@@ -15,8 +15,8 @@ namespace Ensage.Common
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
-    using System.Threading.Tasks;
 
     using Ensage.Common.AbilityInfo;
     using Ensage.Common.Extensions;
@@ -31,17 +31,9 @@ namespace Ensage.Common
     {
         #region Static Fields
 
-        private static bool callOnLoad;
+        private static readonly EdgeTrigger IngameTrigger = new EdgeTrigger();
 
-        /// <summary>
-        ///     The loaded.
-        /// </summary>
-        private static bool loaded;
-
-        /// <summary>
-        ///     The unloaded.
-        /// </summary>
-        private static bool unloaded = true;
+        private static readonly List<Delegate> NotifiedSubscribers = new List<Delegate>();
 
         #endregion
 
@@ -52,43 +44,9 @@ namespace Ensage.Common
         /// </summary>
         static Events()
         {
-            Game.OnUpdate += args =>
-                {
-                    CallOnUpdate();
-                    if (!Game.IsInGame || ObjectManager.LocalHero == null || !ObjectManager.LocalHero.IsValid)
-                    {
-                        if (!unloaded)
-                        {
-                            CallOnClose();
-                            Load();
-                            unloaded = true;
-                        }
-
-                        loaded = false;
-                        return;
-                    }
-
-                    if (loaded)
-                    {
-                        return;
-                    }
-
-                    unloaded = false;
-                    loaded = true;
-                    Load();
-                    DelayAction.Add(200, CallOnLoad);
-                };
-
-            //GameDispatcher.OnUpdate += args =>
-            //    {
-            //        if (!callOnLoad)
-            //        {
-            //            return;
-            //        }
-
-            //        callOnLoad = false;
-            //        CallOnLoadAsync();
-            //    };
+            IngameTrigger.Fallen += IngameTriggerOnFallen;
+            IngameTrigger.Risen += IngameTriggerOnRisen;
+            Game.OnUpdate += UpdateTrigger;
         }
 
         #endregion
@@ -139,41 +97,30 @@ namespace Ensage.Common
 
         #region Methods
 
-        /// <summary>
-        ///     The call on close.
-        /// </summary>
-        private static void CallOnClose()
+        private static void IngameTriggerOnFallen(object sender, EventArgs eventArgs)
         {
+            Console.WriteLine("Unloading...");
+
+            // cleanup
+            Game.OnUpdate -= UpdateOnLoad;
+
+            // raise and reset framework
             OnClose?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
+            Init();
         }
 
-        /// <summary>
-        ///     Calls the OnLoad event.
-        /// </summary>
-        private static void CallOnLoad()
+        private static void IngameTriggerOnRisen(object sender, EventArgs eventArgs)
         {
-            OnLoad?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
-        }
+            Console.WriteLine("Loading...");
 
-        private static async void CallOnLoadAsync()
-        {
-            Load();
-            await Task.Delay(50);
-            await OnLoadAsync();
-        }
-
-        /// <summary>
-        ///     The call on update.
-        /// </summary>
-        private static void CallOnUpdate()
-        {
-            OnUpdate?.Invoke(EventArgs.Empty);
+            Init();
+            Game.OnUpdate += UpdateOnLoad;
         }
 
         /// <summary>
         ///     The load.
         /// </summary>
-        private static void Load()
+        private static void Init()
         {
             AbilityDatabase.Init();
             AbilityDamage.Init();
@@ -186,37 +133,50 @@ namespace Ensage.Common
             EntityExtensions.Init();
             Orbwalking.Events_OnLoad(null, null);
             Utils.Sleeps = new Dictionary<string, double>();
+            NotifiedSubscribers.Clear();
         }
 
-        private static async Task OnLoadAsync()
+        private static void UpdateOnLoad(EventArgs args)
         {
+            if (!Utils.SleepCheck("Events.OnLoad"))
+            {
+                return;
+            }
+
             if (OnLoad == null)
             {
                 return;
             }
 
-            foreach (var @delegate in OnLoad.GetInvocationList())
+            if (!IngameTrigger.Value)
             {
-                if (@delegate == null)
-                {
-                    return;
-                }
-
-                @delegate.DynamicInvoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
-                if (@delegate.Target == null)
-                {
-                    //Console.WriteLine(@delegate.ToString());
-                    continue;
-                }
-
-                if (@delegate.Target.ToString().Contains("Transitions."))
-                {
-                    continue;
-                }
-
-                //Console.WriteLine(@delegate.Target.ToString());
-                await Task.Delay(50);
+                return;
             }
+
+            var subscribers = OnLoad.GetInvocationList();
+
+            foreach (var subscriber in subscribers.Where(s => !NotifiedSubscribers.Contains(s)))
+            {
+                NotifiedSubscribers.Add(subscriber);
+
+                try
+                {
+                    subscriber.DynamicInvoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+
+            Utils.Sleep(250, "Events.OnLoad");
+        }
+
+        private static void UpdateTrigger(EventArgs args)
+        {
+            OnUpdate?.Invoke(EventArgs.Empty);
+
+            IngameTrigger.Value = Game.IsInGame && ObjectManager.LocalHero != null && ObjectManager.LocalHero.IsValid;
         }
 
         #endregion
