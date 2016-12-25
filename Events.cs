@@ -37,6 +37,8 @@ namespace Ensage.Common
 
         private static readonly List<Delegate> NotifiedSubscribers = new List<Delegate>();
 
+        private static readonly Type Type;
+
         private static CancellationTokenSource loaderTask;
 
         #endregion
@@ -48,8 +50,11 @@ namespace Ensage.Common
         /// </summary>
         static Events()
         {
+            Type = MethodBase.GetCurrentMethod().DeclaringType;
+
             IngameTrigger.Fallen += IngameTriggerOnFallen;
             IngameTrigger.Risen += IngameTriggerOnRisen;
+
             Game.OnUpdate += UpdateTrigger;
         }
 
@@ -109,7 +114,7 @@ namespace Ensage.Common
             StopLoader();
 
             // raise and reset framework
-            OnClose?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
+            OnClose?.Invoke(Type, EventArgs.Empty);
             Init();
         }
 
@@ -174,13 +179,7 @@ namespace Ensage.Common
                     {
                         NotifiedSubscribers.Add(subscriber);
 
-                        GameDispatcher.BeginInvoke(
-                            () =>
-                                {
-                                    subscriber.DynamicInvoke(
-                                        MethodBase.GetCurrentMethod().DeclaringType,
-                                        EventArgs.Empty);
-                                });
+                        GameDispatcher.BeginInvoke(() => { subscriber.DynamicInvoke(Type, EventArgs.Empty); });
                     }
                 }
                 catch (TaskCanceledException)
