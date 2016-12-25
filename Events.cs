@@ -17,6 +17,8 @@ namespace Ensage.Common
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     using Ensage.Common.AbilityInfo;
     using Ensage.Common.Extensions;
@@ -34,6 +36,8 @@ namespace Ensage.Common
         private static readonly EdgeTrigger IngameTrigger = new EdgeTrigger();
 
         private static readonly List<Delegate> NotifiedSubscribers = new List<Delegate>();
+
+        private static CancellationTokenSource loaderTask;
 
         #endregion
 
@@ -102,7 +106,7 @@ namespace Ensage.Common
             Console.WriteLine("Unloading...");
 
             // cleanup
-            Game.OnUpdate -= UpdateOnLoad;
+            StopLoader();
 
             // raise and reset framework
             OnClose?.Invoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
@@ -114,7 +118,7 @@ namespace Ensage.Common
             Console.WriteLine("Loading...");
 
             Init();
-            Game.OnUpdate += UpdateOnLoad;
+            StartLoader();
         }
 
         /// <summary>
@@ -135,40 +139,59 @@ namespace Ensage.Common
             NotifiedSubscribers.Clear();
         }
 
-        private static void UpdateOnLoad(EventArgs args)
+        private static void StartLoader()
         {
-            if (!Utils.SleepCheck("Events.OnLoad"))
+            loaderTask = new CancellationTokenSource();
+            Task.Factory.StartNew(UpdateOnLoad, loaderTask.Token);
+        }
+
+        private static void StopLoader()
+        {
+            loaderTask?.Cancel();
+        }
+
+        private static async void UpdateOnLoad()
+        {
+            while (!loaderTask.IsCancellationRequested)
             {
-                return;
-            }
-
-            if (OnLoad == null)
-            {
-                return;
-            }
-
-            if (!IngameTrigger.Value)
-            {
-                return;
-            }
-
-            var subscribers = OnLoad.GetInvocationList();
-
-            foreach (var subscriber in subscribers.Where(s => !NotifiedSubscribers.Contains(s)))
-            {
-                NotifiedSubscribers.Add(subscriber);
-
                 try
                 {
-                    subscriber.DynamicInvoke(MethodBase.GetCurrentMethod().DeclaringType, EventArgs.Empty);
+                    await Task.Delay(250, loaderTask.Token);
+
+                    if (OnLoad == null)
+                    {
+                        continue;
+                    }
+
+                    if (!IngameTrigger.Value)
+                    {
+                        continue;
+                    }
+
+                    var subscribers = OnLoad.GetInvocationList();
+
+                    foreach (var subscriber in subscribers.Where(s => !NotifiedSubscribers.Contains(s)))
+                    {
+                        NotifiedSubscribers.Add(subscriber);
+
+                        GameDispatcher.BeginInvoke(
+                            () =>
+                                {
+                                    subscriber.DynamicInvoke(
+                                        MethodBase.GetCurrentMethod().DeclaringType,
+                                        EventArgs.Empty);
+                                });
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                    Console.WriteLine("Stopped LoaderTask");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
             }
-
-            Utils.Sleep(250, "Events.OnLoad");
         }
 
         private static void UpdateTrigger(EventArgs args)
