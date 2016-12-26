@@ -130,8 +130,8 @@ namespace Ensage.Common.Extensions.Damage
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
-                        ModifierName = "modifier_chen_penitence", SourceSpellName = "chen_penitence", Amp = "bonus_damage_taken",
-                        HeroId = ClassID.CDOTA_Unit_Hero_Chen,
+                        ModifierName = "modifier_chen_penitence", SourceSpellName = "chen_penitence",
+                        Amp = "bonus_damage_taken", HeroId = ClassID.CDOTA_Unit_Hero_Chen,
                     });
 
             ExternalDmgReductions.Add(
@@ -820,9 +820,9 @@ namespace Ensage.Common.Extensions.Damage
             double minusMagicResistancePerc = 0d)
         {
             var totalSpellAmp = 0f;
-            var damage = 0f;
-            var talent = source.Spellbook.Spells.First(x => x.Name.Contains("special_bonus_spell_amplify"));
-            if (talent.Level > 0)
+            var damage = dmg;
+            var talent = source.Spellbook.Spells.FirstOrDefault(x => x.Name.Contains("special_bonus_spell_amplify"));
+            if (talent?.Level > 0)
             {
                 totalSpellAmp += talent.GetAbilityData("value") / 100f;
             }
@@ -843,7 +843,7 @@ namespace Ensage.Common.Extensions.Damage
             if (hero != null && spellName != "axe_culling_blade")
             {
                 totalSpellAmp += (100f + hero.TotalIntelligence / 16f) / 100f;
-                damage = dmg * totalSpellAmp;
+                damage *= totalSpellAmp;
             }
 
             var taken = target.DamageTaken(
