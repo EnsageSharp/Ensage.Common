@@ -130,15 +130,8 @@ namespace Ensage.Common.Extensions.Damage
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
-                        ModifierName = "modifier_oracle_fates_edict", SourceSpellName = "oracle_fates_edict", 
-                        HeroId = ClassID.CDOTA_Unit_Hero_Oracle, Amp = "damage_amp"
-                    });
-
-            ExternalDmgAmps.Add(
-                new ExternalDmgAmps
-                    {
-                        ModifierName = "modifier_item_mask_of_madness_berserk", SourceSpellName = "item_mask_of_madness", 
-                        Amp = "berserk_extra_damage"
+                        ModifierName = "modifier_chen_penitence", SourceSpellName = "chen_penitence",
+                        Amp = "bonus_damage_taken", HeroId = ClassID.CDOTA_Unit_Hero_Chen,
                     });
 
             ExternalDmgReductions.Add(
@@ -284,7 +277,6 @@ namespace Ensage.Common.Extensions.Damage
             var abaddonRedirect = false;
             var kunkkaGhostShipAbsorb = false;
             var iceBlast = false;
-            var chenPenitence = false;
 
             if (dmgType == DamageType.Physical && target.IsAttackImmune())
             {
@@ -386,9 +378,6 @@ namespace Ensage.Common.Extensions.Damage
                         break;
                     case "modifier_ice_blast":
                         iceBlast = true;
-                        break;
-                    case "chen_penitence":
-                        chenPenitence = true;
                         break;
                 }
             }
@@ -624,7 +613,7 @@ namespace Ensage.Common.Extensions.Damage
                         continue;
                     }
 
-                    reduceProc = reduceProc + 0.7;
+                    reduceProc = reduceProc + 0.6;
                 }
             }
 
@@ -635,10 +624,6 @@ namespace Ensage.Common.Extensions.Damage
                 {
                     var baseAmp = .05 * spell.Level;
                     var owner = spell.Owner as Hero;
-                    if (owner.AghanimState())
-                    {
-                        baseAmp = baseAmp + .1;
-                    }
 
                     var distance = target.Distance2D(owner);
                     if (distance <= 200)
@@ -658,11 +643,15 @@ namespace Ensage.Common.Extensions.Damage
 
             if (abaddonRedirect)
             {
-                reduceOther += 0.35;
+                reduceOther += 0.5;
             }
             else if (kunkkaGhostShipAbsorb)
             {
-                reduceOther += 0.5;
+                var spell = Abilities.FindAbility("kunkka_ghostship");
+                if (spell != null)
+                {
+                    reduceOther += spell.GetAbilityData("ghostship_absorb") / 100;
+                }
             }
 
             var sourceModifiers = source.Modifiers.ToList();
@@ -687,19 +676,19 @@ namespace Ensage.Common.Extensions.Damage
                 var spell = Abilities.FindAbility("bloodseeker_bloodrage");
                 if (spell != null)
                 {
-                    var bloodrite = spell.GetAbilityData("damage_increase_pct");
+                    var bloodrage = spell.GetAbilityData("damage_increase_pct") / 100;
                     if (target.Distance2D(source) > 2200)
                     {
-                        bloodrite /= 2;
+                        bloodrage /= 2;
                     }
 
-                    ampFromMe += bloodrite;
+                    ampFromMe += bloodrage;
                 }
             }
 
             if (silverEdge)
             {
-                ampFromMe -= 0.4;
+                ampFromMe -= 0.5;
             }
 
             if (iceBlast)
@@ -740,7 +729,7 @@ namespace Ensage.Common.Extensions.Damage
                     var resist = 1 - (1 - target.MagicDamageResist) * (1 + (float)minusMagicResistancePerc / 100);
                     tempDmg =
                         (float)
-                        ((tempDmg * (1 - manaShield - reduceOther) - magOnly) * (1 + amp - reduceProc) * (1 + ampFromMe)
+                        ((tempDmg * (1 - manaShield) * (1 - reduceOther) - magOnly) * (1 + amp - reduceProc) * (1 + ampFromMe)
                          * (1 - resist) - reduceStatic + aa);
                     break;
                 case DamageType.Pure:
@@ -752,7 +741,7 @@ namespace Ensage.Common.Extensions.Damage
                     {
                         tempDmg =
                             (float)
-                            (tempDmg * (1 - manaShield - reduceOther) * (1 + amp - reduceProc) * (1 + ampFromMe)
+                            (tempDmg * (1 - manaShield) * (1 - reduceOther) * (1 + amp - reduceProc) * (1 + ampFromMe)
                              - reduceStatic + aa);
                     }
 
@@ -763,22 +752,9 @@ namespace Ensage.Common.Extensions.Damage
                         return 0;
                     }
 
-                    if (!throughBKB)
-                    {
-                        if (chenPenitence)
-                        {
-                            var ability = Abilities.FindAbility("chen_penitence", target.GetEnemyTeam());
-                            if (ability != null)
-                            {
-                                var bonus = ability.GetAbilityData("bonus_damage_taken");
-                                amp += bonus / 100;
-                            }
-                        }
-                    }
-
                     tempDmg =
                         (float)
-                        ((tempDmg * (1 - manaShield - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
+                        ((tempDmg * (1 - manaShield) * (1 - reduceOther) - reduceBlock) * (1 + amp - reduceProc)
                          * (1 + ampFromMe) * (1 - target.DamageResist * (1 - minusDamageResistancePerc / 100))
                          + 0.06 * minusArmor / (1 + 0.06 * Math.Abs(minusArmor))) - reduceStatic + aa;
                     break;
@@ -843,14 +819,21 @@ namespace Ensage.Common.Extensions.Damage
             double minusDamageResistancePerc = 0d, 
             double minusMagicResistancePerc = 0d)
         {
+            var totalSpellAmp = 0f;
             var damage = dmg;
+            var talent = source.Spellbook.Spells.FirstOrDefault(x => x.Name.Contains("special_bonus_spell_amplify"));
+            if (talent?.Level > 0)
+            {
+                totalSpellAmp += talent.GetAbilityData("value") / 100f;
+            }
+
             if (spellName != "axe_culling_blade")
             {
                 foreach (var item in source.Inventory.Items)
                 {
                     if (item.StoredName() == "item_aether_lens")
                     {
-                        damage *= 1f + item.GetAbilityData("spell_amp") / 100f;
+                        totalSpellAmp += item.GetAbilityData("spell_amp") / 100f;
                     }
                 }
             }
@@ -859,7 +842,8 @@ namespace Ensage.Common.Extensions.Damage
 
             if (hero != null && spellName != "axe_culling_blade")
             {
-                damage *= 1f + hero.TotalIntelligence / 16f / 100f;
+                totalSpellAmp += (100f + hero.TotalIntelligence / 16f) / 100f;
+                damage *= totalSpellAmp;
             }
 
             var taken = target.DamageTaken(
