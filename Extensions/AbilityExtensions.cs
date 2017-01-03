@@ -1175,6 +1175,12 @@ namespace Ensage.Common.Extensions
                     bonusRange += aetherLens.GetAbilityData("cast_range_bonus");
                 }
 
+                var talent = hero.Spellbook.Spells.FirstOrDefault(x => x.Name.Contains("special_bonus_cast_range"));
+                if (talent?.Level > 0)
+                {
+                    bonusRange += talent.GetAbilityData("value");
+                }
+
                 if (!castRangeDictionary.ContainsKey(n))
                 {
                     castRangeDictionary.Add(n, castRange + bonusRange);
