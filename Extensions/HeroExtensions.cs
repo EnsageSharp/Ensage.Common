@@ -225,6 +225,14 @@ namespace Ensage.Common.Extensions
             var classId = hero.ClassID;
             switch (classId)
             {
+                case ClassID.CDOTA_Unit_Hero_Tiny:
+                    var grow = hero.Spellbook.SpellR;
+                    if (grow != null && grow.Level > 0 && hero.HasItem(ClassID.CDOTA_Item_UltimateScepter))
+                    {
+                        bonus = grow.GetAbilityData("bonus_range_scepter");
+                    }
+
+                    break;
                 case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
                     var psi = hero.Spellbook.SpellE;
                     if (psi != null && psi.Level > 0)
