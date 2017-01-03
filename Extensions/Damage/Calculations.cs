@@ -821,6 +821,16 @@ namespace Ensage.Common.Extensions.Damage
         {
             var totalSpellAmp = 0f;
             var damage = dmg;
+
+            if (dmgType == DamageType.Magical)
+            {
+                var raindrop = target.FindItem("item_infused_raindrop");
+                if (raindrop != null && raindrop.CanBeCasted() && damage >= raindrop.GetAbilityData("min_damage"))
+                {
+                    damage -= Math.Min(raindrop.GetAbilityData("magic_damage_block"), damage);
+                }
+            }
+
             var talent = source.Spellbook.Spells.FirstOrDefault(x => x.Name.Contains("special_bonus_spell_amplify"));
             if (talent?.Level > 0)
             {
