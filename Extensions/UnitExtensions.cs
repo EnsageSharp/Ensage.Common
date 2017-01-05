@@ -429,7 +429,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static Item FindItem(this Unit unit, string name, bool cache = false)
         {
-            if (!unit.IsVisible)
+            if (!unit.IsVisible || !unit.HasInventory)
             {
                 return null;
             }

@@ -1169,13 +1169,13 @@ namespace Ensage.Common.Extensions
                     bonusRange = 350;
                 }
 
-                var aetherLens = hero != null ? hero.FindItem("item_aether_lens", true) : null;
+                var aetherLens = hero?.FindItem("item_aether_lens", true);
                 if (aetherLens != null)
                 {
                     bonusRange += aetherLens.GetAbilityData("cast_range_bonus");
                 }
 
-                var talent = hero.Spellbook.Spells.FirstOrDefault(x => x.Name.Contains("special_bonus_cast_range"));
+                var talent = hero?.Spellbook.Spells.FirstOrDefault(x => x.Name.Contains("special_bonus_cast_range"));
                 if (talent?.Level > 0)
                 {
                     bonusRange += talent.GetAbilityData("value");
