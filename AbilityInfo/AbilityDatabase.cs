@@ -13,6 +13,7 @@
 // </copyright>
 namespace Ensage.Common.AbilityInfo
 {
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Permissions;
@@ -33,7 +34,7 @@ namespace Ensage.Common.AbilityInfo
         /// <summary>
         ///     Gets the ability info dictionary.
         /// </summary>
-        private static Dictionary<string, AbilityInfo> abilityinfoDictionary;
+        private static ConcurrentDictionary<string, AbilityInfo> abilityinfoDictionary;
 
         /// <summary>
         ///     The loaded.
@@ -79,7 +80,7 @@ namespace Ensage.Common.AbilityInfo
             }
 
             info = spells.FirstOrDefault(data => data.AbilityName == abilityName);
-            abilityinfoDictionary.Add(abilityName, info);
+            abilityinfoDictionary.TryAdd(abilityName, info);
 
             return info;
         }
@@ -107,7 +108,7 @@ namespace Ensage.Common.AbilityInfo
                 spells = JsonConvert.DeserializeObject<AbilityInfo[]>(@object.ToString()).ToList();
             }
 
-            abilityinfoDictionary = new Dictionary<string, AbilityInfo>();
+            abilityinfoDictionary = new ConcurrentDictionary<string, AbilityInfo>();
         }
 
         #endregion

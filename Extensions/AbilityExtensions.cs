@@ -15,6 +15,7 @@
 namespace Ensage.Common.Extensions
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -35,54 +36,54 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     The ability behavior dictionary.
         /// </summary>
-        private static Dictionary<string, AbilityBehavior> abilityBehaviorDictionary =
-            new Dictionary<string, AbilityBehavior>();
+        private static ConcurrentDictionary<string, AbilityBehavior> abilityBehaviorDictionary =
+            new ConcurrentDictionary<string, AbilityBehavior>();
 
         /// <summary>
         ///     The boolean dictionary.
         /// </summary>
-        private static Dictionary<string, bool> boolDictionary = new Dictionary<string, bool>();
+        private static ConcurrentDictionary<string, bool> boolDictionary = new ConcurrentDictionary<string, bool>();
 
         /// <summary>
         ///     The can hit dictionary.
         /// </summary>
-        private static Dictionary<uint, bool> canHitDictionary = new Dictionary<uint, bool>();
+        private static ConcurrentDictionary<uint, bool> canHitDictionary = new ConcurrentDictionary<uint, bool>();
 
         /// <summary>
         ///     The cast point dictionary.
         /// </summary>
-        private static Dictionary<string, double> castPointDictionary = new Dictionary<string, double>();
+        private static ConcurrentDictionary<string, double> castPointDictionary = new ConcurrentDictionary<string, double>();
 
         /// <summary>
         ///     The cast range dictionary.
         /// </summary>
-        private static Dictionary<string, float> castRangeDictionary = new Dictionary<string, float>();
+        private static ConcurrentDictionary<string, float> castRangeDictionary = new ConcurrentDictionary<string, float>();
 
         /// <summary>
         ///     The channel dictionary.
         /// </summary>
-        private static Dictionary<string, float> channelDictionary = new Dictionary<string, float>();
+        private static ConcurrentDictionary<string, float> channelDictionary = new ConcurrentDictionary<string, float>();
 
         /// <summary>
         ///     The data dictionary.
         /// </summary>
-        private static Dictionary<string, AbilitySpecialData> dataDictionary =
-            new Dictionary<string, AbilitySpecialData>();
+        private static ConcurrentDictionary<string, AbilitySpecialData> dataDictionary =
+            new ConcurrentDictionary<string, AbilitySpecialData>();
 
         /// <summary>
         ///     Temporarily stores cast delay values
         /// </summary>
-        private static Dictionary<string, double> delayDictionary = new Dictionary<string, double>();
+        private static ConcurrentDictionary<string, double> delayDictionary = new ConcurrentDictionary<string, double>();
 
         /// <summary>
         ///     The hit delay dictionary.
         /// </summary>
-        private static Dictionary<string, double> hitDelayDictionary = new Dictionary<string, double>();
+        private static ConcurrentDictionary<string, double> hitDelayDictionary = new ConcurrentDictionary<string, double>();
 
         /// <summary>
         ///     Temporarily stores radius values
         /// </summary>
-        private static Dictionary<string, float> radiusDictionary = new Dictionary<string, float>();
+        private static ConcurrentDictionary<string, float> radiusDictionary = new ConcurrentDictionary<string, float>();
 
         /// <summary>
         ///     The sleeper.
@@ -92,7 +93,7 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     Temporarily stores speed values
         /// </summary>
-        private static Dictionary<string, float> speedDictionary = new Dictionary<string, float>();
+        private static ConcurrentDictionary<string, float> speedDictionary = new ConcurrentDictionary<string, float>();
 
         #endregion
 
@@ -801,7 +802,7 @@ namespace Ensage.Common.Extensions
             if (!channelDictionary.TryGetValue(name + level, out channel))
             {
                 channel = ability.GetChannelTime(level - 1);
-                channelDictionary.Add(name + level, channel);
+                channelDictionary.TryAdd(name + level, channel);
             }
 
             // Console.WriteLine(ability.GetChannelTime(ability.Level - 1) + "  " + delay + " " + name);
@@ -880,7 +881,7 @@ namespace Ensage.Common.Extensions
             }
 
             castPoint = ability.GetCastPoint(ability.Level);
-            castPointDictionary.Add(name + " " + ability.Level, castPoint);
+            castPointDictionary.TryAdd(name + " " + ability.Level, castPoint);
             return castPoint;
         }
 
@@ -919,7 +920,7 @@ namespace Ensage.Common.Extensions
             if (!dataDictionary.TryGetValue(name + "_" + dataName, out data))
             {
                 data = ability.AbilitySpecialData.FirstOrDefault(x => x.Name == dataName);
-                dataDictionary.Add(name + "_" + dataName, data);
+                dataDictionary.TryAdd(name + "_" + dataName, data);
             }
 
             if (level > 0)
@@ -1071,7 +1072,7 @@ namespace Ensage.Common.Extensions
                 if (!delayDictionary.TryGetValue(name + " " + level, out delay))
                 {
                     delay = Math.Max(ability.FindCastPoint(name), 0.07);
-                    delayDictionary.Add(name + " " + level, delay);
+                    delayDictionary.TryAdd(name + " " + level, delay);
                 }
 
                 if (name == "templar_assassin_meld")
@@ -1186,7 +1187,7 @@ namespace Ensage.Common.Extensions
 
                 if (!castRangeDictionary.ContainsKey(n))
                 {
-                    castRangeDictionary.Add(n, castRange + bonusRange);
+                    castRangeDictionary.TryAdd(n, castRange + bonusRange);
                     Utils.Sleep(5000, "Common.GetCastRange." + n);
                 }
                 else
@@ -1219,7 +1220,7 @@ namespace Ensage.Common.Extensions
 
             if (!castRangeDictionary.ContainsKey(n))
             {
-                castRangeDictionary.Add(n, radius);
+                castRangeDictionary.TryAdd(n, radius);
                 Utils.Sleep(5000, "Common.GetCastRange." + n);
             }
             else
@@ -1265,7 +1266,7 @@ namespace Ensage.Common.Extensions
             var found = hitDelayDictionary.TryGetValue(n, out storedDelay);
             if (!found)
             {
-                hitDelayDictionary.Add(n, 0);
+                hitDelayDictionary.TryAdd(n, 0);
             }
 
             if (found && !Utils.SleepCheck(n))
@@ -1422,7 +1423,7 @@ namespace Ensage.Common.Extensions
             if (data == null)
             {
                 speed = float.MaxValue;
-                speedDictionary.Add(name + " " + level, speed);
+                speedDictionary.TryAdd(name + " " + level, speed);
                 return speed;
             }
 
@@ -1432,7 +1433,7 @@ namespace Ensage.Common.Extensions
             }
 
             speed = ability.GetAbilityData(data.Speed, abilityName: name);
-            speedDictionary.Add(name + " " + level, speed);
+            speedDictionary.TryAdd(name + " " + level, speed);
 
             return speed;
         }
@@ -1467,28 +1468,28 @@ namespace Ensage.Common.Extensions
             if (data == null)
             {
                 radius = 0;
-                radiusDictionary.Add(name + " " + ability.Level, radius);
+                radiusDictionary.TryAdd(name + " " + ability.Level, radius);
                 return radius;
             }
 
             if (data.Width != null)
             {
                 radius = ability.GetAbilityData(data.Width, abilityName: name);
-                radiusDictionary.Add(name + " " + ability.Level, radius);
+                radiusDictionary.TryAdd(name + " " + ability.Level, radius);
                 return radius;
             }
 
             if (data.StringRadius != null)
             {
                 radius = ability.GetAbilityData(data.StringRadius, abilityName: name);
-                radiusDictionary.Add(name + " " + ability.Level, radius);
+                radiusDictionary.TryAdd(name + " " + ability.Level, radius);
                 return radius;
             }
 
             if (data.Radius > 0)
             {
                 radius = data.Radius;
-                radiusDictionary.Add(name + " " + ability.Level, radius);
+                radiusDictionary.TryAdd(name + " " + ability.Level, radius);
                 return radius;
             }
 
@@ -1498,7 +1499,7 @@ namespace Ensage.Common.Extensions
             }
 
             radius = (ability.Owner as Hero).GetAttackRange() + 150;
-            radiusDictionary.Add(name + " " + ability.Level, radius);
+            radiusDictionary.TryAdd(name + " " + ability.Level, radius);
             return radius;
         }
 
@@ -1575,7 +1576,7 @@ namespace Ensage.Common.Extensions
             }
 
             data = ability.AbilityBehavior;
-            abilityBehaviorDictionary.Add(name, data);
+            abilityBehaviorDictionary.TryAdd(name, data);
             return data.HasFlag(flag);
         }
 
@@ -1609,7 +1610,7 @@ namespace Ensage.Common.Extensions
             }
 
             var value = ability.AbilityType == type;
-            boolDictionary.Add(n, value);
+            boolDictionary.TryAdd(n, value);
             return value;
         }
 
@@ -1848,17 +1849,17 @@ namespace Ensage.Common.Extensions
         /// </summary>
         internal static void Init()
         {
-            hitDelayDictionary = new Dictionary<string, double>();
-            dataDictionary = new Dictionary<string, AbilitySpecialData>();
-            channelDictionary = new Dictionary<string, float>();
-            castRangeDictionary = new Dictionary<string, float>();
-            castPointDictionary = new Dictionary<string, double>();
-            boolDictionary = new Dictionary<string, bool>();
-            abilityBehaviorDictionary = new Dictionary<string, AbilityBehavior>();
-            speedDictionary = new Dictionary<string, float>();
-            radiusDictionary = new Dictionary<string, float>();
-            delayDictionary = new Dictionary<string, double>();
-            canHitDictionary = new Dictionary<uint, bool>();
+            hitDelayDictionary = new ConcurrentDictionary<string, double>();
+            dataDictionary = new ConcurrentDictionary<string, AbilitySpecialData>();
+            channelDictionary = new ConcurrentDictionary<string, float>();
+            castRangeDictionary = new ConcurrentDictionary<string, float>();
+            castPointDictionary = new ConcurrentDictionary<string, double>();
+            boolDictionary = new ConcurrentDictionary<string, bool>();
+            abilityBehaviorDictionary = new ConcurrentDictionary<string, AbilityBehavior>();
+            speedDictionary = new ConcurrentDictionary<string, float>();
+            radiusDictionary = new ConcurrentDictionary<string, float>();
+            delayDictionary = new ConcurrentDictionary<string, double>();
+            canHitDictionary = new ConcurrentDictionary<uint, bool>();
             sleeper = new MultiSleeper();
         }
 
