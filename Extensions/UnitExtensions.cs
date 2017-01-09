@@ -14,6 +14,7 @@
 namespace Ensage.Common.Extensions
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -33,37 +34,37 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     The turn rate dictionary.
         /// </summary>
-        private static readonly Dictionary<uint, double> TurnrateDictionary = new Dictionary<uint, double>();
+        private static readonly ConcurrentDictionary<uint, double> TurnrateDictionary = new ConcurrentDictionary<uint, double>();
 
         /// <summary>
         ///     The ability dictionary.
         /// </summary>
-        private static Dictionary<string, Ability> abilityDictionary = new Dictionary<string, Ability>();
+        private static ConcurrentDictionary<string, Ability> abilityDictionary = new ConcurrentDictionary<string, Ability>();
 
         /// <summary>
         ///     The boolean dictionary.
         /// </summary>
-        private static Dictionary<string, bool> boolDictionary = new Dictionary<string, bool>();
+        private static ConcurrentDictionary<string, bool> boolDictionary = new ConcurrentDictionary<string, bool>();
 
         /// <summary>
         ///     The item dictionary.
         /// </summary>
-        private static Dictionary<string, Item> itemDictionary = new Dictionary<string, Item>();
+        private static ConcurrentDictionary<string, Item> itemDictionary = new ConcurrentDictionary<string, Item>();
 
         /// <summary>
         ///     The modifier dictionary.
         /// </summary>
-        private static Dictionary<string, bool> modifierBoolDictionary = new Dictionary<string, bool>();
+        private static ConcurrentDictionary<string, bool> modifierBoolDictionary = new ConcurrentDictionary<string, bool>();
 
         /// <summary>
         ///     The modifier dictionary.
         /// </summary>
-        private static Dictionary<string, Modifier> modifierDictionary = new Dictionary<string, Modifier>();
+        private static ConcurrentDictionary<string, Modifier> modifierDictionary = new ConcurrentDictionary<string, Modifier>();
 
         /// <summary>
         ///     The range dictionary.
         /// </summary>
-        private static Dictionary<float, float> rangeDictionary = new Dictionary<float, float>();
+        private static ConcurrentDictionary<float, float> rangeDictionary = new ConcurrentDictionary<float, float>();
 
         #endregion
 
@@ -280,7 +281,7 @@ namespace Ensage.Common.Extensions
                           && unit.IsAlive;
             if (!boolDictionary.ContainsKey(n))
             {
-                boolDictionary.Add(n, canMove);
+                boolDictionary.TryAdd(n, canMove);
             }
             else
             {
@@ -452,7 +453,7 @@ namespace Ensage.Common.Extensions
                 }
                 else
                 {
-                    itemDictionary.Add(n, item);
+                    itemDictionary.TryAdd(n, item);
                 }
 
                 Utils.Sleep(1000, "Common.FindItem." + name);
@@ -506,7 +507,7 @@ namespace Ensage.Common.Extensions
         {
             if (Utils.SleepCheck("Ensage.Common.FindModifierReset"))
             {
-                modifierDictionary = new Dictionary<string, Modifier>();
+                modifierDictionary = new ConcurrentDictionary<string, Modifier>();
                 Utils.Sleep(20000, "Ensage.Common.FindModifierReset");
             }
 
@@ -543,7 +544,7 @@ namespace Ensage.Common.Extensions
             }
             else
             {
-                modifierDictionary.Add(name, modifier);
+                modifierDictionary.TryAdd(name, modifier);
             }
 
             Utils.Sleep(100, "Ensage.Common.FindModifier" + name);
@@ -635,7 +636,7 @@ namespace Ensage.Common.Extensions
                 }
                 else
                 {
-                    abilityDictionary.Add(n, ability);
+                    abilityDictionary.TryAdd(n, ability);
                 }
 
                 Utils.Sleep(1000, "Common.FindSpell." + name);
@@ -697,7 +698,7 @@ namespace Ensage.Common.Extensions
             range = unit.AttackRange + unit.HullRadius;
             if (!rangeDictionary.ContainsKey(unit.Handle))
             {
-                rangeDictionary.Add(unit.Handle, range);
+                rangeDictionary.TryAdd(unit.Handle, range);
             }
             else
             {
@@ -803,7 +804,7 @@ namespace Ensage.Common.Extensions
                 {
                     turnRate = 0.5;
                 }
-                TurnrateDictionary.Add(handle, turnRate);
+                TurnrateDictionary.TryAdd(handle, turnRate);
             }
 
             if (currentTurnRate)
@@ -900,7 +901,7 @@ namespace Ensage.Common.Extensions
         {
             if (Utils.SleepCheck("Ensage.Common.HasModifierReset"))
             {
-                modifierBoolDictionary = new Dictionary<string, bool>();
+                modifierBoolDictionary = new ConcurrentDictionary<string, bool>();
                 Utils.Sleep(1200000, "Ensage.Common.HasModifierReset");
             }
 
@@ -919,7 +920,7 @@ namespace Ensage.Common.Extensions
             }
             else
             {
-                modifierBoolDictionary.Add(name, value);
+                modifierBoolDictionary.TryAdd(name, value);
             }
 
             Utils.Sleep(50, "Ensage.Common.HasModifier" + name);
@@ -946,7 +947,7 @@ namespace Ensage.Common.Extensions
         {
             if (Utils.SleepCheck("Ensage.Common.HasModifierReset"))
             {
-                modifierBoolDictionary = new Dictionary<string, bool>();
+                modifierBoolDictionary = new ConcurrentDictionary<string, bool>();
                 Utils.Sleep(1200000, "Ensage.Common.HasModifierReset");
             }
 
@@ -976,7 +977,7 @@ namespace Ensage.Common.Extensions
                 }
                 else
                 {
-                    modifierBoolDictionary.Add(name, true);
+                    modifierBoolDictionary.TryAdd(name, true);
                 }
 
                 Utils.Sleep(50, "Ensage.Common.HasModifier" + name);
@@ -989,7 +990,7 @@ namespace Ensage.Common.Extensions
                     }
                     else
                     {
-                        modifierBoolDictionary.Add(aname, true);
+                        modifierBoolDictionary.TryAdd(aname, true);
                     }
 
                     Utils.Sleep(50, "Ensage.Common.HasModifiers" + aname);
@@ -1007,7 +1008,7 @@ namespace Ensage.Common.Extensions
             }
             else
             {
-                modifierBoolDictionary.Add(aname, value);
+                modifierBoolDictionary.TryAdd(aname, value);
             }
 
             Utils.Sleep(50, "Ensage.Common.HasModifiers" + aname);
@@ -1087,7 +1088,7 @@ namespace Ensage.Common.Extensions
             var exist = boolDictionary.TryGetValue(n, out channeling);
             if (!exist)
             {
-                boolDictionary.Add(n, false);
+                boolDictionary.TryAdd(n, false);
             }
 
             if (!Utils.SleepCheck(n) && channeling)
@@ -1711,6 +1712,16 @@ namespace Ensage.Common.Extensions
             return owner.Inventory.Items.FirstOrDefault(x => x.AbilityData2.ID == (uint)itemId);
         }
 
+        /// <summary>
+        /// Returns false for announcers, portrait entities etc.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsRealUnit(this Unit unit)
+        {
+            return unit.UnitType != 0 && !unit.UnitState.HasFlag(UnitState.FakeAlly);
+        }
+
         #endregion
 
         #region Methods
@@ -1720,12 +1731,12 @@ namespace Ensage.Common.Extensions
         /// </summary>
         internal static void Init()
         {
-            boolDictionary = new Dictionary<string, bool>();
-            itemDictionary = new Dictionary<string, Item>();
-            abilityDictionary = new Dictionary<string, Ability>();
-            rangeDictionary = new Dictionary<float, float>();
-            modifierBoolDictionary = new Dictionary<string, bool>();
-            modifierDictionary = new Dictionary<string, Modifier>();
+            boolDictionary = new ConcurrentDictionary<string, bool>();
+            itemDictionary = new ConcurrentDictionary<string, Item>();
+            abilityDictionary = new ConcurrentDictionary<string, Ability>();
+            rangeDictionary = new ConcurrentDictionary<float, float>();
+            modifierBoolDictionary = new ConcurrentDictionary<string, bool>();
+            modifierDictionary = new ConcurrentDictionary<string, Modifier>();
         }
 
         #endregion

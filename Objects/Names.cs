@@ -13,6 +13,7 @@
 // </copyright>
 namespace Ensage.Common.Objects
 {
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
 
     /// <summary>
@@ -25,7 +26,7 @@ namespace Ensage.Common.Objects
         /// <summary>
         ///     The name dictionary.
         /// </summary>
-        private static Dictionary<float, string> nameDictionary = new Dictionary<float, string>();
+        private static ConcurrentDictionary<float, string> nameDictionary = new ConcurrentDictionary<float, string>();
 
         #endregion
 
@@ -55,7 +56,7 @@ namespace Ensage.Common.Objects
             }
 
             name = entity.Name;
-            nameDictionary.Add(handle, name);
+            nameDictionary.TryAdd(handle, name);
             return name;
         }
 
@@ -83,7 +84,7 @@ namespace Ensage.Common.Objects
             }
 
             name = entity.Name;
-            nameDictionary.Add(handle, name);
+            nameDictionary.TryAdd(handle, name);
             return name;
         }
 
@@ -96,7 +97,7 @@ namespace Ensage.Common.Objects
         /// </summary>
         internal static void Init()
         {
-            nameDictionary = new Dictionary<float, string>();
+            nameDictionary = new ConcurrentDictionary<float, string>();
         }
 
         #endregion
