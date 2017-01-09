@@ -15,6 +15,8 @@ namespace Ensage.Common.Extensions
 {
     using System;
 
+    using Ensage.Common.Enums;
+
     /// <summary>
     ///     The item extensions.
     /// </summary>
@@ -69,6 +71,16 @@ namespace Ensage.Common.Extensions
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Returns the Item ID.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static ItemId GetItemId(this Item item)
+        {
+            return (ItemId)item.AbilityData2.ID;
         }
 
         #endregion

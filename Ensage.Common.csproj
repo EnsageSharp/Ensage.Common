@@ -80,6 +80,8 @@
     <Compile Include="Composer.cs" />
     <Compile Include="DelayAction.cs" />
     <Compile Include="DelayActionItem.cs" />
+    <Compile Include="Enums\AbilityId.cs" />
+    <Compile Include="Enums\ItemId.cs" />
     <Compile Include="Extensions\AbilityExtensions.cs" />
     <Compile Include="Extensions\Damage\DamageBlocks.cs" />
     <Compile Include="Extensions\Damage\Calculations.cs" />

@@ -17,6 +17,7 @@ namespace Ensage.Common.Extensions
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ensage.Common.Enums;
     using Ensage.Common.Extensions.Damage;
     using Ensage.Common.Objects;
 
@@ -882,6 +883,7 @@ namespace Ensage.Common.Extensions
             return unit.Inventory.Items.Any(item => item.ClassID == classId);
         }
 
+
         /// <summary>
         ///     The has modifier.
         /// </summary>
@@ -1684,6 +1686,29 @@ namespace Ensage.Common.Extensions
                 minusArmor, 
                 minusDamageResistancePerc, 
                 minusMagicResistancePerc);
+        }
+
+
+        /// <summary>
+        /// Returns an ability by using its internal ID.
+        /// </summary>
+        /// <param name="owner">Owner unit.</param>
+        /// <param name="abilityId">The ability ID of the wanted ability.</param>
+        /// <returns></returns>
+        public static Ability GetAbilityById(this Unit owner, AbilityId abilityId)
+        {
+            return owner.Spellbook.Spells.FirstOrDefault(x => x.AbilityData2.ID == (uint)abilityId);
+        }
+
+        /// <summary>
+        /// Returns an item by using its internal ID.
+        /// </summary>
+        /// <param name="owner">Owner unit.</param>
+        /// <param name="itemId">The item ID of the wanted item.</param>
+        /// <returns></returns>
+        public static Ability GetItemById(this Unit owner, ItemId itemId)
+        {
+            return owner.Inventory.Items.FirstOrDefault(x => x.AbilityData2.ID == (uint)itemId);
         }
 
         #endregion
