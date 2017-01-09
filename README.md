@@ -1,5 +1,5 @@
 #License
-Copyright 2015 - 2016 EnsageSharp
+Copyright 2015 - 2017 EnsageSharp
 EnsageSharp/Common is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 Free Software Foundation, either version 3 of the License, or
