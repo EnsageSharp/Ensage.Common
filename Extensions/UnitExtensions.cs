@@ -1707,7 +1707,7 @@ namespace Ensage.Common.Extensions
         /// <param name="owner">Owner unit.</param>
         /// <param name="itemId">The item ID of the wanted item.</param>
         /// <returns></returns>
-        public static Ability GetItemById(this Unit owner, ItemId itemId)
+        public static Item GetItemById(this Unit owner, ItemId itemId)
         {
             return owner.Inventory.Items.FirstOrDefault(x => x.AbilityData2.ID == (uint)itemId);
         }
