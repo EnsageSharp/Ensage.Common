@@ -11,6 +11,7 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
+
 namespace Ensage.Common.Combo
 {
     using System;
@@ -19,12 +20,14 @@ namespace Ensage.Common.Combo
     using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using Ensage.Common.Threading;
+
     /// <summary>
     ///     Executing a combo with async functions
     /// </summary>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     [SuppressMessage("ReSharper", "StyleCop.SA1310")]
-    public class Combo : IDisposable
+    public class Combo : ICombo, IEquatable<Combo>
     {
         #region Constants
 
@@ -38,13 +41,11 @@ namespace Ensage.Common.Combo
 
         private readonly Func<CancellationToken, Task> comboFunction;
 
-        private readonly Key key;
-
-        private readonly ulong virtualKey;
-
         private Task currentExecution;
 
         private bool disposed;
+
+        private Key key;
 
         private CancellationTokenSource token;
 
@@ -61,7 +62,7 @@ namespace Ensage.Common.Combo
         {
             this.comboFunction = comboFunction;
             this.key = key;
-            this.virtualKey = (ulong)KeyInterop.VirtualKeyFromKey(key);
+            this.VirtualKey = (ulong)KeyInterop.VirtualKeyFromKey(key);
         }
 
         #endregion
@@ -71,28 +72,42 @@ namespace Ensage.Common.Combo
         /// <summary>
         ///     Returns true if the current execution is completed.
         /// </summary>
-        public bool IsCompleted
+        public bool IsCompleted => this.currentExecution == null || this.currentExecution.IsCompleted;
+
+        /// <summary>
+        ///     Gets a value indicating whether the current execution is running.
+        /// </summary>
+        public bool IsRunning => this.currentExecution != null && !this.currentExecution.IsCompleted;
+
+        /// <summary>
+        ///     Gets execution key.
+        /// </summary>
+        public Key Key
         {
             get
             {
-                return this.currentExecution == null || this.currentExecution.IsCompleted;
+                return this.key;
+            }
+            set
+            {
+                this.key = value;
+                this.VirtualKey = (ulong)KeyInterop.VirtualKeyFromKey(this.key);
             }
         }
 
         /// <summary>
-        ///     Gets a value indicating whether the current execution is running. 
+        ///     Gets virtual execution key.
         /// </summary>
-        public bool IsRunning
-        {
-            get
-            {
-                return this.currentExecution != null && !this.currentExecution.IsCompleted;
-            }
-        }
+        public ulong VirtualKey { get; private set; }
 
         #endregion
 
         #region Public Methods and Operators
+
+        public void Activate()
+        {
+            GameDispatcher.OnIngameUpdate += this.OnUpdate;
+        }
 
         /// <summary>
         ///     Cancels the execution of the current combo.
@@ -110,10 +125,50 @@ namespace Ensage.Common.Combo
             }
         }
 
+        public void Deactivate()
+        {
+            this.Cancel();
+
+            GameDispatcher.OnIngameUpdate -= this.OnUpdate;
+        }
+
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <inheritdoc />
+        public bool Equals(Combo other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return this.Key == other.Key;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            var other = obj as Combo;
+            return other != null && this.Equals(other);
         }
 
         /// <summary>
@@ -122,7 +177,7 @@ namespace Ensage.Common.Combo
         /// <returns></returns>
         public async Task Execute()
         {
-            if (!Game.IsKeyDown(this.key))
+            if (!Game.IsKeyDown(this.Key))
             {
                 return;
             }
@@ -145,6 +200,12 @@ namespace Ensage.Common.Combo
             {
                 this.Finish();
             }
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return (int)this.Key;
         }
 
         #endregion
@@ -181,10 +242,15 @@ namespace Ensage.Common.Combo
                 return;
             }
 
-            if (((args.Msg == WM_KEYUP) || (args.Msg == WM_SYSKEYUP)) && (args.WParam == this.virtualKey))
+            if (((args.Msg == WM_KEYUP) || (args.Msg == WM_SYSKEYUP)) && (args.WParam == this.VirtualKey))
             {
                 this.Cancel();
             }
+        }
+
+        private async void OnUpdate(EventArgs args)
+        {
+            await this.Execute();
         }
 
         private void Prepare()
