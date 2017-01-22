@@ -189,7 +189,9 @@ namespace Ensage.Common.Objects
 
             tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
             foreach (
-                var hero in ObjectManager.GetEntities<Hero>().Where(hero => tempList.All(x => x.Handle != hero.Handle)))
+                var hero in
+                ObjectManager.GetEntities<Hero>()
+                    .Where(hero => !hero.IsIllusion && tempList.All(x => x.Handle != hero.Handle)))
             {
                 tempList.Add(hero);
             }
@@ -208,33 +210,28 @@ namespace Ensage.Common.Objects
         /// </param>
         private static void ObjectMgr_OnAddEntity(EntityEventArgs args)
         {
-            DelayAction.Add(
-                200, 
-                () =>
-                    {
-                        var hero = args.Entity as Hero;
-                        if (hero == null)
-                        {
-                            return;
-                        }
+            var hero = args.Entity as Hero;
+            if (hero == null || hero.IsIllusion)
+            {
+                return;
+            }
 
-                        tempList.Add(hero);
-                        if (!All.Contains(hero))
-                        {
-                            All.Add(hero);
-                        }
+            tempList.Add(hero);
+            if (!All.Contains(hero))
+            {
+                All.Add(hero);
+            }
 
-                        if (!Radiant.Contains(hero) && hero.Team == Team.Radiant)
-                        {
-                            Radiant.Add(hero);
-                            return;
-                        }
+            if (!Radiant.Contains(hero) && hero.Team == Team.Radiant)
+            {
+                Radiant.Add(hero);
+                return;
+            }
 
-                        if (!Dire.Contains(hero) && hero.Team == Team.Dire)
-                        {
-                            Dire.Add(hero);
-                        }
-                    });
+            if (!Dire.Contains(hero) && hero.Team == Team.Dire)
+            {
+                Dire.Add(hero);
+            }
         }
 
         /// <summary>
@@ -246,7 +243,7 @@ namespace Ensage.Common.Objects
         private static void ObjectMgr_OnRemoveEntity(EntityEventArgs args)
         {
             var hero = args.Entity as Hero;
-            if (hero == null)
+            if (hero == null || hero.IsIllusion)
             {
                 return;
             }
