@@ -1,5 +1,5 @@
 ﻿// <copyright file="Circle.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -184,7 +184,7 @@ namespace Ensage.Common.Objects.DrawObjects
                 {
                     angle += step;
                     var point = new Vector2(
-                        this.center.X + outRadius * (float)Math.Cos(angle), 
+                        this.center.X + outRadius * (float)Math.Cos(angle),
                         this.center.Y + outRadius * (float)Math.Sin(angle));
                     this.ScreenPoints.Add(point);
                 }
@@ -200,8 +200,8 @@ namespace Ensage.Common.Objects.DrawObjects
                 {
                     angle += step;
                     var point = new Vector3(
-                        this.center.X + outRadius * (float)Math.Cos(angle), 
-                        this.center.Y + outRadius * (float)Math.Sin(angle), 
+                        this.center.X + outRadius * (float)Math.Cos(angle),
+                        this.center.Y + outRadius * (float)Math.Sin(angle),
                         this.Ground);
                     this.WorldPoints.Add(point);
                 }

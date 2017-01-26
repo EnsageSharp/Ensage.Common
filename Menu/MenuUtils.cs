@@ -1,5 +1,5 @@
 ﻿// <copyright file="MenuUtils.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -55,12 +55,12 @@ namespace Ensage.Common.Menu
         }
 
         public static void DrawBoxBordered(
-            float x, 
-            float y, 
-            float w, 
-            float h, 
-            float borderWidth, 
-            DotaTexture texture, 
+            float x,
+            float y,
+            float w,
+            float h,
+            float borderWidth,
+            DotaTexture texture,
             Color colorBorder)
         {
             Drawing.DrawRect(new Vector2(x, y), new Vector2(w, h), texture);
@@ -78,12 +78,12 @@ namespace Ensage.Common.Menu
         /// <param name="color">Color</param>
         /// <param name="colorBorder">Border Color</param>
         public static void DrawBoxBordered(
-            float x, 
-            float y, 
-            float w, 
-            float h, 
-            float borderWidth, 
-            Color color, 
+            float x,
+            float y,
+            float w,
+            float h,
+            float borderWidth,
+            Color color,
             Color colorBorder)
         {
             DrawBoxFilled(x, y, w, h, color);
@@ -156,12 +156,12 @@ namespace Ensage.Common.Menu
             Drawing.DrawRect(position, size, color);
             var a = size.Y / 2;
             Drawing.DrawRect(
-                position, 
-                new Vector2(a, size.Y), 
+                position,
+                new Vector2(a, size.Y),
                 Textures.GetTexture("materials/ensage_ui/menu/roundleft.vmat_c"));
             Drawing.DrawRect(
-                position + new Vector2(size.X - a, 0), 
-                new Vector2(a, size.Y), 
+                position + new Vector2(size.X - a, 0),
+                new Vector2(a, size.Y),
                 Textures.GetTexture("materials/ensage_ui/menu/roundright.vmat_c"));
         }
 
@@ -214,8 +214,8 @@ namespace Ensage.Common.Menu
                     // 1,
                     // color); // 3 is with line width 
                     Drawing.DrawLine(
-                        new Vector2(pt[i].X, pt[i].Y), 
-                        new Vector2((float)(pt[i].X + Math.Cos(k) * iSmooth), (float)(pt[i].Y + Math.Sin(k) * iSmooth)), 
+                        new Vector2(pt[i].X, pt[i].Y),
+                        new Vector2((float)(pt[i].X + Math.Cos(k) * iSmooth), (float)(pt[i].Y + Math.Sin(k) * iSmooth)),
                         color);
                 }
 
@@ -344,8 +344,8 @@ namespace Ensage.Common.Menu
                 Drawing.DrawRect(
                     menu.Position
                     + new Vector2(
-                          (float)(menu.Width - menu.Height * 0.5 + add1 - size.X * 0.6),
-                          (float)(menu.Height * 0.5 - size.Y * 0.5)),
+                        (float)(menu.Width - menu.Height * 0.5 + add1 - size.X * 0.6),
+                        (float)(menu.Height * 0.5 - size.Y * 0.5)),
                     size,
                     arrow);
             }

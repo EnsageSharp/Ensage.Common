@@ -1,5 +1,5 @@
 ﻿// <copyright file="UnitExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,6 @@ namespace Ensage.Common.Extensions
 {
     using System;
     using System.Collections.Concurrent;
-    using System.Collections.Generic;
     using System.Linq;
 
     using Ensage.Common.Enums;
@@ -34,12 +33,14 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     The turn rate dictionary.
         /// </summary>
-        private static readonly ConcurrentDictionary<uint, double> TurnrateDictionary = new ConcurrentDictionary<uint, double>();
+        private static readonly ConcurrentDictionary<uint, double> TurnrateDictionary =
+            new ConcurrentDictionary<uint, double>();
 
         /// <summary>
         ///     The ability dictionary.
         /// </summary>
-        private static ConcurrentDictionary<string, Ability> abilityDictionary = new ConcurrentDictionary<string, Ability>();
+        private static ConcurrentDictionary<string, Ability> abilityDictionary =
+            new ConcurrentDictionary<string, Ability>();
 
         /// <summary>
         ///     The boolean dictionary.
@@ -54,12 +55,14 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     The modifier dictionary.
         /// </summary>
-        private static ConcurrentDictionary<string, bool> modifierBoolDictionary = new ConcurrentDictionary<string, bool>();
+        private static ConcurrentDictionary<string, bool> modifierBoolDictionary =
+            new ConcurrentDictionary<string, bool>();
 
         /// <summary>
         ///     The modifier dictionary.
         /// </summary>
-        private static ConcurrentDictionary<string, Modifier> modifierDictionary = new ConcurrentDictionary<string, Modifier>();
+        private static ConcurrentDictionary<string, Modifier> modifierDictionary =
+            new ConcurrentDictionary<string, Modifier>();
 
         /// <summary>
         ///     The range dictionary.
@@ -83,7 +86,7 @@ namespace Ensage.Common.Extensions
         {
             return
                 unit.HasModifiers(
-                    new[] { "modifier_item_ultimate_scepter_consumed", "modifier_item_ultimate_scepter" }, 
+                    new[] { "modifier_item_ultimate_scepter_consumed", "modifier_item_ultimate_scepter" },
                     false);
         }
 
@@ -252,12 +255,12 @@ namespace Ensage.Common.Extensions
                    && (cullingBlade
                            ? !unit.HasModifier("modifier_skeleton_king_reincarnation_scepter_active")
                            : !unit.HasModifiers(
-                               new[]
-                                   {
-                                       "modifier_dazzle_shallow_grave", "modifier_oracle_false_promise", 
-                                       "modifier_skeleton_king_reincarnation_scepter_active"
-                                   }, 
-                               false));
+                                 new[]
+                                     {
+                                         "modifier_dazzle_shallow_grave", "modifier_oracle_false_promise",
+                                         "modifier_skeleton_king_reincarnation_scepter_active"
+                                     },
+                                 false));
         }
 
         /// <summary>
@@ -320,7 +323,7 @@ namespace Ensage.Common.Extensions
         {
             return !unit.IsUnitState(UnitState.Muted) && !IsStunned(unit) && unit.IsAlive
                    && !unit.HasModifiers(
-                       new[] { "modifier_axe_berserkers_call", "modifier_phoenix_supernova_hiding" }, 
+                       new[] { "modifier_axe_berserkers_call", "modifier_phoenix_supernova_hiding" },
                        false);
         }
 
@@ -372,23 +375,23 @@ namespace Ensage.Common.Extensions
         ///     The <see cref="float" />.
         /// </returns>
         public static float DamageTaken(
-            this Unit target, 
-            float dmg, 
-            DamageType dmgType, 
-            Unit source, 
-            bool throughBKB = false, 
-            double minusArmor = 0d, 
-            double minusDamageResistancePerc = 0d, 
+            this Unit target,
+            float dmg,
+            DamageType dmgType,
+            Unit source,
+            bool throughBKB = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
             double minusMagicResistancePerc = 0d)
         {
             return Calculations.DamageTaken(
-                target, 
-                dmg, 
-                dmgType, 
-                source, 
-                throughBKB, 
-                minusArmor, 
-                minusDamageResistancePerc, 
+                target,
+                dmg,
+                dmgType,
+                source,
+                throughBKB,
+                minusArmor,
+                minusDamageResistancePerc,
                 minusMagicResistancePerc);
         }
 
@@ -408,7 +411,7 @@ namespace Ensage.Common.Extensions
         {
             var stunAbility =
                 unit.Spellbook.Spells.Where(
-                    x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsDisable)
+                        x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsDisable)
                     .MinOrDefault(x => x.GetHitDelay(target));
 
             return stunAbility != null && stunAbility.CastStun(target);
@@ -576,23 +579,24 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The find relative angle.
+        ///     The find relative angle.
         /// </summary>
         /// <param name="unit">
-        /// The unit.
+        ///     The unit.
         /// </param>
         /// <param name="pos">
-        /// The pos.
+        ///     The pos.
         /// </param>
         /// <param name="delta">
-        /// The alpha.
+        ///     The alpha.
         /// </param>
         /// <returns>
-        /// The <see cref="float"/>.
+        ///     The <see cref="float" />.
         /// </returns>
         public static float FindRelativeAngle(this Unit unit, Vector3 pos, float delta)
         {
-            var angle = Math.Abs(Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad - delta);
+            var angle = Math.Abs(
+                Math.Atan2(pos.Y - unit.Position.Y, pos.X - unit.Position.X) - unit.RotationRad - delta);
 
             if (angle > Math.PI)
             {
@@ -669,6 +673,17 @@ namespace Ensage.Common.Extensions
         {
             spell = unit.FindSpell(name);
             return spell;
+        }
+
+        /// <summary>
+        ///     Returns an ability by using its internal ID.
+        /// </summary>
+        /// <param name="owner">Owner unit.</param>
+        /// <param name="abilityId">The ability ID of the wanted ability.</param>
+        /// <returns></returns>
+        public static Ability GetAbilityById(this Unit owner, AbilityId abilityId)
+        {
+            return owner.Spellbook.Spells.FirstOrDefault(x => x.AbilityData2.ID == (uint)abilityId);
         }
 
         /// <summary>
@@ -755,6 +770,17 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
+        ///     Returns an item by using its internal ID.
+        /// </summary>
+        /// <param name="owner">Owner unit.</param>
+        /// <param name="itemId">The item ID of the wanted item.</param>
+        /// <returns></returns>
+        public static Item GetItemById(this Unit owner, ItemId itemId)
+        {
+            return owner.Inventory.Items.FirstOrDefault(x => x.AbilityData2.ID == (uint)itemId);
+        }
+
+        /// <summary>
         ///     Finds item with given name which has more than 1 level
         /// </summary>
         /// <param name="unit">
@@ -804,6 +830,7 @@ namespace Ensage.Common.Extensions
                 {
                     turnRate = 0.5;
                 }
+
                 TurnrateDictionary.TryAdd(handle, turnRate);
             }
 
@@ -813,6 +840,7 @@ namespace Ensage.Common.Extensions
                 {
                     turnRate *= 0.65;
                 }
+
                 if (unit.HasModifier("modifier_batrider_sticky_napalm"))
                 {
                     turnRate *= 0.3;
@@ -883,7 +911,6 @@ namespace Ensage.Common.Extensions
         {
             return unit.Inventory.Items.Any(item => item.ClassID == classId);
         }
-
 
         /// <summary>
         ///     The has modifier.
@@ -1206,8 +1233,7 @@ namespace Ensage.Common.Extensions
         public static bool IsLinkensProtected(this Unit unit)
         {
             var linkensphere = unit.FindItem("item_sphere", true);
-            return (linkensphere != null && linkensphere.Cooldown == 0)
-                   || unit.HasModifier("modifier_item_sphere_target");
+            return linkensphere != null && linkensphere.Cooldown == 0 || unit.HasModifier("modifier_item_sphere_target");
         }
 
         /// <summary>
@@ -1239,10 +1265,20 @@ namespace Ensage.Common.Extensions
                 unit.HasModifiers(
                     new[]
                         {
-                            "modifier_ghost_state", "modifier_item_ethereal_blade_slow", 
+                            "modifier_ghost_state", "modifier_item_ethereal_blade_slow",
                             "modifier_omninight_guardian_angel"
-                        }, 
+                        },
                     false);
+        }
+
+        /// <summary>
+        ///     Returns false for announcers, portrait entities etc.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static bool IsRealUnit(this Unit unit)
+        {
+            return unit.UnitType != 0 && !unit.UnitState.HasFlag(UnitState.FakeAlly);
         }
 
         /// <summary>
@@ -1364,9 +1400,9 @@ namespace Ensage.Common.Extensions
         ///     The <see cref="bool" />.
         /// </returns>
         public static bool IsValidTarget(
-            this Unit unit, 
-            float range = float.MaxValue, 
-            bool checkTeam = true, 
+            this Unit unit,
+            float range = float.MaxValue,
+            bool checkTeam = true,
             Vector3 from = new Vector3())
         {
             if (unit == null || !unit.IsValid || !unit.IsAlive || !unit.IsVisible || !unit.IsSpawned || unit.IsNeutral
@@ -1385,8 +1421,8 @@ namespace Ensage.Common.Extensions
 
             return !(range < float.MaxValue)
                    || !(Vector2.DistanceSquared(
-                       (@from.ToVector2().IsValid() ? @from : ObjectManager.LocalHero.NetworkPosition).ToVector2(), 
-                       unitPosition.ToVector2()) > range * range);
+                            (@from.ToVector2().IsValid() ? @from : ObjectManager.LocalHero.NetworkPosition).ToVector2(),
+                            unitPosition.ToVector2()) > range * range);
         }
 
         /// <summary>
@@ -1423,14 +1459,14 @@ namespace Ensage.Common.Extensions
         ///     The <see cref="float" />.
         /// </returns>
         public static float ManaBurnDamageTaken(
-            this Unit unit, 
-            float burnAmount, 
-            double multiplier, 
-            DamageType dmgType, 
-            Unit source, 
-            bool throughBkb = false, 
-            double minusArmor = 0d, 
-            double minusDamageResistancePerc = 0d, 
+            this Unit unit,
+            float burnAmount,
+            double multiplier,
+            DamageType dmgType,
+            Unit source,
+            bool throughBkb = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
             double minusMagicResistancePerc = 0d)
         {
             var tempBurn = burnAmount;
@@ -1440,13 +1476,13 @@ namespace Ensage.Common.Extensions
             }
 
             return Calculations.DamageTaken(
-                unit, 
-                (float)(tempBurn * multiplier), 
-                dmgType, 
-                source, 
-                throughBkb, 
-                minusArmor, 
-                minusDamageResistancePerc, 
+                unit,
+                (float)(tempBurn * multiplier),
+                dmgType,
+                source,
+                throughBkb,
+                minusArmor,
+                minusDamageResistancePerc,
                 minusMagicResistancePerc);
         }
 
@@ -1487,15 +1523,15 @@ namespace Ensage.Common.Extensions
         ///     The <see cref="float" />.
         /// </returns>
         public static float ManaBurnSpellDamageTaken(
-            this Unit unit, 
-            float burnAmount, 
-            double multiplier, 
-            DamageType dmgType, 
-            Unit source, 
-            string spellName, 
-            bool throughBkb = false, 
-            double minusArmor = 0d, 
-            double minusDamageResistancePerc = 0d, 
+            this Unit unit,
+            float burnAmount,
+            double multiplier,
+            DamageType dmgType,
+            Unit source,
+            string spellName,
+            bool throughBkb = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
             double minusMagicResistancePerc = 0d)
         {
             var tempBurn = burnAmount;
@@ -1505,14 +1541,14 @@ namespace Ensage.Common.Extensions
             }
 
             return Calculations.SpellDamageTaken(
-                unit, 
-                (float)(tempBurn * multiplier), 
-                dmgType, 
-                source, 
-                spellName, 
-                throughBkb, 
-                minusArmor, 
-                minusDamageResistancePerc, 
+                unit,
+                (float)(tempBurn * multiplier),
+                dmgType,
+                source,
+                spellName,
+                throughBkb,
+                minusArmor,
+                minusDamageResistancePerc,
                 minusMagicResistancePerc);
         }
 
@@ -1563,7 +1599,7 @@ namespace Ensage.Common.Extensions
         {
             var stunAbility =
                 unit.Spellbook.Spells.Where(
-                    x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsSilence)
+                        x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsSilence)
                     .MinOrDefault(x => x.GetHitDelay(target));
 
             return stunAbility != null && stunAbility.CastStun(target);
@@ -1585,52 +1621,10 @@ namespace Ensage.Common.Extensions
         {
             var stunAbility =
                 unit.Spellbook.Spells.Where(
-                    x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsSlow)
+                        x => x.CanBeCasted() && x.CommonProperties() != null && x.CommonProperties().IsSlow)
                     .MinOrDefault(x => x.GetHitDelay(target));
 
             return stunAbility != null && stunAbility.CastStun(target);
-        }
-
-        /// <summary>
-        /// The vector 2 from polar angle.
-        /// </summary>
-        /// <param name="unit">
-        /// The unit.
-        /// </param>
-        /// <param name="delta">
-        /// The delta.
-        /// </param>
-        /// <param name="radial">
-        /// The radial.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Vector2"/>.
-        /// </returns>
-        public static Vector2 Vector2FromPolarAngle(this Unit unit, float delta = 0f, float radial = 1f)
-        {
-            var diff = Utils.DegreeToRadian(unit.RotationDifference);
-            var alpha = unit.NetworkRotationRad + diff;
-            return VectorExtensions.FromPolarCoordinates(radial, (float)(alpha + delta));
-        }
-
-        /// <summary>
-        /// The vector 3 from polar angle.
-        /// </summary>
-        /// <param name="unit">
-        /// The unit.
-        /// </param>
-        /// <param name="delta">
-        /// The delta.
-        /// </param>
-        /// <param name="radial">
-        /// The radial.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Vector3"/>.
-        /// </returns>
-        public static Vector3 Vector3FromPolarAngle(this Unit unit, float delta = 0f, float radial = 1f)
-        {
-            return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
         }
 
         /// <summary>
@@ -1667,59 +1661,68 @@ namespace Ensage.Common.Extensions
         ///     The <see cref="float" />.
         /// </returns>
         public static float SpellDamageTaken(
-            this Unit target, 
-            float dmg, 
-            DamageType dmgType, 
-            Unit source, 
-            string spellName, 
-            bool throughBKB = false, 
-            double minusArmor = 0d, 
-            double minusDamageResistancePerc = 0d, 
+            this Unit target,
+            float dmg,
+            DamageType dmgType,
+            Unit source,
+            string spellName,
+            bool throughBKB = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
             double minusMagicResistancePerc = 0d)
         {
             return Calculations.SpellDamageTaken(
-                target, 
-                dmg, 
-                dmgType, 
-                source, 
-                spellName, 
-                throughBKB, 
-                minusArmor, 
-                minusDamageResistancePerc, 
+                target,
+                dmg,
+                dmgType,
+                source,
+                spellName,
+                throughBKB,
+                minusArmor,
+                minusDamageResistancePerc,
                 minusMagicResistancePerc);
         }
 
-
         /// <summary>
-        /// Returns an ability by using its internal ID.
+        ///     The vector 2 from polar angle.
         /// </summary>
-        /// <param name="owner">Owner unit.</param>
-        /// <param name="abilityId">The ability ID of the wanted ability.</param>
-        /// <returns></returns>
-        public static Ability GetAbilityById(this Unit owner, AbilityId abilityId)
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="delta">
+        ///     The delta.
+        /// </param>
+        /// <param name="radial">
+        ///     The radial.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector2" />.
+        /// </returns>
+        public static Vector2 Vector2FromPolarAngle(this Unit unit, float delta = 0f, float radial = 1f)
         {
-            return owner.Spellbook.Spells.FirstOrDefault(x => x.AbilityData2.ID == (uint)abilityId);
+            var diff = Utils.DegreeToRadian(unit.RotationDifference);
+            var alpha = unit.NetworkRotationRad + diff;
+            return VectorExtensions.FromPolarCoordinates(radial, (float)(alpha + delta));
         }
 
         /// <summary>
-        /// Returns an item by using its internal ID.
+        ///     The vector 3 from polar angle.
         /// </summary>
-        /// <param name="owner">Owner unit.</param>
-        /// <param name="itemId">The item ID of the wanted item.</param>
-        /// <returns></returns>
-        public static Item GetItemById(this Unit owner, ItemId itemId)
+        /// <param name="unit">
+        ///     The unit.
+        /// </param>
+        /// <param name="delta">
+        ///     The delta.
+        /// </param>
+        /// <param name="radial">
+        ///     The radial.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="Vector3" />.
+        /// </returns>
+        public static Vector3 Vector3FromPolarAngle(this Unit unit, float delta = 0f, float radial = 1f)
         {
-            return owner.Inventory.Items.FirstOrDefault(x => x.AbilityData2.ID == (uint)itemId);
-        }
-
-        /// <summary>
-        /// Returns false for announcers, portrait entities etc.
-        /// </summary>
-        /// <param name="unit"></param>
-        /// <returns></returns>
-        public static bool IsRealUnit(this Unit unit)
-        {
-            return unit.UnitType != 0 && !unit.UnitState.HasFlag(UnitState.FakeAlly);
+            return Vector2FromPolarAngle(unit, delta, radial).ToVector3();
         }
 
         #endregion

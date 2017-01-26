@@ -1,5 +1,5 @@
 ﻿// <copyright file="CommonMenu.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -135,8 +135,8 @@ namespace Ensage.Common.Menu
             this.Item("positionY")
                 .SetValue(
                     new Slider(
-                        Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)), 
-                        (int)(HUDInfo.ScreenSizeY() * 0.08), 
+                        Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)),
+                        (int)(HUDInfo.ScreenSizeY() * 0.08),
                         Drawing.Width / 4));
             var console = this.newMessageType.SelectedIndex == 2;
 
@@ -148,7 +148,7 @@ namespace Ensage.Common.Menu
                     + "</font> Hold: <font face='Verdana' color='#ff7700'>"
                     + Utils.KeyToText(this.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
                 Game.PrintMessage(
-                    msg, 
+                    msg,
                     this.newMessageType.SelectedIndex == 2 || this.newMessageType.SelectedIndex == 0
                         ? MessageType.LogMessage
                         : MessageType.ChatMessage);
@@ -168,18 +168,18 @@ namespace Ensage.Common.Menu
         {
             this.hacks = new Menu("Hacks", "Common.Hacks");
             this.hacks.AddItem(
-                new MenuItem("showSpawnBoxes", "Show SpawnBoxes").SetValue(Config.ShowSpawnBoxes)
-                    .SetTooltip("Makes SpawnBoxes always visible")).ValueChanged +=
+                    new MenuItem("showSpawnBoxes", "Show SpawnBoxes").SetValue(Config.ShowSpawnBoxes)
+                        .SetTooltip("Makes SpawnBoxes always visible")).ValueChanged +=
                 (sender, args) => { Config.ShowSpawnBoxes = args.GetNewValue<bool>(); };
             Config.ShowSpawnBoxes = this.hacks.Item("showSpawnBoxes").GetValue<bool>();
             this.hacks.AddItem(
-                new MenuItem("showTowerRange", "Show TowerRange").SetValue(Config.ShowTowerRange)
-                    .SetTooltip("Makes TowerRange always visible")).ValueChanged +=
+                    new MenuItem("showTowerRange", "Show TowerRange").SetValue(Config.ShowTowerRange)
+                        .SetTooltip("Makes TowerRange always visible")).ValueChanged +=
                 (sender, args) => { Config.ShowTowerRange = args.GetNewValue<bool>(); };
             Config.ShowTowerRange = this.hacks.Item("showTowerRange").GetValue<bool>();
             this.hacks.AddItem(
-                new MenuItem("autoAccept", "AutoAccept").SetValue(Config.AutoAccept)
-                    .SetTooltip("Automatically clicks on accept after game was found")).ValueChanged +=
+                    new MenuItem("autoAccept", "AutoAccept").SetValue(Config.AutoAccept)
+                        .SetTooltip("Automatically clicks on accept after game was found")).ValueChanged +=
                 (sender, args) => { Config.AutoAccept = args.GetNewValue<bool>(); };
             Config.AutoAccept = this.hacks.Item("autoAccept").GetValue<bool>();
             this.AddSubMenu(this.hacks);
@@ -191,20 +191,20 @@ namespace Ensage.Common.Menu
         private void Initialize()
         {
             this.AddItem(
-                new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true))
+                    new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true))
                 .SetTooltip("When a assembly uses a key, dota will ignore it");
             this.AddItem(
-                new MenuItem("showConsole", "Show Console").SetValue(Config.DebugConsole)
-                    .SetTooltip("Enable if you wanna see console window")).ValueChanged +=
+                    new MenuItem("showConsole", "Show Console").SetValue(Config.DebugConsole)
+                        .SetTooltip("Enable if you wanna see console window")).ValueChanged +=
                 (sender, args) => { Config.DebugConsole = args.GetNewValue<bool>(); };
             Config.DebugConsole = this.Item("showConsole").GetValue<bool>();
             Config.DisableDrawings = false;
             this.AddItem(
-                new MenuItem("disableDrawings", "Disable Drawings").SetValue(Config.DisableDrawings)
-                    .DontSave()
-                    .SetTooltip(
-                        "This option will HIDE menu and all other drawings and particles. This option will get disabled after you press F5", 
-                        Color.Red)).ValueChanged +=
+                    new MenuItem("disableDrawings", "Disable Drawings").SetValue(Config.DisableDrawings)
+                        .DontSave()
+                        .SetTooltip(
+                            "This option will HIDE menu and all other drawings and particles. This option will get disabled after you press F5",
+                            Color.Red)).ValueChanged +=
                 (sender, args) => { Config.DisableDrawings = args.GetNewValue<bool>(); };
             this.Item("disableDrawings").SetValue(false);
             this.message.ValueChanged += this.MessageValueChanged;
@@ -305,24 +305,24 @@ namespace Ensage.Common.Menu
                     new MenuItem("messageType", "Show the message in: ").SetValue(
                         new StringList(new[] { "SideLog", "Chat", "Console" })));
             this.settings.AddItem(
-                new MenuItem("EnsageSharp.Common.IncreaseSize", "Size increase: ").SetValue(new Slider(0, 0, 250)))
-                .SetTooltip("Increases size of the menu, it can take up to 20 sec before the menu gets fully resized")
-                .ValueChanged +=
+                        new MenuItem("EnsageSharp.Common.IncreaseSize", "Size increase: ").SetValue(new Slider(0, 0, 250)))
+                    .SetTooltip("Increases size of the menu, it can take up to 20 sec before the menu gets fully resized")
+                    .ValueChanged +=
                 (sender, args) => { DelayAction.Add(250, () => IncreaseMenuSize = args.GetNewValue<Slider>().Value); };
             IncreaseMenuSize = this.settings.Item("EnsageSharp.Common.IncreaseSize").GetValue<Slider>().Value;
             this.xPos =
                 this.settings.AddItem(
-                    new MenuItem("positionX", "Position X").SetValue(
-                        new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height / 3)))
+                        new MenuItem("positionX", "Position X").SetValue(
+                            new Slider((int)MenuSettings.BasePosition.X, 10, Drawing.Height / 3)))
                     .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel")
                     .SetFontColor(Color.GreenYellow);
             this.yPos =
                 this.settings.AddItem(
-                    new MenuItem("positionY", "Position Y").SetValue(
-                        new Slider(
-                            (int)MenuSettings.BasePosition.Y, 
-                            (int)(HUDInfo.ScreenSizeY() * 0.08), 
-                            Drawing.Width / 4)))
+                        new MenuItem("positionY", "Position Y").SetValue(
+                            new Slider(
+                                (int)MenuSettings.BasePosition.Y,
+                                (int)(HUDInfo.ScreenSizeY() * 0.08),
+                                Drawing.Width / 4)))
                     .SetTooltip("Change position by dragging the 'EnsageSharp Menu' top panel")
                     .SetFontColor(Color.GreenYellow);
             this.AddSubMenu(this.settings);
@@ -332,11 +332,11 @@ namespace Ensage.Common.Menu
             this.xPos.SetValue(new Slider(Math.Max(Math.Min(currentX, Drawing.Height / 3), 10), 10, Drawing.Height / 3));
             this.yPos.SetValue(
                 new Slider(
-                    Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)), 
-                    (int)(HUDInfo.ScreenSizeY() * 0.08), 
+                    Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)),
+                    (int)(HUDInfo.ScreenSizeY() * 0.08),
                     Drawing.Width / 4));
             MenuSettings.BasePosition = new Vector2(
-                this.xPos.GetValue<Slider>().Value, 
+                this.xPos.GetValue<Slider>().Value,
                 this.yPos.GetValue<Slider>().Value);
         }
 

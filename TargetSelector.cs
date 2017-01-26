@@ -1,5 +1,5 @@
 ﻿// <copyright file="TargetSelector.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -124,17 +124,18 @@ namespace Ensage.Common
                 var attackRange = source.GetAttackRange() + bonusRange;
                 var lowestHp =
                     Creeps.All.Where(
-                        x =>
-                        x.IsValid && x.IsSpawned
-                        && (x.ClassID == ClassID.CDOTA_BaseNPC_Tower || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
-                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
-                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
-                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
-                            || x.ClassID == ClassID.CDOTA_BaseNPC_Additive
-                            || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
-                            || x.ClassID == ClassID.CDOTA_BaseNPC_Building
-                            || x.ClassID == ClassID.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
-                        && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
+                            x =>
+                                x.IsValid && x.IsSpawned
+                                && (x.ClassID == ClassID.CDOTA_BaseNPC_Tower
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Additive
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Barracks
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Building
+                                    || x.ClassID == ClassID.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
+                                && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
                         .MinOrDefault(creep => creep.Health);
                 return lowestHp;
             }
@@ -164,8 +165,9 @@ namespace Ensage.Common
                 Heroes.GetByTeam(source.GetEnemyTeam())
                     .Where(
                         hero =>
-                        hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range
-                        && !hero.IsInvul() && !hero.HasModifier("modifier_skeleton_king_reincarnation_scepter_active"))
+                            hero.IsValid && hero.IsAlive && hero.IsVisible && hero.Distance2D(source) <= range
+                            && !hero.IsInvul()
+                            && !hero.HasModifier("modifier_skeleton_king_reincarnation_scepter_active"))
                     .MaxOrDefault(hero => hero.Health);
         }
 

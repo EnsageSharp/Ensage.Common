@@ -1,5 +1,5 @@
 ﻿// <copyright file="AbilityToggler.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,6 @@ namespace Ensage.Common.Menu
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using Ensage.Common.Objects;
 
@@ -63,30 +62,30 @@ namespace Ensage.Common.Menu
             foreach (var v in abilityDictionary)
             {
                 this.Add(v.Key, v.Value);
-                //Menu.TextureDictionary.Add(
-                //    v.Key, 
-                //    v.Key.Substring(0, "item".Length) == "item"
-                //        ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
-                //        : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
+
+                // Menu.TextureDictionary.Add(
+                // v.Key, 
+                // v.Key.Substring(0, "item".Length) == "item"
+                // ? Textures.GetTexture("materials/ensage_ui/items/" + v.Key.Substring("item_".Length) + ".vmat")
+                // : Textures.GetTexture("materials/ensage_ui/spellicons/" + v.Key + ".vmat"));
             }
 
-            //var posDict = this.PositionDictionary;
-            //foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
-            //{
-            //    this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
-            //}
+            // var posDict = this.PositionDictionary;
+            // foreach (var v in this.Dictionary.Where(v => !posDict.ContainsKey(v.Key)))
+            // {
+            // this.PositionDictionary.Add(v.Key, new float[] { 0, 0 });
+            // }
 
-            //var svDict = this.SValuesDictionary;
-            //foreach (var v in this.Dictionary.Where(v => !svDict.ContainsKey(v.Key)))
-            //{
-            //    this.SValuesDictionary.Add(v.Key, v.Value);
-            //}
+            // var svDict = this.SValuesDictionary;
+            // foreach (var v in this.Dictionary.Where(v => !svDict.ContainsKey(v.Key)))
+            // {
+            // this.SValuesDictionary.Add(v.Key, v.Value);
+            // }
         }
 
         #endregion
 
         #region Public Methods and Operators
-
 
         /// <summary>
         ///     The add.
@@ -116,7 +115,8 @@ namespace Ensage.Common.Menu
                 Menu.TextureDictionary.Add(
                     name,
                     textureName.Substring(0, "item".Length) == "item"
-                        ? Textures.GetTexture("materials/ensage_ui/items/" + textureName.Substring("item_".Length) + ".vmat")
+                        ? Textures.GetTexture(
+                            "materials/ensage_ui/items/" + textureName.Substring("item_".Length) + ".vmat")
                         : Textures.GetTexture("materials/ensage_ui/spellicons/" + textureName + ".vmat"));
             }
 
@@ -134,16 +134,16 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
-        /// You cannot add duplicates with this method, use Add(name, defaultValue) instead
+        ///     You cannot add duplicates with this method, use Add(name, defaultValue) instead
         /// </summary>
         /// <param name="name">
-        /// The name.
+        ///     The name.
         /// </param>
         /// <param name="textureName">
-        /// The texture name.
+        ///     The texture name.
         /// </param>
         /// <param name="defaultValue">
-        /// The default value.
+        ///     The default value.
         /// </param>
         public void Add(string name, string textureName, bool defaultValue = true)
         {
@@ -163,7 +163,8 @@ namespace Ensage.Common.Menu
                 Menu.TextureDictionary.Add(
                     name,
                     textureName.Substring(0, "item".Length) == "item"
-                        ? Textures.GetTexture("materials/ensage_ui/items/" + textureName.Substring("item_".Length) + ".vmat")
+                        ? Textures.GetTexture(
+                            "materials/ensage_ui/items/" + textureName.Substring("item_".Length) + ".vmat")
                         : Textures.GetTexture("materials/ensage_ui/spellicons/" + textureName + ".vmat"));
             }
 

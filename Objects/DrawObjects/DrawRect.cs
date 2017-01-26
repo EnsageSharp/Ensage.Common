@@ -1,5 +1,5 @@
 ﻿// <copyright file="DrawRect.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -58,6 +58,10 @@ namespace Ensage.Common.Objects.DrawObjects
 
         #region Public Properties
 
+        public bool Border { get; set; }
+
+        public Color BorderColor { get; set; } = Color.Black;
+
         /// <summary>
         ///     Gets or sets the color.
         /// </summary>
@@ -84,6 +88,11 @@ namespace Ensage.Common.Objects.DrawObjects
             else
             {
                 Drawing.DrawRect(this.Position, this.Size, this.Texture);
+            }
+
+            if (this.Border)
+            {
+                Drawing.DrawRect(this.Position, this.Size, this.BorderColor, true);
             }
         }
 

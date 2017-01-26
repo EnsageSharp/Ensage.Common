@@ -1,5 +1,5 @@
 ﻿// <copyright file="Orbwalking.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +14,6 @@
 namespace Ensage.Common
 {
     using System;
-    using System.Linq;
 
     using Ensage.Common.Menu;
     using Ensage.Common.Objects.UtilityObjects;
@@ -129,6 +128,62 @@ namespace Ensage.Common
             return orbwalker.CanCancelAttack(delay);
         }
 
+        public static void Load()
+        {
+        }
+
+        /// <summary>
+        ///     Orbwalks on given target if they are in range, while moving to mouse position
+        /// </summary>
+        /// <param name="target">
+        ///     The target.
+        /// </param>
+        /// <param name="bonusWindupMs">
+        ///     The bonus Windup Ms.
+        /// </param>
+        /// <param name="bonusRange">
+        ///     The bonus Range.
+        /// </param>
+        /// <param name="attackmodifiers">
+        ///     The attackmodifiers.
+        /// </param>
+        /// <param name="followTarget">
+        ///     The follow Target.
+        /// </param>
+        public static void Orbwalk(
+            Unit target,
+            float bonusWindupMs = 0,
+            float bonusRange = 0,
+            bool attackmodifiers = false,
+            bool followTarget = false)
+        {
+            orbwalker.OrbwalkOn(target, bonusWindupMs, bonusRange, attackmodifiers, followTarget);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private static void EnableDebugMenuItem_ValueChanged(object sender, OnValueChangeEventArgs e)
+        {
+            orbwalker.EnableDebug = e.GetNewValue<bool>();
+        }
+
+        /// <summary>
+        ///     The events_ on close.
+        /// </summary>
+        /// <param name="sender">
+        ///     The sender.
+        /// </param>
+        /// <param name="e">
+        ///     The e.
+        /// </param>
+        private static void OnClose(object sender, EventArgs e)
+        {
+            // menu.Items.Remove(menu.Items.FirstOrDefault(x => x.Name == ObjectManager.LocalHero?.Name + "Common.Orbwalking.UserDelay"));
+            orbwalker.Unit = null;
+        }
+
         private static void OnLoad(object sender, EventArgs eventArgs)
         {
             if (menu == null)
@@ -155,63 +210,6 @@ namespace Ensage.Common
             {
                 orbwalker.Unit = ObjectManager.LocalHero;
             }
-        }
-
-        public static void Load()
-        {
-            
-        }
-
-        private static void EnableDebugMenuItem_ValueChanged(object sender, OnValueChangeEventArgs e)
-        {
-            orbwalker.EnableDebug = e.GetNewValue<bool>();
-        }
-
-        /// <summary>
-        ///     Orbwalks on given target if they are in range, while moving to mouse position
-        /// </summary>
-        /// <param name="target">
-        ///     The target.
-        /// </param>
-        /// <param name="bonusWindupMs">
-        ///     The bonus Windup Ms.
-        /// </param>
-        /// <param name="bonusRange">
-        ///     The bonus Range.
-        /// </param>
-        /// <param name="attackmodifiers">
-        ///     The attackmodifiers.
-        /// </param>
-        /// <param name="followTarget">
-        ///     The follow Target.
-        /// </param>
-        public static void Orbwalk(
-            Unit target, 
-            float bonusWindupMs = 0, 
-            float bonusRange = 0, 
-            bool attackmodifiers = false, 
-            bool followTarget = false)
-        {
-            orbwalker.OrbwalkOn(target, bonusWindupMs, bonusRange, attackmodifiers, followTarget);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///     The events_ on close.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        private static void OnClose(object sender, EventArgs e)
-        {
-            //menu.Items.Remove(menu.Items.FirstOrDefault(x => x.Name == ObjectManager.LocalHero?.Name + "Common.Orbwalking.UserDelay"));
-            orbwalker.Unit = null;
         }
 
         #endregion

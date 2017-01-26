@@ -1,5 +1,5 @@
 ﻿// <copyright file="Lanes.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -34,13 +34,13 @@ namespace Ensage.Common.Objects
                                                                          Path =
                                                                              new List<Vector3>
                                                                                  {
-                                                                                     new Vector3(-3466, -6043, 0), 
-                                                                                     new Vector3(-673, -6349, 0), 
-                                                                                     new Vector3(4478, -6119, 0), 
-                                                                                     new Vector3(5490, -5672, 0), 
+                                                                                     new Vector3(-3466, -6043, 0),
+                                                                                     new Vector3(-673, -6349, 0),
+                                                                                     new Vector3(4478, -6119, 0),
+                                                                                     new Vector3(5490, -5672, 0),
                                                                                      new Vector3(6172, -3896, 0)
-                                                                                 }, 
-                                                                         Name = "Radiant Bot Lane", Team = Team.Radiant, 
+                                                                                 },
+                                                                         Name = "Radiant Bot Lane", Team = Team.Radiant,
                                                                          Position = LanePosition.Bottom
                                                                      }
 

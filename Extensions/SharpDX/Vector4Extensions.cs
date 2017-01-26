@@ -1,5 +1,5 @@
 ﻿// <copyright file="Vector4Extensions.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -420,9 +420,9 @@ namespace Ensage.Common.Extensions.SharpDX
             var sin = Math.Sin(angle);
 
             return new Vector4(
-                (float)(vector4.X * cos - vector4.Y * sin), 
-                (float)(vector4.Y * cos + vector4.X * sin), 
-                vector4.Z, 
+                (float)(vector4.X * cos - vector4.Y * sin),
+                (float)(vector4.Y * cos + vector4.X * sin),
+                vector4.Z,
                 vector4.W);
         }
 

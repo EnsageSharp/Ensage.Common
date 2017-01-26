@@ -1,5 +1,5 @@
 ﻿// <copyright file="AbilityExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -11,7 +11,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Extensions
 {
     using System;
@@ -33,6 +32,7 @@ namespace Ensage.Common.Extensions
     public static class AbilityExtensions
     {
         #region Static Fields
+
         /// <summary>
         ///     The ability behavior dictionary.
         /// </summary>
@@ -52,12 +52,14 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     The cast point dictionary.
         /// </summary>
-        private static ConcurrentDictionary<string, double> castPointDictionary = new ConcurrentDictionary<string, double>();
+        private static ConcurrentDictionary<string, double> castPointDictionary =
+            new ConcurrentDictionary<string, double>();
 
         /// <summary>
         ///     The cast range dictionary.
         /// </summary>
-        private static ConcurrentDictionary<string, float> castRangeDictionary = new ConcurrentDictionary<string, float>();
+        private static ConcurrentDictionary<string, float> castRangeDictionary =
+            new ConcurrentDictionary<string, float>();
 
         /// <summary>
         ///     The channel dictionary.
@@ -78,7 +80,8 @@ namespace Ensage.Common.Extensions
         /// <summary>
         ///     The hit delay dictionary.
         /// </summary>
-        private static ConcurrentDictionary<string, double> hitDelayDictionary = new ConcurrentDictionary<string, double>();
+        private static ConcurrentDictionary<string, double> hitDelayDictionary =
+            new ConcurrentDictionary<string, double>();
 
         /// <summary>
         ///     Temporarily stores radius values
@@ -273,7 +276,7 @@ namespace Ensage.Common.Extensions
 
             var position = sourcePosition;
             if (ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"
-                || (name == "earthshaker_enchant_totem" && (ability.Owner as Hero).AghanimState()))
+                || name == "earthshaker_enchant_totem" && (ability.Owner as Hero).AghanimState())
             {
                 var pred = ability.GetPrediction(target, abilityName: name);
                 var lion = name == "lion_impale" ? ability.GetAbilityData("length_buffer") : 0;
@@ -450,8 +453,7 @@ namespace Ensage.Common.Extensions
                         x =>
                             x.IsValid && x.IsAlive && x.Team == owner.Team && x.Distance2D(xyz) <= range
                             && x.Distance2D(owner) < owner.Distance2D(target)
-                            && x.Position.ToVector2()
-                                .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                            && x.Position.ToVector2().DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
                             <= radius + x.HullRadius))
                 {
                     return false;
@@ -459,13 +461,13 @@ namespace Ensage.Common.Extensions
 
                 if (
                     Heroes.GetByTeam(owner.Team)
-                          .Any(
-                              hero =>
-                                  hero.IsAlive && !hero.Equals(owner) && !hero.Equals(target)
-                                  && hero.Distance2D(xyz) <= range && hero.Distance2D(owner) < owner.Distance2D(target)
-                                  && hero.Position.ToVector2()
-                                         .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
-                                  <= radius + hero.HullRadius))
+                        .Any(
+                            hero =>
+                                hero.IsAlive && !hero.Equals(owner) && !hero.Equals(target)
+                                && hero.Distance2D(xyz) <= range && hero.Distance2D(owner) < owner.Distance2D(target)
+                                && hero.Position.ToVector2()
+                                    .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                                <= radius + hero.HullRadius))
                 {
                     return false;
                 }
@@ -478,8 +480,7 @@ namespace Ensage.Common.Extensions
                         x =>
                             x.IsValid && x.IsAlive && x.Team != owner.Team && x.Distance2D(xyz) <= range
                             && x.Distance2D(owner) < owner.Distance2D(target)
-                            && x.Position.ToVector2()
-                                .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                            && x.Position.ToVector2().DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
                             <= radius + x.HullRadius))
                 {
                     return false;
@@ -487,13 +488,13 @@ namespace Ensage.Common.Extensions
 
                 if (
                     Heroes.GetByTeam(owner.GetEnemyTeam())
-                          .Any(
-                              hero =>
-                                  hero.IsAlive && !hero.Equals(target) && hero.Distance2D(xyz) <= range
-                                  && hero.Distance2D(owner) < owner.Distance2D(target)
-                                  && hero.Position.ToVector2()
-                                         .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
-                                  <= radius + hero.HullRadius))
+                        .Any(
+                            hero =>
+                                hero.IsAlive && !hero.Equals(target) && hero.Distance2D(xyz) <= range
+                                && hero.Distance2D(owner) < owner.Distance2D(target)
+                                && hero.Position.ToVector2()
+                                    .DistanceToLineSegment(sourcePosition.ToVector2(), xyz.ToVector2())
+                                <= radius + hero.HullRadius))
                 {
                     return false;
                 }
@@ -693,7 +694,7 @@ namespace Ensage.Common.Extensions
             var canUse = Utils.ChainStun(target, delay, null, false, name);
             if (!canUse && chainStun
                 && (!target.HasModifier("modifier_pudge_meat_hook")
-                    || (ability.StoredName() != "pudge_dismember" && ability.StoredName() != "pudge_rot")))
+                    || ability.StoredName() != "pudge_dismember" && ability.StoredName() != "pudge_rot"))
             {
                 return false;
             }
@@ -715,11 +716,11 @@ namespace Ensage.Common.Extensions
             }
             else if (ability.IsAbilityBehavior(AbilityBehavior.AreaOfEffect, name)
                      || ability.IsAbilityBehavior(AbilityBehavior.Point, name) || name == "lion_impale"
-                     || (name == "earthshaker_enchant_totem" && (ability.Owner as Hero).AghanimState())
+                     || name == "earthshaker_enchant_totem" && (ability.Owner as Hero).AghanimState()
                      || ability.IsSkillShot())
             {
                 var stunned = target.IsStunned() || target.IsInvul() || target.IsRooted() || target.IsHexed();
-                if ((!(Prediction.StraightTime(target) > straightTimeforSkillShot * 1000) && !stunned)
+                if (!(Prediction.StraightTime(target) > straightTimeforSkillShot * 1000) && !stunned
                     || !ability.CastSkillShot(target, name, soulRing, otherTargets))
                 {
                     return false;
@@ -934,6 +935,16 @@ namespace Ensage.Common.Extensions
             }
 
             return data.Count > 1 ? data.GetValue(lvl - 1) : data.Value;
+        }
+
+        /// <summary>
+        ///     Returns the ability id
+        /// </summary>
+        /// <param name="ability"></param>
+        /// <returns></returns>
+        public static AbilityId GetAbilityId(this Ability ability)
+        {
+            return (AbilityId)ability.AbilityData2.ID;
         }
 
         /// <summary>
@@ -1828,16 +1839,6 @@ namespace Ensage.Common.Extensions
 
             var distance = ability.GetAbilityData(data.Distance);
             return distance > 0 ? distance : ability.GetCastRange();
-        }
-
-        /// <summary>
-        /// Returns the ability id
-        /// </summary>
-        /// <param name="ability"></param>
-        /// <returns></returns>
-        public static AbilityId GetAbilityId(this Ability ability)
-        {
-            return (AbilityId)ability.AbilityData2.ID;
         }
 
         #endregion

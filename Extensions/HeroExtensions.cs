@@ -1,5 +1,5 @@
 ﻿// <copyright file="HeroExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -11,13 +11,11 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-
 namespace Ensage.Common.Extensions
 {
     using System.Collections.Generic;
     using System.Linq;
 
-    using Ensage.Common.Enums;
     using Ensage.Common.Objects;
 
     /// <summary>
@@ -26,7 +24,6 @@ namespace Ensage.Common.Extensions
     public static class HeroExtensions
     {
         #region Static Fields
-        
 
         /// <summary>
         ///     The boolean dictionary.
@@ -125,8 +122,7 @@ namespace Ensage.Common.Extensions
                            : !hero.HasModifiers(
                                  new[]
                                      {
-                                         "modifier_dazzle_shallow_grave",
-                                         "modifier_oracle_false_promise",
+                                         "modifier_dazzle_shallow_grave", "modifier_oracle_false_promise",
                                          "modifier_skeleton_king_reincarnation_scepter_active"
                                      },
                                  false));
@@ -176,8 +172,8 @@ namespace Ensage.Common.Extensions
                             || x.StoredName() == "item_glimmer_cape");
             }
 
-            var canGoInvis = (invis != null && hero.CanCast() && invis.CanBeCasted())
-                             || (riki != null && riki.Level > 0 && !hero.IsSilenced());
+            var canGoInvis = invis != null && hero.CanCast() && invis.CanBeCasted()
+                             || riki != null && riki.Level > 0 && !hero.IsSilenced();
             if (!boolDictionary.ContainsKey(n))
             {
                 boolDictionary.Add(n, canGoInvis);

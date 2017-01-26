@@ -1,5 +1,5 @@
 ﻿// <copyright file="Textures.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -34,6 +34,29 @@ namespace Ensage.Common.Objects
         #region Public Methods and Operators
 
         /// <summary>
+        ///     The get hero round texture.
+        /// </summary>
+        /// <param name="heroName">
+        ///     The hero name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="DotaTexture" />.
+        /// </returns>
+        public static DotaTexture GetHeroRoundTexture(string heroName)
+        {
+            var name = "materials/ensage_ui/heroes_round/" + heroName.Substring("npc_dota_hero_".Length) + ".vmat";
+            DotaTexture texture;
+            if (TextureDictionary.TryGetValue(name, out texture))
+            {
+                return texture;
+            }
+
+            texture = FindTexture(name);
+            TextureDictionary.Add(name, texture);
+            return texture;
+        }
+
+        /// <summary>
         ///     The get hero texture.
         /// </summary>
         /// <param name="heroName">
@@ -45,6 +68,52 @@ namespace Ensage.Common.Objects
         public static DotaTexture GetHeroTexture(string heroName)
         {
             var name = "materials/ensage_ui/heroes_horizontal/" + heroName.Substring("npc_dota_hero_".Length) + ".vmat";
+            DotaTexture texture;
+            if (TextureDictionary.TryGetValue(name, out texture))
+            {
+                return texture;
+            }
+
+            texture = FindTexture(name);
+            TextureDictionary.Add(name, texture);
+            return texture;
+        }
+
+        /// <summary>
+        ///     The get hero vertical texture.
+        /// </summary>
+        /// <param name="heroName">
+        ///     The hero name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="DotaTexture" />.
+        /// </returns>
+        public static DotaTexture GetHeroVerticalTexture(string heroName)
+        {
+            var name = "materials/ensage_ui/heroes_vertical/" + heroName.Substring("npc_dota_hero_".Length) + ".vmat";
+            DotaTexture texture;
+            if (TextureDictionary.TryGetValue(name, out texture))
+            {
+                return texture;
+            }
+
+            texture = FindTexture(name);
+            TextureDictionary.Add(name, texture);
+            return texture;
+        }
+
+        /// <summary>
+        ///     The get item texture.
+        /// </summary>
+        /// <param name="itemName">
+        ///     The item name.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="DotaTexture" />.
+        /// </returns>
+        public static DotaTexture GetItemTexture(string itemName)
+        {
+            var name = "materials/ensage_ui/items/" + itemName.Substring("item_".Length) + ".vmat";
             DotaTexture texture;
             if (TextureDictionary.TryGetValue(name, out texture))
             {
@@ -69,29 +138,6 @@ namespace Ensage.Common.Objects
         {
             var name = "materials/ensage_ui/neutrals_vertical/" + creepName.Substring("npc_dota_neutral_".Length)
                        + ".vmat";
-            DotaTexture texture;
-            if (TextureDictionary.TryGetValue(name, out texture))
-            {
-                return texture;
-            }
-
-            texture = FindTexture(name);
-            TextureDictionary.Add(name, texture);
-            return texture;
-        }
-
-        /// <summary>
-        ///     The get item texture.
-        /// </summary>
-        /// <param name="itemName">
-        ///     The item name.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="DotaTexture" />.
-        /// </returns>
-        public static DotaTexture GetItemTexture(string itemName)
-        {
-            var name = "materials/ensage_ui/items/" + itemName.Substring("item_".Length) + ".vmat";
             DotaTexture texture;
             if (TextureDictionary.TryGetValue(name, out texture))
             {
@@ -184,16 +230,16 @@ namespace Ensage.Common.Objects
                 {
                     // Second exception occurs in case user doesnt have texture pack installed, notify the user and replace it with internal texture
                     Game.PrintMessage(
-                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>", 
+                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>",
                         MessageType.LogMessage);
                     Game.PrintMessage(
-                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>", 
+                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>",
                         MessageType.LogMessage);
                     Game.PrintMessage(
-                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>", 
+                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>",
                         MessageType.ChatMessage);
                     Game.PrintMessage(
-                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>", 
+                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>",
                         MessageType.ChatMessage);
 
                     Console.WriteLine(@"!!!!!!! Texture Pack not found !!!!!!!!");

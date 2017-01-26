@@ -1,5 +1,5 @@
 ﻿// <copyright file="Menu.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -36,17 +36,17 @@ namespace Ensage.Common.Menu
         #region Static Fields
 
         /// <summary>
+        ///     The root menus.
+        /// </summary>
+        internal static readonly Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
+
+        /// <summary>
         ///     The menu position dictionary.
         /// </summary>
         private static readonly Dictionary<string, Vector2> MenuPositionDictionary = new Dictionary<string, Vector2>();
 
         /// <summary>The panel text.</summary>
         private static readonly DrawText PanelText;
-
-        /// <summary>
-        ///     The root menus.
-        /// </summary>
-        internal static readonly Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
         /// <summary>
         ///     The root menus draggable.
@@ -92,8 +92,6 @@ namespace Ensage.Common.Menu
         /// </summary>
         private bool visible;
 
-
-
         #endregion
 
         #region Constructors and Destructors
@@ -117,20 +115,6 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
-        /// The activate common menu.
-        /// </summary>
-        private static void ActivateCommonMenu()
-        {
-            if (Root != null)
-            {
-                return;
-            }
-
-            Root = new CommonMenu();
-            Root.AddToMainMenu();
-        }
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="Menu" /> class.
         /// </summary>
         /// <param name="displayName">
@@ -149,10 +133,10 @@ namespace Ensage.Common.Menu
         ///     The show text with texture.
         /// </param>
         public Menu(
-            string displayName, 
-            string name, 
-            bool isRootMenu = false, 
-            string textureName = null, 
+            string displayName,
+            string name,
+            bool isRootMenu = false,
+            string textureName = null,
             bool showTextWithTexture = false)
             : base(20)
         {
@@ -390,9 +374,9 @@ namespace Ensage.Common.Menu
                     bonus +=
                         (int)
                         Drawing.MeasureText(
-                            MultiLanguage._(this.DisplayName), 
-                            "Arial", 
-                            new Vector2((float)(this.Height * 0.48), 100), 
+                            MultiLanguage._(this.DisplayName),
+                            "Arial",
+                            new Vector2((float)(this.Height * 0.48), 100),
                             FontFlags.None).X;
                 }
 
@@ -577,9 +561,9 @@ namespace Ensage.Common.Menu
         ///     The <see cref="MenuItem" />.
         /// </returns>
         public static MenuItem GetValueGlobally(
-            string assemblyname, 
-            string menuname, 
-            string itemname, 
+            string assemblyname,
+            string menuname,
+            string itemname,
             string submenu = null)
         {
             var menu = RootMenus.FirstOrDefault(x => x.Key == assemblyname + "." + menuname).Value;
@@ -693,11 +677,11 @@ namespace Ensage.Common.Menu
             MenuSettings.RootMenuWidthIncrease =
                 (int)
                 Math.Max(
-                    MenuSettings.RootMenuWidthIncrease, 
+                    MenuSettings.RootMenuWidthIncrease,
                     Drawing.MeasureText(
-                        MultiLanguage._(this.DisplayName), 
-                        "Arial", 
-                        new Vector2((float)(this.Height * 0.48), 100), 
+                        MultiLanguage._(this.DisplayName),
+                        "Arial",
+                        new Vector2((float)(this.Height * 0.48), 100),
                         FontFlags.AntiAlias).X + bonus);
             this.OrderNumber = menuCount;
             menuCount++;
@@ -723,10 +707,10 @@ namespace Ensage.Common.Menu
 
             var wasHovered = this.hovered;
             this.hovered = Utils.IsUnderRectangle(
-                Game.MouseScreenPosition, 
-                this.Position.X, 
-                this.Position.Y, 
-                this.Width, 
+                Game.MouseScreenPosition,
+                this.Position.X,
+                this.Position.Y,
+                this.Width,
                 this.Height);
             if (!wasHovered && this.hovered)
             {
@@ -740,8 +724,8 @@ namespace Ensage.Common.Menu
             var add = this.hovered
                           ? this.transition.GetValue() * 0.1
                           : this.transition.GetValue() > 0 || this.transition.Moving
-                                ? (this.Height - this.transition.GetValue()) * 0.1
-                                : 0;
+                              ? (this.Height - this.transition.GetValue()) * 0.1
+                              : 0;
             MenuUtils.MainMenuDraw(this, add);
         }
 
@@ -773,7 +757,7 @@ namespace Ensage.Common.Menu
 
             tempItem = this.Items.FirstOrDefault(x => x.Name == name)
                        ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
-                              .FirstOrDefault();
+                       .FirstOrDefault();
             if (tempItem != null)
             {
                 ItemDictionary.Add(id, tempItem);
@@ -900,18 +884,18 @@ namespace Ensage.Common.Menu
                 if (!this.Visible || Config.DisableDrawings)
                 {
                     this.OnReceiveMessage(
-                        (Utils.WindowsMessages)args.Msg, 
-                        Game.MouseScreenPosition, 
-                        (uint)args.WParam, 
+                        (Utils.WindowsMessages)args.Msg,
+                        Game.MouseScreenPosition,
+                        (uint)args.WParam,
                         args);
                     return;
                 }
 
                 this.DraggableOnReceiveMessage(
-                    (Utils.WindowsMessages)args.Msg, 
-                    Game.MouseScreenPosition, 
-                    (uint)args.WParam, 
-                    RootMenusDraggable, 
+                    (Utils.WindowsMessages)args.Msg,
+                    Game.MouseScreenPosition,
+                    (uint)args.WParam,
+                    RootMenusDraggable,
                     args);
                 return;
             }
@@ -1005,9 +989,9 @@ namespace Ensage.Common.Menu
         ///     The args.
         /// </param>
         protected override void OnReceiveMessage(
-            Utils.WindowsMessages message, 
-            Vector2 cursorPos, 
-            uint key, 
+            Utils.WindowsMessages message,
+            Vector2 cursorPos,
+            uint key,
             WndEventArgs args = null)
         {
             // Spread the message to the menu's children recursively
@@ -1100,6 +1084,20 @@ namespace Ensage.Common.Menu
         }
 
         /// <summary>
+        ///     The activate common menu.
+        /// </summary>
+        private static void ActivateCommonMenu()
+        {
+            if (Root != null)
+            {
+                return;
+            }
+
+            Root = new CommonMenu();
+            Root.AddToMainMenu();
+        }
+
+        /// <summary>
         ///     The on draw.
         /// </summary>
         /// <param name="args">
@@ -1115,15 +1113,15 @@ namespace Ensage.Common.Menu
             Menu draggedMenu = null;
             var bgsize = new Vector2(4, (float)(MenuSettings.MenuItemHeight / 1.2));
             Drawing.DrawRect(
-                MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y - bgsize.X), 
+                MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y - bgsize.X),
                 new Vector2(
-                    MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
-                    MenuSettings.MenuItemHeight * menuCount + bgsize.Y - bgsize.X), 
+                    MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7,
+                    MenuSettings.MenuItemHeight * menuCount + bgsize.Y - bgsize.X),
                 Root.SelectedTheme.RootMenuBackgroundColor);
             MenuPanel.Position = MenuSettings.BasePosition - new Vector2(MenuSettings.MenuItemHeight / 7, bgsize.Y - 1);
             MenuPanel.Size =
                 new Vector2(
-                    MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7, 
+                    MenuSettings.MenuWidth + MenuSettings.MenuItemHeight + MenuSettings.MenuItemHeight / 7,
                     bgsize.Y);
             MenuPanel.Color = Root.SelectedTheme.TopPanelBackgroundColor;
             MenuPanel.Draw();
@@ -1179,7 +1177,7 @@ namespace Ensage.Common.Menu
         private void ObjectMgr_OnAddEntity(EntityEventArgs args)
         {
             DelayAction.Add(
-                2000, 
+                2000,
                 () =>
                     {
                         var hero = args.Entity as Hero;

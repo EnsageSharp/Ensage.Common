@@ -1,4 +1,4 @@
-// <copyright file="Heroes.cs" company="EnsageSharp">
+﻿// <copyright file="Heroes.cs" company="EnsageSharp">
 //    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -15,9 +15,7 @@ namespace Ensage.Common.Objects
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Runtime.CompilerServices;
 
     using Ensage.Common.Objects.UtilityObjects;
 
@@ -43,21 +41,21 @@ namespace Ensage.Common.Objects
         /// </summary>
         public static List<Hero> Radiant;
 
-        /// <summary>Gets or sets the teams.</summary>
-        public static IReadOnlyDictionary<Team, List<Hero>> Teams => teams;
-
         /// <summary>
         ///     The loaded.
         /// </summary>
         private static bool loaded;
+
+        /// <summary>The teams.</summary>
+        private static Dictionary<Team, List<Hero>> teams;
 
         /// <summary>
         ///     The temp list.
         /// </summary>
         private static List<Hero> tempList;
 
-        /// <summary>The teams.</summary>
-        private static Dictionary<Team, List<Hero>> teams;
+        /// <summary>The update sleeper.</summary>
+        private static Sleeper updateSleeper;
 
         #endregion
 
@@ -103,6 +101,13 @@ namespace Ensage.Common.Objects
 
         #endregion
 
+        #region Public Properties
+
+        /// <summary>Gets or sets the teams.</summary>
+        public static IReadOnlyDictionary<Team, List<Hero>> Teams => teams;
+
+        #endregion
+
         #region Public Methods and Operators
 
         /// <summary>
@@ -121,9 +126,6 @@ namespace Ensage.Common.Objects
                        : (team == Team.Dire ? Dire : teams.FirstOrDefault(x => x.Key == team).Value);
         }
 
-        /// <summary>The update sleeper.</summary>
-        private static Sleeper updateSleeper;
-
         /// <summary>
         ///     The update.
         /// </summary>
@@ -137,7 +139,7 @@ namespace Ensage.Common.Objects
                 return;
             }
 
-            if (updateSleeper.Sleeping || (!Game.IsCustomGame && All.Count(x => x.IsValid) >= 10))
+            if (updateSleeper.Sleeping || !Game.IsCustomGame && All.Count(x => x.IsValid) >= 10)
             {
                 return;
             }
@@ -228,8 +230,7 @@ namespace Ensage.Common.Objects
             }
 
             tempList = Players.All.Where(x => x.Hero != null && x.Hero.IsValid).Select(x => x.Hero).ToList();
-            foreach (
-                var hero in
+            foreach (var hero in
                 ObjectManager.GetEntities<Hero>()
                     .Where(hero => !hero.IsIllusion && tempList.All(x => x.Handle != hero.Handle)))
             {

@@ -1,5 +1,5 @@
 ﻿// <copyright file="PriorityIcon.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -73,7 +73,7 @@ namespace Ensage.Common.Menu.Draw
             this.Item = this.Name.Contains("item");
             this.priorityNumber = new DrawText
                                       {
-                                          FontFlags = FontFlags.AntiAlias, Color = Color.White, 
+                                          FontFlags = FontFlags.AntiAlias, Color = Color.White,
                                           Position = this.Position + new Vector2(4, 3)
                                       };
             this.transition = new QuadEaseInOut(0.35);
@@ -228,9 +228,9 @@ namespace Ensage.Common.Menu.Draw
 
             Drawing.DrawRect(this.IconPosition + new Vector2(2, 2), iconSize - new Vector2(3, 3), this.texture);
             Drawing.DrawRect(
-                this.IconPosition + new Vector2(1, 1), 
-                this.IconSize - new Vector2(1, 1), 
-                Color.Black - new Color(0, 0, 0, opacity), 
+                this.IconPosition + new Vector2(1, 1),
+                this.IconSize - new Vector2(1, 1),
+                Color.Black - new Color(0, 0, 0, opacity),
                 true);
         }
 

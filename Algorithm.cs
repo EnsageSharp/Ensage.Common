@@ -1,5 +1,5 @@
 ﻿// <copyright file="Algorithm.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -77,16 +77,16 @@ namespace Ensage.Common
                         var unitCounterClockWise = unit.Rotate((float)Math.PI / -2);
                         var delta = (float)Math.Sqrt(Math.Pow(radius, 2f) - Math.Pow(distance, 2f));
                         MaximalEnclosingCircleCompare(
-                            vector, 
-                            radius, 
-                            center + delta * unitClockWise, 
-                            ref returnValue, 
+                            vector,
+                            radius,
+                            center + delta * unitClockWise,
+                            ref returnValue,
                             ref contain);
                         MaximalEnclosingCircleCompare(
-                            vector, 
-                            radius, 
-                            center + delta * unitCounterClockWise, 
-                            ref returnValue, 
+                            vector,
+                            radius,
+                            center + delta * unitCounterClockWise,
+                            ref returnValue,
                             ref contain);
                     }
                 }
@@ -118,10 +118,10 @@ namespace Ensage.Common
         #region Methods
 
         private static void MaximalEnclosingCircleCompare(
-            List<Tuple<Vector2, uint>> vector, 
-            float radius, 
-            Vector2 candidate, 
-            ref Vector2 oldCenter, 
+            List<Tuple<Vector2, uint>> vector,
+            float radius,
+            Vector2 candidate,
+            ref Vector2 oldCenter,
             ref uint oldContain)
         {
             var containList = vector.FindAll(x => Vector2.Distance(x.Item1, candidate) < radius);

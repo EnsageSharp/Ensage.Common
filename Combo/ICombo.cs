@@ -1,5 +1,5 @@
 ﻿// <copyright file="ICombo.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -26,7 +26,7 @@ namespace Ensage.Common.Combo
         bool IsCompleted { get; }
 
         /// <summary>
-        ///     Gets a value indicating whether the current execution is running. 
+        ///     Gets a value indicating whether the current execution is running.
         /// </summary>
         bool IsRunning { get; }
 

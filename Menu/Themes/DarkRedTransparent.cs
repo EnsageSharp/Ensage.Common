@@ -1,5 +1,5 @@
-﻿// <copyright file="Default.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+﻿// <copyright file="DarkRedTransparent.cs" company="EnsageSharp">
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -24,11 +24,6 @@ namespace Ensage.Common.Menu.Themes
     internal class DarkRedTransparent : IMenuTheme
     {
         #region Public Properties
-
-        /// <summary>
-        ///     Gets the theme name.
-        /// </summary>
-        public string ThemeName { get; } = "Dark Red Transparent";
 
         /// <summary>
         ///     Gets the item background.
@@ -68,7 +63,8 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the menu arrow open.
         /// </summary>
-        public string MenuArrowOpen { get; } = "materials/ensage_ui/menu/themes/dark_red_transparent/arrowrighthover.vmat_c";
+        public string MenuArrowOpen { get; } =
+            "materials/ensage_ui/menu/themes/dark_red_transparent/arrowrighthover.vmat_c";
 
         /// <summary>
         ///     Gets the menu background.
@@ -83,17 +79,20 @@ namespace Ensage.Common.Menu.Themes
         /// <summary>
         ///     Gets the on off slider background.
         /// </summary>
-        public string OnOffSliderBackground { get; } = "materials/ensage_ui/menu/themes/dark_red_transparent/sliderbgon.vmat_c";
+        public string OnOffSliderBackground { get; } =
+            "materials/ensage_ui/menu/themes/dark_red_transparent/sliderbgon.vmat_c";
 
         /// <summary>
         ///     Gets the on off slider disabled.
         /// </summary>
-        public string OnOffSliderDisabled { get; } = "materials/ensage_ui/menu/themes/dark_red_transparent/circleshadowgray.vmat_c";
+        public string OnOffSliderDisabled { get; } =
+            "materials/ensage_ui/menu/themes/dark_red_transparent/circleshadowgray.vmat_c";
 
         /// <summary>
         ///     Gets the on off slider enabled.
         /// </summary>
-        public string OnOffSliderEnabled { get; } = "materials/ensage_ui/menu/themes/dark_red_transparent/circleshadow.vmat_c";
+        public string OnOffSliderEnabled { get; } =
+            "materials/ensage_ui/menu/themes/dark_red_transparent/circleshadow.vmat_c";
 
         /// <summary>
         ///     Gets the root menu background color (color under menu background texture).
@@ -169,6 +168,11 @@ namespace Ensage.Common.Menu.Themes
         ///     Gets the sub menu side line color.
         /// </summary>
         public Color SubMenuSideLineColor { get; } = new Color(20, 20, 20);
+
+        /// <summary>
+        ///     Gets the theme name.
+        /// </summary>
+        public string ThemeName { get; } = "Dark Red Transparent";
 
         /// <summary>
         ///     Gets the ability/hero toggler disabled color.

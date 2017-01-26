@@ -1,5 +1,5 @@
 ﻿// <copyright file="Calculations.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -33,40 +33,40 @@ namespace Ensage.Common.Extensions.Damage
         private static readonly List<DamageBlocks> DamageBlocksList = new List<DamageBlocks>
                                                                           {
                                                                               new DamageBlocks(
-                                                                                  "modifier_item_crimson_guard_extra", 
-                                                                                  "block_damage_melee_active", 
-                                                                                  "block_damage_ranged_active", 
-                                                                                  "item_crimson_guard", 
-                                                                                  true), 
+                                                                                  "modifier_item_crimson_guard_extra",
+                                                                                  "block_damage_melee_active",
+                                                                                  "block_damage_ranged_active",
+                                                                                  "item_crimson_guard",
+                                                                                  true),
                                                                               new DamageBlocks(
-                                                                                  "modifier_tidehunter_kraken_shell", 
-                                                                                  "damage_reduction", 
-                                                                                  "damage_reduction", 
-                                                                                  "tidehunter_kraken_shell", 
-                                                                                  false), 
+                                                                                  "modifier_tidehunter_kraken_shell",
+                                                                                  "damage_reduction",
+                                                                                  "damage_reduction",
+                                                                                  "tidehunter_kraken_shell",
+                                                                                  false),
                                                                               new DamageBlocks(
-                                                                                  "modifier_item_crimson_guard", 
-                                                                                  "block_damage_melee", 
-                                                                                  "block_damage_ranged", 
-                                                                                  "item_crimson_guard", 
-                                                                                  true), 
+                                                                                  "modifier_item_crimson_guard",
+                                                                                  "block_damage_melee",
+                                                                                  "block_damage_ranged",
+                                                                                  "item_crimson_guard",
+                                                                                  true),
                                                                               new DamageBlocks(
-                                                                                  "modifier_item_vanguard", 
-                                                                                  "block_damage_melee", 
-                                                                                  "block_damage_ranged", 
-                                                                                  "item_vanguard", 
-                                                                                  true), 
+                                                                                  "modifier_item_vanguard",
+                                                                                  "block_damage_melee",
+                                                                                  "block_damage_ranged",
+                                                                                  "item_vanguard",
+                                                                                  true),
                                                                               new DamageBlocks(
-                                                                                  "modifier_item_poor_mans_shield", 
-                                                                                  "damage_block_melee", 
-                                                                                  "damage_block_ranged", 
-                                                                                  "item_poor_mans_shield", 
-                                                                                  true), 
+                                                                                  "modifier_item_poor_mans_shield",
+                                                                                  "damage_block_melee",
+                                                                                  "damage_block_ranged",
+                                                                                  "item_poor_mans_shield",
+                                                                                  true),
                                                                               new DamageBlocks(
-                                                                                  "modifier_item_stout_shield", 
-                                                                                  "damage_block_melee", 
-                                                                                  "damage_block_ranged", 
-                                                                                  "item_stout_shield", 
+                                                                                  "modifier_item_stout_shield",
+                                                                                  "damage_block_melee",
+                                                                                  "damage_block_ranged",
+                                                                                  "item_stout_shield",
                                                                                   true)
                                                                           };
 
@@ -107,23 +107,23 @@ namespace Ensage.Common.Extensions.Damage
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
-                        ModifierName = "modifier_shadow_demon_soul_catcher", SourceTeam = -1, Amp = "bonus_damage_taken", 
-                        SourceSpellName = "shadow_demon_soul_catcher", HeroId = ClassID.CDOTA_Unit_Hero_Shadow_Demon, 
+                        ModifierName = "modifier_shadow_demon_soul_catcher", SourceTeam = -1, Amp = "bonus_damage_taken",
+                        SourceSpellName = "shadow_demon_soul_catcher", HeroId = ClassID.CDOTA_Unit_Hero_Shadow_Demon,
                         Type = DamageType.Pure
                     });
 
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
-                        ModifierName = "modifier_bloodseeker_bloodrage", SourceTeam = -2, Amp = "damage_increase_pct", 
-                        SourceSpellName = "bloodseeker_bloodrage", HeroId = ClassID.CDOTA_Unit_Hero_Bloodseeker, 
+                        ModifierName = "modifier_bloodseeker_bloodrage", SourceTeam = -2, Amp = "damage_increase_pct",
+                        SourceSpellName = "bloodseeker_bloodrage", HeroId = ClassID.CDOTA_Unit_Hero_Bloodseeker,
                         Type = DamageType.Pure
                     });
 
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
-                        ModifierName = "modifier_slardar_sprint", SourceSpellName = "slardar_sprint", Amp = "bonus_damage", 
+                        ModifierName = "modifier_slardar_sprint", SourceSpellName = "slardar_sprint", Amp = "bonus_damage",
                         HeroId = ClassID.CDOTA_Unit_Hero_Slardar
                     });
 
@@ -137,75 +137,75 @@ namespace Ensage.Common.Extensions.Damage
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_wisp_overcharge", SourceSpellName = "wisp_overcharge", 
+                        ModifierName = "modifier_wisp_overcharge", SourceSpellName = "wisp_overcharge",
                         HeroID = ClassID.CDOTA_Unit_Hero_Wisp, Reduce = "bonus_damage_pct", Type = 1, SourceTeam = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_spectre_dispersion", SourceTeam = 0, Reduce = "damage_reflection_pct", 
+                        ModifierName = "modifier_spectre_dispersion", SourceTeam = 0, Reduce = "damage_reflection_pct",
                         HeroID = ClassID.CDOTA_Unit_Hero_Spectre, SourceSpellName = "spectre_dispersion", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_nyx_assassin_burrow", SourceSpellName = "nyx_assassin_burrow", 
+                        ModifierName = "modifier_nyx_assassin_burrow", SourceSpellName = "nyx_assassin_burrow",
                         HeroID = ClassID.CDOTA_Unit_Hero_Nyx_Assassin, Reduce = "damage_reduction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_winter_wyvern_winters_curse", 
-                        HeroID = ClassID.CDOTA_Unit_Hero_Winter_Wyvern, SourceSpellName = "winter_wyvern_winters_curse", 
+                        ModifierName = "modifier_winter_wyvern_winters_curse",
+                        HeroID = ClassID.CDOTA_Unit_Hero_Winter_Wyvern, SourceSpellName = "winter_wyvern_winters_curse",
                         Reduce = "damage_reduction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_ursa_enrage", SourceSpellName = "ursa_enrage", 
+                        ModifierName = "modifier_ursa_enrage", SourceSpellName = "ursa_enrage",
                         HeroID = ClassID.CDOTA_Unit_Hero_Ursa, Reduce = "damage_reduction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_templar_assassin_refraction_absorb", 
-                        HeroID = ClassID.CDOTA_Unit_Hero_TemplarAssassin, SourceSpellName = "templar_assassin_refraction", 
-                        Type = 1
+                        ModifierName = "modifier_templar_assassin_refraction_absorb",
+                        HeroID = ClassID.CDOTA_Unit_Hero_TemplarAssassin,
+                        SourceSpellName = "templar_assassin_refraction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_treant_living_armor", Type = 0, SourceTeam = 1, 
-                        SourceSpellName = "treant_living_armor", HeroID = ClassID.CDOTA_Unit_Hero_Treant, 
+                        ModifierName = "modifier_treant_living_armor", Type = 0, SourceTeam = 1,
+                        SourceSpellName = "treant_living_armor", HeroID = ClassID.CDOTA_Unit_Hero_Treant,
                         Reduce = "damage_block"
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_abaddon_aphotic_shield", Type = 2, SourceTeam = 1, 
-                        SourceSpellName = "abaddon_aphotic_shield", HeroID = ClassID.CDOTA_Unit_Hero_Abaddon, 
+                        ModifierName = "modifier_abaddon_aphotic_shield", Type = 2, SourceTeam = 1,
+                        SourceSpellName = "abaddon_aphotic_shield", HeroID = ClassID.CDOTA_Unit_Hero_Abaddon,
                         Reduce = "damage_absorb"
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_ember_spirit_flame_guard", Type = 0, SourceTeam = 0, 
-                        HeroID = ClassID.CDOTA_Unit_Hero_EmberSpirit, SourceSpellName = "ember_spirit_flame_guard", 
+                        ModifierName = "modifier_ember_spirit_flame_guard", Type = 0, SourceTeam = 0,
+                        HeroID = ClassID.CDOTA_Unit_Hero_EmberSpirit, SourceSpellName = "ember_spirit_flame_guard",
                         Reduce = "absorb_amount", MagicOnly = true
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
-                        ModifierName = "modifier_item_pipe_barrier", Type = 0, SourceSpellName = "item_pipe", 
+                        ModifierName = "modifier_item_pipe_barrier", Type = 0, SourceSpellName = "item_pipe",
                         Reduce = "barrier_block", MagicOnly = true
                     });
         }
@@ -245,13 +245,13 @@ namespace Ensage.Common.Extensions.Damage
         ///     The <see cref="float" />.
         /// </returns>
         public static float DamageTaken(
-            this Unit target, 
-            float dmg, 
-            DamageType dmgType, 
-            Unit source, 
-            bool throughBKB = false, 
-            double minusArmor = 0d, 
-            double minusDamageResistancePerc = 0d, 
+            this Unit target,
+            float dmg,
+            DamageType dmgType,
+            Unit source,
+            bool throughBKB = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
             double minusMagicResistancePerc = 0d)
         {
             if (target.IsInvul())
@@ -458,7 +458,7 @@ namespace Ensage.Common.Extensions.Damage
             {
                 var id = target.Handle + v.ModifierName;
                 var sleeping = modifierSleeper.Sleeping(id);
-                if ((sleeping && !modifierDictionary[id]) || (!sleeping && modifiers.All(x => x.Name != v.ModifierName)))
+                if (sleeping && !modifierDictionary[id] || !sleeping && modifiers.All(x => x.Name != v.ModifierName))
                 {
                     if (!sleeping)
                     {
@@ -729,8 +729,8 @@ namespace Ensage.Common.Extensions.Damage
                     var resist = 1 - (1 - target.MagicDamageResist) * (1 + (float)minusMagicResistancePerc / 100);
                     tempDmg =
                         (float)
-                        ((tempDmg * (1 - manaShield) * (1 - reduceOther) - magOnly) * (1 + amp - reduceProc) * (1 + ampFromMe)
-                         * (1 - resist) - reduceStatic + aa);
+                        ((tempDmg * (1 - manaShield) * (1 - reduceOther) - magOnly) * (1 + amp - reduceProc)
+                         * (1 + ampFromMe) * (1 - resist) - reduceStatic + aa);
                     break;
                 case DamageType.Pure:
                     if (!throughBKB && target.IsMagicImmune())
@@ -809,14 +809,14 @@ namespace Ensage.Common.Extensions.Damage
         ///     The <see cref="float" />.
         /// </returns>
         public static float SpellDamageTaken(
-            this Unit target, 
-            float dmg, 
-            DamageType dmgType, 
-            Unit source, 
-            string spellName, 
-            bool throughBKB = false, 
-            double minusArmor = 0d, 
-            double minusDamageResistancePerc = 0d, 
+            this Unit target,
+            float dmg,
+            DamageType dmgType,
+            Unit source,
+            string spellName,
+            bool throughBKB = false,
+            double minusArmor = 0d,
+            double minusDamageResistancePerc = 0d,
             double minusMagicResistancePerc = 0d)
         {
             var totalSpellAmp = 0f;
@@ -857,12 +857,12 @@ namespace Ensage.Common.Extensions.Damage
             }
 
             var taken = target.DamageTaken(
-                damage, 
-                dmgType, 
-                source, 
-                throughBKB, 
-                minusArmor, 
-                minusDamageResistancePerc, 
+                damage,
+                dmgType,
+                source,
+                throughBKB,
+                minusArmor,
+                minusDamageResistancePerc,
                 minusMagicResistancePerc);
             return taken;
         }

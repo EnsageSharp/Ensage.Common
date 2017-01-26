@@ -1,5 +1,5 @@
 // <copyright file="UnitDatabase.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -230,9 +230,9 @@ namespace Ensage.Common
                     !unit.HasModifiers(
                         new[]
                             {
-                                "modifier_alchemist_chemical_rage", "modifier_terrorblade_metamorphosis", 
+                                "modifier_alchemist_chemical_rage", "modifier_terrorblade_metamorphosis",
                                 "modifier_lone_druid_true_form", "modifier_troll_warlord_berserkers_rage"
-                            }, 
+                            },
                         false))
                 {
                     return attackBaseTime / (1 + (attackSpeed - 100) / 100);

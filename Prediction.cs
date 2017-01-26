@@ -1,5 +1,5 @@
 // <copyright file="Prediction.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -157,12 +157,12 @@ namespace Ensage.Common
         ///     The lasttick.
         /// </param>
         public Prediction(
-            string unitName, 
-            ClassID unitClassId, 
-            Vector3 speed, 
-            float rotSpeed, 
-            Vector3 lastPosition, 
-            float lastRotR, 
+            string unitName,
+            ClassID unitClassId,
+            Vector3 speed,
+            float rotSpeed,
+            Vector3 lastPosition,
+            float lastRotR,
             float lasttick)
         {
             this.UnitName = unitName;
@@ -193,12 +193,12 @@ namespace Ensage.Common
                 unit.HasModifiers(
                     new[]
                         {
-                            "modifier_spirit_breaker_charge_of_darkness", "modifier_earth_spirit_boulder_smash", 
-                            "modifier_earth_spirit_rolling_boulder_caster", "modifier_earth_spirit_geomagnetic_grip", 
-                            "modifier_spirit_breaker_charge_of_darkness", "modifier_huskar_life_break_charge", 
-                            "modifier_magnataur_skewer_movement", "modifier_storm_spirit_ball_lightning", 
+                            "modifier_spirit_breaker_charge_of_darkness", "modifier_earth_spirit_boulder_smash",
+                            "modifier_earth_spirit_rolling_boulder_caster", "modifier_earth_spirit_geomagnetic_grip",
+                            "modifier_spirit_breaker_charge_of_darkness", "modifier_huskar_life_break_charge",
+                            "modifier_magnataur_skewer_movement", "modifier_storm_spirit_ball_lightning",
                             "modifier_faceless_void_time_walk", "modifier_mirana_leap", "modifier_slark_pounce"
-                        }, 
+                        },
                     false);
         }
 
@@ -253,7 +253,7 @@ namespace Ensage.Common
                 if (!predictionDrawings.TryGetValue(unit.Handle, out effect))
                 {
                     effect = new ParticleEffect(
-                        @"particles\ui_mouseactions\range_display.vpcf", 
+                        @"particles\ui_mouseactions\range_display.vpcf",
                         PredictedXYZ(unit, delay));
                     effect.SetControlPoint(1, new Vector3(unit.HullRadius + 20, 0, 0));
                     predictionDrawings.Add(unit.Handle, effect);
@@ -277,7 +277,7 @@ namespace Ensage.Common
         /// </returns>
         public static Vector3 InFront(Unit unit, float distance)
         {
-            var v = unit.Position + (unit.Vector3FromPolarAngle() * distance);
+            var v = unit.Position + unit.Vector3FromPolarAngle() * distance;
             return new Vector3(v.X, v.Y, 0);
         }
 
@@ -372,7 +372,7 @@ namespace Ensage.Common
                 targetSpeed = unit.Vector3FromPolarAngle() * (unit.MovementSpeed / 1000f);
             }
 
-            var v = unit.Position + (targetSpeed * delay);
+            var v = unit.Position + targetSpeed * delay;
             return new Vector3(v.X, v.Y, 0);
         }
 
@@ -454,13 +454,13 @@ namespace Ensage.Common
             {
                 return;
             }
-            
+
             if (!Utils.SleepCheck("Prediction.SpeedTrack.Sleep"))
             {
                 return;
             }
 
-            if (playerList == null || (playerList.Count < 10 && Utils.SleepCheck("Prediction.SpeedTrack")))
+            if (playerList == null || playerList.Count < 10 && Utils.SleepCheck("Prediction.SpeedTrack"))
             {
                 playerList = Heroes.All;
                 Utils.Sleep(1000, "Prediction.SpeedTrack");
@@ -487,12 +487,12 @@ namespace Ensage.Common
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
                     data = new Prediction(
-                        unit.StoredName(), 
-                        unit.ClassID, 
-                        new Vector3(0, 0, 0), 
-                        0, 
-                        new Vector3(0, 0, 0), 
-                        0, 
+                        unit.StoredName(),
+                        unit.ClassID,
+                        new Vector3(0, 0, 0),
+                        0,
+                        new Vector3(0, 0, 0),
+                        0,
                         0);
                     TrackTable.Add(data);
                 }
@@ -505,7 +505,7 @@ namespace Ensage.Common
                     continue;
                 }
 
-                if (data == null || (data.LastPosition != new Vector3(0, 0, 0) && !(tick - data.Lasttick > 0)))
+                if (data == null || data.LastPosition != new Vector3(0, 0, 0) && !(tick - data.Lasttick > 0))
                 {
                     continue;
                 }

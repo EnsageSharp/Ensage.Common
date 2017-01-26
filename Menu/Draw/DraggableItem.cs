@@ -1,5 +1,5 @@
 ﻿// <copyright file="DraggableItem.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -85,7 +85,7 @@ namespace Ensage.Common.Menu.Draw
                 if (this.BeingDragged)
                 {
                     return new Vector2(
-                        this.DragTransition.GetPosition().X, 
+                        this.DragTransition.GetPosition().X,
                         Game.MouseScreenPosition.Y - this.mousePositionDifference.Y);
                 }
 
@@ -140,10 +140,10 @@ namespace Ensage.Common.Menu.Draw
         ///     The args.
         /// </param>
         protected void DraggableOnReceiveMessage(
-            Utils.WindowsMessages message, 
-            Vector2 cursorPos, 
-            uint key, 
-            List<DraggableItem> draggableItems, 
+            Utils.WindowsMessages message,
+            Vector2 cursorPos,
+            uint key,
+            List<DraggableItem> draggableItems,
             WndEventArgs args = null)
         {
             if (!this.IsInside(cursorPos) && !this.BeingDragged)
@@ -201,7 +201,7 @@ namespace Ensage.Common.Menu.Draw
                 this.dragAndDropSleeper.Sleep(200);
                 this.lastClickMousePosition = cursorPos;
                 DelayAction.Add(
-                    200, 
+                    200,
                     () =>
                         {
                             if (!this.BeingDragged && this.leftButtonDown)
@@ -260,9 +260,9 @@ namespace Ensage.Common.Menu.Draw
         ///     The args.
         /// </param>
         protected abstract void OnReceiveMessage(
-            Utils.WindowsMessages message, 
-            Vector2 cursorPos, 
-            uint key, 
+            Utils.WindowsMessages message,
+            Vector2 cursorPos,
+            uint key,
             WndEventArgs args = null);
 
         /// <summary>
@@ -272,8 +272,8 @@ namespace Ensage.Common.Menu.Draw
         {
             var enlargePosition = this.Position
                                   - new Vector2(
-                                        this.Width * (this.DefaultResizePercentage / 200), 
-                                        this.Height * (this.DefaultResizePercentage / 200));
+                                      this.Width * (this.DefaultResizePercentage / 200),
+                                      this.Height * (this.DefaultResizePercentage / 200));
             if (!this.ResizeTransition.Moving)
             {
                 this.Size = new Vector2(this.Height, this.Width);

@@ -1,5 +1,5 @@
 ﻿// <copyright file="Vector3Extensions.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -317,8 +317,8 @@ namespace Ensage.Common.Extensions.SharpDX
                 ObjectManager.GetEntities<Building>()
                     .Any(
                         tower =>
-                        tower.ClassID == ClassID.CDOTA_BaseNPC_Tower
-                        && tower.IsValidTarget(950, enemyTurretsOnly, position));
+                            tower.ClassID == ClassID.CDOTA_BaseNPC_Tower
+                            && tower.IsValidTarget(950, enemyTurretsOnly, position));
 
             // return GameObjects.Turrets.Any(turret => turret.IsValidTarget(950, enemyTurretsOnly, position));
         }
@@ -451,8 +451,8 @@ namespace Ensage.Common.Extensions.SharpDX
             var sin = Math.Sin(angle);
 
             return new Vector3(
-                (float)(vector3.X * cos - vector3.Y * sin), 
-                (float)(vector3.Y * cos + vector3.X * sin), 
+                (float)(vector3.X * cos - vector3.Y * sin),
+                (float)(vector3.Y * cos + vector3.X * sin),
                 vector3.Z);
         }
 

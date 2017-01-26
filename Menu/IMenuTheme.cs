@@ -1,5 +1,5 @@
 ﻿// <copyright file="IMenuTheme.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -21,11 +21,6 @@ namespace Ensage.Common.Menu
     public interface IMenuTheme
     {
         #region Public Properties
-
-        /// <summary>
-        ///     Gets the theme name.
-        /// </summary>
-        string ThemeName { get; }
 
         /// <summary>
         ///     Gets the item background.
@@ -166,6 +161,11 @@ namespace Ensage.Common.Menu
         ///     Gets the sub menu side line color.
         /// </summary>
         Color SubMenuSideLineColor { get; }
+
+        /// <summary>
+        ///     Gets the theme name.
+        /// </summary>
+        string ThemeName { get; }
 
         /// <summary>
         ///     Gets the ability/hero toggler disabled color.

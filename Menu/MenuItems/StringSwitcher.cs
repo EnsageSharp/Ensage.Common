@@ -1,5 +1,5 @@
 ﻿// <copyright file="StringSwitcher.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -25,10 +25,10 @@ namespace Ensage.Common.Menu.MenuItems
         /// <param name="defaultSelectedIndex">The default selected index.</param>
         /// <param name="makeChampionUniq">The make champion unique.</param>
         public StringSwitcher(
-            string name, 
-            string displayName, 
-            string[] list, 
-            int defaultSelectedIndex = 0, 
+            string name,
+            string displayName,
+            string[] list,
+            int defaultSelectedIndex = 0,
             bool makeChampionUniq = false)
             : base(name, displayName, makeChampionUniq)
         {

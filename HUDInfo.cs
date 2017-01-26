@@ -1,5 +1,5 @@
 ﻿// <copyright file="HUDInfo.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -15,7 +15,6 @@ namespace Ensage.Common
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     using Ensage.Common.Objects.UtilityObjects;
 
@@ -31,22 +30,22 @@ namespace Ensage.Common
         /// <summary>
         ///     The map bottom.
         /// </summary>
-        private const float MapBottom = -7404;
+        private const float MapBottom = -7521;
 
         /// <summary>
         ///     The map left.
         /// </summary>
-        private const float MapLeft = -8185;
+        private const float MapLeft = -8068;
 
         /// <summary>
         ///     The map right.
         /// </summary>
-        private const float MapRight = 7641;
+        private const float MapRight = 7933;
 
         /// <summary>
         ///     The map top.
         /// </summary>
-        private const float MapTop = 7624;
+        private const float MapTop = 7679;
 
         #endregion
 
@@ -66,21 +65,6 @@ namespace Ensage.Common
         ///     The health bar width.
         /// </summary>
         private static readonly double HpBarWidth;
-
-        /// <summary>
-        ///     The health bar x.
-        /// </summary>
-        private static readonly double HpBarX;
-
-        /// <summary>
-        ///     The health bar y.
-        /// </summary>
-        private static readonly float HpBarY;
-
-        /// <summary>
-        ///     The monitor.
-        /// </summary>
-        private static readonly float Monitor;
 
         /// <summary>
         ///     The player id dictionary.
@@ -127,246 +111,6 @@ namespace Ensage.Common
         private static float minimapMapScaleY;
 
         /// <summary>
-        ///     The minimaps.
-        /// </summary>
-        private static Dictionary<Vector2, Minimap> minimaps = new Dictionary<Vector2, Minimap>
-                                                                   {
-                                                                       {
-                                                                           // 4:3
-                                                                           new Vector2(
-                                                                           800, 
-                                                                           600), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 11), 
-                                                                           new Vector2(
-                                                                           151, 
-                                                                           146))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1024, 
-                                                                           768), 
-                                                                           new Minimap(
-                                                                           new Vector2(5, 11), 
-                                                                           new Vector2(
-                                                                           193, 
-                                                                           186))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1152, 
-                                                                           864), 
-                                                                           new Minimap(
-                                                                           new Vector2(6, 12), 
-                                                                           new Vector2(
-                                                                           217, 
-                                                                           211))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1280, 
-                                                                           960), 
-                                                                           new Minimap(
-                                                                           new Vector2(6, 13), 
-                                                                           new Vector2(
-                                                                           241, 
-                                                                           235))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1280, 
-                                                                           1024), 
-                                                                           new Minimap(
-                                                                           new Vector2(6, 13), 
-                                                                           new Vector2(
-                                                                           255, 
-                                                                           229))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1600, 
-                                                                           1200), 
-                                                                           new Minimap(
-                                                                           new Vector2(8, 14), 
-                                                                           new Vector2(
-                                                                           304, 
-                                                                           288))
-                                                                       }, 
-                                                                       {
-                                                                           // 16:9
-                                                                           new Vector2
-                                                                           (
-                                                                           1280, 
-                                                                           720), 
-                                                                           new Minimap
-                                                                           (
-                                                                           new Vector2
-                                                                           (
-                                                                           4, 
-                                                                           12), 
-                                                                           new Vector2
-                                                                           (
-                                                                           181, 
-                                                                           174))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1360, 
-                                                                           768), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 12), 
-                                                                           new Vector2(
-                                                                           193, 
-                                                                           186))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1366, 
-                                                                           768), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 12), 
-                                                                           new Vector2(
-                                                                           193, 
-                                                                           186))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1600, 
-                                                                           900), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 12), 
-                                                                           new Vector2(
-                                                                           228, 
-                                                                           217))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1920, 
-                                                                           1080), 
-                                                                           new Minimap(
-                                                                           new Vector2(
-                                                                           5, 
-                                                                           12), 
-                                                                           new Vector2(
-                                                                           272, 
-                                                                           261))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           2560, 
-                                                                           1440), 
-                                                                           new Minimap(
-                                                                           new Vector2(
-                                                                           5, 
-                                                                           12), 
-                                                                           new Vector2(
-                                                                           372, 
-                                                                           341))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           2560, 
-                                                                           1080), 
-                                                                           new Minimap(
-                                                                           new Vector2(
-                                                                           5, 
-                                                                           11), 
-                                                                           new Vector2(
-                                                                           272, 
-                                                                           261))
-                                                                       }, 
-                                                                       {
-                                                                           // 16:10
-                                                                           new Vector2(
-                                                                           1024, 
-                                                                           600), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 12), 
-                                                                           new Vector2(
-                                                                           151, 
-                                                                           146))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1280, 
-                                                                           768), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 12), 
-                                                                           new Vector2(
-                                                                           193, 
-                                                                           186))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1280, 
-                                                                           800), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 12), 
-                                                                           new Vector2(
-                                                                           203, 
-                                                                           192))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1440, 
-                                                                           900), 
-                                                                           new Minimap(
-                                                                           new Vector2(4, 12), 
-                                                                           new Vector2(
-                                                                           227, 
-                                                                           217))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1680, 
-                                                                           1050), 
-                                                                           new Minimap(
-                                                                           new Vector2(
-                                                                           4, 
-                                                                           12), 
-                                                                           new Vector2(
-                                                                           267, 
-                                                                           252))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           1920, 
-                                                                           1200), 
-                                                                           new Minimap(
-                                                                           new Vector2(
-                                                                           5, 
-                                                                           11), 
-                                                                           new Vector2(
-                                                                           304, 
-                                                                           288))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           2560, 
-                                                                           1600), 
-                                                                           new Minimap(
-                                                                           new Vector2(
-                                                                           20, 
-                                                                           28), 
-                                                                           new Vector2(
-                                                                           391, 
-                                                                           356))
-                                                                       }, 
-                                                                       {
-                                                                           new Vector2(
-                                                                           2880, 
-                                                                           1800), 
-                                                                           new Minimap(
-                                                                           new Vector2(
-                                                                           30, 
-                                                                           38), 
-                                                                           new Vector2(
-                                                                           430, 
-                                                                           396))
-                                                                       }
-                                                                   };
-
-        /// <summary>
         ///     The y.
         /// </summary>
         private static double y;
@@ -390,20 +134,11 @@ namespace Ensage.Common
                 return;
             }
 
-            currentMinimap =
-                minimaps.FirstOrDefault(
-                    x => Math.Abs(x.Key.X - ScreenSize.X) < 10 && Math.Abs(x.Key.Y - ScreenSize.Y) < 10).Value;
-            if (currentMinimap == null)
-            {
-                Console.WriteLine("Could not find minimap data for your resolution");
-            }
-            else
-            {
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
-            }
+            currentMinimap = new Minimap(new Vector2(-2, 1), new Vector2(0));
 
             var ratio = Math.Floor((decimal)(ScreenSize.X / ScreenSize.Y * 100));
+
+            // Console.WriteLine("Your screen ratio is " + ratio);
             if (ratio == 213)
             {
                 compareWidth = 1600;
@@ -415,6 +150,11 @@ namespace Ensage.Common
                 HpBarWidth = 69;
                 HpBarX = 36;
                 HpBarY = 23;
+                currentMinimap.Size = new Vector2(
+                    0.1070833333333333f * ScreenSize.X,
+                    0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
             else if (ratio == 177)
             {
@@ -424,9 +164,14 @@ namespace Ensage.Common
                 DireCompare = 2.5401;
                 RadiantCompare = 3.499;
                 HpBarHeight = 10;
-                HpBarWidth = 84;
-                HpBarX = 43;
+                HpBarWidth = 86.5;
+                HpBarX = 44;
                 HpBarY = 27;
+                currentMinimap.Size = new Vector2(
+                    0.1270833333333333f * ScreenSize.X,
+                    0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
             else if (ratio == 166)
             {
@@ -439,6 +184,11 @@ namespace Ensage.Common
                 HpBarWidth = 71;
                 HpBarX = 37;
                 HpBarY = 22;
+                currentMinimap.Size = new Vector2(
+                    0.1370833333333333f * ScreenSize.X,
+                    0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
             else if (ratio == 160)
             {
@@ -451,6 +201,11 @@ namespace Ensage.Common
                 HpBarWidth = 75;
                 HpBarX = 38.3;
                 HpBarY = 25;
+                currentMinimap.Size = new Vector2(
+                    0.1425833333333333f * ScreenSize.X,
+                    0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
             else if (ratio == 150)
             {
@@ -463,6 +218,11 @@ namespace Ensage.Common
                 HpBarWidth = 79.2;
                 HpBarX = 40.2;
                 HpBarY = 24;
+                currentMinimap.Size = new Vector2(
+                    0.1500233333333333f * ScreenSize.X,
+                    0.2200940740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
             else if (ratio == 133)
             {
@@ -475,6 +235,11 @@ namespace Ensage.Common
                 HpBarWidth = 71;
                 HpBarX = 36.6;
                 HpBarY = 23;
+                currentMinimap.Size = new Vector2(
+                    0.1690833333333333f * ScreenSize.X,
+                    0.2225740740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
             else if (ratio == 125)
             {
@@ -487,6 +252,11 @@ namespace Ensage.Common
                 HpBarWidth = 96.5;
                 HpBarX = 49;
                 HpBarY = 32;
+                currentMinimap.Size = new Vector2(
+                    0.1850833333333333f * ScreenSize.X,
+                    0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
             else
             {
@@ -502,26 +272,63 @@ namespace Ensage.Common
                 HpBarWidth = 83.5;
                 HpBarX = 43;
                 HpBarY = 28;
+                currentMinimap.Size = new Vector2(
+                    0.1270833333333333f * ScreenSize.X,
+                    0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
+                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
             }
 
             Monitor = ScreenSize.X / compareWidth;
             Rate = Math.Max(Monitor, 1);
             X = panelHeroSizeX * Monitor;
             y = ScreenSize.Y / tinfoHeroDown;
-            //Drawing.OnDraw += Drawing_OnDraw;
-            //var mipos = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
-            //var minimap = new Render.Rectangle(
-            //    mipos.X, 
-            //    mipos.Y, 
-            //    currentMinimap.Size.X, 
-            //    currentMinimap.Size.Y, 
-            //    new ColorBGRA(100, 100, 100, 50));
-            //minimap.Add();
+
+            // Drawing.OnDraw += Drawing_OnDraw;
+            // var mipos = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
+            // var minimap = new Render.Rectangle(
+            // mipos.X,
+            // mipos.Y,
+            // currentMinimap.Size.X,
+            // currentMinimap.Size.Y,
+            // new ColorBGRA(100, 100, 100, 25));
+            // minimap.Add();
+            // var mouse = new Render.Rectangle(0, 0, 5, 5, Color.White);
+            // mouse.Add();
+            // GameUpdate update = args =>
+            // {
+            // var mousePos = Game.MousePosition;
+            // if (Utils.SleepCheck("mouse"))
+            // {
+            // Console.WriteLine(mousePos);
+            // Utils.Sleep(500, "mouse");
+            // }
+
+            // var minimapPos = mousePos.WorldToMinimap();
+            // mouse.X = minimapPos.X;
+            // mouse.Y = minimapPos.Y;
+            // };
+            // Game.OnUpdate += update;
         }
 
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        ///     The health bar x.
+        /// </summary>
+        public static double HpBarX { get; set; }
+
+        /// <summary>
+        ///     The health bar y.
+        /// </summary>
+        public static float HpBarY { get; set; }
+
+        /// <summary>
+        ///     The monitor.
+        /// </summary>
+        public static float Monitor { get; set; }
 
         /// <summary>
         ///     Gets the mouse position from minimap.
@@ -595,9 +402,9 @@ namespace Ensage.Common
         public static float GetHPBarSizeX(Unit unit = null)
         {
             var hero = ObjectManager.LocalHero;
-            if (unit != null && hero != null && Equals(unit, hero))
+            if (unit != null && hero != null && Equals(unit.Handle, hero.Handle))
             {
-                return (float)((float)HpBarWidth * Monitor * 1.1);
+                return (float)((float)HpBarWidth * Monitor * 1.06);
             }
 
             return (float)HpBarWidth * Monitor;

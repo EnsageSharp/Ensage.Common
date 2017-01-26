@@ -1,5 +1,5 @@
 ﻿// <copyright file="OnOffSlider.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -237,10 +237,10 @@ namespace Ensage.Common.Menu.Draw
         {
             var wasHovered = this.Hovered;
             this.Hovered = Utils.IsUnderRectangle(
-                mousePosition, 
-                this.Position.X, 
-                this.Position.Y, 
-                (float)(this.Height * 1.5), 
+                mousePosition,
+                this.Position.X,
+                this.Position.Y,
+                (float)(this.Height * 1.5),
                 this.Width);
 
             if (!wasHovered && this.Hovered)
@@ -253,11 +253,11 @@ namespace Ensage.Common.Menu.Draw
             }
 
             MenuUtils.RoundedRectangle(
-                (int)this.Position.X, 
-                (int)this.Position.Y, 
-                (int)(this.Height * 1.5), 
-                (int)this.Width, 
-                (int)this.Width / 2, 
+                (int)this.Position.X,
+                (int)this.Position.Y,
+                (int)(this.Height * 1.5),
+                (int)this.Width,
+                (int)this.Width / 2,
                 Color.Black);
 
             var circleSize = this.SizeInside.Y / 2.28;
@@ -268,20 +268,20 @@ namespace Ensage.Common.Menu.Draw
             this.char1.Color = this.onColor;
             this.char1.Draw();
             MenuUtils.RoundedRectangle(
-                (float)(this.Position.X + this.Width / 2 - circleSize / 2), 
-                (int)(this.Position.Y + this.Width / 2 - circleSize / 2 + 1), 
-                (int)circleSize, 
-                (int)circleSize, 
-                (int)this.SizeInside.Y / 4, 
+                (float)(this.Position.X + this.Width / 2 - circleSize / 2),
+                (int)(this.Position.Y + this.Width / 2 - circleSize / 2 + 1),
+                (int)circleSize,
+                (int)circleSize,
+                (int)this.SizeInside.Y / 4,
                 this.onColor);
 
             // Console.WriteLine((int)this.SizeInside.Y / 2);
             MenuUtils.RoundedRectangle(
-                (float)(this.Position.X + this.Height * 1.25 - circleSize / 2), 
-                (int)(this.Position.Y + this.Width / 2 - circleSize / 2 + 1), 
-                (int)circleSize, 
-                (int)circleSize, 
-                (int)this.SizeInside.Y / 4, 
+                (float)(this.Position.X + this.Height * 1.25 - circleSize / 2),
+                (int)(this.Position.Y + this.Width / 2 - circleSize / 2 + 1),
+                (int)circleSize,
+                (int)circleSize,
+                (int)this.SizeInside.Y / 4,
                 this.offColor);
 
             this.char1.Position = new Vector2((float)(this.Position.X + this.Height * 1.08), textCircleY);
@@ -291,7 +291,7 @@ namespace Ensage.Common.Menu.Draw
             this.IndicatorPosition = this.Enabled ? this.Position + new Vector2(this.Height / 2, 0) : this.Position;
             var baseCirclePosition =
                 new Vector2(
-                    (float)(this.IndicatorPosition.X + this.Height / 2 - this.SizeInside.X / 2), 
+                    (float)(this.IndicatorPosition.X + this.Height / 2 - this.SizeInside.X / 2),
                     this.IndicatorPosition.Y + this.Width / 2 - this.SizeInside.Y / 2);
 
             this.char2.TextSize = new Vector2((float)(this.Height * 1.655));
@@ -307,11 +307,11 @@ namespace Ensage.Common.Menu.Draw
             var sliderColor = new Color((int)(this.Color.R * 0.5), (int)(this.Color.G * 0.5), (int)(this.Color.B * 0.5));
             this.char2.Color = sliderColor;
             MenuUtils.RoundedRectangle(
-                baseCirclePosition.X, 
-                (int)baseCirclePosition.Y, 
-                (int)this.SizeInside.X, 
-                (int)this.SizeInside.Y, 
-                (int)this.SizeInside.Y / 2, 
+                baseCirclePosition.X,
+                (int)baseCirclePosition.Y,
+                (int)this.SizeInside.X,
+                (int)this.SizeInside.Y,
+                (int)this.SizeInside.Y / 2,
                 sliderColor);
             this.char2.Draw();
             this.char2.Position = new Vector2((float)(this.IndicatorPosition.X + this.Height * 0.5), textCircleY);

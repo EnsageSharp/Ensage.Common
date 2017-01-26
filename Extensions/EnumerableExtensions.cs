@@ -1,5 +1,5 @@
 ﻿// <copyright file="EnumerableExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -80,7 +80,7 @@ namespace Ensage.Common.Extensions
             return
                 (T)
                 Enum.ToObject(
-                    typeof(T), 
+                    typeof(T),
                     flags.Aggregate(0L, (current, flag) => current | Convert.ToInt64((object)flag)));
         }
 
@@ -301,7 +301,7 @@ namespace Ensage.Common.Extensions
             return
                 (T)
                 Enum.ToObject(
-                    typeof(T), 
+                    typeof(T),
                     status
                         ? Convert.ToInt64(flags) | Convert.ToInt64(value)
                         : ~Convert.ToInt64(flags) & Convert.ToInt64(value));

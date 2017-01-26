@@ -1,5 +1,5 @@
 ﻿// <copyright file="DrawText.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -28,6 +28,15 @@ namespace Ensage.Common.Objects.DrawObjects
         ///     The sleeper.
         /// </summary>
         private readonly Sleeper sleeper;
+
+        private Vector2 position;
+
+        /// <summary>
+        ///     The shadow position.
+        /// </summary>
+        private Vector2 shadowPosition;
+
+        private Vector2 shadowPosition2;
 
         /// <summary>
         ///     The text.
@@ -65,6 +74,32 @@ namespace Ensage.Common.Objects.DrawObjects
         /// </summary>
         public FontFlags FontFlags { get; set; }
 
+        /// <summary>Gets or sets the position.</summary>
+        public override Vector2 Position
+        {
+            get
+            {
+                return this.position;
+            }
+
+            set
+            {
+                this.position = value;
+                if (this.Shadow)
+                {
+                    this.shadowPosition = this.position + new Vector2(1, 1); // this.Size * (float)0.045);
+                    this.shadowPosition2 = this.position - new Vector2(1, 1); // this.Size * (float)0.045);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether shadow.
+        /// </summary>
+        public bool Shadow { get; set; }
+
+        public Color ShadowColor { get; set; } = Color.Black;
+
         /// <summary>
         ///     Gets or sets the text.
         /// </summary>
@@ -88,7 +123,8 @@ namespace Ensage.Common.Objects.DrawObjects
                     return;
                 }
 
-                this.Size = Drawing.MeasureText(this.text, "Arial", this.textSize, this.FontFlags);
+                this.Size = Drawing.MeasureText(this.text, "Arial", this.textSize, this.FontFlags)
+                            + (this.Shadow ? new Vector2(2) : Vector2.Zero);
             }
         }
 
@@ -110,7 +146,8 @@ namespace Ensage.Common.Objects.DrawObjects
                 }
 
                 this.textSize = value;
-                this.Size = Drawing.MeasureText(this.text, "Arial", this.textSize, this.FontFlags);
+                this.Size = Drawing.MeasureText(this.text, "Arial", this.textSize, this.FontFlags)
+                            + (this.Shadow ? new Vector2(2) : Vector2.Zero);
                 this.sleeper.Sleep(200);
             }
         }
@@ -124,6 +161,44 @@ namespace Ensage.Common.Objects.DrawObjects
         /// </summary>
         public override void Draw()
         {
+            if (this.Shadow)
+            {
+                Drawing.DrawText(
+                    this.Text,
+                    this.position - new Vector2(1, 0),
+                    this.textSize,
+                    this.ShadowColor,
+                    this.FontFlags);
+                Drawing.DrawText(
+                    this.Text,
+                    this.position - new Vector2(0, 1),
+                    this.textSize,
+                    this.ShadowColor,
+                    this.FontFlags);
+                for (var i = 1; i <= this.textSize.X / 7; i++)
+                {
+                    Drawing.DrawText(
+                        this.Text,
+                        this.position + new Vector2(i, i / 2),
+                        this.textSize,
+                        this.ShadowColor,
+                        this.FontFlags);
+                    Drawing.DrawText(
+                        this.Text,
+                        this.position + new Vector2(i / 2, i),
+                        this.textSize,
+                        this.ShadowColor,
+                        this.FontFlags);
+                }
+
+                // for (var i = 1; i <= this.textSize.X / 6; i++)
+                // {
+                // Drawing.DrawText(this.Text, this.position + new Vector2(0,i), this.textSize, this.ShadowColor, this.FontFlags);
+                // }
+                // Drawing.DrawText(this.Text, this.shadowPosition, this.textSize, this.ShadowColor, this.FontFlags);
+                // Drawing.DrawText(this.Text, this.shadowPosition2, this.textSize, this.ShadowColor, this.FontFlags);
+            }
+
             Drawing.DrawText(this.text, this.Position, this.textSize, this.Color, this.FontFlags);
         }
 

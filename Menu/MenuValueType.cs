@@ -1,5 +1,5 @@
 ﻿// <copyright file="MenuValueType.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -21,52 +21,52 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The none.
         /// </summary>
-        None, 
+        None,
 
         /// <summary>
         ///     The boolean.
         /// </summary>
-        Boolean, 
+        Boolean,
 
         /// <summary>
         ///     The slider.
         /// </summary>
-        Slider, 
+        Slider,
 
         /// <summary>
         ///     The key bind.
         /// </summary>
-        KeyBind, 
+        KeyBind,
 
         /// <summary>
         ///     The integer.
         /// </summary>
-        Integer, 
+        Integer,
 
         /// <summary>
         ///     The color.
         /// </summary>
-        Color, 
+        Color,
 
         /// <summary>
         ///     The circle.
         /// </summary>
-        Circle, 
+        Circle,
 
         /// <summary>
         ///     The string list.
         /// </summary>
-        StringList, 
+        StringList,
 
         /// <summary>
         ///     The ability toggler.
         /// </summary>
-        AbilityToggler, 
+        AbilityToggler,
 
         /// <summary>
         ///     The hero toggler.
         /// </summary>
-        HeroToggler, 
+        HeroToggler,
 
         /// <summary>
         ///     The priority changer.

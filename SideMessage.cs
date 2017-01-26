@@ -1,5 +1,5 @@
 ﻿// <copyright file="SideMessage.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -62,12 +62,12 @@ namespace Ensage.Common
         /// <param name="stayTime"></param>
         /// <param name="exitTime"></param>
         public SideMessage(
-            string name, 
-            Vector2 size, 
-            Color? bgColor = null, 
-            Color? bdColor = null, 
-            int? enterTime = null, 
-            int? stayTime = null, 
+            string name,
+            Vector2 size,
+            Color? bgColor = null,
+            Color? bdColor = null,
+            int? enterTime = null,
+            int? stayTime = null,
             int? exitTime = null)
         {
             this.MessageName = name;
@@ -216,11 +216,11 @@ namespace Ensage.Common
         /// <param name="color"></param>
         /// <param name="fontFlags"></param>
         public void AddElement(
-            string text, 
-            string fontName, 
-            Vector2 position, 
-            Vector2 size, 
-            Color color, 
+            string text,
+            string fontName,
+            Vector2 position,
+            Vector2 size,
+            Color color,
             FontFlags fontFlags)
         {
             var element = new AMessageComponent(text, fontName, position, size, color, fontFlags)
@@ -415,11 +415,11 @@ namespace Ensage.Common
             /// <param name="color"></param>
             /// <param name="fontFlags"></param>
             public AMessageComponent(
-                string text, 
-                string fontName, 
-                Vector2 position, 
-                Vector2 size, 
-                Color color, 
+                string text,
+                string fontName,
+                Vector2 position,
+                Vector2 size,
+                Color color,
                 FontFlags fontFlags)
             {
                 this.Text = text;
@@ -498,27 +498,27 @@ namespace Ensage.Common
                 else if (this.ComponentType.Equals("DrawText_Size"))
                 {
                     Drawing.DrawText(
-                        this.Text, 
-                        this.Parent.MessagePosition + this.Position, 
-                        this.Size, 
-                        this.Color, 
+                        this.Text,
+                        this.Parent.MessagePosition + this.Position,
+                        this.Size,
+                        this.Color,
                         this.Flags);
                 }
                 else if (this.ComponentType.Equals("DrawText_Font"))
                 {
                     Drawing.DrawText(
-                        this.Text, 
-                        this.FontFace, 
-                        this.Parent.MessagePosition + this.Position, 
-                        this.Size, 
-                        this.Color, 
+                        this.Text,
+                        this.FontFace,
+                        this.Parent.MessagePosition + this.Position,
+                        this.Size,
+                        this.Color,
                         this.Flags);
                 }
                 else if (this.ComponentType.Equals("DrawLine"))
                 {
                     Drawing.DrawLine(
-                        this.Parent.MessagePosition + this.Position, 
-                        this.Parent.MessagePosition + this.Size, 
+                        this.Parent.MessagePosition + this.Position,
+                        this.Parent.MessagePosition + this.Size,
                         this.Color);
                 }
             }

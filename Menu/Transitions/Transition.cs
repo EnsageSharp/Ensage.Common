@@ -1,5 +1,5 @@
 ﻿// <copyright file="Transition.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -146,12 +146,12 @@ namespace Ensage.Common.Menu.Transitions
             }
 
             return this.startPosition.Extend(
-                this.endPosition, 
+                this.endPosition,
                 (float)
                 this.Equation(
-                    this.Time - this.StartTime, 
-                    0, 
-                    this.endPosition.Distance(this.startPosition), 
+                    this.Time - this.StartTime,
+                    0,
+                    this.endPosition.Distance(this.startPosition),
                     this.Duration * 1000));
         }
 
@@ -168,9 +168,9 @@ namespace Ensage.Common.Menu.Transitions
                 this.lastValue =
                     (float)
                     this.Equation(
-                        this.Time - this.StartTime, 
-                        0, 
-                        this.endPosition.Distance(this.startPosition), 
+                        this.Time - this.StartTime,
+                        0,
+                        this.endPosition.Distance(this.startPosition),
                         this.Duration);
                 return this.lastValue;
             }

@@ -1,5 +1,5 @@
 ﻿// <copyright file="MenuSettings.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -108,7 +108,7 @@ namespace Ensage.Common.Menu
             {
                 return (int)(Math.Max((int)(HUDInfo.GetHPBarSizeX() * 2), 180) + CommonMenu.IncreaseMenuSize * 0.13f);
 
-                    // 160
+                // 160
             }
         }
 
@@ -182,10 +182,10 @@ namespace Ensage.Common.Menu
             var mousePos = Game.MouseScreenPosition;
             if (args.Msg == (ulong)Utils.WindowsMessages.WM_LBUTTONDOWN
                 && Utils.IsUnderRectangle(
-                    mousePos, 
-                    Menu.MenuPanel.Position.X, 
-                    Menu.MenuPanel.Position.Y, 
-                    Menu.MenuPanel.Size.X, 
+                    mousePos,
+                    Menu.MenuPanel.Position.X,
+                    Menu.MenuPanel.Position.Y,
+                    Menu.MenuPanel.Size.X,
                     Menu.MenuPanel.Size.Y))
             {
                 mouseDifference = mousePos - BasePosition;

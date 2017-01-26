@@ -1,5 +1,5 @@
 ﻿// <copyright file="HeroToggler.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -77,9 +77,9 @@ namespace Ensage.Common.Menu
         ///     The default values.
         /// </param>
         public HeroToggler(
-            Dictionary<string, bool> heroDictionary, 
-            bool useEnemyHeroes = false, 
-            bool useAllyHeroes = false, 
+            Dictionary<string, bool> heroDictionary,
+            bool useEnemyHeroes = false,
+            bool useAllyHeroes = false,
             bool defaultValues = true)
         {
             this.Dictionary = heroDictionary;
@@ -91,7 +91,7 @@ namespace Ensage.Common.Menu
             foreach (var v in this.Dictionary.Where(v => !Menu.TextureDictionary.ContainsKey(v.Key)))
             {
                 Menu.TextureDictionary.Add(
-                    v.Key, 
+                    v.Key,
                     Textures.GetTexture(
                         "materials/ensage_ui/heroes_horizontal/" + v.Key.Substring("npc_dota_hero_".Length) + ".vmat"));
             }

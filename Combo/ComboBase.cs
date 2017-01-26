@@ -1,5 +1,5 @@
 ﻿// <copyright file="ComboBase.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -271,7 +271,7 @@ namespace Ensage.Common.Combo
                 return;
             }
 
-            if (((args.Msg == WM_KEYUP) || (args.Msg == WM_SYSKEYUP)) && (args.WParam == this.VirtualKey))
+            if ((args.Msg == WM_KEYUP || args.Msg == WM_SYSKEYUP) && args.WParam == this.VirtualKey)
             {
                 this.Cancel();
                 args.Process = false;

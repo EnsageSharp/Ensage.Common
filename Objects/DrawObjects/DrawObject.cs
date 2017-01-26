@@ -1,5 +1,5 @@
 ﻿// <copyright file="DrawObject.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -21,10 +21,10 @@ namespace Ensage.Common.Objects.DrawObjects
         #region Public Properties
 
         /// <summary>Gets or sets the position.</summary>
-        public Vector2 Position { get; set; }
+        public virtual Vector2 Position { get; set; }
 
         /// <summary>Gets or sets the size.</summary>
-        public Vector2 Size { get; set; }
+        public virtual Vector2 Size { get; set; }
 
         #endregion
 
@@ -44,7 +44,7 @@ namespace Ensage.Common.Objects.DrawObjects
         public void CenterOnRectangle(Rectangle rectangle)
         {
             this.Position = new Vector2(
-                rectangle.X + rectangle.Width / 2 - this.Size.X / 2, 
+                rectangle.X + rectangle.Width / 2 - this.Size.X / 2,
                 rectangle.Y + rectangle.Height / 2 - this.Size.Y / 2);
         }
 
@@ -53,7 +53,7 @@ namespace Ensage.Common.Objects.DrawObjects
         public void CenterOnRectangle(DrawRect rectangle)
         {
             this.Position = new Vector2(
-                rectangle.Position.X + rectangle.Size.X / 2 - this.Size.X / 2, 
+                rectangle.Position.X + rectangle.Size.X / 2 - this.Size.X / 2,
                 rectangle.Position.Y + rectangle.Size.Y / 2 - this.Size.Y / 2);
         }
 
@@ -65,7 +65,7 @@ namespace Ensage.Common.Objects.DrawObjects
         public void CenterOnRectangle(float rectangleX, float rectangleY, float rectangleWidth, float rectangleHeight)
         {
             this.Position = new Vector2(
-                rectangleX + rectangleWidth / 2 - this.Size.X / 2, 
+                rectangleX + rectangleWidth / 2 - this.Size.X / 2,
                 rectangleY + rectangleHeight / 2 - this.Size.Y / 2);
         }
 
@@ -75,7 +75,7 @@ namespace Ensage.Common.Objects.DrawObjects
         public void CenterOnRectangleHorizontally(DrawRect rectangle, float indent = 0)
         {
             this.Position = new Vector2(
-                rectangle.Position.X + indent, 
+                rectangle.Position.X + indent,
                 rectangle.Position.Y + rectangle.Size.Y / 2 - this.Size.Y / 2);
         }
 
@@ -85,7 +85,7 @@ namespace Ensage.Common.Objects.DrawObjects
         public void CenterOnRectangleVertically(DrawRect rectangle, float indent = 0)
         {
             this.Position = new Vector2(
-                rectangle.Position.X + rectangle.Size.X / 2 - this.Size.X / 2, 
+                rectangle.Position.X + rectangle.Size.X / 2 - this.Size.X / 2,
                 rectangle.Position.Y + indent);
         }
 

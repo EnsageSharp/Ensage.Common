@@ -1,5 +1,5 @@
 ﻿// <copyright file="AssemblyInfo.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("Ensage")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.2.6.2")]
-[assembly: AssemblyFileVersion("1.2.6.2")]
+[assembly: AssemblyVersion("1.2.6.5")]
+[assembly: AssemblyFileVersion("1.2.6.5")]
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: Guid("f05e29ef-162f-436c-8068-2f45d2c5f9a6")]

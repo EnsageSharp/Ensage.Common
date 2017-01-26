@@ -1,5 +1,5 @@
-﻿// <copyright file="Default.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+﻿// <copyright file="Blue.cs" company="EnsageSharp">
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -24,11 +24,6 @@ namespace Ensage.Common.Menu.Themes
     internal class Blue : IMenuTheme
     {
         #region Public Properties
-
-        /// <summary>
-        ///     Gets the theme name.
-        /// </summary>
-        public string ThemeName { get; } = "Blue";
 
         /// <summary>
         ///     Gets the item background.
@@ -169,6 +164,11 @@ namespace Ensage.Common.Menu.Themes
         ///     Gets the sub menu side line color.
         /// </summary>
         public Color SubMenuSideLineColor { get; } = new Color(20, 20, 20);
+
+        /// <summary>
+        ///     Gets the theme name.
+        /// </summary>
+        public string ThemeName { get; } = "Blue";
 
         /// <summary>
         ///     Gets the ability/hero toggler disabled color.

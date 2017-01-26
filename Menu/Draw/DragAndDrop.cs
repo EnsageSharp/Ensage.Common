@@ -1,5 +1,5 @@
 ﻿// <copyright file="DragAndDrop.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -257,7 +257,7 @@ namespace Ensage.Common.Menu.Draw
         public void Add(string name, uint customPriority = 0, bool enabled = true)
         {
             this.PriorityIconsDictionary.Add(
-                new PriorityIcon(name, this.Height, true), 
+                new PriorityIcon(name, this.Height, true),
                 customPriority != 0 ? customPriority : (uint)this.PriorityIconsDictionary.Count);
             this.UpdateOrder();
             this.itemList.Add(name);
@@ -310,13 +310,13 @@ namespace Ensage.Common.Menu.Draw
             if (count > 0 && enabledIcons.Any(u => u.Key.Enabled))
             {
                 Drawing.DrawRect(
-                    this.BasePosition - new Vector2(move - this.IconSize.X / 2 + this.Height / 10, 0), 
-                    new Vector2(this.Height / 5, this.Height), 
+                    this.BasePosition - new Vector2(move - this.IconSize.X / 2 + this.Height / 10, 0),
+                    new Vector2(this.Height / 5, this.Height),
                     new Color(180, 120, 10));
                 Drawing.DrawRect(
-                    this.BasePosition - new Vector2(move - this.IconSize.X / 2 + this.Height / 10, 0), 
-                    new Vector2(this.Height / 5, this.Height), 
-                    Color.Black, 
+                    this.BasePosition - new Vector2(move - this.IconSize.X / 2 + this.Height / 10, 0),
+                    new Vector2(this.Height / 5, this.Height),
+                    Color.Black,
                     true);
                 move += this.IconSize.X;
             }
@@ -349,7 +349,7 @@ namespace Ensage.Common.Menu.Draw
             this.Width = move;
 
             this.DrawShadow(
-                this.BasePosition - new Vector2(move - this.IconSize.X, 0), 
+                this.BasePosition - new Vector2(move - this.IconSize.X, 0),
                 new Vector2(move, this.IconSize.Y));
             if (this.MovingIcon == null)
             {
@@ -389,7 +389,7 @@ namespace Ensage.Common.Menu.Draw
                 this.leftButtonDown = true;
                 this.MovingIcon = u.Key;
                 DelayAction.Add(
-                    this.usingAbilityToggler ? 100 : 10, 
+                    this.usingAbilityToggler ? 100 : 10,
                     () =>
                         {
                             if (this.leftButtonDown == false || this.MovingIcon == null)
@@ -405,14 +405,14 @@ namespace Ensage.Common.Menu.Draw
                             this.MovingIcon.Height = this.MovingIcon.Height * (float)1.22;
                             this.MovingIcon.Position =
                                 new Vector2(
-                                    this.MovingIcon.Position.X - (this.MovingIcon.Size.X - this.IconSize.X) / 2, 
+                                    this.MovingIcon.Position.X - (this.MovingIcon.Size.X - this.IconSize.X) / 2,
                                     this.BasePosition.Y - this.MovingIcon.Size.Y / 20);
                             this.MovingIcon.IconPosition = this.MovingIcon.Position
                                                            + new Vector2(
-                                                                 this.MovingIcon.Size.X / 2
-                                                                 - this.MovingIcon.IconSize.X / 2, 
-                                                                 this.MovingIcon.Size.Y / 2
-                                                                 - this.MovingIcon.IconSize.Y / 2);
+                                                               this.MovingIcon.Size.X / 2
+                                                               - this.MovingIcon.IconSize.X / 2,
+                                                               this.MovingIcon.Size.Y / 2
+                                                               - this.MovingIcon.IconSize.Y / 2);
                             this.MousePositionDifference = mousePosition - this.MovingIcon.Position;
                         });
                 break;
@@ -445,8 +445,8 @@ namespace Ensage.Common.Menu.Draw
                 this.MovingIcon.ReturnFromDrag(
                     this.MovingIcon.Position
                     + new Vector2(
-                          (this.MovingIcon.Size.X - this.IconSize.X) / 2, 
-                          (this.MovingIcon.Size.Y - this.IconSize.Y) / 2));
+                        (this.MovingIcon.Size.X - this.IconSize.X) / 2,
+                        (this.MovingIcon.Size.Y - this.IconSize.Y) / 2));
                 this.MovingIcon.Moving = false;
                 this.MovingIcon = null;
                 this.UpdateOrder();
@@ -456,8 +456,8 @@ namespace Ensage.Common.Menu.Draw
             this.MovingIcon.ReturnFromDrag(
                 this.MovingIcon.Position
                 + new Vector2(
-                      (this.MovingIcon.Size.X - this.IconSize.X) / 2, 
-                      (this.MovingIcon.Size.Y - this.IconSize.Y) / 2));
+                    (this.MovingIcon.Size.X - this.IconSize.X) / 2,
+                    (this.MovingIcon.Size.Y - this.IconSize.Y) / 2));
             this.transition.Start(0, 150);
             this.MovingIcon.Moving = false;
             this.MovingIcon = null;
@@ -578,9 +578,8 @@ namespace Ensage.Common.Menu.Draw
                 }
 
                 if ((u2.Key.DictionaryPosition == icon.DictionaryPosition - 1
-                     || (this.usingAbilityToggler && !u2.Key.Enabled
-                         && u2.Key.DictionaryPosition > icon.DictionaryPosition))
-                    && mousePosition.X > u2.Key.FixedPosition.X)
+                     || this.usingAbilityToggler && !u2.Key.Enabled
+                     && u2.Key.DictionaryPosition > icon.DictionaryPosition) && mousePosition.X > u2.Key.FixedPosition.X)
                 {
                     if (!u2.Key.Enabled)
                     {
@@ -608,8 +607,7 @@ namespace Ensage.Common.Menu.Draw
                 }
 
                 if ((u2.Key.DictionaryPosition == icon.DictionaryPosition + 1
-                     || (this.usingAbilityToggler && !icon.Enabled
-                         && u2.Key.DictionaryPosition > icon.DictionaryPosition))
+                     || this.usingAbilityToggler && !icon.Enabled && u2.Key.DictionaryPosition > icon.DictionaryPosition)
                     && mousePosition.X < u2.Key.FixedPosition.X + u2.Key.Size.X / 1.2)
                 {
                     {
@@ -653,12 +651,12 @@ namespace Ensage.Common.Menu.Draw
         private void DrawShadow(Vector2 position, Vector2 size)
         {
             Drawing.DrawRect(
-                position, 
-                size, 
+                position,
+                size,
                 new Color(
-                    0, 
-                    0, 
-                    0, 
+                    0,
+                    0,
+                    0,
                     this.MovingIcon != null && this.MovingIcon.Moving
                         ? (int)Math.Min(this.transition.GetValue(), 255)
                         : 150 - (int)Math.Min(this.transition.GetValue(), 255)));
@@ -683,18 +681,18 @@ namespace Ensage.Common.Menu.Draw
         ///     The menu Item.
         /// </param>
         private void HandlePriorityIcon(
-            PriorityIcon icon, 
-            Vector2 mousePosition, 
-            uint priority, 
-            float move, 
+            PriorityIcon icon,
+            Vector2 mousePosition,
+            uint priority,
+            float move,
             MenuItem menuItem)
         {
             var wasHovered = icon.Hovered;
             icon.Hovered = Utils.IsUnderRectangle(
-                mousePosition, 
-                icon.Position.X, 
-                icon.Position.Y, 
-                icon.Size.X, 
+                mousePosition,
+                icon.Position.X,
+                icon.Position.Y,
+                icon.Size.X,
                 icon.Size.Y);
             var onHover = !wasHovered && icon.Hovered;
             var onUnHover = wasHovered && !icon.Hovered;
@@ -716,63 +714,63 @@ namespace Ensage.Common.Menu.Draw
             var brightness = (float)priority / this.Count * 10;
             icon.Color = icon.Enabled
                              ? System.Drawing.Color.FromArgb(
-                                 (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
+                                 (int)Math.Max(Math.Min(210 + alpha, 255), 0),
                                  (int)
                                  Math.Max(
                                      Math.Min(
                                          Menu.Root.SelectedTheme.TogglerEnabledColor.R / 10 * 4 + alpha
-                                         + brightness * 18, 
-                                         255), 
-                                     0), 
+                                         + brightness * 18,
+                                         255),
+                                     0),
                                  (int)
                                  Math.Max(
                                      Math.Min(
                                          Menu.Root.SelectedTheme.TogglerEnabledColor.G / 10 * 4 + alpha
-                                         + brightness * 12, 
-                                         255), 
-                                     0), 
+                                         + brightness * 12,
+                                         255),
+                                     0),
                                  (int)
                                  Math.Max(
                                      Math.Min(
-                                         Menu.Root.SelectedTheme.TogglerEnabledColor.B / 10 + alpha + brightness, 
-                                         255), 
+                                         Menu.Root.SelectedTheme.TogglerEnabledColor.B / 10 + alpha + brightness,
+                                         255),
                                      0)).ToSharpDxColor()
                              : System.Drawing.Color.FromArgb(
-                                 (int)Math.Max(Math.Min(210 + alpha, 255), 0), 
+                                 (int)Math.Max(Math.Min(210 + alpha, 255), 0),
                                  (int)
                                  Math.Max(
                                      Math.Min(
-                                         Menu.Root.SelectedTheme.TogglerDisabledColor.R / 10 + alpha + brightness * 5, 
-                                         255), 
-                                     0), 
+                                         Menu.Root.SelectedTheme.TogglerDisabledColor.R / 10 + alpha + brightness * 5,
+                                         255),
+                                     0),
                                  (int)
                                  Math.Max(
                                      Math.Min(
-                                         Menu.Root.SelectedTheme.TogglerDisabledColor.G / 10 + alpha + brightness * 5, 
-                                         255), 
-                                     0), 
+                                         Menu.Root.SelectedTheme.TogglerDisabledColor.G / 10 + alpha + brightness * 5,
+                                         255),
+                                     0),
                                  (int)
                                  Math.Max(
                                      Math.Min(
-                                         Menu.Root.SelectedTheme.TogglerDisabledColor.B / 10 + alpha + brightness * 5, 
-                                         255), 
+                                         Menu.Root.SelectedTheme.TogglerDisabledColor.B / 10 + alpha + brightness * 5,
+                                         255),
                                      0)).ToSharpDxColor();
 
             if (icon.Moving)
             {
                 icon.Position = new Vector2(
-                    mousePosition.X - this.MousePositionDifference.X, 
+                    mousePosition.X - this.MousePositionDifference.X,
                     this.BasePosition.Y - icon.Size.Y / 20);
                 icon.IconPosition = icon.Position
                                     + new Vector2(
-                                          icon.Size.X / 2 - icon.IconSize.X / 2, 
-                                          icon.Size.Y / 2 - icon.IconSize.Y / 2);
+                                        icon.Size.X / 2 - icon.IconSize.X / 2,
+                                        icon.Size.Y / 2 - icon.IconSize.Y / 2);
                 this.CheckMovingIconPosition(icon, menuItem, mousePosition);
                 return;
             }
 
             if (!icon.Hovered || icon.FixedPosition != this.BasePosition - new Vector2(move, 0)
-                || (this.MovingIcon != null && (!this.MovingIcon.Moving || !this.MovingIcon.Equals(icon))))
+                || this.MovingIcon != null && (!this.MovingIcon.Moving || !this.MovingIcon.Equals(icon)))
             {
                 icon.Position = this.BasePosition - new Vector2(move, 0);
             }
@@ -782,8 +780,8 @@ namespace Ensage.Common.Menu.Draw
             icon.Size = this.iconSize;
             icon.IconPosition = icon.Position
                                 + new Vector2(
-                                      icon.Size.X / 2 - icon.IconSize.X / 2, 
-                                      icon.Size.Y / 2 - icon.IconSize.Y / 2);
+                                    icon.Size.X / 2 - icon.IconSize.X / 2,
+                                    icon.Size.Y / 2 - icon.IconSize.Y / 2);
         }
 
         #endregion

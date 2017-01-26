@@ -45,26 +45,26 @@
   <ItemGroup>
     <Reference Include="Ensage">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\PS\References\Ensage.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="EnsageSharp.Sandbox">
-      <HintPath>C:\PS\System\EnsageSharp.Sandbox.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\PS\References\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\PS\References\SharpDX.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\PS\References\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.XInput">
-      <HintPath>C:\PS\References\SharpDX.XInput.dll</HintPath>
+      <HintPath>C:\NvdKTVgtv\References\SharpDX.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

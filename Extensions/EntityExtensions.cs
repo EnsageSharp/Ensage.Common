@@ -1,5 +1,5 @@
 ﻿// <copyright file="EntityExtensions.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -254,13 +254,31 @@ namespace Ensage.Common.Extensions
         }
 
         /// <summary>
-        /// The get turn rate.
+        ///     Returns in radians how much can entity turn during given time
         /// </summary>
         /// <param name="entity">
-        /// The entity.
+        ///     The entity.
+        /// </param>
+        /// <param name="time">
+        ///     The time.
         /// </param>
         /// <returns>
-        /// The <see cref="double"/>.
+        ///     The <see cref="float" />.
+        /// </returns>
+        public static double GetTurnAmount(this Entity entity, float time)
+        {
+            var turnRate = entity.GetTurnRate();
+            return time / 1000 * (turnRate * (1 / 0.03));
+        }
+
+        /// <summary>
+        ///     The get turn rate.
+        /// </summary>
+        /// <param name="entity">
+        ///     The entity.
+        /// </param>
+        /// <returns>
+        ///     The <see cref="double" />.
         /// </returns>
         [Obsolete("GetTurnRate is deprecated for using with entity. Please use Unit for arguement.")]
         public static double GetTurnRate(this Entity entity)
@@ -274,28 +292,10 @@ namespace Ensage.Common.Extensions
 
             turnRate = entity is Hero
                            ? Game.FindKeyValues(entity.StoredName() + "/MovementTurnRate", KeyValueSource.Hero)
-                                 .FloatValue
+                               .FloatValue
                            : 0.5;
             TurnrateDictionary.Add(handle, turnRate);
             return turnRate;
-        }
-
-        /// <summary>
-        /// Returns in radians how much can entity turn during given time
-        /// </summary>
-        /// <param name="entity">
-        /// The entity.
-        /// </param>
-        /// <param name="time">
-        /// The time.
-        /// </param>
-        /// <returns>
-        /// The <see cref="float"/>.
-        /// </returns>
-        public static double GetTurnAmount(this Entity entity, float time)
-        {
-            var turnRate = entity.GetTurnRate();
-            return (time / 1000) * (turnRate * (1 / 0.03));
         }
 
         /// <summary>
@@ -330,20 +330,20 @@ namespace Ensage.Common.Extensions
                         Math.Max(
                             Math.Abs(
                                 FindAngleR(entity) - Utils.DegreeToRadian(entityPosition.FindAngleForTurnTime(position)))
-                            - 0.69, 
+                            - 0.69,
                             0) / (turnRate * (1 / 0.03));
                 }
 
                 turnRate = entity is Hero
                                ? Game.FindKeyValues(entity.StoredName() + "/MovementTurnRate", KeyValueSource.Hero)
-                                     .FloatValue
+                                   .FloatValue
                                : 0.5;
                 TurnrateDictionary.Add(handle, turnRate);
                 return
                     Math.Max(
                         Math.Abs(
                             FindAngleR(entity) - Utils.DegreeToRadian(entityPosition.FindAngleForTurnTime(position)))
-                        - 0.69, 
+                        - 0.69,
                         0) / (turnRate * (1 / 0.03));
             }
             catch (KeyValuesNotFoundException)

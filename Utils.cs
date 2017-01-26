@@ -1,5 +1,5 @@
 ﻿// <copyright file="Utils.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -43,24 +43,26 @@ namespace Ensage.Common
         /// </summary>
         private static readonly string[] DisableModifiers =
             {
-                "modifier_shadow_demon_disruption", 
-                "modifier_obsidian_destroyer_astral_imprisonment_prison", 
-                "modifier_eul_cyclone", "modifier_invoker_tornado", 
-                "modifier_bane_nightmare", 
-                "modifier_shadow_shaman_shackles", 
-                "modifier_crystal_maiden_frostbite", 
-                "modifier_ember_spirit_searing_chains", 
-                "modifier_axe_berserkers_call", 
-                "modifier_lone_druid_spirit_bear_entangle_effect", 
-                "modifier_meepo_earthbind", "modifier_naga_siren_ensnare", 
-                "modifier_storm_spirit_electric_vortex_pull", 
-                "modifier_treant_overgrowth", "modifier_cyclone", 
-                "modifier_sheepstick_debuff", 
-                "modifier_shadow_shaman_voodoo", "modifier_lion_voodoo", 
-                "modifier_sheepstick", "modifier_brewmaster_storm_cyclone", 
-                "modifier_puck_phase_shift", 
-                "modifier_dark_troll_warlord_ensnare", 
-                "modifier_invoker_deafening_blast_knockback", 
+                "modifier_shadow_demon_disruption",
+                "modifier_obsidian_destroyer_astral_imprisonment_prison",
+                "modifier_eul_cyclone", "modifier_invoker_tornado",
+                "modifier_bane_nightmare",
+                "modifier_shadow_shaman_shackles",
+                "modifier_crystal_maiden_frostbite",
+                "modifier_ember_spirit_searing_chains",
+                "modifier_axe_berserkers_call",
+                "modifier_lone_druid_spirit_bear_entangle_effect",
+                "modifier_meepo_earthbind",
+                "modifier_naga_siren_ensnare",
+                "modifier_storm_spirit_electric_vortex_pull",
+                "modifier_treant_overgrowth", "modifier_cyclone",
+                "modifier_sheepstick_debuff",
+                "modifier_shadow_shaman_voodoo", "modifier_lion_voodoo",
+                "modifier_sheepstick",
+                "modifier_brewmaster_storm_cyclone",
+                "modifier_puck_phase_shift",
+                "modifier_dark_troll_warlord_ensnare",
+                "modifier_invoker_deafening_blast_knockback",
                 "modifier_pudge_meat_hook"
             };
 
@@ -69,37 +71,39 @@ namespace Ensage.Common
         /// </summary>
         private static readonly Dictionary<uint, string> KeyCodeDictionary = new Dictionary<uint, string>
                                                                                  {
-                                                                                     { 8, "Backspace" }, { 9, "Tab" }, 
-                                                                                     { 13, "Enter" }, { 16, "Shift" }, 
-                                                                                     { 17, "Ctrl" }, { 18, "Alt" }, 
-                                                                                     { 19, "Pause" }, { 20, "CapsLock" }, 
-                                                                                     { 27, "Escape" }, { 32, "Space" }, 
-                                                                                     { 33, "PageUp" }, { 34, "PageDown" }, 
-                                                                                     { 35, "End" }, { 36, "Home" }, 
-                                                                                     { 37, "LeftArrow" }, 
-                                                                                     { 38, "UpArrow" }, 
-                                                                                     { 39, "RightArrow" }, 
-                                                                                     { 40, "DownArrow" }, { 45, "Insert" }, 
-                                                                                     { 46, "Delete" }, { 48, "0" }, 
-                                                                                     { 49, "1" }, { 50, "2" }, { 51, "3" }, 
-                                                                                     { 52, "4" }, { 53, "5" }, { 54, "6" }, 
-                                                                                     { 55, "7" }, { 56, "8" }, { 57, "9" }, 
-                                                                                     { 91, "LeftWindow" }, 
-                                                                                     { 92, "RightWindow" }, 
-                                                                                     { 93, "Select" }, { 96, "Num0" }, 
-                                                                                     { 97, "Num1" }, { 98, "Num2" }, 
-                                                                                     { 99, "Num3" }, { 100, "Num4" }, 
-                                                                                     { 101, "Num5" }, { 102, "Num6" }, 
-                                                                                     { 103, "Num7" }, { 104, "Num8" }, 
-                                                                                     { 105, "Num9" }, { 106, "*" }, 
-                                                                                     { 107, "+" }, { 109, "-" }, 
-                                                                                     { 110, "," }, { 111, "/" }, 
-                                                                                     { 144, "NumLock" }, 
-                                                                                     { 145, "ScrollLock" }, { 186, ";" }, 
-                                                                                     { 187, "=" }, { 188, "," }, 
-                                                                                     { 189, "-" }, { 190, "." }, 
-                                                                                     { 191, "/" }, { 192, "`" }, 
-                                                                                     { 219, "(" }, { 220, "'\'" }, 
+                                                                                     { 8, "Backspace" }, { 9, "Tab" },
+                                                                                     { 13, "Enter" }, { 16, "Shift" },
+                                                                                     { 17, "Ctrl" }, { 18, "Alt" },
+                                                                                     { 19, "Pause" }, { 20, "CapsLock" },
+                                                                                     { 27, "Escape" }, { 32, "Space" },
+                                                                                     { 33, "PageUp" },
+                                                                                     { 34, "PageDown" }, { 35, "End" },
+                                                                                     { 36, "Home" }, { 37, "LeftArrow" },
+                                                                                     { 38, "UpArrow" },
+                                                                                     { 39, "RightArrow" },
+                                                                                     { 40, "DownArrow" },
+                                                                                     { 45, "Insert" }, { 46, "Delete" },
+                                                                                     { 48, "0" }, { 49, "1" },
+                                                                                     { 50, "2" }, { 51, "3" },
+                                                                                     { 52, "4" }, { 53, "5" },
+                                                                                     { 54, "6" }, { 55, "7" },
+                                                                                     { 56, "8" }, { 57, "9" },
+                                                                                     { 91, "LeftWindow" },
+                                                                                     { 92, "RightWindow" },
+                                                                                     { 93, "Select" }, { 96, "Num0" },
+                                                                                     { 97, "Num1" }, { 98, "Num2" },
+                                                                                     { 99, "Num3" }, { 100, "Num4" },
+                                                                                     { 101, "Num5" }, { 102, "Num6" },
+                                                                                     { 103, "Num7" }, { 104, "Num8" },
+                                                                                     { 105, "Num9" }, { 106, "*" },
+                                                                                     { 107, "+" }, { 109, "-" },
+                                                                                     { 110, "," }, { 111, "/" },
+                                                                                     { 144, "NumLock" },
+                                                                                     { 145, "ScrollLock" }, { 186, ";" },
+                                                                                     { 187, "=" }, { 188, "," },
+                                                                                     { 189, "-" }, { 190, "." },
+                                                                                     { 191, "/" }, { 192, "`" },
+                                                                                     { 219, "(" }, { 220, "'\'" },
                                                                                      { 221, ")" }, { 222, "'" }
                                                                                  };
 
@@ -120,57 +124,57 @@ namespace Ensage.Common
             /// <summary>
             ///     Left mouse button double-click
             /// </summary>
-            WM_LBUTTONDBLCLCK = 0x203, 
+            WM_LBUTTONDBLCLCK = 0x203,
 
             /// <summary>
             ///     Right mouse button double click
             /// </summary>
-            WM_RBUTTONDBLCLCK = 0x206, 
+            WM_RBUTTONDBLCLCK = 0x206,
 
             /// <summary>
             ///     Middle mouse button double click
             /// </summary>
-            WM_MBUTTONDBLCLCK = 0x209, 
+            WM_MBUTTONDBLCLCK = 0x209,
 
             /// <summary>
             ///     Middle mouse button down
             /// </summary>
-            WM_MBUTTONDOWN = 0x207, 
+            WM_MBUTTONDOWN = 0x207,
 
             /// <summary>
             ///     Middle mouse button up
             /// </summary>
-            WM_MBUTTONUP = 0x208, 
+            WM_MBUTTONUP = 0x208,
 
             /// <summary>
             ///     Mouse being moved
             /// </summary>
-            WM_MOUSEMOVE = 0x200, 
+            WM_MOUSEMOVE = 0x200,
 
             /// <summary>
             ///     Left mouse button down
             /// </summary>
-            WM_LBUTTONDOWN = 0x201, 
+            WM_LBUTTONDOWN = 0x201,
 
             /// <summary>
             ///     Left mouse button up
             /// </summary>
-            WM_LBUTTONUP = 0x202, 
+            WM_LBUTTONUP = 0x202,
 
             /// <summary>
             ///     Right mouse button down
             /// </summary>
-            WM_RBUTTONDOWN = 0x204, 
+            WM_RBUTTONDOWN = 0x204,
 
             /// <summary>
             ///     Right mouse button up
             /// </summary>
-            WM_RBUTTONUP = 0x205, 
+            WM_RBUTTONUP = 0x205,
 
             /// <summary>
             ///     Key down
             /// </summary>
-            WM_KEYDOWN = 0x0100, 
+            WM_KEYDOWN = 0x0100,
 
             /// <summary>
             ///     Key up
@@ -240,7 +244,7 @@ namespace Ensage.Common
                 chain = remainingTime <= delay;
             }
 
-            return ((!(stunned || unit.IsStunned()) || chain) && !onlychain) || (onlychain && chain);
+            return (!(stunned || unit.IsStunned()) || chain) && !onlychain || onlychain && chain;
         }
 
         /// <summary>

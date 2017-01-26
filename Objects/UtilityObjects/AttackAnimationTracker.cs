@@ -1,5 +1,5 @@
 ﻿// <copyright file="AttackAnimationTracker.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -25,7 +25,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         #region Fields
 
         /// <summary>
-        /// The is attacking.
+        ///     The is attacking.
         /// </summary>
         private bool isAttacking;
 
@@ -35,7 +35,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         private NetworkActivity lastUnitActivity;
 
         /// <summary>
-        /// The unit.
+        ///     The unit.
         /// </summary>
         private Unit unit;
 
@@ -125,7 +125,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             {
                 this.AttackOrderSent = true;
                 DelayAction.Add(
-                    Game.Ping + 50, 
+                    Game.Ping + 50,
                     () =>
                         {
                             if (!this.isAttacking)
@@ -172,19 +172,18 @@ namespace Ensage.Common.Objects.UtilityObjects
             if (target != null)
             {
                 var pos = Prediction.InFront(
-                    this.Unit, 
+                    this.Unit,
                     (float)(Game.Ping / 1000 + this.Unit.GetTurnTime(target.Position) * this.Unit.MovementSpeed));
                 distance = pos.Distance2D(target) - this.Unit.Distance2D(target);
             }
 
-            var isValid = (target != null && target.IsValid && target.IsAlive && target.IsVisible && !target.IsInvul()
-                           && !target.HasModifiers(
-                               new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" }, 
-                               false)
-                           && target.Distance2D(this.Unit)
-                           <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 75 + targetHull
-                           + Math.Max(distance, 0))
-                          || (target != null && this.Unit.IsAttacking() && this.Unit.GetTurnTime(target.Position) < 0.1);
+            var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible && !target.IsInvul()
+                          && !target.HasModifiers(
+                              new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" },
+                              false)
+                          && target.Distance2D(this.Unit)
+                          <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 75 + targetHull + Math.Max(distance, 0)
+                          || target != null && this.Unit.IsAttacking() && this.Unit.GetTurnTime(target.Position) < 0.1;
 
             return !this.IsAttackOnCoolDown(target, bonusWindupMs) && (target == null || isValid);
         }
@@ -303,7 +302,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                 this.AttackEnd();
             }
 
-            if (!this.isAttacking || (!this.isAttacking && !canCancel))
+            if (!this.isAttacking || !this.isAttacking && !canCancel)
             {
                 return;
             }

@@ -1,5 +1,5 @@
 ﻿// <copyright file="Orbwalker.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -259,7 +259,7 @@ namespace Ensage.Common.Objects.UtilityObjects
         public override void AttackStart()
         {
             DelayAction.Add(
-                (int)(UnitDatabase.GetAttackRate(this.Unit) * 1000), 
+                (int)(UnitDatabase.GetAttackRate(this.Unit) * 1000),
                 () =>
                     {
                         this.currentCount +=
@@ -276,7 +276,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             }
 
             if (this.moveSleeper.Sleeping || this.attackSleeper.Sleeping
-                || (this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))))
+                || this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack")))
             {
                 this.movingWhenReady = true;
                 Drawing.OnDraw += this.MoveWhenReady;
@@ -302,10 +302,10 @@ namespace Ensage.Common.Objects.UtilityObjects
         ///     The follow target.
         /// </param>
         public void OrbwalkOn(
-            Unit target, 
-            float bonusWindupMs = 0, 
-            float bonusRange = 0, 
-            bool attackmodifiers = true, 
+            Unit target,
+            float bonusWindupMs = 0,
+            float bonusRange = 0,
+            bool attackmodifiers = true,
             bool followTarget = false)
         {
             this.OrbwalkOn(target, Game.MousePosition, bonusWindupMs, bonusRange, attackmodifiers, followTarget);
@@ -333,11 +333,11 @@ namespace Ensage.Common.Objects.UtilityObjects
         ///     The follow target.
         /// </param>
         public void OrbwalkOn(
-            Unit target, 
-            Vector3 movePosition, 
-            float bonusWindupMs = 0, 
-            float bonusRange = 0, 
-            bool attackmodifiers = true, 
+            Unit target,
+            Vector3 movePosition,
+            float bonusWindupMs = 0,
+            float bonusRange = 0,
+            bool attackmodifiers = true,
             bool followTarget = false)
         {
             if (this.Unit == null || !this.Unit.IsValid)
@@ -355,7 +355,7 @@ namespace Ensage.Common.Objects.UtilityObjects
             if (target != null)
             {
                 var pos = Prediction.InFront(
-                    this.Unit, 
+                    this.Unit,
                     (float)(Game.Ping / 1000 + this.Unit.GetTurnTime(target.Position) * this.Unit.MovementSpeed));
                 distance = pos.Distance2D(target) - this.Unit.Distance2D(target);
             }
@@ -363,14 +363,14 @@ namespace Ensage.Common.Objects.UtilityObjects
             var isValid = target != null && target.IsValid && target.IsAlive && target.IsVisible;
             var isAttackable = target != null && target.IsValid && !target.IsInvul() && !target.IsAttackImmune()
                                && !target.HasModifiers(
-                                   new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" }, 
+                                   new[] { "modifier_ghost_state", "modifier_item_ethereal_blade_slow" },
                                    false)
                                && target.Distance2D(this.Unit)
                                <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 50 + targetHull + bonusRange
                                + Math.Max(distance, 0);
-            if ((isValid && isAttackable)
-                || (!isAttackable && target != null && target.IsValid && this.Unit.IsAttacking()
-                    && this.Unit.GetTurnTime(target.Position) < 0.1))
+            if (isValid && isAttackable
+                || !isAttackable && target != null && target.IsValid && this.Unit.IsAttacking()
+                && this.Unit.GetTurnTime(target.Position) < 0.1)
             {
                 var canAttack = !this.IsAttackOnCoolDown(target, bonusWindupMs) && this.Unit.CanAttack();
                 if (canAttack && !this.attackSleeper.Sleeping && (!this.hero || Utils.SleepCheck("Orbwalk.Attack")))
@@ -391,10 +391,10 @@ namespace Ensage.Common.Objects.UtilityObjects
 
                     Utils.Sleep(
                         UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + Game.Ping
-                        + 100, 
+                        + 100,
                         "Orbwalk.Attack");
                     Utils.Sleep(
-                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50, 
+                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50,
                         "Orbwalk.Move");
                     return;
                 }
@@ -409,11 +409,11 @@ namespace Ensage.Common.Objects.UtilityObjects
             }
 
             var userdelay = this.setUserDelayManually ? this.UserDelay : Orbwalking.UserDelay;
-            var canCancel = (this.CanCancelAttack(userdelay) && this.IsAttackOnCoolDown(target, bonusWindupMs))
-                            || ((!isValid || !isAttackable)
-                                && (!this.Unit.IsAttacking() || this.CanCancelAttack(userdelay)));
+            var canCancel = this.CanCancelAttack(userdelay) && this.IsAttackOnCoolDown(target, bonusWindupMs)
+                            || (!isValid || !isAttackable)
+                            && (!this.Unit.IsAttacking() || this.CanCancelAttack(userdelay));
             if (!canCancel || this.moveSleeper.Sleeping || this.attackSleeper.Sleeping
-                || (this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack"))))
+                || this.hero && (!Utils.SleepCheck("Orbwalk.Move") || !Utils.SleepCheck("Orbwalk.Attack")))
             {
                 return;
             }
@@ -500,15 +500,15 @@ namespace Ensage.Common.Objects.UtilityObjects
                                           ? Math.Floor(Game.RawGameTime - this.counter10Start) + " sec: "
                                             + this.current10Count + " attacks"
                                           : this.counter10Result <= 0
-                                                ? "counter not started"
-                                                : "result: " + this.counter10Result + " attacks ";
+                                              ? "counter not started"
+                                              : "result: " + this.counter10Result + " attacks ";
             this.counterText.Position = HUDInfo.GetHPbarPosition(this.Unit)
                                         - new Vector2(50, 50 + this.counterText.Size.Y);
             this.counter10Text.Position = HUDInfo.GetHPbarPosition(this.Unit) - new Vector2(50);
             this.secondsperattackText.Position = HUDInfo.GetHPbarPosition(this.Unit)
                                                  - new Vector2(
-                                                       50, 
-                                                       50 + this.counterText.Size.Y + this.counter10Text.Size.Y);
+                                                     50,
+                                                     50 + this.counterText.Size.Y + this.counter10Text.Size.Y);
             this.counterText.Draw();
 
             // this.secondsperattackText.Draw();

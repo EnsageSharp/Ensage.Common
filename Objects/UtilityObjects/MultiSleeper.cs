@@ -1,5 +1,5 @@
 ﻿// <copyright file="MultiSleeper.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -16,14 +16,14 @@ namespace Ensage.Common.Objects.UtilityObjects
     using System.Collections.Generic;
 
     /// <summary>
-    /// The sleeper.
+    ///     The sleeper.
     /// </summary>
     public class MultiSleeper
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MultiSleeper"/> class.
+        ///     Initializes a new instance of the <see cref="MultiSleeper" /> class.
         /// </summary>
         public MultiSleeper()
         {
@@ -60,16 +60,16 @@ namespace Ensage.Common.Objects.UtilityObjects
         }
 
         /// <summary>
-        /// The sleep.
+        ///     The sleep.
         /// </summary>
         /// <param name="duration">
-        /// The duration.
+        ///     The duration.
         /// </param>
         /// <param name="id">
-        /// The id.
+        ///     The id.
         /// </param>
         /// <param name="extendCurrentSleep">
-        /// The extend current sleep.
+        ///     The extend current sleep.
         /// </param>
         public void Sleep(float duration, object id, bool extendCurrentSleep = false)
         {

@@ -1,5 +1,5 @@
 ﻿// <copyright file="MenuDrawHelper.cs" company="EnsageSharp">
-//    Copyright (c) 2016 EnsageSharp.
+//    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
@@ -13,8 +13,6 @@
 // </copyright>
 namespace Ensage.Common.Menu
 {
-    using System.ComponentModel.Design.Serialization;
-
     using Ensage.Common.Extensions.SharpDX;
     using Ensage.Common.Objects;
 
@@ -47,31 +45,31 @@ namespace Ensage.Common.Menu
         internal static void DrawArrow(bool left, Vector2 position, MenuItem item, Color color)
         {
             Drawing.DrawRect(
-                position + new Vector2(0, item.Height / 6), 
-                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
+                position + new Vector2(0, item.Height / 6),
+                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2),
                 Textures.GetTexture(Menu.Root.SelectedTheme.MenuBackground));
             Drawing.DrawRect(
-                position + new Vector2(0, item.Height / 6), 
-                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
+                position + new Vector2(0, item.Height / 6),
+                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2),
                 new SharpDX.Color(20, 20, 20, 190));
             Drawing.DrawRect(
-                position + new Vector2(0, item.Height / 6), 
-                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2), 
+                position + new Vector2(0, item.Height / 6),
+                new Vector2(item.Height - item.Height / 12 * 2, item.Height - item.Height / 6 * 2),
                 Utils.IsUnderRectangle(Game.MouseScreenPosition, position.X, position.Y, item.Height, item.Height)
                     ? Menu.Root.SelectedTheme.StringListArrowHoveredOverlayColor
                     : Menu.Root.SelectedTheme.StringListArrowOverlayColor);
 
             var s = left ? "<" : ">";
             var textSize = Drawing.MeasureText(
-                s, 
-                "Arial", 
-                new Vector2((float)(item.Height * 0.67), item.Height / 2), 
+                s,
+                "Arial",
+                new Vector2((float)(item.Height * 0.67), item.Height / 2),
                 FontFlags.AntiAlias);
             var a = left ? item.Height / 10 : item.Height / 14;
             var textPos = position
                           + new Vector2(
-                                (float)(item.Height * 0.5 - textSize.X * 0.5 - a), 
-                                (float)(item.Height * 0.5 - textSize.Y * 0.5) + 1);
+                              (float)(item.Height * 0.5 - textSize.X * 0.5 - a),
+                              (float)(item.Height * 0.5 - textSize.Y * 0.5) + 1);
 
             Drawing.DrawText(
                 s,
@@ -98,19 +96,19 @@ namespace Ensage.Common.Menu
         internal static void DrawOnOff(bool on, Vector2 position, MenuItem item)
         {
             var alpha = Utils.IsUnderRectangle(
-                Game.MouseScreenPosition, 
-                position.X + item.Height - item.Width, 
-                position.Y, 
-                item.Width, 
-                item.Height)
+                            Game.MouseScreenPosition,
+                            position.X + item.Height - item.Width,
+                            position.Y,
+                            item.Width,
+                            item.Height)
                             ? 30
                             : 0;
             var alpha2 = Utils.IsUnderRectangle(
-                Game.MouseScreenPosition, 
-                position.X, 
-                position.Y, 
-                item.Height, 
-                item.Height)
+                             Game.MouseScreenPosition,
+                             position.X,
+                             position.Y,
+                             item.Height,
+                             item.Height)
                              ? 25
                              : 0;
             var noUnicode = MenuConfig.SelectedLanguage == "Chinese" || MenuConfig.SelectedLanguage == "Russian";
@@ -119,17 +117,17 @@ namespace Ensage.Common.Menu
             var height = item.Height - item.Height / 6 * 2;
 
             MenuUtils.DrawBoxBordered(
-                pos.X, 
-                pos.Y, 
-                height, 
-                height, 
-                1f, 
-                Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(), 
+                pos.X,
+                pos.Y,
+                height,
+                height,
+                1f,
+                Color.FromArgb(140 + alpha, 90 + alpha, 1 + alpha).ToSharpDxColor(),
                 new SharpDX.Color(0, 0, 0));
 
             Drawing.DrawRect(
-                pos + new Vector2(height / 10, height / 10), 
-                new Vector2((float)(height - height / 10 * 2), (float)(height - height / 10 * 2) - 1), 
+                pos + new Vector2(height / 10, height / 10),
+                new Vector2((float)(height - height / 10 * 2), (float)(height - height / 10 * 2) - 1),
                 new SharpDX.Color(5 + alpha2, 5 + alpha2, 5 + alpha2));
             if (noUnicode)
             {
@@ -139,8 +137,8 @@ namespace Ensage.Common.Menu
                 }
 
                 Drawing.DrawRect(
-                    pos + new Vector2(height / 4, height / 4), 
-                    new Vector2((float)(height - height / 4 * 2), (float)(height - height / 4 * 2) - 1), 
+                    pos + new Vector2(height / 4, height / 4),
+                    new Vector2((float)(height - height / 4 * 2), (float)(height - height / 4 * 2) - 1),
                     new SharpDX.Color(230, 148, 2));
             }
             else
@@ -149,8 +147,8 @@ namespace Ensage.Common.Menu
                 var textSize = Drawing.MeasureText(s, "Arial", tsize, FontFlags.AntiAlias);
                 var textPos = item.Position
                               + new Vector2(
-                                    (float)(item.Width - item.Height / 2 - textSize.X / 2.9), 
-                                    (float)(+(item.Height * 0.5) - textSize.Y / 1.9));
+                                  (float)(item.Width - item.Height / 2 - textSize.X / 2.9),
+                                  (float)(+(item.Height * 0.5) - textSize.Y / 1.9));
 
                 Drawing.DrawText(s, textPos, tsize, Color.NavajoWhite.ToSharpDxColor(), FontFlags.Italic);
             }
@@ -202,12 +200,12 @@ namespace Ensage.Common.Menu
         ///     The draw text.
         /// </param>
         internal static void DrawSlider(
-            Vector2 position, 
-            MenuItem item, 
-            int min, 
-            int max, 
-            int value, 
-            int width, 
+            Vector2 position,
+            MenuItem item,
+            int min,
+            int max,
+            int value,
+            int width,
             bool drawText)
         {
             width = width > 0 ? width : item.Width;
@@ -215,18 +213,12 @@ namespace Ensage.Common.Menu
             var x = position.X + 3 + percentage * (width - 3) / 100;
             var x2D = 3 + percentage * (width - 3) / 100;
 
-            MenuUtils.DrawLine(
-                x, 
-                position.Y, 
-                x, 
-                position.Y + item.Height - 2, 
-                2, 
-                Menu.Root.SelectedTheme.SliderColor);
+            MenuUtils.DrawLine(x, position.Y, x, position.Y + item.Height - 2, 2, Menu.Root.SelectedTheme.SliderColor);
             MenuUtils.DrawBoxFilled(
-                position.X, 
-                position.Y - 1, 
-                x2D - 1f, 
-                item.Height, 
+                position.X,
+                position.Y - 1,
+                x2D - 1f,
+                item.Height,
                 Menu.Root.SelectedTheme.SliderFillColor);
 
             if (!drawText)
@@ -235,14 +227,14 @@ namespace Ensage.Common.Menu
             }
 
             var textSize = Drawing.MeasureText(
-                value.ToString(), 
-                "Arial", 
-                new Vector2((float)(item.Height * 0.45), (float)item.Width / 2), 
+                value.ToString(),
+                "Arial",
+                new Vector2((float)(item.Height * 0.45), (float)item.Width / 2),
                 FontFlags.AntiAlias);
             var textPos = position
                           + new Vector2(
-                                (float)(item.Width - item.Height * 0.5 - 2 - textSize.X * 0.5), 
-                                (float)(+(item.Height * 0.5) - textSize.Y * 0.5));
+                              (float)(item.Width - item.Height * 0.5 - 2 - textSize.X * 0.5),
+                              (float)(+(item.Height * 0.5) - textSize.Y * 0.5));
             Drawing.DrawText(
                 value.ToString(),
                 textPos,
