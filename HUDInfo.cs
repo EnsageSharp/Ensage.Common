@@ -404,7 +404,7 @@ namespace Ensage.Common
             var hero = ObjectManager.LocalHero;
             if (unit != null && hero != null && Equals(unit.Handle, hero.Handle))
             {
-                return (float)((float)HpBarWidth * Monitor * 1.06);
+                return (float)((float)HpBarWidth * Monitor * 1.08);
             }
 
             return (float)HpBarWidth * Monitor;
