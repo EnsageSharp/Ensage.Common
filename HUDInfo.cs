@@ -145,6 +145,8 @@ namespace Ensage.Common
 
             var ratio = Math.Floor((decimal)(ScreenSize.X / ScreenSize.Y * 100));
 
+            var largeMinimap = Game.GetConsoleVar("dota_hud_extra_large_minimap").GetInt() == 1;
+
             // Console.WriteLine("Your screen ratio is " + ratio);
             if (ratio == 213)
             {
@@ -172,7 +174,7 @@ namespace Ensage.Common
                 HpBarWidth = 86.5;
                 HpBarX = 44;
                 HpBarY = 27;
-                minimap.Size = new Vector2(0.1270833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
+                minimap.Size = new Vector2(0.1280833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
                 minimapMapScaleX = minimap.Size.X / mapWidth;
                 minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
@@ -270,97 +272,71 @@ namespace Ensage.Common
                 minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
 
+            if (largeMinimap)
+            {
+                const float LargeMinimapConstant = 1.1470833333333333f; // © Moones 2017
+                minimap.Size *= LargeMinimapConstant;
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
+            }
+
             Monitor = ScreenSize.X / compareWidth;
             Rate = Math.Max(Monitor, 1);
             X = panelHeroSizeX * Monitor;
             y = ScreenSize.Y / tinfoHeroDown;
 
-            // Drawing.OnDraw += Drawing_OnDraw;
-            // var mipos = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
-            // var minimap = new Render.Rectangle(
-            // mipos.X,
-            // mipos.Y,
-            // currentMinimap.Size.X,
-            // currentMinimap.Size.Y,
-            // new ColorBGRA(100, 100, 100, 25));
-            // minimap.Add();
-            // var mouse = new Render.Rectangle(0, 0, 5, 5, Color.White);
-            // mouse.Add();
-            // GameUpdate update = args =>
-            // {
-            // var mousePos = Game.MousePosition;
-            // if (Utils.SleepCheck("mouse"))
-            // {
-            // Console.WriteLine(mousePos);
-            // Utils.Sleep(500, "mouse");
-            // }
+            var mouse = new Rectangle(new Vector2(5, 5), Color.White);
+            GameUpdate update = args =>
+                {
+                    var mousePos = Game.MousePosition;
 
-            // var minimapPos = mousePos.WorldToMinimap();
-            // mouse.X = minimapPos.X;
-            // mouse.Y = minimapPos.Y;
-            // };
-            // Game.OnUpdate += update;
+                    // if (Utils.SleepCheck("mouse"))
+                    // {
+                    // Console.WriteLine(mousePos);
+                    // Utils.Sleep(500, "mouse");
+                    // }
+                    var minimapPos = mousePos.WorldToMinimap();
+                    mouse.Position = minimapPos;
+                };
+
             var mipos = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
+            rectangle = new Rectangle(minimap.Size, new ColorBGRA(255, 255, 255, 25)) { Position = mipos };
 
-            rectangle = new Rectangle(minimap.Size, new ColorBGRA(255, 255, 255, 25));
-            rectangle.Position = mipos;
             var menu = new Menu.Menu("HUDInfo", nameof(HUDInfo));
             var minimapOnRight =
                 menu.AddItem(
                     new MenuItem(menu.Name + "minimapRight", "Minimap is on the right").SetValue(false)
                         .SetTooltip("Enable this if you have minimap on the right"));
             minimapOnRight.ValueChanged += (sender, args) => { MinimapIsOnRight = args.GetNewValue<bool>(); };
-            var minimapMenu =
-                menu.AddSubMenu(
-                    new Menu.Menu(
-                        "MinimapAdjust (" + ScreenSize.X + "x" + ScreenSize.Y + ")",
-                        menu.Name + "minimap" + ScreenSize));
-            minimapMenu.AddItem(
-                new MenuItem(minimapMenu.Name + "do not touch below", "Do not touch below unless...").SetTooltip(
-                    "...you know what you are doing").SetFontColor(Color.OrangeRed));
+            MinimapIsOnRight = minimapOnRight.GetValue<bool>();
             var enableRectangle =
-                minimapMenu.AddItem(
-                    new MenuItem(minimapMenu.Name + "enablerectangle", "Enable minimap adjusting").SetTooltip(
-                            "Draws rectangle over minimap (requires -dx9), adjust this rectangle with sliders so it fits with your minimap size")
+                menu.AddItem(
+                    new MenuItem(menu.Name + "enablerectangle", "Enable minimap debug").SetTooltip(
+                            "Draws rectangle over minimap in current e.common minimap size (requires -dx9), and shows current mouse position on minimap")
                         .SetValue(false));
             enableRectangle.SetValue(false);
-            DrawingEndScene draw = eventArgs => rectangle.Render();
+            DrawingEndScene draw = eventArgs =>
+                {
+                    rectangle.Render();
+                    mouse.Render();
+                };
             enableRectangle.ValueChanged += (sender, args) =>
                 {
                     if (args.GetNewValue<bool>())
                     {
                         rectangle.Initialize();
+                        mouse.Initialize();
                         Drawing.OnEndScene += draw;
+                        Game.OnUpdate += update;
                     }
                     else
                     {
                         rectangle.Dispose();
+                        mouse.Dispose();
                         Drawing.OnEndScene -= draw;
+                        Game.OnUpdate -= update;
                     }
                 };
-
-            var sliderSizeX =
-                minimapMenu.AddItem(
-                    new MenuItem(minimapMenu.Name + "sliderSizeX", "Size X (Width)").SetValue(
-                        new Slider((int)minimap.Size.X, 0, 400)));
-            sliderSizeX.ValueChanged += (sender, args) =>
-                {
-                    minimap.Size = new Vector2(args.GetNewValue<Slider>().Value, minimap.Size.Y);
-                    rectangle.Size = minimap.Size;
-                };
-
-            var sliderSizeY =
-                minimapMenu.AddItem(
-                    new MenuItem(minimapMenu.Name + "sliderSizeY", "Size Y (Height)").SetValue(
-                        new Slider((int)minimap.Size.Y, 0, 400)));
-            sliderSizeY.ValueChanged += (sender, args) =>
-                {
-                    minimap.Size = new Vector2(minimap.Size.X, args.GetNewValue<Slider>().Value);
-                    rectangle.Size = minimap.Size;
-                };
-
-            minimap.Size = new Vector2(sliderSizeX.GetValue<Slider>().Value, sliderSizeY.GetValue<Slider>().Value);
-            rectangle.Size = minimap.Size;
 
             DelayAction.Add(200, () => Menu.Menu.Root.AddSubMenu(menu));
         }
@@ -655,7 +631,7 @@ namespace Ensage.Common
             }
             else
             {
-                screenX = ScreenSize.X - minimap.Position.X - scaledX - minimap.Size.X;
+                screenX = ScreenSize.X - minimap.Position.X + scaledX - minimap.Size.X;
             }
 
             var screenY = ScreenSize.Y - scaledY - minimap.Position.Y;
