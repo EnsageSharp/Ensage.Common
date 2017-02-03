@@ -16,9 +16,12 @@ namespace Ensage.Common
     using System;
     using System.Collections.Generic;
 
+    using Ensage.Common.Menu;
     using Ensage.Common.Objects.UtilityObjects;
 
     using SharpDX;
+
+    using Rectangle = Ensage.Common.Objects.RenderObjects.Rectangle;
 
     /// <summary>
     ///     Class used for locating several HUD positions
@@ -104,11 +107,15 @@ namespace Ensage.Common
         /// <summary>
         ///     The current minimap.
         /// </summary>
-        private static Minimap currentMinimap;
+        private static Minimap minimap;
+
+        private static bool minimapIsOnRight1;
 
         private static float minimapMapScaleX;
 
         private static float minimapMapScaleY;
+
+        private static Rectangle rectangle;
 
         /// <summary>
         ///     The y.
@@ -134,7 +141,7 @@ namespace Ensage.Common
                 return;
             }
 
-            currentMinimap = new Minimap(new Vector2(-2, 1), new Vector2(0));
+            minimap = new Minimap(new Vector2(-2, 1), new Vector2(0));
 
             var ratio = Math.Floor((decimal)(ScreenSize.X / ScreenSize.Y * 100));
 
@@ -150,11 +157,9 @@ namespace Ensage.Common
                 HpBarWidth = 69;
                 HpBarX = 36;
                 HpBarY = 23;
-                currentMinimap.Size = new Vector2(
-                    0.1070833333333333f * ScreenSize.X,
-                    0.2240740740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1070833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
             else if (ratio == 177)
             {
@@ -167,11 +172,9 @@ namespace Ensage.Common
                 HpBarWidth = 86.5;
                 HpBarX = 44;
                 HpBarY = 27;
-                currentMinimap.Size = new Vector2(
-                    0.1270833333333333f * ScreenSize.X,
-                    0.2240740740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1270833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
             else if (ratio == 166)
             {
@@ -184,11 +187,9 @@ namespace Ensage.Common
                 HpBarWidth = 71;
                 HpBarX = 37;
                 HpBarY = 22;
-                currentMinimap.Size = new Vector2(
-                    0.1370833333333333f * ScreenSize.X,
-                    0.2240740740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1370833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
             else if (ratio == 160)
             {
@@ -201,11 +202,9 @@ namespace Ensage.Common
                 HpBarWidth = 75;
                 HpBarX = 38.3;
                 HpBarY = 25;
-                currentMinimap.Size = new Vector2(
-                    0.1425833333333333f * ScreenSize.X,
-                    0.2240740740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1425833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
             else if (ratio == 150)
             {
@@ -218,11 +217,9 @@ namespace Ensage.Common
                 HpBarWidth = 79.2;
                 HpBarX = 40.2;
                 HpBarY = 24;
-                currentMinimap.Size = new Vector2(
-                    0.1500233333333333f * ScreenSize.X,
-                    0.2200940740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1500233333333333f * ScreenSize.X, 0.2200940740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
             else if (ratio == 133)
             {
@@ -235,11 +232,9 @@ namespace Ensage.Common
                 HpBarWidth = 71;
                 HpBarX = 36.6;
                 HpBarY = 23;
-                currentMinimap.Size = new Vector2(
-                    0.1690833333333333f * ScreenSize.X,
-                    0.2225740740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1690833333333333f * ScreenSize.X, 0.2225740740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
             else if (ratio == 125)
             {
@@ -252,11 +247,9 @@ namespace Ensage.Common
                 HpBarWidth = 96.5;
                 HpBarX = 49;
                 HpBarY = 32;
-                currentMinimap.Size = new Vector2(
-                    0.1850833333333333f * ScreenSize.X,
-                    0.2240740740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1850833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
             else
             {
@@ -272,11 +265,9 @@ namespace Ensage.Common
                 HpBarWidth = 83.5;
                 HpBarX = 43;
                 HpBarY = 28;
-                currentMinimap.Size = new Vector2(
-                    0.1270833333333333f * ScreenSize.X,
-                    0.2240740740740741f * ScreenSize.Y);
-                minimapMapScaleX = currentMinimap.Size.X / mapWidth;
-                minimapMapScaleY = currentMinimap.Size.Y / mapHeight;
+                minimap.Size = new Vector2(0.1270833333333333f * ScreenSize.X, 0.2240740740740741f * ScreenSize.Y);
+                minimapMapScaleX = minimap.Size.X / mapWidth;
+                minimapMapScaleY = minimap.Size.Y / mapHeight;
             }
 
             Monitor = ScreenSize.X / compareWidth;
@@ -309,6 +300,69 @@ namespace Ensage.Common
             // mouse.Y = minimapPos.Y;
             // };
             // Game.OnUpdate += update;
+            var mipos = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
+
+            rectangle = new Rectangle(minimap.Size, new ColorBGRA(255, 255, 255, 25));
+            rectangle.Position = mipos;
+            var menu = new Menu.Menu("HUDInfo", nameof(HUDInfo));
+            var minimapOnRight =
+                menu.AddItem(
+                    new MenuItem(menu.Name + "minimapRight", "Minimap is on the right").SetValue(false)
+                        .SetTooltip("Enable this if you have minimap on the right"));
+            minimapOnRight.ValueChanged += (sender, args) => { MinimapIsOnRight = args.GetNewValue<bool>(); };
+            var minimapMenu =
+                menu.AddSubMenu(
+                    new Menu.Menu(
+                        "MinimapAdjust (" + ScreenSize.X + "x" + ScreenSize.Y + ")",
+                        menu.Name + "minimap" + ScreenSize));
+            minimapMenu.AddItem(
+                new MenuItem(minimapMenu.Name + "do not touch below", "Do not touch below unless...").SetTooltip(
+                    "...you know what you are doing").SetFontColor(Color.OrangeRed));
+            var enableRectangle =
+                minimapMenu.AddItem(
+                    new MenuItem(minimapMenu.Name + "enablerectangle", "Enable minimap adjusting").SetTooltip(
+                            "Draws rectangle over minimap (requires -dx9), adjust this rectangle with sliders so it fits with your minimap size")
+                        .SetValue(false));
+            enableRectangle.SetValue(false);
+            DrawingEndScene draw = eventArgs => rectangle.Render();
+            enableRectangle.ValueChanged += (sender, args) =>
+                {
+                    if (args.GetNewValue<bool>())
+                    {
+                        rectangle.Initialize();
+                        Drawing.OnEndScene += draw;
+                    }
+                    else
+                    {
+                        rectangle.Dispose();
+                        Drawing.OnEndScene -= draw;
+                    }
+                };
+
+            var sliderSizeX =
+                minimapMenu.AddItem(
+                    new MenuItem(minimapMenu.Name + "sliderSizeX", "Size X (Width)").SetValue(
+                        new Slider((int)minimap.Size.X, 0, 400)));
+            sliderSizeX.ValueChanged += (sender, args) =>
+                {
+                    minimap.Size = new Vector2(args.GetNewValue<Slider>().Value, minimap.Size.Y);
+                    rectangle.Size = minimap.Size;
+                };
+
+            var sliderSizeY =
+                minimapMenu.AddItem(
+                    new MenuItem(minimapMenu.Name + "sliderSizeY", "Size Y (Height)").SetValue(
+                        new Slider((int)minimap.Size.Y, 0, 400)));
+            sliderSizeY.ValueChanged += (sender, args) =>
+                {
+                    minimap.Size = new Vector2(minimap.Size.X, args.GetNewValue<Slider>().Value);
+                    rectangle.Size = minimap.Size;
+                };
+
+            minimap.Size = new Vector2(sliderSizeX.GetValue<Slider>().Value, sliderSizeY.GetValue<Slider>().Value);
+            rectangle.Size = minimap.Size;
+
+            DelayAction.Add(200, () => Menu.Menu.Root.AddSubMenu(menu));
         }
 
         #endregion
@@ -326,6 +380,37 @@ namespace Ensage.Common
         public static float HpBarY { get; set; }
 
         /// <summary>
+        ///     The current minimap.
+        /// </summary>
+        public static Minimap Minimap
+        {
+            get
+            {
+                return minimap;
+            }
+
+            set
+            {
+                minimap = value;
+            }
+        }
+
+        /// <summary>The minimap is on right.</summary>
+        public static bool MinimapIsOnRight
+        {
+            get
+            {
+                return minimapIsOnRight1;
+            }
+
+            set
+            {
+                minimapIsOnRight1 = value;
+                rectangle.Position = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
+            }
+        }
+
+        /// <summary>
         ///     The monitor.
         /// </summary>
         public static float Monitor { get; set; }
@@ -339,8 +424,8 @@ namespace Ensage.Common
             {
                 var mouse = Game.MouseScreenPosition;
 
-                var scaledX = mouse.X - currentMinimap.Position.X;
-                var scaledY = ScreenSize.Y - mouse.Y - currentMinimap.Position.Y;
+                var scaledX = mouse.X - minimap.Position.X;
+                var scaledY = ScreenSize.Y - mouse.Y - minimap.Position.Y;
 
                 var x = scaledX / minimapMapScaleX + MapLeft;
                 var y = scaledY / minimapMapScaleY + MapBottom;
@@ -560,11 +645,20 @@ namespace Ensage.Common
             var x = mapPosition.X - MapLeft;
             var y = mapPosition.Y - MapBottom;
 
-            var scaledX = Math.Min(Math.Max(x * minimapMapScaleX, 0), currentMinimap.Size.X);
-            var scaledY = Math.Min(Math.Max(y * minimapMapScaleY, 0), currentMinimap.Size.Y);
+            var scaledX = Math.Min(Math.Max(x * minimapMapScaleX, 0), minimap.Size.X);
+            var scaledY = Math.Min(Math.Max(y * minimapMapScaleY, 0), minimap.Size.Y);
 
-            var screenX = currentMinimap.Position.X + scaledX;
-            var screenY = ScreenSize.Y - scaledY - currentMinimap.Position.Y;
+            float screenX;
+            if (!MinimapIsOnRight)
+            {
+                screenX = minimap.Position.X + scaledX;
+            }
+            else
+            {
+                screenX = ScreenSize.X - minimap.Position.X - scaledX - minimap.Size.X;
+            }
+
+            var screenY = ScreenSize.Y - scaledY - minimap.Position.Y;
 
             return new Vector2((float)Math.Floor(screenX), (float)Math.Floor(screenY));
         }

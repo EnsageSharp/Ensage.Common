@@ -24,7 +24,7 @@ namespace Ensage.Common.Menu
     /// <summary>
     ///     The common menu.
     /// </summary>
-    internal class CommonMenu : Menu
+    public class CommonMenu : Menu
     {
         #region Fields
 
@@ -66,7 +66,7 @@ namespace Ensage.Common.Menu
         ///     Initializes a new instance of the <see cref="CommonMenu" /> class.
         /// </summary>
         [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
-        public CommonMenu()
+        internal CommonMenu()
             : base("GeneralSettings", "Ensage.Common", true, null, false)
         {
             this.Settings();

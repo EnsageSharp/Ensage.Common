@@ -1,4 +1,4 @@
-﻿// <copyright file="DrawObject.cs" company="EnsageSharp">
+﻿// <copyright file="RenderObject.cs" company="EnsageSharp">
 //    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -11,16 +11,21 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
-namespace Ensage.Common.Objects.DrawObjects
+namespace Ensage.Common.Objects.RenderObjects
 {
+    using System;
+
+    using Ensage.Common.Objects.DrawObjects;
+
     using SharpDX;
 
-    using Rectangle = Ensage.Common.Objects.RenderObjects.Rectangle;
-
-    /// <summary>The draw object.</summary>
-    public abstract class DrawObject : IDrawObject
+    /// <summary>The render object.</summary>
+    public abstract class RenderObject : IRenderObject
     {
         #region Public Properties
+
+        /// <summary>Gets a value indicating whether is initialized.</summary>
+        public bool IsInitialized { get; private set; }
 
         /// <summary>Gets or sets the position.</summary>
         public virtual Vector2 Position { get; set; }
@@ -91,8 +96,59 @@ namespace Ensage.Common.Objects.DrawObjects
                 rectangle.Position.Y + indent);
         }
 
-        /// <summary>The draw.</summary>
-        public abstract void Draw();
+        /// <summary>The dispose.</summary>
+        public virtual void Dispose()
+        {
+            this.IsInitialized = false;
+            Drawing.OnPostReset -= this.OnPostReset;
+            Drawing.OnPreReset -= this.OnPreReset;
+        }
+
+        /// <summary>The end scene.</summary>
+        public abstract void EndScene();
+
+        /// <summary>Initializes render object, subscribes to reset events</summary>
+        public virtual void Initialize()
+        {
+            this.IsInitialized = true;
+            Drawing.OnPostReset += this.OnPostReset;
+            Drawing.OnPreReset += this.OnPreReset;
+        }
+
+        /// <summary>The post reset.</summary>
+        public abstract void PostReset();
+
+        /// <summary>The pre reset.</summary>
+        public abstract void PreReset();
+
+        /// <summary>The render. Must be called in OnEndScene</summary>
+        public void Render()
+        {
+            if (!this.IsInitialized)
+            {
+                return;
+            }
+
+            this.EndScene();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>The on post reset.</summary>
+        /// <param name="args">The args.</param>
+        private void OnPostReset(EventArgs args)
+        {
+            this.PostReset();
+        }
+
+        /// <summary>The on pre reset.</summary>
+        /// <param name="args">The args.</param>
+        private void OnPreReset(EventArgs args)
+        {
+            this.PreReset();
+        }
 
         #endregion
     }

@@ -166,6 +166,9 @@
     <Compile Include="Objects\Lanes.cs" />
     <Compile Include="Objects\Names.cs" />
     <Compile Include="Objects\Players.cs" />
+    <Compile Include="Objects\RenderObjects\IRenderObject.cs" />
+    <Compile Include="Objects\RenderObjects\Rectangle.cs" />
+    <Compile Include="Objects\RenderObjects\RenderObject.cs" />
     <Compile Include="Objects\Textures.cs" />
     <Compile Include="Objects\Towers.cs" />
     <Compile Include="Objects\Trees.cs" />
