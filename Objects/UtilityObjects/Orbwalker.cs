@@ -259,11 +259,18 @@ namespace Ensage.Common.Objects.UtilityObjects
         public override void AttackStart()
         {
             DelayAction.Add(
-                (int)(UnitDatabase.GetAttackRate(this.Unit) * 1000),
+                (int)
+                ((this.UsingCustomAttackSpeedValue
+                      ? UnitDatabase.GetAttackRate(this.Unit, this.CustomAttackSpeedValue)
+                      : UnitDatabase.GetAttackRate(this.Unit)) * 1000),
                 () =>
                     {
                         this.currentCount +=
-                            (float)((Game.RawGameTime - this.counterStart) / UnitDatabase.GetAttackRate(this.Unit));
+                            (float)
+                            ((Game.RawGameTime - this.counterStart)
+                             / (this.UsingCustomAttackSpeedValue
+                                    ? UnitDatabase.GetAttackRate(this.Unit, this.CustomAttackSpeedValue)
+                                    : UnitDatabase.GetAttackRate(this.Unit)));
                     });
             if (!this.counter10Sleeper2.Sleeping)
             {
@@ -379,22 +386,32 @@ namespace Ensage.Common.Objects.UtilityObjects
                     this.AttackOrder();
                     this.attackSleeper.Sleep(
                         (float)
-                        (UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000
+                        ((this.UsingCustomAttackSpeedValue
+                              ? UnitDatabase.GetAttackPoint(this.Unit, this.CustomAttackSpeedValue)
+                              : UnitDatabase.GetAttackPoint(this.Unit)) * 1000 + this.Unit.GetTurnTime(target) * 1000
                          + Game.Ping + 100));
                     this.moveSleeper.Sleep(
                         (float)
-                        (UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50));
+                        ((this.UsingCustomAttackSpeedValue
+                              ? UnitDatabase.GetAttackPoint(this.Unit, this.CustomAttackSpeedValue)
+                              : UnitDatabase.GetAttackPoint(this.Unit)) * 1000 + this.Unit.GetTurnTime(target) * 1000
+                         + 50));
                     if (!this.hero)
                     {
                         return;
                     }
 
                     Utils.Sleep(
-                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + Game.Ping
-                        + 100,
+                        (this.UsingCustomAttackSpeedValue
+                             ? UnitDatabase.GetAttackPoint(this.Unit, this.CustomAttackSpeedValue)
+                             : UnitDatabase.GetAttackPoint(this.Unit)) * 1000 + this.Unit.GetTurnTime(target) * 1000
+                        + Game.Ping + 100,
                         "Orbwalk.Attack");
                     Utils.Sleep(
-                        UnitDatabase.GetAttackPoint(this.Unit) * 1000 + this.Unit.GetTurnTime(target) * 1000 + 50,
+                        (this.UsingCustomAttackSpeedValue
+                             ? UnitDatabase.GetAttackPoint(this.Unit, this.CustomAttackSpeedValue)
+                             : UnitDatabase.GetAttackPoint(this.Unit)) * 1000 + this.Unit.GetTurnTime(target) * 1000
+                        + 50,
                         "Orbwalk.Move");
                     return;
                 }

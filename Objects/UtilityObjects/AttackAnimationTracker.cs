@@ -24,6 +24,9 @@ namespace Ensage.Common.Objects.UtilityObjects
     {
         #region Fields
 
+        /// <summary>The custom attack speed value.</summary>
+        private float customAttackSpeedValue;
+
         /// <summary>
         ///     The is attacking.
         /// </summary>
@@ -61,6 +64,21 @@ namespace Ensage.Common.Objects.UtilityObjects
 
         #region Public Properties
 
+        /// <summary>Gets or sets the custom attack speed value.</summary>
+        public float CustomAttackSpeedValue
+        {
+            get
+            {
+                return this.customAttackSpeedValue;
+            }
+
+            set
+            {
+                this.customAttackSpeedValue = value;
+                this.UsingCustomAttackSpeedValue = this.customAttackSpeedValue > 0;
+            }
+        }
+
         /// <summary>
         ///     Gets the last unit attack start.
         /// </summary>
@@ -95,6 +113,9 @@ namespace Ensage.Common.Objects.UtilityObjects
                 }
             }
         }
+
+        /// <summary>The using custom attack speed value.</summary>
+        public bool UsingCustomAttackSpeedValue { get; private set; }
 
         #endregion
 
@@ -309,9 +330,17 @@ namespace Ensage.Common.Objects.UtilityObjects
 
             this.LastUnitAttackStart = Game.RawGameTime;
             this.NextUnitAttackEnd =
-                (float)(this.LastUnitAttackStart * 1000 + UnitDatabase.GetAttackRate(this.Unit) * 1000);
+                (float)
+                (this.LastUnitAttackStart * 1000
+                 + (this.UsingCustomAttackSpeedValue
+                        ? UnitDatabase.GetAttackRate(this.Unit, this.customAttackSpeedValue)
+                        : UnitDatabase.GetAttackRate(this.Unit)) * 1000);
             this.NextUnitAttackRelease =
-                (float)(this.LastUnitAttackStart * 1000 + UnitDatabase.GetAttackPoint(this.Unit) * 1000);
+                (float)
+                (this.LastUnitAttackStart * 1000
+                 + (this.UsingCustomAttackSpeedValue
+                        ? UnitDatabase.GetAttackPoint(this.Unit, this.customAttackSpeedValue)
+                        : UnitDatabase.GetAttackPoint(this.Unit)) * 1000);
             this.AttackOrderSent = false;
             this.AttackStart();
         }
