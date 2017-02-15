@@ -14,6 +14,7 @@
 namespace Ensage.Common
 {
     using System;
+    using System.Runtime.CompilerServices;
 
     using Ensage.Common.Menu;
     using Ensage.Common.Objects.UtilityObjects;
@@ -61,6 +62,9 @@ namespace Ensage.Common
         ///     The user delay.
         /// </summary>
         public static float UserDelay { get; private set; }
+
+        /// <summary>Gets a value indicating whether enable orbwalking.</summary>
+        public static bool EnableOrbwalking { get; private set; }
 
         #endregion
 
@@ -182,6 +186,8 @@ namespace Ensage.Common
         {
             // menu.Items.Remove(menu.Items.FirstOrDefault(x => x.Name == ObjectManager.LocalHero?.Name + "Common.Orbwalking.UserDelay"));
             orbwalker.Unit = null;
+            Menu.Menu.Root.RemoveSubMenu(menu.Name);
+            menu = null;
         }
 
         private static void OnLoad(object sender, EventArgs eventArgs)
@@ -190,13 +196,27 @@ namespace Ensage.Common
             {
                 menu = Menu.Menu.Root.AddSubMenu(new Menu.Menu("Orbwalking", "Common.Orbwalking"));
 
+                var enableOrbwalker =
+                    menu.AddItem(
+                        new MenuItem(
+                                "common.orbwalking.enable",
+                                "Enable orbwalking for " + Game.Localize(ObjectManager.LocalHero.Name),
+                                true).SetValue(true)
+                            .SetTooltip(
+                                "Disable this if you dont want currently picked hero to move between attacks. Consider adjusting the AttackCancelDelay below in case attack is getting canceled"));
+                enableOrbwalker.ValueChanged += (o, args) =>
+                    { EnableOrbwalking = args.GetNewValue<bool>(); };
+                EnableOrbwalking = enableOrbwalker.GetValue<bool>();
+
                 var enableDebugMenuItem = menu.AddItem(new MenuItem("common.orbwalking.debug", "Debug").SetValue(false));
                 enableDebugMenuItem.ValueChanged += EnableDebugMenuItem_ValueChanged;
 
                 var userDelayMenuItem =
                     menu.AddItem(
                         new MenuItem("Common.Orbwalking.UserDelay", "Attack cancel delay", true).SetValue(
-                            new Slider(0, -200, 200)));
+                                new Slider(0, -200, 200))
+                            .SetTooltip(
+                                "Minus value=attack animation gets canceled sooner, Plus value=attack animation gets canceled later (set plus value in case your hero is canceling attacks)"));
 
                 UserDelay = userDelayMenuItem.GetValue<Slider>().Value;
                 userDelayMenuItem.ValueChanged += (o, args) => { UserDelay = args.GetNewValue<Slider>().Value; };

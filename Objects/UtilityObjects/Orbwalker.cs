@@ -375,6 +375,59 @@ namespace Ensage.Common.Objects.UtilityObjects
                                && target.Distance2D(this.Unit)
                                <= this.Unit.GetAttackRange() + this.Unit.HullRadius + 50 + targetHull + bonusRange
                                + Math.Max(distance, 0);
+            if (!Orbwalking.EnableOrbwalking)
+            {
+                if (isValid && isAttackable
+                    || !isAttackable && target != null && target.IsValid && this.Unit.IsAttacking()
+                    && this.Unit.GetTurnTime(target.Position) < 0.1)
+                {
+                    if (this.Unit.CanAttack())
+                    {
+                        if (!this.attackSleeper.Sleeping)
+                        {
+                            this.attacker.Attack(target, attackmodifiers);
+                            this.attackSleeper.Sleep(100);
+                        }
+
+                        return;
+                    }
+                }
+                else
+                {
+                    if (this.moveSleeper.Sleeping)
+                    {
+                        return;
+                    }
+
+                    if (followTarget && target != null)
+                    {
+                        var pos = target.NetworkActivity == NetworkActivity.Move
+                                      ? target.Predict(Game.Ping + 100)
+                                      : target.Position;
+                        this.Unit.Move(pos);
+                        this.customMovePosition = true;
+                        this.lastMovePosition = pos;
+                    }
+                    else
+                    {
+                        this.Unit.Move(movePosition);
+                        if (movePosition != Game.MousePosition)
+                        {
+                            this.customMovePosition = true;
+                            this.lastMovePosition = movePosition;
+                        }
+                        else
+                        {
+                            this.customMovePosition = false;
+                        }
+                    }
+
+                    this.moveSleeper.Sleep(100);
+                }
+
+                return;
+            }
+
             if (isValid && isAttackable
                 || !isAttackable && target != null && target.IsValid && this.Unit.IsAttacking()
                 && this.Unit.GetTurnTime(target.Position) < 0.1)
