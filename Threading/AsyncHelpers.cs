@@ -87,6 +87,7 @@ namespace Ensage.Common.Threading
         /// <param name="name">Name of the modifier.</param>
         /// <param name="ct"></param>
         /// <returns></returns>
+        [Obsolete("WaitModifierAsync is deprecated, please use WaitGainModifierAsync instead.")]
         public static async Task<bool> WaitModifierAsync(
             this Unit target,
             string name,
@@ -95,6 +96,114 @@ namespace Ensage.Common.Threading
             try
             {
                 while (!target.HasModifier(name))
+                {
+                    await Task.Delay(100, ct);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Waits until the target has a certain modifier.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="name">Name of the modifier.</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public static async Task<bool> WaitGainModifierAsync(
+            this Unit target,
+            string name,
+            CancellationToken ct = default(CancellationToken))
+        {
+            try
+            {
+                while (!target.HasModifier(name))
+                {
+                    await Task.Delay(100, ct);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Waits until the target hasn't a certain modifier.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="name">Name of the modifier.</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public static async Task<bool> WaitLossModifierAsync(
+            this Unit target,
+            string name,
+            CancellationToken ct = default(CancellationToken))
+        {
+            try
+            {
+                while (target.HasModifier(name))
+                {
+                    await Task.Delay(100, ct);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Waits until the target has a certain unitstate.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="state">UnitState to wait for.</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public static async Task<bool> WaitGainUnitStateAsync(
+            this Unit target,
+            UnitState state,
+            CancellationToken ct = default(CancellationToken))
+        {
+            try
+            {
+                while (!target.UnitState.HasFlag(state))
+                {
+                    await Task.Delay(100, ct);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Waits until the target has not a certain unitstate.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="state">UnitState to wait for.</param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public static async Task<bool> WaitLossUnitStateAsync(
+            this Unit target,
+            UnitState state,
+            CancellationToken ct = default(CancellationToken))
+        {
+            try
+            {
+                while (target.UnitState.HasFlag(state))
                 {
                     await Task.Delay(100, ct);
                 }

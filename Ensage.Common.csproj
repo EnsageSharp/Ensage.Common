@@ -98,7 +98,9 @@
     <Compile Include="Extensions\SharpDX\Vector3Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
     <Compile Include="Extensions\UnitExtensions.cs" />
-    <Compile Include="FunctionWheel.cs" />
+    <Compile Include="FuncWheel\FunctionWheel.cs" />
+    <Compile Include="FuncWheel\IWheelEntry.cs" />
+    <Compile Include="FuncWheel\WheelEntry.cs" />
     <Compile Include="HUDInfo.cs" />
     <Compile Include="Menu\Draw\DragAndDrop.cs" />
     <Compile Include="Menu\Draw\DraggableItem.cs" />

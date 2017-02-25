@@ -1,18 +1,20 @@
-﻿namespace Ensage.Common
+﻿namespace Ensage.Common.FuncWheel
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Input;
 
     using Ensage.Common.Extensions;
+    using Ensage.Common.Threading;
 
     using SharpDX;
 
     /// <summary>
-    /// The function wheel. Read the ctor for more infos about it.
+    ///     The function wheel. Read the ctor for more infos about it.
     /// </summary>
-    public class FunctionWheel : IDisposable
+    public class FunctionWheel : List<IWheelEntry>, IDisposable
     {
         #region Constants
 
@@ -46,7 +48,7 @@
 
         private static readonly Vector2[] ArrowPos8 =
             {
-               new Vector2(30, -25), // Up
+                new Vector2(30, -25), // Up
                 new Vector2(64, -5), // Up Right
                 new Vector2(80, 25), // Right
                 new Vector2(64, 60), // Down Right
@@ -59,6 +61,10 @@
         private static readonly DotaTexture ArrowR;
 
         private static readonly DotaTexture ArrowRD;
+
+        private static readonly DotaTexture[] ArrowTextures4;
+
+        private static readonly DotaTexture[] ArrowTextures8;
 
         private static readonly DotaTexture ArrowU;
 
@@ -85,7 +91,7 @@
             };
 
         private static readonly Vector2[] TextPos8 =
-           {
+            {
                 new Vector2(50, -60), // Up
                 new Vector2(105, -20), // Up Right
                 new Vector2(130, 30), // Right
@@ -96,22 +102,17 @@
                 new Vector2(0, -20) // UpLeft
             };
 
-        private static readonly DotaTexture[] ArrowTextures4;
-        private static readonly DotaTexture[] ArrowTextures8;
-
         private static readonly Vector2 TextSize = new Vector2(24, 200);
 
         #endregion
 
         #region Fields
 
-        private Dictionary<string, Action> functions = new Dictionary<string, Action>();
-
         private uint key;
 
         private bool keyDown;
 
-        private Action selectedAction;
+        private IWheelEntry selectedAction;
 
         private Vector2 startPos;
 
@@ -136,25 +137,9 @@
             ArrowU = Drawing.GetTexture("materials/ensage_ui/other/chat_wheel/arrow_7.vmat");
             ArrowUR = Drawing.GetTexture("materials/ensage_ui/other/chat_wheel/arrow_8.vmat");
 
-            ArrowTextures4 = new[]
-            {
-                ArrowU,
-                ArrowR,
-                ArrowD,
-                ArrowL
-            };
+            ArrowTextures4 = new[] { ArrowU, ArrowR, ArrowD, ArrowL };
 
-            ArrowTextures8 = new[]
-           {
-                ArrowU,
-                ArrowUR,
-                ArrowR,
-                ArrowRD,
-                ArrowD,
-                ArrowLD,
-                ArrowL,
-                ArrowLU
-            };
+            ArrowTextures8 = new[] { ArrowU, ArrowUR, ArrowR, ArrowRD, ArrowD, ArrowLD, ArrowL, ArrowLU };
         }
 
         /// <summary>
@@ -162,27 +147,16 @@
         /// </summary>
         /// <param name="key">Hotkey which will show the function wheel</param>
         public FunctionWheel(Key key)
-        {
-            this.key = (uint)KeyInterop.VirtualKeyFromKey(key);
-            Game.OnWndProc += this.Game_OnWndProc;
-            Drawing.OnDraw += this.Drawing_OnDraw;
-        }
+            : this((uint)KeyInterop.VirtualKeyFromKey(key))
+        {}
 
         /// <summary>
         ///     Creates a chat wheel with custom bound functions, like the dota 2 chatwheel.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="functionDictionary">
-        ///     Sets and gets the associated functions for the function wheel.
-        ///     The key is the message displayed to the user and the Action the function which will be exected when selected.
-        ///     The maximum item count is 8!
-        ///     If you want a certain position to be empty, just provide an empty key.
-        /// </param>
-        /// <exception cref="Exception">Throws an exception when too many items are in the dictionary.</exception>
-        public FunctionWheel(Key key, Dictionary<string,Action> functionDictionary )
+        /// <param name="keyCode">Hotkey which will show the function wheel</param>
+        public FunctionWheel(uint keyCode)
         {
-            this.key = (uint)KeyInterop.VirtualKeyFromKey(key);
-            this.functions = functionDictionary;
+            this.key = keyCode;
             Game.OnWndProc += this.Game_OnWndProc;
             Drawing.OnDraw += this.Drawing_OnDraw;
         }
@@ -190,29 +164,6 @@
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        ///     Sets and gets the associated functions for the function wheel.
-        ///     The key is the message displayed to the user and the Action the function which will be exected when selected.
-        ///     The maximum item count is 8!
-        ///     If you want a certain position to be empty, just provide an empty key.
-        /// </summary>
-        /// <exception cref="Exception">Throws an exception when too many items are in the dictionary.</exception>
-        public Dictionary<string, Action> FunctionDictionary
-        {
-            get
-            {
-                return this.functions;
-            }
-            set
-            {
-                if (this.functions.Count > 8)
-                    throw new Exception(
-                        $"Too many actions for the FunctionWheel. Maximum is 8 but {value.Count} were given.");
-                this.functions = value;
-            }
-        }
-
         /// <summary>
         ///     The key associated with this function wheel.
         /// </summary>
@@ -228,9 +179,40 @@
             }
         }
 
+        /// <summary>
+        ///     The keycode associated with this function wheel.
+        /// </summary>
+        public uint KeyCode
+        {
+            get
+            {
+                return this.key;
+            }
+            set
+            {
+                this.key = value;
+            }
+        }
+
         #endregion
 
         #region Public Methods and Operators
+
+        public new void Add(IWheelEntry entry)
+        {
+            if (this.Count > 8)
+            {
+                throw new IndexOutOfRangeException(
+                    $"Too many actions for the FunctionWheel. Maximum is 8 but {this.Count + 1} were given.");
+            }
+
+            base.Add(entry);
+        }
+
+        public void Add(string displayName, Func<Task> func)
+        {
+            this.Add(new WheelEntry(displayName, func));
+        }
 
         public void Dispose()
         {
@@ -246,7 +228,7 @@
         {
             if (!this.keyDown) return;
 
-            var count = this.functions.Count;
+            var count = this.Count;
             //if (count == 0) return;
 
             Drawing.DrawRect(this.startPos, CircleSize, CircleBg);
@@ -272,7 +254,6 @@
             drawCursorPos -= new Vector2(18, 18);
             Drawing.DrawRect(drawCursorPos, new Vector2(36, 36), Cursor);
 
-            var keyValues = this.functions.ToArray();
             if (count <= 4)
             {
                 var selectedItem = 0;
@@ -283,9 +264,8 @@
                     for (var i = 0; i < count; ++i)
                     {
                         // skip empty keys
-                        if( keyValues[i].Key == string.Empty)
-                            continue;
-                        
+                        if (this[i].DisplayName == string.Empty) continue;
+
                         var itemDistance = cursorPos.Distance(this.startPos + TextPos4[i]);
                         if (itemDistance < minDistance)
                         {
@@ -295,34 +275,30 @@
                     }
                     // draw arrow
                     var arrowTexture = ArrowTextures4[selectedItem];
-                    Drawing.DrawRect(
-                            this.startPos + ArrowPos4[selectedItem],
-                            new Vector2(38, 38),
-                            arrowTexture);
-
+                    Drawing.DrawRect(this.startPos + ArrowPos4[selectedItem], new Vector2(38, 38), arrowTexture);
 
                     // execute action
-                    this.selectedAction = keyValues[selectedItem].Value;
+                    this.selectedAction = this[selectedItem];
                 }
 
                 // draw text items
                 for (var i = 0; i < count; ++i)
                 {
                     // selected items have a different color
-                    Color color = Color.White;
+                    var color = Color.White;
                     if (selectedSomething && i == selectedItem) color = Color.Yellow;
 
                     // since we are drawing left, we need to measure the text
                     if (i == 3)
                     {
                         var size = Drawing.MeasureText(
-                            keyValues[i].Key,
+                            this[i].DisplayName,
                             "Arial",
                             TextSize,
                             FontFlags.AntiAlias | FontFlags.DropShadow);
                         size.Y = 0;
                         Drawing.DrawText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             this.startPos + TextPos4[i] - size,
                             TextSize,
                             color,
@@ -332,14 +308,14 @@
                     else if (i % 2 == 0)
                     {
                         var size = Drawing.MeasureText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             "Arial",
                             TextSize,
                             FontFlags.AntiAlias | FontFlags.DropShadow);
                         size.X /= 2;
                         size.Y = 0;
                         Drawing.DrawText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             this.startPos + TextPos4[i] - size,
                             TextSize,
                             color,
@@ -348,7 +324,7 @@
                     else
                     {
                         Drawing.DrawText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             this.startPos + TextPos4[i],
                             TextSize,
                             color,
@@ -366,8 +342,7 @@
                     for (var i = 0; i < count; ++i)
                     {
                         // skip empty keys
-                        if (keyValues[i].Key == string.Empty)
-                            continue;
+                        if (this[i].DisplayName == string.Empty) continue;
 
                         var itemDistance = cursorPos.Distance(this.startPos + TextPos8[i]);
                         if (itemDistance < minDistance)
@@ -378,31 +353,27 @@
                     }
                     // draw arrow
                     var arrowTexture = ArrowTextures8[selectedItem];
-                    Drawing.DrawRect(
-                            this.startPos + ArrowPos8[selectedItem],
-                            new Vector2(38, 38),
-                            arrowTexture);
-
+                    Drawing.DrawRect(this.startPos + ArrowPos8[selectedItem], new Vector2(38, 38), arrowTexture);
 
                     // execute action
-                    this.selectedAction = keyValues[selectedItem].Value;
+                    this.selectedAction = this[selectedItem];
                 }
                 // draw text items
                 for (var i = 0; i < count; ++i)
                 {
-                    Color color = Color.White;
+                    var color = Color.White;
                     if (selectedSomething && i == selectedItem) color = Color.Yellow;
                     // since we are drawing left, we need to measure the text
                     if (i > 4)
                     {
                         var size = Drawing.MeasureText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             "Arial",
                             TextSize,
                             FontFlags.AntiAlias | FontFlags.DropShadow);
                         size.Y = 0;
                         Drawing.DrawText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             this.startPos + TextPos8[i] - size,
                             TextSize,
                             color,
@@ -412,14 +383,14 @@
                     else if (i == 0 || i == 4)
                     {
                         var size = Drawing.MeasureText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             "Arial",
                             TextSize,
                             FontFlags.AntiAlias | FontFlags.DropShadow);
                         size.X /= 2;
                         size.Y = 0;
                         Drawing.DrawText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             this.startPos + TextPos8[i] - size,
                             TextSize,
                             color,
@@ -428,7 +399,7 @@
                     else
                     {
                         Drawing.DrawText(
-                            keyValues[i].Key,
+                             this[i].DisplayName,
                             this.startPos + TextPos8[i],
                             TextSize,
                             color,
@@ -438,7 +409,7 @@
             }
             if (selectedSomething)
             {
-                Drawing.DrawRect(this.startPos + new Vector2(0,-4), CircleSize, CirclePtr);
+                Drawing.DrawRect(this.startPos + new Vector2(0, -4), CircleSize, CirclePtr);
             }
         }
 
@@ -458,8 +429,12 @@
             {
                 if (this.selectedAction != null)
                 {
-                    this.selectedAction();
-                    this.selectedAction = null;
+                    GameDispatcher.BeginInvoke(
+                        () =>
+                            {
+                                this.selectedAction.Execute();
+                                this.selectedAction = null;
+                            });
                 }
                 this.keyDown = false;
             }
