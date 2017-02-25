@@ -1,4 +1,4 @@
-﻿// <copyright file="JungleCamps.cs" company="EnsageSharp">
+// <copyright file="JungleCamps.cs" company="EnsageSharp">
 //    Copyright (c) 2017 EnsageSharp.
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -33,116 +33,149 @@ namespace Ensage.Common.Objects
                                                              {
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-1655, -4329, 256),
-                                                                         StackPosition = new Vector3(-1833, -3062, 256),
-                                                                         WaitPosition = new Vector3(-1890, -3896, 256),
-                                                                         Id = 1, StackTime = 54.5, Team = Team.Radiant,
-                                                                         Ancients = false, Name = "Hard Camp"
+                                                                         CampPosition = new Vector3(-417, -3318, 256),
+                                                                         StackPosition = new Vector3(-268, -2467, 256),
+                                                                         WaitPosition = new Vector3(-776, -3239, 256),
+                                                                         Id = 1, StackTime = 54, Team = Team.Radiant,
+                                                                         Ancients = false, Name = "Hard Camp Middle"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-260, -3234, 256),
-                                                                         StackPosition = new Vector3(-554, -1925, 256),
-                                                                         WaitPosition = new Vector3(-337, -2652, 256),
-                                                                         Id = 2, StackTime = 55, Team = Team.Radiant,
-                                                                         Ancients = false, Name = "Medium Camp"
+                                                                         CampPosition = new Vector3(-1824, -4324, 128),
+                                                                         StackPosition = new Vector3(-1891, -3234, 256),
+                                                                         WaitPosition = new Vector3(-1797, -3943, 204),
+                                                                         Id = 2, StackTime = 56, Team = Team.Radiant,
+                                                                         Ancients = false, Name = "Medium Camp Middle"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(1606, -3433, 256),
-                                                                         StackPosition = new Vector3(1598, -5117, 256),
-                                                                         WaitPosition = new Vector3(1541, -4265, 256),
-                                                                         Id = 3, StackTime = 54.5, Team = Team.Radiant,
-                                                                         Ancients = false, Name = "Medium Camp"
+                                                                         CampPosition = new Vector3(484, -4621, 384),
+                                                                         StackPosition = new Vector3(720, -3551, 384),
+                                                                         WaitPosition = new Vector3(758, -1348, 384),
+                                                                         Id = 3, StackTime = 55, Team = Team.Radiant,
+                                                                         Ancients = false, Name = "Medium Camp Bot"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(4495, -3488, 384),
-                                                                         StackPosition = new Vector3(3002, -3936, 384),
-                                                                         WaitPosition = new Vector3(4356, -4089, 384),
-                                                                         Id = 4, StackTime = 53.1, Team = Team.Radiant,
-                                                                         Ancients = false, Name = "Hard Camp"
+                                                                         CampPosition = new Vector3(4766, -4445, 256),
+                                                                         StackPosition = new Vector3(5418, -3704, 384),
+                                                                         WaitPosition = new Vector3(4594, -4107, 256),
+                                                                         Id = 4, StackTime = 54, Team = Team.Radiant,
+                                                                         Ancients = false, Name = "Hard Camp Bot"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(3031, -4480, 256),
-                                                                         StackPosition = new Vector3(1555, -5337, 384),
-                                                                         WaitPosition = new Vector3(3099, -5325, 384),
-                                                                         Id = 5, StackTime = 53, Team = Team.Radiant,
+                                                                         CampPosition = new Vector3(3024, -4550, 256),
+                                                                         StackPosition = new Vector3(3455, -5316, 384),
+                                                                         WaitPosition = new Vector3(3350, -4561, 256),
+                                                                         Id = 5, StackTime = 54, Team = Team.Radiant,
                                                                          Ancients = false, Name = "Easy Camp"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-3097, 4, 384),
-                                                                         StackPosition = new Vector3(-3472, -1566, 384),
-                                                                         WaitPosition = new Vector3(-2471, -227, 384),
+                                                                         CampPosition = new Vector3(-151, -1956, 384),
+                                                                         StackPosition = new Vector3(974, -2489, 384),
+                                                                         WaitPosition = new Vector3(408, -2110, 384),
                                                                          Id = 6, StackTime = 54, Team = Team.Radiant,
                                                                          Ancients = true, Name = "Ancients Camp"
                                                                      },
-                                                                 new JungleCamp
+																	 new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-3593, 825, 384),
-                                                                         StackPosition = new Vector3(-3893, -737, 384),
-                                                                         WaitPosition = new Vector3(-4129, 600, 384),
+                                                                         CampPosition = new Vector3(-2970, -84, 384),
+                                                                         StackPosition = new Vector3(-1686, 266, 256),
+                                                                         WaitPosition = new Vector3(-2658, -92, 384),
                                                                          Id = 7, StackTime = 53, Team = Team.Radiant,
-                                                                         Ancients = true, Name = "Secret Hard Camp"
+                                                                         Ancients = true, Name = "Secret Ancients Camp"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(1266, 3271, 384),
-                                                                         StackPosition = new Vector3(449, 4752, 384),
-                                                                         WaitPosition = new Vector3(979, 3671, 384),
-                                                                         Id = 8, StackTime = 54, Team = Team.Dire,
+                                                                         CampPosition = new Vector3(-4765, -357, 256),
+                                                                         StackPosition = new Vector3(-3836, -759, 384),
+                                                                         WaitPosition = new Vector3(-4646, -171, 256),
+                                                                         Id = 8, StackTime = 56, Team = Team.Radiant,
+                                                                         Ancients = false, Name = "Secret Hard Camp"
+                                                                     },
+																	 new JungleCamp
+                                                                     {
+                                                                         CampPosition = new Vector3(-3804, 798, 256),
+                                                                         StackPosition = new Vector3(-4765, 662, 256),
+                                                                         WaitPosition = new Vector3(-4029, 640, 256),
+                                                                         Id = 9, StackTime = 55, Team = Team.Radiant,
+                                                                         Ancients = false, Name = "Secret Medium Camp"
+                                                                     },
+                                                                 new JungleCamp
+                                                                     {
+                                                                         CampPosition = new Vector3(-236, 3439, 256),
+                                                                         StackPosition = new Vector3(-748, 4243, 256),
+                                                                         WaitPosition = new Vector3(-464, 3560, 256),
+                                                                         Id = 10, StackTime = 54, Team = Team.Dire,
                                                                          Ancients = false, Name = "Hard Camp"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-291, 3644, 384),
-                                                                         StackPosition = new Vector3(236, 5000, 256),
-                                                                         WaitPosition = new Vector3(-566, 4151, 384),
-                                                                         Id = 9, StackTime = 54.5, Team = Team.Dire,
+                                                                         CampPosition = new Vector3(1194, 3379, 384),
+                                                                         StackPosition = new Vector3(1852, 4376, 256),
+                                                                         WaitPosition = new Vector3(1173, 3593, 384),
+                                                                         Id = 11, StackTime = 53, Team = Team.Dire,
                                                                          Ancients = false, Name = "Medium Camp"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-1640, 2562, 256),
-                                                                         StackPosition = new Vector3(-1180, 4090, 384),
-                                                                         WaitPosition = new Vector3(-1380, 2979, 256),
-                                                                         Id = 10, StackTime = 53, Team = Team.Dire,
-                                                                         Ancients = false, Name = "Medium Camp"
+                                                                         CampPosition = new Vector3(-1840, 4081, 256),
+                                                                         StackPosition = new Vector3(-1436, 4755, 384),
+                                                                         WaitPosition = new Vector3(-1607, 4009, 256),
+                                                                         Id = 12, StackTime = 55, Team = Team.Dire,
+                                                                         Ancients = false, Name = "Medium Camp Top"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-3084, 4492, 384),
-                                                                         StackPosition = new Vector3(-3533, 6295, 384),
-                                                                         WaitPosition = new Vector3(-3058, 4997, 384),
-                                                                         Id = 11, StackTime = 54, Team = Team.Dire,
+                                                                         CampPosition = new Vector3(-2917,4897, 384),
+                                                                         StackPosition = new Vector3(-2290, 5745, 384),
+                                                                         WaitPosition = new Vector3(-3058, 5157, 384),
+                                                                         Id = 13, StackTime = 55, Team = Team.Dire,
                                                                          Ancients = false, Name = "Easy Camp"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(-4628, 3483, 384),
-                                                                         StackPosition = new Vector3(-2801, 3684, 245),
-                                                                         WaitPosition = new Vector3(-4200, 3850, 256),
-                                                                         Id = 12, StackTime = 53, Team = Team.Dire,
+                                                                         CampPosition = new Vector3(-4330, 3695, 256),
+                                                                         StackPosition = new Vector3(-3378, 3718, 256),
+                                                                         WaitPosition = new Vector3(-4277, 33881850, 256),
+                                                                         Id = 14, StackTime = 55, Team = Team.Dire,
                                                                          Ancients = false, Name = "Top Hard Camp"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(4150, -678, 256),
-                                                                         StackPosition = new Vector3(2493, -1059, 256),
-                                                                         WaitPosition = new Vector3(3583, -736, 127),
-                                                                         Id = 13, StackTime = 54, Team = Team.Dire,
+                                                                         CampPosition = new Vector3(-855, 2262, 384),
+                                                                         StackPosition = new Vector3(392, 2343, 384),
+                                                                         WaitPosition = new Vector3(-538, 2437, 384),
+                                                                         Id = 15, StackTime = 53, Team = Team.Dire,
                                                                          Ancients = true, Name = "Ancients Camp"
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(4280, 588, 384),
-                                                                         StackPosition = new Vector3(3537, 1713, 256),
-                                                                         WaitPosition = new Vector3(3710, 548, 384),
-                                                                         Id = 14, StackTime = 54, Team = Team.Dire,
+                                                                         CampPosition = new Vector3(4180, 749, 384),
+                                                                         StackPosition = new Vector3(3473, 729, 384),
+                                                                         WaitPosition = new Vector3(3991, 732, 384),
+                                                                         Id = 16, StackTime = 55, Team = Team.Dire,
                                                                          Ancients = false, Name = "Secret Hard Camp"
                                                                      }
+																 new JungleCamp
+                                                                     {
+                                                                         CampPosition = new Vector3(2707, 109, 384),
+                                                                         StackPosition = new Vector3(2881, -706, 256),
+                                                                         WaitPosition = new Vector3(2997, 177, 384),
+                                                                         Id = 17, StackTime = 54, Team = Team.Dire,
+                                                                         Ancients = false, Name = "Secret Medium Camp"
+                                                                     }
+																	 
+																 new JungleCamp
+                                                                     {
+                                                                         CampPosition = new Vector3(3945, -492, 256),
+                                                                         StackPosition = new Vector3(3905, -1428, 384),
+                                                                         WaitPosition = new Vector3(3753, -840, 256),
+                                                                         Id = 18, StackTime = 53, Team = Team.Dire,
+                                                                         Ancients = true, Name = "Secret Ancient Camp"
+                                                                     }	 
                                                              };
 
         #endregion
