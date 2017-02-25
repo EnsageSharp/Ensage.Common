@@ -158,7 +158,7 @@ namespace Ensage.Common.Objects
                                                                          WaitPosition = new Vector3(3991, 732, 384),
                                                                          Id = 16, StackTime = 55, Team = Team.Dire,
                                                                          Ancients = false, Name = "Secret Hard Camp"
-                                                                     }
+                                                                     },
 																 new JungleCamp
                                                                      {
                                                                          CampPosition = new Vector3(2707, 109, 384),
@@ -166,8 +166,7 @@ namespace Ensage.Common.Objects
                                                                          WaitPosition = new Vector3(2997, 177, 384),
                                                                          Id = 17, StackTime = 54, Team = Team.Dire,
                                                                          Ancients = false, Name = "Secret Medium Camp"
-                                                                     }
-																	 
+                                                                     },
 																 new JungleCamp
                                                                      {
                                                                          CampPosition = new Vector3(3945, -492, 256),
