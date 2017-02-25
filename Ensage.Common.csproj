@@ -45,26 +45,26 @@
   <ItemGroup>
     <Reference Include="Ensage">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NvdKTVgtv\References\Ensage.dll</HintPath>
+      <HintPath>C:\EnsageSharp\References\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="EnsageSharp.Sandbox">
-      <HintPath>C:\NvdKTVgtv\System\EnsageSharp.Sandbox.dll</HintPath>
+      <HintPath>C:\EnsageSharp\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\NvdKTVgtv\References\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\EnsageSharp\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NvdKTVgtv\References\SharpDX.dll</HintPath>
+      <HintPath>C:\EnsageSharp\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\NvdKTVgtv\References\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\EnsageSharp\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.XInput">
-      <HintPath>C:\NvdKTVgtv\References\SharpDX.XInput.dll</HintPath>
+      <HintPath>C:\EnsageSharp\References\SharpDX.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -98,6 +98,7 @@
     <Compile Include="Extensions\SharpDX\Vector3Extensions.cs" />
     <Compile Include="Extensions\SharpDX\Vector4Extensions.cs" />
     <Compile Include="Extensions\UnitExtensions.cs" />
+    <Compile Include="FunctionWheel.cs" />
     <Compile Include="HUDInfo.cs" />
     <Compile Include="Menu\Draw\DragAndDrop.cs" />
     <Compile Include="Menu\Draw\DraggableItem.cs" />
