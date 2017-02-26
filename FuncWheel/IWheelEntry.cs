@@ -8,5 +8,7 @@ namespace Ensage.Common.FuncWheel
         string DisplayName { get; }
 
         Func<Task> Execute { get; }
+
+        bool IsEnabled { get; }
     }
 }

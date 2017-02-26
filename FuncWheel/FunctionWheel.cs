@@ -214,6 +214,11 @@
             this.Add(new WheelEntry(displayName, func));
         }
 
+        public void Add(string displayName, Func<Task> func, bool isEnabled)
+        {
+            this.Add(new WheelEntry(displayName, func, isEnabled));
+        }
+
         public void Dispose()
         {
             Game.OnWndProc -= this.Game_OnWndProc;
@@ -264,7 +269,7 @@
                     for (var i = 0; i < count; ++i)
                     {
                         // skip empty keys
-                        if (this[i].DisplayName == string.Empty) continue;
+                        if (this[i].DisplayName == string.Empty || !this[i].IsEnabled) continue;
 
                         var itemDistance = cursorPos.Distance(this.startPos + TextPos4[i]);
                         if (itemDistance < minDistance)
@@ -287,6 +292,7 @@
                     // selected items have a different color
                     var color = Color.White;
                     if (selectedSomething && i == selectedItem) color = Color.Yellow;
+                    if (!this[i].IsEnabled) color = Color.Gray;
 
                     // since we are drawing left, we need to measure the text
                     if (i == 3)
@@ -342,7 +348,7 @@
                     for (var i = 0; i < count; ++i)
                     {
                         // skip empty keys
-                        if (this[i].DisplayName == string.Empty) continue;
+                        if (this[i].DisplayName == string.Empty || !this[i].IsEnabled) continue;
 
                         var itemDistance = cursorPos.Distance(this.startPos + TextPos8[i]);
                         if (itemDistance < minDistance)
@@ -363,6 +369,7 @@
                 {
                     var color = Color.White;
                     if (selectedSomething && i == selectedItem) color = Color.Yellow;
+                    if (!this[i].IsEnabled) color = Color.Gray;
                     // since we are drawing left, we need to measure the text
                     if (i > 4)
                     {
