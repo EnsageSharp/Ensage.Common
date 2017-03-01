@@ -256,6 +256,10 @@
                 drawCursorPos = drawCursorPos + middle;
                 selectedSomething = true;
             }
+            else
+            {
+                this.selectedAction = null;
+            }
             drawCursorPos -= new Vector2(18, 18);
             Drawing.DrawRect(drawCursorPos, new Vector2(36, 36), Cursor);
 

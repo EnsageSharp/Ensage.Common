@@ -122,5 +122,21 @@ namespace Ensage.Common.Objects
         public Vector3 WaitPosition { get; set; }
 
         #endregion
+
+        public override bool Equals(object obj)
+        {
+            JungleCamp p = obj as JungleCamp;
+            return p?.Id == this.Id;
+        }
+
+        public bool Equals(JungleCamp obj)
+        {
+            return obj?.Id == this.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)this.Id;
+        }
     }
 }

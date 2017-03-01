@@ -50,7 +50,7 @@ namespace Ensage.Common.Objects
                                                                      },
                                                                  new JungleCamp
                                                                      {
-                                                                         CampPosition = new Vector3(506, -4518, 384),
+                                                                         CampPosition = new Vector3(591, -4537, 384),
                                                                          StackPosition = new Vector3(751, -3479, 384),
                                                                          WaitPosition = new Vector3(719, -4391, 384),
                                                                          Id = 3, StackTime = 55, Team = Team.Radiant,
@@ -67,7 +67,7 @@ namespace Ensage.Common.Objects
                                                                  new JungleCamp
                                                                      {
                                                                          CampPosition = new Vector3(3030, -4555, 256),
-                                                                         StackPosition = new Vector3(2475, -5267, 384),
+                                                                         StackPosition = new Vector3(4864, -5157, 384),
                                                                          WaitPosition = new Vector3(3432, -4656, 256),
                                                                          Id = 5, StackTime = 54, Team = Team.Radiant,
                                                                          Ancients = false, Name = "Easy Camp"
