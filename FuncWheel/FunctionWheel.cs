@@ -426,7 +426,7 @@
 
         private void Game_OnWndProc(WndEventArgs args)
         {
-            if (args.WParam != this.key) return;
+            if (Game.IsChatOpen || args.WParam != this.key) return;
 
             if (args.Msg == WM_KEYDOWN || args.Msg == WM_SYSKEYDOWN)
             {
