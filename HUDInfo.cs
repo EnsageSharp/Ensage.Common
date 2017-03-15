@@ -285,61 +285,69 @@ namespace Ensage.Common
             X = panelHeroSizeX * Monitor;
             y = ScreenSize.Y / tinfoHeroDown;
 
-            var mouse = new Rectangle(new Vector2(5, 5), Color.White);
-            GameUpdate update = args =>
-                {
-                    var mousePos = Game.MousePosition;
+            try
+            {
+                var mouse = new Rectangle(new Vector2(5, 5), Color.White);
+                GameUpdate update = args =>
+                                        {
+                                            var mousePos = Game.MousePosition;
 
-                    // if (Utils.SleepCheck("mouse"))
-                    // {
-                    // Console.WriteLine(mousePos);
-                    // Utils.Sleep(500, "mouse");
-                    // }
-                    var minimapPos = mousePos.WorldToMinimap();
-                    mouse.Position = minimapPos;
-                };
+                                            // if (Utils.SleepCheck("mouse"))
+                                            // {
+                                            // Console.WriteLine(mousePos);
+                                            // Utils.Sleep(500, "mouse");
+                                            // }
+                                            var minimapPos = mousePos.WorldToMinimap();
+                                            mouse.Position = minimapPos;
+                                        };
 
-            var mipos = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
-            rectangle = new Rectangle(minimap.Size, new ColorBGRA(255, 255, 255, 25)) { Position = mipos };
+                var mipos = new Vector3(MapLeft, MapTop, 0).WorldToMinimap();
+                rectangle = new Rectangle(minimap.Size, new ColorBGRA(255, 255, 255, 25)) { Position = mipos };
 
-            var menu = new Menu.Menu("HUDInfo", nameof(HUDInfo));
-            var minimapOnRight =
-                menu.AddItem(
-                    new MenuItem(menu.Name + "minimapRight", "Minimap is on the right").SetValue(false)
-                        .SetTooltip("Enable this if you have minimap on the right"));
-            minimapOnRight.ValueChanged += (sender, args) => { MinimapIsOnRight = args.GetNewValue<bool>(); };
-            MinimapIsOnRight = minimapOnRight.GetValue<bool>();
-            var enableRectangle =
-                menu.AddItem(
-                    new MenuItem(menu.Name + "enablerectangle", "Enable minimap debug").SetTooltip(
-                            "Draws rectangle over minimap in current e.common minimap size (requires -dx9), and shows current mouse position on minimap")
-                        .SetValue(false));
-            enableRectangle.SetValue(false);
-            DrawingEndScene draw = eventArgs =>
-                {
-                    rectangle.Render();
-                    mouse.Render();
-                };
-            enableRectangle.ValueChanged += (sender, args) =>
-                {
-                    if (args.GetNewValue<bool>())
-                    {
-                        rectangle.Initialize();
-                        mouse.Initialize();
-                        Drawing.OnEndScene += draw;
-                        Game.OnUpdate += update;
-                    }
-                    else
-                    {
-                        rectangle.Dispose();
-                        mouse.Dispose();
-                        Drawing.OnEndScene -= draw;
-                        Game.OnUpdate -= update;
-                    }
-                };
+                var menu = new Menu.Menu("HUDInfo", nameof(HUDInfo));
+                var minimapOnRight =
+                    menu.AddItem(
+                        new MenuItem(menu.Name + "minimapRight", "Minimap is on the right").SetValue(false)
+                                                                                           .SetTooltip(
+                                                                                               "Enable this if you have minimap on the right"));
+                minimapOnRight.ValueChanged += (sender, args) => { MinimapIsOnRight = args.GetNewValue<bool>(); };
+                MinimapIsOnRight = minimapOnRight.GetValue<bool>();
+                var enableRectangle =
+                    menu.AddItem(
+                        new MenuItem(menu.Name + "enablerectangle", "Enable minimap debug").SetTooltip(
+                                                                                               "Draws rectangle over minimap in current e.common minimap size (requires -dx9), and shows current mouse position on minimap")
+                                                                                           .SetValue(false));
+                enableRectangle.SetValue(false);
+                DrawingEndScene draw = eventArgs =>
+                                           {
+                                               rectangle.Render();
+                                               mouse.Render();
+                                           };
+                enableRectangle.ValueChanged += (sender, args) =>
+                                                    {
+                                                        if (args.GetNewValue<bool>())
+                                                        {
+                                                            rectangle.Initialize();
+                                                            mouse.Initialize();
+                                                            Drawing.OnEndScene += draw;
+                                                            Game.OnUpdate += update;
+                                                        }
+                                                        else
+                                                        {
+                                                            rectangle.Dispose();
+                                                            mouse.Dispose();
+                                                            Drawing.OnEndScene -= draw;
+                                                            Game.OnUpdate -= update;
+                                                        }
+                                                    };
 
-            DelayAction.Add(200, () => Menu.Menu.Root.AddSubMenu(menu));
-        }
+                DelayAction.Add(200, () => Menu.Menu.Root.AddSubMenu(menu));
+            } 
+            catch (WrongRenderModeException e)
+            {
+                Console.WriteLine($"HUDInfo won't work due to dx9 restrictions.");
+            }
+}
 
         #endregion
 
