@@ -108,7 +108,7 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_shadow_demon_soul_catcher", SourceTeam = -1, Amp = "bonus_damage_taken",
-                        SourceSpellName = "shadow_demon_soul_catcher", HeroId = ClassID.CDOTA_Unit_Hero_Shadow_Demon,
+                        SourceSpellName = "shadow_demon_soul_catcher", HeroId = ClassId.CDOTA_Unit_Hero_Shadow_Demon,
                         Type = DamageType.Pure
                     });
 
@@ -116,7 +116,7 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_bloodseeker_bloodrage", SourceTeam = -2, Amp = "damage_increase_pct",
-                        SourceSpellName = "bloodseeker_bloodrage", HeroId = ClassID.CDOTA_Unit_Hero_Bloodseeker,
+                        SourceSpellName = "bloodseeker_bloodrage", HeroId = ClassId.CDOTA_Unit_Hero_Bloodseeker,
                         Type = DamageType.Pure
                     });
 
@@ -124,42 +124,42 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_slardar_sprint", SourceSpellName = "slardar_sprint", Amp = "bonus_damage",
-                        HeroId = ClassID.CDOTA_Unit_Hero_Slardar
+                        HeroId = ClassId.CDOTA_Unit_Hero_Slardar
                     });
 
             ExternalDmgAmps.Add(
                 new ExternalDmgAmps
                     {
                         ModifierName = "modifier_chen_penitence", SourceSpellName = "chen_penitence",
-                        Amp = "bonus_damage_taken", HeroId = ClassID.CDOTA_Unit_Hero_Chen,
+                        Amp = "bonus_damage_taken", HeroId = ClassId.CDOTA_Unit_Hero_Chen,
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_wisp_overcharge", SourceSpellName = "wisp_overcharge",
-                        HeroID = ClassID.CDOTA_Unit_Hero_Wisp, Reduce = "bonus_damage_pct", Type = 1, SourceTeam = 1
+                        HeroID = ClassId.CDOTA_Unit_Hero_Wisp, Reduce = "bonus_damage_pct", Type = 1, SourceTeam = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_spectre_dispersion", SourceTeam = 0, Reduce = "damage_reflection_pct",
-                        HeroID = ClassID.CDOTA_Unit_Hero_Spectre, SourceSpellName = "spectre_dispersion", Type = 1
+                        HeroID = ClassId.CDOTA_Unit_Hero_Spectre, SourceSpellName = "spectre_dispersion", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_nyx_assassin_burrow", SourceSpellName = "nyx_assassin_burrow",
-                        HeroID = ClassID.CDOTA_Unit_Hero_Nyx_Assassin, Reduce = "damage_reduction", Type = 1
+                        HeroID = ClassId.CDOTA_Unit_Hero_Nyx_Assassin, Reduce = "damage_reduction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_winter_wyvern_winters_curse",
-                        HeroID = ClassID.CDOTA_Unit_Hero_Winter_Wyvern, SourceSpellName = "winter_wyvern_winters_curse",
+                        HeroID = ClassId.CDOTA_Unit_Hero_Winter_Wyvern, SourceSpellName = "winter_wyvern_winters_curse",
                         Reduce = "damage_reduction", Type = 1
                     });
 
@@ -167,14 +167,14 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_ursa_enrage", SourceSpellName = "ursa_enrage",
-                        HeroID = ClassID.CDOTA_Unit_Hero_Ursa, Reduce = "damage_reduction", Type = 1
+                        HeroID = ClassId.CDOTA_Unit_Hero_Ursa, Reduce = "damage_reduction", Type = 1
                     });
 
             ExternalDmgReductions.Add(
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_templar_assassin_refraction_absorb",
-                        HeroID = ClassID.CDOTA_Unit_Hero_TemplarAssassin,
+                        HeroID = ClassId.CDOTA_Unit_Hero_TemplarAssassin,
                         SourceSpellName = "templar_assassin_refraction", Type = 1
                     });
 
@@ -182,7 +182,7 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_treant_living_armor", Type = 0, SourceTeam = 1,
-                        SourceSpellName = "treant_living_armor", HeroID = ClassID.CDOTA_Unit_Hero_Treant,
+                        SourceSpellName = "treant_living_armor", HeroID = ClassId.CDOTA_Unit_Hero_Treant,
                         Reduce = "damage_block"
                     });
 
@@ -190,7 +190,7 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_abaddon_aphotic_shield", Type = 2, SourceTeam = 1,
-                        SourceSpellName = "abaddon_aphotic_shield", HeroID = ClassID.CDOTA_Unit_Hero_Abaddon,
+                        SourceSpellName = "abaddon_aphotic_shield", HeroID = ClassId.CDOTA_Unit_Hero_Abaddon,
                         Reduce = "damage_absorb"
                     });
 
@@ -198,7 +198,7 @@ namespace Ensage.Common.Extensions.Damage
                 new ExternalDmgReductions
                     {
                         ModifierName = "modifier_ember_spirit_flame_guard", Type = 0, SourceTeam = 0,
-                        HeroID = ClassID.CDOTA_Unit_Hero_EmberSpirit, SourceSpellName = "ember_spirit_flame_guard",
+                        HeroID = ClassId.CDOTA_Unit_Hero_EmberSpirit, SourceSpellName = "ember_spirit_flame_guard",
                         Reduce = "absorb_amount", MagicOnly = true
                     });
 
@@ -400,7 +400,7 @@ namespace Ensage.Common.Extensions.Damage
                     Ability ability = null;
                     foreach (var hero in Heroes.All)
                     {
-                        if (v.HeroId == hero.ClassID || hero.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                        if (v.HeroId == hero.ClassId || hero.ClassId == ClassId.CDOTA_Unit_Hero_Rubick)
                         {
                             ability = hero.FindSpell(v.SourceSpellName, true);
                             if (ability != null)
@@ -478,7 +478,7 @@ namespace Ensage.Common.Extensions.Damage
                 Ability ability = null;
                 foreach (var hero in Heroes.All)
                 {
-                    if (v.HeroID == hero.ClassID || hero.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+                    if (v.HeroID == hero.ClassId || hero.ClassId == ClassId.CDOTA_Unit_Hero_Rubick)
                     {
                         ability = hero.FindSpell(v.SourceSpellName, true);
                         if (ability != null)
@@ -607,8 +607,8 @@ namespace Ensage.Common.Extensions.Damage
                 {
                     if (
                         !(x.IsValid && !x.IsIllusion()
-                          && (x.ClassID == ClassID.CDOTA_Unit_Hero_Centaur
-                              || x.ClassID == ClassID.CDOTA_Unit_Hero_Rubick) && x.AghanimState()))
+                          && (x.ClassId == ClassId.CDOTA_Unit_Hero_Centaur
+                              || x.ClassId == ClassId.CDOTA_Unit_Hero_Rubick) && x.AghanimState()))
                     {
                         continue;
                     }

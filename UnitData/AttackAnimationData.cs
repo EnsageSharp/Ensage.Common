@@ -46,7 +46,7 @@ namespace Ensage.Common.UnitData
         /// </param>
         public AttackAnimationData(
             string unitName,
-            ClassID unitClassId,
+            ClassId unitClassId,
             double attackRate,
             double attackPoint,
             double attackBackswing,
@@ -102,7 +102,7 @@ namespace Ensage.Common.UnitData
         /// <summary>
         ///     The unit class id.
         /// </summary>
-        public ClassID UnitClassId { get; set; }
+        public ClassId UnitClassId { get; set; }
 
         /// <summary>
         ///     The unit name.

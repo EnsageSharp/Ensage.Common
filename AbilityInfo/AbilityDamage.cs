@@ -502,14 +502,14 @@ namespace Ensage.Common.AbilityInfo
                                 x =>
                                     !x.Equals(source) && !x.Equals(target)
                                     && x.Distance2D(source) < radius + x.HullRadius
-                                    && (x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Lane
-                                        || x.ClassID == ClassID.CDOTA_BaseNPC_Creep
-                                        || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Neutral
-                                        || x.ClassID == ClassID.CDOTA_BaseNPC_Creep_Siege
-                                        || x.ClassID == ClassID.CDOTA_BaseNPC_Creature
-                                        || x.ClassID == ClassID.CDOTA_BaseNPC_Invoker_Forged_Spirit
-                                        || x.ClassID == ClassID.CDOTA_Unit_Undying_Zombie
-                                        || x.ClassID == ClassID.CDOTA_BaseNPC_Warlock_Golem
+                                    && (x.ClassId == ClassId.CDOTA_BaseNPC_Creep_Lane
+                                        || x.ClassId == ClassId.CDOTA_BaseNPC_Creep
+                                        || x.ClassId == ClassId.CDOTA_BaseNPC_Creep_Neutral
+                                        || x.ClassId == ClassId.CDOTA_BaseNPC_Creep_Siege
+                                        || x.ClassId == ClassId.CDOTA_BaseNPC_Creature
+                                        || x.ClassId == ClassId.CDOTA_BaseNPC_Invoker_Forged_Spirit
+                                        || x.ClassId == ClassId.CDOTA_Unit_Undying_Zombie
+                                        || x.ClassId == ClassId.CDOTA_BaseNPC_Warlock_Golem
                                         || x is Hero
                                         && (x.Team == source.Team
                                             || x.Team == source.GetEnemyTeam() && !x.IsMagicImmune())) && x.IsAlive
@@ -542,7 +542,7 @@ namespace Ensage.Common.AbilityInfo
                             level = spellLevel.Level;
                         }
 
-                        if (source.ClassID == ClassID.CDOTA_Unit_Hero_Invoker && level > 0 && source.AghanimState())
+                        if (source.ClassId == ClassId.CDOTA_Unit_Hero_Invoker && level > 0 && source.AghanimState())
                         {
                             level += 1;
                         }
@@ -572,7 +572,7 @@ namespace Ensage.Common.AbilityInfo
                     break;
             }
 
-            if (source.ClassID == ClassID.CDOTA_Unit_Hero_Zuus && !(ability is Item)
+            if (source.ClassId == ClassId.CDOTA_Unit_Hero_Zuus && !(ability is Item)
                 && (source.Distance2D(target) <= 1200 || ability.StoredName() != "zuus_thundergods_wrath"))
             {
                 var staticField = source.Spellbook.Spell3;

@@ -221,8 +221,7 @@ namespace Ensage.Common.Objects
                 try
                 {
                     Game.PrintMessage(
-                        "<font color='#dddddd'>[Ensage]: Texture '" + e.TextureName + "' was not found</font>",
-                        MessageType.LogMessage);
+                        "<font color='#dddddd'>[Ensage]: Texture '" + e.TextureName + "' was not found</font>");
                     Console.WriteLine(@"Texture '" + e.TextureName + @"' was not found");
                     texture = Drawing.GetTexture("materials/ensage_ui/spellicons/doom_bringer_empty1");
                 }
@@ -230,17 +229,13 @@ namespace Ensage.Common.Objects
                 {
                     // Second exception occurs in case user doesnt have texture pack installed, notify the user and replace it with internal texture
                     Game.PrintMessage(
-                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>",
-                        MessageType.LogMessage);
+                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>");
                     Game.PrintMessage(
-                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>",
-                        MessageType.LogMessage);
+                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>");
                     Game.PrintMessage(
-                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>",
-                        MessageType.ChatMessage);
+                        "<font color='#dd3333'>!!!!!!! Texture Pack not found !!!!!!!!</font>");
                     Game.PrintMessage(
-                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>",
-                        MessageType.ChatMessage);
+                        "<font color='#dddddd'>Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp</font>");
 
                     Console.WriteLine(@"!!!!!!! Texture Pack not found !!!!!!!!");
                     Console.WriteLine(@"Get texture pack @ Forum->Community->Developer's Talk->EnsageSharp");
