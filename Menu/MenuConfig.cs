@@ -14,6 +14,7 @@
 namespace Ensage.Common.Menu
 {
     using System;
+    using System.IO;
 
     using EnsageSharp.Sandbox;
 
@@ -41,7 +42,17 @@ namespace Ensage.Common.Menu
         {
             get
             {
-                return appDataDirectory ?? (appDataDirectory = SandboxConfig.AppDataDirectory);
+                if (appDataDirectory == null)
+                {
+                    appDataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config", "game");
+
+                    if (!Directory.Exists(appDataDirectory))
+                    {
+                        Directory.CreateDirectory(appDataDirectory);
+                    }
+                }
+
+                return appDataDirectory;
             }
         }
 
