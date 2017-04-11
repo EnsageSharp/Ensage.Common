@@ -317,7 +317,7 @@ namespace Ensage.Common.Extensions.SharpDX
                 ObjectManager.GetEntities<Building>()
                     .Any(
                         tower =>
-                            tower.ClassID == ClassID.CDOTA_BaseNPC_Tower
+                            tower.ClassId == ClassId.CDOTA_BaseNPC_Tower
                             && tower.IsValidTarget(950, enemyTurretsOnly, position));
 
             // return GameObjects.Turrets.Any(turret => turret.IsValidTarget(950, enemyTurretsOnly, position));

@@ -221,18 +221,18 @@ namespace Ensage.Common.Extensions
                 return range;
             }
 
-            var classId = hero.ClassID;
+            var classId = hero.ClassId;
             switch (classId)
             {
-                case ClassID.CDOTA_Unit_Hero_Tiny:
+                case ClassId.CDOTA_Unit_Hero_Tiny:
                     var grow = hero.Spellbook.SpellR;
-                    if (grow != null && grow.Level > 0 && hero.HasItem(ClassID.CDOTA_Item_UltimateScepter))
+                    if (grow != null && grow.Level > 0 && hero.HasItem(ClassId.CDOTA_Item_UltimateScepter))
                     {
                         bonus = grow.GetAbilityData("bonus_range_scepter");
                     }
 
                     break;
-                case ClassID.CDOTA_Unit_Hero_TemplarAssassin:
+                case ClassId.CDOTA_Unit_Hero_TemplarAssassin:
                     var psi = hero.Spellbook.SpellE;
                     if (psi != null && psi.Level > 0)
                     {
@@ -240,7 +240,7 @@ namespace Ensage.Common.Extensions
                     }
 
                     break;
-                case ClassID.CDOTA_Unit_Hero_Sniper:
+                case ClassId.CDOTA_Unit_Hero_Sniper:
                     var aim = hero.Spellbook.SpellE;
                     if (aim != null && aim.Level > 0)
                     {
@@ -248,7 +248,7 @@ namespace Ensage.Common.Extensions
                     }
 
                     break;
-                case ClassID.CDOTA_Unit_Hero_Enchantress:
+                case ClassId.CDOTA_Unit_Hero_Enchantress:
                     var impetus = hero.Spellbook.SpellR;
                     if (impetus.Level > 0 && hero.AghanimState())
                     {
@@ -315,30 +315,30 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static string GetRealName(this Hero hero)
         {
-            var classId = hero.ClassID;
+            var classId = hero.ClassId;
             switch (classId)
             {
-                case ClassID.CDOTA_Unit_Hero_DoomBringer:
+                case ClassId.CDOTA_Unit_Hero_DoomBringer:
                     return "Doom";
-                case ClassID.CDOTA_Unit_Hero_Furion:
+                case ClassId.CDOTA_Unit_Hero_Furion:
                     return "Nature's Prophet";
-                case ClassID.CDOTA_Unit_Hero_Magnataur:
+                case ClassId.CDOTA_Unit_Hero_Magnataur:
                     return "Magnus";
-                case ClassID.CDOTA_Unit_Hero_Necrolyte:
+                case ClassId.CDOTA_Unit_Hero_Necrolyte:
                     return "Necrophos";
-                case ClassID.CDOTA_Unit_Hero_Nevermore:
+                case ClassId.CDOTA_Unit_Hero_Nevermore:
                     return "ShadowFiend";
-                case ClassID.CDOTA_Unit_Hero_Obsidian_Destroyer:
+                case ClassId.CDOTA_Unit_Hero_Obsidian_Destroyer:
                     return "OutworldDevourer";
-                case ClassID.CDOTA_Unit_Hero_Rattletrap:
+                case ClassId.CDOTA_Unit_Hero_Rattletrap:
                     return "Clockwerk";
-                case ClassID.CDOTA_Unit_Hero_Shredder:
+                case ClassId.CDOTA_Unit_Hero_Shredder:
                     return "Timbersaw";
-                case ClassID.CDOTA_Unit_Hero_SkeletonKing:
+                case ClassId.CDOTA_Unit_Hero_SkeletonKing:
                     return "WraithKing";
-                case ClassID.CDOTA_Unit_Hero_Wisp:
+                case ClassId.CDOTA_Unit_Hero_Wisp:
                     return "Io";
-                case ClassID.CDOTA_Unit_Hero_Zuus:
+                case ClassId.CDOTA_Unit_Hero_Zuus:
                     return "Zeus";
             }
 

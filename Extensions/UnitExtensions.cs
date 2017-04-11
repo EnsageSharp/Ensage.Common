@@ -23,6 +23,8 @@ namespace Ensage.Common.Extensions
 
     using global::SharpDX;
 
+    using AbilityId = Ensage.AbilityId;
+
     /// <summary>
     ///     The unit extensions.
     /// </summary>
@@ -683,7 +685,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static Ability GetAbilityById(this Unit owner, AbilityId abilityId)
         {
-            return owner.Spellbook.Spells.FirstOrDefault(x => x.AbilityData2.ID == (uint)abilityId);
+            return owner.Spellbook.Spells.FirstOrDefault(x => x.AbilityData.Id == (AbilityId)abilityId);
         }
 
         /// <summary>
@@ -777,7 +779,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static Item GetItemById(this Unit owner, ItemId itemId)
         {
-            return owner.Inventory.Items.FirstOrDefault(x => x.AbilityData2.ID == (uint)itemId);
+            return owner.Inventory.Items.FirstOrDefault(x => x.AbilityData.Id == (AbilityId)itemId);
         }
 
         /// <summary>
@@ -864,7 +866,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static double GetTurnTime(this Unit unit, Vector3 position)
         {
-            if (unit.ClassID == ClassID.CDOTA_Unit_Hero_Wisp)
+            if (unit.ClassId == ClassId.CDOTA_Unit_Hero_Wisp)
             {
                 return 0;
             }
@@ -907,9 +909,9 @@ namespace Ensage.Common.Extensions
         /// <returns>
         ///     The <see cref="bool" />.
         /// </returns>
-        public static bool HasItem(this Unit unit, ClassID classId)
+        public static bool HasItem(this Unit unit, ClassId classId)
         {
-            return unit.Inventory.Items.Any(item => item.ClassID == classId);
+            return unit.Inventory.Items.Any(item => item.ClassId == classId);
         }
 
         /// <summary>

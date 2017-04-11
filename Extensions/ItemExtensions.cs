@@ -80,7 +80,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static ItemId GetItemId(this Item item)
         {
-            return (ItemId)item.AbilityData2.ID;
+            return (ItemId)item.AbilityData.Id;
         }
 
         #endregion
