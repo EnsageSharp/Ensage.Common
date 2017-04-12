@@ -42,6 +42,12 @@
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CodeAnalysisRuleSet>Ensage.Common.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ensage">
       <SpecificVersion>False</SpecificVersion>
@@ -211,6 +217,7 @@
     <Compile Include="WindowsMessages.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="key.snk" />
     <None Include="Resources\UnitDatabase.json" />
     <None Include="Resources\AbilityDatabase.json" />
     <None Include="stylecop.json" />
