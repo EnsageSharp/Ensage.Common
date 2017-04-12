@@ -137,7 +137,7 @@ namespace Ensage.Common.Extensions
                     return canBeCasted;
                 }
 
-                if (owner.ClassID != ClassID.CDOTA_Unit_Hero_Invoker)
+                if (owner.ClassId != ClassId.CDOTA_Unit_Hero_Invoker)
                 {
                     canBeCasted = ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
                                   && ability.Cooldown <= Math.Max(Game.Ping / 1000 - 0.1, 0);
@@ -944,7 +944,7 @@ namespace Ensage.Common.Extensions
         /// <returns></returns>
         public static AbilityId GetAbilityId(this Ability ability)
         {
-            return (AbilityId)ability.AbilityData2.ID;
+            return (AbilityId)ability.AbilityData.Id;
         }
 
         /// <summary>

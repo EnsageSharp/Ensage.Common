@@ -45,26 +45,26 @@
   <ItemGroup>
     <Reference Include="Ensage">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\EnsageSharp\References\Ensage.dll</HintPath>
+      <HintPath>C:\EnsageSharpTest\References\Ensage.dll</HintPath>
     </Reference>
     <Reference Include="EnsageSharp.Sandbox">
-      <HintPath>C:\EnsageSharp\System\EnsageSharp.Sandbox.dll</HintPath>
+      <HintPath>C:\EnsageSharpTest\System\EnsageSharp.Sandbox.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\EnsageSharp\References\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\EnsageSharpTest\References\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\EnsageSharp\References\SharpDX.dll</HintPath>
+      <HintPath>C:\EnsageSharpTest\References\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\EnsageSharp\References\SharpDX.Direct3D9.dll</HintPath>
+      <HintPath>C:\EnsageSharpTest\References\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.XInput">
-      <HintPath>C:\EnsageSharp\References\SharpDX.XInput.dll</HintPath>
+    <Reference Include="SharpDX.Mathematics">
+      <HintPath>C:\EnsageSharpTest\References\SharpDX.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />

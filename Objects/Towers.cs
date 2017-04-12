@@ -54,7 +54,7 @@ namespace Ensage.Common.Objects
         {
             all =
                 ObjectManager.GetEntities<Building>()
-                    .Where(x => x.IsAlive && x.ClassID == ClassID.CDOTA_BaseNPC_Tower)
+                    .Where(x => x.IsAlive && x.ClassId == ClassId.CDOTA_BaseNPC_Tower)
                     .ToList();
             dire = all.Where(x => x.Team == Team.Dire).ToList();
             radiant = all.Where(x => x.Team == Team.Radiant).ToList();
@@ -119,7 +119,7 @@ namespace Ensage.Common.Objects
         {
             all =
                 ObjectManager.GetEntities<Building>()
-                    .Where(x => x.IsAlive && x.ClassID == ClassID.CDOTA_BaseNPC_Tower)
+                    .Where(x => x.IsAlive && x.ClassId == ClassId.CDOTA_BaseNPC_Tower)
                     .ToList();
             dire = all.Where(x => x.Team == Team.Dire).ToList();
             radiant = all.Where(x => x.Team == Team.Radiant).ToList();

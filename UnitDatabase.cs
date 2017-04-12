@@ -244,18 +244,18 @@ namespace Ensage.Common
                     return attackBaseTime / (1 + (attackSpeedValue - 100) / 100);
                 }
 
-                switch (unit.ClassID)
+                switch (unit.ClassId)
                 {
-                    case ClassID.CDOTA_Unit_Hero_Alchemist:
+                    case ClassId.CDOTA_Unit_Hero_Alchemist:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "alchemist_chemical_rage");
                         break;
-                    case ClassID.CDOTA_Unit_Hero_Terrorblade:
+                    case ClassId.CDOTA_Unit_Hero_Terrorblade:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "terrorblade_metamorphosis");
                         break;
-                    case ClassID.CDOTA_Unit_Hero_LoneDruid:
+                    case ClassId.CDOTA_Unit_Hero_LoneDruid:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "lone_druid_true_form");
                         break;
-                    case ClassID.CDOTA_Unit_Hero_TrollWarlord:
+                    case ClassId.CDOTA_Unit_Hero_TrollWarlord:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "troll_warlord_berserkers_rage");
                         break;
                 }
@@ -423,7 +423,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="AttackAnimationData" />.
         /// </returns>
-        public static AttackAnimationData GetByClassId(ClassID classId)
+        public static AttackAnimationData GetByClassId(ClassId classId)
         {
             return Units.FirstOrDefault(unitData => unitData.UnitClassId.Equals(classId));
         }

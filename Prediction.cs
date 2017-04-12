@@ -101,7 +101,7 @@ namespace Ensage.Common
         /// <summary>
         ///     The unit class id.
         /// </summary>
-        public ClassID UnitClassId;
+        public ClassId UnitClassId;
 
         /// <summary>
         ///     The unit name.
@@ -158,7 +158,7 @@ namespace Ensage.Common
         /// </param>
         public Prediction(
             string unitName,
-            ClassID unitClassId,
+            ClassId unitClassId,
             Vector3 speed,
             float rotSpeed,
             Vector3 lastPosition,
@@ -354,7 +354,7 @@ namespace Ensage.Common
             }
 
             lastRotRDictionary[unit.Handle] = unit.RotationRad;
-            if ((unit.ClassID == ClassID.CDOTA_Unit_Hero_StormSpirit || unit.ClassID == ClassID.CDOTA_Unit_Hero_Rubick)
+            if ((unit.ClassId == ClassId.CDOTA_Unit_Hero_StormSpirit || unit.ClassId == ClassId.CDOTA_Unit_Hero_Rubick)
                 && unit.HasModifier("modifier_storm_spirit_ball_lightning"))
             {
                 var ballLightning = unit.FindSpell("storm_spirit_ball_lightning", true);
@@ -483,12 +483,12 @@ namespace Ensage.Common
 
                 var data =
                     tempTable.FirstOrDefault(
-                        unitData => unitData.UnitName == unit.StoredName() || unitData.UnitClassId == unit.ClassID);
+                        unitData => unitData.UnitName == unit.StoredName() || unitData.UnitClassId == unit.ClassId);
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
                     data = new Prediction(
                         unit.StoredName(),
-                        unit.ClassID,
+                        unit.ClassId,
                         new Vector3(0, 0, 0),
                         0,
                         new Vector3(0, 0, 0),

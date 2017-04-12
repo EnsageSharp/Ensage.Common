@@ -148,10 +148,7 @@ namespace Ensage.Common.Menu
                     + "</font> Hold: <font face='Verdana' color='#ff7700'>"
                     + Utils.KeyToText(this.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
                 Game.PrintMessage(
-                    msg,
-                    this.newMessageType.SelectedIndex == 2 || this.newMessageType.SelectedIndex == 0
-                        ? MessageType.LogMessage
-                        : MessageType.ChatMessage);
+                    msg);
             }
             else if (console && this.Item("showMessage").GetValue<bool>())
             {

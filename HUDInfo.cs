@@ -448,7 +448,7 @@ namespace Ensage.Common
             var localHero = ObjectManager.LocalHero;
             if (localHero != null && Equals(unit, localHero))
             {
-                if (unit.ClassID == ClassID.CDOTA_Unit_Hero_Meepo)
+                if (unit.ClassId == ClassId.CDOTA_Unit_Hero_Meepo)
                 {
                     return screenPos + new Vector2((float)(-HpBarX * 1.05 * Monitor), (float)(-HpBarY * 1.3 * Monitor));
                 }
@@ -524,7 +524,7 @@ namespace Ensage.Common
             }
             else
             {
-                id = hero.Player.ID;
+                id = hero.Player.Id;
             }
 
             if (!PlayerIdDictionary.ContainsKey(hero.Handle))
