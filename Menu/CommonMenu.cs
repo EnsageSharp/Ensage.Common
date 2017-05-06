@@ -187,14 +187,10 @@ namespace Ensage.Common.Menu
         /// </summary>
         private void Initialize()
         {
-            this.AddItem(
-                    new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ").SetValue(true))
+            this.AddItem(new MenuItem("EnsageSharp.Common.BlockKeys", "Block player inputs for KeyBinds: ")
+                .SetValue(false))
                 .SetTooltip("When a assembly uses a key, dota will ignore it");
-            this.AddItem(
-                    new MenuItem("showConsole", "Show Console").SetValue(Config.DebugConsole)
-                        .SetTooltip("Enable if you wanna see console window")).ValueChanged +=
-                (sender, args) => { Config.DebugConsole = args.GetNewValue<bool>(); };
-            Config.DebugConsole = this.Item("showConsole").GetValue<bool>();
+
             Config.DisableDrawings = false;
             this.AddItem(
                     new MenuItem("disableDrawings", "Disable Drawings").SetValue(Config.DisableDrawings)
