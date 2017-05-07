@@ -19,7 +19,7 @@ namespace Ensage.Common.Menu
     ///     The key bind.
     /// </summary>
     [Serializable]
-    public struct KeyBind
+    public class KeyBind
     {
         #region Fields
 

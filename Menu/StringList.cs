@@ -19,7 +19,7 @@ namespace Ensage.Common.Menu
     ///     The string list.
     /// </summary>
     [Serializable]
-    public struct StringList
+    public class StringList
     {
         #region Fields
 

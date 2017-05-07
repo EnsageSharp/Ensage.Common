@@ -19,7 +19,7 @@ namespace Ensage.Common.Menu
     ///     The slider.
     /// </summary>
     [Serializable]
-    public struct Slider
+    public class Slider
     {
         #region Fields
 
