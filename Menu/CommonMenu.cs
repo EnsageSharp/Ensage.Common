@@ -138,7 +138,7 @@ namespace Ensage.Common.Menu
                         Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)),
                         (int)(HUDInfo.ScreenSizeY() * 0.08),
                         Drawing.Width / 4));
-            var console = this.newMessageType.SelectedIndex == 2;
+            var console = this.newMessageType?.SelectedIndex == 2;
 
             if (this.Item("showMessage").GetValue<bool>() && !console)
             {
