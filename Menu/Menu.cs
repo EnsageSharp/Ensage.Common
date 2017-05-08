@@ -688,8 +688,9 @@ namespace Ensage.Common.Menu
                         "Arial",
                         new Vector2((float)(this.Height * 0.48), 100),
                         FontFlags.AntiAlias).X + bonus);
-            this.OrderNumber = menuCount;
+
             menuCount++;
+            this.UpdateDraggableOrder();
         }
 
         /// <summary>
@@ -796,11 +797,21 @@ namespace Ensage.Common.Menu
                     Drawing.OnDraw -= this.Drawing_OnDraw;
                     Game.OnWndProc -= this.Game_OnWndProc;
                     this.UnloadMenuState();
+
                     menuCount--;
+                    this.UpdateDraggableOrder();
                 }
             }
             catch (Exception)
             {
+            }
+        }
+
+        private void UpdateDraggableOrder()
+        {
+            for (var i = 0; i < RootMenusDraggable.Count; i++)
+            {
+                RootMenusDraggable[i].OrderNumber = i + 1;
             }
         }
 
