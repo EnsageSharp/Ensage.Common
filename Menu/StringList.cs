@@ -19,7 +19,7 @@ namespace Ensage.Common.Menu
     ///     The string list.
     /// </summary>
     [Serializable]
-    public class StringList
+    public struct StringList
     {
         #region Fields
 
@@ -50,6 +50,21 @@ namespace Ensage.Common.Menu
         {
             this.SList = list;
             this.SelectedIndex = defaultSelectedIndex;
+        }
+
+        public StringList(params string[] list)
+            : this(list, 0)
+        {
+        }
+
+        public static implicit operator int(StringList list)
+        {
+            return list.SelectedIndex;
+        }
+
+        public static implicit operator string(StringList list)
+        {
+            return list.SelectedValue;
         }
 
         #endregion

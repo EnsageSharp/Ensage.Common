@@ -225,8 +225,6 @@ namespace Ensage.Common.Menu
         /// </summary>
         public string UniqueId { get; set; }
 
-        public object Value => value;
-
         #endregion
 
         #region Properties

@@ -19,7 +19,7 @@ namespace Ensage.Common.Menu
     ///     The slider.
     /// </summary>
     [Serializable]
-    public class Slider
+    public struct Slider
     {
         #region Fields
 
@@ -82,5 +82,10 @@ namespace Ensage.Common.Menu
         }
 
         #endregion
+
+        public static implicit operator int(Slider slider)
+        {
+            return slider.Value;
+        }
     }
 }
