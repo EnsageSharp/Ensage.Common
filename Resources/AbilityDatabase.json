@@ -1645,8 +1645,7 @@
             "IsNuke": true,
             "MagicImmunityPierce": true,
             "OnlyForKillSteal": true,
-            "DamageString": "kill_threshold",
-            "DamageScepterString": "kill_threshold_scepter"
+            "DamageString": "kill_threshold"
         },
         {
             "AbilityName": "weaver_shukuchi",
