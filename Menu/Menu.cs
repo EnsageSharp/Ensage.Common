@@ -38,7 +38,7 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The root menus.
         /// </summary>
-        internal static readonly Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
+        public static readonly Dictionary<string, Menu> RootMenus = new Dictionary<string, Menu>();
 
         /// <summary>
         ///     The menu position dictionary.
