@@ -524,6 +524,35 @@ namespace Ensage.Common.Menu
 
         #region Public Methods and Operators
 
+        private static void DumpMenu(List<string> list, Menu menu)
+        {
+            list.Add(menu.DisplayName.ToLower());
+            foreach (var child in menu.Children)
+            {
+                DumpMenu(list, child);
+            }
+
+            foreach (var item in menu.Items)
+            {
+                list.Add(item.DisplayName.ToLower());
+            }
+        }
+
+        /// <summary>
+        /// Dump the display names of all menus and menu items 
+        /// </summary>
+        public static List<string> DumpDisplayNames()
+        {
+            var list = new List<string>();
+            foreach (var rootMenu in RootMenus)
+            {
+                var menu = rootMenu.Value;
+                DumpMenu(list, menu);
+            }
+
+            return list.Distinct().ToList();
+        }
+
         /// <summary>
         ///     The get menu.
         /// </summary>
