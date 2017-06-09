@@ -11,14 +11,18 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
+
 namespace Ensage.Common.Menu
 {
     using System;
     using System.Collections.Generic;
-    using System.Resources;
-    using System.Web.Script.Serialization;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
 
     using Ensage.Common.Properties;
+
+    using EnsageSharp.Sandbox;
 
     /// <summary>
     /// </summary>
@@ -48,9 +52,13 @@ namespace Ensage.Common.Menu
         public static string _(string textToTranslate)
         {
             var textToTranslateToLower = textToTranslate.ToLower();
-            return translations.ContainsKey(textToTranslateToLower)
-                       ? translations[textToTranslateToLower]
-                       : textToTranslate;
+
+            if (translations.ContainsKey(textToTranslateToLower) && !string.IsNullOrEmpty(translations[textToTranslateToLower]))
+            {
+                return translations[textToTranslateToLower];
+            }
+
+            return textToTranslate;
         }
 
         /// <summary>
@@ -61,16 +69,11 @@ namespace Ensage.Common.Menu
         {
             try
             {
-                var languageStrings =
-                    new ResourceManager("Ensage.Common.Properties.Resources", typeof(Resources).Assembly).GetString(
-                        languageName + "Json");
-
-                if (string.IsNullOrEmpty(languageStrings))
+                if (SandboxConfig.SelectedLanguage.StartsWith("zh") || CultureInfo.InstalledUICulture.Name.StartsWith("zh"))
                 {
-                    return false;
+                    translations = TranslationChinese.Values;
                 }
 
-                translations = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(languageStrings);
                 return true;
             }
             catch (Exception ex)
