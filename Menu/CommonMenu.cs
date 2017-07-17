@@ -251,6 +251,7 @@ namespace Ensage.Common.Menu
 
                     this.SelectedTheme = theme.Value;
                 };
+
             var defaultTheme =
                 this.Themes.FirstOrDefault(x => x.Value.ThemeName == themeSelect.GetValue<StringList>().SelectedValue);
             if (defaultTheme != null)
@@ -331,6 +332,13 @@ namespace Ensage.Common.Menu
             MenuSettings.BasePosition = new Vector2(
                 this.xPos.GetValue<Slider>().Value,
                 this.yPos.GetValue<Slider>().Value);
+
+            this.settings.AddItem(
+                new MenuItem("allowCustomTextures", "Allow custom textures in menu")).SetValue(true);
+            this.settings.AddItem(
+                new MenuItem("allowCustomColors", "Allow custom font colors in menu")).SetValue(true);
+            this.settings.AddItem(
+                new MenuItem("allowCustomFonts", "Allow custom font styles in menu")).SetValue(true);
         }
 
         #endregion

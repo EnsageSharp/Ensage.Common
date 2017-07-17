@@ -529,6 +529,12 @@ namespace Ensage.Common.Menu
         public MenuItem SetFontColor(Color fontColor)
         {
             this.FontColor = fontColor;
+
+            if (Menu.Root?.Item("allowCustomColors").GetValue<bool>() != true)
+            {
+                this.FontColor = Menu.Root?.SelectedTheme.ItemDefaultTextColor ?? new Color(185, 176, 163, 255);
+            }
+
             return this;
         }
 
@@ -549,6 +555,17 @@ namespace Ensage.Common.Menu
         {
             this.FontStyle = fontStyle;
             this.FontColor = fontColor ?? Color.White;
+
+            if (Menu.Root?.Item("allowCustomFonts").GetValue<bool>() != true)
+            {
+                this.FontStyle = FontStyle.Regular;
+            }
+
+            if (Menu.Root?.Item("allowCustomColors").GetValue<bool>() == true)
+            {
+                this.FontColor = Menu.Root?.SelectedTheme.ItemDefaultTextColor ?? new Color(185, 176, 163, 255);
+            }
+
             return this;
         }
 
