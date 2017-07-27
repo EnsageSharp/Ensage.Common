@@ -69,7 +69,7 @@ namespace Ensage.Common.Menu
         {
             try
             {
-                if (SandboxConfig.SelectedLanguage.StartsWith("zh") || CultureInfo.InstalledUICulture.Name.StartsWith("zh"))
+                if (SandboxConfig.SelectedLanguage.StartsWith("zh"))
                 {
                     translations = TranslationChinese.Values;
                 }
