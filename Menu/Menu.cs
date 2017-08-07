@@ -149,6 +149,11 @@ namespace Ensage.Common.Menu
             this.ShowTextWithTexture = showTextWithTexture;
             this.transition = new ExpoEaseInOut(0.25);
 
+            if (Root?.Item("allowCustomTextures").GetValue<bool>() != true)
+            {
+                this.TextureName = null;
+            }
+
             AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
             AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
             Events.OnClose += delegate { this.SaveAll(); };
@@ -874,6 +879,12 @@ namespace Ensage.Common.Menu
         public Menu SetFontColor(Color fontColor)
         {
             this.Color = fontColor;
+
+            if (Root?.Item("allowCustomColors").GetValue<bool>() != true)
+            {
+                this.Color = Root?.SelectedTheme.ItemDefaultTextColor ?? new Color(185, 176, 163, 255);
+            }
+
             return this;
         }
 
