@@ -976,7 +976,7 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The save all.
         /// </summary>
-        internal void SaveAll()
+        public void SaveAll()
         {
             var dic = new Dictionary<string, Dictionary<string, byte[]>>();
             this.RecursiveSaveAll(ref dic);
