@@ -136,7 +136,7 @@ namespace Ensage.Common.Objects
         /// </returns>
         public static DotaTexture GetNeutralCreepTexture(string creepName)
         {
-            var name = "materials/ensage_ui/neutrals_vertical/" + creepName.Substring("npc_dota_neutral_".Length)
+            var name = "materials/ensage_ui/neutrals_horizontal/" + creepName.Substring("npc_dota_neutral_".Length)
                        + ".vmat";
             DotaTexture texture;
             if (TextureDictionary.TryGetValue(name, out texture))

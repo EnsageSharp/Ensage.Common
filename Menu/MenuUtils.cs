@@ -296,14 +296,14 @@ namespace Ensage.Common.Menu
                 {
                     Drawing.DrawRect(
                         menu.Position + new Vector2(3, 3),
-                        new Vector2(menu.Height - 6, menu.Height - 6),
+                        new Vector2((float)(menu.Height * 1.4), menu.Height - 6),
                         Textures.GetNeutralCreepTexture(tName));
                     Drawing.DrawRect(
                         menu.Position + new Vector2(2, 2),
-                        new Vector2(menu.Height - 4, menu.Height - 4),
+                        new Vector2((float)(menu.Height * 1.4) + 2, menu.Height - 4),
                         Color.Black,
                         true);
-                    bonusWidth = (int)(menu.Height * 0.89);
+                    bonusWidth = (int)(menu.Height * 1.44);
                 }
                 else if (tName.Contains("item_"))
                 {
