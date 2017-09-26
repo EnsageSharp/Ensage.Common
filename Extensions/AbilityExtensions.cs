@@ -1509,7 +1509,7 @@ namespace Ensage.Common.Extensions
                 return radius;
             }
 
-            radius = (ability.Owner as Hero).GetAttackRange() + 150;
+            radius = (ability.Owner as Unit).GetAttackRange() + 150;
             radiusDictionary.TryAdd(name + " " + ability.Level, radius);
             return radius;
         }
