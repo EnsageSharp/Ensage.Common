@@ -275,7 +275,19 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The texture name.
         /// </summary>
-        public string TextureName { get; set; }
+        public string TextureName {
+            get
+            {
+                return this.textureName;
+            }
+            set
+            {
+                this.textureName = value;
+                this.CalculateMenuWidth();
+            }
+        }
+
+        private string textureName;
 
         /// <summary>
         ///     The unique id.
@@ -695,6 +707,15 @@ namespace Ensage.Common.Menu
             this.InitMenuState(assembly.GetName().Name);
 
             DelayAction.Add(2000, this.SetHeroTogglers);
+
+            this.CalculateMenuWidth();
+
+            menuCount++;
+            this.UpdateDraggableOrder();
+        }
+
+        private void CalculateMenuWidth()
+        {
             var bonus = 0f;
             if (this.TextureName != null)
             {
@@ -722,9 +743,6 @@ namespace Ensage.Common.Menu
                         "Arial",
                         new Vector2((float)(this.Height * 0.48), 100),
                         FontFlags.AntiAlias).X + bonus);
-
-            menuCount++;
-            this.UpdateDraggableOrder();
         }
 
         /// <summary>
