@@ -1311,53 +1311,30 @@ namespace Ensage.Common.Menu
                         switch (message)
                         {
                             case Utils.WindowsMessages.WM_KEYDOWN:
-                                var val = this.GetValue<KeyBind>();
-                                if (key == val.Key)
-                                {
-                                    if (val.Type == KeyBindType.Press)
-                                    {
-                                        if (!val.Active)
-                                        {
-                                            val.Active = true;
-                                            this.SetValue(val);
-                                        }
-                                    }
-
-                                    if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
-                                    {
-                                        wargs.Process = false;
-                                    }
-                                }
-
+                                this.CheckKeyDown(key, wargs);
                                 break;
                             case Utils.WindowsMessages.WM_KEYUP:
-
-                                var val2 = this.GetValue<KeyBind>();
-                                if (key == val2.Key)
-                                {
-                                    if (val2.Type == KeyBindType.Press)
-                                    {
-                                        val2.Active = false;
-                                        this.SetValue(val2);
-                                    }
-                                    else
-                                    {
-                                        val2.Active = !val2.Active;
-                                        this.SetValue(val2);
-                                    }
-
-                                    if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
-                                    {
-                                        wargs.Process = false;
-                                    }
-                                }
-
+                                this.CheckKeyUp(key, wargs);
+                                break;
+                            case Utils.WindowsMessages.WM_MBUTTONDOWN:
+                            case Utils.WindowsMessages.WM_XBUTTONDOWN:
+                                this.CheckKeyDown(key >> 16, wargs);
+                                break;
+                            case Utils.WindowsMessages.WM_MBUTTONUP:
+                            case Utils.WindowsMessages.WM_XBUTTONUP:
+                                this.CheckKeyUp(key >> 16, wargs);
                                 break;
                         }
                     }
 
-                    if (message == Utils.WindowsMessages.WM_KEYUP && this.Interacting)
+                    if (this.Interacting
+                        && (message == Utils.WindowsMessages.WM_KEYUP || message == Utils.WindowsMessages.WM_XBUTTONUP || message == Utils.WindowsMessages.WM_MBUTTONUP))
                     {
+                        if (message != Utils.WindowsMessages.WM_KEYUP)
+                        {
+                            key >>= 16;
+                        }
+
                         var val = this.GetValue<KeyBind>();
                         val.Key = key;
                         this.SetValue(val);
@@ -1616,6 +1593,50 @@ namespace Ensage.Common.Menu
                         false,
                         true,
                         this.GetValue<HeroToggler>().DefaultValues));
+            }
+        }
+
+        private void CheckKeyUp(uint key, WndEventArgs wargs)
+        {
+            var val = this.GetValue<KeyBind>();
+            if (key == val.Key)
+            {
+                if (val.Type == KeyBindType.Press)
+                {
+                    val.Active = false;
+                    this.SetValue(val);
+                }
+                else
+                {
+                    val.Active = !val.Active;
+                    this.SetValue(val);
+                }
+
+                if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
+                {
+                    wargs.Process = false;
+                }
+            }
+        }
+
+        private void CheckKeyDown(uint key, WndEventArgs wargs)
+        {
+            var val = this.GetValue<KeyBind>();
+            if (key == val.Key)
+            {
+                if (val.Type == KeyBindType.Press)
+                {
+                    if (!val.Active)
+                    {
+                        val.Active = true;
+                        this.SetValue(val);
+                    }
+                }
+
+                if (wargs != null && Menu.Root.Item("EnsageSharp.Common.BlockKeys").GetValue<bool>())
+                {
+                    wargs.Process = false;
+                }
             }
         }
 

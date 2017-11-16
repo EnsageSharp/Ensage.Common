@@ -71,6 +71,9 @@ namespace Ensage.Common
         /// </summary>
         private static readonly Dictionary<uint, string> KeyCodeDictionary = new Dictionary<uint, string>
                                                                                  {
+                                                                                     { 0, "Mouse3" },
+                                                                                     { 1, "Mouse4" },
+                                                                                     { 2, "Mouse5" },
                                                                                      { 8, "Backspace" }, { 9, "Tab" },
                                                                                      { 13, "Enter" }, { 16, "Shift" },
                                                                                      { 17, "Ctrl" }, { 18, "Alt" },
@@ -103,7 +106,7 @@ namespace Ensage.Common
                                                                                      { 187, "=" }, { 188, "," },
                                                                                      { 189, "-" }, { 190, "." },
                                                                                      { 191, "/" }, { 192, "`" },
-                                                                                     { 219, "(" }, { 220, "'\'" },
+                                                                                     { 219, "(" }, { 220, "\\" },
                                                                                      { 221, ")" }, { 222, "'" }
                                                                                  };
 
@@ -179,7 +182,11 @@ namespace Ensage.Common
             /// <summary>
             ///     Key up
             /// </summary>
-            WM_KEYUP = 0x0101
+            WM_KEYUP = 0x0101,
+
+            WM_XBUTTONDOWN = 0x20B,
+
+            WM_XBUTTONUP = 0x20C
         }
 
         #endregion
