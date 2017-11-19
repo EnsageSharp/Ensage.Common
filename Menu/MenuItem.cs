@@ -1328,9 +1328,16 @@ namespace Ensage.Common.Menu
                     }
 
                     if (this.Interacting
-                        && (message == Utils.WindowsMessages.WM_KEYUP || message == Utils.WindowsMessages.WM_XBUTTONUP || message == Utils.WindowsMessages.WM_MBUTTONUP))
+                        && (message == Utils.WindowsMessages.WM_KEYUP
+                            || message == Utils.WindowsMessages.WM_XBUTTONUP
+                            || message == Utils.WindowsMessages.WM_MBUTTONUP
+                            || message == Utils.WindowsMessages.WM_RBUTTONUP))
                     {
-                        if (message != Utils.WindowsMessages.WM_KEYUP)
+                        if (message == Utils.WindowsMessages.WM_RBUTTONUP)
+                        {
+                            key = uint.MaxValue;
+                        }
+                        else if (message != Utils.WindowsMessages.WM_KEYUP)
                         {
                             key >>= 16;
                         }
