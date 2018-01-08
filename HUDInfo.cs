@@ -548,7 +548,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
-        public static double GetTopPanelSizeX()
+        public static double GetTopPanelSizeX(Hero hero = null)
         {
             return X;
         }
@@ -562,7 +562,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
-        public static double GetTopPanelSizeY()
+        public static double GetTopPanelSizeY(Hero hero = null)
         {
             return 35 * Rate;
         }
