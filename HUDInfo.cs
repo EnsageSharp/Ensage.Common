@@ -166,10 +166,10 @@ namespace Ensage.Common
             else if (ratio == 177)
             {
                 compareWidth = 1600;
-                panelHeroSizeX = 55.09;
+                panelHeroSizeX = 52.8900000000004;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.5401;
-                RadiantCompare = 3.499;
+                DireCompare = 2.5001;
+                RadiantCompare = 3.409;
                 HpBarHeight = 10;
                 HpBarWidth = 86.5;
                 HpBarX = 44;
@@ -210,11 +210,11 @@ namespace Ensage.Common
             }
             else if (ratio == 150)
             {
-                compareWidth = 1280;
-                panelHeroSizeX = 51.39;
+                compareWidth = 1024;
+                panelHeroSizeX = 47.21;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.64;
-                RadiantCompare = 4.02;
+                DireCompare = 2.775;
+                RadiantCompare = 4.57;
                 HpBarHeight = 8;
                 HpBarWidth = 79.2;
                 HpBarX = 40.2;
@@ -225,11 +225,11 @@ namespace Ensage.Common
             }
             else if (ratio == 133)
             {
-                compareWidth = 1024;
-                panelHeroSizeX = 47.21;
+                compareWidth = 1280;
+                panelHeroSizeX = 58.3;
                 tinfoHeroDown = 25.714;
-                DireCompare = 2.775;
-                RadiantCompare = 4.57;
+                DireCompare = 2.78;
+                RadiantCompare = 4.65;
                 HpBarHeight = 8;
                 HpBarWidth = 71;
                 HpBarX = 36.6;
@@ -540,21 +540,6 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        ///     Returns top panel size
-        /// </summary>
-        /// <param name="hero">
-        ///     The hero.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="double[]" />.
-        /// </returns>
-        public static double[] GetTopPanelSize(Hero hero)
-        {
-            double[] size = { GetTopPanelSizeX(hero), GetTopPanelSizeY(hero) };
-            return size;
-        }
-
-        /// <summary>
         ///     Returns top panel hero icon width
         /// </summary>
         /// <param name="hero">
@@ -563,7 +548,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
-        public static double GetTopPanelSizeX(Hero hero)
+        public static double GetTopPanelSizeX()
         {
             return X;
         }
@@ -577,7 +562,7 @@ namespace Ensage.Common
         /// <returns>
         ///     The <see cref="double" />.
         /// </returns>
-        public static double GetTopPanelSizeY(Hero hero)
+        public static double GetTopPanelSizeY()
         {
             return 35 * Rate;
         }
