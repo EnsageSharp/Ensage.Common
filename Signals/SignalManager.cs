@@ -28,7 +28,7 @@ namespace Ensage.Common.Signals
         /// <summary>
         ///     Signals list.
         /// </summary>
-        private static readonly List<Signal> Signals = new List<Signal>();
+        private static readonly HashSet<Signal> Signals = new HashSet<Signal>();
 
         #endregion
 
@@ -52,10 +52,7 @@ namespace Ensage.Common.Signals
         /// <param name="signal">The signal.</param>
         public static void AddSignal(Signal signal)
         {
-            if (!Signals.Contains(signal))
-            {
-                Signals.Add(signal);
-            }
+            Signals.Add(signal);
         }
 
         /// <summary>
@@ -64,10 +61,7 @@ namespace Ensage.Common.Signals
         /// <param name="signal">The signal.</param>
         public static void RemoveSignal(Signal signal)
         {
-            if (Signals.Contains(signal))
-            {
-                Signals.Remove(signal);
-            }
+            Signals.Remove(signal);
         }
 
         #endregion
@@ -91,13 +85,15 @@ namespace Ensage.Common.Signals
 
                 if (signal.SignalWaver(signal))
                 {
-                    signal.TriggerSignal(MethodBase.GetCurrentMethod().Name, "Signal was waved.");
+                   // signal.TriggerSignal(MethodBase.GetCurrentMethod().Name, "Signal was waved.");
+                    signal.TriggerSignal(null, "Signal was waved.");
                     Signals.Remove(signal);
                 }
 
                 if (signal.Expired && signal.CalledExpired == false)
                 {
-                    signal.TriggerOnExipired(MethodBase.GetCurrentMethod().Name);
+                    //signal.TriggerOnExipired(MethodBase.GetCurrentMethod().Name);
+                    signal.TriggerOnExipired(null);
                     signal.CalledExpired = true;
                 }
             }

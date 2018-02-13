@@ -19,7 +19,7 @@ namespace Ensage.Common
     /// <summary>
     ///     Class that contains all of the needed information for delaying an action.
     /// </summary>
-    public class DelayActionItem
+    public class DelayActionItem : IEquatable<DelayActionItem>
     {
         #region Constructors and Destructors
 
@@ -68,5 +68,24 @@ namespace Ensage.Common
         public CancellationToken Token { get; set; }
 
         #endregion
+
+        public bool Equals(DelayActionItem other)
+        {
+            return other != null && this.Time == other.Time && this.Function.Equals(other.Function) && this.Token.Equals(other.Token);
+        }
+
+        public override bool Equals(object other)
+        {
+            return Equals(other as DelayActionItem);
+        }
+
+        public override int GetHashCode()
+        {
+            var hash = this.Time;
+            hash = (hash * 7) + this.Function.GetHashCode();
+            hash = (hash * 7) + this.Token.GetHashCode();
+            return hash;
+        }
+
     }
 }

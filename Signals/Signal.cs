@@ -16,11 +16,14 @@ namespace Ensage.Common.Signals
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
+
+    using Ensage.Common.Extensions;
 
     /// <summary>
     ///     A signal.
     /// </summary>
-    public class Signal : EventArgs
+    public class Signal : EventArgs, IEquatable<Signal>
     {
         #region Constructors and Destructors
 
@@ -230,16 +233,16 @@ namespace Ensage.Common.Signals
             this.Enabled = false;
 
             // Get the caller of the this method.
-            var callFrame = new StackFrame(1);
-            var declaringType = callFrame.GetMethod().DeclaringType;
+            //var callFrame = new StackFrame(1);
+            //var declaringType = callFrame.GetMethod().DeclaringType;
 
-            if (declaringType == null)
-            {
-                return;
-            }
+            //if (declaringType == null)
+            //{
+            //    return;
+            //}
 
-            var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
-            this.TriggerEnabledStatusChanged(caller, false);
+            //var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
+            this.TriggerEnabledStatusChanged(this, false);
 
             SignalManager.RemoveSignal(this);
         }
@@ -252,16 +255,16 @@ namespace Ensage.Common.Signals
             this.Enabled = true;
 
             // Get the caller of the this method.
-            var callFrame = new StackFrame(1);
-            var declaringType = callFrame.GetMethod().DeclaringType;
+            //var callFrame = new StackFrame(1);
+            //var declaringType = callFrame.GetMethod().DeclaringType;
 
-            if (declaringType == null)
-            {
-                return;
-            }
+            //if (declaringType == null)
+            //{
+            //    return;
+            //}
 
-            var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
-            this.TriggerEnabledStatusChanged(caller, true);
+            //var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
+            this.TriggerEnabledStatusChanged(this, true);
 
             SignalManager.AddSignal(this);
         }
@@ -276,16 +279,16 @@ namespace Ensage.Common.Signals
             reason = string.Format(reason, format);
 
             // Get the caller of the this method.
-            var callFrame = new StackFrame(1);
-            var declaringType = callFrame.GetMethod().DeclaringType;
+            //var callFrame = new StackFrame(1);
+            //var declaringType = callFrame.GetMethod().DeclaringType;
 
-            if (declaringType == null)
-            {
-                return;
-            }
+            //if (declaringType == null)
+            //{
+            //    return;
+            //}
 
-            var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
-            this.TriggerSignal(caller, reason);
+            //var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
+            this.TriggerSignal(this, reason);
         }
 
         /// <summary>
@@ -295,16 +298,16 @@ namespace Ensage.Common.Signals
         public void Raise(Exception exception)
         {
             // Get the caller of the this method.
-            var callFrame = new StackFrame(1);
-            var declaringType = callFrame.GetMethod().DeclaringType;
+            //var callFrame = new StackFrame(1);
+            //var declaringType = callFrame.GetMethod().DeclaringType;
 
-            if (declaringType == null)
-            {
-                return;
-            }
+            //if (declaringType == null)
+            //{
+            //    return;
+            //}
 
-            var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
-            this.TriggerSignal(caller, exception.Message);
+            //var caller = declaringType.FullName + "." + callFrame.GetMethod().Name;
+            this.TriggerSignal(this, exception.Message);
         }
 
         /// <summary>
@@ -331,10 +334,7 @@ namespace Ensage.Common.Signals
         /// <param name="enabled">Signal enabled or not..</param>
         internal void TriggerEnabledStatusChanged(object sender, bool enabled)
         {
-            if (this.OnEnabledStatusChanged != null)
-            {
-                this.OnEnabledStatusChanged.Invoke(sender, new EnabledStatusChangedArgs(enabled));
-            }
+            this.OnEnabledStatusChanged?.Invoke(sender, new EnabledStatusChangedArgs(enabled));
         }
 
         /// <summary>
@@ -343,10 +343,7 @@ namespace Ensage.Common.Signals
         /// <param name="sender">The sender.</param>
         internal void TriggerOnExipired(object sender)
         {
-            if (this.OnExpired != null)
-            {
-                this.OnExpired.Invoke(sender, new EventArgs());
-            }
+            this.OnExpired?.Invoke(sender, new EventArgs());
         }
 
         /// <summary>
@@ -365,10 +362,7 @@ namespace Ensage.Common.Signals
             this.LastSignaled = DateTimeOffset.Now;
             this.OnRaised(sender, new RaisedArgs(reason, this));
 
-            if (OnSignalRaised != null)
-            {
-                OnSignalRaised.Invoke(sender, this);
-            }
+            OnSignalRaised?.Invoke(sender, this);
         }
 
         #endregion
@@ -479,6 +473,27 @@ namespace Ensage.Common.Signals
             public Signal Signal { get; set; }
 
             #endregion
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Signal);
+        }
+
+        public bool Equals(Signal other)
+        {
+            return other != null && this.Properties.Count == other.Properties.Count && !this.Properties.Except(other.Properties).Any();
+        }
+
+        public override int GetHashCode()
+        {
+            var hashcode = 1337;
+            foreach (var value in this.Properties.Values)
+            {
+                hashcode = (hashcode * 2) + value.GetHashCode();
+            }
+
+            return hashcode;
         }
     }
 }
