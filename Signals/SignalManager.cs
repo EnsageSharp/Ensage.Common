@@ -76,6 +76,7 @@ namespace Ensage.Common.Signals
         /// </param>
         private static void Game_OnUpdate(EventArgs args)
         {
+            var counter = 0;
             foreach (var signal in Signals.ToList())
             {
                 if (!signal.Enabled)
@@ -88,6 +89,13 @@ namespace Ensage.Common.Signals
                    // signal.TriggerSignal(MethodBase.GetCurrentMethod().Name, "Signal was waved.");
                     signal.TriggerSignal(null, "Signal was waved.");
                     Signals.Remove(signal);
+
+                    // only allow x singals at once
+                    counter++;
+                    if (counter > 25)
+                    {
+                        break;
+                    }
                 }
 
                 if (signal.Expired && signal.CalledExpired == false)

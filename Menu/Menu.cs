@@ -1256,16 +1256,21 @@ namespace Ensage.Common.Menu
         /// </param>
         private void ObjectMgr_OnAddEntity(EntityEventArgs args)
         {
-            DelayAction.Add(
-                2000,
-                () =>
-                    {
-                        var hero = args.Entity as Hero;
-                        if (hero != null)
-                        {
-                            this.SetHeroTogglers();
-                        }
-                    });
+            //DelayAction.Add(
+            //    2000,
+            //    () =>
+            //        {
+            //            var hero = args.Entity as Hero;
+            //            if (hero != null)
+            //            {
+            //                this.SetHeroTogglers();
+            //            }
+            //        });
+
+            if (args.Entity != null && args.Entity is Hero)
+            {
+                this.SetHeroTogglers();
+            }
         }
 
         /// <summary>
