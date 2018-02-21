@@ -1269,7 +1269,7 @@ namespace Ensage.Common.Menu
 
             if (args.Entity != null && args.Entity is Hero)
             {
-                this.SetHeroTogglers();
+                DelayAction.Add(2000, this.SetHeroTogglers);
             }
         }
 
