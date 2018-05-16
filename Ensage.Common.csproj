@@ -61,6 +61,7 @@
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="PlaySharp.Toolkit" />
     <Reference Include="SharpDX">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\EnsageSharpTest\References\SharpDX.dll</HintPath>

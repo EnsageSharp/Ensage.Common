@@ -15,6 +15,9 @@ namespace Ensage.Common.Menu
 {
     using System;
     using System.IO;
+    using System.Windows.Input;
+
+    using EnsageSharp.Sandbox;
 
     using SharpDX;
 
@@ -219,16 +222,32 @@ namespace Ensage.Common.Menu
                 return;
             }
 
-            if ((args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP || args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN)
-                && args.WParam == Menu.Root.Item("pressKey").GetValue<KeyBind>().Key)
+            if (args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP || args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN)
             {
-                DrawMenu = args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN;
+                int menuKey;
+                if (SandboxConfig.Config.HotKeys.TryGetValue("Menu", out menuKey))
+                {
+                    var pressedKey = KeyInterop.KeyFromVirtualKey((int)args.WParam);
+                    var key = KeyInterop.KeyFromVirtualKey(menuKey);
+                    if (pressedKey == key)
+                    {
+                        DrawMenu = args.Msg == (uint)Utils.WindowsMessages.WM_KEYDOWN;
+                    }
+                }
             }
 
-            if (args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP
-                && args.WParam == Menu.Root.Item("toggleKey").GetValue<KeyBind>().Key)
+            if (args.Msg == (uint)Utils.WindowsMessages.WM_KEYUP)
             {
-                DrawMenu = !DrawMenu;
+                int menuKey;
+                if (SandboxConfig.Config.HotKeys.TryGetValue("MenuToggle", out menuKey))
+                {
+                    var pressedKey = KeyInterop.KeyFromVirtualKey((int)args.WParam);
+                    var key = KeyInterop.KeyFromVirtualKey(menuKey);
+                    if (pressedKey == key)
+                    {
+                        DrawMenu = !DrawMenu;
+                    }
+                }
             }
         }
 

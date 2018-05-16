@@ -29,21 +29,6 @@ namespace Ensage.Common.Menu
         #region Fields
 
         /// <summary>
-        ///     The hacks.
-        /// </summary>
-        private Menu hacks;
-
-        /// <summary>
-        ///     The message.
-        /// </summary>
-        private MenuItem message;
-
-        /// <summary>
-        ///     The new message type.
-        /// </summary>
-        private StringList newMessageType;
-
-        /// <summary>
         ///     The settings.
         /// </summary>
         private Menu settings;
@@ -70,7 +55,6 @@ namespace Ensage.Common.Menu
             : base("GeneralSettings", "Ensage.Common", true, null, false)
         {
             this.Settings();
-            this.Hacks();
             this.Initialize();
         }
 
@@ -103,21 +87,6 @@ namespace Ensage.Common.Menu
         #region Methods
 
         /// <summary>
-        ///     The message value changed.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender.
-        /// </param>
-        /// <param name="e">
-        ///     The e.
-        /// </param>
-        internal void MessageValueChanged(object sender, OnValueChangeEventArgs e)
-        {
-            this.newMessageType = e.GetNewValue<StringList>();
-            this.Events_OnLoad(null, null);
-        }
-
-        /// <summary>
         ///     The events_ on load.
         /// </summary>
         /// <param name="sender">
@@ -138,48 +107,6 @@ namespace Ensage.Common.Menu
                         Math.Max(Math.Min(currentY, Drawing.Width / 4), (int)(HUDInfo.ScreenSizeY() * 0.08)),
                         (int)(HUDInfo.ScreenSizeY() * 0.08),
                         Drawing.Width / 4));
-            var console = this.newMessageType.SelectedIndex == 2;
-
-            if (this.Item("showMessage").GetValue<bool>() && !console)
-            {
-                var msg =
-                    "<font face='Verdana' color='#ff7700'>[</font>Menu Hotkeys<font face='Verdana' color='#ff7700'>]</font> Press: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(this.Item("toggleKey").GetValue<KeyBind>().Key)
-                    + "</font> Hold: <font face='Verdana' color='#ff7700'>"
-                    + Utils.KeyToText(this.Item("pressKey").GetValue<KeyBind>().Key) + "</font>";
-                Game.PrintMessage(
-                    msg);
-            }
-            else if (console && this.Item("showMessage").GetValue<bool>())
-            {
-                var msg = @"[Menu Hotkeys] Press: " + Utils.KeyToText(this.Item("toggleKey").GetValue<KeyBind>().Key)
-                          + @" Hold: " + Utils.KeyToText(this.Item("pressKey").GetValue<KeyBind>().Key);
-                Console.WriteLine(msg);
-            }
-        }
-
-        /// <summary>
-        ///     The hacks.
-        /// </summary>
-        private void Hacks()
-        {
-            this.hacks = new Menu("Hacks", "Common.Hacks");
-            this.hacks.AddItem(
-                    new MenuItem("showSpawnBoxes", "Show SpawnBoxes").SetValue(Config.ShowSpawnBoxes)
-                        .SetTooltip("Makes SpawnBoxes always visible")).ValueChanged +=
-                (sender, args) => { Config.ShowSpawnBoxes = args.GetNewValue<bool>(); };
-            Config.ShowSpawnBoxes = this.hacks.Item("showSpawnBoxes").GetValue<bool>();
-            this.hacks.AddItem(
-                    new MenuItem("showTowerRange", "Show TowerRange").SetValue(Config.ShowTowerRange)
-                        .SetTooltip("Makes TowerRange always visible")).ValueChanged +=
-                (sender, args) => { Config.ShowTowerRange = args.GetNewValue<bool>(); };
-            Config.ShowTowerRange = this.hacks.Item("showTowerRange").GetValue<bool>();
-            this.hacks.AddItem(
-                    new MenuItem("autoAccept", "AutoAccept").SetValue(Config.AutoAccept)
-                        .SetTooltip("Automatically clicks on accept after game was found")).ValueChanged +=
-                (sender, args) => { Config.AutoAccept = args.GetNewValue<bool>(); };
-            Config.AutoAccept = this.hacks.Item("autoAccept").GetValue<bool>();
-            this.AddSubMenu(this.hacks);
         }
 
         /// <summary>
@@ -200,7 +127,6 @@ namespace Ensage.Common.Menu
                             Color.Red)).ValueChanged +=
                 (sender, args) => { Config.DisableDrawings = args.GetNewValue<bool>(); };
             this.Item("disableDrawings").SetValue(false);
-            this.message.ValueChanged += this.MessageValueChanged;
             Events.OnLoad += this.Events_OnLoad;
 
             Composer.ComposeParts(this);
@@ -288,16 +214,6 @@ namespace Ensage.Common.Menu
         private void Settings()
         {
             this.settings = new Menu("MenuSettings", "Common.menuSettings");
-            this.settings.AddItem(
-                new MenuItem("pressKey", "Menu hold key").SetValue(new KeyBind(16, KeyBindType.Press)));
-            this.settings.AddItem(
-                new MenuItem("toggleKey", "Menu toggle key").SetValue(new KeyBind(118, KeyBindType.Toggle)));
-            this.settings.AddItem(new MenuItem("showMessage", "Show OnLoad message: ").SetValue(true))
-                .SetTooltip("Show message with menu hotkeys on game load");
-            this.message =
-                this.settings.AddItem(
-                    new MenuItem("messageType", "Show the message in: ").SetValue(
-                        new StringList(new[] { "SideLog", "Chat", "Console" })));
             this.settings.AddItem(
                         new MenuItem("EnsageSharp.Common.IncreaseSize", "Size increase: ").SetValue(new Slider(0, 0, 250)))
                     .SetTooltip("Increases size of the menu, it can take up to 20 sec before the menu gets fully resized")
