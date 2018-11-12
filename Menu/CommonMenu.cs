@@ -215,7 +215,7 @@ namespace Ensage.Common.Menu
         {
             this.settings = new Menu("MenuSettings", "Common.menuSettings");
             this.settings.AddItem(
-                        new MenuItem("EnsageSharp.Common.IncreaseSize", "Size increase: ").SetValue(new Slider(0, 0, 250)))
+                        new MenuItem("EnsageSharp.Common.IncreaseSize", "Size increase: ").SetValue(new Slider(0, -50, 250)))
                     .SetTooltip("Increases size of the menu, it can take up to 20 sec before the menu gets fully resized")
                     .ValueChanged +=
                 (sender, args) => { DelayAction.Add(250, () => IncreaseMenuSize = args.GetNewValue<Slider>().Value); };
