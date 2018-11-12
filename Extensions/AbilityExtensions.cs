@@ -137,7 +137,7 @@ namespace Ensage.Common.Extensions
                     return canBeCasted;
                 }
 
-                if (owner.ClassId != ClassId.CDOTA_Unit_Hero_Invoker)
+                if (owner.NetworkName != "CDOTA_Unit_Hero_Invoker")
                 {
                     canBeCasted = ability.Level > 0 && owner.Mana + bonusMana >= ability.ManaCost
                                   && ability.Cooldown <= Math.Max(Game.Ping / 1000 - 0.1, 0);

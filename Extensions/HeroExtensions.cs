@@ -16,6 +16,7 @@ namespace Ensage.Common.Extensions
     using System.Collections.Generic;
     using System.Linq;
 
+    using Ensage.Common.Enums;
     using Ensage.Common.Objects;
 
     /// <summary>
@@ -221,18 +222,18 @@ namespace Ensage.Common.Extensions
                 return range;
             }
 
-            var classId = hero.ClassId;
-            switch (classId)
+            var heroId = hero.HeroId;
+            switch (heroId)
             {
-                case ClassId.CDOTA_Unit_Hero_Tiny:
+                case HeroId.npc_dota_hero_tiny:
                     var grow = hero.Spellbook.SpellR;
-                    if (grow != null && grow.Level > 0 && hero.HasItem(ClassId.CDOTA_Item_UltimateScepter))
+                    if (grow != null && grow.Level > 0 && hero.HasItem(ItemId.item_ultimate_scepter))
                     {
                         bonus = grow.GetAbilityData("bonus_range_scepter");
                     }
 
                     break;
-                case ClassId.CDOTA_Unit_Hero_TemplarAssassin:
+                case HeroId.npc_dota_hero_templar_assassin:
                     var psi = hero.Spellbook.SpellE;
                     if (psi != null && psi.Level > 0)
                     {
@@ -240,7 +241,7 @@ namespace Ensage.Common.Extensions
                     }
 
                     break;
-                case ClassId.CDOTA_Unit_Hero_Sniper:
+                case HeroId.npc_dota_hero_sniper:
                     var aim = hero.Spellbook.SpellE;
                     if (aim != null && aim.Level > 0)
                     {
@@ -248,7 +249,7 @@ namespace Ensage.Common.Extensions
                     }
 
                     break;
-                case ClassId.CDOTA_Unit_Hero_Enchantress:
+                case HeroId.npc_dota_hero_enchantress:
                     var impetus = hero.Spellbook.SpellR;
                     if (impetus.Level > 0 && hero.AghanimState())
                     {
@@ -315,46 +316,46 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static string GetRealName(this Hero hero)
         {
-            var classId = hero.ClassId;
-            switch (classId)
+            var heroId = hero.HeroId;
+            switch (heroId)
             {
-                case ClassId.CDOTA_Unit_Hero_DoomBringer:
+                case HeroId.npc_dota_hero_doom_bringer:
                     return "Doom";
-                case ClassId.CDOTA_Unit_Hero_Furion:
+                case HeroId.npc_dota_hero_furion:
                     return "Nature's Prophet";
-                case ClassId.CDOTA_Unit_Hero_Magnataur:
+                case HeroId.npc_dota_hero_magnataur:
                     return "Magnus";
-                case ClassId.CDOTA_Unit_Hero_Necrolyte:
+                case HeroId.npc_dota_hero_necrolyte:
                     return "Necrophos";
-                case ClassId.CDOTA_Unit_Hero_Nevermore:
+                case HeroId.npc_dota_hero_nevermore:
                     return "ShadowFiend";
-                case ClassId.CDOTA_Unit_Hero_Obsidian_Destroyer:
+                case HeroId.npc_dota_hero_obsidian_destroyer:
                     return "OutworldDevourer";
-                case ClassId.CDOTA_Unit_Hero_Rattletrap:
+                case HeroId.npc_dota_hero_rattletrap:
                     return "Clockwerk";
-                case ClassId.CDOTA_Unit_Hero_Shredder:
+                case HeroId.npc_dota_hero_shredder:
                     return "Timbersaw";
-                case ClassId.CDOTA_Unit_Hero_SkeletonKing:
+                case HeroId.npc_dota_hero_skeleton_king:
                     return "WraithKing";
-                case ClassId.CDOTA_Unit_Hero_Wisp:
+                case HeroId.npc_dota_hero_wisp:
                     return "Io";
-                case ClassId.CDOTA_Unit_Hero_Zuus:
+                case HeroId.npc_dota_hero_zuus:
                     return "Zeus";
             }
 
-            return classId.ToString().Substring("CDOTA_Unit_Hero_".Length).Replace("_", string.Empty);
+            return heroId.ToString().Substring("npc_dota_hero_".Length).Replace("_", string.Empty);
         }
 
-        /// <summary>
-        ///     The is illusion.
-        /// </summary>
-        /// <param name="hero">
-        ///     The hero.
-        /// </param>
-        /// <returns>
-        ///     The <see cref="bool" />.
-        /// </returns>
-        public static bool IsIllusion(this Hero hero)
+    /// <summary>
+    ///     The is illusion.
+    /// </summary>
+    /// <param name="hero">
+    ///     The hero.
+    /// </param>
+    /// <returns>
+    ///     The <see cref="bool" />.
+    /// </returns>
+    public static bool IsIllusion(this Hero hero)
         {
             return hero.IsIllusion;
         }

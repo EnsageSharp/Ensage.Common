@@ -101,7 +101,7 @@ namespace Ensage.Common
         /// <summary>
         ///     The unit class id.
         /// </summary>
-        public ClassId UnitClassId;
+        public string UnitNetworkName;
 
         /// <summary>
         ///     The unit name.
@@ -138,8 +138,8 @@ namespace Ensage.Common
         /// <param name="unitName">
         ///     The unit name.
         /// </param>
-        /// <param name="unitClassId">
-        ///     The unit class id.
+        /// <param name="unitNetworkName">
+        ///     The unit network name.
         /// </param>
         /// <param name="speed">
         ///     The speed.
@@ -158,7 +158,7 @@ namespace Ensage.Common
         /// </param>
         public Prediction(
             string unitName,
-            ClassId unitClassId,
+            string unitNetworkName,
             Vector3 speed,
             float rotSpeed,
             Vector3 lastPosition,
@@ -166,7 +166,7 @@ namespace Ensage.Common
             float lasttick)
         {
             this.UnitName = unitName;
-            this.UnitClassId = unitClassId;
+            this.UnitNetworkName = unitNetworkName;
             this.Speed = speed;
             this.RotSpeed = rotSpeed;
             this.LastPosition = lastPosition;
@@ -354,7 +354,7 @@ namespace Ensage.Common
             }
 
             lastRotRDictionary[unit.Handle] = unit.RotationRad;
-            if ((unit.ClassId == ClassId.CDOTA_Unit_Hero_StormSpirit || unit.ClassId == ClassId.CDOTA_Unit_Hero_Rubick)
+            if ((unit.NetworkName == "CDOTA_Unit_Hero_StormSpirit" || unit.NetworkName == "CDOTA_Unit_Hero_Rubick")
                 && unit.HasModifier("modifier_storm_spirit_ball_lightning"))
             {
                 var ballLightning = unit.FindSpell("storm_spirit_ball_lightning", true);
@@ -483,12 +483,12 @@ namespace Ensage.Common
 
                 var data =
                     tempTable.FirstOrDefault(
-                        unitData => unitData.UnitName == unit.StoredName() || unitData.UnitClassId == unit.ClassId);
+                        unitData => unitData.UnitName == unit.StoredName() || unitData.UnitNetworkName == unit.NetworkName);
                 if (data == null && unit.IsAlive && unit.IsVisible)
                 {
                     data = new Prediction(
                         unit.StoredName(),
-                        unit.ClassId,
+                        unit.NetworkName,
                         new Vector3(0, 0, 0),
                         0,
                         new Vector3(0, 0, 0),
