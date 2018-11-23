@@ -1125,7 +1125,7 @@ namespace Ensage.Common.Extensions
                 return true;
             }
 
-            channeling = unit.Inventory.Items.Any(v => v.IsChanneling) || unit.Spellbook.Spells.Any(v => v.IsChanneling);
+            channeling = (unit.Inventory != null && unit.Inventory.Items.Any(v => v.IsChanneling)) || unit.Spellbook.Spells.Any(v => v.IsChanneling);
             boolDictionary[n] = channeling;
             Utils.Sleep(100, n);
             return channeling;
