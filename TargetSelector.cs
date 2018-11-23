@@ -126,15 +126,15 @@ namespace Ensage.Common
                     Creeps.All.Where(
                             x =>
                                 x.IsValid && x.IsSpawned
-                                && (x.ClassId == ClassId.CDOTA_BaseNPC_Tower
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Creep_Lane
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Creep
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Creep_Neutral
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Creep_Siege
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Additive
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Barracks
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Building
-                                    || x.ClassId == ClassId.CDOTA_BaseNPC_Creature) && x.IsAlive && x.IsVisible
+                                && (x.NetworkName == "CDOTA_BaseNPC_Tower"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Creep_Lane"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Creep"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Creep_Neutral"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Creep_Siege"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Additive"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Barracks"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Building"
+                                    || x.NetworkName == "CDOTA_BaseNPC_Creature") && x.IsAlive && x.IsVisible
                                 && x.Team != source.Team && x.Distance2D(source) < attackRange + 100)
                         .MinOrDefault(creep => creep.Health);
                 return lowestHp;

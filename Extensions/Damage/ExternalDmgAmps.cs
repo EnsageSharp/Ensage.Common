@@ -53,7 +53,7 @@ namespace Ensage.Common.Extensions.Damage
             double sourceTeam,
             string amp,
             string sourceSpellName,
-            ClassId heroId,
+            HeroId heroId,
             DamageType type)
         {
             this.ModifierName = modifierName;
@@ -76,7 +76,7 @@ namespace Ensage.Common.Extensions.Damage
         /// <summary>
         ///     Gets or sets the hero id.
         /// </summary>
-        public ClassId HeroId { get; set; }
+        public HeroId HeroId { get; set; }
 
         /// <summary>
         ///     Gets or sets the modifier name.

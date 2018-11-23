@@ -244,18 +244,18 @@ namespace Ensage.Common
                     return attackBaseTime / (1 + (attackSpeedValue - 100) / 100);
                 }
 
-                switch (unit.ClassId)
+                switch (unit.HeroId)
                 {
-                    case ClassId.CDOTA_Unit_Hero_Alchemist:
+                    case HeroId.npc_dota_hero_alchemist:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "alchemist_chemical_rage");
                         break;
-                    case ClassId.CDOTA_Unit_Hero_Terrorblade:
+                    case HeroId.npc_dota_hero_terrorblade:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "terrorblade_metamorphosis");
                         break;
-                    case ClassId.CDOTA_Unit_Hero_LoneDruid:
+                    case HeroId.npc_dota_hero_lone_druid:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "lone_druid_true_form");
                         break;
-                    case ClassId.CDOTA_Unit_Hero_TrollWarlord:
+                    case HeroId.npc_dota_hero_troll_warlord:
                         spell = unit.Spellbook.Spells.First(x => x.StoredName() == "troll_warlord_berserkers_rage");
                         break;
                 }
@@ -415,17 +415,17 @@ namespace Ensage.Common
         }
 
         /// <summary>
-        ///     Gets the attack animation data by class id.
+        ///     Gets the attack animation data by network name.
         /// </summary>
-        /// <param name="classId">
-        ///     The class id.
+        /// <param name="networkName">
+        ///     The network name.
         /// </param>
         /// <returns>
         ///     The <see cref="AttackAnimationData" />.
         /// </returns>
-        public static AttackAnimationData GetByClassId(ClassId classId)
+        public static AttackAnimationData GetByNetworkName(string networkName)
         {
-            return Units.FirstOrDefault(unitData => unitData.UnitClassId.Equals(classId));
+            return Units.FirstOrDefault(unitData => unitData.UnitNetworkName.Equals(networkName));
         }
 
         /// <summary>

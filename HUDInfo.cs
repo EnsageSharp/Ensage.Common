@@ -396,7 +396,7 @@ namespace Ensage.Common
             var localHero = ObjectManager.LocalHero;
             if (localHero != null && Equals(unit, localHero))
             {
-                if (unit.ClassId == ClassId.CDOTA_Unit_Hero_Meepo)
+                if (unit.NetworkName == "CDOTA_Unit_Hero_Meepo")
                 {
                     return screenPos + new Vector2((float)(-HpBarX * 1.05 * Monitor), (float)(-HpBarY * 1.3 * Monitor));
                 }

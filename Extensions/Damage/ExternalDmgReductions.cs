@@ -56,7 +56,7 @@ namespace Ensage.Common.Extensions.Damage
             double sourceTeam,
             string reduce,
             string sourceSpellName,
-            ClassId heroId,
+            HeroId heroId,
             float type,
             bool magicOnly)
         {
@@ -76,7 +76,7 @@ namespace Ensage.Common.Extensions.Damage
         /// <summary>
         ///     Gets or sets the hero id.
         /// </summary>
-        public ClassId HeroID { get; set; }
+        public HeroId HeroID { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether magic only.

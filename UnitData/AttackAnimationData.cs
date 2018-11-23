@@ -26,7 +26,7 @@ namespace Ensage.Common.UnitData
         /// <param name="unitName">
         ///     The unit name.
         /// </param>
-        /// <param name="unitClassId">
+        /// <param name="unitNetworkName">
         ///     The unit class id.
         /// </param>
         /// <param name="attackRate">
@@ -46,7 +46,7 @@ namespace Ensage.Common.UnitData
         /// </param>
         public AttackAnimationData(
             string unitName,
-            ClassId unitClassId,
+            string unitNetworkName,
             double attackRate,
             double attackPoint,
             double attackBackswing,
@@ -54,7 +54,7 @@ namespace Ensage.Common.UnitData
             double turnRate)
         {
             this.UnitName = unitName;
-            this.UnitClassId = unitClassId;
+            this.UnitNetworkName = unitNetworkName;
             this.AttackRate = attackRate;
             this.AttackPoint = attackPoint;
             this.AttackBackswing = attackBackswing;
@@ -102,7 +102,7 @@ namespace Ensage.Common.UnitData
         /// <summary>
         ///     The unit class id.
         /// </summary>
-        public ClassId UnitClassId { get; set; }
+        public string UnitNetworkName { get; set; }
 
         /// <summary>
         ///     The unit name.

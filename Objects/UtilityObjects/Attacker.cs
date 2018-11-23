@@ -47,9 +47,9 @@ namespace Ensage.Common.Objects.UtilityObjects
         public Attacker(Unit unit)
         {
             this.Unit = unit;
-            switch (unit.ClassId)
+            switch (unit.NetworkName)
             {
-                case ClassId.CDOTA_Unit_Hero_Clinkz:
+                case "CDOTA_Unit_Hero_Clinkz":
                     this.AttackModifier = unit.Spellbook.Spell2;
                     this.attack = (target) =>
                         {
@@ -63,7 +63,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                             this.Unit.Attack(target);
                         };
                     break;
-                case ClassId.CDOTA_Unit_Hero_DrowRanger:
+                case "CDOTA_Unit_Hero_DrowRanger":
                     this.AttackModifier = unit.Spellbook.Spell1;
                     this.attack = (target) =>
                         {
@@ -77,7 +77,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                             this.Unit.Attack(target);
                         };
                     break;
-                case ClassId.CDOTA_Unit_Hero_Viper:
+                case "CDOTA_Unit_Hero_Viper":
                     this.AttackModifier = unit.Spellbook.SpellQ;
                     this.attack = (target) =>
                         {
@@ -91,7 +91,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                             this.Unit.Attack(target);
                         };
                     break;
-                case ClassId.CDOTA_Unit_Hero_Huskar:
+                case "CDOTA_Unit_Hero_Huskar":
                     this.AttackModifier = unit.Spellbook.Spell2;
                     this.attack = (target) =>
                         {
@@ -105,7 +105,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                             this.Unit.Attack(target);
                         };
                     break;
-                case ClassId.CDOTA_Unit_Hero_Silencer:
+                case "CDOTA_Unit_Hero_Silencer":
                     this.AttackModifier = unit.Spellbook.Spell2;
                     this.attack = (target) =>
                         {
@@ -119,7 +119,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                             this.Unit.Attack(target);
                         };
                     break;
-                case ClassId.CDOTA_Unit_Hero_Jakiro:
+                case "CDOTA_Unit_Hero_Jakiro":
                     this.AttackModifier = unit.Spellbook.Spell3;
                     this.attack = (target) =>
                         {
@@ -133,7 +133,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                             this.Unit.Attack(target);
                         };
                     break;
-                case ClassId.CDOTA_Unit_Hero_Obsidian_Destroyer:
+                case "CDOTA_Unit_Hero_Obsidian_Destroyer":
                     this.AttackModifier = unit.Spellbook.Spell1;
                     this.attack = (target) =>
                         {
@@ -147,7 +147,7 @@ namespace Ensage.Common.Objects.UtilityObjects
                             this.Unit.Attack(target);
                         };
                     break;
-                case ClassId.CDOTA_Unit_Hero_Enchantress:
+                case "CDOTA_Unit_Hero_Enchantress":
                     this.AttackModifier = unit.Spellbook.Spell4;
                     this.attack = (target) =>
                         {

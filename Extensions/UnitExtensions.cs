@@ -866,7 +866,7 @@ namespace Ensage.Common.Extensions
         /// </returns>
         public static double GetTurnTime(this Unit unit, Vector3 position)
         {
-            if (unit.ClassId == ClassId.CDOTA_Unit_Hero_Wisp)
+            if (unit.NetworkName == "CDOTA_Unit_Hero_Wisp")
             {
                 return 0;
             }
@@ -903,15 +903,15 @@ namespace Ensage.Common.Extensions
         /// <param name="unit">
         ///     The unit.
         /// </param>
-        /// <param name="classId">
-        ///     The class Id.
+        /// <param name="itemId">
+        ///     The item Id.
         /// </param>
         /// <returns>
         ///     The <see cref="bool" />.
         /// </returns>
-        public static bool HasItem(this Unit unit, ClassId classId)
+        public static bool HasItem(this Unit unit, ItemId itemId)
         {
-            return unit.Inventory.Items.Any(item => item.ClassId == classId);
+            return unit.Inventory.Items.Any(item => item.GetItemId() == itemId);
         }
 
         /// <summary>
