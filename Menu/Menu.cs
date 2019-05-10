@@ -14,6 +14,7 @@
 namespace Ensage.Common.Menu
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
@@ -109,7 +110,7 @@ namespace Ensage.Common.Menu
             MenuPanel = new DrawRect(Color.Black);
             PanelText = new DrawText { Text = "EnsageSharp Menu", FontFlags = FontFlags.AntiAlias };
             TextureDictionary = new Dictionary<string, DotaTexture>();
-            ItemDictionary = new Dictionary<string, MenuItem>();
+            ItemDictionary = new ConcurrentDictionary<string, MenuItem>();
             Drawing.OnDraw += OnDraw;
             ActivateCommonMenu();
         }
@@ -149,10 +150,8 @@ namespace Ensage.Common.Menu
             this.ShowTextWithTexture = showTextWithTexture;
             this.transition = new ExpoEaseInOut(0.25);
 
-            if (Root?.Item("allowCustomTextures").GetValue<bool>() != true)
-            {
+            if (!Root?.Item("allowCustomTextures").GetValue<bool>() ?? false)
                 this.TextureName = null;
-            }
 
             AppDomain.CurrentDomain.DomainUnload += delegate { this.SaveAll(); };
             AppDomain.CurrentDomain.ProcessExit += delegate { this.SaveAll(); };
@@ -301,7 +300,7 @@ namespace Ensage.Common.Menu
         /// <summary>
         ///     The item dictionary.
         /// </summary>
-        internal static Dictionary<string, MenuItem> ItemDictionary { get; set; }
+        internal static ConcurrentDictionary<string, MenuItem> ItemDictionary { get; set; }
 
         /// <summary>Gets or sets the menu panel.</summary>
         internal static DrawRect MenuPanel { get; set; }
@@ -817,10 +816,7 @@ namespace Ensage.Common.Menu
                        ?? (from subMenu in this.Children where subMenu.Item(name) != null select subMenu.Item(name))
                        .FirstOrDefault();
             if (tempItem != null)
-            {
-                ItemDictionary.Add(id, tempItem);
-            }
-
+                ItemDictionary.TryAdd(id, tempItem);
             return tempItem;
         }
 
